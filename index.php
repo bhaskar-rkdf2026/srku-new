@@ -35,30 +35,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 }
 ?>
 
-<!-- HERO BANNER SECTION -->
+<!-- HERO BANNER SECTION WITH BACKGROUND VIDEO & FLOATING STAT CARDS -->
 <section class="hero-section" style="background-image: url('assets/upload/2026/07/campus-1.webp');">
+    <!-- Vimeo Background Video iFrame -->
+    <div class="elementor-background-video-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:1; pointer-events:none;">
+        <iframe src="https://player.vimeo.com/video/1213199411?muted=1&amp;autoplay=1&amp;loop=1&amp;background=1&amp;app_id=122963" 
+                style="width: 100vw; height: 56.25vw; min-height: 100%; min-width: 177.77vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.8;" 
+                frameborder="0" allow="autoplay; fullscreen; picture-in-picture" title="SRKU Hero Video"></iframe>
+    </div>
+
     <div class="hero-overlay"></div>
-    <div class="hero-container">
+    
+    <div class="hero-container" style="position: relative; z-index: 3;">
         <div>
-            <span class="badge-gold" style="margin-bottom: 15px; display: inline-block;">
-                <i class="fas fa-university"></i> UGC-RECOGNIZED UNIVERSITY IN MP
-            </span>
-            <h2 class="hero-heading">SRK University, Bhopal<br><span style="color: var(--accent-yellow);">Empowering Minds, Shaping Futures</span></h2>
-            <p style="font-size: 1.05rem; color: #e2e8f0; margin: 20px 0 30px; max-width: 600px; line-height: 1.7;">
-                Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership, rigorous research, and unmatched career growth.
-            </p>
-            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                <a href="#apply" class="btn btn-yellow"><i class="fas fa-graduation-cap"></i> Apply Now 2026-27</a>
-                <a href="courses.php" class="btn btn-outline-white"><i class="fas fa-book-open"></i> Explore Programme</a>
+            <h1 class="hero-title">
+                SRK University, Bhopal<br>
+                <font color="#c9a24c"><i class="gold-italic">UGC-Recognized<br></i></font>
+                University in MP
+            </h1>
+
+            <div class="hero-desc">
+                <p>Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership. If you are looking for the <strong>best placement university in MP</strong>, our rigorous research, multi-disciplinary collaboration, and industry-aligned pedagogy deliver unmatched career growth.</p>
+            </div>
+
+            <div class="hero-btns">
+                <a href="#apply" class="btn btn-hero-yellow">Apply Now</a>
+                <a href="courses.php" class="btn btn-hero-outline">Explore Programme</a>
             </div>
         </div>
 
-        <div class="hero-video-box">
-            <video controls poster="assets/upload/2026/07/campus-1.webp" style="width: 100%; height: 320px; object-fit: cover; border-radius: var(--radius-md);">
-                <source src="assets/images/IMG_3597.mov" type="video/mp4">
-                <source src="assets/images/IMG_3597.mov" type="video/quicktime">
-                Your browser does not support HTML5 video player.
-            </video>
+        <!-- FLOATING ABSOLUTE STAT CARDS ON RIGHT (EXACT MATCH TO SCREENSHOT) -->
+        <div class="hero-stat-cards">
+            <div class="stat-card-light">
+                <div class="icon-blue-box">
+                    <i class="far fa-keyboard"></i>
+                </div>
+                <div>
+                    <h3 class="stat-num">42+</h3>
+                    <p class="stat-lbl">HIGH-TECH LABS</p>
+                </div>
+            </div>
+
+            <div class="stat-card-dark">
+                <div class="icon-maroon-box">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div>
+                    <h3 class="stat-num">94%</h3>
+                    <p class="stat-lbl">PLACEMENT RECORD</p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -299,8 +325,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 "At Sarvepalli Radhakrishnan University, our mission is to foster an academic environment that cultivates critical thinking, research innovation, and professional integrity. We empower our students to become technology leaders, entrepreneurs, and responsible global citizens."
             </p>
             <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                <a href="about.php#board" class="btn btn-yellow"><i class="fas fa-user-tie"></i> Read Full Message</a>
-                <a href="page.php?slug=vision-mission" class="btn btn-outline-white"><i class="fas fa-bullseye"></i> Vision & Mission</a>
+                <a href="about.php#board" class="btn btn-hero-yellow"><i class="fas fa-user-tie"></i> Read Full Message</a>
+                <a href="page.php?slug=vision-mission" class="btn btn-hero-outline"><i class="fas fa-bullseye"></i> Vision & Mission</a>
             </div>
         </div>
     </div>
@@ -444,7 +470,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                     <label>Your Message / Query</label>
                     <textarea name="message" class="form-control" rows="3" placeholder="Specify your qualification or query"></textarea>
                 </div>
-                <button type="submit" name="submit_enquiry" class="btn btn-yellow" style="width: 100%; justify-content: center; font-size: 1rem;">
+                <button type="submit" name="submit_enquiry" class="btn btn-hero-yellow" style="width: 100%; justify-content: center; font-size: 1rem;">
                     <i class="fas fa-paper-plane"></i> Submit Admission Enquiry
                 </button>
             </form>
@@ -458,8 +484,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         <h2 style="font-family: var(--font-heading); font-size: 2.4rem; font-weight: 800; margin-bottom: 12px;">Admissions Open for Session 2026-27</h2>
         <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 25px;">Take the first step towards a rewarding global career with SRK University Bhopal.</p>
         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-            <a href="#apply" class="btn btn-yellow"><i class="fas fa-edit"></i> Apply Now</a>
-            <a href="tel:07554911204" class="btn btn-outline-white"><i class="fas fa-phone-alt"></i> Call Helpline</a>
+            <a href="#apply" class="btn btn-hero-yellow"><i class="fas fa-edit"></i> Apply Now</a>
+            <a href="tel:07554911204" class="btn btn-hero-outline"><i class="fas fa-phone-alt"></i> Call Helpline</a>
         </div>
     </div>
 </section>
