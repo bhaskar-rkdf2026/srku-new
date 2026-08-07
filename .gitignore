@@ -1,0 +1,12 @@
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore session & local database dumps
+*.sqlite
+*.log
+config/db_local.php
+
+# Ignore IDE settings
+.idea/
+.vscode/
