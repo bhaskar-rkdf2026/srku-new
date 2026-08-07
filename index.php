@@ -5,13 +5,6 @@ require_once __DIR__ . '/includes/header.php';
 
 $pdo = getDBConnection();
 
-// Fetch dynamic courses
-$coursesList = [];
-try {
-    $stmt = $pdo->query("SELECT * FROM courses WHERE status = 'active' LIMIT 8");
-    $coursesList = $stmt->fetchAll();
-} catch (Exception $e) {}
-
 // Handle Form Submission for Enquiry
 $enquirySuccess = false;
 $enquiryErr = '';
@@ -43,23 +36,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 ?>
 
 <!-- HERO BANNER SECTION -->
-<section class="hero-section" style="background-image: url('assets/images/2ZG_1043-scaled.jpg');">
+<section class="hero-section" style="background-image: url('assets/uploads/2026/07/campus-1.webp');">
     <div class="hero-overlay"></div>
     <div class="hero-container">
-        <div class="hero-text">
-            <span class="hero-tag">
+        <div>
+            <span class="badge-gold" style="margin-bottom: 15px; display: inline-block;">
                 <i class="fas fa-university"></i> UGC-RECOGNIZED UNIVERSITY IN MP
             </span>
-            <h2>SRK University, Bhopal<br><span>Empowering Minds, Shaping Futures</span></h2>
-            <p>Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership, rigorous research, and unmatched career growth.</p>
-            <div class="hero-btns">
-                <a href="#apply" class="btn-yellow"><i class="fas fa-graduation-cap"></i> Apply Now 2026-27</a>
-                <a href="courses.php" class="btn-outline-white"><i class="fas fa-book-open"></i> Explore Programmes</a>
+            <h2 class="hero-heading">SRK University, Bhopal<br><span style="color: var(--accent-yellow);">Empowering Minds, Shaping Futures</span></h2>
+            <p style="font-size: 1.05rem; color: #e2e8f0; margin: 20px 0 30px; max-width: 600px; line-height: 1.7;">
+                Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership, rigorous research, and unmatched career growth.
+            </p>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <a href="#apply" class="btn btn-yellow"><i class="fas fa-graduation-cap"></i> Apply Now 2026-27</a>
+                <a href="courses.php" class="btn btn-outline-white"><i class="fas fa-book-open"></i> Explore Programme</a>
             </div>
         </div>
 
         <div class="hero-video-box">
-            <img src="assets/images/DSC06304-1024x683.jpg" alt="SRKU Campus">
+            <img src="assets/uploads/2026/07/campus-1.webp" alt="SRKU Campus">
             <a href="assets/images/IMG_3597.mov" target="_blank" class="play-badge" title="Watch Campus Video">
                 <i class="fas fa-play"></i>
             </a>
@@ -92,11 +87,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 <!-- WELCOME TO SRK UNIVERSITY SECTION -->
 <section class="section">
     <div class="container">
-        <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center;">
+        <div class="grid-2" style="align-items: center;">
             <div>
                 <span class="section-subtitle">WELCOME TO SRK UNIVERSITY</span>
-                <div class="section-title" style="text-align: left; margin-bottom: 20px;">
-                    <h2>Empowering Minds, Shaping Futures through <span>Academic Excellence</span></h2>
+                <div class="section-header" style="text-align: left; margin-bottom: 20px;">
+                    <h2 class="section-title">Empowering Minds, Shaping Futures through <span class="highlight">Academic Excellence</span></h2>
                 </div>
                 <p style="color: var(--text-dark); margin-bottom: 15px; line-height: 1.8;">
                     Sarvepalli Radhakrishnan University (SRKU), Bhopal is a premier educational institution committed to delivering cutting-edge technical, pharmaceutical, management, and scientific education.
@@ -105,14 +100,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                     Recognized by the University Grants Commission (UGC) under Section 2(f), AICTE, PCI, and statutory councils, SRKU provides an innovative ecosystem blending rigorous research, multidisciplinary collaboration, and industry-aligned pedagogy.
                 </p>
 
-                <a href="about.php" class="btn-yellow" style="background: var(--primary-maroon); color: #ffffff;">
+                <a href="about.php" class="btn btn-primary">
                     Read More <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div>
-                <img src="assets/images/2ZG_1043-1024x681.jpg" alt="SRKU Main Campus Building" style="border-radius: var(--radius-md); box-shadow: var(--shadow-lg); border: 4px solid var(--accent-yellow); margin-bottom: 20px;">
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center;">
+                <img src="assets/uploads/2026/07/2ZG_1043-scaled.jpg" alt="SRKU Main Campus Building" style="border-radius: var(--radius-md); box-shadow: var(--shadow-lg); border: 4px solid var(--accent-yellow); margin-bottom: 20px;">
+                <div class="grid-3" style="text-align: center; gap: 10px;">
                     <div style="background: var(--dark-navy); color: #fff; padding: 12px; border-radius: 6px;">
                         <strong style="color: var(--accent-yellow); font-size: 1.2rem; display: block;">42+</strong>
                         <small style="font-size: 0.75rem;">HIGH-TECH LABS</small>
@@ -122,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                         <small style="font-size: 0.75rem;">Placement Rate</small>
                     </div>
                     <div style="background: var(--dark-navy); color: #fff; padding: 12px; border-radius: 6px;">
-                        <strong style="color: var(--accent-yellow); font-size: 1.2rem; display: block;">2026</strong>
+                        <strong style="color: var(--accent-yellow); font-size: 1.2rem; display: block;">2026-27</strong>
                         <small style="font-size: 0.75rem;">LIVE UPDATES</small>
                     </div>
                 </div>
@@ -137,8 +132,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;">
             <div>
                 <span class="section-subtitle">ACADEMIC EXCELLENCE</span>
-                <div class="section-title" style="text-align: left; margin-bottom: 0;">
-                    <h2>Explore Programmes <span>Offered</span></h2>
+                <div class="section-header" style="text-align: left; margin-bottom: 0;">
+                    <h2 class="section-title">Explore Programmes <span>Offered</span></h2>
                 </div>
             </div>
             <a href="courses.php" class="btn-card-apply" style="font-size: 0.95rem;">
@@ -148,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 
         <div class="grid-4">
             <div class="prog-card">
-                <img src="assets/images/DSC_2491-768x512.jpg" class="prog-img" alt="Engineering">
+                <img src="assets/uploads/2026/06/DSC_2491-scaled.jpg" class="prog-img" alt="Engineering">
                 <div class="prog-body">
                     <h3 class="prog-title">Department of Engineering</h3>
                     <p class="prog-desc">B.Tech & M.Tech programs in CSE, Mechanical, Civil & Electrical Engineering with AI & IoT specializations.</p>
@@ -157,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/images/TZ3_0670-768x512.jpg" class="prog-img" alt="Pharmacy">
+                <img src="assets/uploads/2026/06/TZ3_0670-scaled.jpg" class="prog-img" alt="Pharmacy">
                 <div class="prog-body">
                     <h3 class="prog-title">Sri Sai College of Pharmacy</h3>
                     <p class="prog-desc">PCI & AICTE approved B.Pharm, D.Pharm and M.Pharm programs with modern drug testing labs.</p>
@@ -166,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/images/TZ3_0772-768x512.jpg" class="prog-img" alt="Computer Applications">
+                <img src="assets/uploads/2026/06/TZ3_0772-scaled.jpg" class="prog-img" alt="Computer Applications">
                 <div class="prog-body">
                     <h3 class="prog-title">Department of Computer Application</h3>
                     <p class="prog-desc">BCA, MCA, and B.Sc Computer Science courses designed for modern software development & cloud computing.</p>
@@ -175,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/images/TZ3_0736-768x512.jpg" class="prog-img" alt="Nursing">
+                <img src="assets/uploads/2026/06/TZ3_0736-scaled.jpg" class="prog-img" alt="Nursing">
                 <div class="prog-body">
                     <h3 class="prog-title">RKDF College of Nursing</h3>
                     <p class="prog-desc">INC & MPNRC recognized B.Sc Nursing, Post Basic Nursing, and GNM programs with hospital clinical training.</p>
@@ -184,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/images/TZ3_0762-768x512.jpg" class="prog-img" alt="Management">
+                <img src="assets/uploads/2026/06/TZ3_0762-scaled.jpg" class="prog-img" alt="Management">
                 <div class="prog-body">
                     <h3 class="prog-title">Department of Management</h3>
                     <p class="prog-desc">MBA, BBA, and Commerce degrees with Dual Specializations in Marketing, HR, Finance & Business Analytics.</p>
@@ -193,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/images/TZ3_0696-768x512.jpg" class="prog-img" alt="APJ Kalam Pharmacy">
+                <img src="assets/uploads/2026/06/TZ3_0696-scaled.jpg" class="prog-img" alt="APJ Kalam Pharmacy">
                 <div class="prog-body">
                     <h3 class="prog-title">Dr. APJ Abdul Kalam College of Pharmacy</h3>
                     <p class="prog-desc">Premier pharmaceutical research institute offering state-of-the-art pharmacology & chemistry labs.</p>
@@ -202,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/images/TZ3_0603-768x512.jpg" class="prog-img" alt="Allied Sciences">
+                <img src="assets/uploads/2026/06/TZ3_0603-scaled.jpg" class="prog-img" alt="Allied Sciences">
                 <div class="prog-body">
                     <h3 class="prog-title">Department of Allied Sciences</h3>
                     <p class="prog-desc">B.Sc, M.Sc courses in Biotechnology, Microbiology, Medical Lab Technology (BMLT) & Physics.</p>
@@ -211,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/images/TZ3_0590-768x512.jpg" class="prog-img" alt="SRK College of Pharmacy">
+                <img src="assets/uploads/2026/06/TZ3_0590-scaled.jpg" class="prog-img" alt="SRK College of Pharmacy">
                 <div class="prog-body">
                     <h3 class="prog-title">Sarvepalli Radhakrishnan College of Pharmacy</h3>
                     <p class="prog-desc">Center of excellence in pharmaceutical research, drug formulation, and clinical trials training.</p>
@@ -225,9 +220,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 <!-- PROMINENT INSTITUTES / FACULTIES -->
 <section class="section">
     <div class="container">
-        <div class="section-title" style="margin-bottom: 40px;">
+        <div class="section-header" style="margin-bottom: 40px;">
             <span class="section-subtitle">CONSTITUENT UNITS</span>
-            <h2>Prominent Institutes under <span>SRK University</span></h2>
+            <h2 class="section-title">Prominent Institutes under <span class="highlight">SRK University</span></h2>
         </div>
 
         <div class="grid-4">
@@ -294,17 +289,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 <section class="chancellor-banner">
     <div class="chancellor-grid">
         <div>
-            <img src="assets/images/DSC_3756-scaled.jpg" class="chancellor-photo" alt="Chancellor SRK University">
+            <img src="assets/uploads/2026/06/DSC_3756-scaled.jpg" class="chancellor-photo" alt="Chancellor SRK University">
         </div>
-        <div class="chancellor-content">
-            <h3>Message From Chancellor Desk</h3>
-            <div class="chancellor-desig">Leadership & Governance</div>
-            <p class="chancellor-quote">
+        <div>
+            <h3 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">Message From Chancellor Desk</h3>
+            <div style="color: var(--accent-yellow); font-weight: 700; font-size: 1rem; margin-bottom: 20px; text-transform: uppercase;">Leadership & Governance</div>
+            <p style="font-size: 1.05rem; line-height: 1.8; color: #f1f5f9; font-style: italic; margin-bottom: 25px; border-left: 4px solid var(--accent-yellow); padding-left: 20px;">
                 "At Sarvepalli Radhakrishnan University, our mission is to foster an academic environment that cultivates critical thinking, research innovation, and professional integrity. We empower our students to become technology leaders, entrepreneurs, and responsible global citizens."
             </p>
-            <div style="display: flex; gap: 15px;">
-                <a href="about.php#board" class="btn-yellow"><i class="fas fa-user-tie"></i> Read Full Message</a>
-                <a href="page.php?slug=vision-mission" class="btn-outline-white"><i class="fas fa-bullseye"></i> Vision & Mission</a>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <a href="about.php#board" class="btn btn-yellow"><i class="fas fa-user-tie"></i> Read Full Message</a>
+                <a href="page.php?slug=vision-mission" class="btn btn-outline-white"><i class="fas fa-bullseye"></i> Vision & Mission</a>
             </div>
         </div>
     </div>
@@ -313,15 +308,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 <!-- WORLD-CLASS FACILITIES SECTION -->
 <section class="section bg-light">
     <div class="container">
-        <div class="section-title" style="margin-bottom: 40px;">
+        <div class="section-header" style="margin-bottom: 40px;">
             <span class="section-subtitle">CAMPUS LIFE & INFRASTRUCTURE</span>
-            <h2>World-Class Campus <span>Facilities</span></h2>
+            <h2 class="section-title">World-Class Campus <span class="highlight">Facilities</span></h2>
             <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 8px;">Equipped with state-of-the-art infrastructure for learning, living, and innovating.</p>
         </div>
 
         <div class="grid-3">
             <div class="prog-card">
-                <img src="assets/images/TZ3_0778-768x512.jpg" class="prog-img" alt="Central Library">
+                <img src="assets/uploads/2026/06/TZ3_0778-scaled.jpg" class="prog-img" alt="Central Library">
                 <div class="prog-body">
                     <h3 class="prog-title">Central Digital Library</h3>
                     <p class="prog-desc">Vast collection of over 50,000 books, international research journals, e-books, and 24/7 digital resource access.</p>
@@ -329,7 +324,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/images/TZ3_0670-768x512.jpg" class="prog-img" alt="Advanced Research Labs">
+                <img src="assets/uploads/2026/06/TZ3_0670-scaled.jpg" class="prog-img" alt="Advanced Research Labs">
                 <div class="prog-body">
                     <h3 class="prog-title">42+ Advanced Research Labs</h3>
                     <p class="prog-desc">High-performance computing centers, Robotics labs, Pharmaceutics testing equipment, and AI innovation units.</p>
@@ -337,7 +332,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/images/TZ3_0736-768x512.jpg" class="prog-img" alt="Lecture Theatres">
+                <img src="assets/uploads/2026/06/TZ3_0736-scaled.jpg" class="prog-img" alt="Lecture Theatres">
                 <div class="prog-body">
                     <h3 class="prog-title">Air-Conditioned Auditoriums</h3>
                     <p class="prog-desc">Smart audio-visual lecture halls and auditoriums hosting national seminars, workshops, and guest lectures.</p>
@@ -345,7 +340,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/images/TZ3_0696-768x512.jpg" class="prog-img" alt="Sports Complex">
+                <img src="assets/uploads/2026/06/TZ3_0696-scaled.jpg" class="prog-img" alt="Sports Complex">
                 <div class="prog-body">
                     <h3 class="prog-title">Sports Complex & Gymnasium</h3>
                     <p class="prog-desc">Cricket stadium, basketball courts, indoor badminton arenas, and modern fitness gym for student athletics.</p>
@@ -353,7 +348,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/images/DSC06304-768x512.jpg" class="prog-img" alt="Hostel & Dining">
+                <img src="assets/uploads/2026/06/DSC06304-scaled.jpg" class="prog-img" alt="Hostel & Dining">
                 <div class="prog-body">
                     <h3 class="prog-title">Hostels & Hygienic Dining</h3>
                     <p class="prog-desc">Separate secured hostels for boys & girls with Wi-Fi, 24/7 security, medical support, and nutritious mess food.</p>
@@ -361,7 +356,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/images/TZ3_0603-768x512.jpg" class="prog-img" alt="Medical Facilities">
+                <img src="assets/uploads/2026/06/TZ3_0603-scaled.jpg" class="prog-img" alt="Medical Facilities">
                 <div class="prog-body">
                     <h3 class="prog-title">Medical & Healthcare Center</h3>
                     <p class="prog-desc">On-campus 100-bed hospital providing round-the-clock emergency care, pharmacy, and health check-ups.</p>
@@ -374,11 +369,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 <!-- PLACEMENT & RECRUITER HIGHLIGHTS -->
 <section class="section">
     <div class="container">
-        <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center; margin-bottom: 40px;">
+        <div class="grid-2" style="align-items: center; margin-bottom: 40px;">
             <div>
                 <span class="section-subtitle">CAREER & PLACEMENT CELL</span>
-                <div class="section-title" style="text-align: left; margin-bottom: 20px;">
-                    <h2>Unmatched Placement <span>Track Record</span></h2>
+                <div class="section-header" style="text-align: left; margin-bottom: 20px;">
+                    <h2 class="section-title">Unmatched Placement <span class="highlight">Track Record</span></h2>
                 </div>
                 <p style="color: var(--text-dark); margin-bottom: 15px; line-height: 1.8;">
                     Our dedicated Corporate Relations Cell conducts year-round campus recruitment drives, soft skills training, mock interviews, and industry internships.
@@ -393,7 +388,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div>
-                <img src="assets/images/TZ3_0590-768x512.jpg" alt="Campus Placement Ceremony" style="border-radius: var(--radius-md); border: 4px solid var(--primary-maroon); box-shadow: var(--shadow-lg);">
+                <img src="assets/uploads/2026/06/TZ3_0590-scaled.jpg" alt="Campus Placement Ceremony" style="border-radius: var(--radius-md); border: 4px solid var(--primary-maroon); box-shadow: var(--shadow-lg);">
             </div>
         </div>
     </div>
@@ -403,9 +398,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 <section class="section bg-cream" id="apply">
     <div class="container">
         <div style="max-width: 750px; margin: 0 auto; background: #ffffff; padding: 40px; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);">
-            <div class="section-title" style="margin-bottom: 25px;">
+            <div class="section-header" style="margin-bottom: 25px;">
                 <span class="section-subtitle">ADMISSION SESSION 2026-27</span>
-                <h2>Apply For <span>Admissions 2026</span></h2>
+                <h2 class="section-title">Apply For <span class="highlight">Admissions 2026</span></h2>
                 <p style="color: var(--text-muted); font-size: 0.92rem; margin-top: 6px;">Fill out your details below and our counselor will call you within 24 hours.</p>
             </div>
 
@@ -422,7 +417,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                     <label>Full Name *</label>
                     <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="grid-2" style="gap: 20px;">
                     <div class="form-group">
                         <label>Email Address *</label>
                         <input type="email" name="email" class="form-control" placeholder="yourname@gmail.com" required>
@@ -448,7 +443,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                     <label>Your Message / Query</label>
                     <textarea name="message" class="form-control" rows="3" placeholder="Specify your qualification or query"></textarea>
                 </div>
-                <button type="submit" name="submit_enquiry" class="btn-yellow" style="width: 100%; border: none; cursor: pointer; justify-content: center; font-size: 1rem;">
+                <button type="submit" name="submit_enquiry" class="btn btn-yellow" style="width: 100%; justify-content: center; font-size: 1rem;">
                     <i class="fas fa-paper-plane"></i> Submit Admission Enquiry
                 </button>
             </form>
@@ -457,13 +452,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 </section>
 
 <!-- CTA BANNER -->
-<section class="cta-banner">
+<section class="cta-banner" style="background: linear-gradient(135deg, var(--dark-navy), var(--dark-blue)); color: #ffffff; padding: 60px 20px; text-align: center;">
     <div class="container">
-        <h2>Admissions Open for Session 2026-27</h2>
-        <p>Take the first step towards a rewarding global career with SRK University Bhopal.</p>
-        <div style="display: flex; gap: 15px; justify-content: center;">
-            <a href="#apply" class="btn-yellow"><i class="fas fa-edit"></i> Apply Now</a>
-            <a href="tel:07554911204" class="btn-outline-white"><i class="fas fa-phone-alt"></i> Call Helpline</a>
+        <h2 style="font-family: var(--font-heading); font-size: 2.4rem; font-weight: 800; margin-bottom: 12px;">Admissions Open for Session 2026-27</h2>
+        <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 25px;">Take the first step towards a rewarding global career with SRK University Bhopal.</p>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <a href="#apply" class="btn btn-yellow"><i class="fas fa-edit"></i> Apply Now</a>
+            <a href="tel:07554911204" class="btn btn-outline-white"><i class="fas fa-phone-alt"></i> Call Helpline</a>
         </div>
     </div>
 </section>
