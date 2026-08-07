@@ -284,27 +284,21 @@ img { max-width: 100%; height: auto; display: block; }
     align-items: center;
 }
 
-/* Vimeo background video — covers entire viewport */
-.hero-video-bg {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 1;
-    pointer-events: none;
-    overflow: hidden;
-    background: #000;
-}
-.hero-video-bg iframe {
+/* ─── Video background iframe — direct child of .hero-section ─── */
+.hero-bg-video {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* Always covers — whichever dimension is larger wins */
-    width: 177.78vh;      /* 100vh × 16/9 */
-    height: 56.25vw;      /* 100vw × 9/16 */
+    /* Cover entire section on any screen ratio */
+    width: 177.78vh;      /* screen-height × 16/9  */
+    height: 56.25vw;      /* screen-width  × 9/16  */
     min-width: 100%;
     min-height: 100%;
+    z-index: 1;
+    pointer-events: none;
     border: 0;
+    background: #000;
 }
 
 /* Dark overlay on top of video */

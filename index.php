@@ -29,10 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 ═══════════════════════════════════════════════════════ -->
 <section class="hero-section">
 
-    <div class="hero-video-bg">
-        <iframe src="https://player.vimeo.com/video/1213199411?muted=1&amp;autoplay=1&amp;loop=1&amp;background=1&amp;app_id=122963"
-                frameborder="0" allow="autoplay; fullscreen; picture-in-picture" title="SRKU Hero"></iframe>
-    </div>
+    <iframe class="hero-bg-video"
+            src="https://player.vimeo.com/video/1213199411?muted=1&amp;autoplay=1&amp;loop=1&amp;background=1&amp;app_id=122963"
+            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" title="SRKU Hero"></iframe>
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
