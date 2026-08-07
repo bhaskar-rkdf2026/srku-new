@@ -29,7 +29,7 @@ $ticker = getSetting('ticker_text', 'Admissions Open 2026-27 | UGC Recognized Pr
                 <a href="tel:07554911204"><i class="fas fa-phone-alt"></i> Help Line: <?php echo sanitize($helpline); ?></a>
                 <a href="mailto:<?php echo sanitize($email); ?>"><i class="fas fa-envelope"></i> <?php echo sanitize($email); ?></a>
                 <span class="badge-tag">Admissions Open 2026-27</span>
-                <a href="<?php echo BASE_URL; ?>admin/login.php" style="color: var(--accent-gold); font-weight: 700;"><i class="fas fa-lock"></i> Admin CMS</a>
+                <a href="<?php echo BASE_URL; ?>admin/login.php" style="color: var(--accent-yellow); font-weight: 700;"><i class="fas fa-lock"></i> Admin CMS</a>
             </div>
         </div>
     </div>
@@ -38,11 +38,7 @@ $ticker = getSetting('ticker_text', 'Admissions Open 2026-27 | UGC Recognized Pr
     <header class="main-header glass-header">
         <div class="nav-container">
             <a href="<?php echo BASE_URL; ?>" class="logo-brand">
-                <div class="logo-icon">SRK</div>
-                <div class="logo-text">
-                    <h1>Sarvepalli Radhakrishnan</h1>
-                    <p>University Bhopal (UGC Recognized)</p>
-                </div>
+                <img src="<?php echo BASE_URL; ?>assets/upload/2026/07/SRK-logo.webp" alt="Sarvepalli Radhakrishnan University Logo" style="height: 55px; width: auto; object-fit: contain;">
             </a>
 
             <nav class="nav-menu">
@@ -56,11 +52,11 @@ $ticker = getSetting('ticker_text', 'Admissions Open 2026-27 | UGC Recognized Pr
                         <a href="<?php echo BASE_URL; ?>page.php?slug=why-srk" class="dropdown-item">Why SRK</a>
                         <a href="<?php echo BASE_URL; ?>page.php?slug=vision-mission" class="dropdown-item">Vision & Mission</a>
                         <a href="<?php echo BASE_URL; ?>about.php#accreditation" class="dropdown-item">Accreditation</a>
-                        <a href="<?php echo BASE_URL; ?>assets/uploads/2026/07/NIRF-2026.pdf" target="_blank" class="dropdown-item">NIRF 2026</a>
+                        <a href="<?php echo BASE_URL; ?>assets/upload/2026/07/NIRF-2026.pdf" target="_blank" class="dropdown-item">NIRF 2026</a>
                         <a href="<?php echo BASE_URL; ?>about.php#board" class="dropdown-item">Board of Management</a>
                         <a href="<?php echo BASE_URL; ?>about.php#constituent" class="dropdown-item">Constituent Unit</a>
                         <a href="<?php echo BASE_URL; ?>about.php#committees" class="dropdown-item">All Committee</a>
-                        <a href="<?php echo BASE_URL; ?>assets/uploads/2026/07/university-ordinance.pdf" target="_blank" class="dropdown-item">University Ordinance</a>
+                        <a href="<?php echo BASE_URL; ?>assets/upload/2026/07/university-ordinance.pdf" target="_blank" class="dropdown-item">University Ordinance</a>
                     </div>
                 </div>
 

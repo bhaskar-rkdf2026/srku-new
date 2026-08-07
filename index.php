@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 ?>
 
 <!-- HERO BANNER SECTION -->
-<section class="hero-section" style="background-image: url('assets/uploads/2026/07/campus-1.webp');">
+<section class="hero-section" style="background-image: url('assets/upload/2026/07/campus-1.webp');">
     <div class="hero-overlay"></div>
     <div class="hero-container">
         <div>
@@ -54,10 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         </div>
 
         <div class="hero-video-box">
-            <img src="assets/uploads/2026/07/campus-1.webp" alt="SRKU Campus">
-            <a href="assets/images/IMG_3597.mov" target="_blank" class="play-badge" title="Watch Campus Video">
-                <i class="fas fa-play"></i>
-            </a>
+            <video controls poster="assets/upload/2026/07/campus-1.webp" style="width: 100%; height: 320px; object-fit: cover; border-radius: var(--radius-md);">
+                <source src="assets/images/IMG_3597.mov" type="video/mp4">
+                <source src="assets/images/IMG_3597.mov" type="video/quicktime">
+                Your browser does not support HTML5 video player.
+            </video>
         </div>
     </div>
 </section>
@@ -106,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div>
-                <img src="assets/uploads/2026/07/2ZG_1043-scaled.jpg" alt="SRKU Main Campus Building" style="border-radius: var(--radius-md); box-shadow: var(--shadow-lg); border: 4px solid var(--accent-yellow); margin-bottom: 20px;">
+                <img src="assets/upload/2026/07/2ZG_1043-scaled.jpg" alt="SRKU Main Campus Building" style="border-radius: var(--radius-md); box-shadow: var(--shadow-lg); border: 4px solid var(--accent-yellow); margin-bottom: 20px;">
                 <div class="grid-3" style="text-align: center; gap: 10px;">
                     <div style="background: var(--dark-navy); color: #fff; padding: 12px; border-radius: 6px;">
                         <strong style="color: var(--accent-yellow); font-size: 1.2rem; display: block;">42+</strong>
@@ -143,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 
         <div class="grid-4">
             <div class="prog-card">
-                <img src="assets/uploads/2026/06/DSC_2491-scaled.jpg" class="prog-img" alt="Engineering">
+                <img src="assets/upload/2026/06/DSC_2491-scaled.jpg" class="prog-img" alt="Engineering">
                 <div class="prog-body">
                     <h3 class="prog-title">Department of Engineering</h3>
                     <p class="prog-desc">B.Tech & M.Tech programs in CSE, Mechanical, Civil & Electrical Engineering with AI & IoT specializations.</p>
@@ -152,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/uploads/2026/06/TZ3_0670-scaled.jpg" class="prog-img" alt="Pharmacy">
+                <img src="assets/upload/2026/06/TZ3_0670-scaled.jpg" class="prog-img" alt="Pharmacy">
                 <div class="prog-body">
                     <h3 class="prog-title">Sri Sai College of Pharmacy</h3>
                     <p class="prog-desc">PCI & AICTE approved B.Pharm, D.Pharm and M.Pharm programs with modern drug testing labs.</p>
@@ -161,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/uploads/2026/06/TZ3_0772-scaled.jpg" class="prog-img" alt="Computer Applications">
+                <img src="assets/upload/2026/06/TZ3_0772-scaled.jpg" class="prog-img" alt="Computer Applications">
                 <div class="prog-body">
                     <h3 class="prog-title">Department of Computer Application</h3>
                     <p class="prog-desc">BCA, MCA, and B.Sc Computer Science courses designed for modern software development & cloud computing.</p>
@@ -170,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/uploads/2026/06/TZ3_0736-scaled.jpg" class="prog-img" alt="Nursing">
+                <img src="assets/upload/2026/06/TZ3_0736-scaled.jpg" class="prog-img" alt="Nursing">
                 <div class="prog-body">
                     <h3 class="prog-title">RKDF College of Nursing</h3>
                     <p class="prog-desc">INC & MPNRC recognized B.Sc Nursing, Post Basic Nursing, and GNM programs with hospital clinical training.</p>
@@ -179,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/uploads/2026/06/TZ3_0762-scaled.jpg" class="prog-img" alt="Management">
+                <img src="assets/upload/2026/06/TZ3_0762-scaled.jpg" class="prog-img" alt="Management">
                 <div class="prog-body">
                     <h3 class="prog-title">Department of Management</h3>
                     <p class="prog-desc">MBA, BBA, and Commerce degrees with Dual Specializations in Marketing, HR, Finance & Business Analytics.</p>
@@ -188,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/uploads/2026/06/TZ3_0696-scaled.jpg" class="prog-img" alt="APJ Kalam Pharmacy">
+                <img src="assets/upload/2026/06/TZ3_0696-scaled.jpg" class="prog-img" alt="APJ Kalam Pharmacy">
                 <div class="prog-body">
                     <h3 class="prog-title">Dr. APJ Abdul Kalam College of Pharmacy</h3>
                     <p class="prog-desc">Premier pharmaceutical research institute offering state-of-the-art pharmacology & chemistry labs.</p>
@@ -197,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/uploads/2026/06/TZ3_0603-scaled.jpg" class="prog-img" alt="Allied Sciences">
+                <img src="assets/upload/2026/06/TZ3_0603-scaled.jpg" class="prog-img" alt="Allied Sciences">
                 <div class="prog-body">
                     <h3 class="prog-title">Department of Allied Sciences</h3>
                     <p class="prog-desc">B.Sc, M.Sc courses in Biotechnology, Microbiology, Medical Lab Technology (BMLT) & Physics.</p>
@@ -206,7 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/uploads/2026/06/TZ3_0590-scaled.jpg" class="prog-img" alt="SRK College of Pharmacy">
+                <img src="assets/upload/2026/06/TZ3_0590-scaled.jpg" class="prog-img" alt="SRK College of Pharmacy">
                 <div class="prog-body">
                     <h3 class="prog-title">Sarvepalli Radhakrishnan College of Pharmacy</h3>
                     <p class="prog-desc">Center of excellence in pharmaceutical research, drug formulation, and clinical trials training.</p>
@@ -289,7 +290,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 <section class="chancellor-banner">
     <div class="chancellor-grid">
         <div>
-            <img src="assets/uploads/2026/06/DSC_3756-scaled.jpg" class="chancellor-photo" alt="Chancellor SRK University">
+            <img src="assets/upload/2026/06/DSC_3756-scaled.jpg" class="chancellor-photo" alt="Chancellor SRK University">
         </div>
         <div>
             <h3 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">Message From Chancellor Desk</h3>
@@ -316,7 +317,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 
         <div class="grid-3">
             <div class="prog-card">
-                <img src="assets/uploads/2026/06/TZ3_0778-scaled.jpg" class="prog-img" alt="Central Library">
+                <img src="assets/upload/2026/06/TZ3_0778-scaled.jpg" class="prog-img" alt="Central Library">
                 <div class="prog-body">
                     <h3 class="prog-title">Central Digital Library</h3>
                     <p class="prog-desc">Vast collection of over 50,000 books, international research journals, e-books, and 24/7 digital resource access.</p>
@@ -324,7 +325,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/uploads/2026/06/TZ3_0670-scaled.jpg" class="prog-img" alt="Advanced Research Labs">
+                <img src="assets/upload/2026/06/TZ3_0670-scaled.jpg" class="prog-img" alt="Advanced Research Labs">
                 <div class="prog-body">
                     <h3 class="prog-title">42+ Advanced Research Labs</h3>
                     <p class="prog-desc">High-performance computing centers, Robotics labs, Pharmaceutics testing equipment, and AI innovation units.</p>
@@ -332,7 +333,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/uploads/2026/06/TZ3_0736-scaled.jpg" class="prog-img" alt="Lecture Theatres">
+                <img src="assets/upload/2026/06/TZ3_0736-scaled.jpg" class="prog-img" alt="Lecture Theatres">
                 <div class="prog-body">
                     <h3 class="prog-title">Air-Conditioned Auditoriums</h3>
                     <p class="prog-desc">Smart audio-visual lecture halls and auditoriums hosting national seminars, workshops, and guest lectures.</p>
@@ -340,7 +341,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/uploads/2026/06/TZ3_0696-scaled.jpg" class="prog-img" alt="Sports Complex">
+                <img src="assets/upload/2026/06/TZ3_0696-scaled.jpg" class="prog-img" alt="Sports Complex">
                 <div class="prog-body">
                     <h3 class="prog-title">Sports Complex & Gymnasium</h3>
                     <p class="prog-desc">Cricket stadium, basketball courts, indoor badminton arenas, and modern fitness gym for student athletics.</p>
@@ -348,7 +349,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/uploads/2026/06/DSC06304-scaled.jpg" class="prog-img" alt="Hostel & Dining">
+                <img src="assets/upload/2026/06/DSC06304-scaled.jpg" class="prog-img" alt="Hostel & Dining">
                 <div class="prog-body">
                     <h3 class="prog-title">Hostels & Hygienic Dining</h3>
                     <p class="prog-desc">Separate secured hostels for boys & girls with Wi-Fi, 24/7 security, medical support, and nutritious mess food.</p>
@@ -356,7 +357,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div class="prog-card">
-                <img src="assets/uploads/2026/06/TZ3_0603-scaled.jpg" class="prog-img" alt="Medical Facilities">
+                <img src="assets/upload/2026/06/TZ3_0603-scaled.jpg" class="prog-img" alt="Medical Facilities">
                 <div class="prog-body">
                     <h3 class="prog-title">Medical & Healthcare Center</h3>
                     <p class="prog-desc">On-campus 100-bed hospital providing round-the-clock emergency care, pharmacy, and health check-ups.</p>
@@ -388,7 +389,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
 
             <div>
-                <img src="assets/uploads/2026/06/TZ3_0590-scaled.jpg" alt="Campus Placement Ceremony" style="border-radius: var(--radius-md); border: 4px solid var(--primary-maroon); box-shadow: var(--shadow-lg);">
+                <img src="assets/upload/2026/06/TZ3_0590-scaled.jpg" alt="Campus Placement Ceremony" style="border-radius: var(--radius-md); border: 4px solid var(--primary-maroon); box-shadow: var(--shadow-lg);">
             </div>
         </div>
     </div>
