@@ -272,18 +272,19 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 /* ==========================================
-   HERO SECTION — EXACT MATCH TO SCREENSHOT
+   HERO SECTION — 100VH FULLSCREEN
    ========================================== */
 .hero-section {
     position: relative;
     width: 100%;
-    min-height: 580px;
+    height: 100vh;          /* true fullscreen */
+    min-height: 600px;
     overflow: hidden;
     display: flex;
     align-items: center;
 }
 
-/* Vimeo background video */
+/* Vimeo background video — covers entire viewport */
 .hero-video-bg {
     position: absolute;
     top: 0; left: 0;
@@ -298,11 +299,12 @@ img { max-width: 100%; height: auto; display: block; }
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* 16:9 aspect ratio scaled to always cover */
-    width: 177.78vh;   /* 100vh * 16/9 */
-    height: 100vh;
+    /* Always covers — whichever dimension is larger wins */
+    width: 177.78vh;      /* 100vh × 16/9 */
+    height: 56.25vw;      /* 100vw × 9/16 */
     min-width: 100%;
-    min-height: 56.25vw; /* 100vw * 9/16 */
+    min-height: 100%;
+    border: 0;
 }
 
 /* Dark overlay on top of video */
@@ -316,14 +318,15 @@ img { max-width: 100%; height: auto; display: block; }
     z-index: 2;
 }
 
-/* Content wrapper — sits above video & overlay */
+/* Content wrapper — sits above video & overlay, fills full section height */
 .hero-content {
     position: relative;
     z-index: 3;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 90px 20px 110px;
+    padding: 0 40px 90px;   /* bottom padding leaves room for ticker */
     width: 100%;
+    /* push content to vertical center using parent flexbox */
 }
 
 /* Heading — left aligned */
@@ -394,7 +397,7 @@ img { max-width: 100%; height: auto; display: block; }
     border-color: var(--primary-maroon);
 }
 
-/* FLOATING STAT CARDS — absolutely on bottom-right of hero */
+/* FLOATING STAT CARDS — absolutely positioned on right side of hero */
 .hero-stat-card-1,
 .hero-stat-card-2 {
     position: absolute;
@@ -405,14 +408,14 @@ img { max-width: 100%; height: auto; display: block; }
     gap: 14px;
     padding: 16px 22px;
     border-radius: 10px;
-    min-width: 200px;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    min-width: 210px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.28);
 }
-/* Card 1 — Light/White (42+ HIGH-TECH LABS) — upper card */
+/* Card 1 — White/Glass (upper card) — positioned at 35% from bottom */
 .hero-stat-card-1 {
     background: rgba(255,255,255,0.93);
     backdrop-filter: blur(14px);
-    bottom: 135px;
+    bottom: calc(50px + 90px + 10px); /* ticker(40) + card2(~80) + gap */
 }
 .hero-stat-card-1 .icon-box {
     width: 44px; height: 44px;
@@ -443,10 +446,10 @@ img { max-width: 100%; height: auto; display: block; }
     text-transform: uppercase;
 }
 
-/* Card 2 — Dark Maroon (94% PLACEMENT RECORD) — lower card */
+/* Card 2 — Dark Maroon (lower card, just above ticker) */
 .hero-stat-card-2 {
     background: var(--primary-maroon);
-    bottom: 55px;
+    bottom: 55px;   /* sits just above the 40px ticker bar */
 }
 .hero-stat-card-2 .icon-box {
     width: 44px; height: 44px;
