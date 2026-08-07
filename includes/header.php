@@ -37,7 +37,10 @@ $ticker = getSetting('ticker_text', 'Admissions Open 2026-27 | UGC Recognized Pr
     <header class="main-header glass-header">
         <div class="nav-container">
             <a href="<?php echo BASE_URL; ?>" class="logo-brand">
-                <img src="<?php echo BASE_URL; ?>assets/upload/2026/06/New-Project.webp" alt="SRK University Bhopal Logo" style="height: 52px; width: auto; object-fit: contain;" onerror="this.src='<?php echo BASE_URL; ?>assets/upload/2026/07/SRK-logo.webp';">
+                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-logo.webp" 
+                     alt="SRK University Bhopal Logo" 
+                     style="height: 52px; width: auto; object-fit: contain;"
+                     onerror="this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/srk-logo-real.webp';">
             </a>
 
             <nav class="nav-menu">
@@ -213,10 +216,3 @@ $ticker = getSetting('ticker_text', 'Admissions Open 2026-27 | UGC Recognized Pr
         </div>
     </header>
 
-    <!-- LIVE ANNOUNCEMENT TICKER -->
-    <div class="ticker-bar">
-        <div class="ticker-title">LIVE UPDATES</div>
-        <div class="ticker-content">
-            <?php echo sanitize($ticker); ?>
-        </div>
-    </div>
