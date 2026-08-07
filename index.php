@@ -35,58 +35,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 }
 ?>
 
-<!-- HERO BANNER SECTION WITH BACKGROUND VIDEO & FLOATING STAT CARDS -->
-<section class="hero-section" style="background-image: url('assets/upload/2026/07/campus-1.webp');">
-    <!-- Vimeo Background Video iFrame -->
-    <div class="elementor-background-video-container" style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; z-index:1; pointer-events:none;">
-        <iframe src="https://player.vimeo.com/video/1213199411?muted=1&amp;autoplay=1&amp;loop=1&amp;background=1&amp;app_id=122963" 
-                style="width: 100vw; height: 56.25vw; min-height: 100%; min-width: 177.77vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.8;" 
-                frameborder="0" allow="autoplay; fullscreen; picture-in-picture" title="SRKU Hero Video"></iframe>
+<!-- ============================================================
+     HERO SECTION — EXACT MATCH TO OLD WEBSITE SCREENSHOT
+     Vimeo autoplay background + left text + absolute stat cards
+     ============================================================ -->
+<section class="hero-section">
+
+    <!-- Full-screen Vimeo background video (muted, autoplay, loop) -->
+    <div class="hero-video-bg">
+        <iframe src="https://player.vimeo.com/video/1213199411?muted=1&amp;autoplay=1&amp;loop=1&amp;background=1&amp;app_id=122963"
+                frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                title="concept2-hero"></iframe>
     </div>
 
+    <!-- Dark gradient overlay -->
     <div class="hero-overlay"></div>
-    
-    <div class="hero-container" style="position: relative; z-index: 3;">
-        <div>
-            <h1 class="hero-title">
-                SRK University, Bhopal<br>
-                <font color="#c9a24c"><i class="gold-italic">UGC-Recognized<br></i></font>
-                University in MP
-            </h1>
 
-            <div class="hero-desc">
-                <p>Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership. If you are looking for the <strong>best placement university in MP</strong>, our rigorous research, multi-disciplinary collaboration, and industry-aligned pedagogy deliver unmatched career growth.</p>
+    <!-- Main content — left-aligned text -->
+    <div class="hero-content">
+
+        <!-- H1 Heading: exact match to Elementor h1 -->
+        <h1 class="hero-h1">
+            SRK University, Bhopal<br>
+            <span class="gold-line">UGC-Recognized</span>
+            University in MP
+        </h1>
+
+        <!-- Description paragraph: exact match to Elementor text-editor -->
+        <p class="hero-desc">
+            Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership.
+            If you are looking for the <b>best placement university in MP</b>, our rigorous research, multi-disciplinary
+            collaboration, and industry-aligned pedagogy deliver unmatched career growth.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="hero-btns">
+            <a href="#apply" class="btn-hero-yellow">Apply Now</a>
+            <a href="courses.php" class="btn-hero-outline">Explore Programme</a>
+        </div>
+
+        <!-- FLOATING STAT CARD 1 — White/Glass — 42+ HIGH-TECH LABS -->
+        <div class="hero-stat-card-1">
+            <div class="icon-box">
+                <svg aria-hidden="true" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg"><path d="M528 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h480c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm8 336c0 4.411-3.589 8-8 8H48c-4.411 0-8-3.589-8-8V112c0-4.411 3.589-8 8-8h480c4.411 0 8 3.589 8 8v288zM170 270v-28c0-6.627-5.373-12-12-12h-28c-6.627 0-12 5.373-12 12v28c0 6.627 5.373 12 12 12h28c6.627 0 12-5.373 12-12zm96 0v-28c0-6.627-5.373-12-12-12h-28c-6.627 0-12 5.373-12 12v28c0 6.627 5.373 12 12 12h28c6.627 0 12-5.373 12-12zm96 0v-28c0-6.627-5.373-12-12-12h-28c-6.627 0-12 5.373-12 12v28c0 6.627 5.373 12 12 12h28c6.627 0 12-5.373 12-12zm96 0v-28c0-6.627-5.373-12-12-12h-28c-6.627 0-12 5.373-12 12v28c0 6.627 5.373 12 12 12h28c6.627 0 12-5.373 12-12zm-336 82v-28c0-6.627-5.373-12-12-12H82c-6.627 0-12 5.373-12 12v28c0 6.627 5.373 12 12 12h28c6.627 0 12-5.373 12-12zm384 0v-28c0-6.627-5.373-12-12-12h-28c-6.627 0-12 5.373-12 12v28c0 6.627 5.373 12 12 12h28c6.627 0 12-5.373 12-12zM122 188v-28c0-6.627-5.373-12-12-12H82c-6.627 0-12 5.373-12 12v28c0 6.627 5.373 12 12 12h28c6.627 0 12-5.373 12-12zm96 0v-28c0-6.627-5.373-12-12-12h-28c-6.627 0-12 5.373-12 12v28c0 6.627 5.373 12 12 12h28c6.627 0 12-5.373 12-12zm96 0v-28c0-6.627-5.373-12-12-12h-28c-6.627 0-12 5.373-12 12v28c0 6.627 5.373 12 12 12h28c6.627 0 12-5.373 12-12zm96 0v-28c0-6.627-5.373-12-12-12h-28c-6.627 0-12 5.373-12 12v28c0 6.627 5.373 12 12 12h28c6.627 0 12-5.373 12-12zm96 0v-28c0-6.627-5.373-12-12-12h-28c-6.627 0-12 5.373-12 12v28c0 6.627 5.373 12 12 12h28c6.627 0 12-5.373 12-12zm-98 158v-16c0-6.627-5.373-12-12-12H180c-6.627 0-12 5.373-12 12v16c0 6.627 5.373 12 12 12h216c6.627 0 12-5.373 12-12z"></path></svg>
             </div>
-
-            <div class="hero-btns">
-                <a href="#apply" class="btn btn-hero-yellow">Apply Now</a>
-                <a href="courses.php" class="btn btn-hero-outline">Explore Programme</a>
+            <div>
+                <h3 class="stat-num">42+</h3>
+                <p class="stat-lbl">HIGH-TECH LABS</p>
             </div>
         </div>
 
-        <!-- FLOATING ABSOLUTE STAT CARDS ON RIGHT (EXACT MATCH TO SCREENSHOT) -->
-        <div class="hero-stat-cards">
-            <div class="stat-card-light">
-                <div class="icon-blue-box">
-                    <i class="far fa-keyboard"></i>
-                </div>
-                <div>
-                    <h3 class="stat-num">42+</h3>
-                    <p class="stat-lbl">HIGH-TECH LABS</p>
-                </div>
+        <!-- FLOATING STAT CARD 2 — Dark Maroon — 94% PLACEMENT RECORD -->
+        <div class="hero-stat-card-2">
+            <div class="icon-box">
+                <i class="fas fa-bell"></i>
             </div>
-
-            <div class="stat-card-dark">
-                <div class="icon-maroon-box">
-                    <i class="fas fa-bell"></i>
-                </div>
-                <div>
-                    <h3 class="stat-num">94%</h3>
-                    <p class="stat-lbl">PLACEMENT RECORD</p>
-                </div>
+            <div>
+                <h3 class="stat-num">94%</h3>
+                <p class="stat-lbl">PLACEMENT RECORD</p>
             </div>
         </div>
-    </div>
+
+    </div><!-- /.hero-content -->
 </section>
 
 <!-- STATS STRIP -->
