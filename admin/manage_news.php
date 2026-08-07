@@ -27,71 +27,81 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_news'])) {
 $news = $pdo->query("SELECT * FROM news ORDER BY id DESC")->fetchAll();
 ?>
 
-<div style="margin-bottom: 20px;">
-    <h3 style="font-family: var(--font-heading); color: var(--dark-navy);">Campus News & Announcements</h3>
+<div class="mb-4">
+    <h3 class="h4 fw-bold text-navy mb-0">Campus News &amp; Announcements</h3>
 </div>
 
-<div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px;">
-    <div style="background: #ffffff; padding: 25px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: fit-content;">
-        <h4 style="font-family: var(--font-heading); margin-bottom: 20px;">Add Announcement / Circular</h4>
-        <form action="manage_news.php" method="POST">
-            <div class="form-group">
-                <label>Title *</label>
-                <input type="text" name="title" class="form-control" placeholder="Admissions Open 2026-27" required>
-            </div>
-            <div class="form-group">
-                <label>Category</label>
-                <select name="category" class="form-control">
-                    <option value="Admission">Admission</option>
-                    <option value="Placement">Placement Drive</option>
-                    <option value="Examination">Examination</option>
-                    <option value="Announcement">General Circular</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Date</label>
-                <input type="date" name="publish_date" class="form-control" value="<?php echo date('Y-m-d'); ?>">
-            </div>
-            <div class="form-group">
-                <label>Summary Content</label>
-                <textarea name="content" class="form-control" rows="4" placeholder="Write notice details..."></textarea>
-            </div>
-            <button type="submit" name="save_news" class="btn-primary" style="width: 100%; border: none; cursor: pointer;">
-                <i class="fas fa-plus-circle"></i> Publish News
-            </button>
-        </form>
+<div class="row g-4">
+    
+    <!-- Add News Form -->
+    <div class="col-12 col-lg-5">
+        <div class="card border-0 shadow-sm rounded-4 p-4">
+            <h4 class="h5 fw-bold text-navy mb-4">Add Announcement / Circular</h4>
+            <form action="manage_news.php" method="POST">
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-dark small">Title *</label>
+                    <input type="text" name="title" class="form-control py-2" placeholder="Admissions Open 2026-27" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-dark small">Category</label>
+                    <select name="category" class="form-select py-2">
+                        <option value="Admission">Admission</option>
+                        <option value="Placement">Placement Drive</option>
+                        <option value="Examination">Examination</option>
+                        <option value="Announcement">General Circular</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-dark small">Date</label>
+                    <input type="date" name="publish_date" class="form-control py-2" value="<?php echo date('Y-m-d'); ?>">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold text-dark small">Summary Content</label>
+                    <textarea name="content" class="form-control py-2" rows="4" placeholder="Write notice details..."></textarea>
+                </div>
+                <button type="submit" name="save_news" class="btn btn-danger w-100 py-2">
+                    <i class="fas fa-plus-circle me-1"></i> Publish News
+                </button>
+            </form>
+        </div>
     </div>
 
-    <div style="background: #ffffff; padding: 25px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color);">
-        <h4 style="font-family: var(--font-heading); margin-bottom: 20px;">Published News & Notices</h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>Title & Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($news)): ?>
-                    <?php foreach ($news as $n): ?>
+    <!-- Published News List -->
+    <div class="col-12 col-lg-7">
+        <div class="card border-0 shadow-sm rounded-4 p-4">
+            <h4 class="h5 fw-bold text-navy mb-4">Published News &amp; Notices</h4>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
                         <tr>
-                            <td><span style="background: var(--dark-navy); color: var(--accent-gold); padding: 3px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;"><?php echo sanitize($n['category']); ?></span></td>
-                            <td>
-                                <strong><?php echo sanitize($n['title']); ?></strong><br>
-                                <small style="color: var(--text-muted);"><i class="far fa-calendar"></i> <?php echo sanitize($n['publish_date']); ?></small>
-                            </td>
-                            <td>
-                                <a href="manage_news.php?action=delete&id=<?php echo $n['id']; ?>" onclick="return confirm('Delete this news notice?');" class="btn-primary" style="padding: 4px 8px; font-size: 0.78rem; background: #dc2626;">Delete</a>
-                            </td>
+                            <th>Category</th>
+                            <th>Title &amp; Date</th>
+                            <th>Action</th>
                         </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr><td colspan="3" style="text-align: center;">No news notices recorded yet.</td></tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($news)): ?>
+                            <?php foreach ($news as $n): ?>
+                                <tr>
+                                    <td><span class="badge bg-dark text-warning"><?php echo sanitize($n['category']); ?></span></td>
+                                    <td>
+                                        <strong class="text-navy d-block"><?php echo sanitize($n['title']); ?></strong>
+                                        <small class="text-muted"><i class="far fa-calendar me-1"></i><?php echo sanitize($n['publish_date']); ?></small>
+                                    </td>
+                                    <td>
+                                        <a href="manage_news.php?action=delete&id=<?php echo $n['id']; ?>" onclick="return confirm('Delete this news notice?');" class="btn btn-sm btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr><td colspan="3" class="text-center text-muted py-4">No news notices recorded yet.</td></tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+
 </div>
 
 <?php require_once __DIR__ . '/footer.php'; ?>

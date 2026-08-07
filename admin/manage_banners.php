@@ -28,71 +28,77 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_banner'])) {
 $banners = $pdo->query("SELECT * FROM banners ORDER BY sort_order ASC, id DESC")->fetchAll();
 ?>
 
-<div style="margin-bottom: 20px;">
-    <h3 style="font-family: var(--font-heading); color: var(--dark-navy);">Manage Home Hero Banners</h3>
+<div class="mb-4">
+    <h3 class="h4 fw-bold text-navy mb-0">Manage Home Hero Banners</h3>
 </div>
 
-<div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px;">
-    <div style="background: #ffffff; padding: 25px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); height: fit-content;">
-        <h4 style="font-family: var(--font-heading); margin-bottom: 20px;">Add New Hero Banner</h4>
-        <form action="manage_banners.php" method="POST">
-            <div class="form-group">
-                <label>Main Headline *</label>
-                <input type="text" name="title" class="form-control" placeholder="Welcome to SRK University" required>
-            </div>
-            <div class="form-group">
-                <label>Subtitle / Description</label>
-                <textarea name="subtitle" class="form-control" rows="2" placeholder="Premier Technical & Academic Ecosystem"></textarea>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div class="form-group">
-                    <label>Button Text</label>
-                    <input type="text" name="btn_text" class="form-control" placeholder="Apply Now">
+<div class="row g-4">
+    <div class="col-12 col-lg-5">
+        <div class="card border-0 shadow-sm rounded-4 p-4">
+            <h4 class="h5 fw-bold text-navy mb-4">Add New Hero Banner</h4>
+            <form action="manage_banners.php" method="POST">
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-dark small">Main Headline *</label>
+                    <input type="text" name="title" class="form-control py-2" placeholder="Welcome to SRK University" required>
                 </div>
-                <div class="form-group">
-                    <label>Button Link</label>
-                    <input type="text" name="btn_link" class="form-control" placeholder="contact.php#apply">
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-dark small">Subtitle / Description</label>
+                    <textarea name="subtitle" class="form-control py-2" rows="2" placeholder="Premier Technical &amp; Academic Ecosystem"></textarea>
                 </div>
-            </div>
-            <div class="form-group">
-                <label>Sort Order</label>
-                <input type="number" name="sort_order" class="form-control" value="0">
-            </div>
-            <button type="submit" name="save_banner" class="btn-primary" style="width: 100%; border: none; cursor: pointer;">
-                <i class="fas fa-plus-circle"></i> Save Banner
-            </button>
-        </form>
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <label class="form-label fw-bold text-dark small">Button Text</label>
+                        <input type="text" name="btn_text" class="form-control py-2" placeholder="Apply Now">
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label fw-bold text-dark small">Button Link</label>
+                        <input type="text" name="btn_link" class="form-control py-2" placeholder="contact.php#apply">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold text-dark small">Sort Order</label>
+                    <input type="number" name="sort_order" class="form-control py-2" value="0">
+                </div>
+                <button type="submit" name="save_banner" class="btn btn-danger w-100 py-2">
+                    <i class="fas fa-plus-circle me-1"></i> Save Banner
+                </button>
+            </form>
+        </div>
     </div>
 
-    <div style="background: #ffffff; padding: 25px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color);">
-        <h4 style="font-family: var(--font-heading); margin-bottom: 20px;">Existing Banners</h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Order</th>
-                    <th>Title & Subtitle</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($banners)): ?>
-                    <?php foreach ($banners as $b): ?>
+    <div class="col-12 col-lg-7">
+        <div class="card border-0 shadow-sm rounded-4 p-4">
+            <h4 class="h5 fw-bold text-navy mb-4">Existing Banners</h4>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
                         <tr>
-                            <td>#<?php echo $b['sort_order']; ?></td>
-                            <td>
-                                <strong><?php echo sanitize($b['title']); ?></strong><br>
-                                <small style="color: var(--text-muted);"><?php echo sanitize($b['subtitle']); ?></small>
-                            </td>
-                            <td>
-                                <a href="manage_banners.php?action=delete&id=<?php echo $b['id']; ?>" onclick="return confirm('Remove banner?');" class="btn-primary" style="padding: 4px 8px; font-size: 0.78rem; background: #dc2626;">Delete</a>
-                            </td>
+                            <th>Order</th>
+                            <th>Title &amp; Subtitle</th>
+                            <th>Action</th>
                         </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr><td colspan="3" style="text-align: center;">No custom banners created. Default hero display active.</td></tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($banners)): ?>
+                            <?php foreach ($banners as $b): ?>
+                                <tr>
+                                    <td class="fw-bold">#<?php echo $b['sort_order']; ?></td>
+                                    <td>
+                                        <strong class="text-navy d-block"><?php echo sanitize($b['title']); ?></strong>
+                                        <small class="text-muted"><?php echo sanitize($b['subtitle']); ?></small>
+                                    </td>
+                                    <td>
+                                        <a href="manage_banners.php?action=delete&id=<?php echo $b['id']; ?>" onclick="return confirm('Remove banner?');" class="btn btn-sm btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr><td colspan="3" class="text-center text-muted py-4">No custom banners created. Default hero display active.</td></tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 

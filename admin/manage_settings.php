@@ -26,34 +26,34 @@ $address = getSetting('address');
 $ticker = getSetting('ticker_text');
 ?>
 
-<div style="margin-bottom: 20px;">
-    <h3 style="font-family: var(--font-heading); color: var(--dark-navy);">Global Website Settings</h3>
+<div class="mb-4">
+    <h3 class="h4 fw-bold text-navy mb-0">Global Website Settings</h3>
 </div>
 
-<div style="background: #ffffff; padding: 30px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); max-width: 800px;">
+<div class="card border-0 shadow-sm rounded-4 p-4" style="max-width: 800px;">
     <form action="manage_settings.php" method="POST">
-        <div class="form-group">
-            <label>Helpline Phone Number</label>
-            <input type="text" name="helpline" class="form-control" value="<?php echo sanitize($helpline); ?>" placeholder="0755 - 4911204">
+        <div class="mb-3">
+            <label class="form-label fw-bold text-dark small">Helpline Phone Number</label>
+            <input type="text" name="helpline" class="form-control py-2" value="<?php echo sanitize($helpline); ?>" placeholder="0755 - 4911204">
         </div>
 
-        <div class="form-group">
-            <label>Official Email Address</label>
-            <input type="email" name="email" class="form-control" value="<?php echo sanitize($email); ?>" placeholder="exam@srku.edu.in">
+        <div class="mb-3">
+            <label class="form-label fw-bold text-dark small">Official Email Address</label>
+            <input type="email" name="email" class="form-control py-2" value="<?php echo sanitize($email); ?>" placeholder="exam@srku.edu.in">
         </div>
 
-        <div class="form-group">
-            <label>Campus Physical Address</label>
-            <textarea name="address" class="form-control" rows="2"><?php echo sanitize($address); ?></textarea>
+        <div class="mb-3">
+            <label class="form-label fw-bold text-dark small">Campus Physical Address</label>
+            <textarea name="address" class="form-control py-2" rows="2"><?php echo sanitize($address); ?></textarea>
         </div>
 
-        <div class="form-group">
-            <label>Top Announcement Ticker Bar Text</label>
-            <textarea name="ticker_text" class="form-control" rows="3"><?php echo sanitize($ticker); ?></textarea>
+        <div class="mb-4">
+            <label class="form-label fw-bold text-dark small">Top Announcement Ticker Bar Text</label>
+            <textarea name="ticker_text" class="form-control py-2" rows="3"><?php echo sanitize($ticker); ?></textarea>
         </div>
 
-        <button type="submit" name="save_settings" class="btn-primary" style="border: none; cursor: pointer;">
-            <i class="fas fa-save"></i> Save Global Settings
+        <button type="submit" name="save_settings" class="btn btn-danger px-4">
+            <i class="fas fa-save me-1"></i> Save Global Settings
         </button>
     </form>
 </div>

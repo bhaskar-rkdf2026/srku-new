@@ -11,65 +11,82 @@ $totalEnquiries = $pdo->query("SELECT COUNT(*) FROM enquiries")->fetchColumn();
 $recentEnquiries = $pdo->query("SELECT * FROM enquiries ORDER BY id DESC LIMIT 5")->fetchAll();
 ?>
 
-<div class="grid-4" style="margin-bottom: 40px;">
-    <div class="card" style="border-left: 4px solid var(--primary-maroon);">
-        <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Total Pages</div>
-        <div style="font-size: 2.2rem; font-weight: 800; color: var(--dark-navy); margin: 8px 0;"><?php echo $totalPages; ?></div>
-        <a href="manage_pages.php" style="font-size: 0.85rem; color: var(--primary-maroon); font-weight: 600;">Manage Pages &rarr;</a>
+<!-- Stats Grid (Bootstrap 4-col) -->
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3 mb-4">
+    
+    <div class="col">
+        <div class="card h-100 border-0 border-start border-4 border-danger shadow-sm p-3">
+            <div class="text-uppercase text-muted fw-bold small">Total Pages</div>
+            <div class="display-6 fw-bold text-navy my-2"><?php echo $totalPages; ?></div>
+            <a href="manage_pages.php" class="text-danger fw-semibold text-decoration-none small">Manage Pages &rarr;</a>
+        </div>
     </div>
 
-    <div class="card" style="border-left: 4px solid var(--accent-gold);">
-        <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Active Courses</div>
-        <div style="font-size: 2.2rem; font-weight: 800; color: var(--dark-navy); margin: 8px 0;"><?php echo $totalCourses; ?></div>
-        <a href="manage_courses.php" style="font-size: 0.85rem; color: var(--primary-maroon); font-weight: 600;">Manage Courses &rarr;</a>
+    <div class="col">
+        <div class="card h-100 border-0 border-start border-4 border-warning shadow-sm p-3">
+            <div class="text-uppercase text-muted fw-bold small">Active Courses</div>
+            <div class="display-6 fw-bold text-navy my-2"><?php echo $totalCourses; ?></div>
+            <a href="manage_courses.php" class="text-danger fw-semibold text-decoration-none small">Manage Courses &rarr;</a>
+        </div>
     </div>
 
-    <div class="card" style="border-left: 4px solid #0284c7;">
-        <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">News & Notices</div>
-        <div style="font-size: 2.2rem; font-weight: 800; color: var(--dark-navy); margin: 8px 0;"><?php echo $totalNews; ?></div>
-        <a href="manage_news.php" style="font-size: 0.85rem; color: var(--primary-maroon); font-weight: 600;">Manage News &rarr;</a>
+    <div class="col">
+        <div class="card h-100 border-0 border-start border-4 border-info shadow-sm p-3">
+            <div class="text-uppercase text-muted fw-bold small">News &amp; Notices</div>
+            <div class="display-6 fw-bold text-navy my-2"><?php echo $totalNews; ?></div>
+            <a href="manage_news.php" class="text-danger fw-semibold text-decoration-none small">Manage News &rarr;</a>
+        </div>
     </div>
 
-    <div class="card" style="border-left: 4px solid #16a34a;">
-        <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Admission Leads</div>
-        <div style="font-size: 2.2rem; font-weight: 800; color: var(--dark-navy); margin: 8px 0;"><?php echo $totalEnquiries; ?></div>
-        <a href="manage_enquiries.php" style="font-size: 0.85rem; color: var(--primary-maroon); font-weight: 600;">View Leads &rarr;</a>
+    <div class="col">
+        <div class="card h-100 border-0 border-start border-4 border-success shadow-sm p-3">
+            <div class="text-uppercase text-muted fw-bold small">Admission Leads</div>
+            <div class="display-6 fw-bold text-navy my-2"><?php echo $totalEnquiries; ?></div>
+            <a href="manage_enquiries.php" class="text-danger fw-semibold text-decoration-none small">View Leads &rarr;</a>
+        </div>
     </div>
+
 </div>
 
-<div style="background: #ffffff; padding: 30px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color);">
-    <h3 style="font-family: var(--font-heading); color: var(--dark-navy); margin-bottom: 20px;">Recent Admission Enquiries</h3>
+<!-- Recent Leads Table -->
+<div class="card border-0 shadow-sm rounded-4 p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="h5 fw-bold text-navy mb-0">Recent Admission Enquiries</h4>
+        <a href="manage_enquiries.php" class="btn btn-sm btn-outline-danger">View All Leads</a>
+    </div>
     
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Course</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (!empty($recentEnquiries)): ?>
-                <?php foreach ($recentEnquiries as $eq): ?>
-                    <tr>
-                        <td>#<?php echo $eq['id']; ?></td>
-                        <td><strong><?php echo sanitize($eq['name']); ?></strong></td>
-                        <td><?php echo sanitize($eq['email']); ?></td>
-                        <td><?php echo sanitize($eq['phone']); ?></td>
-                        <td><span style="background: var(--light-bg); padding: 4px 8px; border-radius: 4px; font-size: 0.85rem;"><?php echo sanitize($eq['course']); ?></span></td>
-                        <td><small><?php echo sanitize($eq['created_at']); ?></small></td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
                 <tr>
-                    <td colspan="6" style="text-align: center; color: var(--text-muted);">No admission enquiries received yet.</td>
+                    <th>#ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Course</th>
+                    <th>Date</th>
                 </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php if (!empty($recentEnquiries)): ?>
+                    <?php foreach ($recentEnquiries as $eq): ?>
+                        <tr>
+                            <td class="fw-bold">#<?php echo $eq['id']; ?></td>
+                            <td class="fw-semibold text-navy"><?php echo sanitize($eq['name']); ?></td>
+                            <td><?php echo sanitize($eq['email']); ?></td>
+                            <td><?php echo sanitize($eq['phone']); ?></td>
+                            <td><span class="badge bg-light text-dark border"><?php echo sanitize($eq['course']); ?></span></td>
+                            <td><small class="text-muted"><?php echo sanitize($eq['created_at']); ?></small></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">No admission enquiries received yet.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <?php require_once __DIR__ . '/footer.php'; ?>

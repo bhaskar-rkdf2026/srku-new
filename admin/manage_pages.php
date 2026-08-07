@@ -50,84 +50,86 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_page'])) {
 $pages = $pdo->query("SELECT * FROM pages ORDER BY id DESC")->fetchAll();
 ?>
 
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-    <h3 style="font-family: var(--font-heading); color: var(--dark-navy);">Dynamic Page CMS</h3>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="h4 fw-bold text-navy mb-0">Dynamic Page CMS</h3>
     <?php if (isset($_GET['action'])): ?>
-        <a href="manage_pages.php" class="btn-secondary" style="color: var(--dark-navy);">&larr; Back to List</a>
+        <a href="manage_pages.php" class="btn btn-outline-secondary btn-sm">&larr; Back to List</a>
     <?php else: ?>
-        <a href="manage_pages.php?action=add" class="btn-primary"><i class="fas fa-plus"></i> Create New Page</a>
+        <a href="manage_pages.php?action=add" class="btn btn-danger btn-sm"><i class="fas fa-plus me-1"></i> Create New Page</a>
     <?php endif; ?>
 </div>
 
 <?php if (isset($_GET['action']) && ($_GET['action'] === 'add' || $_GET['action'] === 'edit')): ?>
-    <div style="background: #ffffff; padding: 30px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color);">
-        <h4 style="font-family: var(--font-heading); margin-bottom: 20px;"><?php echo $editPage ? 'Edit Page' : 'Add New Page'; ?></h4>
+    <div class="card border-0 shadow-sm rounded-4 p-4">
+        <h4 class="h5 fw-bold text-navy mb-4"><?php echo $editPage ? 'Edit Page' : 'Add New Page'; ?></h4>
         
         <form action="manage_pages.php" method="POST">
             <?php if ($editPage): ?>
                 <input type="hidden" name="id" value="<?php echo $editPage['id']; ?>">
             <?php endif; ?>
 
-            <div class="form-group">
-                <label>Page Title *</label>
+            <div class="mb-3">
+                <label class="form-label fw-bold text-dark small">Page Title *</label>
                 <input type="text" name="title" class="form-control" value="<?php echo sanitize($editPage['title'] ?? ''); ?>" required>
             </div>
 
-            <div class="form-group">
-                <label>URL Slug (e.g. <code>why-srk</code>)</label>
+            <div class="mb-3">
+                <label class="form-label fw-bold text-dark small">URL Slug (e.g. <code>why-srk</code>)</label>
                 <input type="text" name="slug" class="form-control" value="<?php echo sanitize($editPage['slug'] ?? ''); ?>" placeholder="Auto generated if empty">
             </div>
 
-            <div class="form-group">
-                <label>Page Content (HTML Allowed)</label>
+            <div class="mb-3">
+                <label class="form-label fw-bold text-dark small">Page Content (HTML Allowed)</label>
                 <textarea name="content" class="form-control" rows="12" placeholder="Write full HTML or rich content here..."><?php echo htmlspecialchars($editPage['content'] ?? ''); ?></textarea>
             </div>
 
-            <div class="form-group">
-                <label>Meta Description (SEO)</label>
+            <div class="mb-4">
+                <label class="form-label fw-bold text-dark small">Meta Description (SEO)</label>
                 <input type="text" name="meta_description" class="form-control" value="<?php echo sanitize($editPage['meta_description'] ?? ''); ?>">
             </div>
 
-            <button type="submit" name="save_page" class="btn-primary" style="border: none; cursor: pointer;">
-                <i class="fas fa-save"></i> Save Page
+            <button type="submit" name="save_page" class="btn btn-danger px-4">
+                <i class="fas fa-save me-1"></i> Save Page
             </button>
         </form>
     </div>
 <?php else: ?>
-    <div style="background: #ffffff; padding: 25px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color);">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Slug</th>
-                    <th>View Link</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($pages)): ?>
-                    <?php foreach ($pages as $p): ?>
-                        <tr>
-                            <td>#<?php echo $p['id']; ?></td>
-                            <td><strong><?php echo sanitize($p['title']); ?></strong></td>
-                            <td><code><?php echo sanitize($p['slug']); ?></code></td>
-                            <td>
-                                <a href="<?php echo BASE_URL . 'page.php?slug=' . urlencode($p['slug']); ?>" target="_blank" style="color: var(--primary-maroon);">
-                                    <i class="fas fa-external-link-alt"></i> Preview
-                                </a>
-                            </td>
-                            <td>
-                                <a href="manage_pages.php?action=edit&id=<?php echo $p['id']; ?>" class="btn-secondary" style="padding: 5px 10px; font-size: 0.8rem; color: var(--dark-navy);">Edit</a>
-                                <a href="manage_pages.php?action=delete&id=<?php echo $p['id']; ?>" onclick="return confirm('Are you sure you want to delete this page?');" class="btn-primary" style="padding: 5px 10px; font-size: 0.8rem; background: #dc2626;">Delete</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr><td colspan="5" style="text-align: center;">No custom pages created yet.</td></tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+    <div class="card border-0 shadow-sm rounded-4 p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>#ID</th>
+                        <th>Title</th>
+                        <th>Slug</th>
+                        <th>View Link</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($pages)): ?>
+                        <?php foreach ($pages as $p): ?>
+                            <tr>
+                                <td class="fw-bold">#<?php echo $p['id']; ?></td>
+                                <td class="fw-semibold text-navy"><?php echo sanitize($p['title']); ?></td>
+                                <td><code><?php echo sanitize($p['slug']); ?></code></td>
+                                <td>
+                                    <a href="<?php echo BASE_URL . 'page.php?slug=' . urlencode($p['slug']); ?>" target="_blank" class="text-danger small fw-semibold">
+                                        <i class="fas fa-external-link-alt me-1"></i> Preview
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="manage_pages.php?action=edit&id=<?php echo $p['id']; ?>" class="btn btn-sm btn-outline-navy me-1">Edit</a>
+                                    <a href="manage_pages.php?action=delete&id=<?php echo $p['id']; ?>" onclick="return confirm('Are you sure you want to delete this page?');" class="btn btn-sm btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr><td colspan="5" class="text-center text-muted py-4">No custom pages created yet.</td></tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 <?php endif; ?>
 
