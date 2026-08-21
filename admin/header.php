@@ -10,6 +10,8 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin CMS Dashboard - <?php echo SITE_NAME; ?></title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/cropped-srku-logo-real-32x32.webp">
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -79,9 +81,12 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
 <div class="d-flex">
     <!-- SIDEBAR -->
     <aside class="admin-sidebar">
-        <div class="sidebar-logo">
-            <h5>SRKU CMS Admin</h5>
-            <small>Control Panel v2.0</small>
+        <div class="sidebar-logo text-center">
+            <a href="index.php" class="brand-badge text-decoration-none">
+                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-logo.webp" alt="SRKU Logo" style="max-height: 42px; width: auto; display: block;" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/images/SRK-logo.webp';">
+            </a>
+            <h5 class="text-white fw-bold mb-0 mt-2" style="font-size: 0.98rem; letter-spacing: 0.5px;">SRKU Central CMS</h5>
+            <small style="color: #ffd700; font-size: 0.72rem; font-weight: 600;"><i class="fas fa-shield-alt text-warning me-1"></i> Admin Portal v2.0</small>
         </div>
 
         <nav class="nav flex-column my-2">

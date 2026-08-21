@@ -662,34 +662,107 @@ html, body {
    ADMIN PANEL — Bootstrap sidebar layout
 ══════════════════════════════════════ */
 .admin-sidebar {
-    width: 240px;
+    width: 260px;
     min-height: 100vh;
-    background: var(--srku-navy);
+    background: linear-gradient(180deg, #18183d 0%, #232356 60%, #3e3e93 100%);
     position: fixed; left: 0; top: 0;
     z-index: 1000;
     display: flex; flex-direction: column;
-    box-shadow: 3px 0 15px rgba(0,0,0,0.2);
+    box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+    overflow-y: auto;
+    padding-bottom: 24px;
 }
-.admin-main { margin-left: 240px; min-height: 100vh; background: #f8fafc; }
-.admin-sidebar .sidebar-logo { padding: 20px 18px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-.admin-sidebar .sidebar-logo h5 { font-family: var(--font-heading); color: var(--srku-gold); font-size: 1.1rem; margin: 0; }
-.admin-sidebar .sidebar-logo small { color: #64748b; font-size: 0.75rem; }
+.admin-main { margin-left: 260px; min-height: 100vh; background: #f8fafc; }
+.admin-sidebar .sidebar-logo {
+    padding: 22px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0,0,0,0.15);
+}
+.admin-sidebar .sidebar-logo .brand-badge {
+    background: #ffffff;
+    padding: 8px 12px;
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+.admin-sidebar .sidebar-logo h5 {
+    font-family: var(--font-heading);
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 800;
+    margin: 10px 0 2px;
+    letter-spacing: 0.5px;
+}
+.admin-sidebar .sidebar-logo small {
+    color: #ffd700;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+.admin-sidebar .nav {
+    padding: 12px 14px;
+    gap: 4px;
+}
 .sidebar-nav-link {
-    display: flex; align-items: center; gap: 10px;
-    padding: 11px 18px;
-    color: #94a3b8;
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 16px;
+    color: #cbd5e1;
     text-decoration: none;
     font-size: 0.88rem;
     font-weight: 600;
-    border-left: 3px solid transparent;
-    transition: var(--transition);
+    border-radius: 8px;
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.sidebar-nav-link:hover { color: #fff; background: rgba(255,255,255,0.06); border-left-color: var(--srku-gold); }
-.sidebar-nav-link.active { color: #fff; background: rgba(201,162,76,0.12); border-left-color: var(--srku-gold); }
-.sidebar-nav-link i { width: 18px; text-align: center; font-size: 15px; }
-.admin-topbar { background: #fff; padding: 14px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-.admin-card { background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 22px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-.stat-admin-card { border-left: 4px solid var(--srku-red); }
+.sidebar-nav-link:hover {
+    color: #ffffff;
+    background: rgba(236, 51, 55, 0.18);
+    transform: translateX(4px);
+}
+.sidebar-nav-link.active {
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #ec3337, #d62529) !important;
+    box-shadow: 0 4px 14px rgba(236, 51, 55, 0.4);
+    font-weight: 700;
+}
+.sidebar-nav-link i {
+    width: 20px;
+    text-align: center;
+    font-size: 15px;
+    opacity: 0.9;
+}
+.sidebar-nav-link.active i {
+    color: #ffffff !important;
+    opacity: 1;
+}
+.admin-topbar {
+    background: #ffffff;
+    padding: 16px 28px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.admin-stat-card {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    padding: 22px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.admin-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+.admin-card {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    padding: 24px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
 
 /* ══════════════════════════════════════
    COMPREHENSIVE MOBILE RESPONSIVE ENGINE
