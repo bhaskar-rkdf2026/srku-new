@@ -17,7 +17,7 @@ $recentEnquiries = $pdo->query("SELECT * FROM enquiries ORDER BY id DESC LIMIT 6
 ?>
 
 <!-- Welcome Banner -->
-<div class="card border-0 shadow-sm rounded-4 p-4 mb-4 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, #18183d 0%, #3e3e93 60%, #ec3337 100%);">
+<div class="card border-0 shadow-sm rounded-4 p-4 mb-4 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, #18183d 0%, #3e3e93 60%, #a30407 100%);">
     <div class="row align-items-center position-relative" style="z-index: 2;">
         <div class="col-md-8">
             <span class="badge bg-warning text-dark fw-bold px-3 py-1 mb-2 text-uppercase">SRKU Institutional Administration</span>

@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
 </head>
-<body class="d-flex align-items-center justify-content-center min-vh-100 p-3" style="background: linear-gradient(135deg, #18183d 0%, #2a2a68 50%, #ec3337 100%);">
+<body class="d-flex align-items-center justify-content-center min-vh-100 p-3" style="background: linear-gradient(135deg, #18183d 0%, #2a2a68 50%, #a30407 100%);">
 
     <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5 w-100 bg-white" style="max-width: 440px; box-shadow: 0 20px 45px rgba(0,0,0,0.25) !important;">
         <div class="text-center mb-4">
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="password" name="password" class="form-control py-2" placeholder="••••••••" required>
                 </div>
             </div>
-            <button type="submit" class="btn btn-danger w-100 py-2 fw-bold shadow-sm" style="background: linear-gradient(135deg, #ec3337, #d62529);">
+            <button type="submit" class="btn btn-danger w-100 py-2 fw-bold shadow-sm" style="background: linear-gradient(135deg, #a30407, #d62529);">
                 <i class="fas fa-sign-in-alt me-1"></i> Sign In to Dashboard
             </button>
         </form>
