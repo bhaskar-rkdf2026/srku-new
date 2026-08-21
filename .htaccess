@@ -1,23 +1,77 @@
 # Apache Server Configuration for SRKU Web Application
+# 100% Compatible with original https://new.srku.edu.in/ structure on Localhost & GoDaddy
 
-# Disable Directory Browsing
 Options -Indexes
 
-# Enable Rewrite Engine
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /
 
-    # Security: Block access to hidden files and system files (.git, .env, .sql, .sqlite, etc.)
+    # Security: Block access to internal files
     RewriteRule "(^|/)\." - [F]
     RewriteRule \.(sql|sqlite|db|log|md|json)$ - [F,NC]
 
-    # Automatically add trailing slash if directory exists
-    RewriteCond %{REQUEST_FILENAME} -d
-    RewriteRule ^(.*[^/])$ $1/ [L,R=301]
+    # Legacy wp-content uploads mapping to assets/uploads
+    RewriteRule ^wp-content/uploads/(.*)$ assets/uploads/$1 [L,NC]
 
-    # Clean URL Rewriting for CMS Pages
-    # Example: /page/why-srk -> page.php?slug=why-srk
+    # Clean URLs for Main Navigation Pages
+    RewriteRule ^about/?$ about.php [L,QSA]
+    RewriteRule ^about/why-srk/?$ page.php?slug=why-srk [L,QSA]
+    RewriteRule ^about/srk-university-vision-and-mission/?$ page.php?slug=vision-mission [L,QSA]
+    RewriteRule ^about/accreditation/?$ page.php?slug=accreditation [L,QSA]
+    RewriteRule ^about/board-of-management/?$ page.php?slug=board-of-management [L,QSA]
+    RewriteRule ^about/constituent-unit/?$ page.php?slug=constituent-unit [L,QSA]
+    RewriteRule ^about/admission/?$ page.php?slug=admission [L,QSA]
+
+    RewriteRule ^departments/?$ departments.php [L,QSA]
+    RewriteRule ^faculties/?$ departments.php [L,QSA]
+    RewriteRule ^courses/?$ courses.php [L,QSA]
+    RewriteRule ^syllabus/?$ syllabus.php [L,QSA]
+    RewriteRule ^placements/?$ placements.php [L,QSA]
+    RewriteRule ^facilities/?$ facilities.php [L,QSA]
+    RewriteRule ^research-innovation/?$ research-innovation.php [L,QSA]
+    RewriteRule ^incubation-center/?$ incubation-center.php [L,QSA]
+    RewriteRule ^student-life/?$ student-life.php [L,QSA]
+    RewriteRule ^gallery/?$ gallery.php [L,QSA]
+    RewriteRule ^alumni/?$ alumni.php [L,QSA]
+    RewriteRule ^career/?$ career.php [L,QSA]
+    RewriteRule ^blogs/?$ blogs.php [L,QSA]
+    RewriteRule ^contact/?$ contact.php [L,QSA]
+
+    # Dynamic Course Detail Pages
+    # Example: /courses/b-tech-srk-university-faculty-of-engineering
+    RewriteRule ^courses/([a-zA-Z0-9-]+)/?$ course-detail.php?slug=$1 [L,QSA]
+    RewriteRule ^course/([a-zA-Z0-9-]+)/?$ course-detail.php?slug=$1 [L,QSA]
+
+    # Dynamic Department & Constituent College Pages
+    RewriteRule ^department-of-engineering/?$ department-detail.php?slug=department-of-engineering [L,QSA]
+    RewriteRule ^faculty-of-engineering/?$ department-detail.php?slug=department-of-engineering [L,QSA]
+    RewriteRule ^department-of-pharmacy/?$ department-detail.php?slug=department-of-pharmacy [L,QSA]
+    RewriteRule ^sri-sai-college-of-pharmacy-srk-bhopal/?$ department-detail.php?slug=sri-sai-college-of-pharmacy-srk-bhopal [L,QSA]
+    RewriteRule ^rkdf-polytechnic-pharmacy/?$ department-detail.php?slug=rkdf-polytechnic-pharmacy [L,QSA]
+    RewriteRule ^dr-apj-abdul-kalam-college-of-pharmacy-srk-bhopal/?$ department-detail.php?slug=dr-apj-abdul-kalam-college-of-pharmacy-srk-bhopal [L,QSA]
+    RewriteRule ^sarvepalli-radhakrishnan-college-of-pharmacy/?$ department-detail.php?slug=sarvepalli-radhakrishnan-college-of-pharmacy [L,QSA]
+    RewriteRule ^sarvepalli-radhakrishnan-institute-of-pharmaceutical-science/?$ department-detail.php?slug=sarvepalli-radhakrishnan-institute-of-pharmaceutical-science [L,QSA]
+    RewriteRule ^sarvepalli-radhakrishnan-institute-of-pharmaceutical-sciences/?$ department-detail.php?slug=sarvepalli-radhakrishnan-institute-of-pharmaceutical-science [L,QSA]
+    RewriteRule ^r-n-kapoor-memorial-institute-of-pharmaceutical-sciences-srk-bhopal/?$ department-detail.php?slug=r-n-kapoor-memorial-institute-of-pharmaceutical-sciences-srk-university [L,QSA]
+    RewriteRule ^r-n-kapoor-memorial-institute-of-pharmaceutical-sciences-srk-university/?$ department-detail.php?slug=r-n-kapoor-memorial-institute-of-pharmaceutical-sciences-srk-university [L,QSA]
+    RewriteRule ^department-of-computer-application/?$ department-detail.php?slug=department-of-computer-application [L,QSA]
+    RewriteRule ^faculty-of-computer-application/?$ department-detail.php?slug=faculty-of-computer-application [L,QSA]
+    RewriteRule ^department-of-management/?$ department-detail.php?slug=department-of-management [L,QSA]
+    RewriteRule ^department-of-business-management/?$ department-detail.php?slug=department-of-business-management [L,QSA]
+    RewriteRule ^faculty-of-management/?$ department-detail.php?slug=department-of-management [L,QSA]
+    RewriteRule ^rkdf-college-of-nursing/?$ department-detail.php?slug=rkdf-college-of-nursing [L,QSA]
+    RewriteRule ^faculty-of-agriculture/?$ department-detail.php?slug=faculty-of-agriculture [L,QSA]
+    RewriteRule ^faculty-of-law/?$ department-detail.php?slug=faculty-of-law [L,QSA]
+    RewriteRule ^srk-college-of-law/?$ department-detail.php?slug=srk-college-of-law [L,QSA]
+    RewriteRule ^faculty-of-medicine/?$ department-detail.php?slug=faculty-of-medicine [L,QSA]
+    RewriteRule ^faculty-of-paramedical-sciences/?$ department-detail.php?slug=faculty-of-paramedical-sciences [L,QSA]
+    RewriteRule ^department-of-allied-health-care-sciences/?$ department-detail.php?slug=department-of-allied-health-care-sciences [L,QSA]
+    RewriteRule ^faculty-of-allied-science-and-humanities/?$ department-detail.php?slug=faculty-of-allied-science-and-humanities [L,QSA]
+
+    # Generic dynamic department route: /department/<slug>
+    RewriteRule ^department/([a-zA-Z0-9-]+)/?$ department-detail.php?slug=$1 [L,QSA]
+
+    # Generic dynamic page route: /page/<slug>
     RewriteRule ^page/([a-zA-Z0-9-]+)/?$ page.php?slug=$1 [L,QSA]
 
     # Remove .php Extension from URLs (e.g. /about -> about.php)
@@ -27,10 +81,9 @@ Options -Indexes
     RewriteRule ^([^/]+)/?$ $1.php [L,QSA]
 
     # Fallback to page.php for direct slug URLs if file or directory doesn't exist
-    # Example: /why-srk -> page.php?slug=why-srk
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} !^/(admin|assets|includes|config)/ [NC]
+    RewriteCond %{REQUEST_URI} !^/(admin|assets|includes|config|wp-content|Orginal_website)/ [NC]
     RewriteRule ^([a-zA-Z0-9-]+)/?$ page.php?slug=$1 [L,QSA]
 </IfModule>
 
@@ -44,21 +97,29 @@ AddDefaultCharset UTF-8
     Header set X-XSS-Protection "1; mode=block"
 </IfModule>
 
-# Browser Caching for Performance
+# Browser Caching for Maximum Performance & Instant Speed
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType image/jpg "access plus 1 year"
     ExpiresByType image/jpeg "access plus 1 year"
     ExpiresByType image/gif "access plus 1 year"
     ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
     ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType video/mp4 "access plus 1 month"
+    ExpiresByType video/webm "access plus 1 month"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    ExpiresByType application/pdf "access plus 1 month"
     ExpiresByType text/css "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
     ExpiresByType application/x-javascript "access plus 1 month"
     ExpiresByType text/javascript "access plus 1 month"
 </IfModule>
 
-# Gzip Compression
+# Gzip / Brotli Compression
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json font/woff font/woff2 font/ttf image/svg+xml
 </IfModule>

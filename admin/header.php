@@ -13,11 +13,66 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
+    <!-- CKEditor 5 Classic CDN -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+    <style>
+        .action-btn-group {
+            display: inline-flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: flex-end !important;
+            gap: 6px !important;
+            flex-wrap: nowrap !important;
+            white-space: nowrap !important;
+        }
+        .action-btn-group .btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 32px !important;
+            height: 32px !important;
+            padding: 0 !important;
+            border-radius: 6px !important;
+            flex-shrink: 0 !important;
+            line-height: 1 !important;
+        }
+        table td.text-nowrap, table th.text-nowrap {
+            white-space: nowrap !important;
+        }
+        /* Section-Wise Form Styling */
+        .admin-form-section {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            padding: 22px 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+        }
+        .admin-form-section-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--srku-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .ck-editor__editable_inline {
+            min-height: 240px !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 0.95rem !important;
+            line-height: 1.7 !important;
+        }
+    </style>
 </head>
 <body class="bg-light">
 
@@ -33,11 +88,14 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
             <a href="index.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'index.php' ? 'active' : ''; ?>">
                 <i class="fas fa-chart-line"></i> Dashboard
             </a>
-            <a href="manage_pages.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_pages.php' ? 'active' : ''; ?>">
-                <i class="fas fa-file-alt"></i> Manage Pages
+            <a href="manage_departments.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_departments.php' ? 'active' : ''; ?>">
+                <i class="fas fa-sitemap"></i> Departments (14)
             </a>
             <a href="manage_courses.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_courses.php' ? 'active' : ''; ?>">
-                <i class="fas fa-graduation-cap"></i> Courses &amp; Fees
+                <i class="fas fa-graduation-cap"></i> Courses &amp; Fees (39)
+            </a>
+            <a href="manage_pages.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_pages.php' ? 'active' : ''; ?>">
+                <i class="fas fa-file-alt"></i> Dynamic Pages
             </a>
             <a href="manage_banners.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_banners.php' ? 'active' : ''; ?>">
                 <i class="fas fa-images"></i> Hero Banners
@@ -47,6 +105,12 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
             </a>
             <a href="manage_enquiries.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_enquiries.php' ? 'active' : ''; ?>">
                 <i class="fas fa-envelope-open-text"></i> Leads &amp; Queries
+            </a>
+            <a href="manage_header_footer.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_header_footer.php' ? 'active' : ''; ?>">
+                <i class="fas fa-heading"></i> Header &amp; Footer
+            </a>
+            <a href="manage_media.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_media.php' ? 'active' : ''; ?>">
+                <i class="fas fa-photo-video"></i> Media Library
             </a>
             <a href="manage_settings.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_settings.php' ? 'active' : ''; ?>">
                 <i class="fas fa-cog"></i> Site Settings
@@ -65,11 +129,11 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
         <div class="admin-topbar">
             <div>
                 <h4 class="fw-bold mb-0 text-navy">Welcome, <?php echo sanitize($_SESSION['admin_user'] ?? 'Admin'); ?></h4>
-                <small class="text-muted">Manage your university web content &amp; leads dynamically.</small>
+                <small class="text-muted">Manage university content, courses, admissions &amp; settings dynamically.</small>
             </div>
             <div>
                 <a href="<?php echo BASE_URL; ?>" target="_blank" class="btn btn-sm btn-danger px-3">
-                    <i class="fas fa-globe me-1"></i> View Site
+                    <i class="fas fa-globe me-1"></i> View Live Site
                 </a>
             </div>
         </div>

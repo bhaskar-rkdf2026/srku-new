@@ -1,6 +1,11 @@
 # Ignore OS files
 .DS_Store
 Thumbs.db
+*.crdownload
+*.tmp
+
+# Scratch & temporary test scripts
+scratch/
 
 # Ignore session & local database dumps
 *.sqlite
