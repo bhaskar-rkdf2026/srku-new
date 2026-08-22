@@ -13,9 +13,11 @@ $totalAlumni = getSetting('total_alumni', '15,000+');
 $heroTitle = getSetting('hero_title', 'SRK University, Bhopal');
 $heroSubtitle = getSetting('hero_subtitle', 'UGC-Recognized University in MP');
 $heroDesc = getSetting('hero_desc', 'Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership. If you are looking for the best placement university in MP, our rigorous research, multi-disciplinary collaboration, and industry-aligned pedagogy deliver unmatched career growth.');
-$chancellorName = getSetting('chancellor_name', 'Dr. Sunil Kapoor');
-$chancellorTitle = getSetting('chancellor_title', 'Founder Chairman & Chancellor');
-$chancellorMsg = getSetting('chancellor_msg', 'At Sarvepalli Radhakrishnan University, our mission is to foster an academic environment that cultivates critical thinking, research innovation, and professional integrity. We empower our students to become technology leaders, healthcare pioneers, and responsible global citizens.');
+$chancellorName = getSetting('chancellor_name', 'Dr. Sadhna Kapoor');
+$chancellorTitle = getSetting('chancellor_title', 'Chancellor');
+$chancellorQuote = getSetting('chancellor_quote', 'We bridge academic brilliance with industrial pragmatism.');
+$chancellorMsg = getSetting('chancellor_msg', 'Dr. Sadhna Kapoor is the Chancellor of SRK University, Bhopal. A visionary and selfless leader with exceptional entrepreneurial, interpersonal, social and administrative skills, she is passionate about technology and innovation, community development, social service, and interdisciplinary teaching and research.');
+$chancellorMsg2 = getSetting('chancellor_msg2', 'Under her stewardship, SRK University has been recognised for its global academic collaborations, reflecting a sustained dedication to educational innovation and excellence.');
 
 // Handle Form Submission for Enquiry
 $enquirySuccess = false;
@@ -61,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 <?php echo sanitize($heroDesc); ?>
             </p>
             <div class="d-flex flex-wrap gap-3 mt-4">
-                <a href="#apply" class="btn-hero-yellow">Apply Now</a>
+                <a href="<?php echo BASE_URL; ?>contact.php#apply" class="btn-hero-yellow">Apply Now</a>
                 <a href="<?php echo BASE_URL; ?>courses.php" class="btn-hero-outline">Explore Programmes</a>
             </div>
         </div>
@@ -211,107 +213,106 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 ═══════════════════════════════════════════════════════ -->
 <section class="py-5 bg-cream">
     <div class="container-xl py-3">
-        
+
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-2">
             <div>
-                <span class="section-subtitle">ACADEMIC EXCELLENCE</span>
-                <h2 class="section-title mb-0">Explore Programmes <span>Offered</span></h2>
+                <span class="section-subtitle">CONSTITUENT UNITS</span>
+                <h2 class="section-title mb-0">A Guide to the University's <span>Constituent Units</span></h2>
             </div>
-            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View All Programmes <i class="fas fa-arrow-right ms-1"></i></a>
+            <a href="<?php echo BASE_URL; ?>departments.php" class="btn-card-apply fs-6">View all Constituent Unit <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-            
+
             <div class="col">
                 <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp" class="prog-img" alt="Engineering"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/lab-and-research.webp';">
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp" class="prog-img" alt="RKDF Institute of Science & Technology">
                     <div class="prog-body">
-                        <h3 class="prog-title">Department of Engineering</h3>
-                        <p class="prog-desc">B.Tech &amp; M.Tech in CSE, AI/DS, Mechanical, Civil &amp; Electrical with smart labs.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-engineering" class="btn-card-apply">Explore Department &rarr;</a>
+                        <h3 class="prog-title">RKDF Institute of Science &amp; Technology</h3>
+                        <p class="prog-desc">Empowering minds in research &amp; science, engineering for tomorrow's leaders.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-technology" class="btn-card-apply">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-COP.webp" class="prog-img" alt="Pharmacy"
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-COP.webp" class="prog-img" alt="SRK College of Pharmacy"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/R.N.-KAPOOR-MEMORIAL-PHARMACY.webp';">
                     <div class="prog-body">
-                        <h3 class="prog-title">Sri Sai College of Pharmacy</h3>
-                        <p class="prog-desc">PCI &amp; AICTE approved B.Pharm, D.Pharm and M.Pharm programs with modern drug testing labs.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=sri-sai-college-of-pharmacy-srk-bhopal" class="btn-card-apply">Explore Department &rarr;</a>
+                        <h3 class="prog-title">SRK College of Pharmacy</h3>
+                        <p class="prog-desc">Shaping allied pharmacy leadership and skill training.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-pharmacy" class="btn-card-apply">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/MCA-SRKUniversityFacultyofComputerApplication.webp" class="prog-img" alt="Computer"
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SARVEPALLI-RADHAKRISHANAN-COLLEGE-OF-ALLIED-HEALTHCARE-SCIENCES.webp" class="prog-img" alt="SRK College of Allied Healthcare Sciences">
+                    <div class="prog-body">
+                        <h3 class="prog-title">SRK College of Allied Healthcare Sciences</h3>
+                        <p class="prog-desc">Delivering quality allied healthcare education with skilled clinical training.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-paramedical-sciences" class="btn-card-apply">Explore &rarr;</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="prog-card">
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/RKDF-POLYTECHNIC-PHARMACY.webp" class="prog-img" alt="RKDF Polytechnic Pharmacy College"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
                     <div class="prog-body">
-                        <h3 class="prog-title">Dept. of Computer Application</h3>
-                        <p class="prog-desc">BCA, MCA, PGDCA courses for modern software development, web &amp; cloud computing.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-computer-application" class="btn-card-apply">Explore Department &rarr;</a>
+                        <h3 class="prog-title">RKDF Polytechnic Pharmacy</h3>
+                        <p class="prog-desc">Providing industry-aligned diploma pharmacy education and practical training.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-polytechnic-pharmacy" class="btn-card-apply">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/rkdf-college-of-nursing1.webp" class="prog-img" alt="Nursing"
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Pharmacy-Homeopathy.webp" class="prog-img" alt="SRK Homeopathic Medical College"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
+                    <div class="prog-body">
+                        <h3 class="prog-title">SRK Homeopathic Medical College</h3>
+                        <p class="prog-desc">Nurturing holistic healing through a foundation in Homeopathic medicine.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=srk-homeopathic-medical-college" class="btn-card-apply">Explore &rarr;</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="prog-card">
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/R.N.-KAPOOR-MEMORIAL-PHARMACY.webp" class="prog-img" alt="Dr. APJ College of Pharmacy">
+                    <div class="prog-body">
+                        <h3 class="prog-title">Dr. APJ College of Pharmacy</h3>
+                        <p class="prog-desc">Building future pharmacists with a foundation in advanced research skills.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=dr-apj-abdul-kalam-college-of-pharmacy" class="btn-card-apply">Explore &rarr;</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="prog-card">
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-COLLEGE-OF-AYURVEDA.webp" class="prog-img" alt="SRK College of Ayurveda"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
+                    <div class="prog-body">
+                        <h3 class="prog-title">SRK College of Ayurveda</h3>
+                        <p class="prog-desc">Preserving Ayurvedic wisdom through a foundation in traditional and modern research.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=srk-college-of-ayurveda" class="btn-card-apply">Explore &rarr;</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="prog-card">
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/RKDF-MEDICAL-COLLEGE.webp" class="prog-img" alt="SRK Medical College"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/Operation-Theatre.webp';">
                     <div class="prog-body">
-                        <h3 class="prog-title">RKDF College of Nursing</h3>
-                        <p class="prog-desc">INC &amp; MPNRC recognized B.Sc Nursing, Post Basic Nursing, and M.Sc with clinical hospital training.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-nursing" class="btn-card-apply">Explore Department &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/MBA.webp" class="prog-img" alt="Management"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
-                    <div class="prog-body">
-                        <h3 class="prog-title">Department of Management</h3>
-                        <p class="prog-desc">MBA, BBA with Dual Specializations in Marketing, HR, Finance &amp; Business Analytics.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-management" class="btn-card-apply">Explore Department &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/R.N.-KAPOOR-MEMORIAL-PHARMACY.webp" class="prog-img" alt="APJ Kalam Pharmacy">
-                    <div class="prog-body">
-                        <h3 class="prog-title">Dr. APJ Abdul Kalam Pharmacy</h3>
-                        <p class="prog-desc">Premier pharma research institute with state-of-the-art pharmacology &amp; chemistry labs.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=dr-apj-abdul-kalam-college-of-pharmacy-srk-bhopal" class="btn-card-apply">Explore Department &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SARVEPALLI-RADHAKRISHANAN-COLLEGE-OF-ALLIED-HEALTHCARE-SCIENCES.webp" class="prog-img" alt="Allied Sciences">
-                    <div class="prog-body">
-                        <h3 class="prog-title">Faculty of Paramedical Sciences</h3>
-                        <p class="prog-desc">BPT, MPT, BMLT, DMLT, X-Ray Radiography and Optometry with multi-specialty hospital training.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-paramedical-sciences" class="btn-card-apply">Explore Department &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-COLLEGE-OF-AYURVEDA.webp" class="prog-img" alt="Law"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
-                    <div class="prog-body">
-                        <h3 class="prog-title">Faculty of Law</h3>
-                        <p class="prog-desc">LL.B, BA LL.B and LL.M degree programs preparing legal professionals with moot court training.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-law" class="btn-card-apply">Explore Department &rarr;</a>
+                        <h3 class="prog-title">SRK Medical College</h3>
+                        <p class="prog-desc">Comprehensive medical education preparing skilled, ethical clinical physicians.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-medicine" class="btn-card-apply">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -326,43 +327,93 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 <section class="py-5">
     <div class="container-xl py-3">
         <div class="text-center mb-4">
-            <span class="section-subtitle">CONSTITUENT UNITS</span>
-            <h2 class="section-title">Prominent Institutes under <span>SRK University</span></h2>
+            <span class="section-subtitle">WHY CHOOSE SRKU</span>
+            <h2 class="section-title">Foundations of Academic <span>Excellence</span> in Central India</h2>
+            <p class="text-muted small mb-0">Discover why we are consistently ranked among the top engineering colleges in MP and premier management hubs.</p>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3">
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-engineering" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-cogs"></i></div><div class="faculty-info"><h4>Faculty of Engineering</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-pharmacy" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-pills"></i></div><div class="faculty-info"><h4>Faculty of Pharmacy</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-computer-application" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-laptop-code"></i></div><div class="faculty-info"><h4>Computer Applications</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-nursing" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-user-md"></i></div><div class="faculty-info"><h4>Faculty of Nursing</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-management" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-chart-bar"></i></div><div class="faculty-info"><h4>Business Management</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-technology" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-cogs"></i></div><div class="faculty-info"><h4>Faculty of Engineering</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-medicine" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-stethoscope"></i></div><div class="faculty-info"><h4>Faculty of Medicine</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-management" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-chart-bar"></i></div><div class="faculty-info"><h4>Business &amp; Management</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-paramedical-sciences" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-user-md"></i></div><div class="faculty-info"><h4>Paramedical Sciences</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-law" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-balance-scale"></i></div><div class="faculty-info"><h4>Law &amp; Governance</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-allied-science-and-humanities" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-atom"></i></div><div class="faculty-info"><h4>Allied Science &amp; Humanities</h4></div></div></a></div>
             <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-agriculture" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-seedling"></i></div><div class="faculty-info"><h4>Faculty of Agriculture</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-law" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-balance-scale"></i></div><div class="faculty-info"><h4>Faculty of Law</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>departments.php" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-th-large"></i></div><div class="faculty-info"><h4>View All Faculties</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-science-technology-mca" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-laptop-code"></i></div><div class="faculty-info"><h4>Computer Application</h4></div></div></a></div>
         </div>
     </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     CHANCELLOR MESSAGE (Bootstrap 2-col Layout)
+     ADMISSION PATHWAYS (UG / PG / PhD / Diploma)
 ═══════════════════════════════════════════════════════ -->
-<section class="chancellor-section py-5">
+<section class="py-5 bg-light">
     <div class="container-xl py-3">
-        <div class="row align-items-center g-4 g-lg-5">
-            <div class="col-12 col-md-5 col-lg-4">
-                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/ruchichaubey.webp"
-                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                     class="chancellor-photo" alt="Chancellor SRK University">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-2">
+            <div>
+                <span class="section-subtitle">COURSES &amp; PROGRAMS</span>
+                <h2 class="section-title mb-0">How to Get Admission in <span>SRK University</span> Bhopal?</h2>
+                <p class="text-muted small mb-0">Choose your trajectory from over 140+ meticulously designed programs and find the pathway that fits your goals.</p>
             </div>
-            <div class="col-12 col-md-7 col-lg-8">
-                <h2 class="text-white fw-bold mb-2">Message From Chancellor Desk</h2>
-                <div class="text-gold fw-bold mb-3 text-uppercase" style="letter-spacing:1px; font-size:0.88rem;"><?php echo sanitize($chancellorName); ?> &bull; <?php echo sanitize($chancellorTitle); ?></div>
-                <p class="fst-italic text-light border-start border-3 border-warning ps-3 mb-4" style="font-size:1.02rem; line-height:1.8;">
-                    "<?php echo sanitize($chancellorMsg); ?>"
-                </p>
-                <div class="d-flex flex-wrap gap-3">
-                    <a href="<?php echo BASE_URL; ?>page.php?slug=board-of-management" class="btn-srku-gold"><i class="fas fa-user-tie"></i> Read Full Message</a>
-                    <a href="<?php echo BASE_URL; ?>page.php?slug=vision-mission" class="btn-srku-outline"><i class="fas fa-bullseye"></i> Vision &amp; Mission</a>
+            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View all 140+ programs <i class="fas fa-arrow-right ms-1"></i></a>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+            <div class="col">
+                <div class="admission-type-card">
+                    <div class="admission-type-icon"><i class="fas fa-user-graduate"></i></div>
+                    <h3>UG</h3>
+                    <p>B.Tech, BCA, BBA, B.Pharm, BA LL.B, MBBS &amp; more foundation degree programs.</p>
                 </div>
+            </div>
+            <div class="col">
+                <div class="admission-type-card">
+                    <div class="admission-type-icon"><i class="fas fa-user-tie"></i></div>
+                    <h3>PG</h3>
+                    <p>M.Tech, MBA, MCA, M.Pharm, LL.M &amp; specialized postgraduate degrees.</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="admission-type-card">
+                    <div class="admission-type-icon"><i class="fas fa-microscope"></i></div>
+                    <h3>PHD</h3>
+                    <p>Doctoral Research across Engineering, Pharmacy, Management &amp; Sciences.</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="admission-type-card">
+                    <div class="admission-type-icon"><i class="fas fa-certificate"></i></div>
+                    <h3>Diploma &amp; Certificate</h3>
+                    <p>Professional Development and short-term certification programs.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     CHANCELLOR MESSAGE (matches live srku.edu.in design)
+═══════════════════════════════════════════════════════ -->
+<section class="chancellor-v2">
+    <div class="chancellor-v2__inner">
+        <div class="chancellor-v2__media">
+            <img class="chancellor-v2__photo"
+                 src="<?php echo BASE_URL; ?>assets/uploads/2026/08/Chancelloer-480x503-1.jpg"
+                 onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/ruchichaubey.webp';"
+                 alt="<?php echo sanitize($chancellorName); ?>, Chancellor of SRK University, Bhopal">
+            <div class="chancellor-v2__quote">
+                <p class="chancellor-v2__quote-text">&ldquo;<?php echo sanitize($chancellorQuote); ?>&rdquo;</p>
+                <p class="chancellor-v2__quote-name"><?php echo strtoupper(sanitize($chancellorName)); ?> &middot; <?php echo sanitize($chancellorTitle); ?></p>
+            </div>
+        </div>
+        <div class="chancellor-v2__content">
+            <p class="chancellor-v2__eyebrow">Chancellor&rsquo;s Message</p>
+            <h2 class="chancellor-v2__title">A legacy of <em>excellence.</em><br>A vision for tomorrow.</h2>
+            <p class="chancellor-v2__body"><?php echo sanitize($chancellorMsg); ?></p>
+            <p class="chancellor-v2__body"><?php echo sanitize($chancellorMsg2); ?></p>
+            <div class="chancellor-v2__accred">
+                <div class="chancellor-v2__accred-item"><span class="chancellor-v2__accred-name">UGC</span><span class="chancellor-v2__accred-tag">Recognised</span></div>
+                <div class="chancellor-v2__accred-item"><span class="chancellor-v2__accred-name">NAAC</span><span class="chancellor-v2__accred-tag">A+ Grade</span></div>
+                <div class="chancellor-v2__accred-item"><span class="chancellor-v2__accred-name">AICTE</span><span class="chancellor-v2__accred-tag">Approved</span></div>
             </div>
         </div>
     </div>
@@ -426,23 +477,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
+     LABS DRIVING INDUSTRY INNOVATION
+═══════════════════════════════════════════════════════ -->
+<section class="py-5 bg-light">
+    <div class="container-xl py-3">
+        <div class="row align-items-center g-4 g-lg-5">
+            <div class="col-12 col-lg-6 order-lg-2">
+                <span class="section-subtitle">INNOVATION &amp; RESEARCH</span>
+                <h2 class="section-title mb-3">Labs <span>Driving</span> Industry Innovation</h2>
+                <p class="text-dark mb-4" style="line-height:1.8; font-size:0.94rem;">
+                    Innovative faculty and staff members work with industry partners to produce ready-to-deploy solutions across our 42+ advanced research labs.
+                </p>
+                <div class="row row-cols-3 g-3 text-center">
+                    <div class="col"><div class="student-life-stat"><span class="num">42+</span><span class="lbl">Patents Filed</span></div></div>
+                    <div class="col"><div class="student-life-stat"><span class="num">120+</span><span class="lbl">Research Labs</span></div></div>
+                    <div class="col"><div class="student-life-stat"><span class="num">&#8377;12Cr+</span><span class="lbl">Annual Grants</span></div></div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 order-lg-1">
+                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/lab-and-research.webp"
+                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                     alt="Labs Driving Industry Innovation" class="img-fluid rounded-4 shadow">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
      PLACEMENT & TOP RECRUITERS
 ═══════════════════════════════════════════════════════ -->
 <section class="py-5">
     <div class="container-xl py-3">
+        <div class="text-center mb-4">
+            <span class="section-subtitle">DISCOVER SUCCESS</span>
+            <h2 class="section-title mb-0">A direct pipeline to <span>industry leadership</span></h2>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-3 text-center mb-4">
+            <div class="col"><div class="student-life-stat"><span class="num">&#8377;42 LPA</span><span class="lbl">Highest International Package</span></div></div>
+            <div class="col"><div class="student-life-stat"><span class="num">500+</span><span class="lbl">Global Corporate Partners</span></div></div>
+            <div class="col"><div class="student-life-stat"><span class="num">15,000+</span><span class="lbl">Alumni in Leadership</span></div></div>
+        </div>
         <div class="row align-items-center g-4 g-lg-5">
             <div class="col-12 col-lg-6">
-                <span class="section-subtitle">CAREER &amp; PLACEMENT CELL</span>
-                <h2 class="section-title mb-3">Unmatched Placement <span>Track Record (94%)</span></h2>
                 <p class="text-dark mb-4" style="line-height:1.8; font-size:0.94rem;">
-                    Our dedicated Corporate Relations Cell conducts year-round campus recruitment drives, soft skills training, mock interviews, and industry internships connecting students to 120+ top national and global MNCs.
+                    Our dedicated Corporate Relations Cell conducts year-round campus recruitment drives, soft skills training, mock interviews, and industry internships connecting students to 500+ top national and global MNCs.
                 </p>
                 <div class="d-flex flex-wrap gap-2 mb-4">
-                    <div class="rec-logo"><i class="fas fa-building text-danger"></i> TCS</div>
+                    <div class="rec-logo"><i class="fas fa-building text-danger"></i> TATA</div>
                     <div class="rec-logo"><i class="fas fa-building text-danger"></i> Infosys</div>
                     <div class="rec-logo"><i class="fas fa-building text-danger"></i> Amazon</div>
                     <div class="rec-logo"><i class="fas fa-building text-danger"></i> Wipro</div>
-                    <div class="rec-logo"><i class="fas fa-building text-danger"></i> Cipla</div>
+                    <div class="rec-logo"><i class="fas fa-building text-danger"></i> Cognizant</div>
                     <div class="rec-logo"><i class="fas fa-building text-danger"></i> Sun Pharma</div>
                     <div class="rec-logo"><i class="fas fa-building text-danger"></i> L&amp;T</div>
                     <div class="rec-logo"><i class="fas fa-building text-danger"></i> HDFC Bank</div>
@@ -465,10 +550,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
     <div class="container-xl py-2">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <span class="section-subtitle">CAMPUS LIFE</span>
-                <h2 class="section-title mb-0">Life at <span>SRK University</span></h2>
+                <span class="section-subtitle">STUDENT LIFE</span>
+                <h2 class="section-title mb-0">Experience an Unmatched University <span>Campus Life</span> in Bhopal</h2>
+                <p class="text-muted small mb-0">A campus that thrives, builds, and celebrates together — 220-acre campus, 120+ active clubs, and 18 annual fests keep an unmatched student journey alive.</p>
             </div>
             <a href="<?php echo BASE_URL; ?>gallery.php" class="btn-card-apply">View Full Gallery &rarr;</a>
+        </div>
+        <div class="row row-cols-2 row-cols-md-4 g-3 mb-4 text-center">
+            <div class="col"><div class="student-life-stat"><span class="num">42+</span><span class="lbl">Active Clubs</span></div></div>
+            <div class="col"><div class="student-life-stat"><span class="num">120+</span><span class="lbl">Sports</span></div></div>
+            <div class="col"><div class="student-life-stat"><span class="num">4,500+</span><span class="lbl">Hostel Beds</span></div></div>
+            <div class="col"><div class="student-life-stat"><span class="num">42+</span><span class="lbl">Annual Fests</span></div></div>
         </div>
         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-2">
             <div class="col"><img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Gallary-slider-01.webp" class="gallery-img" alt="Gallery 1" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"></div>
@@ -555,6 +647,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         </div>
     </div>
 </section>
+
+<!-- ═══════════════════════════════════════════════════════
+     RECENT NEWS & BLOGS
+═══════════════════════════════════════════════════════ -->
+<?php $homeNews = getNews(null, 3); ?>
+<?php if (!empty($homeNews)): ?>
+<section class="py-5 bg-cream">
+    <div class="container-xl py-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-2">
+            <div>
+                <span class="section-subtitle">RECENT NEWS</span>
+                <h2 class="section-title mb-0">Information About All the <span>News &amp; Events</span> of University</h2>
+            </div>
+            <a href="<?php echo BASE_URL; ?>blogs.php" class="btn-card-apply fs-6">View All News <i class="fas fa-arrow-right ms-1"></i></a>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <?php foreach ($homeNews as $n): ?>
+                <div class="col">
+                    <div class="prog-card">
+                        <img src="<?php echo !empty($n['image_url']) ? BASE_URL . sanitize($n['image_url']) : BASE_URL . 'assets/uploads/2026/07/001.webp'; ?>"
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                             class="prog-img" alt="<?php echo sanitize($n['title']); ?>">
+                        <div class="prog-body">
+                            <div class="small text-muted mb-1"><i class="far fa-calendar-alt me-1"></i> <?php echo date('d M Y', strtotime($n['publish_date'] ?: $n['created_at'])); ?></div>
+                            <h3 class="prog-title"><?php echo sanitize($n['title']); ?></h3>
+                            <p class="prog-desc"><?php echo substr(strip_tags($n['content']), 0, 100) . '...'; ?></p>
+                            <a href="<?php echo BASE_URL; ?>blog-detail.php?slug=<?php echo urlencode($n['slug'] ?: $n['id']); ?>" class="btn-card-apply">Read More &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
 
 <!-- ═══════════════════════════════════════════════════════
      CTA BANNER

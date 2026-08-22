@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-$slug = sanitize($_GET['slug'] ?? 'department-of-engineering');
+$slug = sanitize($_GET['slug'] ?? 'rkdf-institute-of-science-technology');
 $dept = getDepartmentBySlug($slug);
 
 if (!$dept) {

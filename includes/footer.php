@@ -61,11 +61,11 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
             <div class="col-12 col-md-6 col-lg-3 footer-col">
                 <h5 class="fw-bold text-white mb-3">Institutes &amp; Faculties</h5>
                 <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-engineering"><i class="fas fa-angle-right me-1 text-warning"></i> Department of Engineering</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-pharmacy"><i class="fas fa-angle-right me-1 text-warning"></i> Sri Sai College of Pharmacy</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-computer-application"><i class="fas fa-angle-right me-1 text-warning"></i> Faculty of Computer Applications</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-nursing"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF College of Nursing</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-management"><i class="fas fa-angle-right me-1 text-warning"></i> Department of Management</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>rkdf-institute-of-science-technology"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Institute Of Science &amp; Technology</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>sri-sai-college-of-pharmacy"><i class="fas fa-angle-right me-1 text-warning"></i> Sri Sai College Of Pharmacy</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>rkdf-institute-science-technology-mca"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Institute Science &amp; Technology MCA</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>rkdf-college-of-nursing"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF College Of Nursing</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>rkdf-institute-of-management"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Institute Of Management</a></li>
                     <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-agriculture"><i class="fas fa-angle-right me-1 text-warning"></i> Faculty of Agriculture</a></li>
                     <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-law"><i class="fas fa-angle-right me-1 text-warning"></i> Faculty of Law</a></li>
                 </ul>
