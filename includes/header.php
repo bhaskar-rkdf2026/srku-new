@@ -53,17 +53,17 @@ $customHeadCode = getSetting('header_custom_head_code', '');
 <header class="site-header-static">
     <style>
         *,*::before,*::after{box-sizing:border-box}
-        .static-nav-wrapper{background-color:#fff;box-shadow:0 2px 12px rgba(0,0,0,0.08);font-family:'Inter','Segoe UI',Arial,sans-serif;position:sticky;top:0;z-index:9999;width:100%;overflow-x:clip}
-        .static-nav-container{max-width:1380px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:74px;width:100%}
+        .static-nav-wrapper{background-color:#fff;box-shadow:0 2px 12px rgba(0,0,0,0.09);font-family:'Inter','Segoe UI',Arial,sans-serif;position:sticky;top:0;z-index:9999;width:100%}
+        .static-nav-container{max-width:1320px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:76px}
         .static-nav-logo{display:flex;align-items:center;flex-shrink:0}
-        .static-nav-logo img{max-height:54px;width:auto;display:block}
-        .static-menu-list{list-style:none;margin:0;padding:0;display:flex;align-items:center;flex-wrap:nowrap;gap:2px;flex:1;justify-content:center}
+        .static-nav-logo img{max-height:58px;width:auto;display:block}
+        .static-menu-list{list-style:none;margin:0;padding:0;display:flex;align-items:center;flex-wrap:nowrap;gap:1px;flex:1;justify-content:center}
         .static-menu-item{position:relative}
-        .static-menu-link{display:flex;align-items:center;gap:3px;padding:9px 7px;color:#1e293b;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:0;white-space:nowrap;transition:color 0.2s ease}
+        .static-menu-link{display:flex;align-items:center;gap:4px;padding:10px 10px;color:#1e293b;text-decoration:none;font-size:13.5px;font-weight:600;letter-spacing:.1px;white-space:nowrap;transition:color 0.2s ease}
         .static-menu-link:hover,.static-menu-item.active>.static-menu-link{color:#7a0b0d}
-        .static-dropdown-arrow{display:inline-block;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;margin-left:2px;transition:transform 0.25s ease;flex-shrink:0}
+        .static-dropdown-arrow{display:inline-block;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;margin-left:3px;transition:transform 0.25s ease;flex-shrink:0}
         .static-menu-item.open>.static-menu-link .static-dropdown-arrow,.static-dropdown-item.open>.static-dropdown-link .static-dropdown-arrow{transform:rotate(180deg)}
-        .static-dropdown-panel{position:absolute;top:calc(100% + 2px);left:0;background:#fff;min-width:240px;box-shadow:0 12px 36px rgba(0,0,0,0.13);border-radius:8px;border:1px solid #eef0f4;padding:6px 0;list-style:none;margin:0;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity 0.2s ease,transform 0.2s ease,visibility 0.2s;z-index:2000}
+        .static-dropdown-panel{position:absolute;top:calc(100% + 4px);left:0;background:#fff;min-width:240px;box-shadow:0 12px 36px rgba(0,0,0,0.13);border-radius:8px;border:1px solid #eef0f4;padding:6px 0;list-style:none;margin:0;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity 0.22s ease,transform 0.22s ease,visibility 0.22s;z-index:2000}
         .static-menu-item:hover>.static-dropdown-panel{opacity:1;visibility:visible;transform:translateY(0)}
         .static-dropdown-item{position:relative}
         .static-dropdown-link{display:flex;align-items:center;justify-content:space-between;padding:8px 18px;color:#334155;text-decoration:none;font-size:13px;font-weight:500;line-height:1.4;transition:all 0.18s ease;white-space:nowrap}
@@ -78,8 +78,8 @@ $customHeadCode = getSetting('header_custom_head_code', '');
         .static-megamenu-link svg{flex-shrink:0;width:13px;height:13px;fill:#7a0b0d;margin-top:2px}
         .static-menu-list-footer{display:none}
         .static-contact-btn-mobile{display:none}
-        .static-contact-btn{display:inline-flex;align-items:center;flex-shrink:0;background:#7a0b0d;color:#ffffff!important;font-size:13px;font-weight:700;padding:9px 18px;border-radius:30px;text-decoration:none;box-shadow:0 3px 10px rgba(122,11,13,0.25);transition:background 0.2s ease,box-shadow 0.2s ease,transform 0.2s ease;white-space:nowrap}
-        .static-contact-btn:hover{background:#a30407;box-shadow:0 5px 16px rgba(122,11,13,0.4);color:#ffffff!important;transform:translateY(-1px)}
+        .static-contact-btn{display:inline-flex;align-items:center;flex-shrink:0;background:#7a0b0d;color:#ffffff!important;font-size:13.5px;font-weight:700;padding:10px 22px;border-radius:30px;text-decoration:none;box-shadow:0 3px 12px rgba(236,51,55,0.3);transition:background 0.2s ease,box-shadow 0.2s ease,transform 0.2s ease;white-space:nowrap;letter-spacing:.2px}
+        .static-contact-btn:hover{background:#d62529;box-shadow:0 5px 18px rgba(236,51,55,0.45);color:#ffffff!important;transform:translateY(-1px)}
         .static-mobile-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;background:transparent;border:none;cursor:pointer;padding:8px 6px;z-index:10001;flex-shrink:0}
         .static-mobile-toggle span{display:block;width:26px;height:2.5px;background-color:#1e293b;border-radius:3px;transition:all 0.32s cubic-bezier(.4,0,.2,1);transform-origin:center}
         .static-mobile-toggle.is-open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
@@ -87,16 +87,15 @@ $customHeadCode = getSetting('header_custom_head_code', '');
         .static-mobile-toggle.is-open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
         .static-nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9998;opacity:0;transition:opacity 0.3s ease}
         .static-nav-overlay.active{display:block;opacity:1}
-        @media (max-width:1260px){
-            .static-nav-container{padding:0 12px;gap:4px}
-            .static-menu-link{font-size:12px;padding:8px 5px}
-            .static-nav-logo img{max-height:48px}
-            .static-megamenu-panel{width:480px}
-            .static-contact-btn{padding:8px 14px;font-size:12px}
+        @media (max-width:1199px){
+            .static-nav-container{padding:0 16px;gap:6px}
+            .static-menu-link{font-size:12.5px;padding:10px 8px}
+            .static-megamenu-panel{width:460px}
+            .static-contact-btn{padding:9px 18px;font-size:13px}
         }
-        @media (max-width:1080px){
+        @media (max-width:1024px){
             .static-nav-wrapper{position:fixed!important;top:0;left:0;right:0;width:100%}
-            .site-header-static+*{margin-top:74px}
+            .site-header-static+*{margin-top:76px}
             .static-mobile-toggle{display:flex}
             .static-menu-list{position:fixed;top:0;left:-100%;width:300px;max-width:85vw;height:100vh;background:#fff;flex-direction:column;align-items:stretch;padding:76px 0 30px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:5px 0 24px rgba(0,0,0,0.18);transition:left 0.33s cubic-bezier(.4,0,.2,1);gap:0;z-index:9999}
             .static-menu-list.active{left:0}
@@ -210,59 +209,59 @@ $customHeadCode = getSetting('header_custom_head_code', '');
                     <div class="static-dropdown-panel static-megamenu-panel">
                         <div class="static-megamenu-grid">
                             <div>
-                                <a href="<?php echo BASE_URL; ?>rkdf-institute-of-science-technology" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>department-of-engineering" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF Institute Of Science &amp; Technology
+                                    Department of Engineering
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>sri-sai-college-of-pharmacy" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>sri-sai-college-of-pharmacy-srk-bhopal" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Sri Sai College Of Pharmacy
+                                    Sri Sai College of Pharmacy | SRK Bhopal
                                 </a>
                                 <a href="<?php echo BASE_URL; ?>rkdf-polytechnic-pharmacy" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF Polytechnic Pharmacy
+                                    Department of Pharmacy (RKDF Polytechnic)
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>rkdf-college-of-pharmacy" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>department-of-pharmacy" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF College Of Pharmacy
+                                    Department of Pharmacy (RKDF College)
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>rkdf-institute-science-technology-mca" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>department-of-computer-application" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF Institute Science &amp; Technology MCA
+                                    Department of Computer Application
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>r-n-kapoor-memorial-institute-of-pharmaceutical-science" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>r-n-kapoor-memorial-institute-of-pharmaceutical-sciences-srk-university" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    R. N. Kapoor Memorial Institute Of Pharmaceutical Science
+                                    R.N. Kapoor Memorial Institute of Pharmacy
                                 </a>
                             </div>
                             <div>
                                 <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-college-of-pharmacy" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Sarvepalli Radhakrishnan College Of Pharmacy
+                                    Sarvepalli Radhakrishnan College of Pharmacy
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>rkdf-institute-of-management" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>department-of-management" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF Institute Of Management
+                                    Department of Management
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>rkdf-institute-of-business-management" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>department-of-business-management" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF Institute Of Business Management
+                                    Department of Business Management
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>dr-apj-abdul-kalam-college-of-pharmacy" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>dr-apj-abdul-kalam-college-of-pharmacy-srk-bhopal" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Dr. APJ. Abdul Kalam College Of Pharmacy
+                                    Dr. APJ Abdul Kalam College of Pharmacy
                                 </a>
                                 <a href="<?php echo BASE_URL; ?>rkdf-college-of-nursing" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF College Of Nursing
+                                    RKDF College of Nursing
                                 </a>
                                 <a href="<?php echo BASE_URL; ?>department-of-allied-health-care-sciences" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Department Of Allied &amp; Healthcare Sciences
+                                    Department of Allied &amp; Healthcare Sciences
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-college-of-law" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>srk-college-of-law" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Sarvepalli Radhakrishnan College Of Law
+                                    Department of Law
                                 </a>
                             </div>
                         </div>
