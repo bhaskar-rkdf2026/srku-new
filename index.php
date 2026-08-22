@@ -544,23 +544,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
+     STUDENT LIFE AT SRK (matches live srku.edu.in design)
+═══════════════════════════════════════════════════════ -->
+<section class="student-life-v2">
+    <div class="student-life-v2__inner">
+        <p class="student-life-v2__eyebrow">Student Life at SRK</p>
+        <h2 class="student-life-v2__title">Experience <em>an Unmatched University</em><br>Campus Life in Bhopal</h2>
+        <p class="student-life-v2__desc">A campus that thinks, builds, and celebrates together.<br>200 lush acres, 120+ active student clubs, and 18 annual fests create an unforgettable student journey.</p>
+
+        <div class="student-life-v2__row">
+            <div class="student-life-v2__media">
+                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/alumni-hero-TzGn9_DY-3.jpg"
+                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                     alt="Annual Cultural Fest at SRK University">
+                <div class="student-life-v2__badge">
+                    <span class="student-life-v2__badge-tag">Featured</span>
+                    <span class="student-life-v2__badge-title">Annual Cultural Fest</span>
+                </div>
+            </div>
+            <div class="student-life-v2__grid">
+                <div class="student-life-v2__box student-life-v2__box--maroon">
+                    <i class="fas fa-star"></i>
+                    <h3>42+</h3>
+                    <p>Active Clubs</p>
+                </div>
+                <div class="student-life-v2__box student-life-v2__box--gray">
+                    <i class="fas fa-trophy"></i>
+                    <h3>120+</h3>
+                    <p>Sports</p>
+                </div>
+                <div class="student-life-v2__box student-life-v2__box--cream">
+                    <i class="fas fa-bed"></i>
+                    <h3>4,500+</h3>
+                    <p>Hostel Beds</p>
+                </div>
+                <div class="student-life-v2__box student-life-v2__box--maroon">
+                    <i class="fas fa-music"></i>
+                    <h3>18</h3>
+                    <p>Annual Fests</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
      GALLERY SECTION (Bootstrap 5-col Grid)
 ═══════════════════════════════════════════════════════ -->
 <section class="py-5 bg-cream">
     <div class="container-xl py-2">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <span class="section-subtitle">STUDENT LIFE</span>
-                <h2 class="section-title mb-0">Experience an Unmatched University <span>Campus Life</span> in Bhopal</h2>
-                <p class="text-muted small mb-0">A campus that thrives, builds, and celebrates together — 220-acre campus, 120+ active clubs, and 18 annual fests keep an unmatched student journey alive.</p>
+                <span class="section-subtitle">CAMPUS LIFE</span>
+                <h2 class="section-title mb-0">Life at <span>SRK University</span></h2>
             </div>
             <a href="<?php echo BASE_URL; ?>gallery.php" class="btn-card-apply">View Full Gallery &rarr;</a>
-        </div>
-        <div class="row row-cols-2 row-cols-md-4 g-3 mb-4 text-center">
-            <div class="col"><div class="student-life-stat"><span class="num">42+</span><span class="lbl">Active Clubs</span></div></div>
-            <div class="col"><div class="student-life-stat"><span class="num">120+</span><span class="lbl">Sports</span></div></div>
-            <div class="col"><div class="student-life-stat"><span class="num">4,500+</span><span class="lbl">Hostel Beds</span></div></div>
-            <div class="col"><div class="student-life-stat"><span class="num">42+</span><span class="lbl">Annual Fests</span></div></div>
         </div>
         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-2">
             <div class="col"><img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Gallary-slider-01.webp" class="gallery-img" alt="Gallery 1" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"></div>
