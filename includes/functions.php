@@ -352,3 +352,51 @@ function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $so
         return ['success' => false, 'error' => 'Failed to save enquiry: ' . $ex->getMessage()];
     }
 }
+
+// Save and validate a student grievance / complaint
+function saveComplaint($name, $fatherName, $enrollmentNumber, $email, $phone, $instituteName, $courseName, $yearSemester, $complaintType, $complaintDetails) {
+    $name = trim((string)$name);
+    $fatherName = trim((string)$fatherName);
+    $enrollmentNumber = trim((string)$enrollmentNumber);
+    $email = trim((string)$email);
+    $phone = trim((string)$phone);
+    $instituteName = trim((string)$instituteName);
+    $courseName = trim((string)$courseName);
+    $yearSemester = trim((string)$yearSemester);
+    $complaintType = trim((string)$complaintType);
+    $complaintDetails = trim((string)$complaintDetails);
+
+    if (strlen($name) < 2) {
+        return ['success' => false, 'error' => 'Please enter a valid full name (minimum 2 characters).'];
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return ['success' => false, 'error' => 'Please enter a valid email address (e.g. name@domain.com).'];
+    }
+    $cleanPhone = preg_replace('/[^0-9+]/', '', $phone);
+    if (strlen($cleanPhone) < 10 || strlen($cleanPhone) > 15) {
+        return ['success' => false, 'error' => 'Please enter a valid 10-digit mobile number.'];
+    }
+    if (strlen($complaintDetails) < 10) {
+        return ['success' => false, 'error' => 'Please describe your complaint in at least 10 characters.'];
+    }
+
+    try {
+        $pdo = getDBConnection();
+        $stmt = $pdo->prepare("INSERT INTO complaints (name, father_name, enrollment_number, email, phone, institute_name, course_name, year_semester, complaint_type, complaint_details, status, created_at) VALUES (:n, :fn, :en, :e, :p, :inst, :course, :ys, :ct, :cd, 'New', CURRENT_TIMESTAMP)");
+        $stmt->execute([
+            ':n' => $name,
+            ':fn' => $fatherName ?: null,
+            ':en' => $enrollmentNumber ?: null,
+            ':e' => $email,
+            ':p' => $phone,
+            ':inst' => $instituteName ?: null,
+            ':course' => $courseName ?: null,
+            ':ys' => $yearSemester ?: null,
+            ':ct' => $complaintType ?: 'General',
+            ':cd' => $complaintDetails
+        ]);
+        return ['success' => true, 'message' => 'Your complaint has been registered successfully. Our grievance cell will review it and contact you shortly.'];
+    } catch (Exception $ex) {
+        return ['success' => false, 'error' => 'Failed to register complaint: ' . $ex->getMessage()];
+    }
+}
