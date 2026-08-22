@@ -62,6 +62,7 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
             <div class="col-12 col-md-6 col-lg-3 footer-col">
                 <h5 class="fw-bold text-white mb-3">Student Welfare &amp; Disclosures</h5>
                 <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+<<<<<<< HEAD
                     <li><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/AntiRagging.pdf"><i class="fas fa-shield-alt me-1 text-danger"></i> Anti-Ragging Cell (Toll-Free)</a></li>
                     <li><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Student_Grievance_Committee.pdf"><i class="fas fa-angle-right me-1 text-warning"></i> Grievance Redressal Cell</a></li>
                     <li><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Internal-Complaint-Committee.pdf"><i class="fas fa-angle-right me-1 text-warning"></i> Internal Complaints (ICC)</a></li>
@@ -70,6 +71,15 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
                     <li><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/NIRF-2026.pdf"><i class="fas fa-angle-right me-1 text-warning"></i> NIRF 2026 Disclosures</a></li>
                     <li><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Fee-Refund-Policy-2024-25.pdf"><i class="fas fa-angle-right me-1 text-warning"></i> Fee Refund Policy</a></li>
                     <li><a href="<?php echo BASE_URL; ?>admin/login.php"><i class="fas fa-lock me-1 text-warning"></i> Staff / Admin Portal</a></li>
+=======
+                    <li><a href="<?php echo BASE_URL; ?>rkdf-institute-of-science-technology"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Institute Of Science &amp; Technology</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>sri-sai-college-of-pharmacy"><i class="fas fa-angle-right me-1 text-warning"></i> Sri Sai College Of Pharmacy</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>rkdf-institute-science-technology-mca"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Institute Science &amp; Technology MCA</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>rkdf-college-of-nursing"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF College Of Nursing</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>rkdf-institute-of-management"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Institute Of Management</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-agriculture"><i class="fas fa-angle-right me-1 text-warning"></i> Faculty of Agriculture</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-law"><i class="fas fa-angle-right me-1 text-warning"></i> Faculty of Law</a></li>
+>>>>>>> 81476b8a8671ab310774877cf5ce2986d278eef5
                 </ul>
             </div>
 

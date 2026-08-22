@@ -210,59 +210,59 @@ $customHeadCode = getSetting('header_custom_head_code', '');
                     <div class="static-dropdown-panel static-megamenu-panel">
                         <div class="static-megamenu-grid">
                             <div>
-                                <a href="<?php echo BASE_URL; ?>department-of-engineering" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>rkdf-institute-of-science-technology" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Department of Engineering
+                                    RKDF Institute Of Science &amp; Technology
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>sri-sai-college-of-pharmacy-srk-bhopal" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>sri-sai-college-of-pharmacy" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Sri Sai College of Pharmacy | SRK Bhopal
+                                    Sri Sai College Of Pharmacy
                                 </a>
                                 <a href="<?php echo BASE_URL; ?>rkdf-polytechnic-pharmacy" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Department of Pharmacy (RKDF Polytechnic)
+                                    RKDF Polytechnic Pharmacy
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>department-of-pharmacy" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>rkdf-college-of-pharmacy" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Department of Pharmacy (RKDF College)
+                                    RKDF College Of Pharmacy
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>department-of-computer-application" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>rkdf-institute-science-technology-mca" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Department of Computer Application
+                                    RKDF Institute Science &amp; Technology MCA
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>r-n-kapoor-memorial-institute-of-pharmaceutical-sciences-srk-university" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>r-n-kapoor-memorial-institute-of-pharmaceutical-science" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    R.N. Kapoor Memorial Institute of Pharmacy
+                                    R. N. Kapoor Memorial Institute Of Pharmaceutical Science
                                 </a>
                             </div>
                             <div>
                                 <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-college-of-pharmacy" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Sarvepalli Radhakrishnan College of Pharmacy
+                                    Sarvepalli Radhakrishnan College Of Pharmacy
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>department-of-management" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>rkdf-institute-of-management" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Department of Management
+                                    RKDF Institute Of Management
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>department-of-business-management" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>rkdf-institute-of-business-management" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Department of Business Management
+                                    RKDF Institute Of Business Management
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>dr-apj-abdul-kalam-college-of-pharmacy-srk-bhopal" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>dr-apj-abdul-kalam-college-of-pharmacy" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Dr. APJ Abdul Kalam College of Pharmacy
+                                    Dr. APJ. Abdul Kalam College Of Pharmacy
                                 </a>
                                 <a href="<?php echo BASE_URL; ?>rkdf-college-of-nursing" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF College of Nursing
+                                    RKDF College Of Nursing
                                 </a>
                                 <a href="<?php echo BASE_URL; ?>department-of-allied-health-care-sciences" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Department of Allied &amp; Healthcare Sciences
+                                    Department Of Allied &amp; Healthcare Sciences
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>srk-college-of-law" class="static-megamenu-link">
+                                <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-college-of-law" class="static-megamenu-link">
                                     <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Department of Law
+                                    Sarvepalli Radhakrishnan College Of Law
                                 </a>
                             </div>
                         </div>
