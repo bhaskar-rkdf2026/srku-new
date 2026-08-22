@@ -6,11 +6,11 @@
 
 /* ── CSS Variables (SRKU Official Brand Theme) ── */
 :root {
-    --srku-red: #a30407;
-    --srku-blue: #3e3e93;
-    --srku-maroon: #a30407;
+    --srku-red: #7a0b0d;
+    --srku-blue: #0e1f45;
+    --srku-maroon: #7a0b0d;
     --srku-crimson: #d62529;
-    --srku-navy: #3e3e93;
+    --srku-navy: #0e1f45;
     --srku-dark: #2b2b73;
     --srku-gold: #e5a93b;
     --srku-cream: #f8f9fc;
@@ -890,12 +890,10 @@ body {
         grid-template-columns: 1fr;
         gap: clamp(3rem, 8vw, 4rem);
     }
-
     .chancellor-v2__media {
         max-width: 440px;
         margin: 0 auto;
     }
-
     .chancellor-v2__quote {
         right: 1rem;
         bottom: -1.25rem;
@@ -910,7 +908,6 @@ body {
         right: auto;
         bottom: auto;
     }
-
     .chancellor-v2__photo {
         box-shadow: 0 18px 35px -20px rgba(0, 0, 0, .35);
     }
@@ -1075,7 +1072,6 @@ body {
     .student-life-v2__grid {
         grid-template-columns: 1fr 1fr;
     }
-
     .student-life-v2__box {
         min-height: 130px;
         padding: 1.25rem 1rem;
@@ -1215,7 +1211,6 @@ body {
 .welcome-img {
     width: 100%;
     border-radius: 10px;
-    border: 4px solid var(--srku-gold);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
     object-fit: cover;
     max-height: 360px;
@@ -1247,7 +1242,7 @@ body {
    ENQUIRY / FORM SECTION (High Contrast)
 ══════════════════════════════════════ */
 .enquiry-section {
-    background: linear-gradient(135deg, #1e1e4a 0%, #3e3e93 45%, #a30407 100%) !important;
+    background: linear-gradient(135deg, #1e1e4a 0%, #0e1f45 45%, #7a0b0d 100%) !important;
     color: #ffffff;
 }
 
@@ -1441,7 +1436,7 @@ body {
 .admin-sidebar {
     width: 260px;
     min-height: 100vh;
-    background: linear-gradient(180deg, #18183d 0%, #232356 60%, #3e3e93 100%);
+    background: linear-gradient(180deg, #18183d 0%, #232356 60%, #0e1f45 100%);
     position: fixed;
     left: 0;
     top: 0;
@@ -1516,7 +1511,7 @@ body {
 
 .sidebar-nav-link.active {
     color: #ffffff !important;
-    background: linear-gradient(135deg, #a30407, #d62529) !important;
+    background: linear-gradient(135deg, #7a0b0d, #d62529) !important;
     box-shadow: 0 4px 14px rgba(236, 51, 55, 0.4);
     font-weight: 700;
 }
@@ -1700,190 +1695,190 @@ body {
         width: 100%;
         justify-content: center;
     }
+}
 
-    /* ══════════════════════════════════════
+/* ══════════════════════════════════════
    HANDCRAFTED UI PHYSICS & MICRO-ANIMATIONS
 ══════════════════════════════════════ */
-    /* Button Shimmer Glare Effect */
-    .btn-srku,
-    .btn-hero-yellow,
-    .static-contact-btn,
-    .btn-srku-gold,
-    .btn-srku-blue {
-        position: relative;
-        overflow: hidden;
+/* Button Shimmer Glare Effect */
+.btn-srku,
+.btn-hero-yellow,
+.static-contact-btn,
+.btn-srku-gold,
+.btn-srku-blue {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-srku::after,
+.btn-hero-yellow::after,
+.static-contact-btn::after,
+.btn-srku-gold::after,
+.btn-srku-blue::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -75%;
+    width: 45%;
+    height: 200%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.38) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: rotate(30deg);
+    transition: all 0.75s ease;
+    pointer-events: none;
+}
+
+.btn-srku:hover::after,
+.btn-hero-yellow:hover::after,
+.static-contact-btn:hover::after,
+.btn-srku-gold:hover::after,
+.btn-srku-blue:hover::after {
+    left: 135%;
+}
+
+/* Scroll-Triggered Reveal Classes */
+.reveal-init {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.reveal-init.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Card Hover Physics & Image Zoom */
+.prog-card {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+    overflow: hidden;
+}
+
+.prog-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 20px 40px rgba(62, 62, 147, 0.16) !important;
+    border-color: var(--srku-red) !important;
+}
+
+.prog-card .prog-img {
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.prog-card:hover .prog-img {
+    transform: scale(1.07);
+}
+
+.faculty-card {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.faculty-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(62, 62, 147, 0.12) !important;
+    border-color: var(--srku-blue) !important;
+}
+
+/* Floating WhatsApp Button */
+.whatsapp-float-btn {
+    position: fixed;
+    bottom: 26px;
+    left: 26px;
+    width: 52px;
+    height: 52px;
+    background: #25d366;
+    color: #ffffff !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+    z-index: 999;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    animation: pulse-green 2.4s infinite;
+}
+
+.whatsapp-float-btn:hover {
+    transform: scale(1.12);
+    box-shadow: 0 8px 28px rgba(37, 211, 102, 0.65);
+    color: #ffffff !important;
+}
+
+@keyframes pulse-green {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
     }
 
-    .btn-srku::after,
-    .btn-hero-yellow::after,
-    .static-contact-btn::after,
-    .btn-srku-gold::after,
-    .btn-srku-blue::after {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -75%;
-        width: 45%;
-        height: 200%;
-        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.38) 50%, rgba(255, 255, 255, 0) 100%);
-        transform: rotate(30deg);
-        transition: all 0.75s ease;
-        pointer-events: none;
+    70% {
+        box-shadow: 0 0 0 14px rgba(37, 211, 102, 0);
     }
 
-    .btn-srku:hover::after,
-    .btn-hero-yellow:hover::after,
-    .static-contact-btn:hover::after,
-    .btn-srku-gold:hover::after,
-    .btn-srku-blue:hover::after {
-        left: 135%;
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
     }
+}
 
-    /* Scroll-Triggered Reveal Classes */
-    .reveal-init {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-        will-change: opacity, transform;
-    }
+/* Floating Quick Admission Enquiry Tab on Right Screen Edge */
+.floating-enquiry-tab {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: right bottom;
+    background: var(--srku-blue);
+    color: #ffffff !important;
+    padding: 9px 20px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    border-radius: 8px 8px 0 0;
+    z-index: 998;
+    box-shadow: -4px 0 16px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
 
-    .reveal-init.is-revealed {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.floating-enquiry-tab:hover {
+    background: var(--srku-red);
+    color: #ffffff !important;
+    padding-bottom: 22px;
+}
 
-    /* Card Hover Physics & Image Zoom */
-    .prog-card {
-        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
-        overflow: hidden;
-    }
+/* Back To Top Floating Rocket Button */
+.back-to-top-btn {
+    position: fixed;
+    bottom: 26px;
+    right: 26px;
+    width: 46px;
+    height: 46px;
+    background: var(--srku-red);
+    color: #ffffff !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 18px rgba(236, 51, 55, 0.45);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
+}
 
-    .prog-card:hover {
-        transform: translateY(-8px) scale(1.01);
-        box-shadow: 0 20px 40px rgba(62, 62, 147, 0.16) !important;
-        border-color: var(--srku-red) !important;
-    }
+.back-to-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
 
-    .prog-card .prog-img {
-        transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .prog-card:hover .prog-img {
-        transform: scale(1.07);
-    }
-
-    .faculty-card {
-        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
-    }
-
-    .faculty-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 28px rgba(62, 62, 147, 0.12) !important;
-        border-color: var(--srku-blue) !important;
-    }
-
-    /* Floating WhatsApp Button */
-    .whatsapp-float-btn {
-        position: fixed;
-        bottom: 26px;
-        left: 26px;
-        width: 52px;
-        height: 52px;
-        background: #25d366;
-        color: #ffffff !important;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 28px;
-        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
-        z-index: 999;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        animation: pulse-green 2.4s infinite;
-    }
-
-    .whatsapp-float-btn:hover {
-        transform: scale(1.12);
-        box-shadow: 0 8px 28px rgba(37, 211, 102, 0.65);
-        color: #ffffff !important;
-    }
-
-    @keyframes pulse-green {
-        0% {
-            box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-        }
-
-        70% {
-            box-shadow: 0 0 0 14px rgba(37, 211, 102, 0);
-        }
-
-        100% {
-            box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-        }
-    }
-
-    /* Floating Quick Admission Enquiry Tab on Right Screen Edge */
-    .floating-enquiry-tab {
-        position: fixed;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%) rotate(-90deg);
-        transform-origin: right bottom;
-        background: var(--srku-blue);
-        color: #ffffff !important;
-        padding: 9px 20px;
-        font-size: 12.5px;
-        font-weight: 700;
-        letter-spacing: 0.8px;
-        text-transform: uppercase;
-        border-radius: 8px 8px 0 0;
-        z-index: 998;
-        box-shadow: -4px 0 16px rgba(0, 0, 0, 0.2);
-        text-decoration: none;
-        transition: all 0.25s ease;
-    }
-
-    .floating-enquiry-tab:hover {
-        background: var(--srku-red);
-        color: #ffffff !important;
-        padding-bottom: 22px;
-    }
-
-    /* Back To Top Floating Rocket Button */
-    .back-to-top-btn {
-        position: fixed;
-        bottom: 26px;
-        right: 26px;
-        width: 46px;
-        height: 46px;
-        background: var(--srku-red);
-        color: #ffffff !important;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 18px rgba(236, 51, 55, 0.45);
-        z-index: 999;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(20px);
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        text-decoration: none;
-    }
-
-    .back-to-top-btn.show {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-
-    .back-to-top-btn:hover {
-        background: #d62529;
-        transform: translateY(-4px) scale(1.08);
-        box-shadow: 0 6px 24px rgba(236, 51, 55, 0.6);
-        color: #ffffff !important;
-    }
+.back-to-top-btn:hover {
+    background: #d62529;
+    transform: translateY(-4px) scale(1.08);
+    box-shadow: 0 6px 24px rgba(236, 51, 55, 0.6);
+    color: #ffffff !important;
 }
 
 @media (max-width: 767px) {
