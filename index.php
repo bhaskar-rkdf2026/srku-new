@@ -459,6 +459,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
+     STUDENT LIFE AT SRK (matches live srku.edu.in design)
+═══════════════════════════════════════════════════════ -->
+<section class="student-life-v2">
+    <div class="student-life-v2__inner">
+        <p class="student-life-v2__eyebrow">Student Life at SRK</p>
+        <h2 class="student-life-v2__title">Experience <em>an Unmatched University</em><br>Campus Life in Bhopal</h2>
+        <p class="student-life-v2__desc">A campus that thinks, builds, and celebrates together.<br>200 lush acres, 120+ active student clubs, and 18 annual fests create an unforgettable student journey.</p>
+
+        <div class="student-life-v2__row">
+            <div class="student-life-v2__media">
+                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/alumni-hero-TzGn9_DY-3.jpg"
+                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                     alt="Annual Cultural Fest at SRK University">
+                <div class="student-life-v2__badge">
+                    <span class="student-life-v2__badge-tag">Featured</span>
+                    <span class="student-life-v2__badge-title">Annual Cultural Fest</span>
+                </div>
+            </div>
+            <div class="student-life-v2__grid">
+                <div class="student-life-v2__box student-life-v2__box--maroon">
+                    <i class="fas fa-star"></i>
+                    <h3>42+</h3>
+                    <p>Active Clubs</p>
+                </div>
+                <div class="student-life-v2__box student-life-v2__box--gray">
+                    <i class="fas fa-trophy"></i>
+                    <h3>120+</h3>
+                    <p>Sports</p>
+                </div>
+                <div class="student-life-v2__box student-life-v2__box--cream">
+                    <i class="fas fa-bed"></i>
+                    <h3>4,500+</h3>
+                    <p>Hostel Beds</p>
+                </div>
+                <div class="student-life-v2__box student-life-v2__box--maroon">
+                    <i class="fas fa-music"></i>
+                    <h3>18</h3>
+                    <p>Annual Fests</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
      GALLERY SECTION (Bootstrap 5-col Grid)
 ═══════════════════════════════════════════════════════ -->
 <section class="py-5 bg-cream">
