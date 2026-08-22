@@ -1,5 +1,5 @@
 <?php
-$address = getSetting('footer_address', getSetting('address', 'NH-12 Hoshangabad Road, Misrod, Bhopal, MP - 462026'));
+$footerAddress = getSetting('footer_address', getSetting('address', 'NH-12 Hoshangabad Road, Misrod, Bhopal, MP - 462026'));
 $helpline = getSetting('footer_phone', getSetting('helpline', '0755 - 4911204'));
 $email = getSetting('footer_email', getSetting('email', 'exam@srku.edu.in'));
 $fbUrl = getSetting('facebook_url', '#');
