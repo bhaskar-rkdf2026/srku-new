@@ -47,8 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 <section class="hero-section position-relative">
 
     <video class="hero-bg-video" autoplay muted loop playsinline poster="<?php echo BASE_URL; ?>assets/images/campus-1.webp">
-        <source src="<?php echo BASE_URL; ?>assets/images/C0036.mp4" type="video/mp4">
-        <source src="<?php echo BASE_URL; ?>assets/upload/2026/06/C0036.mp4" type="video/mp4">
+        <source src="<?php echo BASE_URL; ?>assets/images/SRK-Hero-Section.mp4" type="video/mp4">
     </video>
 
     <div class="hero-overlay"></div>
