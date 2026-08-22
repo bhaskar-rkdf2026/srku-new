@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 <?php echo sanitize($heroDesc); ?>
             </p>
             <div class="d-flex flex-wrap gap-3 mt-4">
-                <a href="<?php echo BASE_URL; ?>contact.php#apply" class="btn-hero-yellow">Apply Now</a>
+                <a href="#apply" class="btn-hero-yellow">Apply Now</a>
                 <a href="<?php echo BASE_URL; ?>courses.php" class="btn-hero-outline">Explore Programmes</a>
             </div>
         </div>
@@ -484,15 +484,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         <div class="row align-items-center g-4 g-lg-5">
             <div class="col-12 col-lg-6 order-lg-2">
                 <span class="section-subtitle">INNOVATION &amp; RESEARCH</span>
-                <h2 class="section-title mb-3">Labs <span>Driving</span> Industry Innovation</h2>
-                <p class="text-dark mb-4" style="line-height:1.8; font-size:0.94rem;">
-                    Innovative faculty and staff members work with industry partners to produce ready-to-deploy solutions across our 42+ advanced research labs.
-                </p>
-                <div class="row row-cols-3 g-3 text-center">
-                    <div class="col"><div class="student-life-stat"><span class="num">42+</span><span class="lbl">Patents Filed</span></div></div>
-                    <div class="col"><div class="student-life-stat"><span class="num">120+</span><span class="lbl">Research Labs</span></div></div>
-                    <div class="col"><div class="student-life-stat"><span class="num">&#8377;12Cr+</span><span class="lbl">Annual Grants</span></div></div>
+                <h2 class="section-title mb-3">Labs <span style="font-style:italic;">Driving</span> Industry Innovation.</h2>
+                <div class="row row-cols-3 g-3 mb-4">
+                    <div class="col"><div class="labs-stat-box"><span class="num">42+</span><span class="lbl">Active Clubs</span></div></div>
+                    <div class="col"><div class="labs-stat-box"><span class="num">120+</span><span class="lbl">Patents Filed</span></div></div>
+                    <div class="col"><div class="labs-stat-box"><span class="num">&#8377;12Cr</span><span class="lbl">Annual Grants</span></div></div>
                 </div>
+                <p class="text-dark mb-4" style="line-height:1.8; font-size:0.94rem;">
+                    From AI/ML and IoT to biomedical instrumentation, our research labs are supported by industry partnerships and produce industry-ready innovations&mdash;not just research papers.
+                </p>
+                <a href="<?php echo BASE_URL; ?>research-innovation.php" class="btn btn-srku"><i class="fas fa-flask me-1"></i> Research &amp; Innovation</a>
             </div>
             <div class="col-12 col-lg-6 order-lg-1">
                 <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/lab-and-research.webp"
@@ -506,38 +507,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 <!-- ═══════════════════════════════════════════════════════
      PLACEMENT & TOP RECRUITERS
 ═══════════════════════════════════════════════════════ -->
-<section class="py-5">
+<section class="placement-v2">
     <div class="container-xl py-3">
-        <div class="text-center mb-4">
+        <div class="text-center mb-5">
             <span class="section-subtitle">DISCOVER SUCCESS</span>
             <h2 class="section-title mb-0">A direct pipeline to <span>industry leadership</span></h2>
-        </div>
-        <div class="row row-cols-1 row-cols-md-3 g-3 text-center mb-4">
-            <div class="col"><div class="student-life-stat"><span class="num">&#8377;42 LPA</span><span class="lbl">Highest International Package</span></div></div>
-            <div class="col"><div class="student-life-stat"><span class="num">500+</span><span class="lbl">Global Corporate Partners</span></div></div>
-            <div class="col"><div class="student-life-stat"><span class="num">15,000+</span><span class="lbl">Alumni in Leadership</span></div></div>
         </div>
         <div class="row align-items-center g-4 g-lg-5">
             <div class="col-12 col-lg-6">
                 <p class="text-dark mb-4" style="line-height:1.8; font-size:0.94rem;">
                     Our dedicated Corporate Relations Cell conducts year-round campus recruitment drives, soft skills training, mock interviews, and industry internships connecting students to 500+ top national and global MNCs.
                 </p>
-                <div class="d-flex flex-wrap gap-2 mb-4">
-                    <div class="rec-logo"><i class="fas fa-building text-danger"></i> TATA</div>
-                    <div class="rec-logo"><i class="fas fa-building text-danger"></i> Infosys</div>
-                    <div class="rec-logo"><i class="fas fa-building text-danger"></i> Amazon</div>
-                    <div class="rec-logo"><i class="fas fa-building text-danger"></i> Wipro</div>
-                    <div class="rec-logo"><i class="fas fa-building text-danger"></i> Cognizant</div>
-                    <div class="rec-logo"><i class="fas fa-building text-danger"></i> Sun Pharma</div>
-                    <div class="rec-logo"><i class="fas fa-building text-danger"></i> L&amp;T</div>
-                    <div class="rec-logo"><i class="fas fa-building text-danger"></i> HDFC Bank</div>
+                <div class="row row-cols-3 g-2 mb-4">
+                    <div class="col"><div class="labs-stat-box labs-stat-box--sm"><span class="num">&#8377;42 LPA</span><span class="lbl">Highest Package</span></div></div>
+                    <div class="col"><div class="labs-stat-box labs-stat-box--sm"><span class="num">500+</span><span class="lbl">Corporate Partners</span></div></div>
+                    <div class="col"><div class="labs-stat-box labs-stat-box--sm"><span class="num">15,000+</span><span class="lbl">Alumni Leaders</span></div></div>
                 </div>
-                <a href="<?php echo BASE_URL; ?>placements.php" class="btn btn-srku"><i class="fas fa-chart-line me-1"></i> View Full Placement Report</a>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="<?php echo BASE_URL; ?>placements.php" class="btn btn-srku"><i class="fas fa-chart-line me-1"></i> View Full Placement Report</a>
+                    <a href="<?php echo BASE_URL; ?>placements.php" class="btn btn-outline-danger"><i class="fas fa-users me-1"></i> Explore Recruiters</a>
+                </div>
             </div>
             <div class="col-12 col-lg-6">
-                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/placement-hero-DCAhDTqD.jpg"
-                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/graduates.webp';"
-                     alt="Campus Placement" class="img-fluid rounded-4 border border-4 border-danger shadow">
+                <div class="placement-v2__media placement-v2__media--compact">
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/placement-hero-DCAhDTqD.jpg"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/graduates.webp';"
+                         alt="Campus Placement">
+                    <div class="placement-v2__badge">
+                        <span class="placement-v2__badge-num">94%</span>
+                        <span class="placement-v2__badge-lbl">Placement Record</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Our Recruiting Partners — infinite auto-scrolling logo marquee -->
+    <?php
+    $recruiterLogos = [
+        ['file' => '1.webp', 'alt' => 'TATA'],
+        ['file' => '2-1.webp', 'alt' => 'Infosys'],
+        ['file' => '6.webp', 'alt' => 'Amazon'],
+        ['file' => '4.webp', 'alt' => 'Wipro'],
+        ['file' => '3.webp', 'alt' => 'Cognizant'],
+        ['file' => '2.webp', 'alt' => 'Infosys'],
+    ];
+    ?>
+    <div class="recruiter-marquee">
+        <p class="recruiter-marquee__label">Our Recruiting Partners</p>
+        <div class="recruiter-marquee__viewport">
+            <div class="recruiter-marquee__track">
+                <?php for ($r = 0; $r < 4; $r++): ?>
+                    <?php foreach ($recruiterLogos as $logo): ?>
+                        <div class="recruiter-marquee__item">
+                            <img src="<?php echo BASE_URL . 'assets/uploads/2026/07/' . rawurlencode($logo['file']); ?>"
+                                 alt="<?php echo sanitize($logo['alt']); ?>" loading="eager" decoding="async">
+                        </div>
+                    <?php endforeach; ?>
+                <?php endfor; ?>
             </div>
         </div>
     </div>
@@ -589,6 +616,114 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
+     AUTO-SCROLLING CAMPUS GALLERY CAROUSEL
+═══════════════════════════════════════════════════════ -->
+<?php
+$autoGalleryImages = [
+    ['file' => 'Gallary-slider-10.webp', 'alt' => 'Faculty Group Photo'],
+    ['file' => 'Gallary-slider-07.webp', 'alt' => 'Students in Library'],
+    ['file' => 'Gallary-slider-06.webp', 'alt' => 'Clinical Training Session'],
+    ['file' => 'Gallary-slider-03.webp', 'alt' => 'MRI Scan Lab'],
+    ['file' => 'Gallary-slider-01.webp', 'alt' => 'Hospital Ward'],
+    ['file' => 'BA-Animation.webp', 'alt' => 'BA Animation Students'],
+    ['file' => 'Diploma-in-Fashion-Design.webp', 'alt' => 'Diploma in Fashion Design'],
+    ['file' => 'B.Sc_.-Fashion-Design.webp', 'alt' => 'B.Sc. Fashion Design'],
+    ['file' => 'PG-Diploma-in-Yoga.webp', 'alt' => 'PG Diploma in Yoga'],
+    ['file' => 'M.Sc_.-Fashion-Design.webp', 'alt' => 'M.Sc. Fashion Design'],
+    ['file' => 'Bcom.webp', 'alt' => 'Faculty of Management'],
+    ['file' => 'BA.webp', 'alt' => 'B.A. Students'],
+];
+?>
+<section class="auto-gallery">
+    <div class="auto-gallery__viewport" id="autoGalleryViewport">
+        <div class="auto-gallery__track" id="autoGalleryTrack">
+            <?php foreach ($autoGalleryImages as $img): ?>
+                <div class="auto-gallery__item">
+                    <img src="<?php echo BASE_URL . 'assets/uploads/2026/07/' . rawurlencode($img['file']); ?>"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                         alt="<?php echo sanitize($img['alt']); ?>">
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="auto-gallery__dots" id="autoGalleryDots"></div>
+</section>
+<script>
+(function () {
+    var track = document.getElementById('autoGalleryTrack');
+    var viewport = document.getElementById('autoGalleryViewport');
+    var dotsWrap = document.getElementById('autoGalleryDots');
+    if (!track || !viewport || !dotsWrap) return;
+
+    var originalItems = Array.prototype.slice.call(track.children);
+    var total = originalItems.length;
+
+    function perView() {
+        var w = window.innerWidth;
+        if (w < 576) return 1;
+        if (w < 900) return 2;
+        return 4;
+    }
+
+    var visible = perView();
+    // Clone the first `visible` items and append them for a seamless infinite loop
+    originalItems.slice(0, visible).forEach(function (node) {
+        track.appendChild(node.cloneNode(true));
+    });
+
+    var index = 0;
+    var dots = [];
+    dotsWrap.innerHTML = '';
+    for (var i = 0; i < total; i++) {
+        var dot = document.createElement('span');
+        dot.className = 'auto-gallery__dot' + (i === 0 ? ' active' : '');
+        (function (idx) {
+            dot.addEventListener('click', function () { goTo(idx); });
+        })(i);
+        dotsWrap.appendChild(dot);
+        dots.push(dot);
+    }
+
+    function setPosition(withTransition) {
+        var itemWidth = track.children[0].getBoundingClientRect().width;
+        var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || 0);
+        track.style.transition = withTransition === false ? 'none' : '';
+        track.style.transform = 'translateX(-' + (index * (itemWidth + gap)) + 'px)';
+    }
+
+    function updateDots() {
+        dots.forEach(function (d, i) { d.classList.toggle('active', i === (index % total)); });
+    }
+
+    function goTo(i) {
+        index = i;
+        setPosition(true);
+        updateDots();
+    }
+
+    function next() {
+        index++;
+        setPosition(true);
+        updateDots();
+        if (index >= total) {
+            setTimeout(function () {
+                index = 0;
+                setPosition(false);
+            }, 500);
+        }
+    }
+
+    window.addEventListener('resize', function () {
+        visible = perView();
+        setPosition(false);
+    });
+
+    setPosition(false);
+    setInterval(next, 3000);
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════
      GALLERY SECTION (Bootstrap 5-col Grid)
 ═══════════════════════════════════════════════════════ -->
 <section class="py-5 bg-cream">
@@ -606,6 +741,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             <div class="col"><img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Gallary-slider-06.webp" class="gallery-img" alt="Gallery 3" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"></div>
             <div class="col"><img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Gallary-slider-07.webp" class="gallery-img" alt="Gallery 4" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"></div>
             <div class="col"><img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Gallary-slider-10.webp" class="gallery-img" alt="Gallery 5" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     INCUBATION & STARTUPS + LATEST NEWS
+═══════════════════════════════════════════════════════ -->
+<?php $incubationNews = getNews(null, 3); ?>
+<section class="py-5 bg-cream">
+    <div class="container-xl py-3">
+        <div class="row g-4 align-items-stretch">
+            <div class="col-12 col-lg-6">
+                <div class="incubation-panel h-100">
+                    <span class="incubation-panel__eyebrow">Incubation &amp; Startups</span>
+                    <h2 class="incubation-panel__title">Build Your Venture On Campus.</h2>
+                    <p class="incubation-panel__desc">The university has established an incubation center for promoting new ideas and startups in the region. The center will incubate the business ideas with relevance and fitment to the local expertise, uniqueness, and market demands. Initially the centre will provide training and support for startups related to handmade soaps &amp; sanitizers and mobile apps.</p>
+                    <a href="<?php echo BASE_URL; ?>incubation-center.php" class="incubation-panel__btn">View more....</a>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="latest-news-panel h-100">
+                    <span class="latest-news-panel__eyebrow">Latest News</span>
+                    <?php if (!empty($incubationNews)): ?>
+                        <?php foreach ($incubationNews as $n): ?>
+                            <div class="latest-news-item">
+                                <img src="<?php echo !empty($n['image_url']) ? BASE_URL . sanitize($n['image_url']) : BASE_URL . 'assets/uploads/2026/07/001.webp'; ?>"
+                                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                                     alt="<?php echo sanitize($n['title']); ?>">
+                                <div class="latest-news-item__body">
+                                    <h4><?php echo sanitize($n['title']); ?></h4>
+                                    <span class="latest-news-item__date"><?php echo date('F j, Y', strtotime($n['publish_date'] ?: $n['created_at'])); ?></span>
+                                    <a href="<?php echo BASE_URL; ?>blog-detail.php?slug=<?php echo urlencode($n['slug'] ?: $n['id']); ?>">Read More &raquo;</a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-muted small mb-0">No news articles published yet.</p>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -695,7 +870,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
     <div class="container-xl py-3">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-2">
             <div>
-                <span class="section-subtitle">RECENT NEWS</span>
+                <span class="section-subtitle">RECENT BLOGS</span>
                 <h2 class="section-title mb-0">Information About All the <span>News &amp; Events</span> of University</h2>
             </div>
             <a href="<?php echo BASE_URL; ?>blogs.php" class="btn-card-apply fs-6">View All News <i class="fas fa-arrow-right ms-1"></i></a>
@@ -720,6 +895,185 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
     </div>
 </section>
 <?php endif; ?>
+
+<!-- ═══════════════════════════════════════════════════════
+     TESTIMONIALS (matches live srku.edu.in design)
+═══════════════════════════════════════════════════════ -->
+<?php
+$homeTestimonials = [
+    [
+        'name' => 'Ravi Gupta',
+        'city' => 'Bhopal',
+        'text' => 'Graduated from this university with valuable skills and experiences that have helped me succeed in my career. The alumni network is strong and supportive, and the career services office provided excellent guidance and resources to help me secure a job after graduation. I also appreciated the emphasis on real-world learning through internships and co-op programs.',
+    ],
+    [
+        'name' => 'Nitish Rai',
+        'city' => 'Bhopal',
+        'text' => "The professors at this university are some of the best in their fields, and they are genuinely passionate about teaching. I appreciated the diverse range of courses offered, and the opportunities to conduct research alongside faculty members. The university's commitment to community service and social responsibility also inspired me to get involved in volunteer work and make a positive impact on society.",
+    ],
+    [
+        'name' => 'Manish Nigam',
+        'city' => 'Bhopal',
+        'text' => 'Attending this university was one of the best decisions I have made. The faculty and staff were incredibly supportive, and the campus provided a great environment for learning. I was able to participate in various extracurricular activities that helped me develop leadership skills and make new friends. I highly recommend this university to anyone who wants to receive a top-quality education in a welcoming community.',
+    ],
+];
+?>
+<section class="testimonial-v2">
+    <div class="testimonial-v2__inner">
+        <p class="testimonial-v2__eyebrow">Real Stories</p>
+        <h2 class="testimonial-v2__title">What our <em>Students say</em> about the university</h2>
+
+        <div class="testimonial-v2__carousel" id="testimonialCarousel">
+            <?php foreach ($homeTestimonials as $i => $t): ?>
+                <div class="testimonial-v2__slide<?php echo $i === 0 ? ' active' : ''; ?>">
+                    <img class="testimonial-v2__avatar" src="<?php echo BASE_URL; ?>assets/uploads/2026/07/dummy.webp"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                         alt="<?php echo sanitize($t['name']); ?>">
+                    <p class="testimonial-v2__text"><?php echo sanitize($t['text']); ?></p>
+                    <p class="testimonial-v2__name"><?php echo sanitize($t['name']); ?></p>
+                    <p class="testimonial-v2__city"><?php echo sanitize($t['city']); ?></p>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="testimonial-v2__dots" id="testimonialDots">
+            <?php foreach ($homeTestimonials as $i => $t): ?>
+                <span class="testimonial-v2__dot<?php echo $i === 0 ? ' active' : ''; ?>" data-index="<?php echo $i; ?>"></span>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<script>
+(function () {
+    var slides = document.querySelectorAll('#testimonialCarousel .testimonial-v2__slide');
+    var dots = document.querySelectorAll('#testimonialDots .testimonial-v2__dot');
+    if (!slides.length) return;
+    var current = 0;
+
+    function show(i) {
+        slides.forEach(function (s, idx) { s.classList.toggle('active', idx === i); });
+        dots.forEach(function (d, idx) { d.classList.toggle('active', idx === i); });
+        current = i;
+    }
+
+    dots.forEach(function (d) {
+        d.addEventListener('click', function () { show(parseInt(d.dataset.index, 10)); });
+    });
+
+    setInterval(function () {
+        show((current + 1) % slides.length);
+    }, 5000);
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════
+     EVENTS GALLERY (auto-scrolling, matches live srku.edu.in design)
+═══════════════════════════════════════════════════════ -->
+<?php
+$eventsGalleryImages = [
+    ['file' => 'Gallary-slider-10.webp', 'alt' => 'Faculty Group Event'],
+    ['file' => 'Gallary-slider-07.webp', 'alt' => 'Library Session'],
+    ['file' => 'Gallary-slider-06.webp', 'alt' => 'Clinical Training Event'],
+    ['file' => 'Gallary-slider-03.webp', 'alt' => 'MRI Lab Tour'],
+    ['file' => '2.png', 'alt' => 'Cultural Dance Event'],
+    ['file' => 'Gallary-slider-01.webp', 'alt' => 'Hospital Ward Visit'],
+    ['file' => '7.png', 'alt' => 'Award Ceremony'],
+    ['file' => '6.png', 'alt' => 'University Event'],
+    ['file' => '5.png', 'alt' => 'University Event'],
+    ['file' => '4.png', 'alt' => 'University Event'],
+];
+?>
+<section class="py-5">
+    <div class="container-xl py-2 text-center">
+        <span class="section-subtitle">OUR EVENTS GALLERY</span>
+        <h2 class="section-title mb-4">Events <span>at SRK</span> University</h2>
+    </div>
+    <div class="auto-gallery__viewport" id="eventsGalleryViewport">
+        <div class="auto-gallery__track auto-gallery__track--3up" id="eventsGalleryTrack">
+            <?php foreach ($eventsGalleryImages as $img): ?>
+                <div class="auto-gallery__item auto-gallery__item--3up">
+                    <img src="<?php echo BASE_URL . 'assets/uploads/2026/07/' . rawurlencode($img['file']); ?>"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                         alt="<?php echo sanitize($img['alt']); ?>">
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="auto-gallery__dots" id="eventsGalleryDots"></div>
+</section>
+<script>
+(function () {
+    var track = document.getElementById('eventsGalleryTrack');
+    var viewport = document.getElementById('eventsGalleryViewport');
+    var dotsWrap = document.getElementById('eventsGalleryDots');
+    if (!track || !viewport || !dotsWrap) return;
+
+    var originalItems = Array.prototype.slice.call(track.children);
+    var total = originalItems.length;
+
+    function perView() {
+        var w = window.innerWidth;
+        if (w < 576) return 1;
+        if (w < 900) return 2;
+        return 3;
+    }
+
+    var visible = perView();
+    originalItems.slice(0, visible).forEach(function (node) {
+        track.appendChild(node.cloneNode(true));
+    });
+
+    var index = 0;
+    var dots = [];
+    dotsWrap.innerHTML = '';
+    for (var i = 0; i < total; i++) {
+        var dot = document.createElement('span');
+        dot.className = 'auto-gallery__dot' + (i === 0 ? ' active' : '');
+        (function (idx) {
+            dot.addEventListener('click', function () { goTo(idx); });
+        })(i);
+        dotsWrap.appendChild(dot);
+        dots.push(dot);
+    }
+
+    function setPosition(withTransition) {
+        var itemWidth = track.children[0].getBoundingClientRect().width;
+        var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || 0);
+        track.style.transition = withTransition === false ? 'none' : '';
+        track.style.transform = 'translateX(-' + (index * (itemWidth + gap)) + 'px)';
+    }
+
+    function updateDots() {
+        dots.forEach(function (d, i) { d.classList.toggle('active', i === (index % total)); });
+    }
+
+    function goTo(i) {
+        index = i;
+        setPosition(true);
+        updateDots();
+    }
+
+    function next() {
+        index++;
+        setPosition(true);
+        updateDots();
+        if (index >= total) {
+            setTimeout(function () {
+                index = 0;
+                setPosition(false);
+            }, 500);
+        }
+    }
+
+    window.addEventListener('resize', function () {
+        visible = perView();
+        setPosition(false);
+    });
+
+    setPosition(false);
+    setInterval(next, 2500);
+})();
+</script>
 
 <!-- ═══════════════════════════════════════════════════════
      CTA BANNER

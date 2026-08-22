@@ -24,7 +24,7 @@ $customHeadCode = getSetting('header_custom_head_code', '');
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Roboto+Slab:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Custom SRKU Styles -->
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css?v=<?php echo @filemtime(__DIR__ . '/../assets/css/style.css') ?: time(); ?>">
     <?php if ($customHeadCode): echo $customHeadCode; endif; ?>
 </head>
 <body>

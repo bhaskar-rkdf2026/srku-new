@@ -137,9 +137,12 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 <h4 class="fw-bold mb-0 text-navy">Welcome, <?php echo sanitize($_SESSION['admin_user'] ?? 'Admin'); ?></h4>
                 <small class="text-muted">Manage university content, courses, admissions &amp; settings dynamically.</small>
             </div>
-            <div>
+            <div class="d-flex gap-2">
                 <a href="<?php echo BASE_URL; ?>" target="_blank" class="btn btn-sm btn-danger px-3">
                     <i class="fas fa-globe me-1"></i> View Live Site
+                </a>
+                <a href="logout.php" class="btn btn-sm btn-outline-secondary px-3">
+                    <i class="fas fa-sign-out-alt me-1"></i> Logout
                 </a>
             </div>
         </div>
