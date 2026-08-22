@@ -307,13 +307,16 @@ function renderPageBanner($pageSlug, $defaultTitle, $defaultSubtitle = '', $defa
 }
 
 // Save and validate student enquiry or lead with source tagging
-function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $source = '') {
+function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $source = '', $fatherName = '', $city = '', $state = '') {
     $name = trim((string)$name);
     $email = trim((string)$email);
     $phone = trim((string)$phone);
     $course = trim((string)$course);
     $message = trim((string)$message);
-    
+    $fatherName = trim((string)$fatherName);
+    $city = trim((string)$city);
+    $state = trim((string)$state);
+
     // Strict Validation
     if (strlen($name) < 2) {
         return ['success' => false, 'error' => 'Please enter a valid full name (minimum 2 characters).'];
@@ -325,20 +328,23 @@ function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $so
     if (strlen($cleanPhone) < 10 || strlen($cleanPhone) > 15) {
         return ['success' => false, 'error' => 'Please enter a valid 10-digit mobile number.'];
     }
-    
+
     $fullMsg = $message;
     if ($source) {
         $fullMsg = "[" . $source . "]\n" . ($message ?: 'No additional message provided.');
     }
-    
+
     try {
         $pdo = getDBConnection();
-        $stmt = $pdo->prepare("INSERT INTO enquiries (name, email, phone, course, message, status, created_at) VALUES (:n, :e, :p, :c, :m, 'New', CURRENT_TIMESTAMP)");
+        $stmt = $pdo->prepare("INSERT INTO enquiries (name, father_name, email, phone, course, city, state, message, status, created_at) VALUES (:n, :fn, :e, :p, :c, :city, :state, :m, 'New', CURRENT_TIMESTAMP)");
         $stmt->execute([
             ':n' => $name,
+            ':fn' => $fatherName ?: null,
             ':e' => $email,
             ':p' => $phone,
             ':c' => $course ?: 'General Admission Enquiry',
+            ':city' => $city ?: null,
+            ':state' => $state ?: null,
             ':m' => $fullMsg
         ]);
         return ['success' => true, 'message' => 'Thank you! Your enquiry has been submitted successfully. Our admission team will contact you shortly.'];

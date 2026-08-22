@@ -47,12 +47,13 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
                 <h5 class="fw-bold text-white mb-3">Quick Links</h5>
                 <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
                     <li><a href="<?php echo BASE_URL; ?>about.php"><i class="fas fa-angle-right me-1 text-warning"></i> About SRKU</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>page.php?slug=why-srk"><i class="fas fa-angle-right me-1 text-warning"></i> Why Choose SRKU</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>why-srk.php"><i class="fas fa-angle-right me-1 text-warning"></i> Why Choose SRKU</a></li>
                     <li><a href="<?php echo BASE_URL; ?>courses.php"><i class="fas fa-angle-right me-1 text-warning"></i> Academic Programmes</a></li>
                     <li><a href="<?php echo BASE_URL; ?>page.php?slug=vision-mission"><i class="fas fa-angle-right me-1 text-warning"></i> Vision &amp; Mission</a></li>
                     <li><a href="<?php echo BASE_URL; ?>placements.php"><i class="fas fa-angle-right me-1 text-warning"></i> Placement Records</a></li>
                     <li><a href="<?php echo BASE_URL; ?>facilities.php"><i class="fas fa-angle-right me-1 text-warning"></i> 42+ Labs &amp; Campus</a></li>
                     <li><a href="<?php echo BASE_URL; ?>contact.php"><i class="fas fa-angle-right me-1 text-warning"></i> Admissions 2026-27</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>admission-enquiry.php"><i class="fas fa-angle-right me-1 text-warning"></i> Admission Enquiry</a></li>
                     <li><a href="<?php echo BASE_URL; ?>admin/login.php"><i class="fas fa-lock me-1 text-warning"></i> Admin CMS</a></li>
                 </ul>
             </div>

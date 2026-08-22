@@ -29,12 +29,12 @@ if (isset($_GET['action']) && $_GET['action'] === 'edit' && isset($_GET['id'])) 
 // Handle Add / Update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_banner'])) {
     $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
-    $page_slug = sanitize($_POST['page_slug'] ?? 'home');
-    $title = sanitize($_POST['title'] ?? '');
-    $subtitle = sanitize($_POST['subtitle'] ?? '');
-    $image_url = sanitize($_POST['image_url'] ?? '');
-    $btn_text = sanitize($_POST['btn_text'] ?? '');
-    $btn_link = sanitize($_POST['btn_link'] ?? '');
+    $page_slug = trim((string)($_POST['page_slug'] ?? 'home'));
+    $title = trim((string)($_POST['title'] ?? ''));
+    $subtitle = trim((string)($_POST['subtitle'] ?? ''));
+    $image_url = trim((string)($_POST['image_url'] ?? ''));
+    $btn_text = trim((string)($_POST['btn_text'] ?? ''));
+    $btn_link = trim((string)($_POST['btn_link'] ?? ''));
     $sort_order = (int)($_POST['sort_order'] ?? 0);
 
     if ($id > 0) {

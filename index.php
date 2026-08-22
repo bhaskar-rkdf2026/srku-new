@@ -30,7 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         $_POST['phone'] ?? '',
         $_POST['course'] ?? '',
         $_POST['message'] ?? '',
-        'Homepage Admission Section'
+        'Homepage Admission Section',
+        $_POST['father_name'] ?? '',
+        $_POST['city'] ?? '',
+        $_POST['state'] ?? ''
     );
     if ($res['success']) {
         $enquirySuccess = true;
@@ -156,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 </p>
                 <div class="d-flex gap-3">
                     <a href="<?php echo BASE_URL; ?>about.php" class="btn btn-srku"><i class="fas fa-arrow-right me-1"></i> Read More</a>
-                    <a href="<?php echo BASE_URL; ?>page.php?slug=why-srk" class="btn btn-outline-danger"><i class="fas fa-star me-1"></i> Why Choose SRKU</a>
+                    <a href="<?php echo BASE_URL; ?>why-srk.php" class="btn btn-outline-danger"><i class="fas fa-star me-1"></i> Why Choose SRKU</a>
                 </div>
             </div>
 
@@ -814,24 +817,20 @@ $autoGalleryImages = [
                     <?php endif; ?>
 
                     <form action="<?php echo BASE_URL; ?>#apply" method="POST">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold text-dark small mb-1">Full Name *</label>
-                            <input type="text" name="name" class="form-control py-2" placeholder="Enter your full name" minlength="2" maxlength="80" required>
-                        </div>
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label class="form-label fw-bold text-dark small mb-1">Email Address *</label>
-                                <input type="email" name="email" class="form-control py-2" placeholder="yourname@gmail.com" required>
+                                <label class="form-label fw-bold text-dark small mb-1">Your Name *</label>
+                                <input type="text" name="name" class="form-control py-2" placeholder="Enter your full name" minlength="2" maxlength="80" required>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-bold text-dark small mb-1">Phone Number *</label>
-                                <input type="tel" name="phone" class="form-control py-2" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" title="Please enter a valid 10-digit mobile number" required>
+                                <label class="form-label fw-bold text-dark small mb-1">Father's Name</label>
+                                <input type="text" name="father_name" class="form-control py-2" placeholder="Enter father's name" maxlength="80">
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-bold text-dark small mb-1">Interested Programme</label>
+                            <label class="form-label fw-bold text-dark small mb-1">Courses</label>
                             <select name="course" class="form-select py-2">
-                                <option value="">-- Select Course --</option>
+                                <option value="">-- Please choose an option --</option>
                                 <option>B.Tech Computer Science &amp; Engineering</option>
                                 <option>B.Tech Artificial Intelligence &amp; Data Science</option>
                                 <option>Bachelor of Pharmacy (B.Pharm)</option>
@@ -845,12 +844,28 @@ $autoGalleryImages = [
                                 <option>Other University Programme</option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold text-dark small mb-1">Message / Query</label>
-                            <textarea name="message" class="form-control py-2" rows="3" placeholder="Specify your qualification or question"></textarea>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark small mb-1">Mail ID *</label>
+                                <input type="email" name="email" class="form-control py-2" placeholder="yourname@gmail.com" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark small mb-1">Mobile Number *</label>
+                                <input type="tel" name="phone" class="form-control py-2" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" title="Please enter a valid 10-digit mobile number" required>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark small mb-1">City</label>
+                                <input type="text" name="city" class="form-control py-2" placeholder="Enter your city" maxlength="100">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark small mb-1">State</label>
+                                <input type="text" name="state" class="form-control py-2" placeholder="Enter your state" maxlength="100">
+                            </div>
                         </div>
                         <button type="submit" name="submit_enquiry" class="btn btn-warning w-100 py-2 fw-bold text-dark">
-                            <i class="fas fa-paper-plane me-1"></i> Submit Admission Enquiry
+                            <i class="fas fa-paper-plane me-1"></i> Submit
                         </button>
                     </form>
                 </div>

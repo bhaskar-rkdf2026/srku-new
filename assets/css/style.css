@@ -1194,6 +1194,196 @@ body {
     transform: scale(1.2);
 }
 
+.about-quicknav-link {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--srku-navy);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.about-quicknav-link:hover {
+    color: var(--srku-maroon);
+}
+
+/* Hover polish for the About / Why SRK / Accreditation pages */
+.card.reveal {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card.reveal:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12) !important;
+}
+
+.card.reveal:hover .about-num-badge,
+.card.reveal:hover .bg-danger-subtle {
+    transform: scale(1.1);
+}
+
+.about-num-badge,
+.bg-danger-subtle {
+    transition: transform 0.3s ease;
+}
+
+.welcome-img {
+    transition: var(--transition);
+}
+
+.welcome-img:hover {
+    filter: brightness(1.04);
+}
+
+.vm-tab i {
+    transition: transform 0.25s ease;
+}
+
+.vm-tab:hover i {
+    transform: scale(1.15);
+    display: inline-block;
+}
+
+.accordion-item {
+    transition: box-shadow 0.3s ease;
+}
+
+.accordion-item:hover {
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18) !important;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+.accordion .accordion-button {
+    font-weight: 700;
+    color: var(--srku-navy);
+    background: #fff;
+    box-shadow: none;
+}
+
+.accordion .accordion-button:not(.collapsed) {
+    color: var(--srku-maroon);
+    background: #fff;
+    box-shadow: none;
+}
+
+.accordion .accordion-button:focus {
+    box-shadow: none;
+    border-color: rgba(0, 0, 0, 0.125);
+}
+
+.accordion .accordion-item {
+    border: none;
+    border-radius: 10px !important;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.accordion .accordion-body {
+    color: #495057;
+    line-height: 1.75;
+    font-size: 0.95rem;
+    background: #fff;
+}
+
+.vm-tabs {
+    display: flex;
+    justify-content: center;
+    gap: clamp(1.5rem, 5vw, 4rem);
+    border-bottom: 1px solid #e2d9c8;
+    margin-bottom: 2.5rem;
+}
+
+.vm-tab {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 0.9rem 0.25rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #8a8378;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-bottom: -1px;
+}
+
+.vm-tab:hover {
+    color: var(--srku-maroon);
+}
+
+.vm-tab.active {
+    color: var(--srku-maroon);
+    border-bottom-color: var(--srku-maroon);
+}
+
+.vm-panel-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.vm-panel {
+    display: none;
+    animation: vmPanelFade 0.4s ease;
+}
+
+.vm-panel.active {
+    display: block;
+}
+
+@keyframes vmPanelFade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.vm-panel__text {
+    color: var(--srku-navy);
+    font-size: 1.15rem;
+    line-height: 1.9;
+    font-family: var(--font-serif);
+    font-style: italic;
+    margin-bottom: 0;
+}
+
+.about-num-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: #7a1d1d24;
+    color: var(--srku-maroon);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 1.1rem;
+}
+
+.about-num-badge {
+    width: 46px;
+    height: 46px;
+    font-size: 0.95rem;
+}
+
 .labs-stat-box {
     background: var(--srku-cream);
     border-radius: 10px;
