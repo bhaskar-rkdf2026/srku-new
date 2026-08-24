@@ -28,7 +28,8 @@ Options -Indexes
     RewriteRule ^about/admission/?$ page.php?slug=admission [L,QSA]
 
     RewriteRule ^departments/?$ departments.php [L,QSA]
-    RewriteRule ^faculties/?$ departments.php [L,QSA]
+    RewriteRule ^faculties/?$ faculties.php [L,QSA]
+    RewriteRule ^faculty/?$ faculties.php [L,QSA]
     RewriteRule ^courses/?$ courses.php [L,QSA]
     RewriteRule ^syllabus/?$ syllabus.php [L,QSA]
     RewriteRule ^placements/?$ placements.php [L,QSA]

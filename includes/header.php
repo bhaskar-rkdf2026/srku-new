@@ -35,9 +35,10 @@ $customHeadCode = getSetting('header_custom_head_code', '');
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-none d-md-flex gap-3">
                 <a href="<?php echo sanitize($erpLink); ?>" target="_blank" class="topbar-link"><i class="fas fa-user-graduate me-1 text-warning"></i> STUDENT PORTAL</a>
-                <a href="<?php echo BASE_URL; ?>departments.php" class="topbar-link"><i class="fas fa-chalkboard-teacher me-1 text-warning"></i> FACULTIES</a>
+                <a href="<?php echo BASE_URL; ?>faculties.php" class="topbar-link"><i class="fas fa-chalkboard-teacher me-1 text-warning"></i> FACULTIES</a>
                 <a href="<?php echo BASE_URL; ?>alumni.php" class="topbar-link"><i class="fas fa-users me-1 text-warning"></i> ALUMNI</a>
                 <a href="<?php echo BASE_URL; ?>career.php" class="topbar-link"><i class="fas fa-briefcase me-1 text-warning"></i> CAREERS</a>
+                <a href="<?php echo BASE_URL; ?>grievance.php" class="topbar-link"><i class="fas fa-balance-scale me-1 text-warning"></i> GRIEVANCE CELL</a>
                 <a href="<?php echo sanitize($aicteLink); ?>" target="_blank" class="topbar-link"><i class="fas fa-award me-1 text-warning"></i> AICTE SCHOLARSHIP</a>
             </div>
             <div class="d-flex align-items-center gap-3 ms-auto ms-md-0">
@@ -183,6 +184,7 @@ $customHeadCode = getSetting('header_custom_head_code', '');
                                 Act &amp; Statutes <span class="static-dropdown-arrow static-sub-arrow"></span>
                             </a>
                             <ul class="static-dropdown-panel static-sub-dropdown">
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>grievance.php" class="static-dropdown-link fw-bold text-danger"><i class="fas fa-balance-scale me-1"></i> Student Grievance Portal</a></li>
                                 <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Student_Grievance_Committee.pdf" class="static-dropdown-link">Student Grievance Committee</a></li>
                                 <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/AntiRagging.pdf" class="static-dropdown-link">Anti Ragging</a></li>
                                 <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/SC_ST_Grievance_committee.pdf" class="static-dropdown-link">SC-ST Grievance Committee</a></li>
@@ -384,10 +386,11 @@ $customHeadCode = getSetting('header_custom_head_code', '');
 
                 <!-- Admission -->
                 <li class="static-menu-item <?php echo (isset($activeNav) && $activeNav == 'admission') ? 'active' : ''; ?>">
-                    <a href="<?php echo BASE_URL; ?>about/admission" class="static-menu-link">
+                    <a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="static-menu-link">
                         Admission <span class="static-dropdown-arrow"></span>
                     </a>
                     <ul class="static-dropdown-panel">
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="static-dropdown-link fw-bold text-danger"><i class="fas fa-file-signature me-1"></i> Online Admission Form 2026-27</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>student-life" class="static-dropdown-link">Student Life</a></li>
                         <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Prospectus.pdf" class="static-dropdown-link">Prospectus</a></li>
                         <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Admission-ProcessGuidelines.pdf" class="static-dropdown-link">Admission Process Guidelines</a></li>

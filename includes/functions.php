@@ -153,6 +153,53 @@ function getPageBySlug($slug) {
     }
 }
 
+// Fetch blogs from dedicated blogs table
+function getBlogs($category = null, $limit = 12, $search = '') {
+    try {
+        $pdo = getDBConnection();
+        $sql = "SELECT * FROM blogs WHERE status = 'published'";
+        $params = [];
+        if (!empty($category) && $category !== 'all') {
+            $sql .= " AND category = :c";
+            $params[':c'] = $category;
+        }
+        if (!empty($search)) {
+            $sql .= " AND (title LIKE :s OR content LIKE :s OR short_description LIKE :s)";
+            $params[':s'] = "%$search%";
+        }
+        $sql .= " ORDER BY publish_date DESC, id DESC";
+        if (!empty($limit)) {
+            $sql .= " LIMIT " . (int)$limit;
+        }
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+// Fetch single blog by slug or ID with view count update
+function getBlogBySlug($slug) {
+    try {
+        $pdo = getDBConnection();
+        $stmt = $pdo->prepare("SELECT * FROM blogs WHERE (slug = :s OR id = :id) AND status = 'published' LIMIT 1");
+        $idVal = is_numeric($slug) ? (int)$slug : 0;
+        $stmt->execute([':s' => $slug, ':id' => $idVal]);
+        $blog = $stmt->fetch();
+        if ($blog) {
+            // increment view count
+            try {
+                $pdo->prepare("UPDATE blogs SET views = views + 1 WHERE id = :id")->execute([':id' => $blog['id']]);
+            } catch (Exception $e2) {}
+            return $blog;
+        }
+        return false;
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
 // Fetch news items
 function getNews($category = null, $limit = 6, $tickerOnly = false) {
     try {
@@ -175,6 +222,19 @@ function getNews($category = null, $limit = 6, $tickerOnly = false) {
         return $stmt->fetchAll();
     } catch (Exception $e) {
         return [];
+    }
+}
+
+// Fetch single news by slug or ID
+function getNewsBySlug($slug) {
+    try {
+        $pdo = getDBConnection();
+        $stmt = $pdo->prepare("SELECT * FROM news WHERE slug = :s OR id = :id LIMIT 1");
+        $idVal = is_numeric($slug) ? (int)$slug : 0;
+        $stmt->execute([':s' => $slug, ':id' => $idVal]);
+        return $stmt->fetch();
+    } catch (Exception $e) {
+        return false;
     }
 }
 
@@ -405,6 +465,23 @@ function saveComplaint($name, $fatherName, $enrollmentNumber, $email, $phone, $i
 
     try {
         $pdo = getDBConnection();
+        // Ensure complaints table exists
+        $pdo->exec("CREATE TABLE IF NOT EXISTS complaints (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(150) NOT NULL,
+            father_name VARCHAR(150) NULL,
+            enrollment_number VARCHAR(100) NULL,
+            email VARCHAR(150) NOT NULL,
+            phone VARCHAR(50) NOT NULL,
+            institute_name VARCHAR(255) NULL,
+            course_name VARCHAR(255) NULL,
+            year_semester VARCHAR(100) NULL,
+            complaint_type VARCHAR(100) NOT NULL DEFAULT 'General',
+            complaint_details TEXT NOT NULL,
+            status VARCHAR(50) NOT NULL DEFAULT 'New',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
         $stmt = $pdo->prepare("INSERT INTO complaints (name, father_name, enrollment_number, email, phone, institute_name, course_name, year_semester, complaint_type, complaint_details, status, created_at) VALUES (:n, :fn, :en, :e, :p, :inst, :course, :ys, :ct, :cd, 'New', CURRENT_TIMESTAMP)");
         $stmt->execute([
             ':n' => $name,
@@ -418,8 +495,97 @@ function saveComplaint($name, $fatherName, $enrollmentNumber, $email, $phone, $i
             ':ct' => $complaintType ?: 'General',
             ':cd' => $complaintDetails
         ]);
+
+        // Also sync into unified enquiries for Admin Admissions & Enquiries dashboard
+        try {
+            $grievanceMsg = "[Student Grievance - " . ($complaintType ?: 'General') . "]\nEnrollment: " . ($enrollmentNumber ?: 'N/A') . "\nInstitute: " . ($instituteName ?: 'N/A') . "\nCourse: " . ($courseName ?: 'N/A') . "\nYear/Sem: " . ($yearSemester ?: 'N/A') . "\n\nDetails:\n" . $complaintDetails;
+            
+            $stmtEnq = $pdo->prepare("INSERT INTO enquiries (name, father_name, email, phone, course, source, message, status, created_at) VALUES (:n, :fn, :e, :p, :c, 'Student Grievance Redressal Portal', :m, 'New', CURRENT_TIMESTAMP)");
+            $stmtEnq->execute([
+                ':n' => $name,
+                ':fn' => $fatherName ?: null,
+                ':e' => $email,
+                ':p' => $phone,
+                ':c' => $courseName ?: ($complaintType ? "Grievance: $complaintType" : 'Student Grievance'),
+                ':m' => $grievanceMsg
+            ]);
+        } catch (Exception $e2) {}
+
         return ['success' => true, 'message' => 'Your complaint has been registered successfully. Our grievance cell will review it and contact you shortly.'];
     } catch (Exception $ex) {
         return ['success' => false, 'error' => 'Failed to register complaint: ' . $ex->getMessage()];
     }
 }
+
+// Faculty list retrieval with optional filtering
+function getFacultyList($deptSlug = '', $search = '', $designation = '', $limit = 0, $offset = 0) {
+    try {
+        $pdo = getDBConnection();
+        $sql = "SELECT * FROM faculty WHERE status = 'active'";
+        $params = [];
+
+        if (!empty($deptSlug)) {
+            $sql .= " AND (dept_slug = :dept OR department_name LIKE :deptLike)";
+            $params[':dept'] = $deptSlug;
+            $params[':deptLike'] = "%" . $deptSlug . "%";
+        }
+        if (!empty($designation)) {
+            $sql .= " AND designation LIKE :desig";
+            $params[':desig'] = "%" . $designation . "%";
+        }
+        if (!empty($search)) {
+            $sql .= " AND (name LIKE :s OR department_name LIKE :s OR qualification LIKE :s OR designation LIKE :s)";
+            $params[':s'] = "%" . $search . "%";
+        }
+
+        $sql .= " ORDER BY 
+            CASE 
+                WHEN designation LIKE '%Dean%' OR designation LIKE '%Principal%' OR designation LIKE '%Director%' THEN 1
+                WHEN designation LIKE '%HOD%' OR designation LIKE '%Head%' THEN 2
+                WHEN designation LIKE '%Professor%' AND designation NOT LIKE '%Associate%' AND designation NOT LIKE '%Assistant%' THEN 3
+                WHEN designation LIKE '%Associate Professor%' OR designation LIKE '%Reader%' THEN 4
+                WHEN designation LIKE '%Assistant Professor%' OR designation LIKE '%Lecturer%' THEN 5
+                ELSE 6
+            END, id ASC";
+
+        if ($limit > 0) {
+            $sql .= " LIMIT " . (int)$limit . " OFFSET " . (int)$offset;
+        }
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+// Faculty distinct departments
+function getFacultyDepartments() {
+    try {
+        $pdo = getDBConnection();
+        return $pdo->query("SELECT department_name, dept_slug, COUNT(*) as count FROM faculty WHERE status = 'active' GROUP BY department_name, dept_slug ORDER BY department_name ASC")->fetchAll();
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+// Faculty statistics
+function getFacultyStats() {
+    try {
+        $pdo = getDBConnection();
+        $total = $pdo->query("SELECT COUNT(*) FROM faculty WHERE status = 'active'")->fetchColumn();
+        $depts = $pdo->query("SELECT COUNT(DISTINCT department_name) FROM faculty WHERE status = 'active'")->fetchColumn();
+        $professors = $pdo->query("SELECT COUNT(*) FROM faculty WHERE status = 'active' AND (designation LIKE '%Professor%' OR designation LIKE '%Dean%' OR designation LIKE '%Principal%')")->fetchColumn();
+        $phdHolders = $pdo->query("SELECT COUNT(*) FROM faculty WHERE status = 'active' AND (qualification LIKE '%PhD%' OR qualification LIKE '%P.hd%' OR qualification LIKE '%MD%' OR qualification LIKE '%MS%' OR qualification LIKE '%MDS%')")->fetchColumn();
+        return [
+            'total' => (int)$total,
+            'departments' => (int)$depts,
+            'professors' => (int)$professors,
+            'phd_md_count' => (int)$phdHolders
+        ];
+    } catch (Exception $e) {
+        return ['total' => 0, 'departments' => 0, 'professors' => 0, 'phd_md_count' => 0];
+    }
+}
+

@@ -204,14 +204,14 @@ $courses = $pdo->query("SELECT * FROM courses ORDER BY department ASC, course_na
                 </div>
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label class="form-label fw-bold text-dark small">Scheme PDF URL</label>
-                        <input type="url" name="scheme_url" class="form-control" placeholder="https://www.srku.edu.in/.../Scheme.pdf" value="<?php echo sanitize($editCourse['scheme_url'] ?? ''); ?>">
-                        <small class="text-muted">Direct URL to semester-wise scheme of examination document.</small>
+                        <label class="form-label fw-bold text-dark small">Scheme PDF Path / URL</label>
+                        <input type="text" name="scheme_url" class="form-control" placeholder="assets/uploads/syllabus/Scheme.pdf or #" value="<?php echo sanitize($editCourse['scheme_url'] ?? ''); ?>">
+                        <small class="text-muted">Local file path (assets/uploads/syllabus/...), full URL, or '#' if not available.</small>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label fw-bold text-dark small">Syllabus PDF URL</label>
-                        <input type="url" name="syllabus_url" class="form-control" placeholder="https://www.srku.edu.in/.../Syllabus.pdf" value="<?php echo sanitize($editCourse['syllabus_url'] ?? ''); ?>">
-                        <small class="text-muted">Direct URL to complete course structure &amp; syllabus PDF document.</small>
+                        <label class="form-label fw-bold text-dark small">Syllabus PDF Path / URL</label>
+                        <input type="text" name="syllabus_url" class="form-control" placeholder="assets/uploads/syllabus/Syllabus.pdf or #" value="<?php echo sanitize($editCourse['syllabus_url'] ?? ''); ?>">
+                        <small class="text-muted">Local file path (assets/uploads/syllabus/...), full URL, or '#' if not available.</small>
                     </div>
                 </div>
             </div>

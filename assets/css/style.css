@@ -2313,8 +2313,12 @@ body {
 
 .admin-main {
     margin-left: 260px;
+    width: calc(100% - 260px);
+    max-width: calc(100% - 260px);
     min-height: 100vh;
     background: #f8fafc;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 .admin-sidebar .sidebar-logo {
@@ -2709,6 +2713,73 @@ body {
     padding-bottom: 22px;
 }
 
+/* ═══════════════════════════════════════════════════════
+   DUAL STICKY FLOATING SIDE WIDGETS (Admission & Grievance)
+═══════════════════════════════════════════════════════ */
+.sticky-side-container {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 9995;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sticky-side-btn {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 18px 11px 14px;
+    border-radius: 30px 0 0 30px;
+    color: #ffffff !important;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    box-shadow: -4px 4px 18px rgba(0, 0, 0, 0.25);
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    border: none;
+    outline: none;
+    text-align: left;
+}
+
+.sticky-side-btn.btn-admission-sticky {
+    background: linear-gradient(135deg, #7A0B0D 0%, #d62529 100%);
+    border-left: 3.5px solid #ffcc00;
+}
+
+.sticky-side-btn.btn-admission-sticky:hover {
+    transform: translateX(-8px);
+    background: linear-gradient(135deg, #9b0e11 0%, #ec3337 100%);
+    box-shadow: -6px 6px 24px rgba(236, 51, 55, 0.45);
+}
+
+.sticky-side-btn.btn-grievance-sticky {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-left: 3.5px solid #38bdf8;
+}
+
+.sticky-side-btn.btn-grievance-sticky:hover {
+    transform: translateX(-8px);
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    box-shadow: -6px 6px 24px rgba(30, 41, 59, 0.5);
+}
+
+.sticky-side-btn .sticky-icon {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
 /* Back To Top Floating Rocket Button */
 .back-to-top-btn {
     position: fixed;
@@ -2747,6 +2818,30 @@ body {
 @media (max-width: 767px) {
     .floating-enquiry-tab {
         display: none !important;
+    }
+
+    .sticky-side-container {
+        right: 0;
+        top: auto;
+        bottom: 80px;
+        transform: none;
+        gap: 6px;
+    }
+
+    .sticky-side-btn {
+        padding: 9px 12px 9px 10px;
+        font-size: 0.75rem;
+        border-radius: 20px 0 0 20px;
+    }
+
+    .sticky-side-btn span.label-text {
+        display: none;
+    }
+
+    .sticky-side-btn .sticky-icon {
+        width: 24px;
+        height: 24px;
+        font-size: 0.78rem;
     }
 
     .whatsapp-float-btn {
