@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 <span class="section-subtitle">WELCOME TO SRK UNIVERSITY</span>
                 <h2 class="section-title mb-3">Empowering Minds, <span>Shaping Futures</span><br>through Academic Excellence</h2>
                 <p class="text-dark mb-3" style="line-height:1.8; font-size:0.95rem;">
-                    Sarvepalli Radhakrishnan University (SRKU), Bhopal is a premier educational institution committed to delivering cutting-edge technical, pharmaceutical, management, and scientific education.
+                    Sarvepalli Radhakrishnan University (SRKU), Bhopal, is a premier educational institution committed to delivering cutting-edge technical, pharmaceutical, management, and scientific education.
                 </p>
                 <p class="text-muted mb-4" style="line-height:1.8; font-size:0.93rem;">
                     Recognized by the University Grants Commission (UGC) under Section 2(f), AICTE, PCI, and statutory councils, SRKU provides an innovative ecosystem blending rigorous research, multidisciplinary collaboration, and industry-aligned pedagogy.
@@ -230,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                     <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp" class="prog-img" alt="RKDF Institute of Science & Technology">
                     <div class="prog-body">
                         <h3 class="prog-title">RKDF Institute of Science &amp; Technology</h3>
-                        <p class="prog-desc">Empowering minds in research &amp; science, engineering for tomorrow's leaders.</p>
+                        <p class="prog-desc">Empowering minds in research, science &amp; engineering for tomorrow's leaders.</p>
                         <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-technology" class="btn-card-apply">Explore &rarr;</a>
                     </div>
                 </div>
@@ -353,7 +353,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-2">
             <div>
                 <span class="section-subtitle">COURSES &amp; PROGRAMS</span>
-                <h2 class="section-title mb-0">How to Get Admission in <span>SRK University</span> Bhopal?</h2>
+                <h2 class="section-title mb-0">How to Get Admission in <span>SRK University</span>, Bhopal?</h2>
                 <p class="text-muted small mb-0">Choose your trajectory from over 140+ meticulously designed programs and find the pathway that fits your goals.</p>
             </div>
             <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View all 140+ programs <i class="fas fa-arrow-right ms-1"></i></a>
@@ -411,7 +411,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             <p class="chancellor-v2__body"><?php echo sanitize($chancellorMsg); ?></p>
             <p class="chancellor-v2__body"><?php echo sanitize($chancellorMsg2); ?></p>
             <div class="chancellor-v2__accred">
-                <div class="chancellor-v2__accred-item"><span class="chancellor-v2__accred-name">UGC</span><span class="chancellor-v2__accred-tag">Recognised</span></div>
+                <div class="chancellor-v2__accred-item"><span class="chancellor-v2__accred-name">UGC</span><span class="chancellor-v2__accred-tag">Recognized</span></div>
                 <div class="chancellor-v2__accred-item"><span class="chancellor-v2__accred-name">NAAC</span><span class="chancellor-v2__accred-tag">A+ Grade</span></div>
                 <div class="chancellor-v2__accred-item"><span class="chancellor-v2__accred-name">AICTE</span><span class="chancellor-v2__accred-tag">Approved</span></div>
             </div>
@@ -516,7 +516,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         <div class="row align-items-center g-4 g-lg-5">
             <div class="col-12 col-lg-6">
                 <p class="text-dark mb-4" style="line-height:1.8; font-size:0.94rem;">
-                    Our dedicated Corporate Relations Cell conducts year-round campus recruitment drives, soft skills training, mock interviews, and industry internships connecting students to 500+ top national and global MNCs.
+                    Our dedicated Corporate Relations Cell conducts year-round campus recruitment drives, soft skills training, mock interviews, and industry internships, connecting students to 500+ top national and global MNCs.
                 </p>
                 <div class="row row-cols-3 g-2 mb-4">
                     <div class="col"><div class="labs-stat-box labs-stat-box--sm"><span class="num">&#8377;42 LPA</span><span class="lbl">Highest Package</span></div></div>
@@ -648,7 +648,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 <div class="incubation-panel h-100">
                     <span class="incubation-panel__eyebrow">Incubation &amp; Startups</span>
                     <h2 class="incubation-panel__title">Build Your Venture On Campus.</h2>
-                    <p class="incubation-panel__desc">The university has established an incubation center for promoting new ideas and startups in the region. The center will incubate the business ideas with relevance and fitment to the local expertise, uniqueness, and market demands. Initially the centre will provide training and support for startups related to handmade soaps &amp; sanitizers and mobile apps.</p>
+                    <p class="incubation-panel__desc">The university has established an incubation center for promoting new ideas and startups in the region. The center will incubate business ideas with relevance and fitment to local expertise, uniqueness, and market demands. Initially, the center will provide training and support for startups related to handmade soaps &amp; sanitizers and mobile apps.</p>
                     <a href="<?php echo BASE_URL; ?>incubation-center.php" class="incubation-panel__btn">View more....</a>
                 </div>
             </div>
