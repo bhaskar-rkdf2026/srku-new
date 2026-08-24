@@ -17,11 +17,14 @@ Options -Indexes
     RewriteRule ^about/?$ about.php [L,QSA]
     RewriteRule ^about/why-srk/?$ why-srk.php [L,QSA]
     RewriteRule ^why-srk/?$ why-srk.php [L,QSA]
-    RewriteRule ^about/srk-university-vision-and-mission/?$ page.php?slug=vision-mission [L,QSA]
+    RewriteRule ^about/srk-university-vision-and-mission/?$ vision-mission.php [L,QSA]
+    RewriteRule ^vision-mission/?$ vision-mission.php [L,QSA]
     RewriteRule ^about/accreditation/?$ accreditation.php [L,QSA]
     RewriteRule ^accreditation/?$ accreditation.php [L,QSA]
-    RewriteRule ^about/board-of-management/?$ page.php?slug=board-of-management [L,QSA]
-    RewriteRule ^about/constituent-unit/?$ page.php?slug=constituent-unit [L,QSA]
+    RewriteRule ^about/board-of-management/?$ board-of-management.php [L,QSA]
+    RewriteRule ^board-of-management/?$ board-of-management.php [L,QSA]
+    RewriteRule ^about/constituent-unit/?$ constituent-unit.php [L,QSA]
+    RewriteRule ^constituent-unit/?$ constituent-unit.php [L,QSA]
     RewriteRule ^about/admission/?$ page.php?slug=admission [L,QSA]
 
     RewriteRule ^departments/?$ departments.php [L,QSA]
@@ -39,6 +42,7 @@ Options -Indexes
     RewriteRule ^blogs/?$ blogs.php [L,QSA]
     RewriteRule ^contact/?$ contact.php [L,QSA]
     RewriteRule ^admission-enquiry/?$ admission-enquiry.php [L,QSA]
+    RewriteRule ^grievance/?$ grievance.php [L,QSA]
 
     # Dynamic Course Detail Pages
     # Example: /courses/b-tech-srk-university-faculty-of-engineering

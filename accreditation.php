@@ -7,7 +7,7 @@ require_once __DIR__ . '/includes/header.php';
 <!-- ═══════════════════════════════════════════════════════
      HERO BANNER
 ═══════════════════════════════════════════════════════ -->
-<section class="position-relative text-white py-5" style="background: linear-gradient(100deg, rgba(61,10,9,0.62) 0%, rgba(8,16,32,0.6) 100%), url('<?php echo BASE_URL; ?>assets/uploads/2026/07/campus-1.webp') center/cover no-repeat;">
+<section class="position-relative text-white py-5" style="background: linear-gradient(100deg, rgba(91,22,20,0.85) 0%, rgba(15,30,59,0.78) 100%), url('<?php echo BASE_URL; ?>assets/uploads/2026/07/campus-1.webp') center/cover no-repeat;">
     <div class="container-xl py-4 position-relative z-2">
         <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb mb-0 small">
@@ -15,13 +15,13 @@ require_once __DIR__ . '/includes/header.php';
                 <li class="breadcrumb-item active" aria-current="page" style="color: rgba(255,255,255,0.85);">Accreditation</li>
             </ol>
         </nav>
-        <h1 class="fw-bold display-6 mb-3" style="text-shadow: 0 2px 12px rgba(0,0,0,0.45);">Our Accreditations &amp; Regulatory Recognition &ndash; Guaranteeing Quality Excellence</h1>
+        <h1 class="fw-bold display-6 mb-3" style="max-width:800px; text-shadow: 0 2px 12px rgba(0,0,0,0.45);">Our Accreditations &amp; Regulatory Recognition &ndash; Guaranteeing Quality Excellence</h1>
         <p class="mb-4" style="max-width:760px; line-height:1.8; color: rgba(255,255,255,0.9); text-shadow: 0 1px 6px rgba(0,0,0,0.4);">
             SRK University is proud to hold comprehensive recognition and accreditation from India's leading regulatory bodies. These approvals reflect our unwavering commitment to academic excellence, quality assurance, and ethical practice across all our programmes.
         </p>
         <div class="d-flex flex-wrap gap-3">
             <a href="<?php echo BASE_URL; ?>contact.php#apply" class="btn-hero-yellow">Apply Now</a>
-            <a href="<?php echo BASE_URL; ?>page.php?slug=board-of-management" class="btn-hero-outline">Meet the Leadership</a>
+            <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn-hero-outline">Meet the Leadership</a>
         </div>
     </div>
 </section>
