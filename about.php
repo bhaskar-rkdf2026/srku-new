@@ -27,42 +27,14 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 
-<!-- STATS STRIP -->
-<div class="stats-strip py-2">
-    <div class="container-xl">
-        <div class="row row-cols-2 row-cols-md-5 g-0 text-center">
-            <div class="col stat-box">
-                <div class="stat-val">18,000+</div>
-                <div class="stat-txt">Students</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">600+</div>
-                <div class="stat-txt">Faculty</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">120+</div>
-                <div class="stat-txt">Programs</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">1,400+</div>
-                <div class="stat-txt">Research Papers</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">42+</div>
-                <div class="stat-txt">Global Partners</div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- WHO WE ARE / UNIVERSITY OVERVIEW -->
 <section class="py-5" id="overview">
     <div class="container-xl py-3">
         <div class="row align-items-center g-4 g-lg-5">
             <div class="col-12 col-lg-5 reveal">
-                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/welcome-srku-campus.jpeg"
+                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/srku-rkdf-building.jpeg"
                      onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                     class="welcome-img" alt="SRK University Campus">
+                     class="welcome-img" alt="RKDF Group Campus Building">
             </div>
             <div class="col-12 col-lg-7 reveal">
                 <span class="section-subtitle">UNIVERSITY OVERVIEW</span>
@@ -81,6 +53,71 @@ require_once __DIR__ . '/includes/header.php';
                 </ul>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- STATS MILESTONE TIMELINE -->
+<?php
+$aboutMilestoneStats = [
+    ['icon' => 'fa-award', 'num' => '31<sup>st</sup>', 'lbl' => 'Year of Excellence'],
+    ['icon' => 'fa-user-graduate', 'num' => '20,000+', 'lbl' => 'Students'],
+    ['icon' => 'fa-briefcase', 'num' => '35,000+', 'lbl' => 'Placements'],
+    ['icon' => 'fa-handshake', 'num' => '300+', 'lbl' => 'Industry Linkages'],
+    ['icon' => 'fa-users', 'num' => '1,10,000+', 'lbl' => 'Alumni'],
+    ['icon' => 'fa-chalkboard-teacher', 'num' => '1,000+', 'lbl' => 'Faculty'],
+    ['icon' => 'fa-lightbulb', 'num' => '160+', 'lbl' => 'Patents'],
+    ['icon' => 'fa-gift', 'num' => '&#10003;', 'lbl' => 'Scholarship Available'],
+];
+?>
+<section class="stat-milestones">
+    <div class="stat-milestones__track">
+
+        <div class="stat-milestones__row stat-milestones__row--top">
+            <?php foreach ($aboutMilestoneStats as $mi => $ms): ?>
+                <div class="stat-milestones__col">
+                    <?php if ($mi % 2 === 0): ?>
+                        <div class="stat-milestones__card">
+                            <span class="stat-milestones__icon"><i class="fas <?php echo $ms['icon']; ?>"></i></span>
+                            <span class="stat-milestones__num"><?php echo $ms['num']; ?></span>
+                            <span class="stat-milestones__lbl"><?php echo $ms['lbl']; ?></span>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="stat-milestones__row stat-milestones__row--dots">
+            <?php foreach ($aboutMilestoneStats as $mi => $ms): ?>
+                <div class="stat-milestones__col<?php echo $mi % 2 === 1 ? ' stat-milestones__col--bottom-accent' : ''; ?>">
+                    <span class="stat-milestones__dot"></span>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="stat-milestones__row stat-milestones__row--bottom">
+            <?php foreach ($aboutMilestoneStats as $mi => $ms): ?>
+                <div class="stat-milestones__col">
+                    <?php if ($mi % 2 === 1): ?>
+                        <div class="stat-milestones__card stat-milestones__card--accent">
+                            <span class="stat-milestones__icon"><i class="fas <?php echo $ms['icon']; ?>"></i></span>
+                            <span class="stat-milestones__num"><?php echo $ms['num']; ?></span>
+                            <span class="stat-milestones__lbl"><?php echo $ms['lbl']; ?></span>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <?php foreach ($aboutMilestoneStats as $mi => $ms): ?>
+            <div class="stat-milestones__grid-item">
+                <div class="stat-milestones__card<?php echo $mi % 2 === 1 ? ' stat-milestones__card--accent' : ''; ?>">
+                    <span class="stat-milestones__icon"><i class="fas <?php echo $ms['icon']; ?>"></i></span>
+                    <span class="stat-milestones__num"><?php echo $ms['num']; ?></span>
+                    <span class="stat-milestones__lbl"><?php echo $ms['lbl']; ?></span>
+                </div>
+            </div>
+        <?php endforeach; ?>
+
     </div>
 </section>
 
@@ -103,14 +140,22 @@ require_once __DIR__ . '/includes/header.php';
 
         <div class="vm-panel-wrap reveal">
             <div class="vm-panel active" id="vm-panel-vision" role="tabpanel">
+                <p class="vm-panel__quote">&ldquo;Learn about Education that helps Society&rdquo;</p>
                 <p class="vm-panel__text">
-                    To be a leading institution of higher education known for innovative teaching, research, and exceptional faculty, students, and staff of diverse social, cultural, religious, economic, and tribal backgrounds, prepared to tackle the challenges of the 21st century.
+                    Sarvepalli Radhakrishnan University is an academic fraternity of individuals dedicated to the motto of &ldquo;Learn about Education that helps Society&rdquo;. To emerge as a World-Class University in creating and disseminating knowledge, and providing students a unique learning experience in Science, Technology, Medicine, Management and other areas of life that will best serve the world and betterment of society. To create a knowledge-based society with scientific temper, team spirit, and dignity of labour to face global competitive challenges.
                 </p>
             </div>
             <div class="vm-panel" id="vm-panel-mission" role="tabpanel">
-                <p class="vm-panel__text">
-                    To provide world-class education to our students, create and disseminate knowledge through cutting-edge research, and engage with communities to better understand and solve their most pressing challenges.
-                </p>
+                <ul class="vm-panel__list">
+                    <li>Sarvepalli Radhakrishnan University is a nurturing ground for an individual's holistic growth to make effective contribution to the society in a dynamic environment. To evolve and develop skill-based systems for effective delivery of knowledge so as to equip young professionals with dedication and commitment to excellence in all spheres of life &amp; society.</li>
+                    <li>Facilitate intellectual stimulation to generate, maintain, and disseminate knowledge.</li>
+                    <li>Empower participants to meet the challenges of a collaborative and competitive globalized environment.</li>
+                    <li>Synergize excellence amongst aspirants through world-class ambience.</li>
+                    <li>Institute a culture of inclusiveness and provide wide access to higher education opportunities.</li>
+                    <li>Foster sustainable environmental attitude.</li>
+                    <li>Initiate trends which impact global higher education policies and practices.</li>
+                    <li>We treasure our ethos and our character.</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -352,6 +397,52 @@ $aboutGalleryImages = [
     startAutoScroll();
 })();
 </script>
+
+<!-- FAQ -->
+<section class="py-5 text-center text-white" style="background: linear-gradient(135deg, var(--srku-maroon), var(--srku-navy));">
+    <div class="container-xl py-2">
+        <span class="section-subtitle text-warning">FAQS</span>
+        <h2 class="fw-bold mb-4">Answers before you ask.</h2>
+        <div class="accordion mx-auto reveal" id="aboutFaq" style="max-width:760px;">
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#aboutFaq1" aria-expanded="true" aria-controls="aboutFaq1">
+                        When was SRK University established?
+                    </button>
+                </h3>
+                <div id="aboutFaq1" class="accordion-collapse collapse show" data-bs-parent="#aboutFaq">
+                    <div class="accordion-body text-start">
+                        SRK University, Bhopal, was established under the Madhya Pradesh Niji Vishwavidyalaya (Sthapana Avam Sanchalan) Adhiniyam 2007, as amended by the Dwitiya Sanshodhan Adhiniyam 2014, and is sponsored by RKDF Education Society, Bhopal.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#aboutFaq2" aria-expanded="false" aria-controls="aboutFaq2">
+                        Which regulatory bodies recognise SRK University?
+                    </button>
+                </h3>
+                <div id="aboutFaq2" class="accordion-collapse collapse" data-bs-parent="#aboutFaq">
+                    <div class="accordion-body text-start">
+                        We are recognised by the UGC (Section 2(f)), AICTE, NMC, DCI, PCI, INC, and CCH &amp; NCISM, ensuring our programmes meet national academic and professional standards.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#aboutFaq3" aria-expanded="false" aria-controls="aboutFaq3">
+                        What makes SRK University different from other private universities?
+                    </button>
+                </h3>
+                <div id="aboutFaq3" class="accordion-collapse collapse" data-bs-parent="#aboutFaq">
+                    <div class="accordion-body text-start">
+                        Our multidisciplinary campus, NAAC-graded excellence, modern infrastructure, and strong industry and research partnerships set us apart, offering students a well-rounded and future-ready education.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- CTA -->
 <section class="py-5 text-center text-white" style="background: linear-gradient(135deg, var(--srku-navy), var(--srku-maroon));">

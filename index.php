@@ -149,16 +149,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             
             <div class="col-12 col-lg-6">
                 <span class="section-subtitle">WELCOME TO SRK UNIVERSITY</span>
-                <h2 class="section-title mb-3">Empowering Minds, <span>Shaping Futures</span><br>through Academic Excellence</h2>
+                <h2 class="section-title mb-3">Commited Towards Your <span>Better Future</span><br>Through Academic Excellence</h2>
                 <p class="text-dark mb-3" style="line-height:1.8; font-size:0.95rem;">
-                    Sarvepalli Radhakrishnan University (SRKU), Bhopal, is a premier educational institution committed to delivering cutting-edge technical, pharmaceutical, management, and scientific education.
+                    The <strong>SRK University</strong> is a multidisciplinary university known for its high standards in teaching and research, and attracts eminent scholars to its faculty across the academic spectrum.
                 </p>
                 <p class="text-muted mb-4" style="line-height:1.8; font-size:0.93rem;">
-                    Recognized by the University Grants Commission (UGC) under Section 2(f), AICTE, PCI, and statutory councils, SRKU provides an innovative ecosystem blending rigorous research, multidisciplinary collaboration, and industry-aligned pedagogy.
+                    The group was established in 1995 under the flagship of the RKDF Group. Ever since its inception, a strong commitment to excellence in teaching and research has made the group a role-model and path-setter for other institutions. Its rich academic tradition has always attracted the most talented students, who later go on to make important contributions to society.
                 </p>
                 <div class="d-flex gap-3">
                     <a href="<?php echo BASE_URL; ?>about.php" class="btn btn-srku"><i class="fas fa-arrow-right me-1"></i> Read More</a>
-                    <a href="<?php echo BASE_URL; ?>why-srk.php" class="btn btn-outline-danger"><i class="fas fa-star me-1"></i> Why Choose SRKU</a>
+                    <a href="<?php echo BASE_URL; ?>why-srk.php" class="btn btn-srku-outline-maroon"><span class="btn-icon-badge"><i class="fas fa-star"></i></span> Why Choose SRKU</a>
                 </div>
             </div>
 
@@ -220,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 <span class="section-subtitle">CONSTITUENT UNITS</span>
                 <h2 class="section-title mb-0">A Guide to the University's <span>Constituent Units</span></h2>
             </div>
-            <a href="<?php echo BASE_URL; ?>departments.php" class="btn-card-apply fs-6">View all Constituent Unit <i class="fas fa-arrow-right ms-1"></i></a>
+            <a href="<?php echo BASE_URL; ?>departments.php" class="btn-card-apply fs-6">View all Constituent Units <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
@@ -352,18 +352,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
     <div class="container-xl py-3">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-2">
             <div>
-                <span class="section-subtitle">COURSES &amp; PROGRAMS</span>
+                <span class="section-subtitle">COURSES &amp; PROGRAMMES</span>
                 <h2 class="section-title mb-0">How to Get Admission in <span>SRK University</span>, Bhopal?</h2>
-                <p class="text-muted small mb-0">Choose your trajectory from over 140+ meticulously designed programs and find the pathway that fits your goals.</p>
+                <p class="text-muted small mb-0">Choose your trajectory from over 140+ meticulously designed programmes and find the pathway that fits your goals.</p>
             </div>
-            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View all 140+ programs <i class="fas fa-arrow-right ms-1"></i></a>
+            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View all 140+ programmes <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
             <div class="col">
                 <div class="admission-type-card">
                     <div class="admission-type-icon"><i class="fas fa-user-graduate"></i></div>
                     <h3>UG</h3>
-                    <p>B.Tech, BCA, BBA, B.Pharm, BA LL.B, MBBS &amp; more foundation degree programs.</p>
+                    <p>B.Tech, BCA, BBA, B.Pharm, BA LL.B, MBBS &amp; more foundation degree programmes.</p>
                 </div>
             </div>
             <div class="col">
@@ -384,7 +384,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 <div class="admission-type-card">
                     <div class="admission-type-icon"><i class="fas fa-certificate"></i></div>
                     <h3>Diploma &amp; Certificate</h3>
-                    <p>Professional Development and short-term certification programs.</p>
+                    <p>Professional Development and short-term certification programmes.</p>
                 </div>
             </div>
         </div>
@@ -525,7 +525,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 </div>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="<?php echo BASE_URL; ?>placements.php" class="btn btn-srku"><i class="fas fa-chart-line me-1"></i> View Full Placement Report</a>
-                    <a href="<?php echo BASE_URL; ?>placements.php" class="btn btn-outline-danger"><i class="fas fa-users me-1"></i> Explore Recruiters</a>
+                    <a href="<?php echo BASE_URL; ?>placements.php" class="btn btn-srku-outline-maroon"><span class="btn-icon-badge"><i class="fas fa-users"></i></span> Explore Recruiters</a>
                 </div>
             </div>
             <div class="col-12 col-lg-6">
@@ -649,7 +649,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                     <span class="incubation-panel__eyebrow">Incubation &amp; Startups</span>
                     <h2 class="incubation-panel__title">Build Your Venture On Campus.</h2>
                     <p class="incubation-panel__desc">The university has established an incubation center for promoting new ideas and startups in the region. The center will incubate business ideas with relevance and fitment to local expertise, uniqueness, and market demands. Initially, the center will provide training and support for startups related to handmade soaps &amp; sanitizers and mobile apps.</p>
-                    <a href="<?php echo BASE_URL; ?>incubation-center.php" class="incubation-panel__btn">View more....</a>
+                    <a href="<?php echo BASE_URL; ?>incubation-center.php" class="incubation-panel__btn">View More &rarr;</a>
                 </div>
             </div>
             <div class="col-12 col-lg-6">
@@ -808,7 +808,7 @@ $homeTestimonials = [
     [
         'name' => 'Ravi Gupta',
         'city' => 'Bhopal',
-        'text' => 'Graduated from this university with valuable skills and experiences that have helped me succeed in my career. The alumni network is strong and supportive, and the career services office provided excellent guidance and resources to help me secure a job after graduation. I also appreciated the emphasis on real-world learning through internships and co-op programs.',
+        'text' => 'Graduated from this university with valuable skills and experiences that have helped me succeed in my career. The alumni network is strong and supportive, and the career services office provided excellent guidance and resources to help me secure a job after graduation. I also appreciated the emphasis on real-world learning through internships and co-op programmes.',
     ],
     [
         'name' => 'Nitish Rai',

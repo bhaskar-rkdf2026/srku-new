@@ -1,4 +1,4 @@
-<?php
+?<?php
 $pageTitle = "Accreditation & Regulatory Recognition - Sarvepalli Radhakrishnan University, Bhopal";
 $activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
@@ -185,6 +185,126 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </div>
 </section>
+
+<!-- CAMPUS GALLERY -->
+<?php
+$accGalleryImages = [
+    ['path' => 'assets/uploads/2026/08/welcome-srku-campus.jpeg', 'alt' => 'SRK University Main Building'],
+    ['path' => 'assets/uploads/2026/08/srku-main-gate.jpeg', 'alt' => 'SRK University Main Gate'],
+    ['path' => 'assets/uploads/2026/08/srku-academic-block.jpeg', 'alt' => 'SRK University Academic Block'],
+    ['path' => 'assets/uploads/2026/08/srku-rkdf-building.jpeg', 'alt' => 'RKDF Group Campus Building'],
+    ['path' => 'assets/uploads/2026/08/srku-campus-block.jpeg', 'alt' => 'SRK University Campus Block'],
+    ['path' => 'assets/uploads/2026/07/Gallary-slider-07.webp', 'alt' => 'Students in the University Library'],
+    ['path' => 'assets/uploads/2026/07/Gallary-slider-06.webp', 'alt' => 'Clinical Training at SRK University'],
+    ['path' => 'assets/uploads/2026/07/Gallary-slider-10.webp', 'alt' => 'SRK University Faculty Group'],
+    ['path' => 'assets/uploads/2026/07/5.png', 'alt' => 'Student Life at SRK University']
+];
+?>
+<section class="py-5 text-center text-white" style="background: linear-gradient(135deg, var(--srku-maroon), var(--srku-navy));">
+    <div class="container-xl py-2 reveal">
+        <span class="section-subtitle text-warning">CAMPUS GALLERY</span>
+        <h2 class="fw-bold mb-0">A Glimpse Into Life at SRK University</h2>
+    </div>
+</section>
+<section class="auto-gallery" id="gallery">
+    <div class="auto-gallery__viewport" id="accGalleryViewport">
+        <div class="auto-gallery__track" id="accGalleryTrack">
+            <?php foreach ($accGalleryImages as $image): ?>
+                <div class="auto-gallery__item">
+                    <img src="<?php echo BASE_URL . sanitize($image['path']); ?>"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                         alt="<?php echo sanitize($image['alt']); ?>">
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="auto-gallery__dots" id="accGalleryDots"></div>
+    <div class="text-center mt-4">
+        <a href="<?php echo BASE_URL; ?>gallery.php?category=Campus" class="btn btn-srku-gold">
+            <i class="fas fa-images me-2"></i>View More Photos
+        </a>
+    </div>
+</section>
+<script>
+(function () {
+    var track = document.getElementById('accGalleryTrack');
+    var viewport = document.getElementById('accGalleryViewport');
+    var dotsWrap = document.getElementById('accGalleryDots');
+    if (!track || !viewport || !dotsWrap) return;
+
+    var originalItems = Array.prototype.slice.call(track.children);
+    var total = originalItems.length;
+    var index = 0;
+    var dots = [];
+    var timer;
+
+    originalItems.slice(0, Math.min(4, total)).forEach(function (item) {
+        track.appendChild(item.cloneNode(true));
+    });
+
+    function setPosition(withTransition) {
+        var itemWidth = track.children[0].getBoundingClientRect().width;
+        var styles = getComputedStyle(track);
+        var gap = parseFloat(styles.columnGap || styles.gap || 0);
+        track.style.transition = withTransition === false ? 'none' : '';
+        track.style.transform = 'translateX(-' + (index * (itemWidth + gap)) + 'px)';
+    }
+
+    function updateDots() {
+        dots.forEach(function (dot, dotIndex) {
+            var active = dotIndex === (index % total);
+            dot.classList.toggle('active', active);
+            dot.setAttribute('aria-current', active ? 'true' : 'false');
+        });
+    }
+
+    function goTo(nextIndex) {
+        index = nextIndex;
+        setPosition(true);
+        updateDots();
+    }
+
+    function next() {
+        index++;
+        setPosition(true);
+        updateDots();
+        if (index >= total) {
+            window.setTimeout(function () {
+                index = 0;
+                setPosition(false);
+                updateDots();
+            }, 600);
+        }
+    }
+
+    function startAutoScroll() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        window.clearInterval(timer);
+        timer = window.setInterval(next, 3000);
+    }
+
+    originalItems.forEach(function (_, dotIndex) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'auto-gallery__dot' + (dotIndex === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Show gallery photo ' + (dotIndex + 1));
+        dot.setAttribute('aria-current', dotIndex === 0 ? 'true' : 'false');
+        dot.addEventListener('click', function () {
+            goTo(dotIndex);
+            startAutoScroll();
+        });
+        dotsWrap.appendChild(dot);
+        dots.push(dot);
+    });
+
+    viewport.addEventListener('mouseenter', function () { window.clearInterval(timer); });
+    viewport.addEventListener('mouseleave', startAutoScroll);
+    window.addEventListener('resize', function () { setPosition(false); });
+
+    setPosition(false);
+    startAutoScroll();
+})();
+</script>
 
 <!-- FAQ -->
 <section class="py-5 text-center text-white" style="background: linear-gradient(135deg, var(--srku-maroon), var(--srku-navy));">
