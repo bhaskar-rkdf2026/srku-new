@@ -71,11 +71,15 @@ $customHeadCode = getSetting('header_custom_head_code', '');
         .static-sub-dropdown{left:100%;top:-6px;margin-top:0}
         .static-dropdown-item:hover>.static-sub-dropdown{opacity:1;visibility:visible;transform:translateY(0)}
         .static-sub-arrow{border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:5px solid currentColor;border-right:0;flex-shrink:0}
-        .static-megamenu-panel{width:560px;padding:16px 18px;left:0}
-        .static-megamenu-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px}
-        .static-megamenu-link{display:flex;align-items:flex-start;gap:8px;padding:6px 8px;color:#334155;text-decoration:none;font-size:12.5px;font-weight:500;border-radius:5px;transition:all 0.18s ease;line-height:1.35}
-        .static-megamenu-link:hover{background-color:#fef9f0;color:#7a0b0d}
-        .static-megamenu-link svg{flex-shrink:0;width:13px;height:13px;fill:#7a0b0d;margin-top:2px}
+        .static-megamenu-panel{width:880px;padding:20px 24px;left:-160px;border-radius:10px}
+        .static-megamenu-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px 20px}
+        .static-megamenu-col-title{font-size:11px;font-weight:800;color:#7a0b0d;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;padding-bottom:5px;border-bottom:2px solid #f0e6e6;display:flex;align-items:center;gap:6px}
+        .static-megamenu-link{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:6px 8px;color:#334155;text-decoration:none;font-size:12px;font-weight:500;border-radius:5px;transition:all 0.18s ease;line-height:1.35}
+        .static-megamenu-link:hover{background-color:#fef9f0;color:#7a0b0d;padding-left:11px}
+        .static-megamenu-link span.name{flex:1;white-space:normal}
+        .static-megamenu-link span.badge-yr{font-size:9.5px;color:#64748b;background:#f1f5f9;padding:1px 5px;border-radius:4px;border:1px solid #e2e8f0;flex-shrink:0}
+        .static-megamenu-link i.fa-angle-right{font-size:10px;color:#cbd5e1;flex-shrink:0}
+        .static-megamenu-link:hover i.fa-angle-right{color:#7a0b0d}
         .static-menu-list-footer{display:none}
         .static-contact-btn-mobile{display:none}
         .static-contact-btn{display:inline-flex;align-items:center;flex-shrink:0;background:#7a0b0d;color:#ffffff!important;font-size:13.5px;font-weight:700;padding:10px 22px;border-radius:30px;text-decoration:none;box-shadow:0 3px 12px rgba(236,51,55,0.3);transition:background 0.2s ease,box-shadow 0.2s ease,transform 0.2s ease;white-space:nowrap;letter-spacing:.2px}
@@ -90,7 +94,7 @@ $customHeadCode = getSetting('header_custom_head_code', '');
         @media (max-width:1199px){
             .static-nav-container{padding:0 16px;gap:6px}
             .static-menu-link{font-size:12.5px;padding:10px 8px}
-            .static-megamenu-panel{width:460px}
+            .static-megamenu-panel{width:720px;left:-100px}
             .static-contact-btn{padding:9px 18px;font-size:13px}
         }
         @media (max-width:1024px){
@@ -201,70 +205,151 @@ $customHeadCode = getSetting('header_custom_head_code', '');
                     </ul>
                 </li>
 
-                <!-- Departments (Megamenu) -->
+                <!-- Departments & Constituent Units (Comprehensive Megamenu) -->
                 <li class="static-menu-item <?php echo (isset($activeNav) && $activeNav == 'departments') ? 'active' : ''; ?>">
-                    <a href="<?php echo BASE_URL; ?>departments" class="static-menu-link">
+                    <a href="<?php echo BASE_URL; ?>departments.php" class="static-menu-link">
                         Departments <span class="static-dropdown-arrow"></span>
                     </a>
-                    <div class="static-dropdown-panel static-megamenu-panel">
+                    <div class="static-dropdown-panel static-megamenu-panel shadow-lg">
                         <div class="static-megamenu-grid">
+                            
+                            <!-- COL 1: Engineering, IT, Management & Commerce -->
                             <div>
-                                <a href="<?php echo BASE_URL; ?>rkdf-institute-of-science-technology" class="static-megamenu-link">
-                                    <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF Institute Of Science &amp; Technology
-                                </a>
-                                <a href="<?php echo BASE_URL; ?>sri-sai-college-of-pharmacy" class="static-megamenu-link">
-                                    <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Sri Sai College Of Pharmacy
-                                </a>
-                                <a href="<?php echo BASE_URL; ?>rkdf-polytechnic-pharmacy" class="static-megamenu-link">
-                                    <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF Polytechnic Pharmacy
-                                </a>
-                                <a href="<?php echo BASE_URL; ?>rkdf-college-of-pharmacy" class="static-megamenu-link">
-                                    <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF College Of Pharmacy
+                                <div class="static-megamenu-col-title">
+                                    <i class="fas fa-microchip"></i> Engg, IT &amp; Management
+                                </div>
+                                <a href="<?php echo BASE_URL; ?>rkdf-institute-of-science-and-technology" class="static-megamenu-link">
+                                    <span class="name">RKDF Inst. of Science &amp; Technology</span>
+                                    <span class="badge-yr">1995</span>
+                                    <i class="fas fa-angle-right"></i>
                                 </a>
                                 <a href="<?php echo BASE_URL; ?>rkdf-institute-science-technology-mca" class="static-megamenu-link">
-                                    <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF Institute Science &amp; Technology MCA
+                                    <span class="name">RKDF IST - MCA</span>
+                                    <span class="badge-yr">1999</span>
+                                    <i class="fas fa-angle-right"></i>
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>r-n-kapoor-memorial-institute-of-pharmaceutical-science" class="static-megamenu-link">
-                                    <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    R. N. Kapoor Memorial Institute Of Pharmaceutical Science
-                                </a>
-                            </div>
-                            <div>
-                                <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-college-of-pharmacy" class="static-megamenu-link">
-                                    <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Sarvepalli Radhakrishnan College Of Pharmacy
+                                <a href="<?php echo BASE_URL; ?>faculty-of-computer-application" class="static-megamenu-link">
+                                    <span class="name">Faculty of Computer Application</span>
+                                    <i class="fas fa-angle-right"></i>
                                 </a>
                                 <a href="<?php echo BASE_URL; ?>rkdf-institute-of-management" class="static-megamenu-link">
-                                    <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF Institute Of Management
+                                    <span class="name">RKDF Institute of Management</span>
+                                    <span class="badge-yr">2003</span>
+                                    <i class="fas fa-angle-right"></i>
                                 </a>
                                 <a href="<?php echo BASE_URL; ?>rkdf-institute-of-business-management" class="static-megamenu-link">
-                                    <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF Institute Of Business Management
+                                    <span class="name">RKDF Inst. of Business Management</span>
+                                    <span class="badge-yr">2006</span>
+                                    <i class="fas fa-angle-right"></i>
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>dr-apj-abdul-kalam-college-of-pharmacy" class="static-megamenu-link">
-                                    <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Dr. APJ. Abdul Kalam College Of Pharmacy
+                                <a href="<?php echo BASE_URL; ?>department-of-management" class="static-megamenu-link">
+                                    <span class="name">Dept. of Management (Logistics)</span>
+                                    <i class="fas fa-angle-right"></i>
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>rkdf-college-of-nursing" class="static-megamenu-link">
-                                    <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    RKDF College Of Nursing
-                                </a>
-                                <a href="<?php echo BASE_URL; ?>department-of-allied-health-care-sciences" class="static-megamenu-link">
-                                    <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Department Of Allied &amp; Healthcare Sciences
-                                </a>
-                                <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-college-of-law" class="static-megamenu-link">
-                                    <svg viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm72 20v-40c0-6.6 5.4-12 12-12h116v-67c0-10.7 12.9-16 20.5-8.5l99 99c4.7 4.7 4.7 12.3 0 17l-99 99c-7.6 7.6-20.5 2.2-20.5-8.5v-67H140c-6.6 0-12-5.4-12-12z"></path></svg>
-                                    Sarvepalli Radhakrishnan College Of Law
+                                <a href="<?php echo BASE_URL; ?>faculty-of-commerce" class="static-megamenu-link">
+                                    <span class="name">Faculty of Commerce</span>
+                                    <i class="fas fa-angle-right"></i>
                                 </a>
                             </div>
+
+                            <!-- COL 2: Pharmacy Institutes (6 Colleges) & Nursing -->
+                            <div>
+                                <div class="static-megamenu-col-title">
+                                    <i class="fas fa-pills"></i> Pharmacy &amp; Nursing
+                                </div>
+                                <a href="<?php echo BASE_URL; ?>rkdf-college-of-pharmacy" class="static-megamenu-link">
+                                    <span class="name">RKDF College of Pharmacy</span>
+                                    <span class="badge-yr">1995</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-college-of-pharmacy" class="static-megamenu-link">
+                                    <span class="name">SRK College of Pharmacy</span>
+                                    <span class="badge-yr">2018</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>dr-apj-abdul-kalam-college-of-pharmacy" class="static-megamenu-link">
+                                    <span class="name">Dr. APJ Abdul Kalam Pharmacy</span>
+                                    <span class="badge-yr">2018</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>sri-sai-college-of-pharmacy" class="static-megamenu-link">
+                                    <span class="name">Sri Sai College of Pharmacy</span>
+                                    <span class="badge-yr">2019</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-institute-of-pharmaceutical-science" class="static-megamenu-link">
+                                    <span class="name">SRK Inst. of Pharmaceutical Sci.</span>
+                                    <span class="badge-yr">2023</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>r-n-kapoor-memorial-institute-of-pharmaceutical-science" class="static-megamenu-link">
+                                    <span class="name">R. N. Kapoor Memorial Pharmacy</span>
+                                    <span class="badge-yr">2023</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>rkdf-college-of-nursing" class="static-megamenu-link">
+                                    <span class="name">RKDF College of Nursing</span>
+                                    <span class="badge-yr">2003</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                            </div>
+
+                            <!-- COL 3: Medical, Dental, Ayush, Law & Allied Sciences -->
+                            <div>
+                                <div class="static-megamenu-col-title">
+                                    <i class="fas fa-stethoscope"></i> Medical, Law &amp; Allied
+                                </div>
+                                <a href="<?php echo BASE_URL; ?>rkdf-medical-college" class="static-megamenu-link">
+                                    <span class="name">RKDF Medical College &amp; Hospital</span>
+                                    <span class="badge-yr">2014</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-college-of-ayurveda" class="static-megamenu-link">
+                                    <span class="name">SRK College of Ayurveda</span>
+                                    <span class="badge-yr">2021</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>rkdf-homoeopathic-medical-college" class="static-megamenu-link">
+                                    <span class="name">RKDF Homoeopathic Medical Coll.</span>
+                                    <span class="badge-yr">2000</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>rkdf-dental-college" class="static-megamenu-link">
+                                    <span class="name">RKDF Dental College &amp; Hospital</span>
+                                    <span class="badge-yr">2003</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>department-of-paramedical-sciences" class="static-megamenu-link">
+                                    <span class="name">Dept. of Paramedical Sciences</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-college-of-law" class="static-megamenu-link">
+                                    <span class="name">SRK College of Law</span>
+                                    <span class="badge-yr">2019</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>faculty-of-agriculture" class="static-megamenu-link">
+                                    <span class="name">Faculty of Agriculture</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>faculty-of-science" class="static-megamenu-link">
+                                    <span class="name">Faculty of Science / Arts / Yoga</span>
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                            </div>
+
                         </div>
+
+                        <!-- Megamenu Footer Action Bar -->
+                        <div class="d-flex justify-content-between align-items-center pt-3 mt-3 border-top">
+                            <a href="<?php echo BASE_URL; ?>departments.php" class="small fw-bold text-danger text-decoration-none d-flex align-items-center gap-1">
+                                <i class="fas fa-th-large"></i> Explore All 26 Constituent Units &amp; Faculties &rarr;
+                            </a>
+                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle small fw-semibold">
+                                26+ Constituent Units
+                            </span>
+                        </div>
+
                     </div>
                 </li>
 

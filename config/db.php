@@ -155,18 +155,21 @@ function autoInitializeTables($pdo) {
             CREATE TABLE IF NOT EXISTS `departments` (
                 `id` INT AUTO_INCREMENT PRIMARY KEY,
                 `name` VARCHAR(255) NOT NULL,
+                `category` VARCHAR(100) DEFAULT 'General',
                 `slug` VARCHAR(191) NOT NULL UNIQUE,
                 `icon` VARCHAR(100) DEFAULT 'fas fa-graduation-cap',
                 `banner_img` VARCHAR(255),
                 `description` LONGTEXT,
                 `dean_name` VARCHAR(150),
+                `contact_no` VARCHAR(100) DEFAULT '0755-4700983, 7024144981',
+                `approvals` VARCHAR(255) DEFAULT 'UGC',
                 `established_year` VARCHAR(10),
                 `status` ENUM('active','inactive') DEFAULT 'active'
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
             CREATE TABLE IF NOT EXISTS `courses` (
                 `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `department` VARCHAR(100) NOT NULL,
+                `department` VARCHAR(150) NOT NULL,
                 `dept_slug` VARCHAR(100),
                 `course_name` VARCHAR(255) NOT NULL,
                 `slug` VARCHAR(191),
@@ -174,9 +177,12 @@ function autoInitializeTables($pdo) {
                 `duration` VARCHAR(50),
                 `eligibility` TEXT,
                 `fees` VARCHAR(100),
+                `specializations` TEXT,
                 `description` LONGTEXT,
                 `career_scope` TEXT,
-                `status` ENUM('active','inactive') DEFAULT 'active'
+                `syllabus_url` VARCHAR(255),
+                `scheme_url` VARCHAR(255),
+                `status` VARCHAR(20) DEFAULT 'active'
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
             CREATE TABLE IF NOT EXISTS `banners` (
@@ -204,9 +210,13 @@ function autoInitializeTables($pdo) {
             CREATE TABLE IF NOT EXISTS `enquiries` (
                 `id` INT AUTO_INCREMENT PRIMARY KEY,
                 `name` VARCHAR(100) NOT NULL,
+                `father_name` VARCHAR(150),
                 `email` VARCHAR(100) NOT NULL,
                 `phone` VARCHAR(20) NOT NULL,
-                `course` VARCHAR(100),
+                `course` VARCHAR(150),
+                `city` VARCHAR(100),
+                `state` VARCHAR(100),
+                `source` VARCHAR(150),
                 `message` TEXT,
                 `status` VARCHAR(50) DEFAULT 'New',
                 `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -229,12 +239,22 @@ function autoInitializeTables($pdo) {
 
         // Schema migrations for MySQL if table previously existed with older columns
         try {
+            $deptCols = $pdo->query("SHOW COLUMNS FROM `departments`")->fetchAll(PDO::FETCH_COLUMN);
+            if (!in_array('category', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `category` VARCHAR(100) DEFAULT 'General' AFTER `name`");
+            if (!in_array('contact_no', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `contact_no` VARCHAR(100) DEFAULT '0755-4700983, 7024144981' AFTER `dean_name`");
+            if (!in_array('approvals', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `approvals` VARCHAR(255) DEFAULT 'UGC' AFTER `contact_no`");
+
             $cols = $pdo->query("SHOW COLUMNS FROM `courses`")->fetchAll(PDO::FETCH_COLUMN);
+            if (!in_array('department', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `department` VARCHAR(150) AFTER `id`");
             if (!in_array('dept_slug', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `dept_slug` VARCHAR(100) AFTER `department`");
             if (!in_array('slug', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `slug` VARCHAR(191) AFTER `course_name`");
             if (!in_array('level', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `level` VARCHAR(50) DEFAULT 'UG' AFTER `slug`");
-            if (!in_array('description', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `description` LONGTEXT AFTER `fees`");
+            if (!in_array('fees', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `fees` VARCHAR(100) AFTER `eligibility`");
+            if (!in_array('specializations', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `specializations` TEXT AFTER `fees`");
+            if (!in_array('description', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `description` LONGTEXT AFTER `specializations`");
             if (!in_array('career_scope', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `career_scope` TEXT AFTER `description`");
+            if (!in_array('syllabus_url', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `syllabus_url` VARCHAR(255) AFTER `career_scope`");
+            if (!in_array('scheme_url', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `scheme_url` VARCHAR(255) AFTER `syllabus_url`");
         } catch (Exception $e) {}
 
         try {
@@ -246,6 +266,10 @@ function autoInitializeTables($pdo) {
 
         try {
             $cols = $pdo->query("SHOW COLUMNS FROM `enquiries`")->fetchAll(PDO::FETCH_COLUMN);
+            if (!in_array('father_name', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `father_name` VARCHAR(150) AFTER `name`");
+            if (!in_array('city', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `city` VARCHAR(100) AFTER `course`");
+            if (!in_array('state', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `state` VARCHAR(100) AFTER `city`");
+            if (!in_array('source', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `source` VARCHAR(150) AFTER `state`");
             if (!in_array('status', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `status` VARCHAR(50) DEFAULT 'New' AFTER `message`");
         } catch (Exception $e) {}
     }
@@ -292,29 +316,21 @@ function autoInitializeTables($pdo) {
     // Seed Departments (All 18 Constituent Colleges & Departments from new.srku.edu.in)
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM departments");
     $stmt->execute();
-    if ($stmt->fetchColumn() <= 14) {
+    if ($stmt->fetchColumn() <= 5) {
         $pdo->exec("DELETE FROM departments");
         $departments = [
-            ['Department of Engineering', 'department-of-engineering', 'fas fa-cogs', 'assets/images/dept_engg.jpg', 'Faculty of Engineering offers AICTE approved B.Tech, M.Tech and Polytechnic programs with cutting-edge computing, AI/ML, Robotics, IoT and Mechanical labs.', 'Dr. R. K. Sharma', '2015'],
-            ['Department of Pharmacy (RKDF College)', 'department-of-pharmacy', 'fas fa-pills', 'assets/images/dept_pharma.jpg', 'PCI & AICTE approved pharmacy institute offering B.Pharm, M.Pharm, and Pharm.D with advanced pharmacology and formulation development labs.', 'Dr. S. K. Jain', '2015'],
-            ['Department of Pharmacy (RKDF Polytechnic)', 'rkdf-polytechnic-pharmacy', 'fas fa-pills', 'assets/images/dept_pharma.jpg', 'Dedicated polytechnic pharmacy institution delivering high quality D.Pharm programs.', 'Dr. S. K. Jain', '2015'],
-            ['Sri Sai College of Pharmacy', 'sri-sai-college-of-pharmacy-srk-bhopal', 'fas fa-capsules', 'assets/images/dept_pharma2.jpg', 'Premier institute specializing in pharmaceutical education, clinical research, drug design, and industrial training.', 'Dr. Neha Verma', '2016'],
-            ['Dr. APJ Abdul Kalam College of Pharmacy', 'dr-apj-abdul-kalam-college-of-pharmacy-srk-bhopal', 'fas fa-flask', 'assets/images/dept_pharma3.jpg', 'Dedicated institute fostering advanced research in nanomedicine, pharmacognosy, and pharmaceutical biotechnology.', 'Dr. A. K. Patel', '2017'],
-            ['Sarvepalli Radhakrishnan College of Pharmacy', 'sarvepalli-radhakrishnan-college-of-pharmacy', 'fas fa-prescription-bottle', 'assets/images/dept_pharma4.jpg', 'Flagship pharmaceutical institution committed to clinical practice, hospital pharmacy, and doctoral research.', 'Dr. Manoj Gupta', '2015'],
-            ['Sarvepalli Radhakrishnan Institute of Pharmaceutical Science', 'sarvepalli-radhakrishnan-institute-of-pharmaceutical-science', 'fas fa-flask', 'assets/images/dept_pharma.jpg', 'Advanced pharmaceutical science institute fostering formulation design and pharmacology.', 'Dr. Manoj Gupta', '2016'],
-            ['R.N. Kapoor Memorial Institute of Pharmaceutical Sciences', 'r-n-kapoor-memorial-institute-of-pharmaceutical-sciences-srk-university', 'fas fa-tablets', 'assets/images/dept_pharma5.jpg', 'Excellence in pharmacy diploma, undergraduate, and postgraduate pharmaceutical chemistry studies.', 'Dr. Pooja Mishra', '2018'],
-            ['Department of Computer Application', 'department-of-computer-application', 'fas fa-laptop-code', 'assets/images/dept_ca.jpg', 'Delivering MCA, BCA, and PGDCA programs focused on Full-stack web development, Cloud Computing, Cyber Security, and AI.', 'Prof. Amit Saxena', '2015'],
-            ['Faculty of Computer Application', 'faculty-of-computer-application', 'fas fa-laptop-code', 'assets/images/dept_ca.jpg', 'Delivering MCA, BCA, and PGDCA programs focused on Full-stack web development, Cloud Computing, Cyber Security, and AI.', 'Prof. Amit Saxena', '2015'],
-            ['Department of Management', 'department-of-management', 'fas fa-chart-line', 'assets/images/dept_mgmt.jpg', 'Top-ranked business school offering MBA and BBA with dual specializations in Finance, Marketing, HR, Business Analytics, and Supply Chain.', 'Dr. V. K. Tiwari', '2015'],
-            ['Department of Business Management', 'department-of-business-management', 'fas fa-briefcase', 'assets/images/dept_mgmt.jpg', 'Leading management academy offering specialized MBA, BBA, and management development programs.', 'Dr. V. K. Tiwari', '2016'],
-            ['RKDF College of Nursing', 'rkdf-college-of-nursing', 'fas fa-user-md', 'assets/images/dept_nursing.jpg', 'INC recognized center providing B.Sc Nursing, Post Basic B.Sc, M.Sc Nursing, and NPCC programs with 500+ bed hospital training.', 'Prof. Mary Joseph', '2016'],
-            ['Faculty of Agriculture', 'faculty-of-agriculture', 'fas fa-seedling', 'assets/images/dept_agri.jpg', 'ICAR aligned B.Sc (Hons) and M.Sc Agriculture programs with 50+ acres of experimental farms, polyhouses, and agronomy research labs.', 'Dr. R. P. Singh', '2016'],
-            ['Faculty of Law', 'faculty-of-law', 'fas fa-balance-scale', 'assets/images/dept_law.jpg', 'BCI approved LL.B, BA LL.B (Hons), and LL.M degrees with moot court hall, legal aid clinic, and judicial mentoring.', 'Adv. Dr. S. K. Dubey', '2015'],
-            ['SRK College of Law', 'srk-college-of-law', 'fas fa-balance-scale', 'assets/images/dept_law.jpg', 'Premier law college offering 3-year LL.B and 5-year integrated BA LL.B degrees.', 'Adv. Dr. S. K. Dubey', '2015'],
-            ['Faculty of Medicine & Dental Sciences', 'faculty-of-medicine', 'fas fa-stethoscope', 'assets/images/dept_med.jpg', 'NMC recognized medical and dental sciences providing MBBS, MD, MS, BDS, and MDS programs with multi-specialty clinical hospital.', 'Dr. H. K. Trivedi', '2015'],
-            ['Faculty of Paramedical & Allied Health Care Sciences', 'faculty-of-paramedical-sciences', 'fas fa-heartbeat', 'assets/images/dept_para.jpg', 'Comprehensive paramedical education in BPT, MPT, BMLT, DMLT, X-Ray Radiography, and Optometry with hospital internships.', 'Dr. Archana Sen', '2016'],
-            ['Department of Allied & Healthcare Sciences', 'department-of-allied-health-care-sciences', 'fas fa-heartbeat', 'assets/images/dept_para.jpg', 'Specialized allied health courses in Medical Lab Technology, Radiology, Dialysis, and Physiotherapy.', 'Dr. Archana Sen', '2016'],
-            ['Faculty of Allied Science & Humanities', 'faculty-of-allied-science-and-humanities', 'fas fa-atom', 'assets/images/dept_science.jpg', 'Undergraduate and Postgraduate programs in B.Sc, M.Sc, Yoga Science, Fashion Design, Journalism (MJ), and Humanities.', 'Dr. Ramesh Chandra', '2015']
+            ['RKDF Institute of Science and Technology (1995)', 'rkdf-institute-of-science-and-technology', 'fas fa-microchip', 'assets/images/dept_engg.jpg', 'Faculty of Engineering offers AICTE approved B.Tech, M.Tech and Polytechnic programs with cutting-edge computing, AI/ML, Robotics, IoT and Mechanical labs.', '', '1995'],
+            ['Department of Pharmacy (RKDF College)', 'rkdf-college-of-pharmacy', 'fas fa-pills', 'assets/images/dept_pharma.jpg', 'PCI & AICTE approved pharmacy institute offering B.Pharm, M.Pharm, and Pharm.D with advanced pharmacology and formulation development labs.', '', '1995'],
+            ['Sri Sai College of Pharmacy', 'sri-sai-college-of-pharmacy-srk-bhopal', 'fas fa-capsules', 'assets/images/dept_pharma2.jpg', 'Premier institute specializing in pharmaceutical education, clinical research, drug design, and industrial training.', '', '2019'],
+            ['Dr. APJ Abdul Kalam College of Pharmacy', 'dr-apj-abdul-kalam-college-of-pharmacy-srk-bhopal', 'fas fa-flask', 'assets/images/dept_pharma3.jpg', 'Dedicated institute fostering advanced research in nanomedicine, pharmacognosy, and pharmaceutical biotechnology.', '', '2018'],
+            ['Sarvepalli Radhakrishnan College of Pharmacy', 'sarvepalli-radhakrishnan-college-of-pharmacy', 'fas fa-prescription-bottle', 'assets/images/dept_pharma4.jpg', 'Flagship pharmaceutical institution committed to clinical practice, hospital pharmacy, and doctoral research.', '', '2018'],
+            ['Sarvepalli Radhakrishnan Institute of Pharmaceutical Science', 'sarvepalli-radhakrishnan-institute-of-pharmaceutical-science', 'fas fa-flask', 'assets/images/dept_pharma.jpg', 'Advanced pharmaceutical science institute fostering formulation design and pharmacology.', '', '2023'],
+            ['R.N. Kapoor Memorial Institute of Pharmaceutical Sciences', 'r-n-kapoor-memorial-institute-of-pharmaceutical-sciences-srk-university', 'fas fa-tablets', 'assets/images/dept_pharma5.jpg', 'Excellence in pharmacy diploma, undergraduate, and postgraduate pharmaceutical chemistry studies.', '', '2023'],
+            ['RKDF College of Nursing', 'rkdf-college-of-nursing', 'fas fa-user-nurse', 'assets/images/dept_nursing.jpg', 'INC recognized center providing B.Sc Nursing, Post Basic B.Sc, M.Sc Nursing, and NPCC programs with 500+ bed hospital training.', '', '2003'],
+            ['Faculty of Agriculture', 'faculty-of-agriculture', 'fas fa-seedling', 'assets/images/dept_agri.jpg', 'ICAR aligned B.Sc (Hons) and M.Sc Agriculture programs with 50+ acres of experimental farms, polyhouses, and agronomy research labs.', '', '2016'],
+            ['Sarvepalli Radhakrishnan College of Law', 'sarvepalli-radhakrishnan-college-of-law', 'fas fa-balance-scale', 'assets/images/dept_law.jpg', 'BCI approved LL.B, BA LL.B (Hons), and LL.M degrees with moot court hall, legal aid clinic, and judicial mentoring.', '', '2019'],
+            ['RKDF Medical College, Hospital & Research Center', 'rkdf-medical-college', 'fas fa-stethoscope', 'assets/images/dept_med.jpg', 'NMC recognized medical and dental sciences providing MBBS, MD, MS, BDS, and MDS programs with multi-specialty clinical hospital.', '', '2014'],
+            ['Department of Paramedical Sciences', 'department-of-paramedical-sciences', 'fas fa-heartbeat', 'assets/images/dept_para.jpg', 'Comprehensive paramedical education in BPT, MPT, BMLT, DMLT, X-Ray Radiography, and Optometry with hospital internships.', '', '2015']
         ];
         $insDept = $pdo->prepare("INSERT INTO departments (name, slug, icon, banner_img, description, dean_name, established_year) VALUES (?, ?, ?, ?, ?, ?, ?)");
         foreach ($departments as $d) {

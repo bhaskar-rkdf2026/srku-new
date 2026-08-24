@@ -26,12 +26,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_course'])) {
     $duration = sanitize($_POST['duration'] ?? '');
     $eligibility = sanitize($_POST['eligibility'] ?? '');
     $fees = sanitize($_POST['fees'] ?? '');
+    $specs = sanitize($_POST['specializations'] ?? '');
     $desc = $_POST['description'] ?? '';
     $career = $_POST['career_scope'] ?? '';
+    $schemeUrl = sanitize($_POST['scheme_url'] ?? '');
+    $syllabusUrl = sanitize($_POST['syllabus_url'] ?? '');
     $status = sanitize($_POST['status'] ?? 'active');
 
     if ($id > 0) {
-        $stmt = $pdo->prepare("UPDATE courses SET department = :d, dept_slug = :ds, course_name = :n, slug = :s, level = :l, duration = :dur, eligibility = :e, fees = :f, description = :desc, career_scope = :c, status = :st WHERE id = :id");
+        $stmt = $pdo->prepare("UPDATE courses SET department = :d, dept_slug = :ds, course_name = :n, slug = :s, level = :l, duration = :dur, eligibility = :e, fees = :f, specializations = :sp, description = :desc, career_scope = :c, scheme_url = :sch, syllabus_url = :syl, status = :st WHERE id = :id");
         $stmt->execute([
             ':d' => $dept,
             ':ds' => $deptSlug,
@@ -41,14 +44,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_course'])) {
             ':dur' => $duration,
             ':e' => $eligibility,
             ':f' => $fees,
+            ':sp' => $specs,
             ':desc' => $desc,
             ':c' => $career,
+            ':sch' => $schemeUrl,
+            ':syl' => $syllabusUrl,
             ':st' => $status,
             ':id' => $id
         ]);
         setFlashMsg('success', 'Course updated successfully.');
     } else {
-        $stmt = $pdo->prepare("INSERT INTO courses (department, dept_slug, course_name, slug, level, duration, eligibility, fees, description, career_scope, status) VALUES (:d, :ds, :n, :s, :l, :dur, :e, :f, :desc, :c, :st)");
+        $stmt = $pdo->prepare("INSERT INTO courses (department, dept_slug, course_name, slug, level, duration, eligibility, fees, specializations, description, career_scope, scheme_url, syllabus_url, status) VALUES (:d, :ds, :n, :s, :l, :dur, :e, :f, :sp, :desc, :c, :sch, :syl, :st)");
         $stmt->execute([
             ':d' => $dept,
             ':ds' => $deptSlug,
@@ -58,8 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_course'])) {
             ':dur' => $duration,
             ':e' => $eligibility,
             ':f' => $fees,
+            ':sp' => $specs,
             ':desc' => $desc,
             ':c' => $career,
+            ':sch' => $schemeUrl,
+            ':syl' => $syllabusUrl,
             ':st' => $status
         ]);
         setFlashMsg('success', 'New course added successfully.');
@@ -155,6 +164,11 @@ $courses = $pdo->query("SELECT * FROM courses ORDER BY department ASC, course_na
                         <input type="text" name="fees" class="form-control" placeholder="e.g. ₹65,000 / Year" value="<?php echo sanitize($editCourse['fees'] ?? ''); ?>">
                     </div>
                     <div class="col-12">
+                        <label class="form-label fw-bold text-dark small">Disciplines / Specializations (Comma Separated)</label>
+                        <input type="text" name="specializations" class="form-control" placeholder="e.g. Civil Engineering, Computer Science & Engineering, Electrical Engineering" value="<?php echo sanitize($editCourse['specializations'] ?? ''); ?>">
+                        <small class="text-muted">Separate multiple streams / disciplines with commas to render interactive badges on course &amp; department pages.</small>
+                    </div>
+                    <div class="col-12">
                         <label class="form-label fw-bold text-dark small">Eligibility Criteria</label>
                         <textarea name="eligibility" class="form-control" rows="2" placeholder="e.g. 10+2 with Physics, Mathematics & Chemistry (Min 50%)"><?php echo sanitize($editCourse['eligibility'] ?? ''); ?></textarea>
                     </div>
@@ -180,6 +194,25 @@ $courses = $pdo->query("SELECT * FROM courses ORDER BY department ASC, course_na
                 <div class="mb-2">
                     <label class="form-label fw-bold text-dark small mb-2">Job Profiles &amp; Higher Studies Opportunities</label>
                     <textarea name="career_scope" class="form-control rich-editor" rows="8" placeholder="Career options after this degree..."><?php echo htmlspecialchars($editCourse['career_scope'] ?? ''); ?></textarea>
+                </div>
+            </div>
+
+            <!-- SECTION 5: Scheme & Syllabus Documents (PDF URLs) -->
+            <div class="admin-form-section">
+                <div class="admin-form-section-title">
+                    <i class="fas fa-file-pdf text-danger"></i> Section 5: Official Curriculum Scheme &amp; Syllabus (PDF Links)
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-dark small">Scheme PDF URL</label>
+                        <input type="url" name="scheme_url" class="form-control" placeholder="https://www.srku.edu.in/.../Scheme.pdf" value="<?php echo sanitize($editCourse['scheme_url'] ?? ''); ?>">
+                        <small class="text-muted">Direct URL to semester-wise scheme of examination document.</small>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-dark small">Syllabus PDF URL</label>
+                        <input type="url" name="syllabus_url" class="form-control" placeholder="https://www.srku.edu.in/.../Syllabus.pdf" value="<?php echo sanitize($editCourse['syllabus_url'] ?? ''); ?>">
+                        <small class="text-muted">Direct URL to complete course structure &amp; syllabus PDF document.</small>
+                    </div>
                 </div>
             </div>
 
@@ -215,7 +248,12 @@ $courses = $pdo->query("SELECT * FROM courses ORDER BY department ASC, course_na
                                 <td><span class="badge bg-navy text-white"><?php echo sanitize($c['level']); ?></span></td>
                                 <td>
                                     <strong class="text-navy d-block"><?php echo sanitize($c['course_name']); ?></strong>
-                                    <small class="text-muted"><code>/courses/<?php echo sanitize($c['slug']); ?></code></small>
+                                    <div class="d-flex align-items-center gap-2 mt-1">
+                                        <small class="text-muted"><code>/courses/<?php echo sanitize($c['slug']); ?></code></small>
+                                        <?php if (!empty($c['scheme_url']) || !empty($c['syllabus_url'])): ?>
+                                            <span class="badge bg-danger-subtle text-danger small"><i class="fas fa-file-pdf me-1"></i>PDF Linked</span>
+                                        <?php endif; ?>
+                                    </div>
                                 </td>
                                 <td><span class="badge bg-light text-dark border"><?php echo sanitize($c['department']); ?></span></td>
                                 <td><small class="text-dark fw-semibold"><?php echo sanitize($c['duration'] ?: 'N/A'); ?></small></td>

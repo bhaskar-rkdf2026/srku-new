@@ -17,9 +17,12 @@ if ($action === 'delete' && $editId > 0) {
 // Handle Add / Edit Form Submit
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = sanitize($_POST['name'] ?? '');
+    $category = sanitize($_POST['category'] ?? 'General');
     $slug = sanitize($_POST['slug'] ?? '');
     $icon = sanitize($_POST['icon'] ?? 'fas fa-graduation-cap');
     $dean = sanitize($_POST['dean_name'] ?? '');
+    $contact = sanitize($_POST['contact_no'] ?? '0755-4700983, 7024144981');
+    $approvals = sanitize($_POST['approvals'] ?? 'UGC');
     $year = sanitize($_POST['established_year'] ?? '2015');
     $desc = $_POST['description'] ?? '';
     $status = sanitize($_POST['status'] ?? 'active');
@@ -31,12 +34,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($editId > 0) {
-        $stmt = $pdo->prepare("UPDATE departments SET name = :n, slug = :s, icon = :i, dean_name = :d, established_year = :y, description = :desc, status = :st WHERE id = :id");
+        $stmt = $pdo->prepare("UPDATE departments SET name = :n, category = :cat, slug = :s, icon = :i, dean_name = :d, contact_no = :con, approvals = :app, established_year = :y, description = :desc, status = :st WHERE id = :id");
         $stmt->execute([
             ':n' => $name,
+            ':cat' => $category,
             ':s' => $slug,
             ':i' => $icon,
             ':d' => $dean,
+            ':con' => $contact,
+            ':app' => $approvals,
             ':y' => $year,
             ':desc' => $desc,
             ':st' => $status,
@@ -44,12 +50,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         setFlashMsg('success', 'Department updated successfully.');
     } else {
-        $stmt = $pdo->prepare("INSERT INTO departments (name, slug, icon, dean_name, established_year, description, status) VALUES (:n, :s, :i, :d, :y, :desc, :st)");
+        $stmt = $pdo->prepare("INSERT INTO departments (name, category, slug, icon, dean_name, contact_no, approvals, established_year, description, status) VALUES (:n, :cat, :s, :i, :d, :con, :app, :y, :desc, :st)");
         $stmt->execute([
             ':n' => $name,
+            ':cat' => $category,
             ':s' => $slug,
             ':i' => $icon,
             ':d' => $dean,
+            ':con' => $contact,
+            ':app' => $approvals,
             ':y' => $year,
             ':desc' => $desc,
             ':st' => $status
@@ -100,6 +109,18 @@ $departments = $pdo->query("SELECT * FROM departments ORDER BY name ASC")->fetch
                     <div class="col-md-6">
                         <label class="form-label fw-bold text-dark small">URL Slug</label>
                         <input type="text" name="slug" class="form-control" value="<?php echo sanitize($editItem['slug'] ?? ''); ?>" placeholder="Auto-generated if empty">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold text-dark small">Faculty / Stream Category</label>
+                        <input type="text" name="category" class="form-control" value="<?php echo sanitize($editItem['category'] ?? 'General'); ?>" placeholder="e.g. Engineering & Technology, Pharmacy, Medical">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold text-dark small">Admission Desk Phone</label>
+                        <input type="text" name="contact_no" class="form-control" value="<?php echo sanitize($editItem['contact_no'] ?? '0755-4700983, 7024144981'); ?>" placeholder="e.g. 0755-4700983, 7024144981">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold text-dark small">Apex Approvals (AICTE, PCI, NMC, etc.)</label>
+                        <input type="text" name="approvals" class="form-control" value="<?php echo sanitize($editItem['approvals'] ?? 'UGC'); ?>" placeholder="e.g. AICTE, PCI, UGC">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold text-dark small">FontAwesome Icon Class</label>

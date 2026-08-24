@@ -317,38 +317,61 @@ function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $so
     $city = trim((string)$city);
     $state = trim((string)$state);
 
-    // Strict Validation
+    // Validation
     if (strlen($name) < 2) {
         return ['success' => false, 'error' => 'Please enter a valid full name (minimum 2 characters).'];
     }
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return ['success' => false, 'error' => 'Please enter a valid email address (e.g. name@domain.com).'];
     }
     $cleanPhone = preg_replace('/[^0-9+]/', '', $phone);
-    if (strlen($cleanPhone) < 10 || strlen($cleanPhone) > 15) {
-        return ['success' => false, 'error' => 'Please enter a valid 10-digit mobile number.'];
+    if (strlen($cleanPhone) < 7 || strlen($cleanPhone) > 16) {
+        return ['success' => false, 'error' => 'Please enter a valid mobile / contact number.'];
     }
 
     $fullMsg = $message;
     if ($source) {
-        $fullMsg = "[" . $source . "]\n" . ($message ?: 'No additional message provided.');
+        $fullMsg = "[" . $source . "]\n" . ($message ?: 'Seat Inquiry / Direct Admission Application');
     }
 
     try {
         $pdo = getDBConnection();
-        $stmt = $pdo->prepare("INSERT INTO enquiries (name, father_name, email, phone, course, city, state, message, status, created_at) VALUES (:n, :fn, :e, :p, :c, :city, :state, :m, 'New', CURRENT_TIMESTAMP)");
+        
+        // Ensure columns exist
+        $cols = $pdo->query("SHOW COLUMNS FROM `enquiries`")->fetchAll(PDO::FETCH_COLUMN);
+        if (!in_array('father_name', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `father_name` VARCHAR(150) AFTER `name`");
+        if (!in_array('city', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `city` VARCHAR(100) AFTER `course`");
+        if (!in_array('state', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `state` VARCHAR(100) AFTER `city`");
+        if (!in_array('source', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `source` VARCHAR(150) AFTER `state`");
+        if (!in_array('status', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `status` VARCHAR(50) DEFAULT 'New' AFTER `message`");
+
+        $stmt = $pdo->prepare("INSERT INTO enquiries (name, father_name, email, phone, course, city, state, source, message, status, created_at) VALUES (:n, :fn, :e, :p, :c, :city, :state, :src, :m, 'New', CURRENT_TIMESTAMP)");
         $stmt->execute([
             ':n' => $name,
             ':fn' => $fatherName ?: null,
-            ':e' => $email,
+            ':e' => $email ?: 'not-provided@srku.edu.in',
             ':p' => $phone,
             ':c' => $course ?: 'General Admission Enquiry',
             ':city' => $city ?: null,
             ':state' => $state ?: null,
+            ':src' => $source ?: 'Website',
             ':m' => $fullMsg
         ]);
-        return ['success' => true, 'message' => 'Thank you! Your enquiry has been submitted successfully. Our admission team will contact you shortly.'];
+        return ['success' => true, 'message' => 'Thank you! Your admission inquiry has been submitted successfully. Our counselor will contact you shortly.'];
     } catch (Exception $ex) {
-        return ['success' => false, 'error' => 'Failed to save enquiry: ' . $ex->getMessage()];
+        // Fallback simple insert if any column discrepancy
+        try {
+            $stmt = $pdo->prepare("INSERT INTO enquiries (name, email, phone, course, message, status) VALUES (:n, :e, :p, :c, :m, 'New')");
+            $stmt->execute([
+                ':n' => $name,
+                ':e' => $email ?: 'lead@srku.edu.in',
+                ':p' => $phone,
+                ':c' => $course ?: 'General Admission Enquiry',
+                ':m' => $fullMsg
+            ]);
+            return ['success' => true, 'message' => 'Thank you! Your inquiry has been submitted successfully. Our counselor will contact you shortly.'];
+        } catch (Exception $e2) {
+            return ['success' => false, 'error' => 'Unable to submit inquiry at this moment. Please call our helpline directly at 0755-4700983.'];
+        }
     }
 }
