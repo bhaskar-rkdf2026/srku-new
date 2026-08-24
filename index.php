@@ -13,11 +13,10 @@ $totalAlumni = getSetting('total_alumni', '15,000+');
 $heroTitle = getSetting('hero_title', 'SRK University, Bhopal');
 $heroSubtitle = getSetting('hero_subtitle', 'UGC-Recognized University in MP');
 $heroDesc = getSetting('hero_desc', 'Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership. If you are looking for the best placement university in MP, our rigorous research, multi-disciplinary collaboration, and industry-aligned pedagogy deliver unmatched career growth.');
-$chancellorName = getSetting('chancellor_name', 'Dr. Sadhna Kapoor');
+$chancellorName = getSetting('chancellor_name', 'Mrs. Janak Kapoor');
 $chancellorTitle = getSetting('chancellor_title', 'Chancellor');
-$chancellorQuote = getSetting('chancellor_quote', 'We bridge academic brilliance with industrial pragmatism.');
-$chancellorMsg = getSetting('chancellor_msg', 'Dr. Sadhna Kapoor is the Chancellor of SRK University, Bhopal. A visionary and selfless leader with exceptional entrepreneurial, interpersonal, social and administrative skills, she is passionate about technology and innovation, community development, social service, and interdisciplinary teaching and research.');
-$chancellorMsg2 = getSetting('chancellor_msg2', 'Under her stewardship, SRK University has been recognised for its global academic collaborations, reflecting a sustained dedication to educational innovation and excellence.');
+$chancellorMsg = getSetting('chancellor_msg', 'It is a matter of great joy that the notification for the establishment of Sarvepalli Radhakrishnan University, Bhopal, has been issued by the State Government.');
+$chancellorMsg2 = getSetting('chancellor_msg2', "In order to maintain quality in the field of higher education in the state, it is an important responsibility of private universities, alongside government universities, to bring about change in research and exploration. It is hoped that Sarvepalli Radhakrishnan University will, in the future, deliver unprecedented performance on quality standards and establish itself as the state's foremost institution of education.");
 
 // Handle Form Submission for Enquiry
 $enquirySuccess = false;
@@ -165,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 
             <div class="col-12 col-lg-6">
                 <div class="position-relative">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/campus-1.webp"
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/welcome-srku-campus.jpeg"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                          alt="SRKU Main Campus" class="welcome-img">
                     <div class="row g-2 mt-3 text-center">
@@ -399,11 +398,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
     <div class="chancellor-v2__inner">
         <div class="chancellor-v2__media">
             <img class="chancellor-v2__photo"
-                 src="<?php echo BASE_URL; ?>assets/uploads/2026/08/Chancelloer-480x503-1.jpg"
+                 src="<?php echo BASE_URL; ?>assets/uploads/2026/08/chancellor.jpeg"
                  onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/ruchichaubey.webp';"
                  alt="<?php echo sanitize($chancellorName); ?>, Chancellor of SRK University, Bhopal">
             <div class="chancellor-v2__quote">
-                <p class="chancellor-v2__quote-text">&ldquo;<?php echo sanitize($chancellorQuote); ?>&rdquo;</p>
                 <p class="chancellor-v2__quote-name"><?php echo strtoupper(sanitize($chancellorName)); ?> &middot; <?php echo sanitize($chancellorTitle); ?></p>
             </div>
         </div>
@@ -548,7 +546,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
     <?php
     $recruiterLogos = [
         ['file' => '1.webp', 'alt' => 'TATA'],
-        ['file' => '2-1.webp', 'alt' => 'Infosys'],
+        ['file' => '2.webp', 'alt' => 'Infosys'],
         ['file' => '6.webp', 'alt' => 'Amazon'],
         ['file' => '4.webp', 'alt' => 'Wipro'],
         ['file' => '3.webp', 'alt' => 'Cognizant'],
@@ -616,114 +614,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         </div>
     </div>
 </section>
-
-<!-- ═══════════════════════════════════════════════════════
-     AUTO-SCROLLING CAMPUS GALLERY CAROUSEL
-═══════════════════════════════════════════════════════ -->
-<?php
-$autoGalleryImages = [
-    ['file' => 'Gallary-slider-10.webp', 'alt' => 'Faculty Group Photo'],
-    ['file' => 'Gallary-slider-07.webp', 'alt' => 'Students in Library'],
-    ['file' => 'Gallary-slider-06.webp', 'alt' => 'Clinical Training Session'],
-    ['file' => 'Gallary-slider-03.webp', 'alt' => 'MRI Scan Lab'],
-    ['file' => 'Gallary-slider-01.webp', 'alt' => 'Hospital Ward'],
-    ['file' => 'BA-Animation.webp', 'alt' => 'BA Animation Students'],
-    ['file' => 'Diploma-in-Fashion-Design.webp', 'alt' => 'Diploma in Fashion Design'],
-    ['file' => 'B.Sc_.-Fashion-Design.webp', 'alt' => 'B.Sc. Fashion Design'],
-    ['file' => 'PG-Diploma-in-Yoga.webp', 'alt' => 'PG Diploma in Yoga'],
-    ['file' => 'M.Sc_.-Fashion-Design.webp', 'alt' => 'M.Sc. Fashion Design'],
-    ['file' => 'Bcom.webp', 'alt' => 'Faculty of Management'],
-    ['file' => 'BA.webp', 'alt' => 'B.A. Students'],
-];
-?>
-<section class="auto-gallery">
-    <div class="auto-gallery__viewport" id="autoGalleryViewport">
-        <div class="auto-gallery__track" id="autoGalleryTrack">
-            <?php foreach ($autoGalleryImages as $img): ?>
-                <div class="auto-gallery__item">
-                    <img src="<?php echo BASE_URL . 'assets/uploads/2026/07/' . rawurlencode($img['file']); ?>"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                         alt="<?php echo sanitize($img['alt']); ?>">
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-    <div class="auto-gallery__dots" id="autoGalleryDots"></div>
-</section>
-<script>
-(function () {
-    var track = document.getElementById('autoGalleryTrack');
-    var viewport = document.getElementById('autoGalleryViewport');
-    var dotsWrap = document.getElementById('autoGalleryDots');
-    if (!track || !viewport || !dotsWrap) return;
-
-    var originalItems = Array.prototype.slice.call(track.children);
-    var total = originalItems.length;
-
-    function perView() {
-        var w = window.innerWidth;
-        if (w < 576) return 1;
-        if (w < 900) return 2;
-        return 4;
-    }
-
-    var visible = perView();
-    // Clone the first `visible` items and append them for a seamless infinite loop
-    originalItems.slice(0, visible).forEach(function (node) {
-        track.appendChild(node.cloneNode(true));
-    });
-
-    var index = 0;
-    var dots = [];
-    dotsWrap.innerHTML = '';
-    for (var i = 0; i < total; i++) {
-        var dot = document.createElement('span');
-        dot.className = 'auto-gallery__dot' + (i === 0 ? ' active' : '');
-        (function (idx) {
-            dot.addEventListener('click', function () { goTo(idx); });
-        })(i);
-        dotsWrap.appendChild(dot);
-        dots.push(dot);
-    }
-
-    function setPosition(withTransition) {
-        var itemWidth = track.children[0].getBoundingClientRect().width;
-        var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || 0);
-        track.style.transition = withTransition === false ? 'none' : '';
-        track.style.transform = 'translateX(-' + (index * (itemWidth + gap)) + 'px)';
-    }
-
-    function updateDots() {
-        dots.forEach(function (d, i) { d.classList.toggle('active', i === (index % total)); });
-    }
-
-    function goTo(i) {
-        index = i;
-        setPosition(true);
-        updateDots();
-    }
-
-    function next() {
-        index++;
-        setPosition(true);
-        updateDots();
-        if (index >= total) {
-            setTimeout(function () {
-                index = 0;
-                setPosition(false);
-            }, 500);
-        }
-    }
-
-    window.addEventListener('resize', function () {
-        visible = perView();
-        setPosition(false);
-    });
-
-    setPosition(false);
-    setInterval(next, 3000);
-})();
-</script>
 
 <!-- ═══════════════════════════════════════════════════════
      GALLERY SECTION (Bootstrap 5-col Grid)
@@ -995,6 +885,11 @@ $eventsGalleryImages = [
     ['file' => '6.png', 'alt' => 'University Event'],
     ['file' => '5.png', 'alt' => 'University Event'],
     ['file' => '4.png', 'alt' => 'University Event'],
+    ['file' => 'welcome-srku-campus.jpeg', 'alt' => 'SRK University Main Building', 'month' => '08'],
+    ['file' => 'srku-main-gate.jpeg', 'alt' => 'SRK University Main Gate', 'month' => '08'],
+    ['file' => 'srku-academic-block.jpeg', 'alt' => 'SRK University Academic Block', 'month' => '08'],
+    ['file' => 'srku-rkdf-building.jpeg', 'alt' => 'RKDF Group Campus Building', 'month' => '08'],
+    ['file' => 'srku-campus-block.jpeg', 'alt' => 'SRK University Campus Block', 'month' => '08'],
 ];
 ?>
 <section class="py-5">
@@ -1006,7 +901,7 @@ $eventsGalleryImages = [
         <div class="auto-gallery__track auto-gallery__track--3up" id="eventsGalleryTrack">
             <?php foreach ($eventsGalleryImages as $img): ?>
                 <div class="auto-gallery__item auto-gallery__item--3up">
-                    <img src="<?php echo BASE_URL . 'assets/uploads/2026/07/' . rawurlencode($img['file']); ?>"
+                    <img src="<?php echo BASE_URL . 'assets/uploads/2026/' . ($img['month'] ?? '07') . '/' . rawurlencode($img['file']); ?>"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                          alt="<?php echo sanitize($img['alt']); ?>">
                 </div>
