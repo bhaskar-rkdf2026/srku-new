@@ -71,9 +71,9 @@ require_once __DIR__ . '/includes/header.php';
                 <a href="<?php echo BASE_URL; ?>contact.php#apply" class="btn btn-srku">Apply Now</a>
             </div>
             <div class="col-12 col-lg-6 reveal">
-                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/campus-1.webp"
+                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/srku-rkdf-building.jpeg"
                      onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                     alt="SRK University Campus" class="welcome-img">
+                     alt="RKDF Group Campus Building" class="welcome-img">
                 <div class="row g-2 mt-3 text-center">
                     <div class="col-4">
                         <div class="welcome-badge"><strong>18,000+</strong><small>Students</small></div>
@@ -138,6 +138,172 @@ require_once __DIR__ . '/includes/header.php';
                     <div class="about-num-badge">06</div>
                     <h4 class="h5 fw-bold text-navy mb-2">Holistic Student Development</h4>
                     <p class="text-muted small mb-0" style="line-height:1.75;">At SRK University, students grow beyond academics through sports, cultural activities, leadership programmes, innovation, and community engagement, building confidence, teamwork, and essential life skills for future success.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CAMPUS GALLERY -->
+<?php
+$whySrkGalleryImages = [
+    ['path' => 'assets/uploads/2026/08/welcome-srku-campus.jpeg', 'alt' => 'SRK University Main Building'],
+    ['path' => 'assets/uploads/2026/08/srku-main-gate.jpeg', 'alt' => 'SRK University Main Gate'],
+    ['path' => 'assets/uploads/2026/08/srku-academic-block.jpeg', 'alt' => 'SRK University Academic Block'],
+    ['path' => 'assets/uploads/2026/08/srku-rkdf-building.jpeg', 'alt' => 'RKDF Group Campus Building'],
+    ['path' => 'assets/uploads/2026/08/srku-campus-block.jpeg', 'alt' => 'SRK University Campus Block'],
+    ['path' => 'assets/uploads/2026/07/Gallary-slider-07.webp', 'alt' => 'Students in the University Library'],
+    ['path' => 'assets/uploads/2026/07/Gallary-slider-06.webp', 'alt' => 'Clinical Training at SRK University'],
+    ['path' => 'assets/uploads/2026/07/Gallary-slider-10.webp', 'alt' => 'SRK University Faculty Group'],
+    ['path' => 'assets/uploads/2026/07/5.png', 'alt' => 'Student Life at SRK University']
+];
+?>
+<section class="py-5 text-center text-white" style="background: linear-gradient(135deg, var(--srku-maroon), var(--srku-navy));">
+    <div class="container-xl py-2 reveal">
+        <span class="section-subtitle text-warning">CAMPUS GALLERY</span>
+        <h2 class="fw-bold mb-0">A Glimpse Into Life at SRK University</h2>
+    </div>
+</section>
+<section class="auto-gallery" id="gallery">
+    <div class="auto-gallery__viewport" id="whySrkGalleryViewport">
+        <div class="auto-gallery__track" id="whySrkGalleryTrack">
+            <?php foreach ($whySrkGalleryImages as $image): ?>
+                <div class="auto-gallery__item">
+                    <img src="<?php echo BASE_URL . sanitize($image['path']); ?>"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                         alt="<?php echo sanitize($image['alt']); ?>">
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="auto-gallery__dots" id="whySrkGalleryDots"></div>
+    <div class="text-center mt-4">
+        <a href="<?php echo BASE_URL; ?>gallery.php?category=Campus" class="btn btn-srku-gold">
+            <i class="fas fa-images me-2"></i>View More Photos
+        </a>
+    </div>
+</section>
+<script>
+(function () {
+    var track = document.getElementById('whySrkGalleryTrack');
+    var viewport = document.getElementById('whySrkGalleryViewport');
+    var dotsWrap = document.getElementById('whySrkGalleryDots');
+    if (!track || !viewport || !dotsWrap) return;
+
+    var originalItems = Array.prototype.slice.call(track.children);
+    var total = originalItems.length;
+    var index = 0;
+    var dots = [];
+    var timer;
+
+    originalItems.slice(0, Math.min(4, total)).forEach(function (item) {
+        track.appendChild(item.cloneNode(true));
+    });
+
+    function setPosition(withTransition) {
+        var itemWidth = track.children[0].getBoundingClientRect().width;
+        var styles = getComputedStyle(track);
+        var gap = parseFloat(styles.columnGap || styles.gap || 0);
+        track.style.transition = withTransition === false ? 'none' : '';
+        track.style.transform = 'translateX(-' + (index * (itemWidth + gap)) + 'px)';
+    }
+
+    function updateDots() {
+        dots.forEach(function (dot, dotIndex) {
+            var active = dotIndex === (index % total);
+            dot.classList.toggle('active', active);
+            dot.setAttribute('aria-current', active ? 'true' : 'false');
+        });
+    }
+
+    function goTo(nextIndex) {
+        index = nextIndex;
+        setPosition(true);
+        updateDots();
+    }
+
+    function next() {
+        index++;
+        setPosition(true);
+        updateDots();
+        if (index >= total) {
+            window.setTimeout(function () {
+                index = 0;
+                setPosition(false);
+                updateDots();
+            }, 600);
+        }
+    }
+
+    function startAutoScroll() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        window.clearInterval(timer);
+        timer = window.setInterval(next, 3000);
+    }
+
+    originalItems.forEach(function (_, dotIndex) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'auto-gallery__dot' + (dotIndex === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Show gallery photo ' + (dotIndex + 1));
+        dot.setAttribute('aria-current', dotIndex === 0 ? 'true' : 'false');
+        dot.addEventListener('click', function () {
+            goTo(dotIndex);
+            startAutoScroll();
+        });
+        dotsWrap.appendChild(dot);
+        dots.push(dot);
+    });
+
+    viewport.addEventListener('mouseenter', function () { window.clearInterval(timer); });
+    viewport.addEventListener('mouseleave', startAutoScroll);
+    window.addEventListener('resize', function () { setPosition(false); });
+
+    setPosition(false);
+    startAutoScroll();
+})();
+</script>
+
+<!-- FAQ -->
+<section class="py-5 text-center text-white" style="background: linear-gradient(135deg, var(--srku-maroon), var(--srku-navy));">
+    <div class="container-xl py-2">
+        <span class="section-subtitle text-warning">FAQS</span>
+        <h2 class="fw-bold mb-4">Answers before you ask.</h2>
+        <div class="accordion mx-auto reveal" id="whySrkFaq" style="max-width:760px;">
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#whySrkFaq1" aria-expanded="true" aria-controls="whySrkFaq1">
+                        Why should I choose SRK University over other universities?
+                    </button>
+                </h3>
+                <div id="whySrkFaq1" class="accordion-collapse collapse show" data-bs-parent="#whySrkFaq">
+                    <div class="accordion-body text-start">
+                        SRK University combines multidisciplinary programmes, experienced faculty, modern infrastructure, and a strong research and entrepreneurship ecosystem to prepare students for meaningful careers and lifelong success.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#whySrkFaq2" aria-expanded="false" aria-controls="whySrkFaq2">
+                        What kind of academic support does SRK University offer?
+                    </button>
+                </h3>
+                <div id="whySrkFaq2" class="accordion-collapse collapse" data-bs-parent="#whySrkFaq">
+                    <div class="accordion-body text-start">
+                        Students benefit from dedicated faculty mentorship, advanced research facilities, and a vibrant campus culture that encourages exploration, innovation, and collaboration across disciplines.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#whySrkFaq3" aria-expanded="false" aria-controls="whySrkFaq3">
+                        Does SRK University offer industry exposure and placement support?
+                    </button>
+                </h3>
+                <div id="whySrkFaq3" class="accordion-collapse collapse" data-bs-parent="#whySrkFaq">
+                    <div class="accordion-body text-start">
+                        Yes. Our Corporate Relations Cell conducts year-round placement drives, internships, and industry engagement programmes to connect students with leading recruiters and build career-ready skills.
+                    </div>
                 </div>
             </div>
         </div>
