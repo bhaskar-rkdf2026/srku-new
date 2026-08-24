@@ -86,7 +86,7 @@ require_once __DIR__ . '/includes/header.php';
                         <i class="fas fa-award"></i>
                     </div>
                     <h3 class="h5 fw-bold text-navy mb-2">AICTE</h3>
-                    <p class="text-muted small mb-0">All technical programs approved by the All India Council for Technical Education.</p>
+                    <p class="text-muted small mb-0">All technical programmes approved by the All India Council for Technical Education.</p>
                 </div>
             </div>
             <div class="col">

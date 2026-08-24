@@ -17,7 +17,7 @@ $units = [
     ['title' => 'R.N. KAPOOR MEMORIAL PHARMACY', 'subtitle' => 'R. N. KAPOOR MEMORIAL INSTITUTE OF PHARMACEUTICAL SCIENCES', 'img' => 'R.N.-KAPOOR-MEMORIAL-PHARMACY.webp', 'href' => BASE_URL . 'department-detail.php?slug=r-n-kapoor-memorial-institute-of-pharmaceutical-science', 'external' => false],
     ['title' => 'SARVEPALLI RADHAKRISHNAN COLLEGE OF ALLIED & HEALTHCARE SCIENCES', 'subtitle' => 'SARVEPALLI RADHAKRISHNAN COLLEGE OF ALLIED & HEALTHCARE SCIENCES', 'img' => 'SARVEPALLI-RADHAKRISHANAN-COLLEGE-OF-ALLIED-HEALTHCARE-SCIENCES.webp', 'href' => BASE_URL . 'department-detail.php?slug=department-of-allied-health-care-sciences', 'external' => false],
     ['title' => 'RKDF DENTAL COLLEGE', 'subtitle' => 'RKDF DENTAL COLLEGE & RESEARCH CENTRE', 'img' => '012-scaled.webp', 'href' => 'http://rkdfdentalcollege.in/', 'external' => true],
-    ['title' => 'Faculty Of Agriculture', 'subtitle' => 'Faculty Of Agriculture', 'img' => '011-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=faculty-of-agriculture', 'external' => false],
+    ['title' => 'Faculty of Agriculture', 'subtitle' => 'Faculty of Agriculture', 'img' => '011-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=faculty-of-agriculture', 'external' => false],
     ['title' => 'NURSING COLLEGE', 'subtitle' => 'RKDF COLLEGE OF NURSING', 'img' => '010-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-college-of-nursing', 'external' => false],
     ['title' => 'RKDF IBM', 'subtitle' => 'RKDF INSTITUTE OF BUSINESS MANAGEMENT', 'img' => '003-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-institute-of-business-management', 'external' => false],
     ['title' => 'RKDF IM', 'subtitle' => 'RKDF INSTITUTE OF MANAGEMENT', 'img' => '009-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-institute-of-management', 'external' => false],
@@ -27,7 +27,7 @@ $units = [
     ['title' => 'Faculty of Commerce', 'subtitle' => '', 'img' => 'ChatGPTImageAug5202610_50_16A.jpg', 'href' => BASE_URL . 'departments.php', 'external' => false, 'dir' => '2026/08'],
     ['title' => 'Faculty of Allied Arts', 'subtitle' => '', 'img' => '002-scaled.webp', 'href' => BASE_URL . 'departments.php', 'external' => false],
     ['title' => 'Faculty of Computer Application', 'subtitle' => '', 'img' => '008-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=faculty-of-computer-application', 'external' => false],
-    ['title' => 'Faculty Of Library & Information Science', 'subtitle' => '', 'img' => '001-scaled.webp', 'href' => BASE_URL . 'departments.php', 'external' => false],
+    ['title' => 'Faculty of Library & Information Science', 'subtitle' => '', 'img' => '001-scaled.webp', 'href' => BASE_URL . 'departments.php', 'external' => false],
 ];
 ?>
 
@@ -44,7 +44,7 @@ $units = [
         </nav>
         <h1 class="fw-bold display-6 mb-3" style="max-width:800px; text-shadow: 0 2px 12px rgba(0,0,0,0.45);">120+ programs. One ambition: your future.</h1>
         <p class="mb-0" style="max-width:760px; line-height:1.8; color: rgba(255,255,255,0.9); text-shadow: 0 1px 6px rgba(0,0,0,0.4);">
-            From B.Tech and MBBS to MBA, LLM, and doctoral research &mdash; every program blends theory, industry immersion, and global exposure. Essays, field notes, and long-form research from students, faculty, and alumni &mdash; published weekly.
+            From B.Tech and MBBS to MBA, LLM, and doctoral research &mdash; every programme blends theory, industry immersion, and global exposure. Essays, field notes, and long-form research from students, faculty, and alumni &mdash; published weekly.
         </p>
     </div>
 </section>
@@ -81,7 +81,7 @@ $units = [
 <section class="py-5">
     <div class="container-xl py-3">
         <div class="text-center mb-5">
-            <span class="section-subtitle">CONSTITUENT UNIT OF OUR UNIVERSITY</span>
+            <span class="section-subtitle">CONSTITUENT UNITS OF OUR UNIVERSITY</span>
             <h2 class="section-title">A Guide to the <span>University's Constituent</span> Units</h2>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">

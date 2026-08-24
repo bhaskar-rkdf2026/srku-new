@@ -17,7 +17,7 @@ require_once __DIR__ . '/includes/header.php';
         </nav>
         <h1 class="fw-bold display-6 mb-3" style="max-width:800px; text-shadow: 0 2px 12px rgba(0,0,0,0.45);">Fourteen schools, one ecosystem.</h1>
         <p class="mb-0" style="max-width:760px; line-height:1.8; color: rgba(255,255,255,0.9); text-shadow: 0 1px 6px rgba(0,0,0,0.4);">
-            From B.Tech and MBBS to MBA, LLM, and doctoral research &mdash; every program blends theory, industry immersion, and global exposure. Essays, field notes, and long-form research from students, faculty, and alumni &mdash; published weekly.
+            From B.Tech and MBBS to MBA, LLM, and doctoral research &mdash; every programme blends theory, industry immersion, and global exposure. Essays, field notes, and long-form research from students, faculty, and alumni &mdash; published weekly.
         </p>
     </div>
 </section>
@@ -63,7 +63,7 @@ require_once __DIR__ . '/includes/header.php';
                     With experienced faculty, modern infrastructure, advanced research facilities, and a vibrant campus culture, SRK University nurtures talent across diverse disciplines. Every student is encouraged to explore, innovate, collaborate, and lead while building a strong foundation for personal and professional growth.
                 </p>
                 <ul class="list-unstyled d-flex flex-column gap-2 mb-4">
-                    <li class="fw-semibold"><i class="fas fa-check-circle text-danger me-2"></i> Multidisciplinary programs across diverse fields</li>
+                    <li class="fw-semibold"><i class="fas fa-check-circle text-danger me-2"></i> Multidisciplinary programmes across diverse fields</li>
                     <li class="fw-semibold"><i class="fas fa-check-circle text-danger me-2"></i> Experienced faculty and dedicated mentorship</li>
                     <li class="fw-semibold"><i class="fas fa-check-circle text-danger me-2"></i> Research, innovation, and entrepreneurship ecosystem</li>
                     <li class="fw-semibold"><i class="fas fa-check-circle text-danger me-2"></i> Modern campus with advanced academic facilities</li>
@@ -82,7 +82,7 @@ require_once __DIR__ . '/includes/header.php';
                         <div class="welcome-badge"><strong>600+</strong><small>Faculty Members</small></div>
                     </div>
                     <div class="col-4">
-                        <div class="welcome-badge"><strong>120+</strong><small>Academic Programs</small></div>
+                        <div class="welcome-badge"><strong>120+</strong><small>Academic Programmes</small></div>
                     </div>
                 </div>
             </div>
@@ -137,7 +137,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="card h-100 p-4 border-0 shadow-sm rounded-4 reveal">
                     <div class="about-num-badge">06</div>
                     <h4 class="h5 fw-bold text-navy mb-2">Holistic Student Development</h4>
-                    <p class="text-muted small mb-0" style="line-height:1.75;">At SRK University, students grow beyond academics through sports, cultural activities, leadership programs, innovation, and community engagement, building confidence, teamwork, and essential life skills for future success.</p>
+                    <p class="text-muted small mb-0" style="line-height:1.75;">At SRK University, students grow beyond academics through sports, cultural activities, leadership programmes, innovation, and community engagement, building confidence, teamwork, and essential life skills for future success.</p>
                 </div>
             </div>
         </div>

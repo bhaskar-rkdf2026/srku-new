@@ -68,7 +68,7 @@ require_once __DIR__ . '/includes/header.php';
                 <span class="section-subtitle">UNIVERSITY OVERVIEW</span>
                 <h2 class="section-title mb-3">Who <span>We Are</span></h2>
                 <p class="text-dark mb-4" style="line-height:1.8; font-size:0.96rem;">
-                    Established under the Madhya Pradesh Niji Vishwavidyalaya (Sthapana Avam Sanchalan) Adhiniyam 2007, as amended by the Dwitiya Sanshodhan Adhiniyam 2014, and sponsored by RKDF Education Society Bhopal, SRK University stands as a beacon of academic excellence in central India.
+                    Established under the Madhya Pradesh Niji Vishwavidyalaya (Sthapana Avam Sanchalan) Adhiniyam 2007, as amended by the Dwitiya Sanshodhan Adhiniyam 2014, and sponsored by RKDF Education Society, Bhopal, SRK University stands as a beacon of academic excellence in central India.
                 </p>
                 <ul class="list-unstyled row row-cols-1 row-cols-sm-2 g-2 mb-0">
                     <li class="col fw-semibold"><i class="fas fa-check-square text-danger me-2"></i> UGC (University Grants Commission) &ndash; Section 2(f)</li>
@@ -178,7 +178,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="card h-100 p-4 border-0 shadow-sm rounded-4 reveal">
                     <div class="about-num-badge">06</div>
                     <h4 class="h5 fw-bold text-navy mb-2">Holistic Student Development</h4>
-                    <p class="text-muted small mb-0" style="line-height:1.75;">At SRK University, students grow beyond academics through sports, cultural activities, leadership programs, innovation, and community engagement, building confidence, teamwork, and essential life skills for future success.</p>
+                    <p class="text-muted small mb-0" style="line-height:1.75;">At SRK University, students grow beyond academics through sports, cultural activities, leadership programmes, innovation, and community engagement, building confidence, teamwork, and essential life skills for future success.</p>
                 </div>
             </div>
         </div>
@@ -217,7 +217,7 @@ require_once __DIR__ . '/includes/header.php';
                         <i class="fas fa-award"></i>
                     </div>
                     <h3 class="h5 fw-bold text-navy mb-2">AICTE</h3>
-                    <p class="text-muted small mb-0">All technical programs approved by the All India Council for Technical Education.</p>
+                    <p class="text-muted small mb-0">All technical programmes approved by the All India Council for Technical Education.</p>
                 </div>
             </div>
             <div class="col">
@@ -226,7 +226,7 @@ require_once __DIR__ . '/includes/header.php';
                         <i class="fas fa-award"></i>
                     </div>
                     <h3 class="h5 fw-bold text-navy mb-2">PCI &amp; INC</h3>
-                    <p class="text-muted small mb-0">Pharmacy and Nursing programs approved by the respective national councils.</p>
+                    <p class="text-muted small mb-0">Pharmacy and Nursing programmes approved by the respective national councils.</p>
                 </div>
             </div>
         </div>

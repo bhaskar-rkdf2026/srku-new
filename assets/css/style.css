@@ -1147,10 +1147,13 @@ body {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    object-fit: cover;
     margin: 0 auto 1.25rem;
-    display: block;
-    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 1.3rem;
 }
 
 .testimonial-v2__text {

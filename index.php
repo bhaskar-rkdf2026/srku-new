@@ -830,9 +830,7 @@ $homeTestimonials = [
         <div class="testimonial-v2__carousel" id="testimonialCarousel">
             <?php foreach ($homeTestimonials as $i => $t): ?>
                 <div class="testimonial-v2__slide<?php echo $i === 0 ? ' active' : ''; ?>">
-                    <img class="testimonial-v2__avatar" src="<?php echo BASE_URL; ?>assets/uploads/2026/07/dummy.webp"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                         alt="<?php echo sanitize($t['name']); ?>">
+                    <span class="testimonial-v2__avatar" aria-hidden="true"><i class="fas fa-user"></i></span>
                     <p class="testimonial-v2__text"><?php echo sanitize($t['text']); ?></p>
                     <p class="testimonial-v2__name"><?php echo sanitize($t['name']); ?></p>
                     <p class="testimonial-v2__city"><?php echo sanitize($t['city']); ?></p>
