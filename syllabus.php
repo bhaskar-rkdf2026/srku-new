@@ -147,7 +147,7 @@ $categories = [
                                                 <?php endif; ?>
                                             </td>
                                             <td>
-                                                <span class="badge bg-primary-subtle text-primary border px-2 py-1"><?php echo sanitize($c['level']); ?></span>
+                                                <span class="badge badge-level-navy text-white px-2 py-1"><?php echo sanitize($c['level']); ?></span>
                                             </td>
                                             <td>
                                                 <span class="text-secondary small fw-semibold"><i class="far fa-clock me-1"></i><?php echo sanitize($c['duration']); ?></span>

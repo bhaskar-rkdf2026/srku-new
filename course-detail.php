@@ -323,7 +323,7 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                                 <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($rc['slug'] ?: $rc['id']); ?>" class="p-2 px-3 rounded-3 text-decoration-none text-dark bg-light hover-danger small d-flex justify-content-between align-items-center">
                                     <div>
                                         <div class="fw-semibold text-truncate" style="max-width: 210px;"><?php echo sanitize($rc['course_name']); ?></div>
-                                        <span class="badge bg-primary-subtle text-primary border small" style="font-size:0.7rem;"><?php echo sanitize($rc['level']); ?> &bull; <?php echo sanitize($rc['duration']); ?></span>
+                                        <span class="badge badge-level-navy text-white small" style="font-size:0.7rem;"><?php echo sanitize($rc['level']); ?> &bull; <?php echo sanitize($rc['duration']); ?></span>
                                     </div>
                                     <i class="fas fa-chevron-right text-muted small"></i>
                                 </a>

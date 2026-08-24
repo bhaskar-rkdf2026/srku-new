@@ -19,15 +19,67 @@ require_once __DIR__ . '/includes/header.php';
                 <p class="text-muted mb-4" style="line-height:1.8; font-size:0.93rem;">
                     Our faculty and doctoral scholars actively publish in prestigious high-impact peer-reviewed journals indexed in Scopus, Web of Science, and PubMed, securing national and international patents across nanomedicine, artificial intelligence, renewable energy, and agricultural biotechnology.
                 </p>
-                <div class="d-flex gap-3">
-                    <a href="<?php echo BASE_URL; ?>incubation-center.php" class="btn btn-srku"><i class="fas fa-lightbulb me-1"></i> Incubation Centre</a>
-                    <a href="<?php echo BASE_URL; ?>page.php?slug=admission" class="btn btn-outline-danger"><i class="fas fa-user-graduate me-1"></i> Ph.D. Admissions</a>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="<?php echo BASE_URL; ?>phd-admission.php" class="btn btn-srku shadow-sm"><i class="fas fa-user-graduate me-1"></i> Ph.D. Admissions 2026</a>
+                    <a href="<?php echo BASE_URL; ?>incubation-center.php" class="btn btn-outline-danger"><i class="fas fa-lightbulb me-1"></i> Incubation Centre</a>
                 </div>
             </div>
             <div class="col-12 col-lg-6">
                 <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/lab-and-research.webp"
                      onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                      alt="SRKU Research Labs" class="img-fluid rounded-4 border border-4 border-danger shadow">
+            </div>
+        </div>
+
+        <!-- Ph.D. Admission & Official Forms Download Section -->
+        <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 bg-white mb-5 border-top border-4 border-danger">
+            <div class="row align-items-center g-4">
+                <div class="col-12 col-lg-6">
+                    <span class="section-subtitle"><i class="fas fa-graduation-cap text-danger me-1"></i> DOCTORAL PROGRAMMES</span>
+                    <h3 class="h4 fw-bold text-navy mb-2">Ph.D. Admission 2026 &amp; Official Forms</h3>
+                    <p class="text-muted small mb-4" style="line-height: 1.8;">
+                        Download the official prescribed application and entrance examination forms for Ph.D. admissions across Engineering, Pharmacy, Management, Computer Applications, Medical, and Science.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-application-form.pdf" target="_blank" class="btn btn-danger btn-sm rounded-pill px-3 fw-bold">
+                            <i class="fas fa-file-pdf me-1"></i> Ph.D. Application Form (PDF)
+                        </a>
+                        <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-entrance-form.pdf" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold">
+                            <i class="fas fa-file-signature me-1"></i> Ph.D. Entrance Form (PDF)
+                        </a>
+                        <a href="<?php echo BASE_URL; ?>phd-admission.php" class="btn btn-outline-navy btn-sm rounded-pill px-3 fw-bold">
+                            View Admission Portal &rarr;
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="row row-cols-1 row-cols-sm-2 g-2">
+                        <div class="col">
+                            <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-admission-policy.pdf" target="_blank" class="p-3 bg-light rounded-3 border text-navy text-decoration-none d-block hover-shadow h-100" style="transition:all 0.2s ease;">
+                                <div class="small fw-bold text-danger mb-1"><i class="fas fa-gavel me-1"></i> Policy</div>
+                                <div class="small fw-semibold text-dark">Ph.D. Admission Policy &rarr;</div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-scholars-pursuing.pdf" target="_blank" class="p-3 bg-light rounded-3 border text-navy text-decoration-none d-block hover-shadow h-100" style="transition:all 0.2s ease;">
+                                <div class="small fw-bold text-primary mb-1"><i class="fas fa-users me-1"></i> Enrolled</div>
+                                <div class="small fw-semibold text-dark">Currently Enrolled Scholars &rarr;</div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-scholars-completed.pdf" target="_blank" class="p-3 bg-light rounded-3 border text-navy text-decoration-none d-block hover-shadow h-100" style="transition:all 0.2s ease;">
+                                <div class="small fw-bold text-warning mb-1"><i class="fas fa-award me-1"></i> Completed</div>
+                                <div class="small fw-semibold text-dark">Ph.D. Awarded Scholars &rarr;</div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="<?php echo BASE_URL; ?>phd-admission.php#apply" class="p-3 bg-danger-subtle rounded-3 border border-danger-subtle text-danger text-decoration-none d-block hover-shadow h-100" style="transition:all 0.2s ease;">
+                                <div class="small fw-bold text-danger mb-1"><i class="fas fa-paper-plane me-1"></i> Apply Online</div>
+                                <div class="small fw-semibold text-danger">Ph.D. Online Pre-Reg &rarr;</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

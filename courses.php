@@ -81,44 +81,69 @@ $departments = getDepartments(true);
                     $specs = !empty($c['specializations']) ? array_map('trim', explode(',', $c['specializations'])) : [];
                 ?>
                     <div class="col">
-                        <div class="card h-100 p-4 border-0 shadow-sm rounded-4 d-flex flex-column hover-shadow bg-white border" style="transition: all 0.25s ease;">
+                        <div class="srku-course-card h-100 rounded-4 shadow-sm d-flex flex-column position-relative overflow-hidden">
                             
-                            <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
-                                <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1 rounded-pill small fw-bold text-truncate" style="max-width: 70%;" title="<?php echo sanitize($c['department']); ?>">
-                                    <i class="fas fa-university me-1"></i> <?php echo sanitize($c['department']); ?>
-                                </span>
-                                <span class="badge bg-primary text-white small px-2 py-1">
-                                    <?php echo sanitize($c['level']); ?>
-                                </span>
-                            </div>
+                            <!-- Top Theme Gradient Accent -->
+                            <div class="course-card-accent"></div>
 
-                            <h3 class="h5 fw-bold text-navy mb-2" style="min-height: 2.8rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                                <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="text-navy text-decoration-none hover-danger">
-                                    <?php echo sanitize($c['course_name']); ?>
-                                </a>
-                            </h3>
-
-                            <!-- Specializations badge if available -->
-                            <?php if (!empty($specs)): ?>
-                                <div class="mb-2">
-                                    <span class="badge bg-warning-subtle text-dark border border-warning-subtle small fw-semibold">
-                                        <i class="fas fa-sitemap text-danger me-1"></i> <?php echo count($specs); ?> Disciplines / Specializations
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                
+                                <!-- Top Badges Row -->
+                                <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+                                    <span class="course-dept-badge text-truncate" title="<?php echo sanitize($c['department']); ?>">
+                                        <i class="fas fa-university me-1 text-danger"></i> <?php echo sanitize($c['department']); ?>
+                                    </span>
+                                    <span class="badge badge-level-navy rounded-pill">
+                                        <?php echo sanitize($c['level']); ?>
                                     </span>
                                 </div>
-                            <?php endif; ?>
 
-                            <div class="text-muted small mb-3 flex-grow-1" style="line-height:1.65;">
-                                <div class="mb-1"><strong class="text-dark"><i class="far fa-clock text-danger me-1"></i> Duration:</strong> <?php echo sanitize($c['duration']); ?></div>
-                                <div class="text-truncate" title="<?php echo sanitize($c['eligibility']); ?>"><strong class="text-dark"><i class="fas fa-check-circle text-success me-1"></i> Eligibility:</strong> <?php echo sanitize($c['eligibility']); ?></div>
-                            </div>
+                                <!-- Course Title -->
+                                <h3 class="course-card-title mb-2">
+                                    <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="text-decoration-none">
+                                        <?php echo sanitize($c['course_name']); ?>
+                                    </a>
+                                </h3>
 
-                            <div class="d-flex gap-2 mt-auto pt-3 border-top">
-                                <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="btn btn-sm btn-outline-danger flex-grow-1 text-center justify-content-center">
-                                    <i class="fas fa-info-circle me-1"></i> Details &amp; Specs
-                                </a>
-                                <a href="<?php echo BASE_URL; ?>contact.php?course=<?php echo urlencode($c['course_name']); ?>" class="btn btn-sm btn-srku flex-grow-1 text-center justify-content-center">
-                                    <i class="fas fa-paper-plane me-1"></i> Apply
-                                </a>
+                                <!-- Specializations Pill -->
+                                <?php if (!empty($specs)): ?>
+                                    <div class="mb-3">
+                                        <span class="course-spec-badge">
+                                            <i class="fas fa-layer-group text-warning me-1"></i> <?php echo count($specs); ?> Disciplines / Specializations
+                                        </span>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="mb-3">
+                                        <span class="course-spec-badge course-spec-badge-general">
+                                            <i class="fas fa-award text-secondary me-1"></i> Degree Programme
+                                        </span>
+                                    </div>
+                                <?php endif; ?>
+
+                                <!-- Key Meta Box (Duration & Eligibility) -->
+                                <div class="course-meta-box mb-4 flex-grow-1">
+                                    <div class="course-meta-row">
+                                        <span class="course-meta-label"><i class="far fa-clock text-danger me-1"></i> Duration:</span>
+                                        <span class="course-meta-val fw-bold text-dark"><?php echo sanitize($c['duration']); ?></span>
+                                    </div>
+                                    <div class="course-meta-row">
+                                        <span class="course-meta-label"><i class="fas fa-check-circle text-success me-1"></i> Eligibility:</span>
+                                        <span class="course-meta-val text-muted small" title="<?php echo sanitize($c['eligibility']); ?>">
+                                            <?php echo sanitize($c['eligibility']); ?>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Action Buttons Footer -->
+                                <div class="d-flex gap-2 pt-3 border-top mt-auto">
+                                    <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="btn btn-course-details flex-grow-1">
+                                        <i class="fas fa-info-circle me-1"></i> Details
+                                    </a>
+                                    <a href="<?php echo BASE_URL; ?>admission-enquiry.php?course=<?php echo urlencode($c['course_name']); ?>" class="btn btn-course-apply flex-grow-1">
+                                        <i class="fas fa-paper-plane me-1"></i> Apply Now
+                                    </a>
+                                </div>
+
                             </div>
 
                         </div>

@@ -43,21 +43,62 @@ function getDepartments($activeOnly = true) {
 function getDepartmentBySlug($slug) {
     try {
         $pdo = getDBConnection();
+        $slug = trim((string)$slug);
+        if (empty($slug)) return false;
+
         $idVal = is_numeric($slug) ? (int)$slug : 0;
+        // 1. Exact match by slug or ID
         $stmt = $pdo->prepare("SELECT * FROM departments WHERE slug = :s OR id = :idval LIMIT 1");
         $stmt->execute([':s' => $slug, ':idval' => $idVal]);
         $res = $stmt->fetch();
         if ($res) return $res;
 
-        // Fallback: search by partial slug or name
-        $cleanTerm = str_replace(['department-of-', 'faculty-of-', '-srk-university', '-srk-bhopal', '-'], ' ', $slug);
-        $cleanTerm = trim($cleanTerm);
-        if (!empty($cleanTerm)) {
-            $stmt = $pdo->prepare("SELECT * FROM departments WHERE name LIKE :term OR slug LIKE :sterm LIMIT 1");
-            $stmt->execute([':term' => '%' . $cleanTerm . '%', ':sterm' => '%' . $slug . '%']);
+        // 2. Direct Slug Keyword Map for all constituents
+        $keyMap = [
+            'homoeopath' => 'rkdf-homoeopathic-medical-college',
+            'dental'     => 'rkdf-dental-college',
+            'ayurved'    => 'sarvepalli-radhakrishnan-college-of-ayurveda',
+            'nursing'    => 'rkdf-college-of-nursing',
+            'medical'    => 'rkdf-medical-college',
+            'paramedic'  => 'department-of-paramedical-sciences',
+            'allied'     => 'department-of-paramedical-sciences',
+            'agricultur' => 'faculty-of-agriculture',
+            'law'        => 'sarvepalli-radhakrishnan-college-of-law',
+            'science-tech' => 'rkdf-institute-of-science-and-technology',
+            'ist'        => 'rkdf-institute-of-science-and-technology',
+            'mca'        => 'rkdf-institute-science-technology-mca',
+            'business'   => 'rkdf-institute-of-business-management',
+            'rkdf-college-of-pharmacy' => 'rkdf-college-of-pharmacy',
+            'pharm'      => 'rkdf-college-of-pharmacy',
+            'commerce'   => 'faculty-of-commerce',
+            'arts'       => 'faculty-of-arts',
+            'science'    => 'faculty-of-science',
+            'computer'   => 'faculty-of-computer-application',
+            'library'    => 'faculty-of-library-science',
+            'yoga'       => 'faculty-of-yoga',
+            'fashion'    => 'faculty-of-fashion-technology-design',
+        ];
+
+        foreach ($keyMap as $k => $mappedSlug) {
+            if (stripos($slug, $k) !== false) {
+                $stmt = $pdo->prepare("SELECT * FROM departments WHERE slug = :ms LIMIT 1");
+                $stmt->execute([':ms' => $mappedSlug]);
+                $matched = $stmt->fetch();
+                if ($matched) return $matched;
+            }
+        }
+
+        // 3. Fallback tokenized search
+        $cleanTerm = preg_replace('/[^a-zA-Z0-9]+/', ' ', $slug);
+        $tokens = array_filter(explode(' ', $cleanTerm), fn($t) => strlen($t) > 3 && !in_array($t, ['department', 'faculty', 'college', 'institute', 'hospital', 'research', 'center', 'centre', 'university', 'srku']));
+        
+        foreach ($tokens as $tok) {
+            $stmt = $pdo->prepare("SELECT * FROM departments WHERE name LIKE :t OR slug LIKE :t LIMIT 1");
+            $stmt->execute([':t' => '%' . $tok . '%']);
             $res = $stmt->fetch();
             if ($res) return $res;
         }
+
         return false;
     } catch (Exception $e) {
         return false;
