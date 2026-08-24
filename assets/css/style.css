@@ -1355,12 +1355,18 @@ body {
 }
 
 .card.reveal:hover .about-num-badge,
-.card.reveal:hover .bg-danger-subtle {
+.card.reveal:hover .bg-danger-subtle,
+.card.reveal:hover .bg-warning-subtle,
+.card.reveal:hover .bg-success-subtle,
+.card.reveal:hover .step-num-circle {
     transform: scale(1.1);
 }
 
 .about-num-badge,
-.bg-danger-subtle {
+.bg-danger-subtle,
+.bg-warning-subtle,
+.bg-success-subtle,
+.step-num-circle {
     transition: transform 0.3s ease;
 }
 
@@ -2924,6 +2930,33 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 12px 28px rgba(62, 62, 147, 0.12) !important;
     border-color: var(--srku-blue) !important;
+}
+
+.card.reveal .card-img-top {
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card.reveal:hover .card-img-top {
+    transform: scale(1.07);
+}
+
+.facility-info-box {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.facility-info-box:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12) !important;
+}
+
+.facility-info-box:hover .bg-danger-subtle,
+.facility-info-box:hover .bg-success-subtle {
+    transform: scale(1.1);
+}
+
+.facility-info-box .bg-danger-subtle,
+.facility-info-box .bg-success-subtle {
+    transition: transform 0.3s ease;
 }
 
 /* Floating WhatsApp Button */

@@ -10,7 +10,7 @@ require_once __DIR__ . '/includes/header.php';
 <section class="py-5">
     <div class="container-xl py-3">
         <div class="row align-items-center g-4 g-lg-5 mb-5">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6 reveal">
                 <span class="section-subtitle">CAMPUS VIBRANCY</span>
                 <h2 class="section-title mb-3">Beyond Academics: <span>A World of Opportunities</span></h2>
                 <p class="text-dark mb-3" style="line-height:1.8; font-size:0.95rem;">
@@ -21,7 +21,7 @@ require_once __DIR__ . '/includes/header.php';
                 </p>
                 <a href="<?php echo BASE_URL; ?>gallery.php" class="btn btn-srku"><i class="fas fa-images me-1"></i> View Campus Life Gallery</a>
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6 reveal">
                 <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Gallary-slider-01.webp"
                      onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                      alt="Student Life at SRKU" class="img-fluid rounded-4 border border-4 border-danger shadow">
@@ -31,7 +31,7 @@ require_once __DIR__ . '/includes/header.php';
         <!-- Student Life Highlights -->
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col">
-                <div class="card p-4 border-0 shadow-sm rounded-4 h-100">
+                <div class="card reveal p-4 border-0 shadow-sm rounded-4 h-100">
                     <div class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center mb-3" style="width:60px; height:60px; font-size:1.6rem;">
                         <i class="fas fa-guitar"></i>
                     </div>
@@ -43,7 +43,7 @@ require_once __DIR__ . '/includes/header.php';
             </div>
 
             <div class="col">
-                <div class="card p-4 border-0 shadow-sm rounded-4 h-100">
+                <div class="card reveal p-4 border-0 shadow-sm rounded-4 h-100">
                     <div class="bg-warning-subtle text-warning rounded-circle d-flex align-items-center justify-content-center mb-3" style="width:60px; height:60px; font-size:1.6rem;">
                         <i class="fas fa-trophy"></i>
                     </div>
@@ -55,7 +55,7 @@ require_once __DIR__ . '/includes/header.php';
             </div>
 
             <div class="col">
-                <div class="card p-4 border-0 shadow-sm rounded-4 h-100">
+                <div class="card reveal p-4 border-0 shadow-sm rounded-4 h-100">
                     <div class="bg-success-subtle text-success rounded-circle d-flex align-items-center justify-content-center mb-3" style="width:60px; height:60px; font-size:1.6rem;">
                         <i class="fas fa-hands-helping"></i>
                     </div>
@@ -70,4 +70,5 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </section>
 
+<script src="<?php echo BASE_URL; ?>assets/js/reveal.js" defer></script>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

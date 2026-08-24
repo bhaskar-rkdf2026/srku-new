@@ -9,7 +9,7 @@ $recruitingPartners = getSetting('recruiting_partners', '120+');
 ?>
 
 <!-- Dynamic Banner Header -->
-<?php renderPageBanner('placements', 'Training & Corporate Placements', '94% Placement Record &bull; 12 LPA Highest Package &bull; 120+ Corporate Recruiters'); ?>
+<?php renderPageBanner('placements', 'Training & Corporate Placements', '94% Placement Record • 12 LPA Highest Package • 120+ Corporate Recruiters'); ?>
 
 <!-- Stats Strip -->
 <div class="stats-strip py-3">
@@ -39,7 +39,7 @@ $recruitingPartners = getSetting('recruiting_partners', '120+');
 <section class="py-5">
     <div class="container-xl py-3">
         <div class="row align-items-center g-4 g-lg-5">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6 reveal">
                 <span class="section-subtitle">CORPORATE RELATIONS DESK</span>
                 <h2 class="section-title mb-3">Connecting Talent with <span>Global Opportunities</span></h2>
                 <p class="text-dark mb-3" style="line-height:1.8; font-size:0.95rem;">
@@ -50,10 +50,10 @@ $recruitingPartners = getSetting('recruiting_partners', '120+');
                 </p>
                 <div class="d-flex gap-3">
                     <a href="<?php echo BASE_URL; ?>contact.php#apply" class="btn btn-srku"><i class="fas fa-user-graduate me-1"></i> Register for Placements</a>
-                    <a href="<?php echo BASE_URL; ?>courses.php" class="btn btn-outline-danger"><i class="fas fa-search me-1"></i> Explore Programmes</a>
+                    <a href="<?php echo BASE_URL; ?>courses.php" class="btn btn-srku-outline-maroon"><span class="btn-icon-badge"><i class="fas fa-search"></i></span> Explore Programmes</a>
                 </div>
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6 reveal">
                 <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/placement-hero-DCAhDTqD.jpg"
                      onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/graduates.webp';"
                      alt="SRKU Placements" class="img-fluid rounded-4 border border-4 border-danger shadow">
@@ -62,28 +62,37 @@ $recruitingPartners = getSetting('recruiting_partners', '120+');
     </div>
 </section>
 
-<!-- Top Recruiters Grid -->
+<!-- Top Recruiters Marquee -->
 <section class="py-5 bg-light">
     <div class="container-xl py-3">
-        <div class="text-center mb-5">
+        <div class="text-center mb-4 reveal">
             <span class="section-subtitle">OUR RECRUITMENT PARTNERS</span>
             <h2 class="fw-bold text-navy">Top Corporate Recruiters</h2>
             <p class="text-muted">Over 120+ leading IT, Engineering, Pharmaceutical, Hospital, and Financial conglomerates hire from SRKU.</p>
         </div>
-
-        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3 text-center">
-            <div class="col"><div class="card p-3 border-0 shadow-sm rounded-3 h-100 d-flex align-items-center justify-content-center fw-bold text-navy"><i class="fas fa-building text-danger me-2"></i> TCS</div></div>
-            <div class="col"><div class="card p-3 border-0 shadow-sm rounded-3 h-100 d-flex align-items-center justify-content-center fw-bold text-navy"><i class="fas fa-building text-danger me-2"></i> Infosys</div></div>
-            <div class="col"><div class="card p-3 border-0 shadow-sm rounded-3 h-100 d-flex align-items-center justify-content-center fw-bold text-navy"><i class="fas fa-building text-danger me-2"></i> Wipro</div></div>
-            <div class="col"><div class="card p-3 border-0 shadow-sm rounded-3 h-100 d-flex align-items-center justify-content-center fw-bold text-navy"><i class="fas fa-building text-danger me-2"></i> Amazon</div></div>
-            <div class="col"><div class="card p-3 border-0 shadow-sm rounded-3 h-100 d-flex align-items-center justify-content-center fw-bold text-navy"><i class="fas fa-pills text-danger me-2"></i> Cipla</div></div>
-            <div class="col"><div class="card p-3 border-0 shadow-sm rounded-3 h-100 d-flex align-items-center justify-content-center fw-bold text-navy"><i class="fas fa-pills text-danger me-2"></i> Sun Pharma</div></div>
-            <div class="col"><div class="card p-3 border-0 shadow-sm rounded-3 h-100 d-flex align-items-center justify-content-center fw-bold text-navy"><i class="fas fa-cogs text-danger me-2"></i> L&amp;T</div></div>
-            <div class="col"><div class="card p-3 border-0 shadow-sm rounded-3 h-100 d-flex align-items-center justify-content-center fw-bold text-navy"><i class="fas fa-laptop text-danger me-2"></i> HCL Tech</div></div>
-            <div class="col"><div class="card p-3 border-0 shadow-sm rounded-3 h-100 d-flex align-items-center justify-content-center fw-bold text-navy"><i class="fas fa-university text-danger me-2"></i> HDFC Bank</div></div>
-            <div class="col"><div class="card p-3 border-0 shadow-sm rounded-3 h-100 d-flex align-items-center justify-content-center fw-bold text-navy"><i class="fas fa-hospital text-danger me-2"></i> Apollo</div></div>
-            <div class="col"><div class="card p-3 border-0 shadow-sm rounded-3 h-100 d-flex align-items-center justify-content-center fw-bold text-navy"><i class="fas fa-car text-danger me-2"></i> Mahindra</div></div>
-            <div class="col"><div class="card p-3 border-0 shadow-sm rounded-3 h-100 d-flex align-items-center justify-content-center fw-bold text-navy"><i class="fas fa-flask text-danger me-2"></i> Lupin Ltd</div></div>
+    </div>
+    <?php
+    $placementRecruiterLogos = [
+        ['file' => '1.webp', 'alt' => 'TATA'],
+        ['file' => '2.webp', 'alt' => 'Infosys'],
+        ['file' => '6.webp', 'alt' => 'Amazon'],
+        ['file' => '4.webp', 'alt' => 'Wipro'],
+        ['file' => '3.webp', 'alt' => 'Cognizant'],
+        ['file' => '2.webp', 'alt' => 'Infosys'],
+    ];
+    ?>
+    <div class="recruiter-marquee" style="margin-top:0;">
+        <div class="recruiter-marquee__viewport">
+            <div class="recruiter-marquee__track">
+                <?php for ($r = 0; $r < 4; $r++): ?>
+                    <?php foreach ($placementRecruiterLogos as $logo): ?>
+                        <div class="recruiter-marquee__item">
+                            <img src="<?php echo BASE_URL . 'assets/uploads/2026/07/' . rawurlencode($logo['file']); ?>"
+                                 alt="<?php echo sanitize($logo['alt']); ?>" loading="eager" decoding="async">
+                        </div>
+                    <?php endforeach; ?>
+                <?php endfor; ?>
+            </div>
         </div>
     </div>
 </section>
@@ -97,29 +106,29 @@ $recruitingPartners = getSetting('recruiting_partners', '120+');
         </div>
         <div class="row row-cols-1 row-cols-md-4 g-4 text-center">
             <div class="col">
-                <div class="card p-4 border-0 shadow-sm rounded-4 h-100">
-                    <div class="bg-danger text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width:55px; height:55px; font-size:1.4rem;">1</div>
+                <div class="card reveal p-4 border-0 shadow-sm rounded-4 h-100">
+                    <div class="step-num-circle bg-danger text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width:55px; height:55px; font-size:1.4rem;">1</div>
                     <h4 class="h5 fw-bold text-navy mb-2">Skill Enhancement</h4>
                     <p class="text-muted small mb-0">Aptitude, domain coding, technical drills, and corporate etiquette training.</p>
                 </div>
             </div>
             <div class="col">
-                <div class="card p-4 border-0 shadow-sm rounded-4 h-100">
-                    <div class="bg-danger text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width:55px; height:55px; font-size:1.4rem;">2</div>
+                <div class="card reveal p-4 border-0 shadow-sm rounded-4 h-100">
+                    <div class="step-num-circle bg-danger text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width:55px; height:55px; font-size:1.4rem;">2</div>
                     <h4 class="h5 fw-bold text-navy mb-2">Pre-Placement Talks</h4>
                     <p class="text-muted small mb-0">Direct interaction between students and HR executives to understand job profiles.</p>
                 </div>
             </div>
             <div class="col">
-                <div class="card p-4 border-0 shadow-sm rounded-4 h-100">
-                    <div class="bg-danger text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width:55px; height:55px; font-size:1.4rem;">3</div>
+                <div class="card reveal p-4 border-0 shadow-sm rounded-4 h-100">
+                    <div class="step-num-circle bg-danger text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width:55px; height:55px; font-size:1.4rem;">3</div>
                     <h4 class="h5 fw-bold text-navy mb-2">Written &amp; Tech Tests</h4>
                     <p class="text-muted small mb-0">Online proctored coding assessments, clinical tests, and GD rounds.</p>
                 </div>
             </div>
             <div class="col">
-                <div class="card p-4 border-0 shadow-sm rounded-4 h-100">
-                    <div class="bg-danger text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width:55px; height:55px; font-size:1.4rem;">4</div>
+                <div class="card reveal p-4 border-0 shadow-sm rounded-4 h-100">
+                    <div class="step-num-circle bg-danger text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width:55px; height:55px; font-size:1.4rem;">4</div>
                     <h4 class="h5 fw-bold text-navy mb-2">Offer Letters</h4>
                     <p class="text-muted small mb-0">Final selection, offer rollout, and pre-joining onboarding support.</p>
                 </div>
@@ -140,4 +149,5 @@ $recruitingPartners = getSetting('recruiting_partners', '120+');
     </div>
 </section>
 
+<script src="<?php echo BASE_URL; ?>assets/js/reveal.js" defer></script>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
