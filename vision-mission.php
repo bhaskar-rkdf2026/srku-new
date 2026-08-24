@@ -65,7 +65,7 @@ require_once __DIR__ . '/includes/header.php';
                 <h2 class="section-title mb-3">An <span>ecosystem</span> for tomorrow's leaders.</h2>
                 <p class="text-dark fw-bold mb-2">&ldquo;LEARN ABOUT EDUCATION THAT HELPS SOCIETY&rdquo;</p>
                 <p class="text-muted mb-0" style="line-height:1.85; font-size:0.95rem;">
-                    Sarvepalli Radhakrishnan University is an academic fraternity of individuals dedicated to the motto of ease learn about education that helps society. To emerge as a World &ndash; Class University in creating and disseminating knowledge, and providing students a unique learning experience in Science, Technology, Medicine, Management and other areas of life that will best serve the world and betterment of society. To create knowledge based society with scientific temper, team spirit and dignity of labor to face global competitive challenges.
+                    Sarvepalli Radhakrishnan University is an academic fraternity of individuals dedicated to the motto, &ldquo;Learn about education that helps society.&rdquo; To emerge as a World &ndash; Class University in creating and disseminating knowledge, and in providing students with a unique learning experience in Science, Technology, Medicine, Management, and other areas of life that will best serve the world and the betterment of society. To create a knowledge-based society with scientific temper, team spirit, and dignity of labour to face global competitive challenges.
                 </p>
             </div>
         </div>
@@ -80,9 +80,9 @@ require_once __DIR__ . '/includes/header.php';
                 <span class="section-subtitle">OUR MISSION</span>
                 <h2 class="section-title mb-3">Empowering <span>minds to shape</span> a better tomorrow.</h2>
                 <p class="text-muted mb-0" style="line-height:1.85; font-size:0.95rem;">
-                    Sarvepalli Radhakrishnan University is a nurturing ground for an individual's holistic growth to make effective contribution to the society in a dynamic environment. To evolve and develop skill based systems for effective delivery of knowledge so as to equip young professionals with dedication and commitment to excellence in all spheres of life &amp; society. Facilitate intellectual stimulation to generate, maintain and disseminate knowledge. Empower participants to meet the challenges of a collaborative and competitive globalized environment. Synergize excellence amongst aspirants through world-class ambience. Institute a culture of inclusiveness and provide wide access to higher education opportunities.
+                    Sarvepalli Radhakrishnan University is a nurturing ground for an individual's holistic growth, making an effective contribution to society in a dynamic environment. To evolve and develop skill-based systems for the effective delivery of knowledge so as to equip young professionals with dedication and commitment to excellence in all spheres of life and society. Facilitate intellectual stimulation to generate, maintain, and disseminate knowledge. Empower participants to meet the challenges of a collaborative and competitive globalised environment. Synergise excellence amongst aspirants through a world-class ambience. Institute a culture of inclusiveness and provide wide access to higher education opportunities.
                     <br><br>
-                    Foster sustainable environmental attitude. Initiate trends which impact global higher education policies and practices. We treasure our ethos and our charter.
+                    Foster a sustainable environmental attitude. Initiate trends which impact global higher education policies and practices. We treasure our ethos and our charter.
                 </p>
             </div>
             <div class="col-12 col-lg-6 order-1 order-lg-2 reveal">

@@ -21,6 +21,19 @@ $defaultGallery = [
     ['title' => 'Robotics & AI Innovation Workshop', 'cat' => 'Labs', 'img' => 'assets/uploads/2026/07/Gallary-slider-06.webp'],
     ['title' => 'Annual Cultural Evening', 'cat' => 'Events', 'img' => 'assets/uploads/2026/07/Gallary-slider-07.webp']
 ];
+
+$infrastructureGallery = [
+    ['title' => 'SRK University Main Building', 'cat' => 'Campus', 'img' => 'assets/uploads/2026/08/welcome-srku-campus.jpeg'],
+    ['title' => 'SRK University Main Gate', 'cat' => 'Campus', 'img' => 'assets/uploads/2026/08/srku-main-gate.jpeg'],
+    ['title' => 'SRK University Academic Block', 'cat' => 'Campus', 'img' => 'assets/uploads/2026/08/srku-academic-block.jpeg'],
+    ['title' => 'RKDF Group Campus Building', 'cat' => 'Campus', 'img' => 'assets/uploads/2026/08/srku-rkdf-building.jpeg'],
+    ['title' => 'SRK University Campus Block', 'cat' => 'Campus', 'img' => 'assets/uploads/2026/08/srku-campus-block.jpeg']
+];
+
+$displayItems = !empty($images) ? $images : $defaultGallery;
+if (empty($category) || $category === 'Campus') {
+    $displayItems = array_merge($infrastructureGallery, $displayItems);
+}
 ?>
 
 <!-- Dynamic Banner Header -->
@@ -41,7 +54,6 @@ $defaultGallery = [
         <!-- Gallery Grid -->
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
             <?php 
-            $displayItems = !empty($images) ? $images : $defaultGallery;
             foreach ($displayItems as $item): 
                 $itemCat = $item['category'] ?? $item['cat'];
                 if ($category && $itemCat !== $category) continue;
