@@ -308,12 +308,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 
             <!-- 1. 1995: Engineering -->
             <div class="col">
-                <div class="prog-card">
+                <div class="prog-card d-flex flex-column h-100">
                     <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp" class="prog-img" alt="RKDF Institute of Science & Technology">
-                    <div class="prog-body">
-                        <h3 class="prog-title">RKDF Institute of Science &amp; Technology</h3>
-                        <p class="prog-desc">Empowering minds in research, science &amp; engineering for tomorrow's leaders.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-technology" class="btn-card-apply">Explore &rarr;</a>
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title mb-2">RKDF Institute of Science &amp; Technology <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">1995</span></h3>
+                        <p class="prog-desc text-muted small mb-3">Empowering minds in research, science &amp; engineering for tomorrow's leaders.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-and-technology" class="btn-card-apply mt-auto">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -326,7 +326,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                     <div class="prog-body d-flex flex-column flex-grow-1">
                         <h3 class="prog-title mb-2">RKDF College of Pharmacy <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">1995</span></h3>
                         <p class="prog-desc text-muted small mb-3">Premier pharmaceutical education, advanced drug research, and industrial laboratory training.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-pharmacy-1995" class="btn-card-apply mt-auto">Explore &rarr;</a>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-pharmacy" class="btn-card-apply mt-auto">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -339,7 +339,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                     <div class="prog-body d-flex flex-column flex-grow-1">
                         <h3 class="prog-title mb-2">RKDF Homoeopathic Medical College Hospital &amp; Research Centre <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2000</span></h3>
                         <p class="prog-desc text-muted small mb-3">Nurturing holistic healing and clinical research in homoeopathic healthcare science.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-homoeopathic-medical-college-hospital-research-center-2000" class="btn-card-apply mt-auto">Explore &rarr;</a>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-homoeopathic-medical-college" class="btn-card-apply mt-auto">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -352,7 +352,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                     <div class="prog-body d-flex flex-column flex-grow-1">
                         <h3 class="prog-title mb-2">RKDF Dental College &amp; Research Centre <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2003</span></h3>
                         <p class="prog-desc text-muted small mb-3">State-of-the-art dental surgery, modern operatory clinics, and specialized oral healthcare.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-dental-college-research-center-2003" class="btn-card-apply mt-auto">Explore &rarr;</a>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-dental-college" class="btn-card-apply mt-auto">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -365,7 +365,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                     <div class="prog-body d-flex flex-column flex-grow-1">
                         <h3 class="prog-title mb-2">RKDF College of Nursing <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2003</span></h3>
                         <p class="prog-desc text-muted small mb-3">INC-approved nursing education with multi-speciality hospital clinical rotations.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-nursing-2003" class="btn-card-apply mt-auto">Explore &rarr;</a>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-nursing" class="btn-card-apply mt-auto">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -378,7 +378,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                     <div class="prog-body d-flex flex-column flex-grow-1">
                         <h3 class="prog-title mb-2">RKDF Medical College, Hospital &amp; Research Center <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2014</span></h3>
                         <p class="prog-desc text-muted small mb-3">Comprehensive MBBS &amp; MD/MS medical education with an on-campus 750+ bed teaching hospital.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-medical-college-hospital-research-center-2014" class="btn-card-apply mt-auto">Explore &rarr;</a>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-medical-college" class="btn-card-apply mt-auto">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -391,7 +391,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                     <div class="prog-body d-flex flex-column flex-grow-1">
                         <h3 class="prog-title mb-2">Sarvepalli Radhakrishnan College of Allied &amp; Healthcare Sciences <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2019</span></h3>
                         <p class="prog-desc text-muted small mb-3">Delivering quality paramedical, clinical diagnostics, and healthcare technology training.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-allied-health-care-sciences" class="btn-card-apply mt-auto">Explore &rarr;</a>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-paramedical-sciences" class="btn-card-apply mt-auto">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -404,7 +404,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                     <div class="prog-body d-flex flex-column flex-grow-1">
                         <h3 class="prog-title mb-2">Sarvepalli Radhakrishnan College of Ayurveda Hospital &amp; Research Centre <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2021</span></h3>
                         <p class="prog-desc text-muted small mb-3">Preserving authentic Ayurvedic medicine with dedicated Panchakarma hospital facilities.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=sarvepalli-radhakrishnan-college-of-ayurveda-hospital-research-center-2021" class="btn-card-apply mt-auto">Explore &rarr;</a>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=sarvepalli-radhakrishnan-college-of-ayurveda" class="btn-card-apply mt-auto">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -424,14 +424,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             <p class="text-muted small mb-0">Discover why we are consistently ranked among the top engineering colleges in MP and premier management hubs.</p>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3">
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-technology" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-cogs"></i></div><div class="faculty-info"><h4>Faculty of Engineering</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-medicine" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-stethoscope"></i></div><div class="faculty-info"><h4>Faculty of Medicine</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-and-technology" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-cogs"></i></div><div class="faculty-info"><h4>Faculty of Engineering</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-medical-college" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-stethoscope"></i></div><div class="faculty-info"><h4>Faculty of Medicine</h4></div></div></a></div>
             <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-management" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-chart-bar"></i></div><div class="faculty-info"><h4>Business &amp; Management</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-paramedical-sciences" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-user-md"></i></div><div class="faculty-info"><h4>Paramedical Sciences</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-law" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-balance-scale"></i></div><div class="faculty-info"><h4>Law &amp; Governance</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-allied-science-and-humanities" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-atom"></i></div><div class="faculty-info"><h4>Allied Science &amp; Humanities</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-paramedical-sciences" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-user-md"></i></div><div class="faculty-info"><h4>Paramedical Sciences</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=sarvepalli-radhakrishnan-college-of-law" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-balance-scale"></i></div><div class="faculty-info"><h4>Law &amp; Governance</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-science" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-atom"></i></div><div class="faculty-info"><h4>Allied Science &amp; Humanities</h4></div></div></a></div>
             <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-agriculture" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-seedling"></i></div><div class="faculty-info"><h4>Faculty of Agriculture</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-science-technology-mca" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-laptop-code"></i></div><div class="faculty-info"><h4>Computer Application</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-computer-application" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-laptop-code"></i></div><div class="faculty-info"><h4>Computer Application</h4></div></div></a></div>
         </div>
     </div>
 </section>
@@ -483,29 +483,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     CHANCELLOR MESSAGE (matches live srku.edu.in design)
+     CHANCELLOR'S MESSAGE SECTION (Luxury Theme Design)
 ═══════════════════════════════════════════════════════ -->
-<section class="chancellor-v2">
-    <div class="chancellor-v2__inner">
-        <div class="chancellor-v2__media">
-            <img class="chancellor-v2__photo"
-                 src="<?php echo BASE_URL; ?>assets/uploads/2026/08/chancellor.jpeg"
-                 onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/ruchichaubey.webp';"
-                 alt="<?php echo sanitize($chancellorName); ?>, Chancellor of SRK University, Bhopal">
-            <div class="chancellor-v2__quote">
-                <p class="chancellor-v2__quote-name"><?php echo strtoupper(sanitize($chancellorName)); ?> &middot; <?php echo sanitize($chancellorTitle); ?></p>
+<section class="chancellor-desk-section py-5 position-relative overflow-hidden">
+    <div class="container-xl py-lg-4">
+        <div class="row align-items-center g-4 g-lg-5">
+            
+            <!-- Left: Framed Portrait & Name Plate -->
+            <div class="col-12 col-lg-5">
+                <div class="chancellor-portrait-wrap position-relative">
+                    <div class="chancellor-photo-frame shadow-lg">
+                        <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/chancellor.jpeg"
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/ruchichaubey.webp';"
+                             alt="<?php echo sanitize($chancellorName); ?>, Chancellor of SRK University, Bhopal"
+                             class="chancellor-photo img-fluid">
+                    </div>
+                    
+                    <!-- Floating Official Designation Badge -->
+                    <div class="chancellor-badge-card shadow-lg">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="chancellor-badge-icon">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div>
+                                <h4 class="chancellor-badge-name mb-0"><?php echo sanitize($chancellorName); ?></h4>
+                                <span class="chancellor-badge-role"><?php echo sanitize($chancellorTitle); ?>, SRK University</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="chancellor-v2__content">
-            <p class="chancellor-v2__eyebrow">Chancellor&rsquo;s Message</p>
-            <h2 class="chancellor-v2__title">A legacy of <em>excellence.</em><br>A vision for tomorrow.</h2>
-            <p class="chancellor-v2__body"><?php echo sanitize($chancellorMsg); ?></p>
-            <p class="chancellor-v2__body"><?php echo sanitize($chancellorMsg2); ?></p>
-            <div class="chancellor-v2__accred">
-                <div class="chancellor-v2__accred-item"><span class="chancellor-v2__accred-name">UGC</span><span class="chancellor-v2__accred-tag">Recognized</span></div>
-                <div class="chancellor-v2__accred-item"><span class="chancellor-v2__accred-name">NAAC</span><span class="chancellor-v2__accred-tag">A+ Grade</span></div>
-                <div class="chancellor-v2__accred-item"><span class="chancellor-v2__accred-name">AICTE</span><span class="chancellor-v2__accred-tag">Approved</span></div>
+
+            <!-- Right: Visionary Statement & Accreditations -->
+            <div class="col-12 col-lg-7">
+                <div class="chancellor-content ps-lg-3">
+                    <span class="section-subtitle">
+                        <i class="fas fa-quote-left text-danger me-1"></i> CHANCELLOR&rsquo;S DESK
+                    </span>
+                    <h2 class="section-title mb-3">
+                        A Legacy of <span>Excellence</span>,<br>A Vision for Tomorrow
+                    </h2>
+                    
+                    <div class="chancellor-quote-lead mb-3">
+                        <p class="mb-0"><?php echo sanitize($chancellorMsg); ?></p>
+                    </div>
+                    
+                    <p class="text-muted mb-4" style="line-height: 1.85; font-size: 0.96rem;">
+                        <?php echo sanitize($chancellorMsg2); ?>
+                    </p>
+
+                    <!-- Trust & Accreditations Pill Row -->
+                    <div class="d-flex flex-wrap gap-3 pt-3 border-top">
+                        <div class="chancellor-accred-box">
+                            <div class="accred-logo"><i class="fas fa-check-circle text-danger"></i> UGC</div>
+                            <span class="accred-sub">Recognized</span>
+                        </div>
+                        <div class="chancellor-accred-box">
+                            <div class="accred-logo"><i class="fas fa-award text-warning"></i> NAAC</div>
+                            <span class="accred-sub">A+ Grade</span>
+                        </div>
+                        <div class="chancellor-accred-box">
+                            <div class="accred-logo"><i class="fas fa-shield-alt text-success"></i> AICTE</div>
+                            <span class="accred-sub">Approved</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 </section>
@@ -745,7 +789,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             </div>
             <div class="col-12 col-lg-6">
                 <div class="latest-news-panel h-100">
-                    <span class="latest-news-panel__eyebrow">Latest News</span>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="latest-news-panel__eyebrow mb-0">Latest News &amp; Circulars</span>
+                        <a href="<?php echo BASE_URL; ?>news.php" class="small text-danger fw-bold text-decoration-none">View All Notices &rarr;</a>
+                    </div>
                     <?php if (!empty($incubationNews)): ?>
                         <?php foreach ($incubationNews as $n): ?>
                             <div class="latest-news-item">
@@ -755,12 +802,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                                 <div class="latest-news-item__body">
                                     <h4><?php echo sanitize($n['title']); ?></h4>
                                     <span class="latest-news-item__date"><?php echo date('F j, Y', strtotime($n['publish_date'] ?: $n['created_at'])); ?></span>
-                                    <a href="<?php echo BASE_URL; ?>blog-detail.php?slug=<?php echo urlencode($n['slug'] ?: $n['id']); ?>">Read More &raquo;</a>
+                                    <a href="<?php echo BASE_URL; ?>news-detail.php?id=<?php echo $n['id']; ?>">Read Circular &raquo;</a>
                                 </div>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <p class="text-muted small mb-0">No news articles published yet.</p>
+                        <p class="text-muted small mb-0">No circulars published yet.</p>
                     <?php endif; ?>
                 </div>
             </div>

@@ -28,10 +28,19 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
     <div class="container-xl pb-4">
         <div class="row g-4">
             
-            <!-- Col 1: About -->
+            <!-- Col 1: About & University Logo -->
             <div class="col-12 col-md-6 col-lg-4 footer-col">
-                <h5 class="fw-bold text-white mb-3"><?php echo sanitize($footerHeading); ?></h5>
-                <div class="mb-3 text-light-50" style="line-height:1.7;">
+                <div class="footer-brand mb-3">
+                    <a href="<?php echo BASE_URL; ?>" class="d-inline-block bg-white p-2 px-3 rounded-3 shadow-sm" title="Sarvepalli Radhakrishnan University, Bhopal">
+                        <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-logo.webp" 
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/images/Dyno-Logo-1.png';" 
+                             alt="Sarvepalli Radhakrishnan University, Bhopal" 
+                             class="img-fluid" 
+                             style="max-height: 48px; width: auto; display: block;">
+                    </a>
+                </div>
+                <h5 class="fw-bold text-white mb-2" style="font-size: 1.15rem;"><?php echo sanitize($footerHeading); ?></h5>
+                <div class="mb-3 text-light-50" style="line-height:1.7; font-size: 0.92rem;">
                     <?php echo $footerAbout; ?>
                 </div>
                 <div class="footer-social d-flex gap-2">
@@ -97,18 +106,40 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
 </footer>
 
 <!-- ═══════ FLOATING INTERACTIVE WIDGETS ═══════ -->
-<!-- Dual Sticky Side Buttons (Right Edge) -->
+<!-- ═══════ FLOATING INTERACTIVE WIDGETS ═══════ -->
+<!-- 4-Item Sticky Floating Side Dock (Right Edge) -->
 <div class="sticky-side-container">
     <!-- 1. Quick Admission Sticky Button -->
-    <button type="button" class="sticky-side-btn btn-admission-sticky" data-bs-toggle="modal" data-bs-target="#quickAdmissionModal" title="Online Admission Form 2026-27">
-        <div class="sticky-icon"><i class="fas fa-file-signature"></i></div>
-        <span class="label-text">Admissions 2026</span>
+    <button type="button" class="sticky-side-item" data-bs-toggle="modal" data-bs-target="#quickAdmissionModal" title="Online Admission Form 2026-27">
+        <div class="sticky-side-btn btn-admission-sticky">
+            <div class="sticky-icon"><i class="fas fa-file-signature"></i></div>
+            <span class="label-text">Admissions 2026</span>
+        </div>
     </button>
+    
     <!-- 2. Grievance Redressal Sticky Button -->
-    <button type="button" class="sticky-side-btn btn-grievance-sticky" data-bs-toggle="modal" data-bs-target="#quickGrievanceModal" title="Student Grievance &amp; Complaint Cell">
-        <div class="sticky-icon"><i class="fas fa-balance-scale"></i></div>
-        <span class="label-text">Grievance Cell</span>
+    <button type="button" class="sticky-side-item" data-bs-toggle="modal" data-bs-target="#quickGrievanceModal" title="Student Grievance &amp; Complaint Cell">
+        <div class="sticky-side-btn btn-grievance-sticky">
+            <div class="sticky-icon"><i class="fas fa-balance-scale"></i></div>
+            <span class="label-text">Grievance Cell</span>
+        </div>
     </button>
+
+    <!-- 3. Direct Phone Helpline Call -->
+    <a href="tel:7024144981" class="sticky-side-item" title="Call Direct Helpline: 7024144981">
+        <div class="sticky-side-btn btn-call-sticky">
+            <div class="sticky-icon"><i class="fas fa-phone-alt"></i></div>
+            <span class="label-text">Call: 7024144981</span>
+        </div>
+    </a>
+
+    <!-- 4. Contact Us Desk -->
+    <a href="<?php echo BASE_URL; ?>contact.php" class="sticky-side-item" title="Contact Us &amp; Campus Desk">
+        <div class="sticky-side-btn btn-contact-sticky">
+            <div class="sticky-icon"><i class="fas fa-envelope-open-text"></i></div>
+            <span class="label-text">Contact Desk</span>
+        </div>
+    </a>
 </div>
 
 <?php if ($enableWhatsapp === '1'): ?>
