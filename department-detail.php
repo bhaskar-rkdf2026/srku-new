@@ -51,6 +51,34 @@ $pgCourses = array_filter($courses, fn($c) => $c['level'] === 'PG');
 $dipCourses = array_filter($courses, fn($c) => in_array($c['level'], ['Diploma', 'Certificate']));
 $docCourses = array_filter($courses, fn($c) => in_array($c['level'], ['Doctorate', 'PhD']));
 
+// Exact 11 Constituent Institutes that possess their own official circular seals
+$exactSeals = [
+    'rkdf-medical-college' => 'logo-rkdf-medical.png',
+    'sarvepalli-radhakrishnan-college-of-ayurveda' => 'logo-srk-ayurveda.png',
+    'rkdf-homoeopathic-medical-college' => 'logo-rkdf-homoeopathy.png',
+    'rkdf-dental-college' => 'logo-rkdf-dental.png',
+    'rkdf-college-of-pharmacy' => 'logo-rkdf-pharmacy.png',
+    'rkdf-college-of-nursing' => 'logo-rkdf-nursing.png',
+    'department-of-paramedical-sciences' => 'logo-allied-healthcare.png',
+    'rkdf-institute-of-science-and-technology' => 'logo-rkdf-science-tech.png',
+    'sarvepalli-radhakrishnan-college-of-law' => 'logo-srk-law.png',
+    'rkdf-institute-of-business-management' => 'logo-rkdf-management.png',
+    'faculty-of-agriculture' => 'logo-srk-agriculture.png'
+];
+
+// Dedicated External Websites Map for standalone portals
+$externalWebsites = [
+    'rkdf-medical-college' => 'https://rkdfmedicalcollege.org/',
+    'rkdf-dental-college' => 'http://rkdfdentalcollege.in/',
+    'rkdf-homoeopathic-medical-college' => 'http://www.rkdfhmc.in/',
+    'sarvepalli-radhakrishnan-college-of-ayurveda' => 'https://www.srkcahrc.in/',
+    'rkdf-institute-of-science-and-technology' => 'https://srku.edu.in/rkdf-ist/index.php',
+    'faculty-of-agriculture' => 'https://srku.edu.in/agriculture/index.php'
+];
+
+$sealFile = $exactSeals[$dept['slug']] ?? null;
+$officialWebsite = $externalWebsites[$dept['slug']] ?? null;
+
 // Other departments for sidebar
 $allDepts = getDepartments(true);
 $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
@@ -59,9 +87,15 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
 <!-- Banner Header -->
 <div class="py-5 text-center text-white position-relative" style="background: linear-gradient(135deg, var(--srku-navy), var(--srku-maroon));">
     <div class="container-xl py-3">
-        <div class="d-inline-flex align-items-center justify-content-center bg-white bg-opacity-10 rounded-circle p-3 mb-3 shadow" style="width:70px; height:70px; font-size:2rem;">
-            <i class="<?php echo sanitize($dept['icon'] ?: 'fas fa-graduation-cap'); ?> text-warning"></i>
-        </div>
+        <?php if ($sealFile && file_exists(__DIR__ . '/assets/images/constituent-logos/' . $sealFile)): ?>
+            <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle shadow mx-auto mb-3" style="width:88px; height:88px;">
+                <img src="<?php echo BASE_URL; ?>assets/images/constituent-logos/<?php echo $sealFile; ?>?v=3" alt="<?php echo sanitize($dept['name']); ?>" class="img-fluid d-block m-auto" style="max-width:88%; max-height:88%; object-fit:contain;">
+            </div>
+        <?php else: ?>
+            <div class="d-inline-flex align-items-center justify-content-center bg-white bg-opacity-10 rounded-circle p-3 mb-3 shadow" style="width:70px; height:70px; font-size:2rem;">
+                <i class="<?php echo sanitize($dept['icon'] ?: 'fas fa-graduation-cap'); ?> text-warning"></i>
+            </div>
+        <?php endif; ?>
         
         <div class="d-flex justify-content-center gap-2 mb-2 flex-wrap">
             <?php if (!empty($dept['established_year'])): ?>
@@ -75,6 +109,14 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
 
         <h1 class="fw-bold display-6 mb-2"><?php echo sanitize($dept['name']); ?></h1>
         <p class="text-warning fw-semibold lead mb-0">Sarvepalli Radhakrishnan University, Bhopal</p>
+
+        <?php if ($officialWebsite): ?>
+            <div class="mt-3">
+                <a href="<?php echo $officialWebsite; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-warning btn-lg fw-bold text-dark px-4 py-2 shadow rounded-pill d-inline-flex align-items-center gap-2" style="font-size:0.95rem;">
+                    <i class="fas fa-globe"></i> Visit Official College Website <i class="fas fa-external-link-alt ms-1" style="font-size:0.75rem;"></i>
+                </a>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -119,6 +161,26 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
                         </div>
                     </div>
                 </div>
+
+                <?php if ($officialWebsite): ?>
+                    <!-- Official Website Callout Box -->
+                    <div class="card p-3 p-md-4 border-0 rounded-4 mb-4 shadow-sm" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-left: 5px solid #ea580c !important;">
+                        <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-white rounded-circle p-2 shadow-xs border d-flex align-items-center justify-content-center" style="width:52px; height:52px; flex-shrink:0;">
+                                    <i class="fas fa-globe text-danger fs-4"></i>
+                                </div>
+                                <div>
+                                    <h4 class="h6 fw-bold text-dark mb-1">Dedicated Official Website Available</h4>
+                                    <p class="text-muted small mb-0">Visit the standalone institutional portal for specialized hospital OPD timings, clinical facilities &amp; department details.</p>
+                                </div>
+                            </div>
+                            <a href="<?php echo $officialWebsite; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-danger btn-sm px-3 py-2 fw-semibold text-nowrap rounded-pill d-inline-flex align-items-center gap-1 shadow-sm">
+                                <span>Check Official Web</span> <i class="fas fa-external-link-alt" style="font-size:0.75rem;"></i>
+                            </a>
+                        </div>
+                    </div>
+                <?php endif; ?>
 
                 <!-- About the Faculty Card -->
                 <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 mb-4">

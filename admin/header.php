@@ -98,7 +98,10 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 <i class="fas fa-sitemap"></i> Departments (14)
             </a>
             <a href="manage_courses.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_courses.php' ? 'active' : ''; ?>">
-                <i class="fas fa-graduation-cap"></i> Courses &amp; Fees (39)
+                <i class="fas fa-graduation-cap"></i> Courses &amp; Programs
+            </a>
+            <a href="manage_faculty.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_faculty.php' ? 'active' : ''; ?>">
+                <i class="fas fa-chalkboard-teacher"></i> Faculty Directory (1,000+)
             </a>
             <a href="manage_pages.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_pages.php' ? 'active' : ''; ?>">
                 <i class="fas fa-file-alt"></i> Dynamic Pages
@@ -106,11 +109,23 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
             <a href="manage_banners.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_banners.php' ? 'active' : ''; ?>">
                 <i class="fas fa-images"></i> Hero Banners
             </a>
-            <a href="manage_news.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_news.php' ? 'active' : ''; ?>">
-                <i class="fas fa-bullhorn"></i> News &amp; Ticker
+            <a href="manage_blogs.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_blogs.php' ? 'active' : ''; ?>">
+                <i class="fas fa-newspaper"></i> Blogs &amp; Articles
             </a>
-            <a href="manage_enquiries.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_enquiries.php' ? 'active' : ''; ?>">
-                <i class="fas fa-envelope-open-text"></i> Leads &amp; Queries
+            <a href="manage_news.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_news.php' ? 'active' : ''; ?>">
+                <i class="fas fa-bullhorn"></i> News &amp; Notices
+            </a>
+            <?php 
+            try {
+                $dbConn = getDBConnection();
+                $newLeadsBadge = (int)$dbConn->query("SELECT COUNT(*) FROM enquiries WHERE status = 'New' OR status IS NULL")->fetchColumn();
+            } catch(Exception $e) { $newLeadsBadge = 0; }
+            ?>
+            <a href="manage_enquiries.php" class="sidebar-nav-link d-flex align-items-center justify-content-between <?php echo $currentAdminPage == 'manage_enquiries.php' ? 'active' : ''; ?>">
+                <div><i class="fas fa-user-graduate me-2"></i> Admissions &amp; Enquiries</div>
+                <?php if ($newLeadsBadge > 0): ?>
+                    <span class="badge bg-warning text-dark fw-bold rounded-pill" style="font-size: 0.7rem;"><?php echo $newLeadsBadge; ?></span>
+                <?php endif; ?>
             </a>
             <a href="manage_header_footer.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_header_footer.php' ? 'active' : ''; ?>">
                 <i class="fas fa-heading"></i> Header &amp; Footer

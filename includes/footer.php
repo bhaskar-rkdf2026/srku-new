@@ -97,30 +97,345 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
 </footer>
 
 <!-- ═══════ FLOATING INTERACTIVE WIDGETS ═══════ -->
-<?php if ($enableEnquiryTab === '1'): ?>
-    <!-- 1. Floating Quick Admission Enquiry Tab (Right Edge) -->
-    <a href="<?php echo (strpos($enquiryTabLink, 'http') === 0 || strpos($enquiryTabLink, '#') === 0) ? $enquiryTabLink : BASE_URL . $enquiryTabLink; ?>" class="floating-enquiry-tab d-none d-md-flex" title="Quick Admission Enquiry">
-        <i class="fas fa-paper-plane me-2"></i> <?php echo sanitize($enquiryTabText); ?>
-    </a>
-<?php endif; ?>
+<!-- Dual Sticky Side Buttons (Right Edge) -->
+<div class="sticky-side-container">
+    <!-- 1. Quick Admission Sticky Button -->
+    <button type="button" class="sticky-side-btn btn-admission-sticky" data-bs-toggle="modal" data-bs-target="#quickAdmissionModal" title="Online Admission Form 2026-27">
+        <div class="sticky-icon"><i class="fas fa-file-signature"></i></div>
+        <span class="label-text">Admissions 2026</span>
+    </button>
+    <!-- 2. Grievance Redressal Sticky Button -->
+    <button type="button" class="sticky-side-btn btn-grievance-sticky" data-bs-toggle="modal" data-bs-target="#quickGrievanceModal" title="Student Grievance &amp; Complaint Cell">
+        <div class="sticky-icon"><i class="fas fa-balance-scale"></i></div>
+        <span class="label-text">Grievance Cell</span>
+    </button>
+</div>
 
 <?php if ($enableWhatsapp === '1'): ?>
-    <!-- 2. WhatsApp Direct Helpline Bubble (Bottom Left) -->
+    <!-- WhatsApp Direct Helpline Bubble (Bottom Left) -->
     <a href="https://api.whatsapp.com/send?phone=<?php echo preg_replace('/[^0-9]/', '', $whatsappNumber); ?>&text=<?php echo urlencode($whatsappMsg); ?>" target="_blank" class="whatsapp-float-btn" title="Chat on WhatsApp" aria-label="WhatsApp Helpline">
         <i class="fab fa-whatsapp"></i>
     </a>
 <?php endif; ?>
 
 <?php if ($enableBackToTop === '1'): ?>
-    <!-- 3. Back To Top Rocket Button (Bottom Right) -->
+    <!-- Back To Top Rocket Button (Bottom Right) -->
     <a href="#" id="backToTopBtn" class="back-to-top-btn" title="Back to top" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </a>
 <?php endif; ?>
 
+<!-- ═══════════════════════════════════════════════════════
+     MODAL 1: QUICK ADMISSION POPUP
+═══════════════════════════════════════════════════════ -->
+<div class="modal fade" id="quickAdmissionModal" tabindex="-1" aria-labelledby="quickAdmissionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content rounded-4 border-0 shadow-lg overflow-hidden">
+            <div class="modal-header bg-maroon text-white p-4">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center p-2" style="width:46px; height:46px;">
+                        <i class="fas fa-file-signature fa-lg"></i>
+                    </div>
+                    <div>
+                        <h5 class="modal-title fw-bold mb-0" id="quickAdmissionModalLabel">Online Admission Enquiry 2026-27</h5>
+                        <small class="text-white-50">Sarvepalli Radhakrishnan University, Bhopal</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body p-4 p-md-5 bg-light">
+                <div id="admissionAlertBox" style="display:none;"></div>
+
+                <form id="quickAdmissionForm" method="POST">
+                    <input type="hidden" name="action" value="submit_admission">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small mb-1">Full Name *</label>
+                            <input type="text" name="name" class="form-control py-2" placeholder="Candidate's full name" required minlength="2">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small mb-1">Father's Name</label>
+                            <input type="text" name="father_name" class="form-control py-2" placeholder="Father's / Guardian's name">
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small mb-1">WhatsApp Mobile *</label>
+                            <input type="tel" name="phone" class="form-control py-2" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small mb-1">Email Address *</label>
+                            <input type="email" name="email" class="form-control py-2" placeholder="yourname@gmail.com" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-dark small mb-1">Course of Interest *</label>
+                        <select name="course" class="form-select py-2" required>
+                            <option value="">-- Select Course (90+ Programs) --</option>
+                            <?php 
+                            $footerCourses = function_exists('getCourses') ? getCourses() : [];
+                            if (!empty($footerCourses)):
+                                $fLevels = ['UG' => 'Undergraduate (UG)', 'PG' => 'Postgraduate (PG)', 'Diploma' => 'Diploma & Certificate', 'Doctorate' => 'Ph.D. & Research'];
+                                foreach ($fLevels as $flKey => $flLabel):
+                                    $fFilt = array_filter($footerCourses, fn($c) => stripos($c['level'], $flKey) !== false || stripos($c['degree_level'], $flKey) !== false);
+                                    if (!empty($fFilt)):
+                            ?>
+                                        <optgroup label="<?php echo $flLabel; ?>">
+                                            <?php foreach ($fFilt as $fc): ?>
+                                                <option value="<?php echo sanitize($fc['course_name']); ?>"><?php echo sanitize($fc['course_name']); ?></option>
+                                            <?php endforeach; ?>
+                                        </optgroup>
+                            <?php 
+                                    endif;
+                                endforeach;
+                            else:
+                            ?>
+                                <option>B.Tech Computer Science &amp; Engineering</option>
+                                <option>Bachelor of Pharmacy (B.Pharm)</option>
+                                <option>MBA — Master of Business Administration</option>
+                                <option>B.Sc. Nursing</option>
+                                <option>B.Sc. (Hons) Agriculture</option>
+                                <option>BPT — Bachelor of Physiotherapy</option>
+                                <option>LL.B — Bachelor of Laws</option>
+                            <?php endif; ?>
+                            <option value="Other Programme">Other University Programme</option>
+                        </select>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small mb-1">City</label>
+                            <input type="text" name="city" class="form-control py-2" placeholder="e.g. Bhopal, Indore">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small mb-1">State</label>
+                            <input type="text" name="state" class="form-control py-2" placeholder="e.g. Madhya Pradesh">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark small mb-1">Any Query / Note (Optional)</label>
+                        <textarea name="message" class="form-control py-2" rows="2" placeholder="Ask about fees, hostel, scholarships, or counseling..."></textarea>
+                    </div>
+
+                    <button type="submit" id="btnSubmitAdmission" class="btn btn-srku w-100 py-3 fw-bold text-white shadow d-flex align-items-center justify-content-center gap-2" style="font-size:1rem;">
+                        <i class="fas fa-paper-plane"></i> <span>Submit Admission Enquiry</span>
+                    </button>
+                </form>
+            </div>
+            
+            <div class="modal-footer bg-white p-3 d-flex justify-content-between align-items-center">
+                <small class="text-muted"><i class="fas fa-phone-alt text-danger me-1"></i> Helpline: 0755-4700983, 7024144981</small>
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     MODAL 2: QUICK GRIEVANCE REDRESSAL POPUP
+═══════════════════════════════════════════════════════ -->
+<div class="modal fade" id="quickGrievanceModal" tabindex="-1" aria-labelledby="quickGrievanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content rounded-4 border-0 shadow-lg overflow-hidden">
+            <div class="modal-header bg-navy text-white p-4">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center p-2" style="width:46px; height:46px;">
+                        <i class="fas fa-balance-scale fa-lg"></i>
+                    </div>
+                    <div>
+                        <h5 class="modal-title fw-bold mb-0" id="quickGrievanceModalLabel">Student Grievance &amp; Complaint Redressal</h5>
+                        <small class="text-white-50">Confidential Redressal Cell &bull; SRK University</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body p-4 p-md-5 bg-light">
+                <div id="grievanceAlertBox" style="display:none;"></div>
+
+                <form id="quickGrievanceForm" method="POST">
+                    <input type="hidden" name="action" value="submit_grievance">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small mb-1">Your Full Name *</label>
+                            <input type="text" name="name" class="form-control py-2" placeholder="Enter student full name" required minlength="2">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small mb-1">Father's Name</label>
+                            <input type="text" name="father_name" class="form-control py-2" placeholder="Father's name">
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small mb-1">Enrollment Number</label>
+                            <input type="text" name="enrollment_number" class="form-control py-2" placeholder="e.g. SRKU2024CS101">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small mb-1">Mobile Number *</label>
+                            <input type="tel" name="phone" class="form-control py-2" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" required>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small mb-1">Email ID *</label>
+                            <input type="email" name="email" class="form-control py-2" placeholder="yourname@gmail.com" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small mb-1">Institute / College Name</label>
+                            <input type="text" name="institute_name" class="form-control py-2" placeholder="e.g. RKDF IST / College of Pharmacy">
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small mb-1">Course &amp; Semester</label>
+                            <input type="text" name="course_name" class="form-control py-2" placeholder="e.g. B.Tech CSE (4th Sem)">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small mb-1">Type of Grievance *</label>
+                            <select name="complaint_type" class="form-select py-2" required>
+                                <option value="">-- Select Grievance Category --</option>
+                                <option value="Academic">Academic &amp; Class Queries</option>
+                                <option value="Examination">Examination &amp; Results</option>
+                                <option value="Administrative">Administrative &amp; Office</option>
+                                <option value="Hostel & Accommodation">Hostel &amp; Mess Accommodation</option>
+                                <option value="Fee & Finance">Fee &amp; Accounts</option>
+                                <option value="Faculty / Staff Behaviour">Faculty / Staff Support</option>
+                                <option value="Infrastructure & Facilities">Infrastructure &amp; Labs</option>
+                                <option value="Anti-Ragging">Anti-Ragging / Security</option>
+                                <option value="Other">Other Issues</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark small mb-1">Detailed Description of Grievance *</label>
+                        <textarea name="complaint_details" class="form-control py-2" rows="4" placeholder="Please describe the issue with relevant context..." minlength="10" required></textarea>
+                    </div>
+
+                    <button type="submit" id="btnSubmitGrievance" class="btn btn-dark w-100 py-3 fw-bold text-white shadow d-flex align-items-center justify-content-center gap-2" style="background:#0f172a; border-color:#0f172a; font-size:1rem;">
+                        <i class="fas fa-shield-alt"></i> <span>Submit Grievance Securely</span>
+                    </button>
+                </form>
+            </div>
+            
+            <div class="modal-footer bg-white p-3 d-flex justify-content-between align-items-center">
+                <small class="text-muted"><i class="fas fa-lock text-success me-1"></i> Strictly confidential redressal as per UGC norms.</small>
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Bootstrap 5.3 Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<?php echo BASE_URL; ?>assets/js/main.js"></script>
+
+<!-- AJAX Form Handlers for Instant Sticky Popups -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Admission Form AJAX
+    const admForm = document.getElementById('quickAdmissionForm');
+    if (admForm) {
+        admForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmitAdmission');
+            const alertBox = document.getElementById('admissionAlertBox');
+            const origHtml = btn.innerHTML;
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> Submitting...';
+            alertBox.style.display = 'none';
+
+            const formData = new FormData(admForm);
+            fetch('<?php echo BASE_URL; ?>api-submit-lead.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                btn.disabled = false;
+                btn.innerHTML = origHtml;
+                alertBox.style.display = 'block';
+                if (data.success) {
+                    alertBox.className = 'alert alert-success d-flex align-items-center gap-2 mb-3';
+                    alertBox.innerHTML = '<i class="fas fa-check-circle fa-lg"></i> <div>' + data.message + '</div>';
+                    admForm.reset();
+                    setTimeout(() => {
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('quickAdmissionModal'));
+                        if (modal) modal.hide();
+                        alertBox.style.display = 'none';
+                    }, 3500);
+                } else {
+                    alertBox.className = 'alert alert-danger d-flex align-items-center gap-2 mb-3';
+                    alertBox.innerHTML = '<i class="fas fa-exclamation-circle fa-lg"></i> <div>' + (data.error || 'Submission failed. Please check details.') + '</div>';
+                }
+            })
+            .catch(err => {
+                btn.disabled = false;
+                btn.innerHTML = origHtml;
+                alertBox.style.display = 'block';
+                alertBox.className = 'alert alert-danger mb-3';
+                alertBox.innerText = 'Network error. Please try again or call our admission desk.';
+            });
+        });
+    }
+
+    // 2. Grievance Form AJAX
+    const grvForm = document.getElementById('quickGrievanceForm');
+    if (grvForm) {
+        grvForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmitGrievance');
+            const alertBox = document.getElementById('grievanceAlertBox');
+            const origHtml = btn.innerHTML;
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> Registering...';
+            alertBox.style.display = 'none';
+
+            const formData = new FormData(grvForm);
+            fetch('<?php echo BASE_URL; ?>api-submit-lead.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                btn.disabled = false;
+                btn.innerHTML = origHtml;
+                alertBox.style.display = 'block';
+                if (data.success) {
+                    alertBox.className = 'alert alert-success d-flex align-items-center gap-2 mb-3';
+                    alertBox.innerHTML = '<i class="fas fa-check-circle fa-lg"></i> <div>' + data.message + '</div>';
+                    grvForm.reset();
+                    setTimeout(() => {
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('quickGrievanceModal'));
+                        if (modal) modal.hide();
+                        alertBox.style.display = 'none';
+                    }, 3500);
+                } else {
+                    alertBox.className = 'alert alert-danger d-flex align-items-center gap-2 mb-3';
+                    alertBox.innerHTML = '<i class="fas fa-exclamation-circle fa-lg"></i> <div>' + (data.error || 'Registration failed. Please check details.') + '</div>';
+                }
+            })
+            .catch(err => {
+                btn.disabled = false;
+                btn.innerHTML = origHtml;
+                alertBox.style.display = 'block';
+                alertBox.className = 'alert alert-danger mb-3';
+                alertBox.innerText = 'Network error. Please try again or contact university office.';
+            });
+        });
+    }
+});
+</script>
+
 <?php if ($footerCustomScripts): echo $footerCustomScripts; endif; ?>
 </body>
 </html>
