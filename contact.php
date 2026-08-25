@@ -49,7 +49,10 @@ $email = getSetting('email', 'exam@srku.edu.in');
                     </div>
                     <div>
                         <h4 class="h6 text-navy fw-bold mb-1">Campus Address</h4>
-                        <p class="text-muted small mb-0"><?php echo sanitize($address); ?></p>
+                        <p class="text-muted small mb-2"><?php echo sanitize($address); ?></p>
+                        <a href="https://maps.app.goo.gl/9YWMY8vVN6PpJBBz8" target="_blank" class="btn btn-sm btn-outline-danger fw-semibold d-inline-flex align-items-center gap-1 rounded-pill px-3 py-1">
+                            <i class="fas fa-directions text-danger"></i> <span>Get Directions on Google Maps ↗</span>
+                        </a>
                     </div>
                 </div>
 
@@ -126,10 +129,16 @@ $email = getSetting('email', 'exam@srku.edu.in');
     </div>
 </section>
 
-<!-- Google Maps Section -->
-<section class="py-0">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3667.653426219468!2d77.4526685!3d23.1828698!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397c430e3b6a95cb%3A0x7d6a5c2d3345aa70!2sSarvepalli%20Radhakrishnan%20University!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
-            width="100%" height="400" style="border:0; display:block;" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade" loading="lazy"></iframe>
+<!-- Google Maps Interactive Campus Location Section -->
+<section class="py-0 position-relative">
+    <div class="position-absolute top-0 start-50 translate-middle-x mt-3 z-3 bg-white shadow-lg rounded-pill px-4 py-2 d-none d-md-flex align-items-center gap-3 border">
+        <span class="small fw-bold text-navy"><i class="fas fa-map-marker-alt text-danger me-1"></i> Sarvepalli Radhakrishnan University, Bhopal</span>
+        <a href="https://maps.app.goo.gl/9YWMY8vVN6PpJBBz8" target="_blank" class="btn btn-sm btn-danger rounded-pill px-3 fw-bold">
+            <i class="fas fa-location-arrow me-1"></i> Open Google Maps App ↗
+        </a>
+    </div>
+    <iframe src="https://maps.google.com/maps?q=23.1677811,77.4663127&hl=en&z=16&output=embed" 
+            width="100%" height="450" style="border:0; display:block;" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade" loading="lazy"></iframe>
 </section>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

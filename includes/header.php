@@ -35,9 +35,10 @@ $customHeadCode = getSetting('header_custom_head_code', '');
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-none d-md-flex gap-3">
                 <a href="<?php echo sanitize($erpLink); ?>" target="_blank" class="topbar-link"><i class="fas fa-user-graduate me-1 text-warning"></i> STUDENT PORTAL</a>
-                <a href="<?php echo BASE_URL; ?>departments.php" class="topbar-link"><i class="fas fa-chalkboard-teacher me-1 text-warning"></i> FACULTIES</a>
+                <a href="<?php echo BASE_URL; ?>faculties.php" class="topbar-link"><i class="fas fa-chalkboard-teacher me-1 text-warning"></i> FACULTIES</a>
                 <a href="<?php echo BASE_URL; ?>alumni.php" class="topbar-link"><i class="fas fa-users me-1 text-warning"></i> ALUMNI</a>
                 <a href="<?php echo BASE_URL; ?>career.php" class="topbar-link"><i class="fas fa-briefcase me-1 text-warning"></i> CAREERS</a>
+                <a href="<?php echo BASE_URL; ?>grievance.php" class="topbar-link"><i class="fas fa-balance-scale me-1 text-warning"></i> GRIEVANCE CELL</a>
                 <a href="<?php echo sanitize($aicteLink); ?>" target="_blank" class="topbar-link"><i class="fas fa-award me-1 text-warning"></i> AICTE SCHOLARSHIP</a>
             </div>
             <div class="d-flex align-items-center gap-3 ms-auto ms-md-0">
@@ -63,12 +64,17 @@ $customHeadCode = getSetting('header_custom_head_code', '');
         .static-menu-link:hover,.static-menu-item.active>.static-menu-link{color:#7a0b0d}
         .static-dropdown-arrow{display:inline-block;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;margin-left:3px;transition:transform 0.25s ease;flex-shrink:0}
         .static-menu-item.open>.static-menu-link .static-dropdown-arrow,.static-dropdown-item.open>.static-dropdown-link .static-dropdown-arrow{transform:rotate(180deg)}
-        .static-dropdown-panel{position:absolute;top:calc(100% + 4px);left:0;background:#fff;min-width:240px;box-shadow:0 12px 36px rgba(0,0,0,0.13);border-radius:8px;border:1px solid #eef0f4;padding:6px 0;list-style:none;margin:0;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity 0.22s ease,transform 0.22s ease,visibility 0.22s;z-index:2000}
+        .static-dropdown-panel{position:absolute;top:calc(100% + 4px);left:0;background:#fff;min-width:255px;box-shadow:0 12px 36px rgba(0,0,0,0.13);border-radius:8px;border:1px solid #eef0f4;padding:6px 0;list-style:none;margin:0;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity 0.22s ease,transform 0.22s ease,visibility 0.22s;z-index:2000}
         .static-menu-item:hover>.static-dropdown-panel{opacity:1;visibility:visible;transform:translateY(0)}
+        .static-menu-item:nth-last-child(2) .static-dropdown-panel,
+        .static-menu-item:nth-last-child(3) .static-dropdown-panel{left:auto;right:0}
         .static-dropdown-item{position:relative}
-        .static-dropdown-link{display:flex;align-items:center;justify-content:space-between;padding:8px 18px;color:#334155;text-decoration:none;font-size:13px;font-weight:500;line-height:1.4;transition:all 0.18s ease;white-space:nowrap}
+        .static-dropdown-link{display:flex;align-items:center;justify-content:flex-start;gap:8px;padding:8px 18px;color:#334155;text-decoration:none;font-size:13px;font-weight:500;line-height:1.4;transition:all 0.18s ease;white-space:nowrap;text-align:left}
         .static-dropdown-link:hover{background-color:#fef9f0;color:#7a0b0d;padding-left:22px}
+        .static-dropdown-link .static-sub-arrow{margin-left:auto}
         .static-sub-dropdown{left:100%;top:-6px;margin-top:0}
+        .static-menu-item:nth-last-child(2) .static-sub-dropdown,
+        .static-menu-item:nth-last-child(3) .static-sub-dropdown{left:auto;right:100%}
         .static-dropdown-item:hover>.static-sub-dropdown{opacity:1;visibility:visible;transform:translateY(0)}
         .static-sub-arrow{border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:5px solid currentColor;border-right:0;flex-shrink:0}
         .static-megamenu-panel{width:880px;padding:20px 24px;left:-160px;border-radius:10px}
@@ -183,6 +189,7 @@ $customHeadCode = getSetting('header_custom_head_code', '');
                                 Act &amp; Statutes <span class="static-dropdown-arrow static-sub-arrow"></span>
                             </a>
                             <ul class="static-dropdown-panel static-sub-dropdown">
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>grievance.php" class="static-dropdown-link fw-bold text-danger"><i class="fas fa-balance-scale me-1"></i> Student Grievance Portal</a></li>
                                 <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Student_Grievance_Committee.pdf" class="static-dropdown-link">Student Grievance Committee</a></li>
                                 <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/AntiRagging.pdf" class="static-dropdown-link">Anti Ragging</a></li>
                                 <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/SC_ST_Grievance_committee.pdf" class="static-dropdown-link">SC-ST Grievance Committee</a></li>
@@ -384,10 +391,14 @@ $customHeadCode = getSetting('header_custom_head_code', '');
 
                 <!-- Admission -->
                 <li class="static-menu-item <?php echo (isset($activeNav) && $activeNav == 'admission') ? 'active' : ''; ?>">
-                    <a href="<?php echo BASE_URL; ?>about/admission" class="static-menu-link">
+                    <a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="static-menu-link">
                         Admission <span class="static-dropdown-arrow"></span>
                     </a>
                     <ul class="static-dropdown-panel">
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="static-dropdown-link fw-bold text-danger">Online Admission Form 2026-27</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>phd-admission.php" class="static-dropdown-link fw-bold text-danger">Ph.D. Admission 2026</a></li>
+                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-application-form.pdf" class="static-dropdown-link">Ph.D. Application Form (PDF)</a></li>
+                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-entrance-form.pdf" class="static-dropdown-link">Ph.D. Entrance Exam Form (PDF)</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>student-life" class="static-dropdown-link">Student Life</a></li>
                         <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Prospectus.pdf" class="static-dropdown-link">Prospectus</a></li>
                         <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Admission-ProcessGuidelines.pdf" class="static-dropdown-link">Admission Process Guidelines</a></li>
@@ -428,15 +439,18 @@ $customHeadCode = getSetting('header_custom_head_code', '');
                         Research <span class="static-dropdown-arrow"></span>
                     </a>
                     <ul class="static-dropdown-panel">
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/researchdevelopmentcell.pdf" class="static-dropdown-link">Research &amp; Development Cell</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>phd-admission.php" class="static-dropdown-link fw-bold text-danger">Ph.D. Admissions &amp; Forms</a></li>
+                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-application-form.pdf" class="static-dropdown-link">Ph.D. Application Form (PDF)</a></li>
+                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-entrance-form.pdf" class="static-dropdown-link">Ph.D. Entrance Exam Form (PDF)</a></li>
+                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-admission-policy.pdf" class="static-dropdown-link">Admission Policy for Ph.D. Programme</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>incubation-center" class="static-dropdown-link">Incubation Centre</a></li>
+                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/researchdevelopmentcell.pdf" class="static-dropdown-link">Research &amp; Development Cell</a></li>
                         <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/university_research_policy.pdf" class="static-dropdown-link">Research Policy</a></li>
                         <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Central-Facilities-for-Research-and-Development.pdf" class="static-dropdown-link">Central Facilities for Research and Development</a></li>
                         <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Constitution-of-Ethics-Board.pdf" class="static-dropdown-link">Ethics Board to Maintain Research Integrity</a></li>
                         <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/consultancy-projects.pdf" class="static-dropdown-link">Consultancy Projects</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Admission_policy_for_Ph.D.Programme.pdf" class="static-dropdown-link">Admission Policy for Ph.D. Programme</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/constitution-of-research-advisory-committee.pdf" class="static-dropdown-link">Constitution of Research Advisory Committee</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Details-about-Ph.D.Scholars-Currently-Enrolled.pdf" class="static-dropdown-link">Details about Ph.D. Scholars Currently Enrolled</a></li>
+                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-scholars-pursuing.pdf" class="static-dropdown-link">Ph.D. Scholars Currently Enrolled</a></li>
+                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-scholars-completed.pdf" class="static-dropdown-link">Ph.D. Awarded Scholars List</a></li>
                     </ul>
                 </li>
 

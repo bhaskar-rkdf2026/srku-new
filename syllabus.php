@@ -126,9 +126,12 @@ $categories = [
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($deptCourses as $c): 
-                                        $schemeUrl = $c['scheme_url'] ?: 'https://www.srku.edu.in/wp-content/uploads/2023/05/BTech-CSE-Scheme-Syllabus.pdf';
-                                        $syllabusUrl = $c['syllabus_url'] ?: $schemeUrl;
+                                     <?php foreach ($deptCourses as $c): 
+                                        $hasScheme = !empty($c['scheme_url']) && $c['scheme_url'] !== '#';
+                                        $hasSyllabus = !empty($c['syllabus_url']) && $c['syllabus_url'] !== '#';
+                                        
+                                        $schemeHref = $hasScheme ? (strpos($c['scheme_url'], 'http') === 0 ? $c['scheme_url'] : BASE_URL . ltrim($c['scheme_url'], '/')) : '#';
+                                        $syllabusHref = $hasSyllabus ? (strpos($c['syllabus_url'], 'http') === 0 ? $c['syllabus_url'] : BASE_URL . ltrim($c['syllabus_url'], '/')) : '#';
                                     ?>
                                         <tr class="course-row" data-coursename="<?php echo sanitize(strtolower($c['course_name'] . ' ' . $c['specializations'])); ?>">
                                             <td>
@@ -144,27 +147,33 @@ $categories = [
                                                 <?php endif; ?>
                                             </td>
                                             <td>
-                                                <span class="badge bg-primary-subtle text-primary border px-2 py-1"><?php echo sanitize($c['level']); ?></span>
+                                                <span class="badge badge-level-navy text-white px-2 py-1"><?php echo sanitize($c['level']); ?></span>
                                             </td>
                                             <td>
                                                 <span class="text-secondary small fw-semibold"><i class="far fa-clock me-1"></i><?php echo sanitize($c['duration']); ?></span>
                                             </td>
                                             <td class="text-end text-nowrap">
                                                 <div class="d-inline-flex gap-2">
-                                                    <?php if ($schemeUrl): ?>
-                                                        <a href="<?php echo sanitize($schemeUrl); ?>" target="_blank" class="btn btn-sm btn-outline-danger shadow-xs fw-semibold" title="Download Scheme PDF">
+                                                    <?php if ($hasScheme): ?>
+                                                        <a href="<?php echo sanitize($schemeHref); ?>" target="_blank" class="btn btn-sm btn-outline-danger shadow-xs fw-semibold" title="Download Scheme PDF">
                                                             <i class="fas fa-file-pdf text-danger me-1"></i> Scheme
                                                         </a>
+                                                    <?php else: ?>
+                                                        <a href="#" class="btn btn-sm btn-outline-secondary opacity-60 shadow-xs fw-semibold" title="Scheme available upon request" onclick="return false;">
+                                                            <i class="fas fa-file-alt me-1"></i> Scheme
+                                                        </a>
                                                     <?php endif; ?>
-                                                    <?php if ($syllabusUrl && $syllabusUrl !== $schemeUrl): ?>
-                                                        <a href="<?php echo sanitize($syllabusUrl); ?>" target="_blank" class="btn btn-sm btn-danger shadow-xs fw-semibold" title="Download Syllabus PDF">
+                                                    
+                                                    <?php if ($hasSyllabus): ?>
+                                                        <a href="<?php echo sanitize($syllabusHref); ?>" target="_blank" class="btn btn-sm btn-danger shadow-xs fw-semibold" title="Download Syllabus PDF">
                                                             <i class="fas fa-download me-1"></i> Syllabus
                                                         </a>
                                                     <?php else: ?>
-                                                        <a href="<?php echo sanitize($syllabusUrl ?: $schemeUrl); ?>" target="_blank" class="btn btn-sm btn-danger shadow-xs fw-semibold" title="Download Complete Syllabus PDF">
-                                                            <i class="fas fa-download me-1"></i> Syllabus
+                                                        <a href="#" class="btn btn-sm btn-secondary opacity-60 shadow-xs fw-semibold" title="Syllabus available upon request" onclick="return false;">
+                                                            <i class="fas fa-clock me-1"></i> On Request
                                                         </a>
                                                     <?php endif; ?>
+
                                                     <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="btn btn-sm btn-light border" title="Course Details">
                                                         <i class="fas fa-arrow-right"></i>
                                                     </a>

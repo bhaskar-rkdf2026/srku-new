@@ -17,7 +17,7 @@ $units = [
     ['title' => 'R.N. KAPOOR MEMORIAL PHARMACY', 'subtitle' => 'R. N. KAPOOR MEMORIAL INSTITUTE OF PHARMACEUTICAL SCIENCES', 'img' => 'R.N.-KAPOOR-MEMORIAL-PHARMACY.webp', 'href' => BASE_URL . 'department-detail.php?slug=r-n-kapoor-memorial-institute-of-pharmaceutical-science', 'external' => false],
     ['title' => 'SARVEPALLI RADHAKRISHNAN COLLEGE OF ALLIED & HEALTHCARE SCIENCES', 'subtitle' => 'SARVEPALLI RADHAKRISHNAN COLLEGE OF ALLIED & HEALTHCARE SCIENCES', 'img' => 'SARVEPALLI-RADHAKRISHANAN-COLLEGE-OF-ALLIED-HEALTHCARE-SCIENCES.webp', 'href' => BASE_URL . 'department-detail.php?slug=department-of-allied-health-care-sciences', 'external' => false],
     ['title' => 'RKDF DENTAL COLLEGE', 'subtitle' => 'RKDF DENTAL COLLEGE & RESEARCH CENTRE', 'img' => '012-scaled.webp', 'href' => 'http://rkdfdentalcollege.in/', 'external' => true],
-    ['title' => 'Faculty Of Agriculture', 'subtitle' => 'Faculty Of Agriculture', 'img' => '011-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=faculty-of-agriculture', 'external' => false],
+    ['title' => 'Faculty of Agriculture', 'subtitle' => 'Faculty of Agriculture', 'img' => '011-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=faculty-of-agriculture', 'external' => false],
     ['title' => 'NURSING COLLEGE', 'subtitle' => 'RKDF COLLEGE OF NURSING', 'img' => '010-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-college-of-nursing', 'external' => false],
     ['title' => 'RKDF IBM', 'subtitle' => 'RKDF INSTITUTE OF BUSINESS MANAGEMENT', 'img' => '003-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-institute-of-business-management', 'external' => false],
     ['title' => 'RKDF IM', 'subtitle' => 'RKDF INSTITUTE OF MANAGEMENT', 'img' => '009-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-institute-of-management', 'external' => false],
@@ -27,25 +27,34 @@ $units = [
     ['title' => 'Faculty of Commerce', 'subtitle' => '', 'img' => 'ChatGPTImageAug5202610_50_16A.jpg', 'href' => BASE_URL . 'departments.php', 'external' => false, 'dir' => '2026/08'],
     ['title' => 'Faculty of Allied Arts', 'subtitle' => '', 'img' => '002-scaled.webp', 'href' => BASE_URL . 'departments.php', 'external' => false],
     ['title' => 'Faculty of Computer Application', 'subtitle' => '', 'img' => '008-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=faculty-of-computer-application', 'external' => false],
-    ['title' => 'Faculty Of Library & Information Science', 'subtitle' => '', 'img' => '001-scaled.webp', 'href' => BASE_URL . 'departments.php', 'external' => false],
+    ['title' => 'Faculty of Library & Information Science', 'subtitle' => '', 'img' => '001-scaled.webp', 'href' => BASE_URL . 'departments.php', 'external' => false],
 ];
 ?>
 
 <!-- ═══════════════════════════════════════════════════════
      HERO BANNER
 ═══════════════════════════════════════════════════════ -->
-<section class="position-relative text-white py-5" style="background: linear-gradient(100deg, rgba(91,22,20,0.85) 0%, rgba(15,30,59,0.78) 100%), url('<?php echo BASE_URL; ?>assets/uploads/2026/07/campus-1.webp') center/cover no-repeat;">
-    <div class="container-xl py-4 position-relative z-2">
+<section class="about-hero-v2">
+    <div class="about-hero-v2__blob about-hero-v2__blob--1"></div>
+    <div class="about-hero-v2__blob about-hero-v2__blob--2"></div>
+    <div class="about-hero-v2__blob about-hero-v2__blob--3"></div>
+    <div class="about-hero-v2__grid"></div>
+    <div class="container-xl about-hero-v2__inner">
         <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb mb-0 small">
-                <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page" style="color: rgba(255,255,255,0.85);">Constituent Unit</li>
+                <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning"><i class="fas fa-home me-1"></i> Home</a></li>
+                <li class="breadcrumb-item active text-white-50" aria-current="page">Constituent Units</li>
             </ol>
         </nav>
-        <h1 class="fw-bold display-6 mb-3" style="max-width:800px; text-shadow: 0 2px 12px rgba(0,0,0,0.45);">120+ programs. One ambition: your future.</h1>
-        <p class="mb-0" style="max-width:760px; line-height:1.8; color: rgba(255,255,255,0.9); text-shadow: 0 1px 6px rgba(0,0,0,0.4);">
-            From B.Tech and MBBS to MBA, LLM, and doctoral research &mdash; every program blends theory, industry immersion, and global exposure. Essays, field notes, and long-form research from students, faculty, and alumni &mdash; published weekly.
+        <span class="about-hero-v2__eyebrow"><i class="fas fa-star"></i> Est. 1995 &middot; RKDF Education Society</span>
+        <h1 class="about-hero-v2__title" style="max-width:800px;">120+ programs. One ambition: <span>your future.</span></h1>
+        <p class="about-hero-v2__desc" style="max-width:760px;">
+            From B.Tech and MBBS to MBA, LLM, and doctoral research &mdash; every programme blends theory, industry immersion, and global exposure. Essays, field notes, and long-form research from students, faculty, and alumni &mdash; published weekly.
         </p>
+        <div class="d-flex flex-wrap gap-3">
+            <a href="<?php echo BASE_URL; ?>departments.php" class="btn-hero-yellow">Explore All Departments</a>
+            <a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="btn-hero-outline">Apply For Admission</a>
+        </div>
     </div>
 </section>
 
@@ -81,7 +90,7 @@ $units = [
 <section class="py-5">
     <div class="container-xl py-3">
         <div class="text-center mb-5">
-            <span class="section-subtitle">CONSTITUENT UNIT OF OUR UNIVERSITY</span>
+            <span class="section-subtitle">CONSTITUENT UNITS OF OUR UNIVERSITY</span>
             <h2 class="section-title">A Guide to the <span>University's Constituent</span> Units</h2>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">

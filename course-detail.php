@@ -180,14 +180,17 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
 
                 <!-- Syllabus & Examination Scheme Downloads -->
                 <?php 
-                    $schemeUrl = $course['scheme_url'] ?: 'https://www.srku.edu.in/wp-content/uploads/2023/05/BTech-CSE-Scheme-Syllabus.pdf';
-                    $syllabusUrl = $course['syllabus_url'] ?: $schemeUrl;
+                    $hasScheme = !empty($course['scheme_url']) && $course['scheme_url'] !== '#';
+                    $hasSyllabus = !empty($course['syllabus_url']) && $course['syllabus_url'] !== '#';
+
+                    $schemeHref = $hasScheme ? (strpos($course['scheme_url'], 'http') === 0 ? $course['scheme_url'] : BASE_URL . ltrim($course['scheme_url'], '/')) : '#';
+                    $syllabusHref = $hasSyllabus ? (strpos($course['syllabus_url'], 'http') === 0 ? $course['syllabus_url'] : BASE_URL . ltrim($course['syllabus_url'], '/')) : '#';
                 ?>
                 <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 mb-4 bg-white border">
                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
                         <div>
                             <h3 class="text-navy fw-bold mb-1"><i class="fas fa-file-pdf text-danger me-2"></i> Official Curriculum Scheme &amp; Syllabus</h3>
-                            <p class="text-muted small mb-0">UGC &amp; Statutory Council approved semester-wise structure, scheme of marks, and syllabus.</p>
+                            <p class="text-muted small mb-0">Approved semester-wise structure, scheme of marks, and complete syllabus.</p>
                         </div>
                         <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fw-semibold small">
                             <i class="fas fa-check me-1"></i> Academic Session 2026-27
@@ -202,9 +205,15 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                                     <h5 class="h6 fw-bold text-navy mb-1">Scheme of Examination</h5>
                                     <p class="text-muted small mb-3">Credit hours, theory/practical marks distribution &amp; passing standards.</p>
                                 </div>
-                                <a href="<?php echo sanitize($schemeUrl); ?>" target="_blank" class="btn btn-outline-danger btn-sm fw-bold w-100 py-2">
-                                    <i class="fas fa-file-pdf me-1"></i> Download Scheme (PDF)
-                                </a>
+                                <?php if ($hasScheme): ?>
+                                    <a href="<?php echo sanitize($schemeHref); ?>" target="_blank" class="btn btn-outline-danger btn-sm fw-bold w-100 py-2">
+                                        <i class="fas fa-file-pdf me-1"></i> Download Scheme (PDF)
+                                    </a>
+                                <?php else: ?>
+                                    <a href="#" class="btn btn-outline-secondary btn-sm fw-bold w-100 py-2 opacity-75" title="Available upon request" onclick="return false;">
+                                        <i class="fas fa-info-circle me-1"></i> Scheme on Request
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -214,9 +223,15 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                                     <h5 class="h6 fw-bold text-navy mb-1">Course Syllabus &amp; Topics</h5>
                                     <p class="text-muted small mb-3">Detailed unit-wise topics, lab practicals, reference books &amp; journals.</p>
                                 </div>
-                                <a href="<?php echo sanitize($syllabusUrl); ?>" target="_blank" class="btn btn-danger btn-sm fw-bold w-100 py-2 shadow-xs">
-                                    <i class="fas fa-download me-1"></i> Download Syllabus (PDF)
-                                </a>
+                                <?php if ($hasSyllabus): ?>
+                                    <a href="<?php echo sanitize($syllabusHref); ?>" target="_blank" class="btn btn-danger btn-sm fw-bold w-100 py-2 shadow-xs">
+                                        <i class="fas fa-download me-1"></i> Download Syllabus (PDF)
+                                    </a>
+                                <?php else: ?>
+                                    <a href="#" class="btn btn-secondary btn-sm fw-bold w-100 py-2 opacity-75" title="Available upon request" onclick="return false;">
+                                        <i class="fas fa-clock me-1"></i> Syllabus on Request
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -308,7 +323,7 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                                 <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($rc['slug'] ?: $rc['id']); ?>" class="p-2 px-3 rounded-3 text-decoration-none text-dark bg-light hover-danger small d-flex justify-content-between align-items-center">
                                     <div>
                                         <div class="fw-semibold text-truncate" style="max-width: 210px;"><?php echo sanitize($rc['course_name']); ?></div>
-                                        <span class="badge bg-primary-subtle text-primary border small" style="font-size:0.7rem;"><?php echo sanitize($rc['level']); ?> &bull; <?php echo sanitize($rc['duration']); ?></span>
+                                        <span class="badge badge-level-navy text-white small" style="font-size:0.7rem;"><?php echo sanitize($rc['level']); ?> &bull; <?php echo sanitize($rc['duration']); ?></span>
                                     </div>
                                     <i class="fas fa-chevron-right text-muted small"></i>
                                 </a>

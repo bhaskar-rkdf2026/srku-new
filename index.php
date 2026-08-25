@@ -13,11 +13,10 @@ $totalAlumni = getSetting('total_alumni', '15,000+');
 $heroTitle = getSetting('hero_title', 'SRK University, Bhopal');
 $heroSubtitle = getSetting('hero_subtitle', 'UGC-Recognized University in MP');
 $heroDesc = getSetting('hero_desc', 'Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership. If you are looking for the best placement university in MP, our rigorous research, multi-disciplinary collaboration, and industry-aligned pedagogy deliver unmatched career growth.');
-$chancellorName = getSetting('chancellor_name', 'Dr. Sadhna Kapoor');
+$chancellorName = getSetting('chancellor_name', 'Mrs. Janak Kapoor');
 $chancellorTitle = getSetting('chancellor_title', 'Chancellor');
-$chancellorQuote = getSetting('chancellor_quote', 'We bridge academic brilliance with industrial pragmatism.');
-$chancellorMsg = getSetting('chancellor_msg', 'Dr. Sadhna Kapoor is the Chancellor of SRK University, Bhopal. A visionary and selfless leader with exceptional entrepreneurial, interpersonal, social and administrative skills, she is passionate about technology and innovation, community development, social service, and interdisciplinary teaching and research.');
-$chancellorMsg2 = getSetting('chancellor_msg2', 'Under her stewardship, SRK University has been recognised for its global academic collaborations, reflecting a sustained dedication to educational innovation and excellence.');
+$chancellorMsg = getSetting('chancellor_msg', 'It is a matter of great joy that the notification for the establishment of Sarvepalli Radhakrishnan University, Bhopal, has been issued by the State Government.');
+$chancellorMsg2 = getSetting('chancellor_msg2', "In order to maintain quality in the field of higher education in the state, it is an important responsibility of private universities, alongside government universities, to bring about change in research and exploration. It is hoped that Sarvepalli Radhakrishnan University will, in the future, deliver unprecedented performance on quality standards and establish itself as the state's foremost institution of education.");
 
 // Handle Form Submission for Enquiry
 $enquirySuccess = false;
@@ -150,22 +149,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             
             <div class="col-12 col-lg-6">
                 <span class="section-subtitle">WELCOME TO SRK UNIVERSITY</span>
-                <h2 class="section-title mb-3">Empowering Minds, <span>Shaping Futures</span><br>through Academic Excellence</h2>
+                <h2 class="section-title mb-3">Commited Towards Your <span>Better Future</span><br>Through Academic Excellence</h2>
                 <p class="text-dark mb-3" style="line-height:1.8; font-size:0.95rem;">
-                    Sarvepalli Radhakrishnan University (SRKU), Bhopal is a premier educational institution committed to delivering cutting-edge technical, pharmaceutical, management, and scientific education.
+                    The <strong>SRK University</strong> is a multidisciplinary university known for its high standards in teaching and research, and attracts eminent scholars to its faculty across the academic spectrum.
                 </p>
                 <p class="text-muted mb-4" style="line-height:1.8; font-size:0.93rem;">
-                    Recognized by the University Grants Commission (UGC) under Section 2(f), AICTE, PCI, and statutory councils, SRKU provides an innovative ecosystem blending rigorous research, multidisciplinary collaboration, and industry-aligned pedagogy.
+                    The group was established in 1995 under the flagship of the RKDF Group. Ever since its inception, a strong commitment to excellence in teaching and research has made the group a role-model and path-setter for other institutions. Its rich academic tradition has always attracted the most talented students, who later go on to make important contributions to society.
                 </p>
                 <div class="d-flex gap-3">
                     <a href="<?php echo BASE_URL; ?>about.php" class="btn btn-srku"><i class="fas fa-arrow-right me-1"></i> Read More</a>
-                    <a href="<?php echo BASE_URL; ?>why-srk.php" class="btn btn-outline-danger"><i class="fas fa-star me-1"></i> Why Choose SRKU</a>
+                    <a href="<?php echo BASE_URL; ?>why-srk.php" class="btn btn-srku-outline-maroon"><span class="btn-icon-badge"><i class="fas fa-star"></i></span> Why Choose SRKU</a>
                 </div>
             </div>
 
             <div class="col-12 col-lg-6">
                 <div class="position-relative">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/campus-1.webp"
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/welcome-srku-campus.jpeg"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                          alt="SRKU Main Campus" class="welcome-img">
                     <div class="row g-2 mt-3 text-center">
@@ -187,28 +186,109 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     STATUTORY APPROVALS & TRUST BADGES (Official University Seal)
+     STATUTORY APPROVALS & CONSTITUENT LOGOS CAROUSEL (After Welcome)
 ═══════════════════════════════════════════════════════ -->
-<div class="py-4 border-top border-bottom bg-light">
-    <div class="container-xl">
-        <div class="row align-items-center g-3 text-center">
-            <div class="col-12 col-md-3 text-md-start">
-                <span class="text-uppercase text-danger fw-bold small" style="letter-spacing:1px;"><i class="fas fa-shield-alt me-1"></i> Recognized &amp; Approved By</span>
-                <h6 class="fw-bold text-navy mb-0">Apex Statutory Councils of India</h6>
-            </div>
-            <div class="col-12 col-md-9">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-end gap-2">
-                    <span class="badge bg-white text-dark border px-3 py-2 fw-semibold shadow-sm"><i class="fas fa-check-circle text-success me-1"></i> UGC Sec. 2(f)</span>
-                    <span class="badge bg-white text-dark border px-3 py-2 fw-semibold shadow-sm"><i class="fas fa-check-circle text-success me-1"></i> AICTE Approved</span>
-                    <span class="badge bg-white text-dark border px-3 py-2 fw-semibold shadow-sm"><i class="fas fa-check-circle text-success me-1"></i> PCI Recognized</span>
-                    <span class="badge bg-white text-dark border px-3 py-2 fw-semibold shadow-sm"><i class="fas fa-check-circle text-success me-1"></i> INC &amp; MPNRC</span>
-                    <span class="badge bg-white text-dark border px-3 py-2 fw-semibold shadow-sm"><i class="fas fa-check-circle text-success me-1"></i> Bar Council of India</span>
-                    <span class="badge bg-white text-dark border px-3 py-2 fw-semibold shadow-sm"><i class="fas fa-check-circle text-success me-1"></i> National Medical Comm.</span>
+<section class="py-4 border-top border-bottom bg-light overflow-hidden">
+    <div class="container-fluid px-3 px-lg-5 mb-3" style="max-width: 1560px;">
+        <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap flex-xl-nowrap overflow-x-auto pb-1" style="scrollbar-width: none; -ms-overflow-style: none;">
+            <!-- Stacked Heading -->
+            <div class="d-flex flex-column text-nowrap flex-shrink-0">
+                <div>
+                    <span class="badge bg-danger text-white px-2 py-1 rounded-pill fw-bold" style="font-size: 0.68rem; letter-spacing: 0.5px;"><i class="fas fa-shield-alt me-1"></i> RECOGNITIONS</span>
                 </div>
+                <span class="fw-bold text-navy small mt-1">Approved &amp; Recognized by:</span>
             </div>
+
+            <!-- All 11 Apex Councils in ONE Single Row -->
+            <div class="d-flex align-items-center gap-2 flex-nowrap overflow-x-auto flex-grow-1 justify-content-start justify-content-xl-center" style="scrollbar-width: none; -ms-overflow-style: none;">
+                <span class="badge bg-white text-dark border px-2 py-1 fw-bold shadow-xs text-nowrap"><i class="fas fa-check-circle text-success me-1"></i> UGC</span>
+                <span class="badge bg-white text-dark border px-2 py-1 fw-bold shadow-xs text-nowrap"><i class="fas fa-check-circle text-success me-1"></i> NMC</span>
+                <span class="badge bg-white text-dark border px-2 py-1 fw-bold shadow-xs text-nowrap"><i class="fas fa-check-circle text-success me-1"></i> NCISM</span>
+                <span class="badge bg-white text-dark border px-2 py-1 fw-bold shadow-xs text-nowrap"><i class="fas fa-check-circle text-success me-1"></i> NCH</span>
+                <span class="badge bg-white text-dark border px-2 py-1 fw-bold shadow-xs text-nowrap"><i class="fas fa-check-circle text-success me-1"></i> NDC</span>
+                <span class="badge bg-white text-dark border px-2 py-1 fw-bold shadow-xs text-nowrap"><i class="fas fa-check-circle text-success me-1"></i> PCI</span>
+                <span class="badge bg-white text-dark border px-2 py-1 fw-bold shadow-xs text-nowrap"><i class="fas fa-check-circle text-success me-1"></i> INC</span>
+                <span class="badge bg-white text-dark border px-2 py-1 fw-bold shadow-xs text-nowrap"><i class="fas fa-check-circle text-success me-1"></i> MPPMC</span>
+                <span class="badge bg-white text-dark border px-2 py-1 fw-bold shadow-xs text-nowrap"><i class="fas fa-check-circle text-success me-1"></i> AICTE</span>
+                <span class="badge bg-white text-dark border px-2 py-1 fw-bold shadow-xs text-nowrap"><i class="fas fa-check-circle text-success me-1"></i> BCI</span>
+                <span class="badge bg-white text-dark border px-2 py-1 fw-bold shadow-xs text-nowrap"><i class="fas fa-check-circle text-success me-1"></i> MPPURC</span>
+            </div>
+
+            <!-- Link to details -->
+            <a href="<?php echo BASE_URL; ?>accreditation.php" class="small fw-bold text-danger text-nowrap text-decoration-none flex-shrink-0 hover-underline ms-auto">
+                View All Accreditations <i class="fas fa-arrow-right ms-1"></i>
+            </a>
         </div>
     </div>
-</div>
+
+    <!-- Infinite Smooth Scrolling Constituent Institutes Seals Carousel -->
+    <div class="constituent-carousel-container pt-3 border-top position-relative">
+        <div class="constituent-marquee-track">
+            <?php
+            $sealsList = [
+                ['name' => 'RKDF Medical College & Research Centre', 'img' => 'logo-rkdf-medical.png', 'slug' => 'rkdf-medical-college-hospital-research-center-2014'],
+                ['name' => 'SRK College of Ayurveda Hospital', 'img' => 'logo-srk-ayurveda.png', 'slug' => 'sarvepalli-radhakrishnan-college-of-ayurveda-hospital-research-center-2021'],
+                ['name' => 'RKDF Homoeopathic Medical College', 'img' => 'logo-rkdf-homoeopathy.png', 'slug' => 'rkdf-homoeopathic-medical-college-hospital-research-center-2000'],
+                ['name' => 'RKDF Dental College & Research Centre', 'img' => 'logo-rkdf-dental.png', 'slug' => 'rkdf-dental-college-research-center-2003'],
+                ['name' => 'RKDF College of Pharmacy (1995)', 'img' => 'logo-rkdf-pharmacy.png', 'slug' => 'rkdf-college-of-pharmacy-1995'],
+                ['name' => 'RKDF College of Nursing (2003)', 'img' => 'logo-rkdf-nursing.png', 'slug' => 'rkdf-college-of-nursing-2003'],
+                ['name' => 'SRK College of Allied & Healthcare', 'img' => 'logo-allied-healthcare.png', 'slug' => 'department-of-allied-health-care-sciences'],
+                ['name' => 'RKDF Institute of Science & Technology', 'img' => 'logo-rkdf-science-tech.png', 'slug' => 'rkdf-institute-of-science-technology'],
+                ['name' => 'Sarvepalli Radhakrishnan College of Law', 'img' => 'logo-srk-law.png', 'slug' => 'sarvepalli-radhakrishnan-college-of-law'],
+                ['name' => 'RKDF Institute of Business Management', 'img' => 'logo-rkdf-management.png', 'slug' => 'rkdf-institute-of-business-management'],
+                ['name' => 'Faculty of Agriculture, SRKU', 'img' => 'logo-srk-agriculture.png', 'slug' => 'faculty-of-agriculture']
+            ];
+            // Render 2 sets for seamless infinite loop
+            $loopSeals = array_merge($sealsList, $sealsList);
+            foreach ($loopSeals as $s):
+            ?>
+                <a href="<?php echo BASE_URL; ?>departments.php" class="seal-item text-decoration-none" title="<?php echo $s['name']; ?>">
+                    <div class="seal-card bg-white p-2 rounded-4 shadow-xs border d-flex align-items-center gap-2">
+                        <img src="<?php echo BASE_URL; ?>assets/images/constituent-logos/<?php echo $s['img']; ?>" alt="<?php echo $s['name']; ?>" class="seal-img flex-shrink-0" style="width: 58px; height: 58px; object-fit: contain;">
+                        <div class="seal-info pe-2">
+                            <span class="d-block fw-bold text-navy text-nowrap" style="font-size: 0.82rem;"><?php echo $s['name']; ?></span>
+                            <span class="small text-muted" style="font-size: 0.72rem;">Constituent Institute</span>
+                        </div>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<style>
+.constituent-carousel-container {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    position: relative;
+}
+.constituent-marquee-track {
+    display: flex;
+    gap: 16px;
+    width: max-content;
+    animation: constituentScroll 32s linear infinite;
+}
+.constituent-marquee-track:hover {
+    animation-play-state: paused;
+}
+.seal-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.seal-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(15, 30, 59, 0.12) !important;
+    border-color: #DC2626 !important;
+}
+@keyframes constituentScroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+</style>
 
 <!-- ═══════════════════════════════════════════════════════
      EXPLORE PROGRAMMES SECTION (Bootstrap 4-col Grid)
@@ -221,100 +301,110 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 <span class="section-subtitle">CONSTITUENT UNITS</span>
                 <h2 class="section-title mb-0">A Guide to the University's <span>Constituent Units</span></h2>
             </div>
-            <a href="<?php echo BASE_URL; ?>departments.php" class="btn-card-apply fs-6">View all Constituent Unit <i class="fas fa-arrow-right ms-1"></i></a>
+            <a href="<?php echo BASE_URL; ?>departments.php" class="btn-card-apply fs-6">View all Constituent Units <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
 
+            <!-- 1. 1995: Engineering -->
             <div class="col">
-                <div class="prog-card">
+                <div class="prog-card d-flex flex-column h-100">
                     <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp" class="prog-img" alt="RKDF Institute of Science & Technology">
-                    <div class="prog-body">
-                        <h3 class="prog-title">RKDF Institute of Science &amp; Technology</h3>
-                        <p class="prog-desc">Empowering minds in research &amp; science, engineering for tomorrow's leaders.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-technology" class="btn-card-apply">Explore &rarr;</a>
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title mb-2">RKDF Institute of Science &amp; Technology <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">1995</span></h3>
+                        <p class="prog-desc text-muted small mb-3">Empowering minds in research, science &amp; engineering for tomorrow's leaders.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-and-technology" class="btn-card-apply mt-auto">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
 
+            <!-- 2. 1995: Pharmacy -->
             <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-COP.webp" class="prog-img" alt="SRK College of Pharmacy"
+                <div class="prog-card d-flex flex-column h-100">
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-COP.webp" class="prog-img" alt="RKDF College of Pharmacy"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/R.N.-KAPOOR-MEMORIAL-PHARMACY.webp';">
-                    <div class="prog-body">
-                        <h3 class="prog-title">SRK College of Pharmacy</h3>
-                        <p class="prog-desc">Shaping allied pharmacy leadership and skill training.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-pharmacy" class="btn-card-apply">Explore &rarr;</a>
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title mb-2">RKDF College of Pharmacy <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">1995</span></h3>
+                        <p class="prog-desc text-muted small mb-3">Premier pharmaceutical education, advanced drug research, and industrial laboratory training.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-pharmacy" class="btn-card-apply mt-auto">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
 
+            <!-- 3. 2000: Homoeopathy -->
             <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SARVEPALLI-RADHAKRISHANAN-COLLEGE-OF-ALLIED-HEALTHCARE-SCIENCES.webp" class="prog-img" alt="SRK College of Allied Healthcare Sciences">
-                    <div class="prog-body">
-                        <h3 class="prog-title">SRK College of Allied Healthcare Sciences</h3>
-                        <p class="prog-desc">Delivering quality allied healthcare education with skilled clinical training.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-paramedical-sciences" class="btn-card-apply">Explore &rarr;</a>
+                <div class="prog-card d-flex flex-column h-100">
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/RKDF-HOMOEOPATHIC.webp" class="prog-img" alt="RKDF Homoeopathic Medical College Hospital & Research Centre"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/Pharmacy-Homeopathy.webp';">
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title mb-2">RKDF Homoeopathic Medical College Hospital &amp; Research Centre <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2000</span></h3>
+                        <p class="prog-desc text-muted small mb-3">Nurturing holistic healing and clinical research in homoeopathic healthcare science.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-homoeopathic-medical-college" class="btn-card-apply mt-auto">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
 
+            <!-- 4. 2003: Dental -->
             <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/RKDF-POLYTECHNIC-PHARMACY.webp" class="prog-img" alt="RKDF Polytechnic Pharmacy College"
+                <div class="prog-card d-flex flex-column h-100">
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/012-scaled.webp" class="prog-img" alt="RKDF Dental College & Research Centre"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
-                    <div class="prog-body">
-                        <h3 class="prog-title">RKDF Polytechnic Pharmacy</h3>
-                        <p class="prog-desc">Providing industry-aligned diploma pharmacy education and practical training.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-polytechnic-pharmacy" class="btn-card-apply">Explore &rarr;</a>
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title mb-2">RKDF Dental College &amp; Research Centre <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2003</span></h3>
+                        <p class="prog-desc text-muted small mb-3">State-of-the-art dental surgery, modern operatory clinics, and specialized oral healthcare.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-dental-college" class="btn-card-apply mt-auto">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
 
+            <!-- 5. 2003: Nursing -->
             <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Pharmacy-Homeopathy.webp" class="prog-img" alt="SRK Homeopathic Medical College"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
-                    <div class="prog-body">
-                        <h3 class="prog-title">SRK Homeopathic Medical College</h3>
-                        <p class="prog-desc">Nurturing holistic healing through a foundation in Homeopathic medicine.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=srk-homeopathic-medical-college" class="btn-card-apply">Explore &rarr;</a>
+                <div class="prog-card d-flex flex-column h-100">
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/010-scaled.webp" class="prog-img" alt="RKDF College of Nursing"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/rkdf-college-of-nursing1.webp';">
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title mb-2">RKDF College of Nursing <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2003</span></h3>
+                        <p class="prog-desc text-muted small mb-3">INC-approved nursing education with multi-speciality hospital clinical rotations.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-nursing" class="btn-card-apply mt-auto">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
 
+            <!-- 6. 2014: Medical -->
             <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/R.N.-KAPOOR-MEMORIAL-PHARMACY.webp" class="prog-img" alt="Dr. APJ College of Pharmacy">
-                    <div class="prog-body">
-                        <h3 class="prog-title">Dr. APJ College of Pharmacy</h3>
-                        <p class="prog-desc">Building future pharmacists with a foundation in advanced research skills.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=dr-apj-abdul-kalam-college-of-pharmacy" class="btn-card-apply">Explore &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-COLLEGE-OF-AYURVEDA.webp" class="prog-img" alt="SRK College of Ayurveda"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
-                    <div class="prog-body">
-                        <h3 class="prog-title">SRK College of Ayurveda</h3>
-                        <p class="prog-desc">Preserving Ayurvedic wisdom through a foundation in traditional and modern research.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=srk-college-of-ayurveda" class="btn-card-apply">Explore &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/RKDF-MEDICAL-COLLEGE.webp" class="prog-img" alt="SRK Medical College"
+                <div class="prog-card d-flex flex-column h-100">
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/RKDF-MEDICAL-COLLEGE.webp" class="prog-img" alt="RKDF Medical College, Hospital & Research Center"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/Operation-Theatre.webp';">
-                    <div class="prog-body">
-                        <h3 class="prog-title">SRK Medical College</h3>
-                        <p class="prog-desc">Comprehensive medical education preparing skilled, ethical clinical physicians.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-medicine" class="btn-card-apply">Explore &rarr;</a>
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title mb-2">RKDF Medical College, Hospital &amp; Research Center <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2014</span></h3>
+                        <p class="prog-desc text-muted small mb-3">Comprehensive MBBS &amp; MD/MS medical education with an on-campus 750+ bed teaching hospital.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-medical-college" class="btn-card-apply mt-auto">Explore &rarr;</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. 2019: Paramedical & Allied Health -->
+            <div class="col">
+                <div class="prog-card d-flex flex-column h-100">
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SARVEPALLI-RADHAKRISHANAN-COLLEGE-OF-ALLIED-HEALTHCARE-SCIENCES.webp" class="prog-img" alt="Sarvepalli Radhakrishnan College of Allied & Healthcare Sciences"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/Operation-Theatre.webp';">
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title mb-2">Sarvepalli Radhakrishnan College of Allied &amp; Healthcare Sciences <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2019</span></h3>
+                        <p class="prog-desc text-muted small mb-3">Delivering quality paramedical, clinical diagnostics, and healthcare technology training.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-paramedical-sciences" class="btn-card-apply mt-auto">Explore &rarr;</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. 2021: Ayurveda -->
+            <div class="col">
+                <div class="prog-card d-flex flex-column h-100">
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-COLLEGE-OF-AYURVEDA.webp" class="prog-img" alt="Sarvepalli Radhakrishnan College of Ayurveda Hospital & Research Centre"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title mb-2">Sarvepalli Radhakrishnan College of Ayurveda Hospital &amp; Research Centre <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2021</span></h3>
+                        <p class="prog-desc text-muted small mb-3">Preserving authentic Ayurvedic medicine with dedicated Panchakarma hospital facilities.</p>
+                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=sarvepalli-radhakrishnan-college-of-ayurveda" class="btn-card-apply mt-auto">Explore &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -334,14 +424,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             <p class="text-muted small mb-0">Discover why we are consistently ranked among the top engineering colleges in MP and premier management hubs.</p>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3">
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-technology" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-cogs"></i></div><div class="faculty-info"><h4>Faculty of Engineering</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-medicine" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-stethoscope"></i></div><div class="faculty-info"><h4>Faculty of Medicine</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-and-technology" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-cogs"></i></div><div class="faculty-info"><h4>Faculty of Engineering</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-medical-college" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-stethoscope"></i></div><div class="faculty-info"><h4>Faculty of Medicine</h4></div></div></a></div>
             <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-management" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-chart-bar"></i></div><div class="faculty-info"><h4>Business &amp; Management</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-paramedical-sciences" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-user-md"></i></div><div class="faculty-info"><h4>Paramedical Sciences</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-law" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-balance-scale"></i></div><div class="faculty-info"><h4>Law &amp; Governance</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-allied-science-and-humanities" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-atom"></i></div><div class="faculty-info"><h4>Allied Science &amp; Humanities</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-paramedical-sciences" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-user-md"></i></div><div class="faculty-info"><h4>Paramedical Sciences</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=sarvepalli-radhakrishnan-college-of-law" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-balance-scale"></i></div><div class="faculty-info"><h4>Law &amp; Governance</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-science" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-atom"></i></div><div class="faculty-info"><h4>Allied Science &amp; Humanities</h4></div></div></a></div>
             <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-agriculture" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-seedling"></i></div><div class="faculty-info"><h4>Faculty of Agriculture</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-science-technology-mca" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-laptop-code"></i></div><div class="faculty-info"><h4>Computer Application</h4></div></div></a></div>
+            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-computer-application" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-laptop-code"></i></div><div class="faculty-info"><h4>Computer Application</h4></div></div></a></div>
         </div>
     </div>
 </section>
@@ -353,18 +443,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
     <div class="container-xl py-3">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-2">
             <div>
-                <span class="section-subtitle">COURSES &amp; PROGRAMS</span>
-                <h2 class="section-title mb-0">How to Get Admission in <span>SRK University</span> Bhopal?</h2>
-                <p class="text-muted small mb-0">Choose your trajectory from over 140+ meticulously designed programs and find the pathway that fits your goals.</p>
+                <span class="section-subtitle">COURSES &amp; PROGRAMMES</span>
+                <h2 class="section-title mb-0">How to Get Admission in <span>SRK University</span>, Bhopal?</h2>
+                <p class="text-muted small mb-0">Choose your trajectory from over 140+ meticulously designed programmes and find the pathway that fits your goals.</p>
             </div>
-            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View all 140+ programs <i class="fas fa-arrow-right ms-1"></i></a>
+            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View all 140+ programmes <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
             <div class="col">
                 <div class="admission-type-card">
                     <div class="admission-type-icon"><i class="fas fa-user-graduate"></i></div>
                     <h3>UG</h3>
-                    <p>B.Tech, BCA, BBA, B.Pharm, BA LL.B, MBBS &amp; more foundation degree programs.</p>
+                    <p>B.Tech, BCA, BBA, B.Pharm, BA LL.B, MBBS &amp; more foundation degree programmes.</p>
                 </div>
             </div>
             <div class="col">
@@ -385,7 +475,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 <div class="admission-type-card">
                     <div class="admission-type-icon"><i class="fas fa-certificate"></i></div>
                     <h3>Diploma &amp; Certificate</h3>
-                    <p>Professional Development and short-term certification programs.</p>
+                    <p>Professional Development and short-term certification programmes.</p>
                 </div>
             </div>
         </div>
@@ -393,30 +483,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     CHANCELLOR MESSAGE (matches live srku.edu.in design)
+     CHANCELLOR'S MESSAGE SECTION (Luxury Theme Design)
 ═══════════════════════════════════════════════════════ -->
-<section class="chancellor-v2">
-    <div class="chancellor-v2__inner">
-        <div class="chancellor-v2__media">
-            <img class="chancellor-v2__photo"
-                 src="<?php echo BASE_URL; ?>assets/uploads/2026/08/Chancelloer-480x503-1.jpg"
-                 onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/ruchichaubey.webp';"
-                 alt="<?php echo sanitize($chancellorName); ?>, Chancellor of SRK University, Bhopal">
-            <div class="chancellor-v2__quote">
-                <p class="chancellor-v2__quote-text">&ldquo;<?php echo sanitize($chancellorQuote); ?>&rdquo;</p>
-                <p class="chancellor-v2__quote-name"><?php echo strtoupper(sanitize($chancellorName)); ?> &middot; <?php echo sanitize($chancellorTitle); ?></p>
+<section class="chancellor-desk-section py-5 position-relative overflow-hidden">
+    <div class="container-xl py-lg-4">
+        <div class="row align-items-center g-4 g-lg-5">
+            
+            <!-- Left: Framed Portrait & Name Plate -->
+            <div class="col-12 col-lg-5">
+                <div class="chancellor-portrait-wrap position-relative">
+                    <div class="chancellor-photo-frame shadow-lg">
+                        <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/chancellor.jpeg"
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/ruchichaubey.webp';"
+                             alt="<?php echo sanitize($chancellorName); ?>, Chancellor of SRK University, Bhopal"
+                             class="chancellor-photo img-fluid">
+                    </div>
+                    
+                    <!-- Floating Official Designation Badge -->
+                    <div class="chancellor-badge-card shadow-lg">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="chancellor-badge-icon">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div>
+                                <h4 class="chancellor-badge-name mb-0"><?php echo sanitize($chancellorName); ?></h4>
+                                <span class="chancellor-badge-role"><?php echo sanitize($chancellorTitle); ?>, SRK University</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="chancellor-v2__content">
-            <p class="chancellor-v2__eyebrow">Chancellor&rsquo;s Message</p>
-            <h2 class="chancellor-v2__title">A legacy of <em>excellence.</em><br>A vision for tomorrow.</h2>
-            <p class="chancellor-v2__body"><?php echo sanitize($chancellorMsg); ?></p>
-            <p class="chancellor-v2__body"><?php echo sanitize($chancellorMsg2); ?></p>
-            <div class="chancellor-v2__accred">
-                <div class="chancellor-v2__accred-item"><span class="chancellor-v2__accred-name">UGC</span><span class="chancellor-v2__accred-tag">Recognised</span></div>
-                <div class="chancellor-v2__accred-item"><span class="chancellor-v2__accred-name">NAAC</span><span class="chancellor-v2__accred-tag">A+ Grade</span></div>
-                <div class="chancellor-v2__accred-item"><span class="chancellor-v2__accred-name">AICTE</span><span class="chancellor-v2__accred-tag">Approved</span></div>
+
+            <!-- Right: Visionary Statement & Accreditations -->
+            <div class="col-12 col-lg-7">
+                <div class="chancellor-content ps-lg-3">
+                    <span class="section-subtitle">
+                        <i class="fas fa-quote-left text-danger me-1"></i> CHANCELLOR&rsquo;S DESK
+                    </span>
+                    <h2 class="section-title mb-3">
+                        A Legacy of <span>Excellence</span>,<br>A Vision for Tomorrow
+                    </h2>
+                    
+                    <div class="chancellor-quote-lead mb-3">
+                        <p class="mb-0"><?php echo sanitize($chancellorMsg); ?></p>
+                    </div>
+                    
+                    <p class="text-muted mb-4" style="line-height: 1.85; font-size: 0.96rem;">
+                        <?php echo sanitize($chancellorMsg2); ?>
+                    </p>
+
+                    <!-- Trust & Accreditations Pill Row -->
+                    <div class="d-flex flex-wrap gap-3 pt-3 border-top">
+                        <div class="chancellor-accred-box">
+                            <div class="accred-logo"><i class="fas fa-check-circle text-danger"></i> UGC</div>
+                            <span class="accred-sub">Recognized</span>
+                        </div>
+                        <div class="chancellor-accred-box">
+                            <div class="accred-logo"><i class="fas fa-award text-warning"></i> NAAC</div>
+                            <span class="accred-sub">A+ Grade</span>
+                        </div>
+                        <div class="chancellor-accred-box">
+                            <div class="accred-logo"><i class="fas fa-shield-alt text-success"></i> AICTE</div>
+                            <span class="accred-sub">Approved</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 </section>
@@ -518,7 +651,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         <div class="row align-items-center g-4 g-lg-5">
             <div class="col-12 col-lg-6">
                 <p class="text-dark mb-4" style="line-height:1.8; font-size:0.94rem;">
-                    Our dedicated Corporate Relations Cell conducts year-round campus recruitment drives, soft skills training, mock interviews, and industry internships connecting students to 500+ top national and global MNCs.
+                    Our dedicated Corporate Relations Cell conducts year-round campus recruitment drives, soft skills training, mock interviews, and industry internships, connecting students to 500+ top national and global MNCs.
                 </p>
                 <div class="row row-cols-3 g-2 mb-4">
                     <div class="col"><div class="labs-stat-box labs-stat-box--sm"><span class="num">&#8377;42 LPA</span><span class="lbl">Highest Package</span></div></div>
@@ -527,7 +660,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 </div>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="<?php echo BASE_URL; ?>placements.php" class="btn btn-srku"><i class="fas fa-chart-line me-1"></i> View Full Placement Report</a>
-                    <a href="<?php echo BASE_URL; ?>placements.php" class="btn btn-outline-danger"><i class="fas fa-users me-1"></i> Explore Recruiters</a>
+                    <a href="<?php echo BASE_URL; ?>placements.php" class="btn btn-srku-outline-maroon"><span class="btn-icon-badge"><i class="fas fa-users"></i></span> Explore Recruiters</a>
                 </div>
             </div>
             <div class="col-12 col-lg-6">
@@ -548,7 +681,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
     <?php
     $recruiterLogos = [
         ['file' => '1.webp', 'alt' => 'TATA'],
-        ['file' => '2-1.webp', 'alt' => 'Infosys'],
+        ['file' => '2.webp', 'alt' => 'Infosys'],
         ['file' => '6.webp', 'alt' => 'Amazon'],
         ['file' => '4.webp', 'alt' => 'Wipro'],
         ['file' => '3.webp', 'alt' => 'Cognizant'],
@@ -618,114 +751,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     AUTO-SCROLLING CAMPUS GALLERY CAROUSEL
-═══════════════════════════════════════════════════════ -->
-<?php
-$autoGalleryImages = [
-    ['file' => 'Gallary-slider-10.webp', 'alt' => 'Faculty Group Photo'],
-    ['file' => 'Gallary-slider-07.webp', 'alt' => 'Students in Library'],
-    ['file' => 'Gallary-slider-06.webp', 'alt' => 'Clinical Training Session'],
-    ['file' => 'Gallary-slider-03.webp', 'alt' => 'MRI Scan Lab'],
-    ['file' => 'Gallary-slider-01.webp', 'alt' => 'Hospital Ward'],
-    ['file' => 'BA-Animation.webp', 'alt' => 'BA Animation Students'],
-    ['file' => 'Diploma-in-Fashion-Design.webp', 'alt' => 'Diploma in Fashion Design'],
-    ['file' => 'B.Sc_.-Fashion-Design.webp', 'alt' => 'B.Sc. Fashion Design'],
-    ['file' => 'PG-Diploma-in-Yoga.webp', 'alt' => 'PG Diploma in Yoga'],
-    ['file' => 'M.Sc_.-Fashion-Design.webp', 'alt' => 'M.Sc. Fashion Design'],
-    ['file' => 'Bcom.webp', 'alt' => 'Faculty of Management'],
-    ['file' => 'BA.webp', 'alt' => 'B.A. Students'],
-];
-?>
-<section class="auto-gallery">
-    <div class="auto-gallery__viewport" id="autoGalleryViewport">
-        <div class="auto-gallery__track" id="autoGalleryTrack">
-            <?php foreach ($autoGalleryImages as $img): ?>
-                <div class="auto-gallery__item">
-                    <img src="<?php echo BASE_URL . 'assets/uploads/2026/07/' . rawurlencode($img['file']); ?>"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                         alt="<?php echo sanitize($img['alt']); ?>">
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-    <div class="auto-gallery__dots" id="autoGalleryDots"></div>
-</section>
-<script>
-(function () {
-    var track = document.getElementById('autoGalleryTrack');
-    var viewport = document.getElementById('autoGalleryViewport');
-    var dotsWrap = document.getElementById('autoGalleryDots');
-    if (!track || !viewport || !dotsWrap) return;
-
-    var originalItems = Array.prototype.slice.call(track.children);
-    var total = originalItems.length;
-
-    function perView() {
-        var w = window.innerWidth;
-        if (w < 576) return 1;
-        if (w < 900) return 2;
-        return 4;
-    }
-
-    var visible = perView();
-    // Clone the first `visible` items and append them for a seamless infinite loop
-    originalItems.slice(0, visible).forEach(function (node) {
-        track.appendChild(node.cloneNode(true));
-    });
-
-    var index = 0;
-    var dots = [];
-    dotsWrap.innerHTML = '';
-    for (var i = 0; i < total; i++) {
-        var dot = document.createElement('span');
-        dot.className = 'auto-gallery__dot' + (i === 0 ? ' active' : '');
-        (function (idx) {
-            dot.addEventListener('click', function () { goTo(idx); });
-        })(i);
-        dotsWrap.appendChild(dot);
-        dots.push(dot);
-    }
-
-    function setPosition(withTransition) {
-        var itemWidth = track.children[0].getBoundingClientRect().width;
-        var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || 0);
-        track.style.transition = withTransition === false ? 'none' : '';
-        track.style.transform = 'translateX(-' + (index * (itemWidth + gap)) + 'px)';
-    }
-
-    function updateDots() {
-        dots.forEach(function (d, i) { d.classList.toggle('active', i === (index % total)); });
-    }
-
-    function goTo(i) {
-        index = i;
-        setPosition(true);
-        updateDots();
-    }
-
-    function next() {
-        index++;
-        setPosition(true);
-        updateDots();
-        if (index >= total) {
-            setTimeout(function () {
-                index = 0;
-                setPosition(false);
-            }, 500);
-        }
-    }
-
-    window.addEventListener('resize', function () {
-        visible = perView();
-        setPosition(false);
-    });
-
-    setPosition(false);
-    setInterval(next, 3000);
-})();
-</script>
-
-<!-- ═══════════════════════════════════════════════════════
      GALLERY SECTION (Bootstrap 5-col Grid)
 ═══════════════════════════════════════════════════════ -->
 <section class="py-5 bg-cream">
@@ -758,13 +783,16 @@ $autoGalleryImages = [
                 <div class="incubation-panel h-100">
                     <span class="incubation-panel__eyebrow">Incubation &amp; Startups</span>
                     <h2 class="incubation-panel__title">Build Your Venture On Campus.</h2>
-                    <p class="incubation-panel__desc">The university has established an incubation center for promoting new ideas and startups in the region. The center will incubate the business ideas with relevance and fitment to the local expertise, uniqueness, and market demands. Initially the centre will provide training and support for startups related to handmade soaps &amp; sanitizers and mobile apps.</p>
-                    <a href="<?php echo BASE_URL; ?>incubation-center.php" class="incubation-panel__btn">View more....</a>
+                    <p class="incubation-panel__desc">The university has established an incubation center for promoting new ideas and startups in the region. The center will incubate business ideas with relevance and fitment to local expertise, uniqueness, and market demands. Initially, the center will provide training and support for startups related to handmade soaps &amp; sanitizers and mobile apps.</p>
+                    <a href="<?php echo BASE_URL; ?>incubation-center.php" class="incubation-panel__btn">View More &rarr;</a>
                 </div>
             </div>
             <div class="col-12 col-lg-6">
                 <div class="latest-news-panel h-100">
-                    <span class="latest-news-panel__eyebrow">Latest News</span>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="latest-news-panel__eyebrow mb-0">Latest News &amp; Circulars</span>
+                        <a href="<?php echo BASE_URL; ?>news.php" class="small text-danger fw-bold text-decoration-none">View All Notices &rarr;</a>
+                    </div>
                     <?php if (!empty($incubationNews)): ?>
                         <?php foreach ($incubationNews as $n): ?>
                             <div class="latest-news-item">
@@ -774,12 +802,12 @@ $autoGalleryImages = [
                                 <div class="latest-news-item__body">
                                     <h4><?php echo sanitize($n['title']); ?></h4>
                                     <span class="latest-news-item__date"><?php echo date('F j, Y', strtotime($n['publish_date'] ?: $n['created_at'])); ?></span>
-                                    <a href="<?php echo BASE_URL; ?>blog-detail.php?slug=<?php echo urlencode($n['slug'] ?: $n['id']); ?>">Read More &raquo;</a>
+                                    <a href="<?php echo BASE_URL; ?>news-detail.php?id=<?php echo $n['id']; ?>">Read Circular &raquo;</a>
                                 </div>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <p class="text-muted small mb-0">No news articles published yet.</p>
+                        <p class="text-muted small mb-0">No circulars published yet.</p>
                     <?php endif; ?>
                 </div>
             </div>
@@ -878,29 +906,35 @@ $autoGalleryImages = [
 <!-- ═══════════════════════════════════════════════════════
      RECENT NEWS & BLOGS
 ═══════════════════════════════════════════════════════ -->
-<?php $homeNews = getNews(null, 3); ?>
-<?php if (!empty($homeNews)): ?>
+<?php $homeBlogs = getBlogs(null, 3); ?>
+<?php if (!empty($homeBlogs)): ?>
 <section class="py-5 bg-cream">
     <div class="container-xl py-3">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-2">
             <div>
-                <span class="section-subtitle">RECENT BLOGS</span>
-                <h2 class="section-title mb-0">Information About All the <span>News &amp; Events</span> of University</h2>
+                <span class="section-subtitle">RECENT BLOGS &amp; ARTICLES</span>
+                <h2 class="section-title mb-0">Insights &amp; Stories from <span>SRK University</span></h2>
             </div>
-            <a href="<?php echo BASE_URL; ?>blogs.php" class="btn-card-apply fs-6">View All News <i class="fas fa-arrow-right ms-1"></i></a>
+            <a href="<?php echo BASE_URL; ?>blogs.php" class="btn-card-apply fs-6">View All Articles <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            <?php foreach ($homeNews as $n): ?>
+            <?php foreach ($homeBlogs as $b): ?>
                 <div class="col">
-                    <div class="prog-card">
-                        <img src="<?php echo !empty($n['image_url']) ? BASE_URL . sanitize($n['image_url']) : BASE_URL . 'assets/uploads/2026/07/001.webp'; ?>"
+                    <div class="prog-card h-100 d-flex flex-column">
+                        <img src="<?php echo !empty($b['image_url']) ? BASE_URL . sanitize($b['image_url']) : BASE_URL . 'assets/uploads/2026/07/001.webp'; ?>"
                              onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                             class="prog-img" alt="<?php echo sanitize($n['title']); ?>">
-                        <div class="prog-body">
-                            <div class="small text-muted mb-1"><i class="far fa-calendar-alt me-1"></i> <?php echo date('d M Y', strtotime($n['publish_date'] ?: $n['created_at'])); ?></div>
-                            <h3 class="prog-title"><?php echo sanitize($n['title']); ?></h3>
-                            <p class="prog-desc"><?php echo substr(strip_tags($n['content']), 0, 100) . '...'; ?></p>
-                            <a href="<?php echo BASE_URL; ?>blog-detail.php?slug=<?php echo urlencode($n['slug'] ?: $n['id']); ?>" class="btn-card-apply">Read More &rarr;</a>
+                             class="prog-img" alt="<?php echo sanitize($b['title']); ?>">
+                        <div class="prog-body d-flex flex-column flex-grow-1">
+                            <div class="d-flex justify-content-between small text-muted mb-1">
+                                <span class="badge bg-danger-subtle text-danger"><?php echo sanitize($b['category']); ?></span>
+                                <span><i class="far fa-calendar-alt me-1"></i> <?php echo date('d M Y', strtotime($b['publish_date'] ?: $b['created_at'])); ?></span>
+                            </div>
+                            <h3 class="prog-title mt-2"><?php echo sanitize($b['title']); ?></h3>
+                            <p class="prog-desc flex-grow-1"><?php 
+                                $bdesc = !empty($b['short_description']) ? $b['short_description'] : strip_tags($b['content']);
+                                echo substr($bdesc, 0, 110) . '...'; 
+                            ?></p>
+                            <a href="<?php echo BASE_URL; ?>blog-detail.php?slug=<?php echo urlencode($b['slug'] ?: $b['id']); ?>" class="btn-card-apply mt-auto align-self-start">Read Article &rarr;</a>
                         </div>
                     </div>
                 </div>
@@ -918,7 +952,7 @@ $homeTestimonials = [
     [
         'name' => 'Ravi Gupta',
         'city' => 'Bhopal',
-        'text' => 'Graduated from this university with valuable skills and experiences that have helped me succeed in my career. The alumni network is strong and supportive, and the career services office provided excellent guidance and resources to help me secure a job after graduation. I also appreciated the emphasis on real-world learning through internships and co-op programs.',
+        'text' => 'Graduated from this university with valuable skills and experiences that have helped me succeed in my career. The alumni network is strong and supportive, and the career services office provided excellent guidance and resources to help me secure a job after graduation. I also appreciated the emphasis on real-world learning through internships and co-op programmes.',
     ],
     [
         'name' => 'Nitish Rai',
@@ -940,9 +974,7 @@ $homeTestimonials = [
         <div class="testimonial-v2__carousel" id="testimonialCarousel">
             <?php foreach ($homeTestimonials as $i => $t): ?>
                 <div class="testimonial-v2__slide<?php echo $i === 0 ? ' active' : ''; ?>">
-                    <img class="testimonial-v2__avatar" src="<?php echo BASE_URL; ?>assets/uploads/2026/07/dummy.webp"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                         alt="<?php echo sanitize($t['name']); ?>">
+                    <span class="testimonial-v2__avatar" aria-hidden="true"><i class="fas fa-user"></i></span>
                     <p class="testimonial-v2__text"><?php echo sanitize($t['text']); ?></p>
                     <p class="testimonial-v2__name"><?php echo sanitize($t['name']); ?></p>
                     <p class="testimonial-v2__city"><?php echo sanitize($t['city']); ?></p>
@@ -995,6 +1027,11 @@ $eventsGalleryImages = [
     ['file' => '6.png', 'alt' => 'University Event'],
     ['file' => '5.png', 'alt' => 'University Event'],
     ['file' => '4.png', 'alt' => 'University Event'],
+    ['file' => 'welcome-srku-campus.jpeg', 'alt' => 'SRK University Main Building', 'month' => '08'],
+    ['file' => 'srku-main-gate.jpeg', 'alt' => 'SRK University Main Gate', 'month' => '08'],
+    ['file' => 'srku-academic-block.jpeg', 'alt' => 'SRK University Academic Block', 'month' => '08'],
+    ['file' => 'srku-rkdf-building.jpeg', 'alt' => 'RKDF Group Campus Building', 'month' => '08'],
+    ['file' => 'srku-campus-block.jpeg', 'alt' => 'SRK University Campus Block', 'month' => '08'],
 ];
 ?>
 <section class="py-5">
@@ -1006,7 +1043,7 @@ $eventsGalleryImages = [
         <div class="auto-gallery__track auto-gallery__track--3up" id="eventsGalleryTrack">
             <?php foreach ($eventsGalleryImages as $img): ?>
                 <div class="auto-gallery__item auto-gallery__item--3up">
-                    <img src="<?php echo BASE_URL . 'assets/uploads/2026/07/' . rawurlencode($img['file']); ?>"
+                    <img src="<?php echo BASE_URL . 'assets/uploads/2026/' . ($img['month'] ?? '07') . '/' . rawurlencode($img['file']); ?>"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                          alt="<?php echo sanitize($img['alt']); ?>">
                 </div>

@@ -5,70 +5,76 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- ═══════════════════════════════════════════════════════
-     HERO BANNER
+     HERO — AURORA MESH (no photo, pure animated gradient)
 ═══════════════════════════════════════════════════════ -->
-<section class="position-relative text-white py-5" style="background: linear-gradient(100deg, rgba(91,22,20,0.85) 0%, rgba(15,30,59,0.78) 100%), url('<?php echo BASE_URL; ?>assets/uploads/2026/07/campus-1.webp') center/cover no-repeat;">
-    <div class="container-xl py-4 position-relative z-2">
-        <nav aria-label="breadcrumb" class="mb-3">
-            <ol class="breadcrumb mb-0 small">
-                <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page" style="color: rgba(255,255,255,0.85);">About</li>
-            </ol>
-        </nav>
-        <h1 class="fw-bold display-6 mb-3" style="max-width:800px; text-shadow: 0 2px 12px rgba(0,0,0,0.45);">Discover SRK University &ndash; Bhopal's Premier Multidisciplinary Private University</h1>
-        <p class="mb-4" style="max-width:760px; line-height:1.8; color: rgba(255,255,255,0.9); text-shadow: 0 1px 6px rgba(0,0,0,0.4);">
-            Welcome to Sarvepalli Radhakrishnan University, commonly known as SRK University, one of Madhya Pradesh's leading private universities. Named after Dr. Sarvepalli Radhakrishnan, India's First Vice President, our institution embodies excellence, innovation, and commitment to holistic education.
-        </p>
-        <div class="d-flex flex-wrap gap-3">
-            <a href="<?php echo BASE_URL; ?>contact.php#apply" class="btn-hero-yellow">Apply Now</a>
-            <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn-hero-outline">Meet the Leadership</a>
+<section class="about-hero-v2">
+    <div class="about-hero-v2__blob about-hero-v2__blob--1"></div>
+    <div class="about-hero-v2__blob about-hero-v2__blob--2"></div>
+    <div class="about-hero-v2__blob about-hero-v2__blob--3"></div>
+    <div class="about-hero-v2__grid"></div>
+
+    <div class="container-xl about-hero-v2__inner">
+        <div class="row align-items-center g-5">
+            <div class="col-12 col-lg-8">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb mb-0 small">
+                        <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page" style="color: rgba(255,255,255,0.85);">About</li>
+                    </ol>
+                </nav>
+                <span class="about-hero-v2__eyebrow"><i class="fas fa-star"></i> Est. 1995 &middot; RKDF Education Society</span>
+                <h1 class="about-hero-v2__title">Discover <span>SRK University</span> &ndash; Bhopal's Premier Multidisciplinary Private University</h1>
+                <p class="about-hero-v2__desc">
+                    Welcome to Sarvepalli Radhakrishnan University, commonly known as SRK University, one of Madhya Pradesh's leading private universities. Named after Dr. Sarvepalli Radhakrishnan, India's First Vice President, our institution embodies excellence, innovation, and commitment to holistic education.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="<?php echo BASE_URL; ?>contact.php#apply" class="btn-hero-yellow">Apply Now</a>
+                    <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn-hero-outline">Meet the Leadership</a>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="about-hero-v2__cards">
+                    <div class="about-hero-v2__card about-hero-v2__card--float1">
+                        <i class="fas fa-calendar-check"></i>
+                        <span class="num">31<sup>st</sup></span>
+                        <span class="lbl">Year of Excellence</span>
+                    </div>
+                    <div class="about-hero-v2__card about-hero-v2__card--float2">
+                        <i class="fas fa-user-graduate"></i>
+                        <span class="num">20,000+</span>
+                        <span class="lbl">Students</span>
+                    </div>
+                    <div class="about-hero-v2__card about-hero-v2__card--float3">
+                        <i class="fas fa-layer-group"></i>
+                        <span class="num">14</span>
+                        <span class="lbl">Constituent Units</span>
+                    </div>
+                    <div class="about-hero-v2__card about-hero-v2__card--float4">
+                        <i class="fas fa-briefcase"></i>
+                        <span class="num">35,000+</span>
+                        <span class="lbl">Placements</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
-
-<!-- STATS STRIP -->
-<div class="stats-strip py-2">
-    <div class="container-xl">
-        <div class="row row-cols-2 row-cols-md-5 g-0 text-center">
-            <div class="col stat-box">
-                <div class="stat-val">18,000+</div>
-                <div class="stat-txt">Students</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">600+</div>
-                <div class="stat-txt">Faculty</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">120+</div>
-                <div class="stat-txt">Programs</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">1,400+</div>
-                <div class="stat-txt">Research Papers</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">42+</div>
-                <div class="stat-txt">Global Partners</div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- WHO WE ARE / UNIVERSITY OVERVIEW -->
 <section class="py-5" id="overview">
     <div class="container-xl py-3">
         <div class="row align-items-center g-4 g-lg-5">
             <div class="col-12 col-lg-5 reveal">
-                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/campus-1.webp"
+                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/srku-rkdf-building.jpeg"
                      onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                     class="welcome-img" alt="SRK University Campus">
+                     class="welcome-img" alt="RKDF Group Campus Building">
             </div>
             <div class="col-12 col-lg-7 reveal">
                 <span class="section-subtitle">UNIVERSITY OVERVIEW</span>
                 <h2 class="section-title mb-3">Who <span>We Are</span></h2>
                 <p class="text-dark mb-4" style="line-height:1.8; font-size:0.96rem;">
-                    Established under the Madhya Pradesh Niji Vishwavidyalaya (Sthapana Avam Sanchalan) Adhiniyam 2007, as amended by the Dwitiya Sanshodhan Adhiniyam 2014, and sponsored by RKDF Education Society Bhopal, SRK University stands as a beacon of academic excellence in central India.
+                    Established under the Madhya Pradesh Niji Vishwavidyalaya (Sthapana Avam Sanchalan) Adhiniyam 2007, as amended by the Dwitiya Sanshodhan Adhiniyam 2014, and sponsored by RKDF Education Society, Bhopal, SRK University stands as a beacon of academic excellence in central India.
                 </p>
                 <ul class="list-unstyled row row-cols-1 row-cols-sm-2 g-2 mb-0">
                     <li class="col fw-semibold"><i class="fas fa-check-square text-danger me-2"></i> UGC (University Grants Commission) &ndash; Section 2(f)</li>
@@ -81,6 +87,71 @@ require_once __DIR__ . '/includes/header.php';
                 </ul>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- STATS MILESTONE TIMELINE -->
+<?php
+$aboutMilestoneStats = [
+    ['icon' => 'fa-award', 'num' => '31<sup>st</sup>', 'lbl' => 'Year of Excellence'],
+    ['icon' => 'fa-user-graduate', 'num' => '20,000+', 'lbl' => 'Students'],
+    ['icon' => 'fa-briefcase', 'num' => '35,000+', 'lbl' => 'Placements'],
+    ['icon' => 'fa-handshake', 'num' => '300+', 'lbl' => 'Industry Linkages'],
+    ['icon' => 'fa-users', 'num' => '1,10,000+', 'lbl' => 'Alumni'],
+    ['icon' => 'fa-chalkboard-teacher', 'num' => '1,000+', 'lbl' => 'Faculty'],
+    ['icon' => 'fa-lightbulb', 'num' => '160+', 'lbl' => 'Patents'],
+    ['icon' => 'fa-gift', 'num' => '&#10003;', 'lbl' => 'Scholarship Available'],
+];
+?>
+<section class="stat-milestones">
+    <div class="stat-milestones__track">
+
+        <div class="stat-milestones__row stat-milestones__row--top">
+            <?php foreach ($aboutMilestoneStats as $mi => $ms): ?>
+                <div class="stat-milestones__col">
+                    <?php if ($mi % 2 === 0): ?>
+                        <div class="stat-milestones__card">
+                            <span class="stat-milestones__icon"><i class="fas <?php echo $ms['icon']; ?>"></i></span>
+                            <span class="stat-milestones__num"><?php echo $ms['num']; ?></span>
+                            <span class="stat-milestones__lbl"><?php echo $ms['lbl']; ?></span>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="stat-milestones__row stat-milestones__row--dots">
+            <?php foreach ($aboutMilestoneStats as $mi => $ms): ?>
+                <div class="stat-milestones__col<?php echo $mi % 2 === 1 ? ' stat-milestones__col--bottom-accent' : ''; ?>">
+                    <span class="stat-milestones__dot"></span>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="stat-milestones__row stat-milestones__row--bottom">
+            <?php foreach ($aboutMilestoneStats as $mi => $ms): ?>
+                <div class="stat-milestones__col">
+                    <?php if ($mi % 2 === 1): ?>
+                        <div class="stat-milestones__card stat-milestones__card--accent">
+                            <span class="stat-milestones__icon"><i class="fas <?php echo $ms['icon']; ?>"></i></span>
+                            <span class="stat-milestones__num"><?php echo $ms['num']; ?></span>
+                            <span class="stat-milestones__lbl"><?php echo $ms['lbl']; ?></span>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <?php foreach ($aboutMilestoneStats as $mi => $ms): ?>
+            <div class="stat-milestones__grid-item">
+                <div class="stat-milestones__card<?php echo $mi % 2 === 1 ? ' stat-milestones__card--accent' : ''; ?>">
+                    <span class="stat-milestones__icon"><i class="fas <?php echo $ms['icon']; ?>"></i></span>
+                    <span class="stat-milestones__num"><?php echo $ms['num']; ?></span>
+                    <span class="stat-milestones__lbl"><?php echo $ms['lbl']; ?></span>
+                </div>
+            </div>
+        <?php endforeach; ?>
+
     </div>
 </section>
 
@@ -103,14 +174,22 @@ require_once __DIR__ . '/includes/header.php';
 
         <div class="vm-panel-wrap reveal">
             <div class="vm-panel active" id="vm-panel-vision" role="tabpanel">
+                <p class="vm-panel__quote">&ldquo;Learn about Education that helps Society&rdquo;</p>
                 <p class="vm-panel__text">
-                    To be a leading institution of higher education known for innovative teaching, research, and exceptional faculty, students, and staff of diverse social, cultural, religious, economic, and tribal backgrounds, prepared to tackle the challenges of the 21st century.
+                    Sarvepalli Radhakrishnan University is an academic fraternity of individuals dedicated to the motto of &ldquo;Learn about Education that helps Society&rdquo;. To emerge as a World-Class University in creating and disseminating knowledge, and providing students a unique learning experience in Science, Technology, Medicine, Management and other areas of life that will best serve the world and betterment of society. To create a knowledge-based society with scientific temper, team spirit, and dignity of labour to face global competitive challenges.
                 </p>
             </div>
             <div class="vm-panel" id="vm-panel-mission" role="tabpanel">
-                <p class="vm-panel__text">
-                    To provide world-class education to our students, create and disseminate knowledge through cutting-edge research, and engage with communities to better understand and solve their most pressing challenges.
-                </p>
+                <ul class="vm-panel__list">
+                    <li>Sarvepalli Radhakrishnan University is a nurturing ground for an individual's holistic growth to make effective contribution to the society in a dynamic environment. To evolve and develop skill-based systems for effective delivery of knowledge so as to equip young professionals with dedication and commitment to excellence in all spheres of life &amp; society.</li>
+                    <li>Facilitate intellectual stimulation to generate, maintain, and disseminate knowledge.</li>
+                    <li>Empower participants to meet the challenges of a collaborative and competitive globalized environment.</li>
+                    <li>Synergize excellence amongst aspirants through world-class ambience.</li>
+                    <li>Institute a culture of inclusiveness and provide wide access to higher education opportunities.</li>
+                    <li>Foster sustainable environmental attitude.</li>
+                    <li>Initiate trends which impact global higher education policies and practices.</li>
+                    <li>We treasure our ethos and our character.</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -178,7 +257,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="card h-100 p-4 border-0 shadow-sm rounded-4 reveal">
                     <div class="about-num-badge">06</div>
                     <h4 class="h5 fw-bold text-navy mb-2">Holistic Student Development</h4>
-                    <p class="text-muted small mb-0" style="line-height:1.75;">At SRK University, students grow beyond academics through sports, cultural activities, leadership programs, innovation, and community engagement, building confidence, teamwork, and essential life skills for future success.</p>
+                    <p class="text-muted small mb-0" style="line-height:1.75;">At SRK University, students grow beyond academics through sports, cultural activities, leadership programmes, innovation, and community engagement, building confidence, teamwork, and essential life skills for future success.</p>
                 </div>
             </div>
         </div>
@@ -217,7 +296,7 @@ require_once __DIR__ . '/includes/header.php';
                         <i class="fas fa-award"></i>
                     </div>
                     <h3 class="h5 fw-bold text-navy mb-2">AICTE</h3>
-                    <p class="text-muted small mb-0">All technical programs approved by the All India Council for Technical Education.</p>
+                    <p class="text-muted small mb-0">All technical programmes approved by the All India Council for Technical Education.</p>
                 </div>
             </div>
             <div class="col">
@@ -226,27 +305,175 @@ require_once __DIR__ . '/includes/header.php';
                         <i class="fas fa-award"></i>
                     </div>
                     <h3 class="h5 fw-bold text-navy mb-2">PCI &amp; INC</h3>
-                    <p class="text-muted small mb-0">Pharmacy and Nursing programs approved by the respective national councils.</p>
+                    <p class="text-muted small mb-0">Pharmacy and Nursing programmes approved by the respective national councils.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- CAMPUS GALLERY (title band + image grid, kept together) -->
+<!-- CAMPUS GALLERY -->
+<?php
+$aboutGalleryImages = [
+    ['path' => 'assets/uploads/2026/08/welcome-srku-campus.jpeg', 'alt' => 'SRK University Main Building'],
+    ['path' => 'assets/uploads/2026/08/srku-main-gate.jpeg', 'alt' => 'SRK University Main Gate'],
+    ['path' => 'assets/uploads/2026/08/srku-academic-block.jpeg', 'alt' => 'SRK University Academic Block'],
+    ['path' => 'assets/uploads/2026/08/srku-rkdf-building.jpeg', 'alt' => 'RKDF Group Campus Building'],
+    ['path' => 'assets/uploads/2026/08/srku-campus-block.jpeg', 'alt' => 'SRK University Campus Block'],
+    ['path' => 'assets/uploads/2026/07/Gallary-slider-07.webp', 'alt' => 'Students in the University Library'],
+    ['path' => 'assets/uploads/2026/07/Gallary-slider-06.webp', 'alt' => 'Clinical Training at SRK University'],
+    ['path' => 'assets/uploads/2026/07/Gallary-slider-10.webp', 'alt' => 'SRK University Faculty Group'],
+    ['path' => 'assets/uploads/2026/07/5.png', 'alt' => 'Student Life at SRK University']
+];
+?>
 <section class="py-5 text-center text-white" style="background: linear-gradient(135deg, var(--srku-maroon), var(--srku-navy));">
     <div class="container-xl py-2 reveal">
         <span class="section-subtitle text-warning">CAMPUS GALLERY</span>
         <h2 class="fw-bold mb-0">A Glimpse Into Life at SRK University</h2>
     </div>
 </section>
-<section class="py-5" id="gallery">
+<section class="auto-gallery" id="gallery">
+    <div class="auto-gallery__viewport" id="aboutGalleryViewport">
+        <div class="auto-gallery__track" id="aboutGalleryTrack">
+            <?php foreach ($aboutGalleryImages as $image): ?>
+                <div class="auto-gallery__item">
+                    <img src="<?php echo BASE_URL . sanitize($image['path']); ?>"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                         alt="<?php echo sanitize($image['alt']); ?>">
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="auto-gallery__dots" id="aboutGalleryDots"></div>
+    <div class="text-center mt-4">
+        <a href="<?php echo BASE_URL; ?>gallery.php?category=Campus" class="btn btn-srku-gold">
+            <i class="fas fa-images me-2"></i>View More Photos
+        </a>
+    </div>
+</section>
+<script>
+(function () {
+    var track = document.getElementById('aboutGalleryTrack');
+    var viewport = document.getElementById('aboutGalleryViewport');
+    var dotsWrap = document.getElementById('aboutGalleryDots');
+    if (!track || !viewport || !dotsWrap) return;
+
+    var originalItems = Array.prototype.slice.call(track.children);
+    var total = originalItems.length;
+    var index = 0;
+    var dots = [];
+    var timer;
+
+    originalItems.slice(0, Math.min(4, total)).forEach(function (item) {
+        track.appendChild(item.cloneNode(true));
+    });
+
+    function setPosition(withTransition) {
+        var itemWidth = track.children[0].getBoundingClientRect().width;
+        var styles = getComputedStyle(track);
+        var gap = parseFloat(styles.columnGap || styles.gap || 0);
+        track.style.transition = withTransition === false ? 'none' : '';
+        track.style.transform = 'translateX(-' + (index * (itemWidth + gap)) + 'px)';
+    }
+
+    function updateDots() {
+        dots.forEach(function (dot, dotIndex) {
+            var active = dotIndex === (index % total);
+            dot.classList.toggle('active', active);
+            dot.setAttribute('aria-current', active ? 'true' : 'false');
+        });
+    }
+
+    function goTo(nextIndex) {
+        index = nextIndex;
+        setPosition(true);
+        updateDots();
+    }
+
+    function next() {
+        index++;
+        setPosition(true);
+        updateDots();
+        if (index >= total) {
+            window.setTimeout(function () {
+                index = 0;
+                setPosition(false);
+                updateDots();
+            }, 600);
+        }
+    }
+
+    function startAutoScroll() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        window.clearInterval(timer);
+        timer = window.setInterval(next, 3000);
+    }
+
+    originalItems.forEach(function (_, dotIndex) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'auto-gallery__dot' + (dotIndex === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Show gallery photo ' + (dotIndex + 1));
+        dot.setAttribute('aria-current', dotIndex === 0 ? 'true' : 'false');
+        dot.addEventListener('click', function () {
+            goTo(dotIndex);
+            startAutoScroll();
+        });
+        dotsWrap.appendChild(dot);
+        dots.push(dot);
+    });
+
+    viewport.addEventListener('mouseenter', function () { window.clearInterval(timer); });
+    viewport.addEventListener('mouseleave', startAutoScroll);
+    window.addEventListener('resize', function () { setPosition(false); });
+
+    setPosition(false);
+    startAutoScroll();
+})();
+</script>
+
+<!-- FAQ -->
+<section class="py-5 text-center text-white" style="background: linear-gradient(135deg, var(--srku-maroon), var(--srku-navy));">
     <div class="container-xl py-2">
-        <div class="row row-cols-2 row-cols-md-4 g-2">
-            <div class="col reveal"><img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Gallary-slider-07.webp" class="gallery-img" alt="SRK University Campus Gallery 1" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"></div>
-            <div class="col reveal"><img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Gallary-slider-06.webp" class="gallery-img" alt="SRK University Campus Gallery 2" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"></div>
-            <div class="col reveal"><img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Gallary-slider-10.webp" class="gallery-img" alt="SRK University Campus Gallery 3" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"></div>
-            <div class="col reveal"><img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/5.png" class="gallery-img" alt="SRK University Campus Gallery 4" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"></div>
+        <span class="section-subtitle text-warning">FAQS</span>
+        <h2 class="fw-bold mb-4">Answers before you ask.</h2>
+        <div class="accordion mx-auto reveal" id="aboutFaq" style="max-width:760px;">
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#aboutFaq1" aria-expanded="true" aria-controls="aboutFaq1">
+                        When was SRK University established?
+                    </button>
+                </h3>
+                <div id="aboutFaq1" class="accordion-collapse collapse show" data-bs-parent="#aboutFaq">
+                    <div class="accordion-body text-start">
+                        SRK University, Bhopal, was established under the Madhya Pradesh Niji Vishwavidyalaya (Sthapana Avam Sanchalan) Adhiniyam 2007, as amended by the Dwitiya Sanshodhan Adhiniyam 2014, and is sponsored by RKDF Education Society, Bhopal.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#aboutFaq2" aria-expanded="false" aria-controls="aboutFaq2">
+                        Which regulatory bodies recognise SRK University?
+                    </button>
+                </h3>
+                <div id="aboutFaq2" class="accordion-collapse collapse" data-bs-parent="#aboutFaq">
+                    <div class="accordion-body text-start">
+                        We are recognised by the UGC (Section 2(f)), AICTE, NMC, DCI, PCI, INC, and CCH &amp; NCISM, ensuring our programmes meet national academic and professional standards.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#aboutFaq3" aria-expanded="false" aria-controls="aboutFaq3">
+                        What makes SRK University different from other private universities?
+                    </button>
+                </h3>
+                <div id="aboutFaq3" class="accordion-collapse collapse" data-bs-parent="#aboutFaq">
+                    <div class="accordion-body text-start">
+                        Our multidisciplinary campus, NAAC-graded excellence, modern infrastructure, and strong industry and research partnerships set us apart, offering students a well-rounded and future-ready education.
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

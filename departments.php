@@ -71,7 +71,7 @@ $filteredDepartments = array_filter($allDepartments, function($dept) use ($selec
         <div class="card p-4 border-0 shadow-sm rounded-4 mb-5 bg-white border">
             <div class="row g-3 align-items-center mb-3">
                 <div class="col-12 col-md-6">
-                    <h2 class="h4 fw-bold text-navy mb-1"><i class="fas fa-university text-danger me-2"></i> Explore Faculties &amp; Colleges</h2>
+                    <h2 class="h4 fw-bold text-navy mb-1"><i class="fas fa-university text-danger me-2"></i> Explore All Faculties &amp; Colleges</h2>
                     <p class="text-muted small mb-0">Browse through all constituent units, professional faculties, and academic departments.</p>
                 </div>
                 <div class="col-12 col-md-6">
@@ -131,84 +131,141 @@ $filteredDepartments = array_filter($allDepartments, function($dept) use ($selec
 
         <!-- Department Cards Grid -->
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <?php if (!empty($filteredDepartments)): ?>
-                <?php foreach ($filteredDepartments as $dept): 
+            <?php 
+            // Exact 11 Constituent Institutes that possess their own official circular seals
+            $exactSeals = [
+                'rkdf-medical-college' => 'logo-rkdf-medical.png',
+                'sarvepalli-radhakrishnan-college-of-ayurveda' => 'logo-srk-ayurveda.png',
+                'rkdf-homoeopathic-medical-college' => 'logo-rkdf-homoeopathy.png',
+                'rkdf-dental-college' => 'logo-rkdf-dental.png',
+                'rkdf-college-of-pharmacy' => 'logo-rkdf-pharmacy.png',
+                'rkdf-college-of-nursing' => 'logo-rkdf-nursing.png',
+                'department-of-paramedical-sciences' => 'logo-allied-healthcare.png',
+                'rkdf-institute-of-science-and-technology' => 'logo-rkdf-science-tech.png',
+                'sarvepalli-radhakrishnan-college-of-law' => 'logo-srk-law.png',
+                'rkdf-institute-of-business-management' => 'logo-rkdf-management.png',
+                'faculty-of-agriculture' => 'logo-srk-agriculture.png'
+            ];
+
+            // Specific icon mapping for all other departments/colleges
+            $iconMap = [
+                'faculty-of-arts' => 'fas fa-palette',
+                'faculty-of-commerce' => 'fas fa-calculator',
+                'faculty-of-computer-application' => 'fas fa-laptop-code',
+                'rkdf-institute-science-technology-mca' => 'fas fa-code',
+                'rkdf-institute-of-management' => 'fas fa-briefcase',
+                'department-of-management' => 'fas fa-chart-line',
+                'faculty-of-science' => 'fas fa-atom',
+                'faculty-of-yoga' => 'fas fa-spa',
+                'faculty-of-fashion-technology-design' => 'fas fa-tshirt',
+                'faculty-of-library-science' => 'fas fa-book-reader',
+                'sarvepalli-radhakrishnan-college-of-pharmacy' => 'fas fa-prescription-bottle-alt',
+                'dr-apj-abdul-kalam-college-of-pharmacy-srk-bhopal' => 'fas fa-pills',
+                'sri-sai-college-of-pharmacy-srk-bhopal' => 'fas fa-capsules',
+                'sarvepalli-radhakrishnan-institute-of-pharmaceutical-science' => 'fas fa-mortar-pestle',
+                'r-n-kapoor-memorial-institute-of-pharmaceutical-sciences-srk-university' => 'fas fa-flask'
+            ];
+
+            if (!empty($filteredDepartments)): 
+                foreach ($filteredDepartments as $dept): 
                     $deptCourses = getCourses($dept['slug']);
                     if (empty($deptCourses)) {
                         $deptCourses = getCourses($dept['name']);
                     }
                     $courseCount = count($deptCourses);
-                ?>
+
+                    // Degree levels summary
+                    $levels = [];
+                    foreach ($deptCourses as $dc) {
+                        $lvl = trim($dc['degree_level'] ?: $dc['level']);
+                        if (stripos($lvl, 'diploma') !== false && stripos($lvl, 'cert') !== false) {
+                            $lvl = 'Diploma / Cert.';
+                        } elseif (stripos($lvl, 'doctorate') !== false || stripos($lvl, 'ph.d') !== false) {
+                            $lvl = 'Doctorate (Ph.D.)';
+                        }
+                        if ($lvl && !in_array($lvl, $levels)) {
+                            $levels[] = $lvl;
+                        }
+                    }
+
+                    // Check if this department has an exact extracted seal
+                    $sealFile = $exactSeals[$dept['slug']] ?? null;
+                    $deptIcon = $iconMap[$dept['slug']] ?? ($dept['icon'] ?: 'fas fa-university');
+
+                    // Clean full readable summary without text cutting
+                    $descText = trim(strip_tags($dept['description'] ?? ''));
+                    if (empty($descText)) {
+                        $descText = 'Delivering industry-aligned professional academic education, advanced research laboratories, and experiential learning.';
+                    }
+                    if (mb_strlen($descText) > 135) {
+                        $descText = mb_substr($descText, 0, 130) . '...';
+                    }
+            ?>
                     <div class="col">
-                        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden d-flex flex-column hover-shadow" style="transition: all 0.3s ease; border: 1px solid rgba(0,0,0,0.06) !important;">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden d-flex flex-column bg-white border-top border-4 border-danger hover-shadow" style="transition: all 0.25s ease; border-color: rgba(122,11,13,0.15);">
                             
                             <!-- Card Header -->
-                            <div class="p-4 bg-light border-bottom">
-                                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                                    <div class="bg-danger text-white rounded-3 d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width:52px; height:52px; font-size:1.4rem;">
-                                        <i class="<?php echo sanitize($dept['icon'] ?: 'fas fa-graduation-cap'); ?>"></i>
-                                    </div>
-                                    <div class="d-flex flex-column align-items-end gap-1">
+                            <div class="p-4 pb-2">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <?php if ($sealFile && file_exists(__DIR__ . '/assets/images/constituent-logos/' . $sealFile)): ?>
+                                        <!-- Official Constituent College Seal -->
+                                        <div class="bg-white rounded-circle shadow-xs border d-flex align-items-center justify-content-center flex-shrink-0" style="width: 66px; height: 66px;" title="<?php echo sanitize($dept['name']); ?> Seal">
+                                            <img src="<?php echo BASE_URL; ?>assets/images/constituent-logos/<?php echo $sealFile; ?>?v=3" alt="<?php echo sanitize($dept['name']); ?>" class="img-fluid d-block m-auto" style="max-width: 88%; max-height: 88%; object-fit: contain;">
+                                        </div>
+                                    <?php else: ?>
+                                        <!-- Department Emblem Icon -->
+                                        <div class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 shadow-xs border border-danger-subtle" style="width: 66px; height: 66px; font-size: 1.6rem;" title="<?php echo sanitize($dept['name']); ?>">
+                                            <i class="<?php echo sanitize($deptIcon); ?>"></i>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <div class="d-flex align-items-center gap-1">
                                         <?php if (!empty($dept['established_year'])): ?>
-                                            <span class="badge bg-navy text-white fw-semibold small px-2 py-1">Est. <?php echo sanitize($dept['established_year']); ?></span>
+                                            <span class="badge bg-navy text-white fw-bold px-2 py-1" style="font-size: 0.72rem;">Est. <?php echo sanitize($dept['established_year']); ?></span>
                                         <?php endif; ?>
                                         <?php if (!empty($dept['approvals'])): ?>
-                                            <span class="badge bg-warning-subtle text-dark border border-warning-subtle small"><?php echo sanitize($dept['approvals']); ?></span>
+                                            <span class="badge bg-warning-subtle text-dark border border-warning-subtle px-2 py-1 fw-bold" style="font-size: 0.72rem;"><?php echo sanitize($dept['approvals']); ?></span>
                                         <?php endif; ?>
                                     </div>
                                 </div>
-                                <h3 class="h5 fw-bold text-navy mb-1" style="min-height: 2.8rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+
+                                <h3 class="h5 fw-bold text-navy mb-2" style="min-height: 2.8rem; line-height: 1.35;">
                                     <a href="<?php echo BASE_URL; ?>department-detail.php?slug=<?php echo urlencode($dept['slug']); ?>" class="text-navy text-decoration-none hover-danger">
                                         <?php echo sanitize($dept['name']); ?>
                                     </a>
                                 </h3>
-                                <div class="d-flex align-items-center justify-content-between pt-1">
-                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle small fw-semibold">
-                                        <i class="fas fa-layer-group me-1"></i> <?php echo sanitize($dept['category'] ?? 'Faculty'); ?>
+
+                                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                                    <span class="badge bg-light text-secondary border small px-2 py-1">
+                                        <i class="fas fa-layer-group text-danger me-1"></i> <?php echo sanitize($dept['category'] ?? 'Academic Unit'); ?>
                                     </span>
-                                    <span class="text-muted small fw-bold"><i class="fas fa-book-reader text-danger me-1"></i> <?php echo $courseCount; ?> <?php echo $courseCount === 1 ? 'Program' : 'Programs'; ?></span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle small px-2 py-1 fw-semibold">
+                                        <i class="fas fa-book-open me-1"></i> <?php echo $courseCount; ?> <?php echo $courseCount === 1 ? 'Program' : 'Programs'; ?>
+                                    </span>
                                 </div>
                             </div>
 
                             <!-- Card Body -->
-                            <div class="p-4 d-flex flex-column flex-grow-1">
-                                <p class="text-muted small mb-3 flex-grow-1" style="line-height:1.65; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
-                                    <?php echo sanitize($dept['description']); ?>
+                            <div class="px-4 pb-4 d-flex flex-column flex-grow-1">
+                                <p class="text-muted small mb-3" style="min-height: 3rem; line-height: 1.55; font-size: 0.86rem;">
+                                    <?php echo sanitize($descText); ?>
                                 </p>
 
-                                <!-- Key Degrees Preview -->
-                                <?php if (!empty($deptCourses)): ?>
-                                    <div class="mb-3">
-                                        <div class="small fw-bold text-navy mb-1"><i class="fas fa-graduation-cap text-danger me-1"></i> Key Degree Offerings:</div>
-                                        <div class="d-flex flex-wrap gap-1">
-                                            <?php 
-                                            $shown = 0;
-                                            foreach (array_slice($deptCourses, 0, 3) as $c): 
-                                                $shortTitle = explode('(', $c['course_name'])[0];
-                                                $shortTitle = trim(str_replace(['Bachelor of', 'Master of', 'Diploma in'], ['B.', 'M.', 'Dip.'], $shortTitle));
-                                            ?>
-                                                <span class="badge bg-light text-dark border small fw-normal"><?php echo sanitize($shortTitle); ?></span>
-                                            <?php endforeach; ?>
-                                            <?php if ($courseCount > 3): ?>
-                                                <span class="badge bg-danger-subtle text-danger small">+<?php echo ($courseCount - 3); ?> more</span>
-                                            <?php endif; ?>
-                                        </div>
+                                <?php if (!empty($levels)): ?>
+                                    <div class="p-2 px-3 rounded-3 bg-light border mb-3 small text-secondary d-flex align-items-center gap-1">
+                                        <i class="fas fa-graduation-cap text-danger me-1"></i>
+                                        <strong class="text-dark">Offerings:</strong> 
+                                        <span class="text-truncate"><?php echo implode(' &bull; ', array_slice($levels, 0, 3)); ?></span>
                                     </div>
                                 <?php endif; ?>
 
-                                <!-- Official Brochure Contact -->
-                                <div class="bg-light p-2 px-3 rounded-3 mb-3 small text-muted border d-flex align-items-center justify-content-between">
-                                    <span><i class="fas fa-phone-alt text-danger me-1"></i> <strong>Admission Desk:</strong></span>
-                                    <span class="text-dark fw-bold"><?php echo sanitize($dept['contact_no'] ?: '0755-4700983'); ?></span>
-                                </div>
-
                                 <!-- Action Buttons -->
-                                <div class="d-flex gap-2 mt-auto pt-2 border-top">
-                                    <a href="<?php echo BASE_URL; ?>department-detail.php?slug=<?php echo urlencode($dept['slug']); ?>" class="btn btn-sm btn-srku flex-grow-1 text-center justify-content-center">
-                                        <i class="fas fa-info-circle me-1"></i> Faculty Details
+                                <div class="d-flex gap-2 mt-auto pt-2">
+                                    <a href="<?php echo BASE_URL; ?>department-detail.php?slug=<?php echo urlencode($dept['slug']); ?>" class="btn btn-sm btn-srku flex-grow-1 text-center justify-content-center py-2">
+                                        View Department &rarr;
                                     </a>
-                                    <a href="<?php echo BASE_URL; ?>courses.php?dept=<?php echo urlencode($dept['slug']); ?>" class="btn btn-sm btn-outline-secondary px-3" title="View all courses offered by this department">
-                                        Courses (<?php echo $courseCount; ?>)
+                                    <a href="<?php echo BASE_URL; ?>faculties.php?dept=<?php echo urlencode($dept['name']); ?>" class="btn btn-sm btn-outline-danger px-3 py-2 d-flex align-items-center" title="View Faculty Members">
+                                        <i class="fas fa-user-tie me-1"></i> Faculty
                                     </a>
                                 </div>
 
