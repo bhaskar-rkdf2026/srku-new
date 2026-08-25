@@ -1,6 +1,8 @@
 <?php
-$pageTitle = "Campus Photo & Event Gallery - SRK University Bhopal";
-$activeNav = "admission";
+$pageTitle = "Campus Life & Event Gallery | Photos & Facilities | SRKU Bhopal";
+$pageDesc = "Take a visual tour of Sarvepalli Radhakrishnan University (SRKU) Bhopal: Campus architecture, central library, clinical labs, convocation ceremonies, sports and student life.";
+$pageKeywords = "SRKU Gallery, Campus Photos, University Events, Sports Day, Medical Labs Gallery Bhopal";
+$activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
 
 $category = sanitize($_GET['category'] ?? '');

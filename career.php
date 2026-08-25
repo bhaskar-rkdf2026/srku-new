@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Careers & Faculty Recruitment - SRK University Bhopal";
+$pageTitle = "Careers & Faculty Recruitment | Work at SRKU Bhopal";
+$pageDesc = "Explore academic, clinical, research, and administrative career openings at Sarvepalli Radhakrishnan University (SRKU), Bhopal. Apply for Professor, Associate Professor and Staff positions.";
+$pageKeywords = "SRKU Careers, Faculty Recruitment Bhopal, University Jobs MP, Teaching Vacancies Bhopal";
 $activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
 

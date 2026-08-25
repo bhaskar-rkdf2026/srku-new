@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Official Notice Board & Circulars - SRK University Bhopal";
+$pageTitle = "Official Notice Board & Academic Circulars | SRKU Bhopal";
+$pageDesc = "Stay updated with official academic circulars, exam notifications, admission announcements, and placement drives at Sarvepalli Radhakrishnan University (SRKU), Bhopal.";
+$pageKeywords = "SRKU Notice Board, University Circulars Bhopal, Exam Time Table SRKU, Admission Notices MP";
 $activeNav = "news";
 require_once __DIR__ . '/includes/header.php';
 
@@ -53,19 +55,21 @@ $filteredNews = array_filter($allNews, function($n) use ($selectedCategory, $sea
                 </div>
             </div>
 
-            <!-- Category Pills -->
-            <div class="d-flex flex-wrap gap-2 pt-3 border-top">
-                <a href="<?php echo BASE_URL; ?>news.php" class="badge px-3 py-2 text-decoration-none rounded-pill <?php echo empty($selectedCategory) ? 'bg-danger text-white' : 'bg-light text-dark border'; ?>">
-                    All Notices (<?php echo count($allNews); ?>)
-                </a>
-                <?php 
-                $cats = ['Admission', 'Placement', 'Examination', 'Announcement'];
-                foreach ($cats as $cat):
-                ?>
-                    <a href="<?php echo BASE_URL; ?>news.php?category=<?php echo urlencode($cat); ?>" class="badge px-3 py-2 text-decoration-none rounded-pill <?php echo $selectedCategory === $cat ? 'bg-danger text-white' : 'bg-light text-dark border'; ?>">
-                        <?php echo $cat; ?>
+            <!-- Category Pills (Single Row, Never Cuts) -->
+            <div class="pt-3 border-top">
+                <div class="srku-filter-row">
+                    <a href="<?php echo BASE_URL; ?>news.php" class="srku-filter-btn <?php echo empty($selectedCategory) ? 'active' : ''; ?>">
+                        <i class="fas fa-bullhorn"></i> All Notices (<?php echo count($allNews); ?>)
                     </a>
-                <?php endforeach; ?>
+                    <?php 
+                    $cats = ['Admission', 'Placement', 'Examination', 'Announcement'];
+                    foreach ($cats as $cat):
+                    ?>
+                        <a href="<?php echo BASE_URL; ?>news.php?category=<?php echo urlencode($cat); ?>" class="srku-filter-btn <?php echo $selectedCategory === $cat ? 'active' : ''; ?>">
+                            <?php echo $cat; ?>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </div>
 

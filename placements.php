@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Training & Placements - Sarvepalli Radhakrishnan University, Bhopal";
+$pageTitle = "Training & Corporate Placements | 120+ Top Recruiters | SRKU Bhopal";
+$pageDesc = "Explore career placements at Sarvepalli Radhakrishnan University (SRKU), Bhopal with 120+ leading corporate recruitment partners, 12 LPA highest package, and dedicated Corporate Relations Cell.";
+$pageKeywords = "SRKU Placements, Placement Record, Highest Package, Top Recruiters Bhopal, Campus Placement Drives MP";
 $activeNav = "placements";
 require_once __DIR__ . '/includes/header.php';
 

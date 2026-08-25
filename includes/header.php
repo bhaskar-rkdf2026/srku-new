@@ -8,14 +8,122 @@ $logoUrl = getSetting('header_logo_url', 'assets/uploads/2026/07/SRK-logo.webp')
 $ctaText = getSetting('header_cta_text', 'Contact Us');
 $ctaLink = getSetting('header_cta_link', 'contact.php');
 $customHeadCode = getSetting('header_custom_head_code', '');
+// SEO & AEO Canonical & Meta Defaults
+$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$reqUri = $_SERVER['REQUEST_URI'] ?? '/';
+$currentFullUrl = "$protocol://$host$reqUri";
+$canonicalUrl = isset($pageCanonical) ? $pageCanonical : $currentFullUrl;
+
+$seoTitle = isset($pageTitle) ? sanitize($pageTitle) : "Sarvepalli Radhakrishnan University (SRKU), Bhopal | Official Portal";
+$seoDesc = isset($pageDesc) ? sanitize($pageDesc) : (isset($metaDesc) ? sanitize($metaDesc) : 'Sarvepalli Radhakrishnan University (SRKU) Bhopal is a premier multidisciplinary private university in Madhya Pradesh recognized under Section 2(f) of UGC Act 1956, offering UGC, AICTE, NMC, PCI, BCI approved programmes across Engineering, Medicine, Pharmacy, Law, Nursing, Agriculture and Management.');
+$seoKeywords = isset($pageKeywords) ? sanitize($pageKeywords) : "SRK University, Sarvepalli Radhakrishnan University, SRKU Bhopal, Admissions 2026-27, UGC Approved University MP, AICTE Approved Engineering College, NMC Approved Medical College Bhopal, RKDF Group, MP Private University";
+$seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $logoUrl : BASE_URL . $logoUrl);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype="https://schema.org/CollegeOrUniversity">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($pageTitle) ? sanitize($pageTitle) : "Home - Sarvepalli Radhakrishnan University, Bhopal"; ?></title>
-    <meta name="description" content="<?php echo isset($metaDesc) ? sanitize($metaDesc) : 'SRK University, Bhopal - UGC-Recognized Premier University in MP offering Engineering, Pharmacy, Nursing, Management, Law, Agriculture & Medical Sciences.'; ?>">
+    <title><?php echo $seoTitle; ?></title>
+    
+    <!-- Core SEO & Search Engine Directives -->
+    <meta name="description" content="<?php echo $seoDesc; ?>">
+    <meta name="keywords" content="<?php echo $seoKeywords; ?>">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="author" content="Sarvepalli Radhakrishnan University, Bhopal">
+    <link rel="canonical" href="<?php echo htmlspecialchars($canonicalUrl); ?>">
+
+    <!-- Geographic & Regional Meta Tags (Local SEO & AEO) -->
+    <meta name="geo.region" content="IN-MP">
+    <meta name="geo.placename" content="Bhopal, Madhya Pradesh">
+    <meta name="geo.position" content="23.1685;77.4682">
+    <meta name="ICBM" content="23.1685, 77.4682">
+
+    <!-- Open Graph Protocol (Facebook, LinkedIn, AI Search Engines) -->
+    <meta property="og:locale" content="en_IN">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="<?php echo $seoTitle; ?>">
+    <meta property="og:description" content="<?php echo $seoDesc; ?>">
+    <meta property="og:url" content="<?php echo htmlspecialchars($canonicalUrl); ?>">
+    <meta property="og:site_name" content="Sarvepalli Radhakrishnan University (SRKU)">
+    <meta property="og:image" content="<?php echo htmlspecialchars($seoImage); ?>">
+    <meta property="og:image:alt" content="Sarvepalli Radhakrishnan University Campus">
+
+    <!-- Twitter Cards (Social & Conversational Search) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo $seoTitle; ?>">
+    <meta name="twitter:description" content="<?php echo $seoDesc; ?>">
+    <meta name="twitter:image" content="<?php echo htmlspecialchars($seoImage); ?>">
+
+    <!-- Schema.org Comprehensive Structured Data (AEO: Google SGE, Perplexity, Gemini, ChatGPT, Bing Copilot) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollegeOrUniversity",
+      "@id": "https://srku.edu.in/#university",
+      "name": "Sarvepalli Radhakrishnan University",
+      "alternateName": ["SRKU", "SRK University", "SRKU Bhopal"],
+      "url": "https://srku.edu.in/",
+      "logo": "https://srku.edu.in/assets/uploads/2026/07/SRK-logo.webp",
+      "image": "https://srku.edu.in/assets/uploads/2026/07/campus-1.webp",
+      "description": "Sarvepalli Radhakrishnan University (SRKU), Bhopal is a statutory multidisciplinary private university established under Section 2(f) of the UGC Act 1956 and MP Niji Vishwavidyalaya Adhiniyam 2007 (Act No. 17 of 2007).",
+      "foundingDate": "1995",
+      "parentOrganization": {
+        "@type": "EducationalOrganization",
+        "name": "RKDF Education Society"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "NH-12, Hoshangabad Road, Jatkhedi, Misrod",
+        "addressLocality": "Bhopal",
+        "addressRegion": "Madhya Pradesh",
+        "postalCode": "462026",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "23.1685",
+        "longitude": "77.4682"
+      },
+      "telephone": "+91-755-4911204",
+      "email": "info@srku.edu.in",
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+91-7024144981",
+          "contactType": "Admissions Desk",
+          "areaServed": "IN",
+          "availableLanguage": ["en", "hi"]
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "+91-755-4911204",
+          "contactType": "Examination Support",
+          "email": "exam@srku.edu.in",
+          "areaServed": "IN"
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "+91-755-4700982",
+          "contactType": "Academic Affairs",
+          "areaServed": "IN"
+        },
+        {
+          "@type": "ContactPoint",
+          "email": "registrar@srku.edu.in",
+          "contactType": "Registrar Office",
+          "areaServed": "IN"
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/",
+        "https://www.instagram.com/",
+        "https://www.linkedin.com/",
+        "https://www.youtube.com/"
+      ]
+    }
+    </script>
 
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -155,6 +263,8 @@ $customHeadCode = getSetting('header_custom_head_code', '');
                         About <span class="static-dropdown-arrow"></span>
                     </a>
                     <ul class="static-dropdown-panel">
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>chancellor-message.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-crown text-warning me-1"></i> Chancellor's Message</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>vice-chancellor-message.php" class="static-dropdown-link fw-semibold text-navy"><i class="fas fa-user-tie text-primary me-1"></i> Vice Chancellor's Message</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>about/why-srk" class="static-dropdown-link">Why SRK</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>about/srk-university-vision-and-mission" class="static-dropdown-link">Vision &amp; Mission</a></li>
                         
@@ -377,13 +487,15 @@ $customHeadCode = getSetting('header_custom_head_code', '');
                         Academics <span class="static-dropdown-arrow"></span>
                     </a>
                     <ul class="static-dropdown-panel">
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>academic-calendar.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-calendar-alt text-warning me-1"></i> Academic Calendar 2026-27</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>exam-rules.php" class="static-dropdown-link fw-semibold text-navy"><i class="fas fa-clipboard-check text-primary me-1"></i> Examination Rules &amp; Ordinances</a></li>
                         <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Details-of-Academic-Programmes.pdf" class="static-dropdown-link">Details of Academic Programmes</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Academic-Calendar.pdf" class="static-dropdown-link">Academic Calendar</a></li>
                         <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/statutes-ordinances-pertaining-to-academics-examination.pdf" class="static-dropdown-link">Statutes Ordinances</a></li>
                         <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Constituent-unitsDepartment.pdf" class="static-dropdown-link">School/ Department/ Centres</a></li>
                         <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/department-wise-faculty-details.pdf" class="static-dropdown-link">Faculty/ Staff Details</a></li>
                         <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/IQAC.pdf" class="static-dropdown-link">Internal Quality Assurance Cell</a></li>
                         <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/UniversityLibrary.pdf" class="static-dropdown-link">Library</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>hostel.php" class="static-dropdown-link"><i class="fas fa-bed text-warning me-1"></i> Hostel Accommodation</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>facilities" class="static-dropdown-link">Facilities</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>placements" class="static-dropdown-link">Placements</a></li>
                     </ul>

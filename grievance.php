@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Grievance / Complaint Form - SRK University Bhopal";
+$pageTitle = "Student Grievance Redressal Cell | Confidential Portal | SRKU Bhopal";
+$pageDesc = "Submit academic, administrative, hostel or examination grievances securely to the official Student Grievance Redressal Cell at Sarvepalli Radhakrishnan University as per UGC regulations.";
+$pageKeywords = "SRKU Grievance Cell, Student Complaint Portal, UGC Grievance Redressal Bhopal, SRKU Student Support";
 $activeNav = "grievance";
 require_once __DIR__ . '/includes/header.php';
 

@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "SRKU Alumni Association Network - Sarvepalli Radhakrishnan University";
+$pageTitle = "Global Alumni Network | 15,000+ Alumni Community | SRKU Bhopal";
+$pageDesc = "Join the global alumni community of Sarvepalli Radhakrishnan University (SRKU), Bhopal with 15,000+ graduates leading worldwide in healthcare, technology, corporate and public sectors.";
+$pageKeywords = "SRKU Alumni Association, Global Alumni Network Bhopal, RKDF Alumni, University Graduates Portal";
 $activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
 

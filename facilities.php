@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Campus Facilities & Infrastructure - SRK University Bhopal";
+$pageTitle = "Campus Facilities & Infrastructure | 42+ Labs, Hostels & Hospitals | SRKU";
+$pageDesc = "Explore the infrastructure of Sarvepalli Radhakrishnan University (SRKU) Bhopal: 42+ high-tech laboratories, Central Library, RKDF Medical Hospital, smart classrooms, hostels and sports complex.";
+$pageKeywords = "SRKU Facilities, University Infrastructure Bhopal, Laboratories, Hostel Facilities, Campus Hospital Bhopal";
 $activeNav = "facilities";
 require_once __DIR__ . '/includes/header.php';
 ?>

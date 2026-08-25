@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = "University Articles & Blogs - Sarvepalli Radhakrishnan University Bhopal";
+$pageTitle = "University Blogs, Articles & Academic Insights | SRKU Bhopal";
+$pageDesc = "Read latest university articles, educational insights, student experiences, campus updates, and academic trends from Sarvepalli Radhakrishnan University (SRKU), Bhopal.";
+$pageKeywords = "SRKU Blogs, Higher Education Articles, Student Stories, Academic Insights Bhopal";
 $activeNav = "blogs";
 
 $category = sanitize($_GET['cat'] ?? '');
@@ -23,32 +25,38 @@ require_once __DIR__ . '/includes/header.php';
         
         <!-- Search & Filter Bar -->
         <div class="card p-3 p-md-4 border-0 shadow-sm rounded-4 mb-4 bg-white">
-            <div class="row g-3 align-items-center">
-                <div class="col-12 col-md-6">
+            <div class="row g-3 align-items-center mb-3">
+                <div class="col-12 col-lg-7">
+                    <h2 class="h5 fw-bold text-navy mb-1"><i class="fas fa-newspaper text-danger me-2"></i> Articles &amp; Insights</h2>
+                    <p class="text-muted small mb-0">Browse university blogs, research highlights, and campus stories.</p>
+                </div>
+                <div class="col-12 col-lg-5">
                     <form method="GET" action="<?php echo BASE_URL; ?>blogs.php" class="d-flex gap-2">
                         <?php if ($category): ?>
                             <input type="hidden" name="cat" value="<?php echo sanitize($category); ?>">
                         <?php endif; ?>
                         <div class="input-group">
-                            <span class="input-group-text bg-light"><i class="fas fa-search text-muted"></i></span>
-                            <input type="text" name="q" value="<?php echo sanitize($search); ?>" class="form-control" placeholder="Search blog articles by title or keyword...">
-                            <button type="submit" class="btn btn-srku px-3">Search</button>
+                            <span class="input-group-text bg-light border-end-0"><i class="fas fa-search text-muted"></i></span>
+                            <input type="text" name="q" value="<?php echo sanitize($search); ?>" class="form-control border-start-0" placeholder="Search blog articles...">
+                            <button type="submit" class="btn btn-srku px-4">Search</button>
                         </div>
                     </form>
                 </div>
-                <div class="col-12 col-md-6">
-                    <div class="d-flex flex-wrap gap-2 justify-content-md-end">
-                        <a href="<?php echo BASE_URL; ?>blogs.php<?php echo $search ? '?q='.urlencode($search) : ''; ?>" 
-                           class="btn btn-sm <?php echo empty($category) ? 'btn-danger fw-bold' : 'btn-light border text-dark'; ?> rounded-pill px-3 py-1">
-                            All Categories
+            </div>
+
+            <!-- Single Row Category Tabs (Never Cuts, Smooth Scroll) -->
+            <div class="pt-3 border-top">
+                <div class="srku-filter-row">
+                    <a href="<?php echo BASE_URL; ?>blogs.php<?php echo $search ? '?q='.urlencode($search) : ''; ?>" 
+                       class="srku-filter-btn <?php echo empty($category) ? 'active' : ''; ?>">
+                        <i class="fas fa-th-large"></i> All Categories
+                    </a>
+                    <?php foreach ($categories as $cat): ?>
+                        <a href="<?php echo BASE_URL; ?>blogs.php?cat=<?php echo urlencode($cat); ?><?php echo $search ? '&q='.urlencode($search) : ''; ?>" 
+                           class="srku-filter-btn <?php echo $category === $cat ? 'active' : ''; ?>">
+                            <?php echo sanitize($cat); ?>
                         </a>
-                        <?php foreach ($categories as $cat): ?>
-                            <a href="<?php echo BASE_URL; ?>blogs.php?cat=<?php echo urlencode($cat); ?><?php echo $search ? '&q='.urlencode($search) : ''; ?>" 
-                               class="btn btn-sm <?php echo $category === $cat ? 'btn-danger fw-bold' : 'btn-light border text-dark'; ?> rounded-pill px-3 py-1">
-                                <?php echo sanitize($cat); ?>
-                            </a>
-                        <?php endforeach; ?>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>

@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "About Us - Sarvepalli Radhakrishnan University, Bhopal";
+$pageTitle = "About SRK University Bhopal | Legacy, Academic Ecosystem & Leadership | SRKU";
+$pageDesc = "Discover Sarvepalli Radhakrishnan University (SRKU), Bhopal — a premier institution established in 1995 under the RKDF Education Society, offering benchmarked education across 14 constituent units.";
+$pageKeywords = "About SRKU, Sarvepalli Radhakrishnan University History, RKDF Group, Private University Bhopal, SRKU Campus Ecosystem";
 $activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
 ?>

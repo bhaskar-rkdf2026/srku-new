@@ -36,7 +36,9 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_dept_e
     }
 }
 
-$pageTitle = $dept['name'] . " - Sarvepalli Radhakrishnan University, Bhopal";
+$pageTitle = sanitize($dept['name']) . " | Programmes & Admissions | SRKU";
+$pageDesc = "Explore academic programs, laboratory infrastructure, distinguished faculty, and admissions at " . sanitize($dept['name']) . ", Sarvepalli Radhakrishnan University (SRKU), Bhopal.";
+$pageKeywords = sanitize($dept['name']) . ", SRKU Department, Courses, Admissions Bhopal, Faculty";
 $activeNav = "departments";
 require_once __DIR__ . '/includes/header.php';
 
@@ -78,6 +80,8 @@ $externalWebsites = [
 
 $sealFile = $exactSeals[$dept['slug']] ?? null;
 $officialWebsite = $externalWebsites[$dept['slug']] ?? null;
+$deptImg = !empty($dept['image']) ? $dept['image'] : 'assets/uploads/2026/07/001.webp';
+$deptImgSrc = (strpos($deptImg, 'http') === 0) ? $deptImg : BASE_URL . $deptImg;
 
 // Other departments for sidebar
 $allDepts = getDepartments(true);
@@ -140,6 +144,23 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
             <!-- Left Main Column -->
             <div class="col-12 col-lg-8">
                 
+                <!-- Campus / Building Image Feature -->
+                <div class="rounded-4 overflow-hidden mb-4 shadow-sm position-relative border" style="max-height: 380px; background: #0b1526;">
+                    <img src="<?php echo $deptImgSrc; ?>" 
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';" 
+                         alt="<?php echo sanitize($dept['name']); ?> Campus" 
+                         class="w-100 h-100 object-fit-cover" style="min-height: 260px; max-height: 380px;">
+                    <div class="position-absolute bottom-0 start-0 end-0 p-3 p-md-4 text-white d-flex align-items-end justify-content-between flex-wrap gap-2" style="background: linear-gradient(to top, rgba(11,21,38,0.92) 0%, rgba(11,21,38,0.4) 60%, transparent 100%);">
+                        <div>
+                            <span class="badge bg-danger text-white px-3 py-1 rounded-pill small fw-bold mb-1 shadow-xs"><i class="fas fa-building me-1"></i> Campus &amp; Infrastructure</span>
+                            <h4 class="h5 fw-bold text-white mb-0 text-shadow"><?php echo sanitize($dept['name']); ?></h4>
+                        </div>
+                        <?php if (!empty($dept['established_year'])): ?>
+                            <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill shadow-xs">Established <?php echo sanitize($dept['established_year']); ?></span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
                 <!-- Quick KPI Bar -->
                 <div class="card p-4 border-0 shadow-sm rounded-4 mb-4 bg-light">
                     <div class="row row-cols-2 row-cols-md-4 g-3 text-center">
@@ -188,10 +209,54 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
                     <p class="text-dark lead fs-6" style="line-height:1.85;">
                         <?php echo nl2br(sanitize($dept['description'])); ?>
                     </p>
-                    <p class="text-muted" style="line-height:1.85; font-size:0.95rem;">
+                    <p class="text-muted mb-0" style="line-height:1.85; font-size:0.95rem;">
                         Equipped with industry-standard curriculum, advanced specialized laboratories, experienced doctoral faculty members, and regular internships, the faculty prepares scholars to excel in competitive careers, clinical healthcare, scientific research, and entrepreneurship.
                     </p>
                 </div>
+
+                <?php 
+                $dName = trim((string)($dept['dean_name'] ?? ''));
+                $dMsg = trim((string)($dept['dean_message'] ?? ''));
+                if (!empty($dName) && !empty($dMsg)): 
+                    $dDesig = trim((string)($dept['dean_designation'] ?? 'Dean & Principal')) ?: 'Dean & Principal';
+                    $dPhoto = trim((string)($dept['dean_photo'] ?? ''));
+                ?>
+                    <!-- Dean / Principal's Desk Message Section (Only shown when populated) -->
+                    <div class="card p-4 p-md-4 border-0 shadow-sm rounded-4 mb-4 position-relative overflow-hidden bg-white" style="border: 1px solid #e2e8f0 !important; border-left: 5px solid #7a0b0d !important;">
+                        <div class="d-flex flex-column flex-md-row gap-4 align-items-md-center">
+                            
+                            <!-- Dean Photo Column -->
+                            <div class="text-center flex-shrink-0 mx-auto mx-md-0" style="width: 140px;">
+                                <div class="rounded-circle overflow-hidden shadow-xs border border-3 border-light mx-auto mb-2 bg-light" style="width: 110px; height: 110px;">
+                                    <?php if (!empty($dPhoto)): ?>
+                                        <img src="<?php echo (strpos($dPhoto, 'http') === 0) ? $dPhoto : BASE_URL . $dPhoto; ?>" 
+                                             alt="<?php echo sanitize($dName); ?>" 
+                                             class="w-100 h-100 object-fit-cover">
+                                    <?php else: ?>
+                                        <div class="w-100 h-100 bg-light d-flex flex-column align-items-center justify-content-center text-danger">
+                                            <i class="fas fa-user-graduate fs-1"></i>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-0" style="font-size: 0.92rem;"><?php echo sanitize($dName); ?></h6>
+                                <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1 mt-1 small" style="font-size: 0.72rem;"><?php echo sanitize($dDesig); ?></span>
+                            </div>
+
+                            <!-- Dean Message Content Column -->
+                            <div class="flex-grow-1 border-start ps-md-4" style="border-color: #f1f5f9 !important;">
+                                <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                                    <span class="badge bg-navy text-white px-3 py-1 rounded-pill small fw-bold"><i class="fas fa-quote-left me-1 text-warning"></i> Leadership Desk</span>
+                                    <span class="text-muted small">Message from the <?php echo sanitize($dDesig); ?></span>
+                                </div>
+                                <h3 class="h6 fw-bold text-navy mb-2">Guiding Academic Excellence &amp; Innovation</h3>
+                                <div class="text-secondary lead fs-6 fst-italic position-relative" style="line-height: 1.75; font-size: 0.95rem !important;">
+                                    "<?php echo nl2br(sanitize($dMsg)); ?>"
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                <?php endif; ?>
 
                 <!-- Academic Programmes Catalog -->
                 <div class="mb-5">

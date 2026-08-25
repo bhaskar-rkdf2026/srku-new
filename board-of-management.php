@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Board of Management - Sarvepalli Radhakrishnan University, Bhopal";
+$pageTitle = "Board of Management & Governance | SRK University Bhopal";
+$pageDesc = "Meet the distinguished Board of Management, Governing Body, and academic leadership guiding Sarvepalli Radhakrishnan University (SRKU), Bhopal.";
+$pageKeywords = "SRKU Board of Management, University Leadership, SRKU Governance, Chancellor, Vice Chancellor Bhopal";
 $activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
 
@@ -29,17 +31,10 @@ $boardMembers = [
                 <li class="breadcrumb-item active text-white-50" aria-current="page">Board of Management</li>
             </ol>
         </nav>
-<<<<<<< HEAD
         <span class="about-hero-v2__eyebrow"><i class="fas fa-star"></i> Est. 1995 &middot; RKDF Education Society</span>
         <h1 class="about-hero-v2__title" style="max-width:800px;">Fourteen schools, <span>one ecosystem.</span></h1>
         <p class="about-hero-v2__desc" style="max-width:760px;">
             From B.Tech and MBBS to MBA, LLM, and doctoral research &mdash; every program blends theory, industry immersion, and global exposure. Essays, field notes, and long-form research from students, faculty, and alumni &mdash; published weekly.
-=======
-        <span class="about-hero-tag" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(229, 169, 59, 0.16) !important; color: #ffcc00 !important; border: 1px solid rgba(229, 169, 59, 0.38) !important; font-size: 0.76rem; font-weight: 700; padding: 5px 14px; border-radius: 30px; letter-spacing: 0.6px; text-transform: uppercase; margin-bottom: 1rem;"><i class="fas fa-users-cog me-1"></i> GOVERNANCE &amp; LEADERSHIP</span>
-        <h1 class="fw-bold display-6 mb-3 text-white" style="max-width:860px; line-height: 1.3;">Board of Management &amp; University Governance</h1>
-        <p class="mb-4 text-white-50" style="max-width:780px; line-height:1.8; font-size: 1.02rem;">
-            The Board of Management is the apex executive body responsible for policy formulation, strategic administration, academic integrity, and sustainable growth across SRK University.
->>>>>>> 9886b3062a50f4a31440069af5d456b70d8e3aad
         </p>
         <div class="d-flex flex-wrap gap-3">
             <a href="#board-members" class="btn-hero-yellow">View Board Members</a>

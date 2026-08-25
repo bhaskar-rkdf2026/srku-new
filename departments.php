@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Academic Departments & Constituent Institutes - SRK University Bhopal";
+$pageTitle = "Academic Departments & Faculties | 14 Schools | SRKU Bhopal";
+$pageDesc = "Discover the faculties and academic departments of Sarvepalli Radhakrishnan University (SRKU), Bhopal including Engineering, Medicine, Pharmacy, Nursing, Law, Management and Agriculture.";
+$pageKeywords = "SRKU Departments, Academic Faculties, Engineering Department, Medical College, Pharmacy Faculty Bhopal";
 $activeNav = "departments";
 require_once __DIR__ . '/includes/header.php';
 

@@ -20,7 +20,7 @@ function getSetting($key, $default = '') {
         $stmt = $pdo->prepare("SELECT setting_value FROM settings WHERE setting_key = :k LIMIT 1");
         $stmt->execute([':k' => $key]);
         $res = $stmt->fetchColumn();
-        return $res !== false ? $res : $default;
+        return ($res !== false && trim((string)$res) !== '') ? $res : $default;
     } catch (Exception $e) {
         return $default;
     }

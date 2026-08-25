@@ -79,10 +79,16 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
 </head>
 <body class="bg-light">
 
+<!-- Mobile Sidebar Overlay Backdrop -->
+<div class="admin-sidebar-overlay" id="adminSidebarOverlay"></div>
+
 <div class="d-flex">
-    <!-- SIDEBAR -->
-    <aside class="admin-sidebar">
+    <!-- SIDEBAR (Desktop Fixed, Mobile Off-Canvas Drawer) -->
+    <aside class="admin-sidebar" id="adminSidebar">
         <div class="sidebar-logo text-center">
+            <button class="admin-sidebar-close" id="adminSidebarClose" aria-label="Close Sidebar">
+                <i class="fas fa-times"></i>
+            </button>
             <a href="index.php" class="brand-badge text-decoration-none">
                 <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-logo.webp" alt="SRKU Logo" style="max-height: 42px; width: auto; display: block;" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/images/SRK-logo.webp';">
             </a>
@@ -94,6 +100,32 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
             <a href="index.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'index.php' ? 'active' : ''; ?>">
                 <i class="fas fa-chart-line"></i> Dashboard
             </a>
+
+            <!-- HOMEPAGE MANAGEMENT SUB-MENU -->
+            <div class="sidebar-heading">Homepage Controls</div>
+            <a href="manage_homepage.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_homepage.php' ? 'active' : ''; ?>">
+                <i class="fas fa-home text-warning"></i> Homepage Sections
+            </a>
+            <div class="sidebar-submenu">
+                <a href="manage_homepage.php?tab=hero" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_homepage.php' && ($_GET['tab'] ?? 'hero') == 'hero') ? 'active' : ''; ?>">
+                    <i class="fas fa-video"></i> Hero Video
+                </a>
+                <a href="manage_homepage.php?tab=welcome" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_homepage.php' && ($_GET['tab'] ?? '') == 'welcome') ? 'active' : ''; ?>">
+                    <i class="fas fa-university"></i> Welcome Section
+                </a>
+                <a href="manage_homepage.php?tab=stats" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_homepage.php' && ($_GET['tab'] ?? '') == 'stats') ? 'active' : ''; ?>">
+                    <i class="fas fa-chart-pie"></i> Key Stats Strip
+                </a>
+                <a href="manage_homepage.php?tab=chancellor" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_homepage.php' && ($_GET['tab'] ?? '') == 'chancellor') ? 'active' : ''; ?>">
+                    <i class="fas fa-crown"></i> Chancellor Desk
+                </a>
+                <a href="manage_homepage.php?tab=vc" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_homepage.php' && ($_GET['tab'] ?? '') == 'vc') ? 'active' : ''; ?>">
+                    <i class="fas fa-user-tie"></i> Vice Chancellor Desk
+                </a>
+            </div>
+
+            <!-- ACADEMICS & DEPARTMENTS -->
+            <div class="sidebar-heading">Academics &amp; Content</div>
             <a href="manage_departments.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_departments.php' ? 'active' : ''; ?>">
                 <i class="fas fa-sitemap"></i> Departments (14)
             </a>
@@ -107,7 +139,7 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 <i class="fas fa-file-alt"></i> Dynamic Pages
             </a>
             <a href="manage_banners.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_banners.php' ? 'active' : ''; ?>">
-                <i class="fas fa-images"></i> Hero Banners
+                <i class="fas fa-images"></i> Page Banners
             </a>
             <a href="manage_blogs.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_blogs.php' ? 'active' : ''; ?>">
                 <i class="fas fa-newspaper"></i> Blogs &amp; Articles
@@ -115,6 +147,9 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
             <a href="manage_news.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_news.php' ? 'active' : ''; ?>">
                 <i class="fas fa-bullhorn"></i> News &amp; Notices
             </a>
+
+            <!-- ADMISSIONS & SETTINGS -->
+            <div class="sidebar-heading">Portal System</div>
             <?php 
             try {
                 $dbConn = getDBConnection();
@@ -134,12 +169,12 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 <i class="fas fa-photo-video"></i> Media Library
             </a>
             <a href="manage_settings.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_settings.php' ? 'active' : ''; ?>">
-                <i class="fas fa-cog"></i> Site Settings
+                <i class="fas fa-cog"></i> Global Settings
             </a>
             <a href="<?php echo BASE_URL; ?>" target="_blank" class="sidebar-nav-link">
                 <i class="fas fa-external-link-alt"></i> Live Website
             </a>
-            <a href="logout.php" class="sidebar-nav-link text-danger mt-4">
+            <a href="logout.php" class="sidebar-nav-link text-danger mt-3">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
         </nav>
@@ -148,19 +183,24 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
     <!-- MAIN CONTENT -->
     <main class="admin-main flex-fill">
         <div class="admin-topbar">
-            <div>
-                <h4 class="fw-bold mb-0 text-navy">Welcome, <?php echo sanitize($_SESSION['admin_user'] ?? 'Admin'); ?></h4>
-                <small class="text-muted">Manage university content, courses, admissions &amp; settings dynamically.</small>
+            <div class="d-flex align-items-center gap-3">
+                <button class="admin-sidebar-toggle-btn" id="adminSidebarToggle" aria-label="Open Navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div>
+                    <h4 class="fw-bold mb-0 text-navy">Welcome, <?php echo sanitize($_SESSION['admin_user'] ?? 'Admin'); ?></h4>
+                    <small class="text-muted">Manage university content, courses, admissions &amp; settings dynamically.</small>
+                </div>
             </div>
-            <div class="d-flex gap-2">
-                <a href="<?php echo BASE_URL; ?>" target="_blank" class="btn btn-sm btn-danger px-3">
-                    <i class="fas fa-globe me-1"></i> View Live Site
+            <div class="d-flex align-items-center gap-2">
+                <a href="<?php echo BASE_URL; ?>" target="_blank" class="btn btn-sm btn-danger px-2 px-md-3">
+                    <i class="fas fa-globe me-1"></i> <span class="d-none d-sm-inline">View Live Site</span>
                 </a>
-                <a href="logout.php" class="btn btn-sm btn-outline-secondary px-3">
-                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                <a href="logout.php" class="btn btn-sm btn-outline-secondary px-2 px-md-3">
+                    <i class="fas fa-sign-out-alt me-1"></i> <span class="d-none d-sm-inline">Logout</span>
                 </a>
             </div>
         </div>
 
-        <div class="p-4">
+        <div class="p-3 p-md-4">
             <?php displayFlashMsg(); ?>

@@ -33,17 +33,45 @@ if (!$article) {
     exit;
 }
 
-$pageTitle = $article['title'] . " - SRK University Bhopal";
+$pageTitle = sanitize($article['title']) . " | SRKU Blog & Articles";
+$pageDesc = sanitize($article['short_description'] ?? substr(strip_tags($article['content']), 0, 160));
+$pageKeywords = sanitize($article['title']) . ", SRKU Article, University Blog, " . sanitize($article['category'] ?? 'Campus Life');
+$pageImage = !empty($article['image_url']) ? (strpos($article['image_url'], 'http') === 0 ? $article['image_url'] : BASE_URL . $article['image_url']) : null;
 $activeNav = "blogs";
 require_once __DIR__ . '/includes/header.php';
+?>
 
+<!-- Schema.org BlogPosting Structured Data for Google News, Search & AI Engine Citations -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": <?php echo json_encode($article['title']); ?>,
+  "description": <?php echo json_encode($pageDesc); ?>,
+  "image": <?php echo json_encode($pageImage ?: BASE_URL . 'assets/uploads/2026/07/campus-1.webp'); ?>,
+  "datePublished": <?php echo json_encode(date('c', strtotime($article['publish_date'] ?? 'now'))); ?>,
+  "author": {
+    "@type": "Organization",
+    "name": <?php echo json_encode($article['author'] ?? 'SRKU Editorial Desk') ?>
+  },
+  "publisher": {
+    "@type": "CollegeOrUniversity",
+    "name": "Sarvepalli Radhakrishnan University",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://srku.edu.in/assets/uploads/2026/07/SRK-logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": <?php echo json_encode($currentUrl); ?>
+  }
+}
+</script>
+<?php
 // Fetch recent & related blogs
 $recentBlogs = getBlogs(null, 5);
 $relatedBlogs = getBlogs($article['category'], 4);
-
-$currentUrl = isset($_SERVER['HTTP_HOST']) 
-    ? ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . ($_SERVER['REQUEST_URI'] ?? ''))
-    : BASE_URL . 'blog-detail.php?slug=' . urlencode($slug);
 ?>
 
 <!-- Dynamic Banner Header -->

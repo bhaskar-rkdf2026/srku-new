@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Vision, Mission & Core Values - Sarvepalli Radhakrishnan University, Bhopal";
+$pageTitle = "Vision, Mission & Core Values | Sarvepalli Radhakrishnan University";
+$pageDesc = "Read the Vision, Mission and institutional values of Sarvepalli Radhakrishnan University (SRKU), Bhopal — fostering multidisciplinary academic excellence and ethical global leadership.";
+$pageKeywords = "SRKU Vision, SRKU Mission, Core Values, Sarvepalli Radhakrishnan University Goals, Higher Education Vision Bhopal";
 $activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
 ?>
