@@ -1,0 +1,1435 @@
+{
+    "manifest_version": "1.0.21",
+    "title": "Dyno - Fitness Gym Elementor Pro Template Kit",
+    "page_builder": "elementor",
+    "kit_version": "1.0.0",
+    "templates": [
+        {
+            "name": "Global Kit Styles",
+            "screenshot": "screenshots\/global-kit-styles.jpg",
+            "source": "templates\/global.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro",
+            "type": "section",
+            "category": "page",
+            "metadata": {
+                "template_type": "global-styles",
+                "include_in_zip": "1",
+                "elementor_pro_required": null,
+                "additional_template_information": [
+                    "These are the global theme styles configured through the Elementor Theme Styles area."
+                ]
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Home",
+            "screenshot": "screenshots\/home.jpg",
+            "source": "templates\/home.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/template-kit\/home\/",
+            "type": "section",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-home",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "About Us",
+            "screenshot": "screenshots\/about-us.jpg",
+            "source": "templates\/about-us.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/template-kit\/about-us\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Our Team",
+            "screenshot": "screenshots\/our-team.jpg",
+            "source": "templates\/our-team.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/template-kit\/our-team\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Services",
+            "screenshot": "screenshots\/services.jpg",
+            "source": "templates\/services.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/template-kit\/services\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Programs",
+            "screenshot": "screenshots\/programs.jpg",
+            "source": "templates\/programs.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/template-kit\/programs\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Portfolio",
+            "screenshot": "screenshots\/portfolio.jpg",
+            "source": "templates\/portfolio.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/template-kit\/portfolio\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Pricing",
+            "screenshot": "screenshots\/pricing.jpg",
+            "source": "templates\/pricing.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/template-kit\/pricing\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "FAQ",
+            "screenshot": "screenshots\/faq.jpg",
+            "source": "templates\/faq.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/template-kit\/faq\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Coming Soon",
+            "screenshot": "screenshots\/coming-soon.jpg",
+            "source": "templates\/coming-soon.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/template-kit\/coming-soon\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Contact",
+            "screenshot": "screenshots\/contact.jpg",
+            "source": "templates\/contact.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/template-kit\/contact\/",
+            "type": "section",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-contact",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Dyno Error 404",
+            "screenshot": "screenshots\/dyno-error-404.jpg",
+            "source": "templates\/dyno-error-404.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/?elementor_library=dyno-error-404",
+            "type": "error-404",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-404",
+                "include_in_zip": "1",
+                "elementor_pro_required": "1",
+                "elementor_library_type": "error-404",
+                "elementor_pro_conditions": [
+                    "include\/singular"
+                ],
+                "additional_template_information": [
+                    "This is a \"Error 404\" template for Elementor Pro.",
+                    "This template will display on: All Singular."
+                ]
+            },
+            "elementor_pro_required": true
+        },
+        {
+            "name": "Dyno Single Post",
+            "screenshot": "screenshots\/dyno-single-post.jpg",
+            "source": "templates\/dyno-single-post.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/?elementor_library=dyno-single-post",
+            "type": "single-post",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-post",
+                "include_in_zip": "1",
+                "elementor_pro_required": "1",
+                "elementor_library_type": "single-post",
+                "elementor_pro_conditions": [
+                    "include\/singular\/post"
+                ],
+                "additional_template_information": [
+                    "This is a \"Single Post\" template for Elementor Pro.",
+                    "This template will display on: Posts."
+                ]
+            },
+            "elementor_pro_required": true
+        },
+        {
+            "name": "Dyno Archives",
+            "screenshot": "screenshots\/dyno-archives.jpg",
+            "source": "templates\/dyno-archives.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/?elementor_library=dyno-archives",
+            "type": "archive",
+            "category": "page",
+            "metadata": {
+                "template_type": "archive-blog",
+                "include_in_zip": "1",
+                "elementor_pro_required": "1",
+                "elementor_library_type": "archive",
+                "elementor_pro_conditions": [
+                    "include\/archive"
+                ],
+                "additional_template_information": [
+                    "This is a \"Archive\" template for Elementor Pro.",
+                    "This template will display on: All Archives."
+                ]
+            },
+            "elementor_pro_required": true
+        },
+        {
+            "name": "Dyno Footer",
+            "screenshot": "screenshots\/dyno-footer.jpg",
+            "source": "templates\/dyno-footer.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/?elementor_library=dyno-footer",
+            "type": "footer",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-footer",
+                "include_in_zip": "1",
+                "elementor_pro_required": "1",
+                "elementor_library_type": "footer",
+                "elementor_pro_conditions": [
+                    "include\/general"
+                ],
+                "additional_template_information": [
+                    "This is a \"Footer\" template for Elementor Pro.",
+                    "This template will display on: Entire Site."
+                ]
+            },
+            "elementor_pro_required": true
+        },
+        {
+            "name": "Dyno Header",
+            "screenshot": "screenshots\/dyno-header.jpg",
+            "source": "templates\/dyno-header.json",
+            "preview_url": "https:\/\/dkkit.rometheme.pro\/dyno\/?elementor_library=dyno-header",
+            "type": "header",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-header",
+                "include_in_zip": "1",
+                "elementor_pro_required": "1",
+                "elementor_library_type": "header",
+                "elementor_pro_conditions": [
+                    "include\/general"
+                ],
+                "additional_template_information": [
+                    "This is a \"Header\" template for Elementor Pro.",
+                    "This template will display on: Entire Site."
+                ]
+            },
+            "elementor_pro_required": true
+        }
+    ],
+    "required_plugins": [
+        {
+            "name": "Elementor Pro",
+            "version": "3.7.1",
+            "file": "elementor-pro\/elementor-pro.php",
+            "author": "Elementor.com"
+        },
+        {
+            "name": "Elementor",
+            "version": "3.13.4",
+            "file": "elementor\/elementor.php",
+            "author": "Elementor.com"
+        }
+    ],
+    "images": [
+        {
+            "filename": "fit-confident-sportswoman-with-barbell-in-gym-5KEXWQYa.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/fit-confident-sportswoman-with-barbell-in-gym-5KEXWQYa-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                }
+            ],
+            "filesize": 135741,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "young-athlete-doing-battle-ropes-exercise-at-the-c-TWN7QWLa.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/young-athlete-doing-battle-ropes-exercise-at-the-c-TWN7QWLa-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                }
+            ],
+            "filesize": 141671,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "fit-young-man-lifting-barbells-working-out-in-a-gy-JUTEAYL.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/fit-young-man-lifting-barbells-working-out-in-a-gy-JUTEAYL-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                }
+            ],
+            "filesize": 232716,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "determined-sportswoman-doing-weightlifting-workout-RPP28VBa.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/determined-sportswoman-doing-weightlifting-workout-RPP28VBa-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                }
+            ],
+            "filesize": 164782,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "strong-couch-training-woman-in-modern-gym-Y82BG9Q.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/strong-couch-training-woman-in-modern-gym-Y82BG9Q.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/programs.json",
+                    "name": "Programs"
+                },
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                }
+            ],
+            "filesize": 205413,
+            "dimensions": [
+                600,
+                700
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "muscular-instructor-helping-sportswoman-with-barbe-9EG7VZVa.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/muscular-instructor-helping-sportswoman-with-barbe-9EG7VZVa.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/programs.json",
+                    "name": "Programs"
+                }
+            ],
+            "filesize": 134815,
+            "dimensions": [
+                600,
+                800
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "couple-run-on-treadmills-in-the-gym-VF5JRZF.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/couple-run-on-treadmills-in-the-gym-VF5JRZF.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/programs.json",
+                    "name": "Programs"
+                },
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                }
+            ],
+            "filesize": 173380,
+            "dimensions": [
+                600,
+                800
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "shot-of-fitness-group-having-workout-session-at-gy-W9SNABH.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/shot-of-fitness-group-having-workout-session-at-gy-W9SNABH.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/programs.json",
+                    "name": "Programs"
+                },
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                }
+            ],
+            "filesize": 156388,
+            "dimensions": [
+                600,
+                800
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "active-lifestyle-beautiful-young-woman-with-slim-b-CAUEPKB.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/active-lifestyle-beautiful-young-woman-with-slim-b-CAUEPKB.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/programs.json",
+                    "name": "Programs"
+                },
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                }
+            ],
+            "filesize": 138055,
+            "dimensions": [
+                600,
+                800
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "Overlay-1.png",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/Overlay-1-800x533.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                },
+                {
+                    "source": "templates\/pricing.json",
+                    "name": "Pricing"
+                }
+            ],
+            "filesize": 118186,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "Check.svg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/Check.svg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                },
+                {
+                    "source": "templates\/pricing.json",
+                    "name": "Pricing"
+                }
+            ],
+            "filesize": 7534,
+            "dimensions": [
+                300,
+                300
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "sporty-woman-with-gadgets-in-nature-ZMCWQFM.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/sporty-woman-with-gadgets-in-nature-ZMCWQFM.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                }
+            ],
+            "filesize": 89298,
+            "dimensions": [
+                600,
+                600
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "determined-sportswoman-working-out-with-medicine-b-MCQVKH9.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/determined-sportswoman-working-out-with-medicine-b-MCQVKH9.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                }
+            ],
+            "filesize": 84767,
+            "dimensions": [
+                600,
+                600
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "young-female-athlete-training-in-a-gym-using-sport-57RPNJF.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/young-female-athlete-training-in-a-gym-using-sport-57RPNJF-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                }
+            ],
+            "filesize": 55386,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "Play-Video-Icon.svg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/Play-Video-Icon.svg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 756,
+            "dimensions": [
+                600,
+                600
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "Personal-Training.svg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/Personal-Training.svg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 33017,
+            "dimensions": [
+                300,
+                300
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "Group-Fitness.svg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/Group-Fitness.svg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 38136,
+            "dimensions": [
+                300,
+                300
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "Nutritions.svg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/Nutritions.svg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 45537,
+            "dimensions": [
+                300,
+                300
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "Strength.svg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/Strength.svg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 49490,
+            "dimensions": [
+                300,
+                300
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "Training.svg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/Training.svg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 53246,
+            "dimensions": [
+                300,
+                300
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "Specific.svg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/Specific.svg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 59796,
+            "dimensions": [
+                300,
+                300
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "mind-body-Wellness.svg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/mind-body-Wellness.svg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 64443,
+            "dimensions": [
+                300,
+                300
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "Body-Goals.svg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/Body-Goals.svg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 69743,
+            "dimensions": [
+                300,
+                300
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "bodybuilder-doing-exercises-with-dumbbells-in-a-da-N8HBSAZ.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/bodybuilder-doing-exercises-with-dumbbells-in-a-da-N8HBSAZ.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 189362,
+            "dimensions": [
+                600,
+                800
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "charming-woman-standing-and-leaning-on-gym-equipme-Q6GTZVZ.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/charming-woman-standing-and-leaning-on-gym-equipme-Q6GTZVZ.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 131843,
+            "dimensions": [
+                600,
+                800
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "modern-empty-crossfit-gym-or-fitness-studio-VCVGBMZa.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/modern-empty-crossfit-gym-or-fitness-studio-VCVGBMZa-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 205850,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "portrait-of-young-beautiful-asian-woman-in-sportsw-NNN83GL.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/portrait-of-young-beautiful-asian-woman-in-sportsw-NNN83GL.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 107779,
+            "dimensions": [
+                600,
+                600
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "smiling-young-woman-exercising-with-barbell-indoor-P6ANDY8.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/smiling-young-woman-exercising-with-barbell-indoor-P6ANDY8.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 83677,
+            "dimensions": [
+                600,
+                600
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "determined-handsome-young-male-working-out-in-gym-2S9EHYN.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/determined-handsome-young-male-working-out-in-gym-2S9EHYN.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 107651,
+            "dimensions": [
+                600,
+                600
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "Quotes-Icon.png",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/Quotes-Icon.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 2654,
+            "dimensions": [
+                300,
+                300
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "young-athlete-doing-battle-ropes-exercise-at-the-c-TWN7QWL.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/young-athlete-doing-battle-ropes-exercise-at-the-c-TWN7QWL.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/pricing.json",
+                    "name": "Pricing"
+                }
+            ],
+            "filesize": 146162,
+            "dimensions": [
+                600,
+                800
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "Overlay-2.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/Overlay-2-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/programs.json",
+                    "name": "Programs"
+                },
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                },
+                {
+                    "source": "templates\/pricing.json",
+                    "name": "Pricing"
+                },
+                {
+                    "source": "templates\/faq.json",
+                    "name": "FAQ"
+                }
+            ],
+            "filesize": 209722,
+            "dimensions": [
+                1536,
+                1024
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "young-beautiful-woman-in-sportswear-in-a-gym-PQ9XHJSa.png",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/young-beautiful-woman-in-sportswear-in-a-gym-PQ9XHJSa.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/programs.json",
+                    "name": "Programs"
+                },
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                },
+                {
+                    "source": "templates\/pricing.json",
+                    "name": "Pricing"
+                },
+                {
+                    "source": "templates\/faq.json",
+                    "name": "FAQ"
+                }
+            ],
+            "filesize": 133889,
+            "dimensions": [
+                600,
+                800
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "team-of-young-people-training-in-gym-club-Y55F3MN.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/team-of-young-people-training-in-gym-club-Y55F3MN-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                },
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                }
+            ],
+            "filesize": 175887,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "portrait-of-muscular-sporty-smiling-man-in-the-gym-SKGJ3DM.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/portrait-of-muscular-sporty-smiling-man-in-the-gym-SKGJ3DM.jpg",
+            "templates": [
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 137260,
+            "dimensions": [
+                600,
+                800
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "portrait-of-beautiful-female-personal-coach-in-gym-4Y6HHKK.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/portrait-of-beautiful-female-personal-coach-in-gym-4Y6HHKK.jpg",
+            "templates": [
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 143769,
+            "dimensions": [
+                600,
+                800
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "weightlifter-working-out-with-the-gym-equipment-NTYZ4AC.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/weightlifter-working-out-with-the-gym-equipment-NTYZ4AC-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                }
+            ],
+            "filesize": 206128,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "man-doing-pushups-in-the-gym-JVWYDWS.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/man-doing-pushups-in-the-gym-JVWYDWS-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/programs.json",
+                    "name": "Programs"
+                },
+                {
+                    "source": "templates\/dyno-error-404.json",
+                    "name": "Dyno Error 404"
+                }
+            ],
+            "filesize": 83164,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "fit-young-man-looking-concentrated-while-exercisin-K847GV7.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/fit-young-man-looking-concentrated-while-exercisin-K847GV7.jpg",
+            "templates": [
+                {
+                    "source": "templates\/programs.json",
+                    "name": "Programs"
+                }
+            ],
+            "filesize": 149266,
+            "dimensions": [
+                600,
+                800
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "muscular-shirtless-male-trainer-helping-young-spor-5HLL8UT.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/muscular-shirtless-male-trainer-helping-young-spor-5HLL8UT.jpg",
+            "templates": [
+                {
+                    "source": "templates\/programs.json",
+                    "name": "Programs"
+                }
+            ],
+            "filesize": 140919,
+            "dimensions": [
+                600,
+                800
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "taking-a-break-exhausted-mature-man-in-sportswear-MTUYX67.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/taking-a-break-exhausted-mature-man-in-sportswear-MTUYX67.jpg",
+            "templates": [
+                {
+                    "source": "templates\/programs.json",
+                    "name": "Programs"
+                }
+            ],
+            "filesize": 62732,
+            "dimensions": [
+                600,
+                800
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "fitness-woman-doing-deep-squat-exercise-on-studio-BX3K9WL.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/fitness-woman-doing-deep-squat-exercise-on-studio-BX3K9WL-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                }
+            ],
+            "filesize": 198704,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "sportswoman-exercising-with-kettlebell-on-sports-g-DLWZYSR.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/sportswoman-exercising-with-kettlebell-on-sports-g-DLWZYSR-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                }
+            ],
+            "filesize": 69939,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "cross-training-in-gym-NPBRL58.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/cross-training-in-gym-NPBRL58-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                },
+                {
+                    "source": "templates\/contact.json",
+                    "name": "Contact"
+                }
+            ],
+            "filesize": 178974,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "serious-young-sportswoman-doing-barbell-deadlift-i-LF95TABa.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/serious-young-sportswoman-doing-barbell-deadlift-i-LF95TABa-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/portfolio.json",
+                    "name": "Portfolio"
+                },
+                {
+                    "source": "templates\/faq.json",
+                    "name": "FAQ"
+                }
+            ],
+            "filesize": 200348,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        },
+        {
+            "filename": "woman-working-out-bodybuilder-with-coaching-assist-SGL67JK.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/woman-working-out-bodybuilder-with-coaching-assist-SGL67JK-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/pricing.json",
+                    "name": "Pricing"
+                }
+            ],
+            "filesize": 103536,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "concentrated-young-woman-exercising-with-battle-ro-KMG5M5C.jpg",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/concentrated-young-woman-exercising-with-battle-ro-KMG5M5C-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/coming-soon.json",
+                    "name": "Coming Soon"
+                }
+            ],
+            "filesize": 159803,
+            "dimensions": [
+                1920,
+                1280
+            ],
+            "image_source": "envato_elements",
+            "person_or_place": "yes",
+            "image_urls": "https:\/\/elements.envato.com\/collections\/KMF8AZDPBW?utm_source=my_collection&utm_medium=link&utm_campaign=share_collection"
+        },
+        {
+            "filename": "Dyno-Logo-1.png",
+            "thumbnail_url": "http:\/\/dkkit.rometheme.pro\/dyno\/wp-content\/uploads\/sites\/77\/2023\/06\/Dyno-Logo-1.png",
+            "templates": [
+                {
+                    "source": "templates\/dyno-footer.json",
+                    "name": "Dyno Footer"
+                },
+                {
+                    "source": "templates\/dyno-header.json",
+                    "name": "Dyno Header"
+                }
+            ],
+            "filesize": 7297,
+            "dimensions": [
+                300,
+                100
+            ],
+            "image_source": "self_created",
+            "person_or_place": "no",
+            "image_urls": ""
+        }
+    ]
+}
