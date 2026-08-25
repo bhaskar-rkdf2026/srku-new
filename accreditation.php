@@ -1,4 +1,4 @@
-?<?php
+<?php
 $pageTitle = "Accreditation & Regulatory Recognition - Sarvepalli Radhakrishnan University, Bhopal";
 $activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
@@ -7,16 +7,21 @@ require_once __DIR__ . '/includes/header.php';
 <!-- ═══════════════════════════════════════════════════════
      HERO BANNER
 ═══════════════════════════════════════════════════════ -->
-<section class="position-relative text-white py-5" style="background: linear-gradient(100deg, rgba(91,22,20,0.85) 0%, rgba(15,30,59,0.78) 100%), url('<?php echo BASE_URL; ?>assets/uploads/2026/07/campus-1.webp') center/cover no-repeat;">
-    <div class="container-xl py-4 position-relative z-2">
+<section class="about-hero-v2">
+    <div class="about-hero-v2__blob about-hero-v2__blob--1"></div>
+    <div class="about-hero-v2__blob about-hero-v2__blob--2"></div>
+    <div class="about-hero-v2__blob about-hero-v2__blob--3"></div>
+    <div class="about-hero-v2__grid"></div>
+    <div class="container-xl about-hero-v2__inner">
         <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb mb-0 small">
                 <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page" style="color: rgba(255,255,255,0.85);">Accreditation</li>
             </ol>
         </nav>
-        <h1 class="fw-bold display-6 mb-3" style="max-width:800px; text-shadow: 0 2px 12px rgba(0,0,0,0.45);">Our Accreditations &amp; Regulatory Recognition &ndash; Guaranteeing Quality Excellence</h1>
-        <p class="mb-4" style="max-width:760px; line-height:1.8; color: rgba(255,255,255,0.9); text-shadow: 0 1px 6px rgba(0,0,0,0.4);">
+        <span class="about-hero-v2__eyebrow"><i class="fas fa-star"></i> Est. 1995 &middot; RKDF Education Society</span>
+        <h1 class="about-hero-v2__title" style="max-width:800px;">Our <span>Accreditations &amp; Regulatory Recognition</span> &ndash; Guaranteeing Quality Excellence</h1>
+        <p class="about-hero-v2__desc" style="max-width:760px;">
             SRK University is proud to hold comprehensive recognition and accreditation from India's leading regulatory bodies. These approvals reflect our unwavering commitment to academic excellence, quality assurance, and ethical practice across all our programmes.
         </p>
         <div class="d-flex flex-wrap gap-3">
