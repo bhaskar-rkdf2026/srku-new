@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Contact Us & Admission Helpline - SRK University Bhopal";
+$pageTitle = "Contact Us & Campus Helplines | Sarvepalli Radhakrishnan University Bhopal";
+$pageDesc = "Get in touch with Sarvepalli Radhakrishnan University (SRKU) Bhopal: Admissions helpline (7024144981), Examination support (07554911204), and campus location on NH-12 Hoshangabad Road, Misrod.";
+$pageKeywords = "Contact SRKU, SRK University Phone Number, Admission Helpline Bhopal, SRKU Address, Misrod Bhopal University";
 $activeNav = "contact";
 require_once __DIR__ . '/includes/header.php';
 

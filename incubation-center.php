@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "SRKU Incubation Centre & Startups - Sarvepalli Radhakrishnan University, Bhopal";
+$pageTitle = "Incubation & Startup Centre | Student Entrepreneurship & Patents | SRKU Bhopal";
+$pageDesc = "SRKU Incubation Centre supports student startups, technology prototypes, patent filing, seed mentorship, and industry commercialization at Sarvepalli Radhakrishnan University.";
+$pageKeywords = "SRKU Incubation Centre, University Startups, Student Entrepreneurship Bhopal, Innovation Hub MP";
 $activeNav = "research";
 require_once __DIR__ . '/includes/header.php';
 ?>

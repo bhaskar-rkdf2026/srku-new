@@ -1,34 +1,34 @@
 <?php
-$pageTitle = "Constituent Units - Sarvepalli Radhakrishnan University, Bhopal";
+$pageTitle = "Constituent Colleges & Institutes | SRK University Bhopal";
+$pageDesc = "Explore the 14+ constituent colleges and specialized institutes of Sarvepalli Radhakrishnan University (SRKU) Bhopal spanning Engineering, Medicine, Pharmacy, Nursing, Law & Agriculture.";
+$pageKeywords = "SRKU Constituent Units, RKDF Medical College, RKDF Institute of Science and Technology, Sri Sai Pharmacy, SRKU Colleges";
 $activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
 
-$units = [
-    ['title' => 'RKDF IST', 'subtitle' => 'RKDF INSTITUTE OF SCIENCE & TECHNOLOGY', 'img' => 'RKDF-IST.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-institute-of-science-technology', 'external' => false],
-    ['title' => 'RKDF MEDICAL COLLEGE', 'subtitle' => 'RKDF MEDICAL COLLEGE, HOSPITAL & RESEARCH CENTER', 'img' => 'RKDF-MEDICAL-COLLEGE.webp', 'href' => 'https://rkdfmedicalcollege.org/', 'external' => true],
-    ['title' => 'SRK COLLEGE OF AYURVEDA', 'subtitle' => 'SARVEPALLI RADHAKRISHNAN COLLEGE OF AYURVEDA HOSPITAL & RESEARCH CENTER', 'img' => 'SRK-COLLEGE-OF-AYURVEDA.webp', 'href' => 'http://www.srkcahrc.in/', 'external' => true],
-    ['title' => 'RKDF HOMEOPATHIC', 'subtitle' => 'RKDF HOMEOPATHIC MEDICAL COLLEGE HOSPITAL & RESEARCH CENTER', 'img' => 'RKDF-HOMOEOPATHIC.webp', 'href' => 'http://www.rkdfhmc.in/', 'external' => true],
-    ['title' => 'RKDF COP', 'subtitle' => 'RKDF COLLEGE OF PHARMACY', 'img' => 'RKDF-COP.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-college-of-pharmacy', 'external' => false],
-    ['title' => 'RKDF POLYTECHNIC PHARMACY', 'subtitle' => 'RKDF POLYTECHNIC PHARMACY', 'img' => 'RKDF-POLYTECHNIC-PHARMACY.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-polytechnic-pharmacy', 'external' => false],
-    ['title' => 'DR. APJ. COP', 'subtitle' => 'DR. APJ. ABDUL KALAM COLLEGE OF PHARMACY', 'img' => 'DR.-APJ.-COP.webp', 'href' => BASE_URL . 'department-detail.php?slug=dr-apj-abdul-kalam-college-of-pharmacy', 'external' => false],
-    ['title' => 'SRK COP', 'subtitle' => 'SARVEPALLI RADHAKRISHNAN COLLEGE OF PHARMACY', 'img' => 'SRK-COP.webp', 'href' => BASE_URL . 'department-detail.php?slug=sarvepalli-radhakrishnan-college-of-pharmacy', 'external' => false],
-    ['title' => 'SS COP', 'subtitle' => 'SRI SAI COLLEGE OF PHARMACY', 'img' => 'SS-COP.webp', 'href' => BASE_URL . 'department-detail.php?slug=sri-sai-college-of-pharmacy', 'external' => false],
-    ['title' => 'SRK IPS', 'subtitle' => 'SARVEPALLI RADHAKRISHNAN INSTITUTE OF PHARMACEUTICAL SCIENCES', 'img' => 'SRK-IPS.webp', 'href' => BASE_URL . 'department-detail.php?slug=sarvepalli-radhakrishnan-institute-of-pharmaceutical-science', 'external' => false],
-    ['title' => 'R.N. KAPOOR MEMORIAL PHARMACY', 'subtitle' => 'R. N. KAPOOR MEMORIAL INSTITUTE OF PHARMACEUTICAL SCIENCES', 'img' => 'R.N.-KAPOOR-MEMORIAL-PHARMACY.webp', 'href' => BASE_URL . 'department-detail.php?slug=r-n-kapoor-memorial-institute-of-pharmaceutical-science', 'external' => false],
-    ['title' => 'SARVEPALLI RADHAKRISHNAN COLLEGE OF ALLIED & HEALTHCARE SCIENCES', 'subtitle' => 'SARVEPALLI RADHAKRISHNAN COLLEGE OF ALLIED & HEALTHCARE SCIENCES', 'img' => 'SARVEPALLI-RADHAKRISHANAN-COLLEGE-OF-ALLIED-HEALTHCARE-SCIENCES.webp', 'href' => BASE_URL . 'department-detail.php?slug=department-of-allied-health-care-sciences', 'external' => false],
-    ['title' => 'RKDF DENTAL COLLEGE', 'subtitle' => 'RKDF DENTAL COLLEGE & RESEARCH CENTRE', 'img' => '012-scaled.webp', 'href' => 'http://rkdfdentalcollege.in/', 'external' => true],
-    ['title' => 'Faculty of Agriculture', 'subtitle' => 'Faculty of Agriculture', 'img' => '011-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=faculty-of-agriculture', 'external' => false],
-    ['title' => 'NURSING COLLEGE', 'subtitle' => 'RKDF COLLEGE OF NURSING', 'img' => '010-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-college-of-nursing', 'external' => false],
-    ['title' => 'RKDF IBM', 'subtitle' => 'RKDF INSTITUTE OF BUSINESS MANAGEMENT', 'img' => '003-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-institute-of-business-management', 'external' => false],
-    ['title' => 'RKDF IM', 'subtitle' => 'RKDF INSTITUTE OF MANAGEMENT', 'img' => '009-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-institute-of-management', 'external' => false],
-    ['title' => 'RKDF IST MCA', 'subtitle' => 'RKDF INSTITUTE OF SCIENCE & TECHNOLOGY MCA', 'img' => 'ChatGPTImageAug5202611_07_54A-1.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-institute-science-technology-mca', 'external' => false, 'dir' => '2026/08'],
-    ['title' => 'SRK LAW COLLEGE', 'subtitle' => 'SARVEPALLI RADHAKRISHNAN COLLEGE OF LAW', 'img' => '006-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=sarvepalli-radhakrishnan-college-of-law', 'external' => false],
-    ['title' => 'Faculty of Allied Sciences', 'subtitle' => '', 'img' => '005-scaled.webp', 'href' => BASE_URL . 'departments.php', 'external' => false],
-    ['title' => 'Faculty of Commerce', 'subtitle' => '', 'img' => 'ChatGPTImageAug5202610_50_16A.jpg', 'href' => BASE_URL . 'departments.php', 'external' => false, 'dir' => '2026/08'],
-    ['title' => 'Faculty of Allied Arts', 'subtitle' => '', 'img' => '002-scaled.webp', 'href' => BASE_URL . 'departments.php', 'external' => false],
-    ['title' => 'Faculty of Computer Application', 'subtitle' => '', 'img' => '008-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=faculty-of-computer-application', 'external' => false],
-    ['title' => 'Faculty of Library & Information Science', 'subtitle' => '', 'img' => '001-scaled.webp', 'href' => BASE_URL . 'departments.php', 'external' => false],
-];
+$dbDepartments = getDepartments(true);
+$units = [];
+
+if (!empty($dbDepartments)) {
+    foreach ($dbDepartments as $d) {
+        $img = !empty($d['image']) ? $d['image'] : 'assets/uploads/2026/07/001.webp';
+        $units[] = [
+            'title' => $d['name'],
+            'subtitle' => !empty($d['category']) ? $d['category'] : 'Constituent Institute',
+            'img_src' => (strpos($img, 'http') === 0) ? $img : BASE_URL . $img,
+            'href' => BASE_URL . 'department-detail.php?slug=' . urlencode($d['slug']),
+            'external' => false
+        ];
+    }
+} else {
+    $units = [
+        ['title' => 'RKDF Institute of Science & Technology', 'subtitle' => 'Engineering & Technology', 'img_src' => BASE_URL . 'assets/uploads/2026/07/001.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-institute-of-science-technology', 'external' => false],
+        ['title' => 'RKDF Medical College, Hospital & Research Center', 'subtitle' => 'Faculty of Medicine', 'img_src' => BASE_URL . 'assets/uploads/2026/07/RKDF-MEDICAL-COLLEGE.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-medical-college', 'external' => false],
+        ['title' => 'SRK College of Ayurveda Hospital & Research Center', 'subtitle' => 'Ayurvedic Medicine', 'img_src' => BASE_URL . 'assets/uploads/2026/07/SRK-COLLEGE-OF-AYURVEDA.webp', 'href' => BASE_URL . 'department-detail.php?slug=sarvepalli-radhakrishnan-college-of-ayurveda', 'external' => false],
+        ['title' => 'RKDF Homoeopathic Medical College Hospital', 'subtitle' => 'Homoeopathy Medicine', 'img_src' => BASE_URL . 'assets/uploads/2026/07/RKDF-HOMOEOPATHIC.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-homoeopathic-medical-college', 'external' => false],
+        ['title' => 'RKDF College of Pharmacy', 'subtitle' => 'Pharmaceutical Sciences', 'img_src' => BASE_URL . 'assets/uploads/2026/07/SRK-COP.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-college-of-pharmacy', 'external' => false],
+        ['title' => 'RKDF Dental College & Research Centre', 'subtitle' => 'Dental Sciences', 'img_src' => BASE_URL . 'assets/uploads/2026/07/012-scaled.webp', 'href' => BASE_URL . 'department-detail.php?slug=rkdf-dental-college', 'external' => false]
+    ];
+}
 ?>
 
 <!-- ═══════════════════════════════════════════════════════
@@ -97,7 +97,7 @@ $units = [
             <?php foreach ($units as $u): ?>
                 <div class="col">
                     <a href="<?php echo sanitize($u['href']); ?>"<?php echo $u['external'] ? ' target="_blank" rel="noopener"' : ''; ?> class="unit-card reveal">
-                        <img src="<?php echo BASE_URL . 'assets/uploads/' . ($u['dir'] ?? '2026/07') . '/' . rawurlencode($u['img']); ?>"
+                        <img src="<?php echo $u['img_src']; ?>"
                              onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                              class="unit-card__img" alt="<?php echo sanitize($u['title']); ?>">
                         <span class="unit-card__scrim"></span>

@@ -640,6 +640,10 @@ body {
     flex: 1;
 }
 
+.hero-ticker-track:hover .hero-ticker-content {
+    animation-play-state: paused;
+}
+
 .hero-ticker-content {
     display: inline-block;
     white-space: nowrap;
@@ -648,6 +652,22 @@ body {
     font-weight: 500;
     color: #e2e8f0;
     padding-left: 30px;
+}
+
+.ticker-news-link {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+}
+
+.ticker-news-link:hover {
+    color: var(--srku-gold) !important;
+    text-decoration: underline !important;
+}
+
+.ticker-separator {
+    color: var(--srku-gold);
+    opacity: 0.75;
 }
 
 @keyframes ticker-scroll {
@@ -2867,6 +2887,24 @@ body {
     color: #fff;
 }
 
+.footer-contact-block div {
+    margin-bottom: 4px;
+}
+
+.footer-contact-block a {
+    display: inline !important;
+    color: #cbd5e1;
+    margin-bottom: 0 !important;
+    transition: var(--transition);
+}
+
+.footer-contact-block a:hover,
+.hover-gold:hover {
+    color: var(--srku-gold) !important;
+    text-decoration: underline !important;
+    padding-left: 0 !important;
+}
+
 .footer-bottom {
     background: #0f0f29;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -2879,17 +2917,56 @@ body {
 ══════════════════════════════════════ */
 .admin-sidebar {
     width: 260px;
-    min-height: 100vh;
+    height: 100vh;
+    max-height: 100vh;
     background: linear-gradient(180deg, #18183d 0%, #232356 60%, #0e1f45 100%);
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 1000;
+    bottom: 0;
+    z-index: 1050;
     display: flex;
     flex-direction: column;
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
-    overflow-y: auto;
-    padding-bottom: 24px;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+    transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.admin-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.admin-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.admin-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(3px);
+    z-index: 1040;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+}
+
+.admin-sidebar-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .admin-main {
@@ -2900,12 +2977,36 @@ body {
     background: #f8fafc;
     overflow-x: hidden;
     box-sizing: border-box;
+    transition: margin-left 0.32s ease, width 0.32s ease;
 }
 
 .admin-sidebar .sidebar-logo {
     padding: 22px 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(0, 0, 0, 0.15);
+    position: relative;
+    flex-shrink: 0;
+}
+
+.admin-sidebar-close {
+    display: none;
+    position: absolute;
+    top: 18px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: background 0.2s ease;
+}
+.admin-sidebar-close:hover {
+    background: rgba(236, 51, 55, 0.6);
 }
 
 .admin-sidebar .sidebar-logo .brand-badge {
@@ -2976,14 +3077,102 @@ body {
     opacity: 1;
 }
 
+/* Sidebar Group Headings */
+.sidebar-heading {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 14px 16px 4px;
+}
+
+/* Submenu Dropdown & Indented Links */
+.sidebar-submenu {
+    padding-left: 14px;
+    margin: 2px 0 6px 20px;
+    border-left: 2px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sidebar-sub-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.sidebar-sub-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(3px);
+}
+
+.sidebar-sub-link.active {
+    color: #ffd700 !important;
+    background: rgba(255, 215, 0, 0.12);
+    font-weight: 700;
+}
+
+.sidebar-sub-link i {
+    font-size: 0.72rem;
+    width: 14px;
+    text-align: center;
+    opacity: 0.85;
+}
+
+.sidebar-dropdown-toggle::after {
+    content: '\f107';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-left: auto;
+    font-size: 0.8rem;
+    transition: transform 0.25s ease;
+}
+
+.sidebar-dropdown-toggle[aria-expanded="true"]::after {
+    transform: rotate(180deg);
+}
+
 .admin-topbar {
     background: #ffffff;
-    padding: 16px 28px;
+    padding: 14px 24px;
     border-bottom: 1px solid #e2e8f0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+}
+
+.admin-sidebar-toggle-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    color: #0e1f45;
+    font-size: 1.15rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+.admin-sidebar-toggle-btn:hover {
+    background: #e2e8f0;
+    color: #7a0b0d;
 }
 
 .admin-stat-card {
@@ -3076,12 +3265,45 @@ body {
         padding: 24px 18px !important;
     }
 
+    /* Admin Panel Responsive Drawer */
     .admin-sidebar {
-        width: 200px;
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 280px !important;
+        max-width: 85vw;
+        height: 100vh;
+        z-index: 10050 !important;
+        transform: translateX(-100%);
+    }
+
+    .admin-sidebar.show {
+        transform: translateX(0) !important;
+        box-shadow: 8px 0 32px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .admin-sidebar-close {
+        display: flex !important;
+    }
+
+    .admin-sidebar-toggle-btn {
+        display: inline-flex !important;
     }
 
     .admin-main {
-        margin-left: 200px;
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .admin-topbar {
+        padding: 12px 16px !important;
+        gap: 12px;
+    }
+
+    .admin-form-section {
+        padding: 18px 16px !important;
     }
 }
 
@@ -3094,14 +3316,21 @@ body {
         padding: 0 15px 60px !important;
     }
 
-    .admin-sidebar {
-        position: relative;
-        width: 100%;
-        min-height: auto;
+    .admin-main .p-4 {
+        padding: 16px 12px !important;
     }
 
-    .admin-main {
-        margin-left: 0;
+    .admin-topbar h4 {
+        font-size: 1.05rem !important;
+    }
+
+    .admin-topbar small {
+        display: none !important;
+    }
+    
+    .admin-form-section {
+        padding: 16px 12px !important;
+        margin-bottom: 16px;
     }
 }
 
@@ -3322,9 +3551,62 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════
-   4-ITEM STICKY FLOATING SIDE DOCK (Icon Only -> Slide Drawer on Hover)
+   CLEAN SLIDE-OUT QUICK ACTION SIDEBAR (Right Edge Flush)
 ═══════════════════════════════════════════════════════ */
-.sticky-side-container {
+/* ── Single-Row Category Filter Bar (No Wrap / No Cut) ── */
+.srku-filter-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 6px 2px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.srku-filter-row::-webkit-scrollbar {
+    display: none;
+}
+.srku-filter-btn {
+    white-space: nowrap !important;
+    flex-shrink: 0;
+    font-size: 0.86rem;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 30px;
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.srku-filter-btn.active {
+    background-color: var(--srku-red) !important;
+    color: #ffffff !important;
+    border: 1px solid var(--srku-red) !important;
+    box-shadow: 0 4px 12px rgba(122, 11, 13, 0.25);
+}
+.srku-filter-btn:not(.active) {
+    background-color: #f8f9fa;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+}
+.srku-filter-btn:not(.active):hover {
+    background-color: #ffffff;
+    color: var(--srku-red);
+    border-color: var(--srku-red);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.sticky-profile-sidebar {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 100px !important;
+    z-index: 30;
+}
+
+.srku-side-actions {
     position: fixed;
     right: 0;
     top: 50%;
@@ -3336,92 +3618,78 @@ body {
     align-items: flex-end;
 }
 
-.sticky-side-item {
-    position: relative;
-    display: flex;
+.side-action-tab {
+    display: inline-flex;
     align-items: center;
-    justify-content: flex-start;
-    text-decoration: none;
-    cursor: pointer;
+    text-decoration: none !important;
     border: none;
     outline: none;
+    cursor: pointer;
     padding: 0;
     background: transparent;
-}
-
-.sticky-side-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    height: 44px;
-    padding: 0 16px 0 8px;
-    border-radius: 24px 0 0 24px;
-    color: #ffffff !important;
-    text-decoration: none;
-    font-size: 0.84rem;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    box-shadow: -4px 4px 14px rgba(0, 0, 0, 0.2);
     transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
     transform: translateX(calc(100% - 46px));
+    height: 44px;
+    border-radius: 24px 0 0 24px;
+    color: #ffffff !important;
+    box-shadow: -4px 4px 14px rgba(0, 0, 0, 0.16);
+    overflow: hidden;
     position: relative;
-    cursor: pointer;
-    border: none;
-    outline: none;
 }
 
-.sticky-side-item:hover .sticky-side-btn,
-.sticky-side-btn:hover {
+.side-action-tab:hover {
     transform: translateX(0);
-    box-shadow: -6px 6px 20px rgba(0, 0, 0, 0.35);
+    box-shadow: -6px 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-.sticky-side-btn .sticky-icon {
-    width: 30px;
-    height: 30px;
-    background: rgba(255, 255, 255, 0.22);
-    border-radius: 50%;
+.side-action-tab .tab-icon {
+    width: 46px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.14);
 }
 
-.sticky-side-btn .label-text {
+.side-action-tab .tab-label {
+    padding: 0 16px 0 10px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
     opacity: 0;
-    transition: opacity 0.2s ease 0.06s;
+    transition: opacity 0.22s ease 0.05s;
     user-select: none;
 }
 
-.sticky-side-item:hover .sticky-side-btn .label-text,
-.sticky-side-btn:hover .label-text {
+.side-action-tab:hover .tab-label {
     opacity: 1;
 }
 
-/* 1. Admission (Maroon/Red + Gold) */
-.sticky-side-btn.btn-admission-sticky {
-    background: linear-gradient(135deg, #7A0B0D 0%, #d62529 100%);
-    border-left: 3.5px solid #ffcc00;
+/* 1. Admission (Crimson / Deep Maroon) */
+.side-action-tab.tab-admission {
+    background: linear-gradient(135deg, #7A0B0D 0%, #a8171b 100%);
+    border-left: 3px solid #ffcc00;
 }
 
-/* 2. Grievance (Navy/Dark Slate + Cyan) */
-.sticky-side-btn.btn-grievance-sticky {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    border-left: 3.5px solid #38bdf8;
+/* 2. Grievance (Dark Slate / Navy) */
+.side-action-tab.tab-grievance {
+    background: linear-gradient(135deg, #0F1E3B 0%, #1e293b 100%);
+    border-left: 3px solid #38bdf8;
 }
 
-/* 3. Call Helpline (Emerald Green + Mint) */
-.sticky-side-btn.btn-call-sticky {
-    background: linear-gradient(135deg, #065f46 0%, #10b981 100%);
-    border-left: 3.5px solid #34d399;
+/* 3. Call Helpline (Emerald Green) */
+.side-action-tab.tab-call {
+    background: linear-gradient(135deg, #065f46 0%, #059669 100%);
+    border-left: 3px solid #34d399;
 }
 
-/* 4. Contact Us (Royal Blue + Amber) */
-.sticky-side-btn.btn-contact-sticky {
+/* 4. Contact Desk (Royal Indigo / Blue) */
+.side-action-tab.tab-contact {
     background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-    border-left: 3.5px solid #fbbf24;
+    border-left: 3px solid #fbbf24;
 }
 
 /* Back To Top Floating Rocket Button */
@@ -3464,28 +3732,27 @@ body {
         display: none !important;
     }
 
-    .sticky-side-container {
+    .srku-side-actions {
         right: 0;
-        top: 48%;
+        top: 50%;
         transform: translateY(-50%);
         gap: 6px;
     }
 
-    .sticky-side-btn {
+    .side-action-tab {
         height: 38px;
-        padding: 0 6px 0 5px;
         transform: translateX(0);
         border-radius: 20px 0 0 20px;
     }
 
-    .sticky-side-btn span.label-text {
-        display: none;
+    .side-action-tab .tab-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 0.8rem;
     }
 
-    .sticky-side-btn .sticky-icon {
-        width: 26px;
-        height: 26px;
-        font-size: 0.78rem;
+    .side-action-tab .tab-label {
+        display: none !important;
     }
 
     .whatsapp-float-btn {

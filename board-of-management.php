@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Board of Management - Sarvepalli Radhakrishnan University, Bhopal";
+$pageTitle = "Board of Management & Governance | SRK University Bhopal";
+$pageDesc = "Meet the distinguished Board of Management, Governing Body, and academic leadership guiding Sarvepalli Radhakrishnan University (SRKU), Bhopal.";
+$pageKeywords = "SRKU Board of Management, University Leadership, SRKU Governance, Chancellor, Vice Chancellor Bhopal";
 $activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
 

@@ -3,14 +3,53 @@ require_once __DIR__ . '/header.php';
 $pdo = getDBConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
+    $videoUrl = trim((string)($_POST['hero_video_url'] ?? 'assets/images/SRK-Hero-Section.mp4'));
+    $fallbackImg = trim((string)($_POST['hero_fallback_image'] ?? 'assets/uploads/2026/08/srku-rkdf-building.jpeg'));
+
+    // Handle Video File Upload
+    if (isset($_FILES['video_file']) && $_FILES['video_file']['error'] === UPLOAD_ERR_OK) {
+        $allowedVideoExts = ['mp4', 'webm', 'ogg', 'mov'];
+        $ext = strtolower(pathinfo($_FILES['video_file']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, $allowedVideoExts)) {
+            $uploadDir = __DIR__ . '/../assets/uploads/2026/08/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            $newFileName = 'hero_video_' . time() . '.' . $ext;
+            $targetPath = $uploadDir . $newFileName;
+            if (move_uploaded_file($_FILES['video_file']['tmp_name'], $targetPath)) {
+                $videoUrl = 'assets/uploads/2026/08/' . $newFileName;
+            }
+        }
+    }
+
+    // Handle Fallback Image Upload
+    if (isset($_FILES['fallback_img_file']) && $_FILES['fallback_img_file']['error'] === UPLOAD_ERR_OK) {
+        $allowedImgExts = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+        $ext = strtolower(pathinfo($_FILES['fallback_img_file']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, $allowedImgExts)) {
+            $uploadDir = __DIR__ . '/../assets/uploads/2026/08/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            $newFileName = 'hero_fallback_' . time() . '.' . $ext;
+            $targetPath = $uploadDir . $newFileName;
+            if (move_uploaded_file($_FILES['fallback_img_file']['tmp_name'], $targetPath)) {
+                $fallbackImg = 'assets/uploads/2026/08/' . $newFileName;
+            }
+        }
+    }
+
     $settingsToUpdate = [
         'hero_title' => sanitize($_POST['hero_title'] ?? 'SRK University, Bhopal'),
         'hero_subtitle' => sanitize($_POST['hero_subtitle'] ?? 'UGC-Recognized University in MP'),
         'hero_desc' => $_POST['hero_desc'] ?? '',
-        'chancellor_name' => sanitize($_POST['chancellor_name'] ?? 'Dr. Sunil Kapoor'),
-        'chancellor_title' => sanitize($_POST['chancellor_title'] ?? 'Founder Chairman & Chancellor'),
+        'hero_video_url' => $videoUrl,
+        'hero_fallback_image' => $fallbackImg,
+        'chancellor_name' => sanitize($_POST['chancellor_name'] ?? 'Mrs. Janak Kapoor'),
+        'chancellor_title' => sanitize($_POST['chancellor_title'] ?? 'Chancellor'),
         'chancellor_msg' => $_POST['chancellor_msg'] ?? '',
-        'vc_name' => sanitize($_POST['vc_name'] ?? 'Prof. (Dr.) Brijendra Singh'),
+        'vc_name' => sanitize($_POST['vc_name'] ?? 'Ms. Priyanka Jaiswal'),
         'vc_title' => sanitize($_POST['vc_title'] ?? 'Vice Chancellor'),
         'vc_msg' => $_POST['vc_msg'] ?? '',
         'helpline' => sanitize($_POST['helpline'] ?? ''),
@@ -30,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     ];
 
     foreach ($settingsToUpdate as $key => $value) {
-        $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (:k, :v) ON DUPLICATE KEY UPDATE setting_value = :v");
+        $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (:k, :v) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
         $stmt->execute([':k' => $key, ':v' => $value]);
     }
 
@@ -42,7 +81,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
 $heroTitle = getSetting('hero_title', 'SRK University, Bhopal');
 $heroSubtitle = getSetting('hero_subtitle', 'UGC-Recognized University in MP');
 $heroDesc = getSetting('hero_desc', 'Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership. If you are looking for the best placement university in MP, our rigorous research, multi-disciplinary collaboration, and industry-aligned pedagogy deliver unmatched career growth.');
-$chancellorName = getSetting('chancellor_name', 'Dr. Sunil Kapoor');
+$heroVideo = getSetting('hero_video_url', 'assets/images/SRK-Hero-Section.mp4');
+$heroFallbackImg = getSetting('hero_fallback_image', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
+$chancellorName = getSetting('chancellor_name', 'Mrs. Janak Kapoor');
 $chancellorTitle = getSetting('chancellor_title', 'Founder Chairman & Chancellor');
 $chancellorMsg = getSetting('chancellor_msg', 'At Sarvepalli Radhakrishnan University, our mission is to foster an academic environment that cultivates critical thinking, research innovation, and professional integrity. We empower our students to become technology leaders, healthcare pioneers, and responsible global citizens.');
 $vcName = getSetting('vc_name', 'Prof. (Dr.) Brijendra Singh');
@@ -70,12 +111,12 @@ $linkedinUrl = getSetting('linkedin_url', 'https://linkedin.com');
 </div>
 
 <div style="max-width: 960px;">
-    <form action="manage_settings.php" method="POST">
+    <form action="manage_settings.php" method="POST" enctype="multipart/form-data">
         
-        <!-- SECTION 1: Homepage Hero -->
+        <!-- SECTION 1: Homepage Hero Video, Fallback Image & Content -->
         <div class="admin-form-section">
             <div class="admin-form-section-title">
-                <i class="fas fa-home text-danger"></i> Section 1: Homepage Hero Section
+                <i class="fas fa-video text-danger"></i> Section 1: Homepage Hero Video &amp; Fallback Poster Background
             </div>
             <div class="row g-3">
                 <div class="col-md-6">
@@ -88,7 +129,27 @@ $linkedinUrl = getSetting('linkedin_url', 'https://linkedin.com');
                 </div>
                 <div class="col-12">
                     <label class="form-label fw-bold text-dark small">Hero Lead Paragraph</label>
-                    <textarea name="hero_desc" class="form-control" rows="3"><?php echo sanitize($heroDesc); ?></textarea>
+                    <textarea name="hero_desc" class="form-control" rows="2"><?php echo sanitize($heroDesc); ?></textarea>
+                </div>
+                
+                <!-- Video Controls -->
+                <div class="col-md-6">
+                    <div class="p-3 bg-light rounded-3 border">
+                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-film text-danger me-1"></i> Hero Video URL / Path</label>
+                        <input type="text" name="hero_video_url" class="form-control form-control-sm mb-2" value="<?php echo sanitize($heroVideo); ?>">
+                        <label class="form-label small text-muted mb-1">OR Upload New Video File</label>
+                        <input type="file" name="video_file" class="form-control form-control-sm" accept="video/mp4,video/webm">
+                    </div>
+                </div>
+
+                <!-- Fallback Image Controls -->
+                <div class="col-md-6">
+                    <div class="p-3 bg-light rounded-3 border">
+                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-image text-success me-1"></i> Fallback Poster Image</label>
+                        <input type="text" name="hero_fallback_image" class="form-control form-control-sm mb-2" value="<?php echo sanitize($heroFallbackImg); ?>">
+                        <label class="form-label small text-muted mb-1">OR Upload New Image</label>
+                        <input type="file" name="fallback_img_file" class="form-control form-control-sm" accept="image/*">
+                    </div>
                 </div>
             </div>
         </div>

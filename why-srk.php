@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Why Choose SRK University - Sarvepalli Radhakrishnan University, Bhopal";
+$pageTitle = "Why Choose SRKU Bhopal | 14 Schools, 42+ Labs & Excellence | SRKU";
+$pageDesc = "Discover why students choose Sarvepalli Radhakrishnan University (SRKU) Bhopal: 14 constituent schools, 42+ cutting-edge labs, 600+ expert faculty, and high-impact placement records.";
+$pageKeywords = "Why Choose SRKU, Best University in Bhopal, SRKU Campus Life, Top Engineering Pharmacy Medical University MP";
 $activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
 ?>

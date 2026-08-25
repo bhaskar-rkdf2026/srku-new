@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Accreditation & Regulatory Recognition - Sarvepalli Radhakrishnan University, Bhopal";
+$pageTitle = "Accreditations & Regulatory Approvals | UGC, AICTE, NMC, PCI, BCI | SRKU";
+$pageDesc = "Sarvepalli Radhakrishnan University (SRKU) Bhopal holds 11 apex statutory regulatory approvals including UGC Section 2(f), AICTE, NMC, PCI, INC, BCI, NDC, NCISM, NCH, and MPPURC.";
+$pageKeywords = "SRKU Accreditations, UGC Approved University Bhopal, AICTE Approval SRKU, NMC Approved Medical College, PCI Approved Pharmacy, BCI Law College Bhopal, MPPURC";
 $activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
 ?>

@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = "Online Admission Enquiry Form 2026-27 - SRK University Bhopal";
+$pageTitle = "Online Admission Enquiry 2026-27 | UG, PG & PhD Programs | SRKU Bhopal";
+$pageDesc = "Apply online for Academic Session 2026-27 at Sarvepalli Radhakrishnan University (SRKU), Bhopal. Direct online enquiry for Engineering, Pharmacy, Nursing, Law, Agriculture and Medical degrees.";
+$pageKeywords = "SRKU Admission 2026, Online Admission Form, University Admission Bhopal, Direct Admission Enquiry MP";
 $activeNav = "admission";
 
 $enquirySuccess = false;

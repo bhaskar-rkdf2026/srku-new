@@ -20,12 +20,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category = sanitize($_POST['category'] ?? 'General');
     $slug = sanitize($_POST['slug'] ?? '');
     $icon = sanitize($_POST['icon'] ?? 'fas fa-graduation-cap');
+    $image = trim((string)($_POST['image'] ?? 'assets/uploads/2026/07/001.webp'));
     $dean = sanitize($_POST['dean_name'] ?? '');
+    $deanDesignation = sanitize($_POST['dean_designation'] ?? 'Dean & Principal');
+    $deanPhoto = trim((string)($_POST['dean_photo'] ?? ''));
+    $deanMessage = $_POST['dean_message'] ?? '';
     $contact = sanitize($_POST['contact_no'] ?? '0755-4700983, 7024144981');
     $approvals = sanitize($_POST['approvals'] ?? 'UGC');
     $year = sanitize($_POST['established_year'] ?? '2015');
     $desc = $_POST['description'] ?? '';
     $status = sanitize($_POST['status'] ?? 'active');
+
+    // Handle Department Campus Image Upload
+    if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK) {
+        $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+        $ext = strtolower(pathinfo($_FILES['image_file']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, $allowed)) {
+            $uploadDir = __DIR__ . '/../assets/uploads/2026/07/';
+            if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+            $fn = 'dept_' . time() . '.' . $ext;
+            if (move_uploaded_file($_FILES['image_file']['tmp_name'], $uploadDir . $fn)) {
+                $image = 'assets/uploads/2026/07/' . $fn;
+            }
+        }
+    }
+
+    // Handle Dean / Principal Photo Upload
+    if (isset($_FILES['dean_photo_file']) && $_FILES['dean_photo_file']['error'] === UPLOAD_ERR_OK) {
+        $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+        $ext = strtolower(pathinfo($_FILES['dean_photo_file']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, $allowed)) {
+            $uploadDir = __DIR__ . '/../assets/uploads/2026/08/';
+            if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+            $fn = 'dean_' . time() . '.' . $ext;
+            if (move_uploaded_file($_FILES['dean_photo_file']['tmp_name'], $uploadDir . $fn)) {
+                $deanPhoto = 'assets/uploads/2026/08/' . $fn;
+            }
+        }
+    }
 
     if (empty($slug)) {
         $slug = generateSlug($name);
@@ -34,13 +66,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($editId > 0) {
-        $stmt = $pdo->prepare("UPDATE departments SET name = :n, category = :cat, slug = :s, icon = :i, dean_name = :d, contact_no = :con, approvals = :app, established_year = :y, description = :desc, status = :st WHERE id = :id");
+        $stmt = $pdo->prepare("UPDATE departments SET name = :n, category = :cat, slug = :s, icon = :i, image = :img, dean_name = :d, dean_designation = :dd, dean_photo = :dp, dean_message = :dm, contact_no = :con, approvals = :app, established_year = :y, description = :desc, status = :st WHERE id = :id");
         $stmt->execute([
             ':n' => $name,
             ':cat' => $category,
             ':s' => $slug,
             ':i' => $icon,
+            ':img' => $image,
             ':d' => $dean,
+            ':dd' => $deanDesignation,
+            ':dp' => $deanPhoto,
+            ':dm' => $deanMessage,
             ':con' => $contact,
             ':app' => $approvals,
             ':y' => $year,
@@ -50,13 +86,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         setFlashMsg('success', 'Department updated successfully.');
     } else {
-        $stmt = $pdo->prepare("INSERT INTO departments (name, category, slug, icon, dean_name, contact_no, approvals, established_year, description, status) VALUES (:n, :cat, :s, :i, :d, :con, :app, :y, :desc, :st)");
+        $stmt = $pdo->prepare("INSERT INTO departments (name, category, slug, icon, image, dean_name, dean_designation, dean_photo, dean_message, contact_no, approvals, established_year, description, status) VALUES (:n, :cat, :s, :i, :img, :d, :dd, :dp, :dm, :con, :app, :y, :desc, :st)");
         $stmt->execute([
             ':n' => $name,
             ':cat' => $category,
             ':s' => $slug,
             ':i' => $icon,
+            ':img' => $image,
             ':d' => $dean,
+            ':dd' => $deanDesignation,
+            ':dp' => $deanPhoto,
+            ':dm' => $deanMessage,
             ':con' => $contact,
             ':app' => $approvals,
             ':y' => $year,
@@ -94,7 +134,7 @@ $departments = $pdo->query("SELECT * FROM departments ORDER BY name ASC")->fetch
 
 <?php if ($action === 'add' || $action === 'edit'): ?>
     <div style="max-width: 960px;">
-        <form action="manage_departments.php<?php echo $editId ? '?action=edit&id=' . $editId : ''; ?>" method="POST">
+        <form action="manage_departments.php<?php echo $editId ? '?action=edit&id=' . $editId : ''; ?>" method="POST" enctype="multipart/form-data">
             
             <!-- SECTION 1: Identity & Meta -->
             <div class="admin-form-section">
@@ -140,23 +180,96 @@ $departments = $pdo->query("SELECT * FROM departments ORDER BY name ASC")->fetch
                 </div>
             </div>
 
-            <!-- SECTION 2: Leadership -->
+            <!-- SECTION 2: Image & Media -->
             <div class="admin-form-section">
                 <div class="admin-form-section-title">
-                    <i class="fas fa-user-tie text-warning"></i> Section 2: Dean &amp; Leadership Profile
+                    <i class="fas fa-image text-danger"></i> Section 2: Department Campus / Building Image
                 </div>
-                <div class="row g-3">
-                    <div class="col-12">
-                        <label class="form-label fw-bold text-dark small">Dean / Principal Name</label>
-                        <input type="text" name="dean_name" class="form-control" value="<?php echo sanitize($editItem['dean_name'] ?? ''); ?>" placeholder="e.g. Prof. (Dr.) A. K. Sharma">
+                <div class="row g-3 align-items-center">
+                    <div class="col-12 col-md-3 text-center">
+                        <?php 
+                        $deptImg = $editItem['image'] ?? 'assets/uploads/2026/07/001.webp';
+                        $deptImgSrc = (strpos($deptImg, 'http') === 0) ? $deptImg : BASE_URL . $deptImg;
+                        ?>
+                        <div class="rounded-3 overflow-hidden border shadow-xs bg-light p-1" style="height: 120px;">
+                            <img src="<?php echo $deptImgSrc; ?>" 
+                                 onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                                 alt="Preview" class="w-100 h-100 rounded-2" style="object-fit: cover;">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold text-dark small">Image Relative Path or URL</label>
+                            <input type="text" name="image" class="form-control form-control-sm" value="<?php echo sanitize($editItem['image'] ?? 'assets/uploads/2026/07/001.webp'); ?>" placeholder="e.g. assets/uploads/2026/07/001.webp">
+                        </div>
+                        <div>
+                            <label class="form-label fw-bold text-dark small">OR Upload New Image</label>
+                            <input type="file" name="image_file" class="form-control form-control-sm" accept="image/*">
+                            <small class="text-muted">High resolution campus/building photo (WebP/JPG/PNG).</small>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SECTION 3: Rich Overview Content with CKEditor -->
+            <!-- SECTION 3: Leadership Profile -->
             <div class="admin-form-section">
                 <div class="admin-form-section-title">
-                    <i class="fas fa-edit text-primary"></i> Section 3: Detailed Department Overview (CKEditor)
+                    <i class="fas fa-user-tie text-warning"></i> Section 3: Dean / Principal Leadership &amp; Message
+                </div>
+                <div class="row g-3 align-items-start">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-bold text-dark small">Dean / Principal / Head Name</label>
+                        <input type="text" name="dean_name" class="form-control" value="<?php echo sanitize($editItem['dean_name'] ?? ''); ?>" placeholder="e.g. Prof. (Dr.) A. K. Sharma">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-bold text-dark small">Designation / Role Title</label>
+                        <input type="text" name="dean_designation" class="form-control" list="designationList" value="<?php echo sanitize($editItem['dean_designation'] ?? 'Dean & Principal'); ?>" placeholder="e.g. Dean, Principal, Director">
+                        <datalist id="designationList">
+                            <option value="Dean &amp; Principal">
+                            <option value="Principal">
+                            <option value="Dean">
+                            <option value="Director">
+                            <option value="Head of Department">
+                            <option value="Principal &amp; Medical Superintendent">
+                        </datalist>
+                    </div>
+
+                    <!-- Dean Photo -->
+                    <div class="col-12 col-md-4">
+                        <div class="p-3 bg-light rounded-3 border text-center">
+                            <label class="form-label fw-bold text-navy small mb-2"><i class="fas fa-camera text-primary me-1"></i> Dean / Principal Photo</label>
+                            <div class="mx-auto rounded-circle overflow-hidden mb-2 shadow-xs bg-white border p-1" style="width: 100px; height: 100px;">
+                                <?php 
+                                $dPhoto = $editItem['dean_photo'] ?? '';
+                                if (!empty($dPhoto)): 
+                                    $dPhotoSrc = (strpos($dPhoto, 'http') === 0) ? $dPhoto : BASE_URL . $dPhoto;
+                                ?>
+                                    <img src="<?php echo $dPhotoSrc; ?>" alt="Dean" class="w-100 h-100 rounded-circle object-fit-cover">
+                                <?php else: ?>
+                                    <div class="w-100 h-100 rounded-circle bg-light d-flex flex-column align-items-center justify-content-center text-muted">
+                                        <i class="fas fa-user-tie text-primary fs-3"></i>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <input type="text" name="dean_photo" class="form-control form-control-sm mb-2" value="<?php echo sanitize($editItem['dean_photo'] ?? ''); ?>" placeholder="Photo path or empty">
+                            <input type="file" name="dean_photo_file" class="form-control form-control-sm" accept="image/*">
+                            <small class="text-muted" style="font-size:0.72rem;">Upload portrait photo (JPG/PNG/WebP).</small>
+                        </div>
+                    </div>
+
+                    <!-- Dean Welcome Message / Desk Note -->
+                    <div class="col-12 col-md-8">
+                        <label class="form-label fw-bold text-dark small"><i class="fas fa-comment-alt text-danger me-1"></i> Message from Dean / Principal's Desk</label>
+                        <textarea name="dean_message" class="form-control" rows="6" placeholder="Welcome to our college. We are committed to fostering academic excellence, clinical precision, research innovation, and ethical leadership..."><?php echo htmlspecialchars($editItem['dean_message'] ?? ''); ?></textarea>
+                        <small class="text-muted">This message and leadership profile will be featured prominently on this constituent unit's detail page.</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4: Rich Overview Content with CKEditor -->
+            <div class="admin-form-section">
+                <div class="admin-form-section-title">
+                    <i class="fas fa-edit text-primary"></i> Section 4: Detailed Department Overview (CKEditor)
                 </div>
                 <div class="mb-2">
                     <label class="form-label fw-bold text-dark small mb-2">Faculty Description &amp; Infrastructure Details</label>
@@ -180,7 +293,7 @@ $departments = $pdo->query("SELECT * FROM departments ORDER BY name ASC")->fetch
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
-                        <th style="width:50px;">Icon</th>
+                        <th style="width:60px;">Image</th>
                         <th>Department / Faculty Name</th>
                         <th>URL Slug</th>
                         <th>Dean / Principal</th>
@@ -190,11 +303,16 @@ $departments = $pdo->query("SELECT * FROM departments ORDER BY name ASC")->fetch
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($departments as $d): ?>
+                    <?php foreach ($departments as $d): 
+                        $dImg = $d['image'] ?: 'assets/uploads/2026/07/001.webp';
+                        $dImgSrc = (strpos($dImg, 'http') === 0) ? $dImg : BASE_URL . $dImg;
+                    ?>
                         <tr>
                             <td>
-                                <div class="bg-light rounded p-2 text-center text-danger" style="width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center;">
-                                    <i class="<?php echo sanitize($d['icon'] ?: 'fas fa-graduation-cap'); ?>"></i>
+                                <div class="rounded-3 overflow-hidden border shadow-xs bg-light" style="width:50px; height:40px;">
+                                    <img src="<?php echo $dImgSrc; ?>" 
+                                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                                         alt="<?php echo sanitize($d['name']); ?>" class="w-100 h-100 object-fit-cover">
                                 </div>
                             </td>
                             <td>

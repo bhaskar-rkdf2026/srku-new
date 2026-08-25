@@ -22,7 +22,9 @@ if (!$notice) {
     }
 }
 
-$pageTitle = $notice['title'] . " - Official Notice - SRK University Bhopal";
+$pageTitle = sanitize($notice['title']) . " | Official Circular | SRKU Bhopal";
+$pageDesc = substr(strip_tags($notice['content'] ?? ''), 0, 160) ?: "Official announcement and circular published by Sarvepalli Radhakrishnan University, Bhopal.";
+$pageKeywords = sanitize($notice['title']) . ", SRKU Notice, University Circular, " . sanitize($notice['category'] ?? 'Announcement');
 $activeNav = "news";
 require_once __DIR__ . '/includes/header.php';
 

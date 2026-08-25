@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Ph.D. Admission 2026 - Sarvepalli Radhakrishnan University Bhopal";
+$pageTitle = "Ph.D. Admissions 2026-27 | Doctoral Research Entrance & Guidelines | SRKU Bhopal";
+$pageDesc = "Apply for Ph.D. Entrance Examination 2026 at Sarvepalli Radhakrishnan University (SRKU), Bhopal. Check eligibility, UGC minimum standards compliance, research domains, syllabus and interview guidelines.";
+$pageKeywords = "PhD Admission Bhopal, Doctoral Program MP, SRKU PhD Entrance Exam, UGC Net Qualified PhD, Research Fellowship Bhopal";
 $activeNav = "admission";
 require_once __DIR__ . '/includes/header.php';
 
