@@ -92,7 +92,7 @@ require_once __DIR__ . '/includes/header.php';
                     <div class="accred-approval-card h-100 d-flex flex-column">
                         <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
                             <span class="accred-dept-pill"><?php echo sanitize($ap['domain']); ?></span>
-                            <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1 small fw-semibold">
+                            <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill accred-status-badge">
                                 <i class="fas fa-check-circle me-1"></i> Recognized
                             </span>
                         </div>
