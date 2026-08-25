@@ -5,24 +5,57 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- ═══════════════════════════════════════════════════════
-     HERO BANNER
+     HERO — AURORA MESH (no photo, pure animated gradient)
 ═══════════════════════════════════════════════════════ -->
-<section class="about-hero-clean text-white py-5 position-relative" style="background: linear-gradient(135deg, #0b152d 0%, #16233f 45%, #630809 100%) !important; color: #ffffff !important;">
-    <div class="container-xl position-relative z-2">
-        <nav aria-label="breadcrumb" class="mb-3">
-            <ol class="breadcrumb mb-0 small">
-                <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning"><i class="fas fa-home me-1"></i> Home</a></li>
-                <li class="breadcrumb-item active text-white-50" aria-current="page">About SRKU</li>
-            </ol>
-        </nav>
-        <span class="about-hero-tag" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(229, 169, 59, 0.16) !important; color: #ffcc00 !important; border: 1px solid rgba(229, 169, 59, 0.38) !important; font-size: 0.76rem; font-weight: 700; padding: 5px 14px; border-radius: 30px; letter-spacing: 0.6px; text-transform: uppercase; margin-bottom: 1rem;"><i class="fas fa-university me-1"></i> INSTITUTIONAL OVERVIEW</span>
-        <h1 class="fw-bold display-6 mb-3 text-white" style="max-width:860px; line-height: 1.3;">Discover SRK University &ndash; Bhopal's Premier Multidisciplinary Private University</h1>
-        <p class="mb-4 text-white-50" style="max-width:780px; line-height:1.8; font-size: 1.02rem;">
-            Welcome to Sarvepalli Radhakrishnan University (SRKU), one of Madhya Pradesh's apex private universities. Named after Dr. Sarvepalli Radhakrishnan, India's First Vice President, our institution embodies excellence, innovation, and holistic education across 26 constituent units.
-        </p>
-        <div class="d-flex flex-wrap gap-3">
-            <a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="btn-hero-yellow">Apply Now</a>
-            <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn-hero-outline">Meet the Leadership</a>
+<section class="about-hero-v2">
+    <div class="about-hero-v2__blob about-hero-v2__blob--1"></div>
+    <div class="about-hero-v2__blob about-hero-v2__blob--2"></div>
+    <div class="about-hero-v2__blob about-hero-v2__blob--3"></div>
+    <div class="about-hero-v2__grid"></div>
+
+    <div class="container-xl about-hero-v2__inner">
+        <div class="row align-items-center g-5">
+            <div class="col-12 col-lg-8">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb mb-0 small">
+                        <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page" style="color: rgba(255,255,255,0.85);">About</li>
+                    </ol>
+                </nav>
+                <span class="about-hero-v2__eyebrow"><i class="fas fa-star"></i> Est. 1995 &middot; RKDF Education Society</span>
+                <h1 class="about-hero-v2__title">Discover <span>SRK University</span> &ndash; Bhopal's Premier Multidisciplinary Private University</h1>
+                <p class="about-hero-v2__desc">
+                    Welcome to Sarvepalli Radhakrishnan University, commonly known as SRK University, one of Madhya Pradesh's leading private universities. Named after Dr. Sarvepalli Radhakrishnan, India's First Vice President, our institution embodies excellence, innovation, and commitment to holistic education.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="<?php echo BASE_URL; ?>contact.php#apply" class="btn-hero-yellow">Apply Now</a>
+                    <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn-hero-outline">Meet the Leadership</a>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="about-hero-v2__cards">
+                    <div class="about-hero-v2__card about-hero-v2__card--float1">
+                        <i class="fas fa-calendar-check"></i>
+                        <span class="num">31<sup>st</sup></span>
+                        <span class="lbl">Year of Excellence</span>
+                    </div>
+                    <div class="about-hero-v2__card about-hero-v2__card--float2">
+                        <i class="fas fa-user-graduate"></i>
+                        <span class="num">20,000+</span>
+                        <span class="lbl">Students</span>
+                    </div>
+                    <div class="about-hero-v2__card about-hero-v2__card--float3">
+                        <i class="fas fa-layer-group"></i>
+                        <span class="num">14</span>
+                        <span class="lbl">Constituent Units</span>
+                    </div>
+                    <div class="about-hero-v2__card about-hero-v2__card--float4">
+                        <i class="fas fa-briefcase"></i>
+                        <span class="num">35,000+</span>
+                        <span class="lbl">Placements</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

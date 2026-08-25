@@ -5,7 +5,7 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Dynamic Banner Header -->
-<?php renderPageBanner('facilities', 'World-Class Campus Facilities', 'Lush Green Sprawling Campus Spread Over Expansive Acres in Bhopal'); ?>
+<?php renderPageBanner('facilities', 'Campus Facilities', 'Infrastructure and amenities available across the SRK University campus in Bhopal'); ?>
 
 <section class="py-5">
     <div class="container-xl py-3">
@@ -19,7 +19,7 @@ require_once __DIR__ . '/includes/header.php';
             
             <!-- Facility 1: Labs -->
             <div class="col">
-                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card reveal h-100 border-0 shadow-sm rounded-4 overflow-hidden">
                     <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/lab-and-research.webp"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                          class="card-img-top" style="height:220px; object-fit:cover;" alt="Research Labs">
@@ -37,7 +37,7 @@ require_once __DIR__ . '/includes/header.php';
 
             <!-- Facility 2: Library -->
             <div class="col">
-                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card reveal h-100 border-0 shadow-sm rounded-4 overflow-hidden">
                     <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/library.webp"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                          class="card-img-top" style="height:220px; object-fit:cover;" alt="Central Library">
@@ -55,7 +55,7 @@ require_once __DIR__ . '/includes/header.php';
 
             <!-- Facility 3: Auditoriums -->
             <div class="col">
-                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card reveal h-100 border-0 shadow-sm rounded-4 overflow-hidden">
                     <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Operation-Theatre.webp"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                          class="card-img-top" style="height:220px; object-fit:cover;" alt="Auditorium">
@@ -73,7 +73,7 @@ require_once __DIR__ . '/includes/header.php';
 
             <!-- Facility 4: Sports -->
             <div class="col">
-                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card reveal h-100 border-0 shadow-sm rounded-4 overflow-hidden">
                     <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/sports.webp"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                          class="card-img-top" style="height:220px; object-fit:cover;" alt="Sports Complex">
@@ -91,7 +91,7 @@ require_once __DIR__ . '/includes/header.php';
 
             <!-- Facility 5: Hostels -->
             <div class="col">
-                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card reveal h-100 border-0 shadow-sm rounded-4 overflow-hidden">
                     <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/hostel.webp"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                          class="card-img-top" style="height:220px; object-fit:cover;" alt="Hostels">
@@ -109,7 +109,7 @@ require_once __DIR__ . '/includes/header.php';
 
             <!-- Facility 6: Hospital -->
             <div class="col">
-                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card reveal h-100 border-0 shadow-sm rounded-4 overflow-hidden">
                     <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/INFRA-STRUCTURE-SRKU-05.webp"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                          class="card-img-top" style="height:220px; object-fit:cover;" alt="Hospital">
@@ -134,7 +134,7 @@ require_once __DIR__ . '/includes/header.php';
     <div class="container-xl py-3">
         <div class="row g-4">
             <div class="col-md-6">
-                <div class="p-4 p-md-5 bg-white rounded-4 border shadow-sm h-100">
+                <div class="facility-info-box reveal p-4 p-md-5 bg-white rounded-4 border shadow-sm h-100">
                     <div class="d-flex align-items-center gap-3 mb-3">
                         <div class="bg-danger-subtle text-danger rounded-circle p-3"><i class="fas fa-bus fa-2x"></i></div>
                         <h3 class="h4 fw-bold text-navy mb-0">Fleet of 30+ University Buses</h3>
@@ -145,7 +145,7 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="p-4 p-md-5 bg-white rounded-4 border shadow-sm h-100">
+                <div class="facility-info-box reveal p-4 p-md-5 bg-white rounded-4 border shadow-sm h-100">
                     <div class="d-flex align-items-center gap-3 mb-3">
                         <div class="bg-success-subtle text-success rounded-circle p-3"><i class="fas fa-shield-alt fa-2x"></i></div>
                         <h3 class="h4 fw-bold text-navy mb-0">24/7 Security &amp; Wi-Fi Campus</h3>
@@ -159,4 +159,5 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </section>
 
+<script src="<?php echo BASE_URL; ?>assets/js/reveal.js" defer></script>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
