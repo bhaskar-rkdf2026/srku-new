@@ -15,8 +15,8 @@ require_once __DIR__ . '/includes/header.php';
     <div class="container-xl about-hero-v2__inner">
         <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb mb-0 small">
-                <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page" style="color: rgba(255,255,255,0.85);">Why SRK</li>
+                <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning"><i class="fas fa-home me-1"></i> Home</a></li>
+                <li class="breadcrumb-item active text-white-50" aria-current="page">Why SRKU</li>
             </ol>
         </nav>
         <span class="about-hero-v2__eyebrow"><i class="fas fa-star"></i> Est. 1995 &middot; RKDF Education Society</span>
@@ -24,6 +24,10 @@ require_once __DIR__ . '/includes/header.php';
         <p class="about-hero-v2__desc" style="max-width:760px;">
             From B.Tech and MBBS to MBA, LLM, and doctoral research &mdash; every programme blends theory, industry immersion, and global exposure. Essays, field notes, and long-form research from students, faculty, and alumni &mdash; published weekly.
         </p>
+        <div class="d-flex flex-wrap gap-3">
+            <a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="btn-hero-yellow">Explore Admissions</a>
+            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-hero-outline">View All 95+ Courses</a>
+        </div>
     </div>
 </section>
 

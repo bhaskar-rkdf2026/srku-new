@@ -15,8 +15,8 @@ require_once __DIR__ . '/includes/header.php';
     <div class="container-xl about-hero-v2__inner">
         <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb mb-0 small">
-                <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page" style="color: rgba(255,255,255,0.85);">Accreditation</li>
+                <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning"><i class="fas fa-home me-1"></i> Home</a></li>
+                <li class="breadcrumb-item active text-white-50" aria-current="page">Accreditations &amp; Approvals</li>
             </ol>
         </nav>
         <span class="about-hero-v2__eyebrow"><i class="fas fa-star"></i> Est. 1995 &middot; RKDF Education Society</span>
@@ -25,8 +25,8 @@ require_once __DIR__ . '/includes/header.php';
             SRK University is proud to hold comprehensive recognition and accreditation from India's leading regulatory bodies. These approvals reflect our unwavering commitment to academic excellence, quality assurance, and ethical practice across all our programmes.
         </p>
         <div class="d-flex flex-wrap gap-3">
-            <a href="<?php echo BASE_URL; ?>contact.php#apply" class="btn-hero-yellow">Apply Now</a>
-            <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn-hero-outline">Meet the Leadership</a>
+            <a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="btn-hero-yellow">Apply Now</a>
+            <a href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Recognition-Approval.pdf" target="_blank" class="btn-hero-outline"><i class="fas fa-file-pdf me-1 text-warning"></i> View Approval PDF</a>
         </div>
     </div>
 </section>
@@ -60,126 +60,48 @@ require_once __DIR__ . '/includes/header.php';
 </div>
 
 <!-- 11 STATUTORY APPROVALS SECTION -->
-<section class="py-5 bg-cream">
+<section class="py-5 bg-light">
     <div class="container-xl py-3">
-        <div class="text-center mb-5">
-            <span class="section-subtitle">OFFICIAL RECOGNITIONS</span>
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <span class="section-subtitle"><i class="fas fa-certificate text-danger me-1"></i> OFFICIAL RECOGNITIONS</span>
             <h2 class="section-title">11 Statutory <span>Regulatory Approvals</span> &amp; Accreditations</h2>
-            <p class="text-muted mx-auto" style="max-width: 720px;">
-                Sarvepalli Radhakrishnan University is duly recognized and accredited by the apex regulatory commissions and councils of the Government of India and the Government of Madhya Pradesh.
+            <p class="text-muted small mb-0">
+                Sarvepalli Radhakrishnan University is duly recognized and accredited by the apex regulatory commissions and statutory councils of the Government of India and Government of Madhya Pradesh.
             </p>
         </div>
 
+        <?php
+        $approvals = [
+            ['code' => 'UGC', 'name' => 'University Grants Commission', 'domain' => 'Govt. of India', 'desc' => 'Statutory recognition under Section 2(f) of the UGC Act 1956, Government of India, empowering degree-granting authority.'],
+            ['code' => 'NMC', 'name' => 'National Medical Commission', 'domain' => 'Medical Education', 'desc' => 'Approved for MBBS, MD/MS, and Postgraduate Medical clinical specialties matching national clinical standards.'],
+            ['code' => 'NCISM', 'name' => 'National Commission for Indian System of Medicine', 'domain' => 'Ayurvedic Medicine', 'desc' => 'Approved for BAMS (Bachelor of Ayurvedic Medicine & Surgery) and Ayurvedic clinical hospital practice.'],
+            ['code' => 'NCH', 'name' => 'National Commission for Homoeopathy', 'domain' => 'Homoeopathic Medicine', 'desc' => 'Approved for BHMS and MD (Homoeopathy) programmes ensuring high healthcare education standards.'],
+            ['code' => 'NDC', 'name' => 'National Dental Commission', 'domain' => 'Dental Surgery', 'desc' => 'Approved for BDS and MDS dental surgery programmes across 8 specialized clinical departments.'],
+            ['code' => 'PCI', 'name' => 'Pharmacy Council of India', 'domain' => 'Pharmaceutical Sciences', 'desc' => 'Approved for D.Pharm, B.Pharm, and M.Pharm degrees across all constituent pharmacy colleges.'],
+            ['code' => 'INC', 'name' => 'Indian Nursing Council', 'domain' => 'Nursing Sciences', 'desc' => 'Approved for GNM, B.Sc. Nursing, P.B.B.Sc., M.Sc. Nursing, and NPCC clinical training.'],
+            ['code' => 'MPPMC', 'name' => 'M.P. Paramedical Council', 'domain' => 'Paramedical Health', 'desc' => 'Recognized for DMLT, BMLT, MMLT, BPT, MPT, Radiography, Dialysis, and Paramedical Diplomas.'],
+            ['code' => 'AICTE', 'name' => 'All India Council for Technical Education', 'domain' => 'Engineering & Management', 'desc' => 'Approved for Engineering Diploma, B.Tech., M.Tech., MCA, and MBA professional programmes.'],
+            ['code' => 'BCI', 'name' => 'Bar Council of India', 'domain' => 'Legal Education', 'desc' => 'Approved for B.A. LL.B. (Hons.), LL.B. (3 Years), and LL.M. professional legal education.'],
+            ['code' => 'MPPURC', 'name' => 'M.P. Private University Regulatory Commission', 'domain' => 'State Regulatory Council', 'desc' => 'Established under Madhya Pradesh Niji Vishwavidyalaya Adhiniyam 2007 (Act No. 17 of 2007).']
+        ];
+        ?>
+
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
-            <!-- 1. NMC -->
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 text-center bg-white border-top border-3 border-danger">
-                    <div class="badge bg-danger-subtle text-danger rounded-pill px-3 py-1 mb-2 fw-bold" style="font-size: 0.8rem;">MEDICAL</div>
-                    <h3 class="h4 fw-bold text-navy mb-1">NMC</h3>
-                    <h4 class="h6 fw-semibold text-danger mb-2">National Medical Commission</h4>
-                    <p class="text-muted small mb-0">Approved for MBBS, MD/MS, and Postgraduate Medical specialties matching national clinical standards.</p>
+            <?php foreach ($approvals as $ap): ?>
+                <div class="col">
+                    <div class="accred-approval-card h-100 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
+                            <span class="accred-dept-pill"><?php echo sanitize($ap['domain']); ?></span>
+                            <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1 small fw-semibold">
+                                <i class="fas fa-check-circle me-1"></i> Recognized
+                            </span>
+                        </div>
+                        <div class="accred-code"><?php echo sanitize($ap['code']); ?></div>
+                        <div class="accred-full-name"><?php echo sanitize($ap['name']); ?></div>
+                        <p class="accred-desc mt-auto"><?php echo sanitize($ap['desc']); ?></p>
+                    </div>
                 </div>
-            </div>
-
-            <!-- 2. NCISM -->
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 text-center bg-white border-top border-3 border-success">
-                    <div class="badge bg-success-subtle text-success rounded-pill px-3 py-1 mb-2 fw-bold" style="font-size: 0.8rem;">AYURVEDA</div>
-                    <h3 class="h4 fw-bold text-navy mb-1">NCISM</h3>
-                    <h4 class="h6 fw-semibold text-success mb-2">National Commission for Indian System of Medicine</h4>
-                    <p class="text-muted small mb-0">Approved for BAMS (Bachelor of Ayurvedic Medicine &amp; Surgery) and Ayurvedic clinical hospital practice.</p>
-                </div>
-            </div>
-
-            <!-- 3. NCH -->
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 text-center bg-white border-top border-3 border-warning">
-                    <div class="badge bg-warning-subtle text-dark rounded-pill px-3 py-1 mb-2 fw-bold" style="font-size: 0.8rem;">HOMOEOPATHY</div>
-                    <h3 class="h4 fw-bold text-navy mb-1">NCH</h3>
-                    <h4 class="h6 fw-semibold text-dark mb-2">National Commission for Homoeopathy</h4>
-                    <p class="text-muted small mb-0">Approved for BHMS and MD (Homoeopathy) programmes ensuring high healthcare education standards.</p>
-                </div>
-            </div>
-
-            <!-- 4. NDC -->
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 text-center bg-white border-top border-3 border-primary">
-                    <div class="badge bg-primary-subtle text-primary rounded-pill px-3 py-1 mb-2 fw-bold" style="font-size: 0.8rem;">DENTAL</div>
-                    <h3 class="h4 fw-bold text-navy mb-1">NDC</h3>
-                    <h4 class="h6 fw-semibold text-primary mb-2">National Dental Commission</h4>
-                    <p class="text-muted small mb-0">Approved for BDS and MDS dental surgery programmes across 8 dental specializations.</p>
-                </div>
-            </div>
-
-            <!-- 5. PCI -->
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 text-center bg-white border-top border-3 border-info">
-                    <div class="badge bg-info-subtle text-info-emphasis rounded-pill px-3 py-1 mb-2 fw-bold" style="font-size: 0.8rem;">PHARMACY</div>
-                    <h3 class="h4 fw-bold text-navy mb-1">PCI</h3>
-                    <h4 class="h6 fw-semibold text-info-emphasis mb-2">Pharmacy Council of India</h4>
-                    <p class="text-muted small mb-0">Approved for D.Pharm, B.Pharm, and M.Pharm degrees across all 5 constituent pharmacy colleges.</p>
-                </div>
-            </div>
-
-            <!-- 6. INC -->
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 text-center bg-white border-top border-3 border-danger">
-                    <div class="badge bg-danger-subtle text-danger rounded-pill px-3 py-1 mb-2 fw-bold" style="font-size: 0.8rem;">NURSING</div>
-                    <h3 class="h4 fw-bold text-navy mb-1">INC</h3>
-                    <h4 class="h6 fw-semibold text-danger mb-2">Indian Nursing Council</h4>
-                    <p class="text-muted small mb-0">Approved for GNM, B.Sc., P.B.B.Sc., M.Sc. Nursing, and NPCC (Nurse Practitioner in Critical Care).</p>
-                </div>
-            </div>
-
-            <!-- 7. MPPMC -->
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 text-center bg-white border-top border-3 border-success">
-                    <div class="badge bg-success-subtle text-success rounded-pill px-3 py-1 mb-2 fw-bold" style="font-size: 0.8rem;">PARAMEDICAL</div>
-                    <h3 class="h4 fw-bold text-navy mb-1">MPPMC</h3>
-                    <h4 class="h6 fw-semibold text-success mb-2">M.P. Paramedical Council</h4>
-                    <p class="text-muted small mb-0">Recognized for DMLT, BMLT, MMLT, BPT, MPT, Radiography, Dialysis, and Paramedical Diplomas.</p>
-                </div>
-            </div>
-
-            <!-- 8. AICTE -->
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 text-center bg-white border-top border-3 border-primary">
-                    <div class="badge bg-primary-subtle text-primary rounded-pill px-3 py-1 mb-2 fw-bold" style="font-size: 0.8rem;">TECHNICAL &amp; MANAGEMENT</div>
-                    <h3 class="h4 fw-bold text-navy mb-1">AICTE</h3>
-                    <h4 class="h6 fw-semibold text-primary mb-2">All India Council for Technical Education</h4>
-                    <p class="text-muted small mb-0">Approved for Engineering Diploma, B.Tech., M.Tech., MCA, and MBA programs.</p>
-                </div>
-            </div>
-
-            <!-- 9. BCI -->
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 text-center bg-white border-top border-3 border-dark">
-                    <div class="badge bg-dark-subtle text-dark rounded-pill px-3 py-1 mb-2 fw-bold" style="font-size: 0.8rem;">LAW</div>
-                    <h3 class="h4 fw-bold text-navy mb-1">BCI</h3>
-                    <h4 class="h6 fw-semibold text-dark mb-2">Bar Council of India</h4>
-                    <p class="text-muted small mb-0">Approved for B.A. LL.B. (Hons.), LL.B. (3 Years), and LL.M. professional legal education.</p>
-                </div>
-            </div>
-
-            <!-- 10. UGC -->
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 text-center bg-white border-top border-3 border-danger">
-                    <div class="badge bg-danger-subtle text-danger rounded-pill px-3 py-1 mb-2 fw-bold" style="font-size: 0.8rem;">GOVT. OF INDIA</div>
-                    <h3 class="h4 fw-bold text-navy mb-1">UGC</h3>
-                    <h4 class="h6 fw-semibold text-danger mb-2">University Grants Commission</h4>
-                    <p class="text-muted small mb-0">Statutory recognition under Section 2(f) of the UGC Act 1956, Government of India.</p>
-                </div>
-            </div>
-
-            <!-- 11. MPPURC -->
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 text-center bg-white border-top border-3 border-secondary">
-                    <div class="badge bg-secondary-subtle text-secondary rounded-pill px-3 py-1 mb-2 fw-bold" style="font-size: 0.8rem;">STATE REGULATOR</div>
-                    <h3 class="h4 fw-bold text-navy mb-1">MPPURC</h3>
-                    <h4 class="h6 fw-semibold text-secondary mb-2">M.P. Private University Regulatory Commission</h4>
-                    <p class="text-muted small mb-0">Established under the Madhya Pradesh Niji Vishwavidyalaya Adhiniyam 2007 (Act No. 17 of 2007).</p>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
@@ -187,36 +109,54 @@ require_once __DIR__ . '/includes/header.php';
 <!-- CONSTITUENT INSTITUTES & SEALS -->
 <section class="py-5 bg-white">
     <div class="container-xl py-3">
-        <div class="text-center mb-5">
-            <span class="section-subtitle">ACADEMIC EXCELLENCE</span>
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <span class="section-subtitle"><i class="fas fa-university text-danger me-1"></i> ACADEMIC EXCELLENCE</span>
             <h2 class="section-title">Official Constituent <span>Colleges &amp; Seals</span></h2>
-            <p class="text-muted mx-auto" style="max-width: 720px;">
-                Our distinguished constituent institutes operate under the statutory framework of SRK University, delivering benchmarked professional education.
+            <p class="text-muted small mb-0">
+                Our distinguished constituent institutes operate under the statutory framework of SRK University, delivering benchmarked professional education across disciplines.
             </p>
         </div>
 
-        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4 justify-content-center text-center">
-            <?php
-            $constituentLogos = [
-                ['name' => 'RKDF Medical College & Research Centre', 'img' => 'logo-rkdf-medical.png', 'est' => '2014'],
-                ['name' => 'SRK College of Ayurveda Hospital', 'img' => 'logo-srk-ayurveda.png', 'est' => '2021'],
-                ['name' => 'RKDF Homoeopathic Medical College', 'img' => 'logo-rkdf-homoeopathy.png', 'est' => '2000'],
-                ['name' => 'RKDF Dental College & Research Centre', 'img' => 'logo-rkdf-dental.png', 'est' => '2003'],
-                ['name' => 'RKDF College of Pharmacy', 'img' => 'logo-rkdf-pharmacy.png', 'est' => '1995'],
-                ['name' => 'RKDF College of Nursing', 'img' => 'logo-rkdf-nursing.png', 'est' => '2003'],
-                ['name' => 'SRK College of Allied & Healthcare', 'img' => 'logo-allied-healthcare.png', 'est' => '2019'],
-                ['name' => 'RKDF Institute of Science & Technology', 'img' => 'logo-rkdf-science-tech.png', 'est' => '1995'],
-                ['name' => 'SRK College of Law', 'img' => 'logo-srk-law.png', 'est' => '2019'],
-                ['name' => 'RKDF Institute of Business Management', 'img' => 'logo-rkdf-management.png', 'est' => '2006'],
-                ['name' => 'Faculty of Agriculture, SRKU', 'img' => 'logo-srk-agriculture.png', 'est' => '2018']
-            ];
-            foreach ($constituentLogos as $cl):
-            ?>
+        <?php
+        $constituentLogos = [
+            ['name' => 'RKDF Medical College Hospital & Research Centre', 'img' => 'logo-rkdf-medical.png', 'est' => '2014', 'slug' => 'rkdf-medical-college'],
+            ['name' => 'SRK College of Ayurveda Hospital', 'img' => 'logo-srk-ayurveda.png', 'est' => '2021', 'slug' => 'sarvepalli-radhakrishnan-college-of-ayurveda'],
+            ['name' => 'RKDF Homoeopathic Medical College', 'img' => 'logo-rkdf-homoeopathy.png', 'est' => '2000', 'slug' => 'rkdf-homoeopathic-medical-college'],
+            ['name' => 'RKDF Dental College & Research Centre', 'img' => 'logo-rkdf-dental.png', 'est' => '2003', 'slug' => 'rkdf-dental-college'],
+            ['name' => 'RKDF College of Pharmacy', 'img' => 'logo-rkdf-pharmacy.png', 'est' => '1995', 'slug' => 'rkdf-college-of-pharmacy'],
+            ['name' => 'RKDF College of Nursing', 'img' => 'logo-rkdf-nursing.png', 'est' => '2003', 'slug' => 'rkdf-college-of-nursing'],
+            ['name' => 'SRK College of Allied & Healthcare Sciences', 'img' => 'logo-allied-healthcare.png', 'est' => '2019', 'slug' => 'department-of-paramedical-sciences'],
+            ['name' => 'RKDF Institute of Science & Technology', 'img' => 'logo-rkdf-science-tech.png', 'est' => '1995', 'slug' => 'rkdf-institute-of-science-and-technology'],
+            ['name' => 'SRK College of Law', 'img' => 'logo-srk-law.png', 'est' => '2019', 'slug' => 'faculty-of-law'],
+            ['name' => 'RKDF Institute of Business Management', 'img' => 'logo-rkdf-management.png', 'est' => '2006', 'slug' => 'rkdf-institute-of-business-management'],
+            ['name' => 'Faculty of Agriculture, SRKU', 'img' => 'logo-srk-agriculture.png', 'est' => '2018', 'slug' => 'faculty-of-agriculture']
+        ];
+        ?>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+            <?php foreach ($constituentLogos as $cl): ?>
                 <div class="col">
-                    <div class="card h-100 p-3 border-0 shadow-sm rounded-4 bg-light text-center transition-hover">
-                        <img src="<?php echo BASE_URL; ?>assets/images/constituent-logos/<?php echo $cl['img']; ?>" alt="<?php echo $cl['name']; ?>" class="img-fluid mx-auto mb-2 rounded-circle shadow-xs" style="width: 80px; height: 80px; object-fit: contain;">
-                        <h5 class="fw-bold text-navy mb-1" style="font-size: 0.85rem; line-height: 1.3;"><?php echo $cl['name']; ?></h5>
-                        <span class="badge bg-white text-secondary border small rounded-pill mt-auto">Est. <?php echo $cl['est']; ?></span>
+                    <div class="constituent-seal-card h-100 d-flex flex-column">
+                        <div class="constituent-seal-logo-wrap">
+                            <img src="<?php echo BASE_URL; ?>assets/images/constituent-logos/<?php echo $cl['img']; ?>" 
+                                 onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-logo.webp';"
+                                 alt="<?php echo sanitize($cl['name']); ?>" 
+                                 class="img-fluid" style="max-height: 68px; width: auto; object-fit: contain;">
+                        </div>
+                        <h4 class="constituent-seal-title"><?php echo sanitize($cl['name']); ?></h4>
+                        
+                        <div class="d-flex justify-content-center align-items-center gap-2 mb-3 mt-auto">
+                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2.5 py-1 rounded-pill small fw-bold">
+                                Constituent Unit
+                            </span>
+                            <span class="badge bg-light text-dark border px-2.5 py-1 rounded-pill small fw-semibold">
+                                <i class="far fa-calendar-alt text-warning me-1"></i> Est. <?php echo $cl['est']; ?>
+                            </span>
+                        </div>
+
+                        <a href="<?php echo BASE_URL . $cl['slug']; ?>" class="btn btn-sm btn-outline-danger rounded-pill fw-bold py-1.5">
+                            Explore College <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
                     </div>
                 </div>
             <?php endforeach; ?>

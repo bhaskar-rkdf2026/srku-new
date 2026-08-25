@@ -15,8 +15,8 @@ require_once __DIR__ . '/includes/header.php';
     <div class="container-xl about-hero-v2__inner">
         <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb mb-0 small">
-                <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page" style="color: rgba(255,255,255,0.85);">Vision &amp; Mission</li>
+                <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning"><i class="fas fa-home me-1"></i> Home</a></li>
+                <li class="breadcrumb-item active text-white-50" aria-current="page">Vision &amp; Mission</li>
             </ol>
         </nav>
         <span class="about-hero-v2__eyebrow"><i class="fas fa-star"></i> Est. 1995 &middot; RKDF Education Society</span>
@@ -24,7 +24,10 @@ require_once __DIR__ . '/includes/header.php';
         <p class="about-hero-v2__desc" style="max-width:760px;">
             SRK University's foundation rests on three pillars: an ambitious Vision for the future, a clear Mission in the present, and Core Values that guide every decision we make. These principles ensure that we remain committed to excellence, integrity, and student success.
         </p>
-        <a href="<?php echo BASE_URL; ?>contact.php#apply" class="btn-hero-yellow">Apply Now</a>
+        <div class="d-flex flex-wrap gap-3">
+            <a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="btn-hero-yellow">Join SRKU</a>
+            <a href="<?php echo BASE_URL; ?>about.php" class="btn-hero-outline">About The University</a>
+        </div>
     </div>
 </section>
 
