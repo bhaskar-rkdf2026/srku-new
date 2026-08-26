@@ -8,11 +8,11 @@ $tab = sanitize($_GET['tab'] ?? 'hero');
 // Handle Save Homepage Sections
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_homepage_sections'])) {
     
-    $heroVideo = trim((string)($_POST['hero_video_url'] ?? 'assets/images/SRK-Hero-Section.mp4'));
-    $heroFallback = trim((string)($_POST['hero_fallback_image'] ?? 'assets/uploads/2026/08/srku-rkdf-building.jpeg'));
-    $chancellorPhoto = trim((string)($_POST['chancellor_photo'] ?? 'assets/uploads/2026/08/chancellor.jpeg'));
-    $vcPhoto = trim((string)($_POST['vc_photo'] ?? 'assets/uploads/2026/07/ruchichaubey.webp'));
-    $welcomePhoto = trim((string)($_POST['welcome_photo'] ?? 'assets/uploads/2026/08/welcome-srku-campus.jpeg'));
+    $heroVideo = normalizeMediaPath($_POST['hero_video_url'] ?? '', 'assets/images/concept2-hero.mp4');
+    $heroFallback = normalizeMediaPath($_POST['hero_fallback_image'] ?? '', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
+    $chancellorPhoto = normalizeMediaPath($_POST['chancellor_photo'] ?? '', 'assets/uploads/2026/08/chancellor.jpeg');
+    $vcPhoto = normalizeMediaPath($_POST['vc_photo'] ?? '', 'assets/uploads/2026/07/ruchichaubey.webp');
+    $welcomePhoto = normalizeMediaPath($_POST['welcome_photo'] ?? '', 'assets/uploads/2026/08/welcome-srku-campus.jpeg');
 
     $uploadDir = __DIR__ . '/../assets/uploads/2026/08/';
     if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
@@ -227,32 +227,37 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
                 </div>
             </div>
 
+            <?php
+            $availableVideos = getAvailableVideos();
+            $resolvedHeroVideo = resolveMediaUrl($heroVideo, 'assets/images/concept2-hero.mp4');
+            $resolvedHeroPoster = resolveMediaUrl($heroFallback, 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
+            ?>
             <div class="row g-4 align-items-start">
                 <!-- Preview Player -->
                 <div class="col-12 col-lg-5">
                     <div class="p-3 rounded-4 bg-dark text-white shadow-sm">
                         <div class="d-flex justify-content-between align-items-center mb-2 px-1">
                             <span class="small fw-bold text-warning"><i class="fas fa-play-circle me-1"></i> Live Video Preview</span>
-                            <span class="badge bg-danger text-white small">Active</span>
+                            <span class="badge bg-success text-white small" id="videoStatusBadge">Ready &amp; Active</span>
                         </div>
                         
-                        <div class="position-relative rounded-3 overflow-hidden" style="max-height: 220px; background: #000;">
-                            <video class="w-100 h-100 object-fit-cover" controls autoplay muted loop playsinline 
-                                   poster="<?php echo (strpos($heroFallback, 'http') === 0) ? $heroFallback : BASE_URL . $heroFallback; ?>">
-                                <source src="<?php echo (strpos($heroVideo, 'http') === 0) ? $heroVideo : BASE_URL . $heroVideo; ?>" type="video/mp4">
+                        <div class="position-relative rounded-3 overflow-hidden" style="min-height: 220px; background: #000;">
+                            <video id="adminHeroPreview" class="w-100 h-100 object-fit-cover" controls autoplay muted loop playsinline 
+                                   poster="<?php echo $resolvedHeroPoster; ?>">
+                                <source id="adminHeroPreviewSrc" src="<?php echo $resolvedHeroVideo; ?>" type="video/mp4">
                             </video>
                         </div>
 
                         <div class="mt-3 pt-2 border-top border-secondary small text-white-50">
-                            <div class="text-truncate mb-1"><i class="fas fa-film text-info me-1"></i> <strong>Video:</strong> <?php echo sanitize($heroVideo); ?></div>
-                            <div class="text-truncate"><i class="fas fa-image text-success me-1"></i> <strong>Poster:</strong> <?php echo sanitize($heroFallback); ?></div>
+                            <div class="text-truncate mb-1"><i class="fas fa-film text-info me-1"></i> <strong>Current Video:</strong> <span id="currentVideoLabel" class="text-white"><?php echo sanitize($heroVideo); ?></span></div>
+                            <div class="text-truncate"><i class="fas fa-image text-success me-1"></i> <strong>Resolved URL:</strong> <span class="text-warning small"><?php echo $resolvedHeroVideo; ?></span></div>
                         </div>
                     </div>
 
                     <div class="mt-3 p-3 rounded-4 bg-light border">
                         <span class="small fw-bold text-navy d-block mb-2"><i class="fas fa-shield-alt text-success me-1"></i> Fallback Image Preview</span>
                         <div class="rounded-3 overflow-hidden" style="height: 110px;">
-                            <img src="<?php echo (strpos($heroFallback, 'http') === 0) ? $heroFallback : BASE_URL . $heroFallback; ?>" 
+                            <img id="adminPosterPreview" src="<?php echo $resolvedHeroPoster; ?>" 
                                  onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/08/srku-rkdf-building.jpeg';"
                                  alt="Fallback Poster" class="w-100 h-100 object-fit-cover">
                         </div>
@@ -264,10 +269,27 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
                     <!-- Video URL/Upload -->
                     <div class="mb-4 p-3 rounded-3 bg-light border">
                         <h6 class="fw-bold text-navy mb-2"><i class="fas fa-film text-danger me-1"></i> 1. Hero Background Video</h6>
+                        
+                        <!-- Quick Pick Existing Video -->
+                        <?php if (!empty($availableVideos)): ?>
+                        <div class="mb-2">
+                            <label class="form-label small fw-bold text-dark mb-1"><i class="fas fa-list text-primary me-1"></i> Quick Select from Server Videos</label>
+                            <select id="quickVideoPicker" class="form-select form-select-sm mb-2" onchange="onQuickVideoSelect(this)">
+                                <option value="">-- Choose an Existing Campus Video --</option>
+                                <?php foreach ($availableVideos as $v): ?>
+                                    <option value="<?php echo sanitize($v['path']); ?>" <?php echo ($heroVideo === $v['path'] || $heroVideo === $v['name'] || stripos($heroVideo, $v['name']) !== false) ? 'selected' : ''; ?>>
+                                        <?php echo sanitize($v['label']); ?> (<?php echo sanitize($v['size']); ?>)
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <?php endif; ?>
+
                         <div class="row g-2">
                             <div class="col-12 col-md-7">
                                 <label class="form-label small text-muted mb-1">Video Relative Path or URL</label>
-                                <input type="text" name="hero_video_url" class="form-control form-control-sm" value="<?php echo sanitize($heroVideo); ?>">
+                                <input type="text" id="heroVideoInput" name="hero_video_url" class="form-control form-control-sm" value="<?php echo sanitize($heroVideo); ?>" placeholder="assets/images/concept2-hero.mp4" oninput="onVideoInputManual(this.value)">
+                                <div class="form-text text-muted" style="font-size: 0.75rem;">Example: <code>assets/images/concept2-hero.mp4</code> or just filename <code>concept2-hero.mp4</code> (auto-resolved).</div>
                             </div>
                             <div class="col-12 col-md-5">
                                 <label class="form-label small text-muted mb-1">OR Upload MP4 Video</label>
@@ -282,7 +304,7 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
                         <div class="row g-2">
                             <div class="col-12 col-md-7">
                                 <label class="form-label small text-muted mb-1">Image Relative Path or URL</label>
-                                <input type="text" name="hero_fallback_image" class="form-control form-control-sm" value="<?php echo sanitize($heroFallback); ?>">
+                                <input type="text" id="heroFallbackInput" name="hero_fallback_image" class="form-control form-control-sm" value="<?php echo sanitize($heroFallback); ?>" oninput="onPosterInputManual(this.value)">
                             </div>
                             <div class="col-12 col-md-5">
                                 <label class="form-label small text-muted mb-1">OR Upload Poster</label>
@@ -314,6 +336,52 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
                     </div>
                 </div>
             </div>
+
+            <script>
+            function onQuickVideoSelect(selectEl) {
+                var val = selectEl.value;
+                if (!val) return;
+                var input = document.getElementById('heroVideoInput');
+                input.value = val;
+                updateVideoPreview(val);
+            }
+
+            function onVideoInputManual(val) {
+                updateVideoPreview(val);
+            }
+
+            function updateVideoPreview(val) {
+                if (!val) return;
+                var baseUrl = '<?php echo BASE_URL; ?>';
+                var finalUrl = val;
+                if (!val.startsWith('http://') && !val.startsWith('https://')) {
+                    var clean = val.replace(/^\/+/, '');
+                    if (!clean.startsWith('assets/')) {
+                        clean = 'assets/images/' + clean;
+                    }
+                    finalUrl = baseUrl + clean;
+                }
+                var vid = document.getElementById('adminHeroPreview');
+                var src = document.getElementById('adminHeroPreviewSrc');
+                if (vid && src) {
+                    src.src = finalUrl;
+                    vid.load();
+                    vid.play().catch(function(){});
+                }
+                var lbl = document.getElementById('currentVideoLabel');
+                if (lbl) lbl.textContent = val;
+            }
+
+            function onPosterInputManual(val) {
+                if (!val) return;
+                var baseUrl = '<?php echo BASE_URL; ?>';
+                var finalUrl = (val.startsWith('http://') || val.startsWith('https://')) ? val : baseUrl + val.replace(/^\/+/, '');
+                var img = document.getElementById('adminPosterPreview');
+                if (img) img.src = finalUrl;
+                var vid = document.getElementById('adminHeroPreview');
+                if (vid) vid.poster = finalUrl;
+            }
+            </script>
         </div>
     <?php endif; ?>
 

@@ -15,22 +15,22 @@ $totalAlumni = getSetting('total_alumni', '15,000+');
 $heroTitle = getSetting('hero_title', 'SRK University, Bhopal');
 $heroSubtitle = getSetting('hero_subtitle', 'UGC-Recognized University in MP');
 $heroDesc = getSetting('hero_desc', 'Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership. If you are looking for the best placement university in MP, our rigorous research, multi-disciplinary collaboration, and industry-aligned pedagogy deliver unmatched career growth.');
-$heroVideo = getSetting('hero_video_url', 'assets/images/SRK-Hero-Section.mp4');
+$heroVideo = getSetting('hero_video_url', 'assets/images/concept2-hero.mp4');
 $heroFallbackImg = getSetting('hero_fallback_image', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
-$heroVideoSrc = (strpos($heroVideo, 'http') === 0) ? $heroVideo : BASE_URL . $heroVideo;
-$heroFallbackPoster = (strpos($heroFallbackImg, 'http') === 0) ? $heroFallbackImg : BASE_URL . $heroFallbackImg;
+$heroVideoSrc = resolveMediaUrl($heroVideo, 'assets/images/concept2-hero.mp4');
+$heroFallbackPoster = resolveMediaUrl($heroFallbackImg, 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
 
 $welcomeSubtitle = getSetting('welcome_subtitle', 'WELCOME TO SRK UNIVERSITY');
 $welcomeTitle = getSetting('welcome_title', 'Committed Towards Your Better Future Through Academic Excellence');
 $welcomeBody1 = getSetting('welcome_body_1', 'The SRK University is a multidisciplinary university known for its high standards in teaching and research, and attracts eminent scholars to its faculty across the academic spectrum.');
 $welcomeBody2 = getSetting('welcome_body_2', 'The group was established in 1995 under the flagship of the RKDF Group. Ever since its inception, a strong commitment to excellence in teaching and research has made the group a role-model and path-setter for other institutions. Its rich academic tradition has always attracted the most talented students, who later go on to make important contributions to society.');
 $welcomePhoto = getSetting('welcome_photo', 'assets/uploads/2026/08/welcome-srku-campus.jpeg');
-$welcomePhotoSrc = (strpos($welcomePhoto, 'http') === 0) ? $welcomePhoto : BASE_URL . $welcomePhoto;
+$welcomePhotoSrc = resolveMediaUrl($welcomePhoto, 'assets/uploads/2026/08/welcome-srku-campus.jpeg');
 
 $chancellorName = getSetting('chancellor_name', 'Mrs. Janak Kapoor');
 $chancellorTitle = getSetting('chancellor_title', 'Chancellor');
 $chancellorPhoto = getSetting('chancellor_photo', 'assets/uploads/2026/08/chancellor.jpeg');
-$chancellorPhotoSrc = (strpos($chancellorPhoto, 'http') === 0) ? $chancellorPhoto : BASE_URL . $chancellorPhoto;
+$chancellorPhotoSrc = resolveMediaUrl($chancellorPhoto, 'assets/uploads/2026/08/chancellor.jpeg');
 $chancellorHeading = getSetting('chancellor_heading', 'A Legacy of Excellence, A Vision for Tomorrow');
 $chancellorMsg = getSetting('chancellor_msg', 'It is a matter of great joy that the notification for the establishment of Sarvepalli Radhakrishnan University, Bhopal, has been issued by the State Government.');
 $chancellorMsg2 = getSetting('chancellor_msg2', "In order to maintain quality in the field of higher education in the state, it is an important responsibility of private universities, alongside government universities, to bring about change in research and exploration. It is hoped that Sarvepalli Radhakrishnan University will, in the future, deliver unprecedented performance on quality standards and establish itself as the state's foremost institution of education.");
@@ -38,7 +38,7 @@ $chancellorMsg2 = getSetting('chancellor_msg2', "In order to maintain quality in
 $vcName = getSetting('vc_name', 'Ms. Priyanka Jaiswal');
 $vcTitle = getSetting('vc_title', 'Vice Chancellor');
 $vcPhoto = getSetting('vc_photo', 'assets/uploads/2026/07/ruchichaubey.webp');
-$vcPhotoSrc = (strpos($vcPhoto, 'http') === 0) ? $vcPhoto : BASE_URL . $vcPhoto;
+$vcPhotoSrc = resolveMediaUrl($vcPhoto, 'assets/uploads/2026/07/ruchichaubey.webp');
 $vcHeading = getSetting('vc_heading', 'Pioneering Excellence, Empowering Future Leaders');
 $vcMsg = getSetting('vc_msg', 'At SRK University, our mission is to transform ambitious learners into visionary global leaders through outcome-based education and cutting-edge research.');
 $vcMsg2 = getSetting('vc_msg2', 'We foster innovation, high-impact research, and multi-disciplinary excellence. Our state-of-the-art infrastructure and faculty mentorship ensure every graduate is prepared for global careers.');
@@ -73,13 +73,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 ═══════════════════════════════════════════════════════ -->
 <section class="hero-section position-relative" style="background: #0b1120 url('<?php echo $heroFallbackPoster; ?>') center/cover no-repeat;">
 
-    <video class="hero-bg-video" autoplay muted loop playsinline poster="<?php echo $heroFallbackPoster; ?>">
+    <video class="hero-bg-video" id="heroBgVideo" autoplay muted loop playsinline preload="auto" poster="<?php echo $heroFallbackPoster; ?>">
         <source src="<?php echo $heroVideoSrc; ?>" type="video/mp4">
         <!-- Direct Fallback Image if Video Cannot Play -->
         <img src="<?php echo $heroFallbackPoster; ?>" alt="<?php echo sanitize($heroTitle); ?>" class="hero-bg-video object-fit-cover">
     </video>
 
     <div class="hero-overlay"></div>
+
+    <script>
+    (function() {
+        function initHeroVideo() {
+            var v = document.getElementById('heroBgVideo');
+            if (!v) return;
+            v.muted = true;
+            v.defaultMuted = true;
+            v.playsInline = true;
+            var playPromise = v.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(function(err) {
+                    var startPlayback = function() {
+                        v.play().catch(function(){});
+                        ['click', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(function(e) {
+                            window.removeEventListener(e, startPlayback);
+                        });
+                    };
+                    ['click', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(function(e) {
+                        window.addEventListener(e, startPlayback, { passive: true, once: true });
+                    });
+                });
+            }
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initHeroVideo);
+        } else {
+            initHeroVideo();
+        }
+    })();
+    </script>
 
     <div class="container-fluid px-4 px-lg-5 position-relative z-3">
         <div class="hero-content px-0">

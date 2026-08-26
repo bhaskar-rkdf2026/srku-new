@@ -14,7 +14,7 @@ if (!empty($dbDepartments)) {
         $units[] = [
             'title' => $d['name'],
             'subtitle' => !empty($d['category']) ? $d['category'] : 'Constituent Institute',
-            'img_src' => (strpos($img, 'http') === 0) ? $img : BASE_URL . $img,
+            'img_src' => resolveMediaUrl($img, 'assets/uploads/2026/07/001.webp'),
             'href' => BASE_URL . 'department-detail.php?slug=' . urlencode($d['slug']),
             'external' => false
         ];

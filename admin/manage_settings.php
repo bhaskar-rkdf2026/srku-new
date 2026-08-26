@@ -3,8 +3,8 @@ require_once __DIR__ . '/header.php';
 $pdo = getDBConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
-    $videoUrl = trim((string)($_POST['hero_video_url'] ?? 'assets/images/SRK-Hero-Section.mp4'));
-    $fallbackImg = trim((string)($_POST['hero_fallback_image'] ?? 'assets/uploads/2026/08/srku-rkdf-building.jpeg'));
+    $videoUrl = normalizeMediaPath($_POST['hero_video_url'] ?? '', 'assets/images/concept2-hero.mp4');
+    $fallbackImg = normalizeMediaPath($_POST['hero_fallback_image'] ?? '', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
 
     // Handle Video File Upload
     if (isset($_FILES['video_file']) && $_FILES['video_file']['error'] === UPLOAD_ERR_OK) {
@@ -44,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
         'hero_title' => sanitize($_POST['hero_title'] ?? 'SRK University, Bhopal'),
         'hero_subtitle' => sanitize($_POST['hero_subtitle'] ?? 'UGC-Recognized University in MP'),
         'hero_desc' => $_POST['hero_desc'] ?? '',
-        'hero_video_url' => $videoUrl,
-        'hero_fallback_image' => $fallbackImg,
+        'hero_video_url' => $videoUrl ?: 'assets/images/concept2-hero.mp4',
+        'hero_fallback_image' => $fallbackImg ?: 'assets/uploads/2026/08/srku-rkdf-building.jpeg',
         'chancellor_name' => sanitize($_POST['chancellor_name'] ?? 'Mrs. Janak Kapoor'),
         'chancellor_title' => sanitize($_POST['chancellor_title'] ?? 'Chancellor'),
         'chancellor_msg' => $_POST['chancellor_msg'] ?? '',
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
 $heroTitle = getSetting('hero_title', 'SRK University, Bhopal');
 $heroSubtitle = getSetting('hero_subtitle', 'UGC-Recognized University in MP');
 $heroDesc = getSetting('hero_desc', 'Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership. If you are looking for the best placement university in MP, our rigorous research, multi-disciplinary collaboration, and industry-aligned pedagogy deliver unmatched career growth.');
-$heroVideo = getSetting('hero_video_url', 'assets/images/SRK-Hero-Section.mp4');
+$heroVideo = getSetting('hero_video_url', 'assets/images/concept2-hero.mp4');
 $heroFallbackImg = getSetting('hero_fallback_image', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
 $chancellorName = getSetting('chancellor_name', 'Mrs. Janak Kapoor');
 $chancellorTitle = getSetting('chancellor_title', 'Founder Chairman & Chancellor');
