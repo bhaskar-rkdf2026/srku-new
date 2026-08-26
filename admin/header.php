@@ -135,12 +135,6 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
             <a href="manage_faculty.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_faculty.php' ? 'active' : ''; ?>">
                 <i class="fas fa-chalkboard-teacher"></i> Faculty Directory (1,000+)
             </a>
-            <a href="manage_pages.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_pages.php' ? 'active' : ''; ?>">
-                <i class="fas fa-file-alt"></i> Dynamic Pages
-            </a>
-            <a href="manage_banners.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_banners.php' ? 'active' : ''; ?>">
-                <i class="fas fa-images"></i> Page Banners
-            </a>
             <a href="manage_blogs.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_blogs.php' ? 'active' : ''; ?>">
                 <i class="fas fa-newspaper"></i> Blogs &amp; Articles
             </a>
