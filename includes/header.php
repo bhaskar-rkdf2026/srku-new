@@ -265,6 +265,7 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                     <ul class="static-dropdown-panel">
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>chancellor-message.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-crown text-warning me-1"></i> Chancellor's Message</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>vice-chancellor-message.php" class="static-dropdown-link fw-semibold text-navy"><i class="fas fa-user-tie text-primary me-1"></i> Vice Chancellor's Message</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>gallery.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-camera-retro text-danger me-1"></i> Photo Gallery</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>about/why-srk" class="static-dropdown-link">Why SRK</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>about/srk-university-vision-and-mission" class="static-dropdown-link">Vision &amp; Mission</a></li>
                         

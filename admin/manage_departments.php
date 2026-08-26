@@ -120,10 +120,10 @@ if ($action === 'edit' && $editId > 0) {
 $departments = $pdo->query("SELECT * FROM departments ORDER BY name ASC")->fetchAll();
 ?>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
     <div>
-        <h3 class="fw-bold text-navy mb-0">Manage Academic Departments &amp; Institutes</h3>
-        <p class="text-muted small mb-0">Configure constituent colleges, faculties, dean profiles, and descriptions.</p>
+        <h3 class="fw-bold text-navy mb-0">Manage Constituent Units &amp; Academic Departments <span class="badge bg-danger-subtle text-danger fs-6 rounded-pill ms-2"><?php echo count($departments); ?> Units</span></h3>
+        <p class="text-muted small mb-0">Configure all 26 constituent colleges, faculties, dean profiles, and campus images.</p>
     </div>
     <?php if ($action === 'edit' || $action === 'add'): ?>
         <a href="manage_departments.php" class="btn btn-outline-secondary btn-sm"><i class="fas fa-arrow-left me-1"></i> Back to List</a>
@@ -305,7 +305,7 @@ $departments = $pdo->query("SELECT * FROM departments ORDER BY name ASC")->fetch
                 <tbody>
                     <?php foreach ($departments as $d): 
                         $dImg = $d['image'] ?: 'assets/uploads/2026/07/001.webp';
-                        $dImgSrc = (strpos($dImg, 'http') === 0) ? $dImg : BASE_URL . $dImg;
+                        $dImgSrc = resolveMediaUrl($dImg, 'assets/uploads/2026/07/001.webp');
                     ?>
                         <tr>
                             <td>

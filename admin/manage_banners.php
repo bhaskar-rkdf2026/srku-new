@@ -78,8 +78,8 @@ $banners = $pdo->query("SELECT * FROM banners ORDER BY page_slug ASC, sort_order
 
 // Handle Homepage Hero Video & Fallback Image Save
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_hero_video'])) {
-    $videoUrl = trim((string)($_POST['hero_video_url'] ?? ''));
-    $fallbackImg = trim((string)($_POST['hero_fallback_image'] ?? 'assets/uploads/2026/08/srku-rkdf-building.jpeg'));
+    $videoUrl = normalizeMediaPath($_POST['hero_video_url'] ?? '', 'assets/images/concept2-hero.mp4');
+    $fallbackImg = normalizeMediaPath($_POST['hero_fallback_image'] ?? '', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
     $heroTitle = trim((string)($_POST['hero_title'] ?? 'SRK University, Bhopal'));
     $heroSubtitle = trim((string)($_POST['hero_subtitle'] ?? 'UGC-Recognized University in MP'));
     $heroDesc = trim((string)($_POST['hero_desc'] ?? ''));
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_hero_video'])) {
     }
 
     $heroSettings = [
-        'hero_video_url' => $videoUrl ?: 'assets/images/SRK-Hero-Section.mp4',
+        'hero_video_url' => $videoUrl ?: 'assets/images/concept2-hero.mp4',
         'hero_fallback_image' => $fallbackImg ?: 'assets/uploads/2026/08/srku-rkdf-building.jpeg',
         'hero_title' => $heroTitle,
         'hero_subtitle' => $heroSubtitle,
@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_hero_video'])) {
     exit;
 }
 
-$currHeroVideo = getSetting('hero_video_url', 'assets/images/SRK-Hero-Section.mp4');
+$currHeroVideo = getSetting('hero_video_url', 'assets/images/concept2-hero.mp4');
 $currHeroFallback = getSetting('hero_fallback_image', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
 $currHeroTitle = getSetting('hero_title', 'SRK University, Bhopal');
 $currHeroSubtitle = getSetting('hero_subtitle', 'UGC-Recognized University in MP');
@@ -182,13 +182,13 @@ $currHeroDesc = getSetting('hero_desc', 'Welcome to SRK University, a premier te
                 <div class="p-3 rounded-4 bg-dark text-white shadow-sm">
                     <div class="d-flex justify-content-between align-items-center mb-2 px-1">
                         <span class="small fw-bold text-warning"><i class="fas fa-play-circle me-1"></i> Current Video Player</span>
-                        <span class="badge bg-danger text-white small">Live Active</span>
+                        <span class="badge bg-success text-white small">Live Active</span>
                     </div>
                     
                     <div class="position-relative rounded-3 overflow-hidden" style="max-height: 220px; background: #000;">
                         <video class="w-100 h-100 object-fit-cover" controls autoplay muted loop playsinline 
-                               poster="<?php echo (strpos($currHeroFallback, 'http') === 0) ? $currHeroFallback : BASE_URL . $currHeroFallback; ?>">
-                            <source src="<?php echo (strpos($currHeroVideo, 'http') === 0) ? $currHeroVideo : BASE_URL . $currHeroVideo; ?>" type="video/mp4">
+                               poster="<?php echo resolveMediaUrl($currHeroFallback, 'assets/uploads/2026/08/srku-rkdf-building.jpeg'); ?>">
+                            <source src="<?php echo resolveMediaUrl($currHeroVideo, 'assets/images/concept2-hero.mp4'); ?>" type="video/mp4">
                             Your browser does not support HTML5 video.
                         </video>
                     </div>
@@ -203,7 +203,7 @@ $currHeroDesc = getSetting('hero_desc', 'Welcome to SRK University, a premier te
                 <div class="mt-3 p-3 rounded-4 bg-light border">
                     <span class="small fw-bold text-navy d-block mb-2"><i class="fas fa-shield-alt text-success me-1"></i> Fallback Image Preview (If Video Fails / Mobile Data Save)</span>
                     <div class="rounded-3 overflow-hidden" style="height: 120px;">
-                        <img src="<?php echo (strpos($currHeroFallback, 'http') === 0) ? $currHeroFallback : BASE_URL . $currHeroFallback; ?>" 
+                        <img src="<?php echo resolveMediaUrl($currHeroFallback, 'assets/uploads/2026/08/srku-rkdf-building.jpeg'); ?>" 
                              onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/08/srku-rkdf-building.jpeg';"
                              alt="Hero Fallback" 
                              class="w-100 h-100 object-fit-cover">

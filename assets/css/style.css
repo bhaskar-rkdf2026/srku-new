@@ -132,18 +132,19 @@ a {
 ══════════════════════════════════════ */
 .srku-topbar {
     background: var(--srku-maroon);
-    padding: 6px 0;
-    font-size: 0.74rem;
-    font-weight: 700;
-    letter-spacing: 0.4px;
+    padding: 4.5px 0;
+    font-size: 0.67rem;
+    font-weight: 600;
+    letter-spacing: 0.25px;
+    line-height: 1.35;
 }
 
 .topbar-link {
-    color: #fff;
+    color: rgba(255, 255, 255, 0.92);
     text-decoration: none;
-    font-weight: 700;
-    font-size: 0.74rem;
-    letter-spacing: 0.5px;
+    font-weight: 600;
+    font-size: 0.67rem;
+    letter-spacing: 0.25px;
     transition: var(--transition);
 }
 
@@ -152,9 +153,9 @@ a {
 }
 
 .topbar-info {
-    color: #fff;
-    font-size: 0.78rem;
-    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.69rem;
+    font-weight: 500;
 }
 
 /* ══════════════════════════════════════

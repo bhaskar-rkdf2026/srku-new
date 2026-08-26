@@ -126,8 +126,18 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
 
             <!-- ACADEMICS & DEPARTMENTS -->
             <div class="sidebar-heading">Academics &amp; Content</div>
+            <?php 
+            try {
+                $dbConn = getDBConnection();
+                $deptsCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM departments")->fetchColumn();
+                $galleryCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM gallery")->fetchColumn();
+            } catch(Exception $e) { 
+                $deptsCountBadge = 26; 
+                $galleryCountBadge = 71;
+            }
+            ?>
             <a href="manage_departments.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_departments.php' ? 'active' : ''; ?>">
-                <i class="fas fa-sitemap"></i> Departments (14)
+                <i class="fas fa-sitemap"></i> Constituent Units (<?php echo $deptsCountBadge; ?>)
             </a>
             <a href="manage_courses.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_courses.php' ? 'active' : ''; ?>">
                 <i class="fas fa-graduation-cap"></i> Courses &amp; Programs
@@ -135,17 +145,14 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
             <a href="manage_faculty.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_faculty.php' ? 'active' : ''; ?>">
                 <i class="fas fa-chalkboard-teacher"></i> Faculty Directory (1,000+)
             </a>
-            <a href="manage_pages.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_pages.php' ? 'active' : ''; ?>">
-                <i class="fas fa-file-alt"></i> Dynamic Pages
-            </a>
-            <a href="manage_banners.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_banners.php' ? 'active' : ''; ?>">
-                <i class="fas fa-images"></i> Page Banners
-            </a>
             <a href="manage_blogs.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_blogs.php' ? 'active' : ''; ?>">
                 <i class="fas fa-newspaper"></i> Blogs &amp; Articles
             </a>
             <a href="manage_news.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_news.php' ? 'active' : ''; ?>">
                 <i class="fas fa-bullhorn"></i> News &amp; Notices
+            </a>
+            <a href="manage_gallery.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_gallery.php' ? 'active' : ''; ?>">
+                <i class="fas fa-images text-danger"></i> Photo Gallery (<?php echo $galleryCountBadge; ?>)
             </a>
 
             <!-- ADMISSIONS & SETTINGS -->

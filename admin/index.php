@@ -3,10 +3,12 @@ require_once __DIR__ . '/header.php';
 $pdo = getDBConnection();
 
 $totalDepts = (int)$pdo->query("SELECT COUNT(*) FROM departments")->fetchColumn();
-$totalPages = (int)$pdo->query("SELECT COUNT(*) FROM pages")->fetchColumn();
+$totalFaculty = (int)$pdo->query("SELECT COUNT(*) FROM faculty")->fetchColumn();
 $totalCourses = (int)$pdo->query("SELECT COUNT(*) FROM courses")->fetchColumn();
 $totalNews = (int)$pdo->query("SELECT COUNT(*) FROM news")->fetchColumn();
-$totalBanners = (int)$pdo->query("SELECT COUNT(*) FROM banners")->fetchColumn();
+try {
+    $totalBlogs = (int)$pdo->query("SELECT COUNT(*) FROM blogs")->fetchColumn();
+} catch(Exception $e) { $totalBlogs = 0; }
 
 $totalEnquiries = (int)$pdo->query("SELECT COUNT(*) FROM enquiries")->fetchColumn();
 $newEnquiries = (int)$pdo->query("SELECT COUNT(*) FROM enquiries WHERE status = 'New' OR status IS NULL")->fetchColumn();
@@ -80,34 +82,34 @@ $recentEnquiries = $pdo->query("SELECT * FROM enquiries ORDER BY id DESC LIMIT 6
         </div>
     </div>
 
-    <!-- 3. Dynamic Pages -->
+    <!-- 3. Faculty Directory -->
     <div class="col-12 col-sm-6 col-lg-4 col-xxl-2">
         <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white hover-lift" style="transition: transform 0.25s ease, box-shadow 0.25s ease; border-left: 4px solid #2563eb !important;">
             <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="text-muted fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.5px;">CMS Pages</span>
+                <span class="text-muted fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.5px;">Faculty</span>
                 <div class="rounded-3 bg-primary-subtle text-primary d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
-                    <i class="fas fa-file-alt"></i>
+                    <i class="fas fa-chalkboard-teacher"></i>
                 </div>
             </div>
-            <div class="h2 fw-bold text-navy mb-1" style="font-size: 1.75rem;"><?php echo $totalPages; ?></div>
-            <a href="manage_pages.php" class="text-primary fw-semibold text-decoration-none small d-inline-flex align-items-center gap-1">
-                Pages <i class="fas fa-arrow-right fa-xs"></i>
+            <div class="h2 fw-bold text-navy mb-1" style="font-size: 1.75rem;"><?php echo $totalFaculty ?: '1,000+'; ?></div>
+            <a href="manage_faculty.php" class="text-primary fw-semibold text-decoration-none small d-inline-flex align-items-center gap-1">
+                Directory <i class="fas fa-arrow-right fa-xs"></i>
             </a>
         </div>
     </div>
 
-    <!-- 4. Hero Banners -->
+    <!-- 4. Blogs & Articles -->
     <div class="col-12 col-sm-6 col-lg-4 col-xxl-2">
         <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white hover-lift" style="transition: transform 0.25s ease, box-shadow 0.25s ease; border-left: 4px solid #0891b2 !important;">
             <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="text-muted fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.5px;">Banners</span>
+                <span class="text-muted fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.5px;">Articles</span>
                 <div class="rounded-3 bg-info-subtle text-info d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
-                    <i class="fas fa-images"></i>
+                    <i class="fas fa-newspaper"></i>
                 </div>
             </div>
-            <div class="h2 fw-bold text-navy mb-1" style="font-size: 1.75rem;"><?php echo $totalBanners; ?></div>
-            <a href="manage_banners.php" class="text-info fw-semibold text-decoration-none small d-inline-flex align-items-center gap-1" style="color: #0891b2 !important;">
-                Banners <i class="fas fa-arrow-right fa-xs"></i>
+            <div class="h2 fw-bold text-navy mb-1" style="font-size: 1.75rem;"><?php echo $totalBlogs; ?></div>
+            <a href="manage_blogs.php" class="text-info fw-semibold text-decoration-none small d-inline-flex align-items-center gap-1" style="color: #0891b2 !important;">
+                Articles <i class="fas fa-arrow-right fa-xs"></i>
             </a>
         </div>
     </div>

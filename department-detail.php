@@ -81,7 +81,7 @@ $externalWebsites = [
 $sealFile = $exactSeals[$dept['slug']] ?? null;
 $officialWebsite = $externalWebsites[$dept['slug']] ?? null;
 $deptImg = !empty($dept['image']) ? $dept['image'] : 'assets/uploads/2026/07/001.webp';
-$deptImgSrc = (strpos($deptImg, 'http') === 0) ? $deptImg : BASE_URL . $deptImg;
+$deptImgSrc = resolveMediaUrl($deptImg, 'assets/uploads/2026/07/001.webp');
 
 // Other departments for sidebar
 $allDepts = getDepartments(true);
