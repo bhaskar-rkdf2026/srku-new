@@ -64,6 +64,7 @@ foreach ($allImages as $img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 

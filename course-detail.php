@@ -199,19 +199,7 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                     </ul>
                 </div>
 
-                <!-- Career Opportunities & Scope -->
-                <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 mb-4 bg-white border">
-                    <h3 class="text-navy fw-bold mb-3"><i class="fas fa-briefcase text-danger me-2"></i> Career Scope &amp; Job Opportunities</h3>
-                    <p class="text-dark" style="line-height:1.8;">
-                        Graduates of <strong><?php echo sanitize($course['course_name']); ?></strong> possess exceptional career prospects across leading corporations, healthcare institutions, and research sectors:
-                    </p>
-                    <div class="p-3 bg-danger-subtle rounded-3 text-danger fw-semibold mb-3 border border-danger-subtle">
-                        <i class="fas fa-star me-2"></i> <?php echo sanitize($course['career_scope'] ?: 'Industry Specialist, R&D Associate, Technical Consultant, Public Sector Officer'); ?><span class="fw-normal">, &amp; many more...</span>
-                    </div>
-                    <p class="text-muted small mb-0">
-                        Our centralized Training &amp; Placement Cell conducts regular corporate interviews, mock assessments, and campus recruitment drives with recruiters offering salary packages up to <strong>12 LPA</strong>.
-                    </p>
-                </div>
+
 
                 <!-- Syllabus & Examination Scheme Downloads -->
                 <?php 
