@@ -64,7 +64,7 @@ require_once __DIR__ . '/includes/header.php';
         <?php if ($search || $category): ?>
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <p class="text-muted mb-0 small">
-                    Showing results for <strong><?php echo $category ? 'Category: ' . sanitize($category) : ''; ?><?php echo ($category && $search) ? ' & ' : ''; ?><?php echo $search ? 'Keyword: "' . sanitize($search) . '"' : ''; ?></strong> (<?php echo count($blogsList); ?> articles found)
+                    Showing results for <strong><?php echo $category ? 'Category: ' . sanitize($category) : ''; ?><?php echo ($category && $search) ? ' & ' : ''; ?><?php echo $search ? 'Keyword: "' . sanitize($search) . '"' : ''; ?></strong>
                 </p>
                 <a href="<?php echo BASE_URL; ?>blogs.php" class="btn btn-sm btn-outline-secondary rounded-pill"><i class="fas fa-redo me-1"></i> Clear Filters</a>
             </div>

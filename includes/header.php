@@ -162,17 +162,48 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
 <header class="site-header-static">
     <style>
         *,*::before,*::after{box-sizing:border-box}
-        .static-nav-wrapper{background-color:#fff;box-shadow:0 2px 12px rgba(0,0,0,0.09);font-family:'Inter','Segoe UI',Arial,sans-serif;position:sticky;top:0;z-index:9999;width:100%}
-        .static-nav-container{max-width:1320px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:76px}
+        .site-header-static{position:relative;min-height:76px;z-index:9990}
+        .static-nav-wrapper{
+            background-color:#ffffff;
+            box-shadow:0 2px 12px rgba(0,0,0,0.08);
+            font-family:'Inter','Segoe UI',Arial,sans-serif;
+            position:relative;
+            top:0;
+            left:0;
+            right:0;
+            z-index:9999;
+            width:100%;
+            transition:background-color 0.3s ease, backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease, box-shadow 0.3s ease, border-bottom 0.3s ease;
+        }
+        .static-nav-wrapper.is-scrolled{
+            position:fixed!important;
+            top:0!important;
+            left:0!important;
+            right:0!important;
+            width:100%!important;
+            background:rgba(255,255,255,0.76)!important;
+            backdrop-filter:blur(20px) saturate(180%)!important;
+            -webkit-backdrop-filter:blur(20px) saturate(180%)!important;
+            border-bottom:1px solid rgba(255,255,255,0.65)!important;
+            box-shadow:0 10px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.03)!important;
+            z-index:99999!important;
+        }
+        .static-nav-wrapper.is-scrolled .static-nav-container{
+            min-height:66px;
+        }
+        .static-nav-wrapper.is-scrolled .static-nav-logo img{
+            max-height:48px;
+        }
+        .static-nav-container{max-width:1320px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:76px;transition:min-height 0.3s ease}
         .static-nav-logo{display:flex;align-items:center;flex-shrink:0}
-        .static-nav-logo img{max-height:58px;width:auto;display:block}
+        .static-nav-logo img{max-height:58px;width:auto;display:block;transition:max-height 0.3s ease}
         .static-menu-list{list-style:none;margin:0;padding:0;display:flex;align-items:center;flex-wrap:nowrap;gap:1px;flex:1;justify-content:center}
         .static-menu-item{position:relative}
         .static-menu-link{display:flex;align-items:center;gap:4px;padding:10px 10px;color:#1e293b;text-decoration:none;font-size:13.5px;font-weight:600;letter-spacing:.1px;white-space:nowrap;transition:color 0.2s ease}
         .static-menu-link:hover,.static-menu-item.active>.static-menu-link{color:#7a0b0d}
         .static-dropdown-arrow{display:inline-block;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;margin-left:3px;transition:transform 0.25s ease;flex-shrink:0}
         .static-menu-item.open>.static-menu-link .static-dropdown-arrow,.static-dropdown-item.open>.static-dropdown-link .static-dropdown-arrow{transform:rotate(180deg)}
-        .static-dropdown-panel{position:absolute;top:calc(100% + 4px);left:0;background:#fff;min-width:255px;box-shadow:0 12px 36px rgba(0,0,0,0.13);border-radius:8px;border:1px solid #eef0f4;padding:6px 0;list-style:none;margin:0;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity 0.22s ease,transform 0.22s ease,visibility 0.22s;z-index:2000}
+        .static-dropdown-panel{position:absolute;top:calc(100% + 4px);left:0;background:rgba(255,255,255,0.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);min-width:255px;box-shadow:0 12px 36px rgba(0,0,0,0.13);border-radius:8px;border:1px solid rgba(255,255,255,0.8);padding:6px 0;list-style:none;margin:0;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity 0.22s ease,transform 0.22s ease,visibility 0.22s;z-index:2000}
         .static-menu-item:hover>.static-dropdown-panel{opacity:1;visibility:visible;transform:translateY(0)}
         .static-menu-item:nth-last-child(2) .static-dropdown-panel,
         .static-menu-item:nth-last-child(3) .static-dropdown-panel{left:auto;right:0}
@@ -275,8 +306,8 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                                 Accreditation <span class="static-dropdown-arrow static-sub-arrow"></span>
                             </a>
                             <ul class="static-dropdown-panel static-sub-dropdown">
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/NIRF-2026.pdf" class="static-dropdown-link">NIRF 2026</a></li>
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Recognition-Approval.pdf" class="static-dropdown-link">Recognition &amp; Approval</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/nirf-2026" class="static-dropdown-link">NIRF 2026</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/recognition-approval" class="static-dropdown-link">Recognition &amp; Approval</a></li>
                             </ul>
                         </li>
 
@@ -289,8 +320,8 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                                 All Committee <span class="static-dropdown-arrow static-sub-arrow"></span>
                             </a>
                             <ul class="static-dropdown-panel static-sub-dropdown">
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Institutional-Development-Plan.pdf" class="static-dropdown-link">Institutional Development Plan</a></li>
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/EOA_Report_2020-21-1.pdf" class="static-dropdown-link">Council Of Technical Education</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/institutional-development-plan" class="static-dropdown-link">Institutional Development Plan</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/council-of-technical-education" class="static-dropdown-link">Council Of Technical Education</a></li>
                             </ul>
                         </li>
 
@@ -301,12 +332,12 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                             </a>
                             <ul class="static-dropdown-panel static-sub-dropdown">
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>grievance.php" class="static-dropdown-link fw-bold text-danger"><i class="fas fa-balance-scale me-1"></i> Student Grievance Portal</a></li>
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Student_Grievance_Committee.pdf" class="static-dropdown-link">Student Grievance Committee</a></li>
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/AntiRagging.pdf" class="static-dropdown-link">Anti Ragging</a></li>
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/SC_ST_Grievance_committee.pdf" class="static-dropdown-link">SC-ST Grievance Committee</a></li>
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/OBC-Minority.pdf" class="static-dropdown-link">OBC Minority</a></li>
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/women-grievance-committee.pdf" class="static-dropdown-link">Women Grievance Committee</a></li>
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/EqualOppurtunityCell.pdf" class="static-dropdown-link">Equal Oppurtunity Cell</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/student-grievance-committee" class="static-dropdown-link">Student Grievance Committee</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/anti-ragging" class="static-dropdown-link">Anti Ragging</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/sc-st-grievance-committee" class="static-dropdown-link">SC-ST Grievance Committee</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/obc-minority" class="static-dropdown-link">OBC Minority</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/women-grievance-committee" class="static-dropdown-link">Women Grievance Committee</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/equal-opportunity-cell" class="static-dropdown-link">Equal Oppurtunity Cell</a></li>
                             </ul>
                         </li>
 
@@ -316,8 +347,8 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                                 University Ordinance <span class="static-dropdown-arrow static-sub-arrow"></span>
                             </a>
                             <ul class="static-dropdown-panel static-sub-dropdown">
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/university-ordinance.pdf" class="static-dropdown-link">University Ordinance</a></li>
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/ordinance-93-100.pdf" class="static-dropdown-link">Subsequent Ordinance 93-100</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/university-ordinance" class="static-dropdown-link">University Ordinance</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/ordinance-93-100" class="static-dropdown-link">Subsequent Ordinance 93-100</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -490,12 +521,12 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                     <ul class="static-dropdown-panel">
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>academic-calendar.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-calendar-alt text-warning me-1"></i> Academic Calendar 2026-27</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>exam-rules.php" class="static-dropdown-link fw-semibold text-navy"><i class="fas fa-clipboard-check text-primary me-1"></i> Examination Rules &amp; Ordinances</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Details-of-Academic-Programmes.pdf" class="static-dropdown-link">Details of Academic Programmes</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/statutes-ordinances-pertaining-to-academics-examination.pdf" class="static-dropdown-link">Statutes Ordinances</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Constituent-unitsDepartment.pdf" class="static-dropdown-link">School/ Department/ Centres</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/department-wise-faculty-details.pdf" class="static-dropdown-link">Faculty/ Staff Details</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/IQAC.pdf" class="static-dropdown-link">Internal Quality Assurance Cell</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/UniversityLibrary.pdf" class="static-dropdown-link">Library</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/details-of-academic-programmes" class="static-dropdown-link">Details of Academic Programmes</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/statutes-ordinances-academics-examination" class="static-dropdown-link">Statutes Ordinances</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/constituent-units-departments" class="static-dropdown-link">School/ Department/ Centres</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/department-wise-faculty-details" class="static-dropdown-link">Faculty/ Staff Details</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/iqac" class="static-dropdown-link">Internal Quality Assurance Cell</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/university-library" class="static-dropdown-link">Library</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>hostel.php" class="static-dropdown-link"><i class="fas fa-bed text-warning me-1"></i> Hostel Accommodation</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>facilities" class="static-dropdown-link">Facilities</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>placements" class="static-dropdown-link">Placements</a></li>
@@ -510,12 +541,12 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                     <ul class="static-dropdown-panel">
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="static-dropdown-link fw-bold text-danger">Online Admission Form 2026-27</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>phd-admission.php" class="static-dropdown-link fw-bold text-danger">Ph.D. Admission 2026</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-application-form.pdf" class="static-dropdown-link">Ph.D. Application Form (PDF)</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-entrance-form.pdf" class="static-dropdown-link">Ph.D. Entrance Exam Form (PDF)</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>phd-application-form.php" class="static-dropdown-link">Ph.D. Application Form</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>phd-entrance-form.php" class="static-dropdown-link">Ph.D. Entrance Exam Form</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>student-life" class="static-dropdown-link">Student Life</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Prospectus.pdf" class="static-dropdown-link">Prospectus</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Admission-ProcessGuidelines.pdf" class="static-dropdown-link">Admission Process Guidelines</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Fee-Refund-Policy-2024-25.pdf" class="static-dropdown-link">Fee Refund Policy 2024-25</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/prospectus" class="static-dropdown-link">Prospectus</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/admission-process-guidelines" class="static-dropdown-link">Admission Process Guidelines</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/fee-refund-policy" class="static-dropdown-link">Fee Refund Policy</a></li>
                     </ul>
                 </li>
 
@@ -525,7 +556,7 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                         Administration <span class="static-dropdown-arrow"></span>
                     </a>
                     <ul class="static-dropdown-panel">
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/OfficersofUniversity.pdf" class="static-dropdown-link">Officers of University</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/officers-of-university" class="static-dropdown-link">Officers of University</a></li>
                         
                         <!-- Authority Of University -->
                         <li class="static-dropdown-item">
@@ -533,16 +564,16 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                                 Authority Of University <span class="static-dropdown-arrow static-sub-arrow"></span>
                             </a>
                             <ul class="static-dropdown-panel static-sub-dropdown">
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Governing-Body.pdf" class="static-dropdown-link">Governing Body</a></li>
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Board-of-Management.pdf" class="static-dropdown-link">Board of Management</a></li>
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Finance-Committee.pdf" class="static-dropdown-link">Finance Committee</a></li>
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/ACADEMIC-COUNCIL-20.pdf.pdf" class="static-dropdown-link">Academic Councils</a></li>
-                                <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/BoardofStudies.pdf" class="static-dropdown-link">Board Of Studies</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/governing-body" class="static-dropdown-link">Governing Body</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/board-of-management" class="static-dropdown-link">Board of Management</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/finance-committee" class="static-dropdown-link">Finance Committee</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/academic-councils" class="static-dropdown-link">Academic Councils</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/board-of-studies" class="static-dropdown-link">Board Of Studies</a></li>
                             </ul>
                         </li>
 
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Internal-Complaint-Committee.pdf" class="static-dropdown-link">Internal Complaint Committee</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/AcademicLeadership.pdf" class="static-dropdown-link">Academic Leadership</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/internal-complaint-committee" class="static-dropdown-link">Internal Complaint Committee</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/academic-leadership" class="static-dropdown-link">Academic Leadership</a></li>
                     </ul>
                 </li>
 
@@ -552,18 +583,18 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                         Research <span class="static-dropdown-arrow"></span>
                     </a>
                     <ul class="static-dropdown-panel">
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>phd-admission.php" class="static-dropdown-link fw-bold text-danger">Ph.D. Admissions &amp; Forms</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-application-form.pdf" class="static-dropdown-link">Ph.D. Application Form (PDF)</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-entrance-form.pdf" class="static-dropdown-link">Ph.D. Entrance Exam Form (PDF)</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-admission-policy.pdf" class="static-dropdown-link">Admission Policy for Ph.D. Programme</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>phd-admission.php" class="static-dropdown-link fw-bold text-danger">Ph.D. Admissions &amp; Guidelines</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>phd-application-form.php" class="static-dropdown-link">Ph.D. Application Form</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>phd-entrance-form.php" class="static-dropdown-link">Ph.D. Entrance Exam Form</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/phd-admission-policy" class="static-dropdown-link">Admission Policy for Ph.D. Programme</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>incubation-center" class="static-dropdown-link">Incubation Centre</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/researchdevelopmentcell.pdf" class="static-dropdown-link">Research &amp; Development Cell</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/university_research_policy.pdf" class="static-dropdown-link">Research Policy</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Central-Facilities-for-Research-and-Development.pdf" class="static-dropdown-link">Central Facilities for Research and Development</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Constitution-of-Ethics-Board.pdf" class="static-dropdown-link">Ethics Board to Maintain Research Integrity</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/2026/07/consultancy-projects.pdf" class="static-dropdown-link">Consultancy Projects</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-scholars-pursuing.pdf" class="static-dropdown-link">Ph.D. Scholars Currently Enrolled</a></li>
-                        <li class="static-dropdown-item"><a target="_blank" href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-scholars-completed.pdf" class="static-dropdown-link">Ph.D. Awarded Scholars List</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/research-development-cell" class="static-dropdown-link">Research &amp; Development Cell</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/university-research-policy" class="static-dropdown-link">Research Policy</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/central-facilities-research" class="static-dropdown-link">Central Facilities for Research and Development</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/ethics-board" class="static-dropdown-link">Ethics Board to Maintain Research Integrity</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/consultancy-projects" class="static-dropdown-link">Consultancy Projects</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/phd-scholars-pursuing" class="static-dropdown-link">Ph.D. Scholars Currently Enrolled</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/phd-scholars-completed" class="static-dropdown-link">Ph.D. Awarded Scholars List</a></li>
                     </ul>
                 </li>
 
@@ -671,6 +702,18 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                 }
             });
         });
+
+        var navWrapper = document.querySelector('.static-nav-wrapper');
+        function handleScroll(){
+            if(!navWrapper) return;
+            if(window.pageYOffset > 25 || window.scrollY > 25){
+                navWrapper.classList.add('is-scrolled');
+            } else {
+                navWrapper.classList.remove('is-scrolled');
+            }
+        }
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
 
         window.addEventListener('resize', function(){
             if(window.innerWidth > 1024){

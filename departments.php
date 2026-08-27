@@ -242,7 +242,7 @@ $filteredDepartments = array_filter($allDepartments, function($dept) use ($selec
                                         <i class="fas fa-layer-group text-danger me-1"></i> <?php echo sanitize($dept['category'] ?? 'Academic Unit'); ?>
                                     </span>
                                     <span class="badge bg-danger-subtle text-danger border border-danger-subtle small px-2 py-1 fw-semibold">
-                                        <i class="fas fa-book-open me-1"></i> <?php echo $courseCount; ?> <?php echo $courseCount === 1 ? 'Program' : 'Programs'; ?>
+                                        <i class="fas fa-book-open me-1"></i> Approved Programmes
                                     </span>
                                 </div>
                             </div>
@@ -263,7 +263,7 @@ $filteredDepartments = array_filter($allDepartments, function($dept) use ($selec
 
                                 <!-- Action Buttons -->
                                 <div class="d-flex gap-2 mt-auto pt-2">
-                                    <a href="<?php echo BASE_URL; ?>department-detail.php?slug=<?php echo urlencode($dept['slug']); ?>" class="btn btn-sm btn-srku flex-grow-1 text-center justify-content-center py-2">
+                                    <a href="<?php echo BASE_URL; ?>department/<?php echo urlencode($dept['slug']); ?>" class="btn btn-sm btn-srku flex-grow-1 text-center justify-content-center py-2">
                                         View Department &rarr;
                                     </a>
                                     <a href="<?php echo BASE_URL; ?>faculties.php?dept=<?php echo urlencode($dept['name']); ?>" class="btn btn-sm btn-outline-danger px-3 py-2 d-flex align-items-center" title="View Faculty Members">

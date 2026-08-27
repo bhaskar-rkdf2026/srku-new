@@ -188,7 +188,7 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
                         </div>
                         <div class="col">
                             <div class="small text-muted mb-1"><i class="fas fa-chart-line text-danger me-1"></i> Placement Record</div>
-                            <div class="fw-bold text-danger fs-6">94% Supported</div>
+                            <div class="fw-bold text-danger fs-6">Active Assistance</div>
                         </div>
                     </div>
                 </div>
@@ -362,7 +362,7 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
                                             </h4>
                                         </div>
                                         <div class="d-flex gap-2 flex-shrink-0">
-                                            <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="btn btn-sm btn-outline-secondary px-3 py-2 fw-semibold">
+                                            <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="btn btn-sm btn-outline-secondary px-3 py-2 fw-semibold">
                                                 <i class="fas fa-info-circle me-1"></i> Details
                                             </a>
                                             <a href="<?php echo BASE_URL; ?>contact.php?course=<?php echo urlencode($c['course_name']); ?>" class="btn btn-sm btn-srku px-3 py-2 fw-semibold">

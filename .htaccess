@@ -44,6 +44,10 @@ Options -Indexes
     RewriteRule ^contact/?$ contact.php [L,QSA]
     RewriteRule ^admission-enquiry/?$ admission-enquiry.php [L,QSA]
     RewriteRule ^grievance/?$ grievance.php [L,QSA]
+    RewriteRule ^document/([a-zA-Z0-9_-]+)/?$ document-viewer.php?slug=$1 [L,QSA]
+    RewriteRule ^(prospectus|admission-process-guidelines|fee-refund-policy|officers-of-university|governing-body|board-of-management|finance-committee|academic-councils|board-of-studies|internal-complaint-committee|academic-leadership|phd-admission-policy|research-development-cell|university-research-policy|central-facilities-research|ethics-board|consultancy-projects|phd-scholars-pursuing|phd-scholars-completed|nirf-2026|recognition-approval|institutional-development-plan|council-of-technical-education|student-grievance-committee|anti-ragging|sc-st-grievance-committee|obc-minority|women-grievance-committee|equal-opportunity-cell|university-ordinance|ordinance-93-100|details-of-academic-programmes|statutes-ordinances-academics-examination|constituent-units-departments|department-wise-faculty-details|iqac|university-library)/?$ document-viewer.php?slug=$1 [L,QSA]
+    RewriteRule ^document-viewer/?$ document-viewer.php [L,QSA]
+    RewriteRule ^blog/([a-zA-Z0-9-]+)/?$ blog-detail.php?slug=$1 [L,QSA]
 
     # Dynamic Course Detail Pages
     # Example: /courses/b-tech-srk-university-faculty-of-engineering

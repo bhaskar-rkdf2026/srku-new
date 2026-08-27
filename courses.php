@@ -54,7 +54,7 @@ $departments = getDepartments(true);
             <div class="d-flex flex-wrap gap-2 mt-3 pt-3 border-top justify-content-center">
                 <a href="<?php echo BASE_URL; ?>courses.php<?php echo $selectedDept ? '?dept=' . urlencode($selectedDept) : ''; ?>" 
                    class="badge px-3 py-2 text-decoration-none rounded-pill <?php echo empty($selectedLevel) ? 'bg-danger text-white' : 'bg-light text-dark border'; ?>">
-                    All Degrees (<?php echo count(getCourses($selectedDept, null, $searchKeyword)); ?>)
+                    All Degrees
                 </a>
                 <a href="<?php echo BASE_URL; ?>courses.php?level=UG<?php echo $selectedDept ? '&dept=' . urlencode($selectedDept) : ''; ?>" 
                    class="badge px-3 py-2 text-decoration-none rounded-pill <?php echo $selectedLevel == 'UG' ? 'bg-danger text-white' : 'bg-light text-dark border'; ?>">
@@ -102,7 +102,7 @@ $departments = getDepartments(true);
 
                                 <!-- Course Title -->
                                 <h3 class="course-card-title mb-2">
-                                    <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="text-decoration-none">
+                                    <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="text-decoration-none">
                                         <?php echo sanitize($c['course_name']); ?>
                                     </a>
                                 </h3>
@@ -123,10 +123,10 @@ $departments = getDepartments(true);
                                 <?php endif; ?>
 
                                 <!-- Key Meta Box (Duration & Eligibility) -->
-                                <div class="course-meta-box mb-4 flex-grow-1">
-                                    <div class="course-meta-row">
+                                <div class="course-meta-box p-3 rounded-3 mb-3">
+                                    <div class="course-meta-row mb-2">
                                         <span class="course-meta-label"><i class="far fa-clock text-danger me-1"></i> Duration:</span>
-                                        <span class="course-meta-val fw-bold text-dark"><?php echo sanitize($c['duration']); ?></span>
+                                        <span class="course-meta-val fw-semibold"><?php echo sanitize($c['duration']); ?></span>
                                     </div>
                                     <div class="course-meta-row">
                                         <span class="course-meta-label"><i class="fas fa-check-circle text-success me-1"></i> Eligibility:</span>
@@ -138,7 +138,7 @@ $departments = getDepartments(true);
 
                                 <!-- Action Buttons Footer -->
                                 <div class="d-flex gap-2 pt-3 border-top mt-auto">
-                                    <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="btn btn-course-details flex-grow-1">
+                                    <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="btn btn-course-details flex-grow-1">
                                         <i class="fas fa-info-circle me-1"></i> Details
                                     </a>
                                     <a href="<?php echo BASE_URL; ?>admission-enquiry.php?course=<?php echo urlencode($c['course_name']); ?>" class="btn btn-course-apply flex-grow-1">
