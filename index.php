@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Home - Sarvepalli Radhakrishnan University, Bhopal";
+$pageTitle = "Sarvepalli Radhakrishnan University (SRKU) Bhopal | Admissions 2026-27 | UGC Approved Private University in MP";
+$pageDesc = "Sarvepalli Radhakrishnan University (SRKU), Bhopal is a premier UGC-recognized multidisciplinary private university in Madhya Pradesh offering 120+ UG, PG, and Ph.D. programmes in Medical, Engineering, Pharmacy, Nursing, Law, Agriculture & Management.";
+$pageKeywords = "Sarvepalli Radhakrishnan University, SRKU Bhopal, SRK University, Admissions 2026-27, Best Private University in MP, UGC Approved University Bhopal, MBBS Admission Bhopal, BTech College Bhopal, Pharmacy College MP, RKDF Group";
 $activeNav = "home";
 require_once __DIR__ . '/includes/header.php';
 
@@ -13,10 +15,33 @@ $totalAlumni = getSetting('total_alumni', '15,000+');
 $heroTitle = getSetting('hero_title', 'SRK University, Bhopal');
 $heroSubtitle = getSetting('hero_subtitle', 'UGC-Recognized University in MP');
 $heroDesc = getSetting('hero_desc', 'Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership. If you are looking for the best placement university in MP, our rigorous research, multi-disciplinary collaboration, and industry-aligned pedagogy deliver unmatched career growth.');
+$heroVideo = getSetting('hero_video_url', 'assets/images/concept2-hero.mp4');
+$heroFallbackImg = getSetting('hero_fallback_image', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
+$heroVideoSrc = resolveMediaUrl($heroVideo, 'assets/images/concept2-hero.mp4');
+$heroFallbackPoster = resolveMediaUrl($heroFallbackImg, 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
+
+$welcomeSubtitle = getSetting('welcome_subtitle', 'WELCOME TO SRK UNIVERSITY');
+$welcomeTitle = getSetting('welcome_title', 'Committed Towards Your Better Future Through Academic Excellence');
+$welcomeBody1 = getSetting('welcome_body_1', 'The SRK University is a multidisciplinary university known for its high standards in teaching and research, and attracts eminent scholars to its faculty across the academic spectrum.');
+$welcomeBody2 = getSetting('welcome_body_2', 'The group was established in 1995 under the flagship of the RKDF Group. Ever since its inception, a strong commitment to excellence in teaching and research has made the group a role-model and path-setter for other institutions. Its rich academic tradition has always attracted the most talented students, who later go on to make important contributions to society.');
+$welcomePhoto = getSetting('welcome_photo', 'assets/uploads/2026/08/welcome-srku-campus.jpeg');
+$welcomePhotoSrc = resolveMediaUrl($welcomePhoto, 'assets/uploads/2026/08/welcome-srku-campus.jpeg');
+
 $chancellorName = getSetting('chancellor_name', 'Mrs. Janak Kapoor');
 $chancellorTitle = getSetting('chancellor_title', 'Chancellor');
+$chancellorPhoto = getSetting('chancellor_photo', 'assets/uploads/2026/08/chancellor.jpeg');
+$chancellorPhotoSrc = resolveMediaUrl($chancellorPhoto, 'assets/uploads/2026/08/chancellor.jpeg');
+$chancellorHeading = getSetting('chancellor_heading', 'A Legacy of Excellence, A Vision for Tomorrow');
 $chancellorMsg = getSetting('chancellor_msg', 'It is a matter of great joy that the notification for the establishment of Sarvepalli Radhakrishnan University, Bhopal, has been issued by the State Government.');
 $chancellorMsg2 = getSetting('chancellor_msg2', "In order to maintain quality in the field of higher education in the state, it is an important responsibility of private universities, alongside government universities, to bring about change in research and exploration. It is hoped that Sarvepalli Radhakrishnan University will, in the future, deliver unprecedented performance on quality standards and establish itself as the state's foremost institution of education.");
+
+$vcName = getSetting('vc_name', 'Ms. Priyanka Jaiswal');
+$vcTitle = getSetting('vc_title', 'Vice Chancellor');
+$vcPhoto = getSetting('vc_photo', 'assets/uploads/2026/07/ruchichaubey.webp');
+$vcPhotoSrc = resolveMediaUrl($vcPhoto, 'assets/uploads/2026/07/ruchichaubey.webp');
+$vcHeading = getSetting('vc_heading', 'Pioneering Excellence, Empowering Future Leaders');
+$vcMsg = getSetting('vc_msg', 'At SRK University, our mission is to transform ambitious learners into visionary global leaders through outcome-based education and cutting-edge research.');
+$vcMsg2 = getSetting('vc_msg2', 'We foster innovation, high-impact research, and multi-disciplinary excellence. Our state-of-the-art infrastructure and faculty mentorship ensure every graduate is prepared for global careers.');
 
 // Handle Form Submission for Enquiry
 $enquirySuccess = false;
@@ -44,15 +69,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 ?>
 
 <!-- ═══════════════════════════════════════════════════════
-     HERO SECTION — 100% FULLSCREEN HTML5 VIDEO
+     HERO SECTION — 100% FULLSCREEN HTML5 VIDEO & FALLBACK POSTER
 ═══════════════════════════════════════════════════════ -->
-<section class="hero-section position-relative">
+<section class="hero-section position-relative" style="background: #0b1120 url('<?php echo $heroFallbackPoster; ?>') center/cover no-repeat;">
 
-    <video class="hero-bg-video" autoplay muted loop playsinline poster="<?php echo BASE_URL; ?>assets/images/campus-1.webp">
-        <source src="<?php echo BASE_URL; ?>assets/images/SRK-Hero-Section.mp4" type="video/mp4">
+    <video class="hero-bg-video" id="heroBgVideo" autoplay muted loop playsinline preload="auto" poster="<?php echo $heroFallbackPoster; ?>">
+        <source src="<?php echo $heroVideoSrc; ?>" type="video/mp4">
+        <!-- Direct Fallback Image if Video Cannot Play -->
+        <img src="<?php echo $heroFallbackPoster; ?>" alt="<?php echo sanitize($heroTitle); ?>" class="hero-bg-video object-fit-cover">
     </video>
 
     <div class="hero-overlay"></div>
+
+    <script>
+    (function() {
+        function initHeroVideo() {
+            var v = document.getElementById('heroBgVideo');
+            if (!v) return;
+            v.muted = true;
+            v.defaultMuted = true;
+            v.playsInline = true;
+            var playPromise = v.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(function(err) {
+                    var startPlayback = function() {
+                        v.play().catch(function(){});
+                        ['click', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(function(e) {
+                            window.removeEventListener(e, startPlayback);
+                        });
+                    };
+                    ['click', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(function(e) {
+                        window.addEventListener(e, startPlayback, { passive: true, once: true });
+                    });
+                });
+            }
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initHeroVideo);
+        } else {
+            initHeroVideo();
+        }
+    })();
+    </script>
 
     <div class="container-fluid px-4 px-lg-5 position-relative z-3">
         <div class="hero-content px-0">
@@ -96,14 +154,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
     </div>
 
     <!-- Live ticker pinned to bottom of hero -->
+    <?php $tickerNews = getNews(null, 10); ?>
     <div class="hero-ticker">
-        <div class="hero-ticker-label">LIVE UPDATES</div>
+        <div class="hero-ticker-label"><i class="fas fa-bolt me-1"></i> LIVE UPDATES</div>
         <div class="hero-ticker-track">
             <span class="hero-ticker-content">
-                <?php echo sanitize($tickerText); ?> &nbsp;&bull;&nbsp;
-                Highest Package: <?php echo sanitize($highestPackage); ?> &nbsp;&bull;&nbsp;
-                <?php echo sanitize($recruitingPartners); ?> Corporate Recruitment Partners &nbsp;&bull;&nbsp;
-                UGC Recognized &amp; AICTE Approved Premier University in Madhya Pradesh &nbsp;&bull;&nbsp;
+                <?php if (!empty($tickerNews)): ?>
+                    <?php foreach ($tickerNews as $tn): ?>
+                        <a href="<?php echo BASE_URL; ?>news-detail.php?id=<?php echo (int)$tn['id']; ?>" class="ticker-news-link">
+                            <span class="badge bg-danger me-1 small px-2 py-0.5"><?php echo sanitize($tn['category'] ?? 'Notice'); ?></span>
+                            <?php echo sanitize($tn['title']); ?>
+                        </a>
+                        <span class="ticker-separator">&nbsp;&nbsp;&bull;&nbsp;&nbsp;</span>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <?php echo sanitize($tickerText); ?> &nbsp;&bull;&nbsp;
+                    Highest Package: <?php echo sanitize($highestPackage); ?> &nbsp;&bull;&nbsp;
+                    <?php echo sanitize($recruitingPartners); ?> Corporate Recruitment Partners &nbsp;&bull;&nbsp;
+                    UGC Recognized &amp; AICTE Approved Premier University in Madhya Pradesh &nbsp;&bull;&nbsp;
+                <?php endif; ?>
             </span>
         </div>
     </div>
@@ -148,13 +217,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         <div class="row align-items-center g-4 g-lg-5">
             
             <div class="col-12 col-lg-6">
-                <span class="section-subtitle">WELCOME TO SRK UNIVERSITY</span>
-                <h2 class="section-title mb-3">Commited Towards Your <span>Better Future</span><br>Through Academic Excellence</h2>
+                <span class="section-subtitle"><?php echo sanitize($welcomeSubtitle); ?></span>
+                <h2 class="section-title mb-3"><?php echo $welcomeTitle; ?></h2>
                 <p class="text-dark mb-3" style="line-height:1.8; font-size:0.95rem;">
-                    The <strong>SRK University</strong> is a multidisciplinary university known for its high standards in teaching and research, and attracts eminent scholars to its faculty across the academic spectrum.
+                    <?php echo $welcomeBody1; ?>
                 </p>
                 <p class="text-muted mb-4" style="line-height:1.8; font-size:0.93rem;">
-                    The group was established in 1995 under the flagship of the RKDF Group. Ever since its inception, a strong commitment to excellence in teaching and research has made the group a role-model and path-setter for other institutions. Its rich academic tradition has always attracted the most talented students, who later go on to make important contributions to society.
+                    <?php echo $welcomeBody2; ?>
                 </p>
                 <div class="d-flex gap-3">
                     <a href="<?php echo BASE_URL; ?>about.php" class="btn btn-srku"><i class="fas fa-arrow-right me-1"></i> Read More</a>
@@ -164,8 +233,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 
             <div class="col-12 col-lg-6">
                 <div class="position-relative">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/welcome-srku-campus.jpeg"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                    <img src="<?php echo $welcomePhotoSrc; ?>"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/08/welcome-srku-campus.jpeg';"
                          alt="SRKU Main Campus" class="welcome-img">
                     <div class="row g-2 mt-3 text-center">
                         <div class="col-4">
@@ -305,110 +374,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         </div>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-
-            <!-- 1. 1995: Engineering -->
-            <div class="col">
-                <div class="prog-card d-flex flex-column h-100">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp" class="prog-img" alt="RKDF Institute of Science & Technology">
-                    <div class="prog-body d-flex flex-column flex-grow-1">
-                        <h3 class="prog-title mb-2">RKDF Institute of Science &amp; Technology <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">1995</span></h3>
-                        <p class="prog-desc text-muted small mb-3">Empowering minds in research, science &amp; engineering for tomorrow's leaders.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-and-technology" class="btn-card-apply mt-auto">Explore &rarr;</a>
+            <?php
+            $topUnits = $pdo->query("SELECT * FROM departments WHERE status = 'active' ORDER BY established_year ASC, id ASC LIMIT 8")->fetchAll();
+            if (empty($topUnits)) {
+                $topUnits = $pdo->query("SELECT * FROM departments ORDER BY id ASC LIMIT 8")->fetchAll();
+            }
+            foreach ($topUnits as $u):
+                $uImg = $u['image'] ?: 'assets/uploads/2026/07/001.webp';
+                $uImgSrc = (strpos($uImg, 'http') === 0) ? $uImg : BASE_URL . $uImg;
+                $uDesc = !empty($u['description']) ? strip_tags($u['description']) : 'Premier academic and research constituent unit at SRK University.';
+                if (mb_strlen($uDesc) > 95) {
+                    $uDesc = mb_substr($uDesc, 0, 92) . '...';
+                }
+            ?>
+                <div class="col">
+                    <div class="prog-card d-flex flex-column h-100">
+                        <img src="<?php echo $uImgSrc; ?>" class="prog-img" alt="<?php echo sanitize($u['name']); ?>"
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
+                        <div class="prog-body d-flex flex-column flex-grow-1">
+                            <h3 class="prog-title mb-2">
+                                <?php echo sanitize($u['name']); ?>
+                                <?php if (!empty($u['established_year'])): ?>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;"><?php echo sanitize($u['established_year']); ?></span>
+                                <?php endif; ?>
+                            </h3>
+                            <p class="prog-desc text-muted small mb-3"><?php echo sanitize($uDesc); ?></p>
+                            <a href="<?php echo BASE_URL; ?>department-detail.php?slug=<?php echo urlencode($u['slug']); ?>" class="btn-card-apply mt-auto">Explore &rarr;</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- 2. 1995: Pharmacy -->
-            <div class="col">
-                <div class="prog-card d-flex flex-column h-100">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-COP.webp" class="prog-img" alt="RKDF College of Pharmacy"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/R.N.-KAPOOR-MEMORIAL-PHARMACY.webp';">
-                    <div class="prog-body d-flex flex-column flex-grow-1">
-                        <h3 class="prog-title mb-2">RKDF College of Pharmacy <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">1995</span></h3>
-                        <p class="prog-desc text-muted small mb-3">Premier pharmaceutical education, advanced drug research, and industrial laboratory training.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-pharmacy" class="btn-card-apply mt-auto">Explore &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. 2000: Homoeopathy -->
-            <div class="col">
-                <div class="prog-card d-flex flex-column h-100">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/RKDF-HOMOEOPATHIC.webp" class="prog-img" alt="RKDF Homoeopathic Medical College Hospital & Research Centre"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/Pharmacy-Homeopathy.webp';">
-                    <div class="prog-body d-flex flex-column flex-grow-1">
-                        <h3 class="prog-title mb-2">RKDF Homoeopathic Medical College Hospital &amp; Research Centre <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2000</span></h3>
-                        <p class="prog-desc text-muted small mb-3">Nurturing holistic healing and clinical research in homoeopathic healthcare science.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-homoeopathic-medical-college" class="btn-card-apply mt-auto">Explore &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. 2003: Dental -->
-            <div class="col">
-                <div class="prog-card d-flex flex-column h-100">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/012-scaled.webp" class="prog-img" alt="RKDF Dental College & Research Centre"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
-                    <div class="prog-body d-flex flex-column flex-grow-1">
-                        <h3 class="prog-title mb-2">RKDF Dental College &amp; Research Centre <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2003</span></h3>
-                        <p class="prog-desc text-muted small mb-3">State-of-the-art dental surgery, modern operatory clinics, and specialized oral healthcare.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-dental-college" class="btn-card-apply mt-auto">Explore &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5. 2003: Nursing -->
-            <div class="col">
-                <div class="prog-card d-flex flex-column h-100">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/010-scaled.webp" class="prog-img" alt="RKDF College of Nursing"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/rkdf-college-of-nursing1.webp';">
-                    <div class="prog-body d-flex flex-column flex-grow-1">
-                        <h3 class="prog-title mb-2">RKDF College of Nursing <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2003</span></h3>
-                        <p class="prog-desc text-muted small mb-3">INC-approved nursing education with multi-speciality hospital clinical rotations.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-nursing" class="btn-card-apply mt-auto">Explore &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 6. 2014: Medical -->
-            <div class="col">
-                <div class="prog-card d-flex flex-column h-100">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/RKDF-MEDICAL-COLLEGE.webp" class="prog-img" alt="RKDF Medical College, Hospital & Research Center"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/Operation-Theatre.webp';">
-                    <div class="prog-body d-flex flex-column flex-grow-1">
-                        <h3 class="prog-title mb-2">RKDF Medical College, Hospital &amp; Research Center <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2014</span></h3>
-                        <p class="prog-desc text-muted small mb-3">Comprehensive MBBS &amp; MD/MS medical education with an on-campus 750+ bed teaching hospital.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-medical-college" class="btn-card-apply mt-auto">Explore &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 7. 2019: Paramedical & Allied Health -->
-            <div class="col">
-                <div class="prog-card d-flex flex-column h-100">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SARVEPALLI-RADHAKRISHANAN-COLLEGE-OF-ALLIED-HEALTHCARE-SCIENCES.webp" class="prog-img" alt="Sarvepalli Radhakrishnan College of Allied & Healthcare Sciences"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/Operation-Theatre.webp';">
-                    <div class="prog-body d-flex flex-column flex-grow-1">
-                        <h3 class="prog-title mb-2">Sarvepalli Radhakrishnan College of Allied &amp; Healthcare Sciences <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2019</span></h3>
-                        <p class="prog-desc text-muted small mb-3">Delivering quality paramedical, clinical diagnostics, and healthcare technology training.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-paramedical-sciences" class="btn-card-apply mt-auto">Explore &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 8. 2021: Ayurveda -->
-            <div class="col">
-                <div class="prog-card d-flex flex-column h-100">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-COLLEGE-OF-AYURVEDA.webp" class="prog-img" alt="Sarvepalli Radhakrishnan College of Ayurveda Hospital & Research Centre"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
-                    <div class="prog-body d-flex flex-column flex-grow-1">
-                        <h3 class="prog-title mb-2">Sarvepalli Radhakrishnan College of Ayurveda Hospital &amp; Research Centre <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;">2021</span></h3>
-                        <p class="prog-desc text-muted small mb-3">Preserving authentic Ayurvedic medicine with dedicated Panchakarma hospital facilities.</p>
-                        <a href="<?php echo BASE_URL; ?>department-detail.php?slug=sarvepalli-radhakrishnan-college-of-ayurveda" class="btn-card-apply mt-auto">Explore &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
@@ -493,8 +488,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             <div class="col-12 col-lg-5">
                 <div class="chancellor-portrait-wrap position-relative">
                     <div class="chancellor-photo-frame shadow-lg">
-                        <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/chancellor.jpeg"
-                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/ruchichaubey.webp';"
+                        <img src="<?php echo $chancellorPhotoSrc; ?>"
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/08/chancellor.jpeg';"
                              alt="<?php echo sanitize($chancellorName); ?>, Chancellor of SRK University, Bhopal"
                              class="chancellor-photo img-fluid">
                     </div>
@@ -521,7 +516,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                         <i class="fas fa-quote-left text-danger me-1"></i> CHANCELLOR&rsquo;S DESK
                     </span>
                     <h2 class="section-title mb-3">
-                        A Legacy of <span>Excellence</span>,<br>A Vision for Tomorrow
+                        <?php echo $chancellorHeading; ?>
                     </h2>
                     
                     <div class="chancellor-quote-lead mb-3">
@@ -529,8 +524,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                     </div>
                     
                     <p class="text-muted mb-4" style="line-height: 1.85; font-size: 0.96rem;">
-                        <?php echo sanitize($chancellorMsg2); ?>
+                        <?php echo $chancellorMsg2; ?>
                     </p>
+
+                    <!-- Call to Action Buttons -->
+                    <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+                        <a href="<?php echo BASE_URL; ?>chancellor-message.php" class="btn btn-danger rounded-pill px-4 py-2 fw-bold d-inline-flex align-items-center gap-2 shadow-sm">
+                            <i class="fas fa-crown text-warning"></i> Read Full Chancellor's Message &rarr;
+                        </a>
+                        <a href="<?php echo BASE_URL; ?>vice-chancellor-message.php" class="btn btn-outline-dark rounded-pill px-3 py-2 fw-semibold d-inline-flex align-items-center gap-2">
+                            <i class="fas fa-user-tie text-danger"></i> VC's Message
+                        </a>
+                    </div>
 
                     <!-- Trust & Accreditations Pill Row -->
                     <div class="d-flex flex-wrap gap-3 pt-3 border-top">

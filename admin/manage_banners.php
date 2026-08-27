@@ -75,13 +75,202 @@ $pageOptions = [
 ];
 
 $banners = $pdo->query("SELECT * FROM banners ORDER BY page_slug ASC, sort_order ASC, id DESC")->fetchAll();
+
+// Handle Homepage Hero Video & Fallback Image Save
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_hero_video'])) {
+    $videoUrl = normalizeMediaPath($_POST['hero_video_url'] ?? '', 'assets/images/concept2-hero.mp4');
+    $fallbackImg = normalizeMediaPath($_POST['hero_fallback_image'] ?? '', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
+    $heroTitle = trim((string)($_POST['hero_title'] ?? 'SRK University, Bhopal'));
+    $heroSubtitle = trim((string)($_POST['hero_subtitle'] ?? 'UGC-Recognized University in MP'));
+    $heroDesc = trim((string)($_POST['hero_desc'] ?? ''));
+
+    // Handle Video File Upload
+    if (isset($_FILES['video_file']) && $_FILES['video_file']['error'] === UPLOAD_ERR_OK) {
+        $allowedVideoExts = ['mp4', 'webm', 'ogg', 'mov'];
+        $ext = strtolower(pathinfo($_FILES['video_file']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, $allowedVideoExts)) {
+            $uploadDir = __DIR__ . '/../assets/uploads/2026/08/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            $newFileName = 'hero_video_' . time() . '.' . $ext;
+            $targetPath = $uploadDir . $newFileName;
+            if (move_uploaded_file($_FILES['video_file']['tmp_name'], $targetPath)) {
+                $videoUrl = 'assets/uploads/2026/08/' . $newFileName;
+            }
+        }
+    }
+
+    // Handle Fallback Image Upload
+    if (isset($_FILES['fallback_img_file']) && $_FILES['fallback_img_file']['error'] === UPLOAD_ERR_OK) {
+        $allowedImgExts = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+        $ext = strtolower(pathinfo($_FILES['fallback_img_file']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, $allowedImgExts)) {
+            $uploadDir = __DIR__ . '/../assets/uploads/2026/08/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            $newFileName = 'hero_fallback_' . time() . '.' . $ext;
+            $targetPath = $uploadDir . $newFileName;
+            if (move_uploaded_file($_FILES['fallback_img_file']['tmp_name'], $targetPath)) {
+                $fallbackImg = 'assets/uploads/2026/08/' . $newFileName;
+            }
+        }
+    }
+
+    $heroSettings = [
+        'hero_video_url' => $videoUrl ?: 'assets/images/concept2-hero.mp4',
+        'hero_fallback_image' => $fallbackImg ?: 'assets/uploads/2026/08/srku-rkdf-building.jpeg',
+        'hero_title' => $heroTitle,
+        'hero_subtitle' => $heroSubtitle,
+        'hero_desc' => $heroDesc
+    ];
+
+    foreach ($heroSettings as $key => $val) {
+        $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (:k, :v) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
+        $stmt->execute([':k' => $key, ':v' => $val]);
+    }
+
+    setFlashMsg('success', 'Homepage Hero Video & Fallback Image settings updated successfully.');
+    header("Location: manage_banners.php");
+    exit;
+}
+
+$currHeroVideo = getSetting('hero_video_url', 'assets/images/concept2-hero.mp4');
+$currHeroFallback = getSetting('hero_fallback_image', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
+$currHeroTitle = getSetting('hero_title', 'SRK University, Bhopal');
+$currHeroSubtitle = getSetting('hero_subtitle', 'UGC-Recognized University in MP');
+$currHeroDesc = getSetting('hero_desc', 'Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership. If you are looking for the best placement university in MP, our rigorous research, multi-disciplinary collaboration, and industry-aligned pedagogy deliver unmatched career growth.');
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h3 class="h4 fw-bold text-navy mb-0">Manage Page Banners &amp; Sliders</h3>
+    <div>
+        <h3 class="h4 fw-bold text-navy mb-1">Manage Page Banners &amp; Sliders</h3>
+        <p class="text-muted small mb-0">Control the Homepage Hero Fullscreen Video, Fallback Poster Image, and Page Top Banners.</p>
+    </div>
     <?php if (isset($_GET['action'])): ?>
         <a href="manage_banners.php" class="btn btn-outline-secondary btn-sm">&larr; Back to Banners List</a>
     <?php endif; ?>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION: HOMEPAGE HERO VIDEO & FALLBACK POSTER MANAGER
+═══════════════════════════════════════════════════════ -->
+<div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-5 bg-white">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-3">
+            <div class="p-3 rounded-circle bg-danger-subtle text-danger" style="font-size: 1.4rem;">
+                <i class="fas fa-video"></i>
+            </div>
+            <div>
+                <span class="badge bg-danger text-white px-3 py-1 rounded-pill small fw-bold">Live Banner Engine</span>
+                <h4 class="fw-bold text-navy mb-0 mt-1">Homepage Hero Video &amp; Fallback Background</h4>
+            </div>
+        </div>
+        <a href="<?php echo BASE_URL; ?>" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+            <i class="fas fa-external-link-alt me-1"></i> Preview Live Homepage
+        </a>
+    </div>
+
+    <form action="manage_banners.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="save_hero_video" value="1">
+        
+        <div class="row g-4 align-items-start">
+            
+            <!-- Left: Current Live Video & Fallback Preview Player -->
+            <div class="col-12 col-lg-5">
+                <div class="p-3 rounded-4 bg-dark text-white shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-2 px-1">
+                        <span class="small fw-bold text-warning"><i class="fas fa-play-circle me-1"></i> Current Video Player</span>
+                        <span class="badge bg-success text-white small">Live Active</span>
+                    </div>
+                    
+                    <div class="position-relative rounded-3 overflow-hidden" style="max-height: 220px; background: #000;">
+                        <video class="w-100 h-100 object-fit-cover" controls autoplay muted loop playsinline 
+                               poster="<?php echo resolveMediaUrl($currHeroFallback, 'assets/uploads/2026/08/srku-rkdf-building.jpeg'); ?>">
+                            <source src="<?php echo resolveMediaUrl($currHeroVideo, 'assets/images/concept2-hero.mp4'); ?>" type="video/mp4">
+                            Your browser does not support HTML5 video.
+                        </video>
+                    </div>
+
+                    <div class="mt-3 pt-2 border-top border-secondary small text-white-50">
+                        <div class="text-truncate mb-1"><i class="fas fa-film text-info me-1"></i> <strong>Video:</strong> <?php echo sanitize($currHeroVideo); ?></div>
+                        <div class="text-truncate"><i class="fas fa-image text-success me-1"></i> <strong>Poster:</strong> <?php echo sanitize($currHeroFallback); ?></div>
+                    </div>
+                </div>
+
+                <!-- Fallback Image Dedicated Preview -->
+                <div class="mt-3 p-3 rounded-4 bg-light border">
+                    <span class="small fw-bold text-navy d-block mb-2"><i class="fas fa-shield-alt text-success me-1"></i> Fallback Image Preview (If Video Fails / Mobile Data Save)</span>
+                    <div class="rounded-3 overflow-hidden" style="height: 120px;">
+                        <img src="<?php echo resolveMediaUrl($currHeroFallback, 'assets/uploads/2026/08/srku-rkdf-building.jpeg'); ?>" 
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/08/srku-rkdf-building.jpeg';"
+                             alt="Hero Fallback" 
+                             class="w-100 h-100 object-fit-cover">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Video & Image Controls -->
+            <div class="col-12 col-lg-7">
+                
+                <!-- 1. Hero Video Config -->
+                <div class="mb-4 p-3 rounded-3 bg-light border">
+                    <h6 class="fw-bold text-navy mb-2"><i class="fas fa-film text-danger me-1"></i> 1. Hero Background Video (MP4 / WebM)</h6>
+                    <div class="row g-2">
+                        <div class="col-12 col-md-7">
+                            <label class="form-label small text-muted mb-1">Video Relative Path or URL</label>
+                            <input type="text" name="hero_video_url" class="form-control form-control-sm" value="<?php echo sanitize($currHeroVideo); ?>" placeholder="assets/images/SRK-Hero-Section.mp4">
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <label class="form-label small text-muted mb-1">OR Upload New Video</label>
+                            <input type="file" name="video_file" class="form-control form-control-sm" accept="video/mp4,video/webm,video/ogg,video/quicktime">
+                        </div>
+                    </div>
+                    <small class="text-muted d-block mt-1">Recommended format: 1080p MP4 (H.264), optimized under 20MB for fast load.</small>
+                </div>
+
+                <!-- 2. Fallback Image Config -->
+                <div class="mb-4 p-3 rounded-3 bg-light border">
+                    <h6 class="fw-bold text-navy mb-2"><i class="fas fa-image text-primary me-1"></i> 2. Fallback Poster Image (Zero-Fail Safety)</h6>
+                    <div class="row g-2">
+                        <div class="col-12 col-md-7">
+                            <label class="form-label small text-muted mb-1">Image Relative Path or URL</label>
+                            <input type="text" name="hero_fallback_image" class="form-control form-control-sm" value="<?php echo sanitize($currHeroFallback); ?>" placeholder="assets/uploads/2026/08/srku-rkdf-building.jpeg">
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <label class="form-label small text-muted mb-1">OR Upload New Image</label>
+                            <input type="file" name="fallback_img_file" class="form-control form-control-sm" accept="image/jpeg,image/png,image/webp,image/jpg">
+                        </div>
+                    </div>
+                    <small class="text-muted d-block mt-1">Default: <code>assets/uploads/2026/08/srku-rkdf-building.jpeg</code> (High-resolution campus building).</small>
+                </div>
+
+                <!-- 3. Hero Text Overlays -->
+                <div class="row g-2 mb-3">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label small fw-bold text-navy mb-1">Hero Main Title</label>
+                        <input type="text" name="hero_title" class="form-control form-control-sm" value="<?php echo sanitize($currHeroTitle); ?>">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label small fw-bold text-navy mb-1">Hero Golden Subtitle</label>
+                        <input type="text" name="hero_subtitle" class="form-control form-control-sm" value="<?php echo sanitize($currHeroSubtitle); ?>">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label small fw-bold text-navy mb-1">Hero Lead Description</label>
+                        <textarea name="hero_desc" class="form-control form-control-sm" rows="2"><?php echo sanitize($currHeroDesc); ?></textarea>
+                    </div>
+                </div>
+
+                <div class="text-end pt-2">
+                    <button type="submit" class="btn btn-danger px-4 py-2 rounded-pill fw-bold shadow-sm">
+                        <i class="fas fa-save me-1"></i> Save Hero Video &amp; Fallback Settings
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </form>
 </div>
 
 <div class="row g-4">

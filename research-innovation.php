@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Research & Innovation - Sarvepalli Radhakrishnan University Bhopal";
+$pageTitle = "Research & Innovation | 1,400+ Publications & Patents | SRKU Bhopal";
+$pageDesc = "Explore groundbreaking research, 1,400+ indexed publications, multidisciplinary labs, and doctoral research at Sarvepalli Radhakrishnan University (SRKU), Bhopal.";
+$pageKeywords = "SRKU Research, Innovation Cell, Publications Bhopal, Patents, PhD Research Labs MP";
 $activeNav = "research";
 require_once __DIR__ . '/includes/header.php';
 ?>

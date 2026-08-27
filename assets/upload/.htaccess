@@ -1,4 +1,0 @@
-# WP Guardian: Block PHP execution in uploads
-<Files *.php>
-  deny from all
-</Files>

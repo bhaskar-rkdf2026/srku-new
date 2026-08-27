@@ -8,19 +8,19 @@ if (!defined('BASE_URL')) {
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)) ? "https://" : "http://";
     $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
     
-    // Determine the base path relative to the document root
-    $scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? ''));
-    // If inside admin/ or other subfolder, trim back to root
-    if (substr($scriptDir, -6) === '/admin') {
-        $scriptDir = substr($scriptDir, 0, -6);
-    } elseif (substr($scriptDir, -9) === '/includes') {
-        $scriptDir = substr($scriptDir, 0, -9);
-    } elseif (substr($scriptDir, -7) === '/config') {
-        $scriptDir = substr($scriptDir, 0, -7);
-    }
+    // Determine base path relative to web root
+    $docRoot = isset($_SERVER['DOCUMENT_ROOT']) ? str_replace('\\', '/', realpath($_SERVER['DOCUMENT_ROOT']) ?: '') : '';
+    $projRoot = str_replace('\\', '/', realpath(__DIR__ . '/..') ?: '');
     
-    $basePath = rtrim($scriptDir, '/') . '/';
-    if ($basePath === '//') $basePath = '/';
+    if ($docRoot && $projRoot && strpos($projRoot, $docRoot) === 0) {
+        $sub = trim(substr($projRoot, strlen($docRoot)), '/');
+        $basePath = $sub ? '/' . $sub . '/' : '/';
+    } else {
+        $scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? ''));
+        $scriptDir = preg_replace('/(\/admin|\/includes|\/config|\/scratch|\/api)$/i', '', $scriptDir);
+        $basePath = rtrim($scriptDir, '/') . '/';
+        if ($basePath === '//' || empty($basePath)) $basePath = '/';
+    }
     
     define('BASE_URL', $protocol . $host . $basePath);
 }

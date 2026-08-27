@@ -20,10 +20,141 @@ function getSetting($key, $default = '') {
         $stmt = $pdo->prepare("SELECT setting_value FROM settings WHERE setting_key = :k LIMIT 1");
         $stmt->execute([':k' => $key]);
         $res = $stmt->fetchColumn();
-        return $res !== false ? $res : $default;
+        return ($res !== false && trim((string)$res) !== '') ? $res : $default;
     } catch (Exception $e) {
         return $default;
     }
+}
+
+/**
+ * Normalizes a relative or bare filename to the correct relative path in the workspace.
+ */
+function normalizeMediaPath($path, $default = '') {
+    $path = trim((string)$path);
+    if (empty($path)) {
+        $path = trim((string)$default);
+    }
+    if (empty($path)) {
+        return '';
+    }
+    if (preg_match('/^https?:\/\//i', $path) || strpos($path, '//') === 0) {
+        return $path;
+    }
+
+    $cleanPath = ltrim(str_replace('\\', '/', $path), '/');
+    $baseDir = dirname(__DIR__);
+
+    // 1. Direct path exists
+    if (is_file($baseDir . '/' . $cleanPath)) {
+        return $cleanPath;
+    }
+
+    // 2. Search common folders
+    $candidateDirs = [
+        'assets/images/',
+        'assets/uploads/2026/08/',
+        'assets/uploads/2026/07/',
+        'assets/uploads/2026/06/',
+        'assets/uploads/2024/06/',
+        'assets/uploads/',
+        'assets/upload/2026/06/',
+        'assets/upload/2024/06/',
+        'assets/upload/',
+        'assets/img/',
+        'assets/',
+        'wp-content/uploads/'
+    ];
+
+    $filename = basename($cleanPath);
+    foreach ($candidateDirs as $dir) {
+        if (is_file($baseDir . '/' . $dir . $filename)) {
+            return $dir . $filename;
+        }
+        if (is_file($baseDir . '/' . $dir . $cleanPath)) {
+            return $dir . $cleanPath;
+        }
+    }
+
+    // 3. Recursive search in assets folder
+    $found = glob($baseDir . '/assets/**/' . $filename);
+    if (!empty($found) && is_file($found[0])) {
+        $rel = str_replace(str_replace('\\', '/', $baseDir) . '/', '', str_replace('\\', '/', $found[0]));
+        return $rel;
+    }
+
+    // 4. Default fallback if original path not found
+    if (!empty($default) && $default !== $path) {
+        return normalizeMediaPath($default, '');
+    }
+
+    return $cleanPath;
+}
+
+/**
+ * Resolves any media path (bare filename, relative path, or full URL) into a fully working URL.
+ */
+function resolveMediaUrl($path, $default = '') {
+    $normalized = normalizeMediaPath($path, $default);
+    if (empty($normalized)) {
+        return '';
+    }
+    if (preg_match('/^https?:\/\//i', $normalized) || strpos($normalized, '//') === 0) {
+        return $normalized;
+    }
+    return BASE_URL . $normalized;
+}
+
+/**
+ * Returns all available video files in the website assets directory.
+ */
+function getAvailableVideos() {
+    $baseDir = dirname(__DIR__);
+    $videos = [];
+    $patterns = [
+        $baseDir . '/assets/images/*.{mp4,webm,mov,ogg}',
+        $baseDir . '/assets/uploads/**/*.{mp4,webm,mov,ogg}',
+        $baseDir . '/assets/upload/**/*.{mp4,webm,mov,ogg}',
+        $baseDir . '/assets/*.{mp4,webm,mov,ogg}'
+    ];
+
+    $matched = [];
+    foreach ($patterns as $pattern) {
+        $found = glob($pattern, GLOB_BRACE);
+        if ($found) {
+            foreach ($found as $f) {
+                if (is_file($f)) {
+                    $matched[realpath($f)] = $f;
+                }
+            }
+        }
+    }
+
+    foreach ($matched as $f) {
+        $rel = str_replace(str_replace('\\', '/', $baseDir) . '/', '', str_replace('\\', '/', $f));
+        $size = filesize($f);
+        $sizeStr = ($size > 1048576) ? round($size / 1048576, 1) . ' MB' : round($size / 1024, 1) . ' KB';
+        $basename = basename($f);
+        
+        $label = $basename;
+        if (stripos($basename, 'concept2') !== false || stripos($basename, 'SRK-Hero') !== false) {
+            $label = 'Campus Aerial & Buildings (High Definition 1080p)';
+        } elseif (stripos($basename, 'drone') !== false) {
+            $label = 'Campus Drone Tour HD';
+        } elseif (stripos($basename, 'C0036') !== false) {
+            $label = 'Campus Cinematic 4K';
+        } elseif (stripos($basename, 'hero_video') !== false) {
+            $label = 'Custom Uploaded Video (' . $basename . ')';
+        }
+
+        $videos[] = [
+            'path' => $rel,
+            'name' => $basename,
+            'size' => $sizeStr,
+            'label' => $label
+        ];
+    }
+
+    return $videos;
 }
 
 // Fetch all active departments
@@ -294,11 +425,11 @@ function getGalleryImages($category = null) {
     try {
         $pdo = getDBConnection();
         if (!empty($category)) {
-            $stmt = $pdo->prepare("SELECT * FROM gallery WHERE category = :c ORDER BY id DESC");
+            $stmt = $pdo->prepare("SELECT * FROM gallery WHERE category = :c ORDER BY id ASC");
             $stmt->execute([':c' => $category]);
             return $stmt->fetchAll();
         }
-        return $pdo->query("SELECT * FROM gallery ORDER BY id DESC")->fetchAll();
+        return $pdo->query("SELECT * FROM gallery ORDER BY id ASC")->fetchAll();
     } catch (Exception $e) {
         return [];
     }

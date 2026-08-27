@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = "Scheme & Syllabus - Sarvepalli Radhakrishnan University, Bhopal";
+$pageTitle = "Scheme & Syllabus | Semester Curriculum & PDF Downloads | SRKU";
+$pageDesc = "Download official course schemes, semester-wise syllabus, examination guidelines, and grading patterns for all degree programs at Sarvepalli Radhakrishnan University (SRKU), Bhopal.";
+$pageKeywords = "SRKU Syllabus, Scheme of Examination, BTech Syllabus, Pharmacy Syllabus Bhopal, University Curriculum PDF";
 $activeNav = "courses";
 require_once __DIR__ . '/includes/header.php';
 

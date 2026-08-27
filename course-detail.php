@@ -36,10 +36,35 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_course
     }
 }
 
-$pageTitle = $course['course_name'] . " - Sarvepalli Radhakrishnan University, Bhopal";
+$pageTitle = sanitize($course['course_name']) . " | Admissions, Eligibility & Details | SRKU Bhopal";
+$pageDesc = "Apply for " . sanitize($course['course_name']) . " at Sarvepalli Radhakrishnan University (SRKU), Bhopal. Check eligibility criteria (" . sanitize($course['eligibility'] ?? '10+2 / Graduation') . "), duration (" . sanitize($course['duration'] ?? '') . "), and career scope.";
+$pageKeywords = sanitize($course['course_name']) . ", " . sanitize($course['course_name']) . " in Bhopal, SRKU Admissions 2026, Course Syllabus, Fees and Eligibility";
 $activeNav = "courses";
 require_once __DIR__ . '/includes/header.php';
+?>
 
+<!-- Schema.org Course Structured Data for Google Course Rich Snippets & AI Search -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": <?php echo json_encode($course['course_name']); ?>,
+  "description": <?php echo json_encode(substr(strip_tags($course['description'] ?? $pageDesc), 0, 300)); ?>,
+  "provider": {
+    "@type": "CollegeOrUniversity",
+    "name": "Sarvepalli Radhakrishnan University",
+    "sameAs": "https://srku.edu.in/"
+  },
+  "educationalCredentialAwarded": <?php echo json_encode($course['course_name']); ?>,
+  "timeRequired": <?php echo json_encode($course['duration'] ?? 'P3Y'); ?>,
+  "coursePrerequisites": <?php echo json_encode($course['eligibility'] ?? '10+2 with minimum aggregate'); ?>,
+  "offers": {
+    "@type": "Offer",
+    "category": <?php echo json_encode($course['level'] ?? 'Degree'); ?>
+  }
+}
+</script>
+<?php
 $relatedCourses = getCourses($course['dept_slug'] ?: $course['department'], null, null, 4);
 $specList = !empty($course['specializations']) ? array_map('trim', explode(',', $course['specializations'])) : [];
 

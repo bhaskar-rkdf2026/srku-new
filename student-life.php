@@ -1,6 +1,8 @@
 <?php
-$pageTitle = "Student Life & Campus Culture - SRK University Bhopal";
-$activeNav = "admission";
+$pageTitle = "Student Life & Campus Culture | Clubs, Sports & Festivals | SRKU Bhopal";
+$pageDesc = "Experience student life at Sarvepalli Radhakrishnan University (SRKU), Bhopal: cultural festivals (Tarang), tech symposiums, sports leagues, student clubs and community activities.";
+$pageKeywords = "SRKU Student Life, Campus Events Bhopal, University Clubs, Tarang Fest, Sports Facilities Bhopal";
+$activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
 ?>
 

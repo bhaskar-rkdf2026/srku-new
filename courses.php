@@ -1,5 +1,7 @@
 <?php
-$pageTitle = "Academic Programmes & Degrees Catalog - SRK University Bhopal";
+$pageTitle = "Academic Programmes & Degrees | 120+ UG, PG, PhD Courses | SRKU";
+$pageDesc = "Explore 120+ UGC and regulatory approved courses at Sarvepalli Radhakrishnan University (SRKU), Bhopal spanning B.Tech, MBBS, B.Pharm, MBA, MCA, B.Sc. Nursing, Law, Agriculture and Ph.D.";
+$pageKeywords = "SRKU Courses, Degrees Catalog, BTech Bhopal, MBBS MP, BPharm Bhopal, MBA Admission, PhD Admissions SRKU";
 $activeNav = "courses";
 require_once __DIR__ . '/includes/header.php';
 

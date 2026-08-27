@@ -1,8 +1,10 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = "Distinguished Faculty Directory | Sarvepalli Radhakrishnan University";
-$pageDesc = "Explore the distinguished faculty, eminent doctors, professors, researchers, and academic leaders at Sarvepalli Radhakrishnan University (SRKU) Bhopal.";
+$pageTitle = "Distinguished Faculty Directory | 1,000+ Professors & Mentors | SRKU";
+$pageDesc = "Meet 1,000+ esteemed professors, medical doctors, researchers, and academic leaders at Sarvepalli Radhakrishnan University (SRKU) Bhopal across 15 constituent colleges.";
+$pageKeywords = "SRKU Faculty, Professors Bhopal, Medical Faculty RKDF, Engineering Professors Bhopal, Academic Mentors";
+$activeNav = "faculties";
 
 $stats = getFacultyStats();
 $facultyDepts = getFacultyDepartments();
@@ -14,62 +16,60 @@ $searchQuery = sanitize($_GET['q'] ?? '');
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<!-- Hero Banner Section -->
-<section class="position-relative text-white py-5" style="background: linear-gradient(135deg, rgba(15, 30, 59, 0.95) 0%, rgba(91, 22, 20, 0.92) 100%), url('<?php echo BASE_URL; ?>assets/uploads/2026/07/campus-1.webp') center/cover no-repeat;">
-    <div class="container py-4 position-relative" style="z-index: 2;">
-        <nav aria-label="breadcrumb" class="mb-3">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-warning text-decoration-none"><i class="fas fa-home me-1"></i> Home</a></li>
-                <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>departments.php" class="text-white-50 text-decoration-none">Academic Units</a></li>
-                <li class="breadcrumb-item active text-white" aria-current="page">Faculty Directory</li>
-            </ol>
-        </nav>
+<!-- ═══════════════════════════════════════════════════════
+     HERO — AURORA MESH (Same as About Us)
+═══════════════════════════════════════════════════════ -->
+<section class="about-hero-v2">
+    <div class="about-hero-v2__blob about-hero-v2__blob--1"></div>
+    <div class="about-hero-v2__blob about-hero-v2__blob--2"></div>
+    <div class="about-hero-v2__blob about-hero-v2__blob--3"></div>
+    <div class="about-hero-v2__grid"></div>
 
-        <div class="row align-items-center g-4">
-            <div class="col-lg-8">
-                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold text-uppercase tracking-wider mb-2 shadow-sm">
-                    <i class="fas fa-chalkboard-teacher me-1"></i> Academic Leadership &amp; Mentorship
-                </span>
-                <h1 class="display-5 fw-bold mb-3 text-white">Distinguished Faculty Directory</h1>
-                <p class="lead text-white-50 mb-4" style="max-width: 720px; line-height: 1.7;">
-                    Meet our team of over <strong>1,000+</strong> esteemed professors, doctors, researchers, and industry veterans delivering experiential pedagogy and pioneering research across 15 constituent colleges and institutes.
+    <div class="container-xl about-hero-v2__inner">
+        <div class="row align-items-center g-5">
+            <div class="col-12 col-lg-8">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb mb-0 small">
+                        <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning"><i class="fas fa-home me-1"></i> Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>departments.php" class="text-decoration-none text-white-50">Academic Units</a></li>
+                        <li class="breadcrumb-item active" aria-current="page" style="color: rgba(255,255,255,0.85);">Faculty Directory</li>
+                    </ol>
+                </nav>
+                <span class="about-hero-v2__eyebrow"><i class="fas fa-chalkboard-teacher"></i> Academic Leadership &amp; Mentorship</span>
+                <h1 class="about-hero-v2__title">Distinguished <span>Faculty Directory</span> &ndash; Mentoring Future Leaders</h1>
+                <p class="about-hero-v2__desc">
+                    Meet our team of over <strong>1,000+</strong> esteemed professors, eminent doctors, researchers, and industry veterans delivering experiential pedagogy and pioneering research across constituent colleges and institutes.
                 </p>
-                <div class="d-flex flex-wrap gap-2">
-                    <a href="<?php echo BASE_URL; ?>assets/uploads/2026/07/department-wise-faculty-details.pdf" target="_blank" class="btn btn-danger btn-sm px-3 py-2 rounded-pill fw-bold shadow-sm">
-                        <i class="fas fa-file-pdf me-1"></i> Download Official Faculty List (PDF)
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="<?php echo BASE_URL; ?>assets/uploads/2026/07/department-wise-faculty-details.pdf" target="_blank" class="btn-hero-yellow">
+                        <i class="fas fa-file-pdf me-1"></i> Download Faculty List (PDF)
                     </a>
-                    <a href="<?php echo BASE_URL; ?>departments.php" class="btn btn-outline-light btn-sm px-3 py-2 rounded-pill fw-semibold">
-                        <i class="fas fa-building me-1"></i> View 26 Constituent Units
+                    <a href="<?php echo BASE_URL; ?>departments.php" class="btn-hero-outline">
+                        <i class="fas fa-building me-1"></i> View Academic Units
                     </a>
                 </div>
             </div>
-
-            <!-- Stats Column -->
-            <div class="col-lg-4">
-                <div class="row g-2">
-                    <div class="col-6">
-                        <div class="p-3 bg-white bg-opacity-10 border border-white border-opacity-15 rounded-3 text-center backdrop-blur">
-                            <h3 class="fw-bold text-warning mb-0"><?php echo number_format($stats['total'] ?: 1047); ?>+</h3>
-                            <small class="text-white-50 text-uppercase fw-semibold" style="font-size: 0.75rem;">Faculty Members</small>
-                        </div>
+            <div class="col-12 col-lg-4">
+                <div class="about-hero-v2__cards">
+                    <div class="about-hero-v2__card about-hero-v2__card--float1">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span class="num"><?php echo number_format($stats['total'] ?: 1000); ?>+</span>
+                        <span class="lbl">Faculty Members</span>
                     </div>
-                    <div class="col-6">
-                        <div class="p-3 bg-white bg-opacity-10 border border-white border-opacity-15 rounded-3 text-center backdrop-blur">
-                            <h3 class="fw-bold text-white mb-0"><?php echo $stats['departments'] ?: 15; ?></h3>
-                            <small class="text-white-50 text-uppercase fw-semibold" style="font-size: 0.75rem;">Institutes &amp; Colleges</small>
-                        </div>
+                    <div class="about-hero-v2__card about-hero-v2__card--float2">
+                        <i class="fas fa-layer-group"></i>
+                        <span class="num"><?php echo $stats['departments'] ?: 15; ?></span>
+                        <span class="lbl">Constituent Units</span>
                     </div>
-                    <div class="col-6">
-                        <div class="p-3 bg-white bg-opacity-10 border border-white border-opacity-15 rounded-3 text-center backdrop-blur">
-                            <h3 class="fw-bold text-white mb-0"><?php echo number_format($stats['professors'] ?: 180); ?>+</h3>
-                            <small class="text-white-50 text-uppercase fw-semibold" style="font-size: 0.75rem;">Professors &amp; Deans</small>
-                        </div>
+                    <div class="about-hero-v2__card about-hero-v2__card--float3">
+                        <i class="fas fa-user-tie"></i>
+                        <span class="num"><?php echo number_format($stats['professors'] ?: 180); ?>+</span>
+                        <span class="lbl">Professors &amp; Deans</span>
                     </div>
-                    <div class="col-6">
-                        <div class="p-3 bg-white bg-opacity-10 border border-white border-opacity-15 rounded-3 text-center backdrop-blur">
-                            <h3 class="fw-bold text-warning mb-0"><?php echo number_format($stats['phd_md_count'] ?: 600); ?>+</h3>
-                            <small class="text-white-50 text-uppercase fw-semibold" style="font-size: 0.75rem;">MD / MS / PhD Mentors</small>
-                        </div>
+                    <div class="about-hero-v2__card about-hero-v2__card--float4">
+                        <i class="fas fa-award"></i>
+                        <span class="num"><?php echo number_format($stats['phd_md_count'] ?: 600); ?>+</span>
+                        <span class="lbl">PhD / MD Mentors</span>
                     </div>
                 </div>
             </div>
