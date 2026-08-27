@@ -440,9 +440,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             <div>
                 <span class="section-subtitle">COURSES &amp; PROGRAMMES</span>
                 <h2 class="section-title mb-0">How to Get Admission in <span>SRK University</span>, Bhopal?</h2>
-                <p class="text-muted small mb-0">Choose your trajectory from over 140+ meticulously designed programmes and find the pathway that fits your goals.</p>
+                <p class="text-muted small mb-0">Choose your trajectory from our meticulously designed programmes and find the pathway that fits your goals.</p>
             </div>
-            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View all programmes <i class="fas fa-arrow-right ms-1"></i></a>
+            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View All Programmes <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
             <div class="col">
@@ -756,8 +756,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     GALLERY SECTION (Bootstrap 5-col Grid)
+     GALLERY SECTION (Bootstrap 5-col Grid) — DB Connected
 ═══════════════════════════════════════════════════════ -->
+<?php $homeGridGallery = getGalleryImages('Campus', 10); ?>
 <section class="py-5 bg-cream">
     <div class="container-xl py-2">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -770,7 +771,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-2">
             <?php foreach (array_slice($homeGridGallery, 0, 10) as $i => $gimg): ?>
             <div class="col">
-                <img src="<?php echo resolveMediaUrl($gimg['image_url'] ?? $gimg['image_path'] ?? '', 'assets/uploads/2026/07/001.webp'); ?>" 
+                <img src="<?php echo resolveMediaUrl($gimg['image_path']); ?>" 
                      class="gallery-img" 
                      alt="SRK University Campus <?php echo $i + 1; ?>"
                      loading="lazy"
@@ -961,55 +962,39 @@ $homeTestimonials = [
     [
         'name' => 'Ravi Gupta',
         'city' => 'Bhopal',
-        'text' => 'Graduated from this university with valuable skills and experiences that have helped me succeed in my career. The alumni network is strong and supportive, and the career services office provided excellent guidance to help me secure a job after graduation.',
+        'text' => 'Graduated from this university with valuable skills and experiences that have helped me succeed in my career. The alumni network is strong and supportive, and the career services office provided excellent guidance and resources to help me secure a job after graduation. I also appreciated the emphasis on real-world learning through internships and co-op programmes.',
     ],
     [
         'name' => 'Nitish Rai',
         'city' => 'Bhopal',
-        'text' => "The professors at this university are some of the best in their fields, and they are genuinely passionate about teaching. I appreciated the diverse range of courses offered, and the opportunities to conduct research alongside faculty members.",
+        'text' => "The professors at this university are some of the best in their fields, and they are genuinely passionate about teaching. I appreciated the diverse range of courses offered, and the opportunities to conduct research alongside faculty members. The university's commitment to community service and social responsibility also inspired me to get involved in volunteer work and make a positive impact on society.",
     ],
     [
         'name' => 'Manish Nigam',
         'city' => 'Bhopal',
-        'text' => 'Attending this university was one of the best decisions I have made. The faculty and staff were incredibly supportive, and the campus provided a great environment for learning and developing leadership skills.',
-    ],
-    [
-        'name' => 'Pooja Sharma',
-        'city' => 'Indore',
-        'text' => 'The academic environment and practical labs at SRKU provided me with real-world exposure that prepared me for my corporate career. The faculty mentorship and active campus placement cell helped me secure an excellent role.',
+        'text' => 'Attending this university was one of the best decisions I have made. The faculty and staff were incredibly supportive, and the campus provided a great environment for learning. I was able to participate in various extracurricular activities that helped me develop leadership skills and make new friends. I highly recommend this university to anyone who wants to receive a top-quality education in a welcoming community.',
     ],
 ];
-$testimonialSlides = array_chunk($homeTestimonials, 2);
 ?>
 <section class="testimonial-v2">
-    <div class="container-xl" style="max-width: 1140px;">
+    <div class="testimonial-v2__inner">
         <p class="testimonial-v2__eyebrow">Real Stories</p>
         <h2 class="testimonial-v2__title">What our <em>Students say</em> about the university</h2>
 
         <div class="testimonial-v2__carousel" id="testimonialCarousel">
-            <?php foreach ($testimonialSlides as $sIdx => $pair): ?>
-                <div class="testimonial-v2__slide<?php echo $sIdx === 0 ? ' active' : ''; ?>">
-                    <div class="row row-cols-1 row-cols-md-2 g-4">
-                        <?php foreach ($pair as $t): ?>
-                            <div class="col">
-                                <div class="testimonial-v2__card">
-                                    <span class="testimonial-v2__avatar" aria-hidden="true"><i class="fas fa-user"></i></span>
-                                    <p class="testimonial-v2__text">&ldquo;<?php echo sanitize($t['text']); ?>&rdquo;</p>
-                                    <div class="mt-auto">
-                                        <p class="testimonial-v2__name"><?php echo sanitize($t['name']); ?></p>
-                                        <p class="testimonial-v2__city"><?php echo sanitize($t['city']); ?></p>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+            <?php foreach ($homeTestimonials as $i => $t): ?>
+                <div class="testimonial-v2__slide<?php echo $i === 0 ? ' active' : ''; ?>">
+                    <span class="testimonial-v2__avatar" aria-hidden="true"><i class="fas fa-user"></i></span>
+                    <p class="testimonial-v2__text"><?php echo sanitize($t['text']); ?></p>
+                    <p class="testimonial-v2__name"><?php echo sanitize($t['name']); ?></p>
+                    <p class="testimonial-v2__city"><?php echo sanitize($t['city']); ?></p>
                 </div>
             <?php endforeach; ?>
         </div>
 
         <div class="testimonial-v2__dots" id="testimonialDots">
-            <?php foreach ($testimonialSlides as $sIdx => $pair): ?>
-                <span class="testimonial-v2__dot<?php echo $sIdx === 0 ? ' active' : ''; ?>" data-index="<?php echo $sIdx; ?>"></span>
+            <?php foreach ($homeTestimonials as $i => $t): ?>
+                <span class="testimonial-v2__dot<?php echo $i === 0 ? ' active' : ''; ?>" data-index="<?php echo $i; ?>"></span>
             <?php endforeach; ?>
         </div>
     </div>
@@ -1038,27 +1023,32 @@ $testimonialSlides = array_chunk($homeTestimonials, 2);
 </script>
 
 <!-- ═══════════════════════════════════════════════════════
-     EVENTS GALLERY (auto-scrolling, matches live srku.edu.in design)
+     CAMPUS GALLERY (auto-scrolling) — DB Connected
 ═══════════════════════════════════════════════════════ -->
 <?php $homeCarouselGallery = getGalleryImages(null, 20); ?>
 <section class="py-5">
     <div class="container-xl py-2 text-center">
-        <span class="section-subtitle">OUR EVENTS GALLERY</span>
-        <h2 class="section-title mb-4">Events <span>at SRK</span> University</h2>
+        <span class="section-subtitle">CAMPUS GALLERY</span>
+        <h2 class="section-title mb-4">A Glimpse Into Life at <span>SRK University</span></h2>
     </div>
     <div class="auto-gallery__viewport" id="eventsGalleryViewport">
         <div class="auto-gallery__track auto-gallery__track--3up" id="eventsGalleryTrack">
-            <?php foreach ($eventsGalleryImages as $img): ?>
+            <?php foreach ($homeCarouselGallery as $gimg): ?>
                 <div class="auto-gallery__item auto-gallery__item--3up">
                     <img src="<?php echo resolveMediaUrl($gimg['image_path']); ?>"
                          loading="lazy"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                         alt="<?php echo sanitize($img['alt']); ?>">
+                         alt="SRK University Campus">
                 </div>
             <?php endforeach; ?>
         </div>
     </div>
     <div class="auto-gallery__dots" id="eventsGalleryDots"></div>
+    <div class="text-center mt-4">
+        <a href="<?php echo BASE_URL; ?>gallery.php" class="btn btn-srku-gold">
+            <i class="fas fa-images me-2"></i>View Full Gallery
+        </a>
+    </div>
 </section>
 <script>
 (function () {
