@@ -230,7 +230,7 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
                     if (empty(trim($dept['dean_name'] ?? ''))) {
                         $dept['dean_name']        = 'Dr. Nilesh Diwakar';
                         $dept['dean_designation'] = 'Director';
-                        $dept['dean_photo']       = 'https://www.srku.edu.in/rkdf-ist/images/diwarkar-sir.jpg';
+                        $dept['dean_photo']       = 'assets/images/rkdf-ist/diwarkar-sir.jpg';
                         $dept['dean_message']     = "SRK University RKDF Institute of Science & Technology is a premier institute for professional studies. This institute has achieved ladder of engineering excellence since it's inception in 1995 & is recognized as one of the leading professional institutes in Madhya Pradesh, where students acquire technical & professional skills with cutting edge technology, knowledge & high moral standards. The growth achieved by this institution is significant. The institute is committed to offer quality technical education by adopting principle of mutual trust, fairness & positive orientation. The management, faculty members & supporting staff is committed to fulfill the expectations of all the stake holders i.e. students, parent, corporate community & society. The students are benefited with excellent infrastructure, dedicated faculty members & excellent track record of placement in corporate world. The vision of our faculties and their dedication to the cause of technical education combined with their dynamic approach to leadership has made a telling difference to the growth of the college. Our graduate students are selected in top notch organization, working in the field of software, energy, infrastructure, robotics & automation in fortune 500 companies of western world as well as MNCs of India. In the years to come RKDF Institute of Science & Technology shall play a significant role in the technology sector for developing trained & skilled human resources to serve the nation for better economic performance & growth.";
                     }
                 }
@@ -240,40 +240,46 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
                     $dDesig = trim((string)($dept['dean_designation'] ?? 'Dean & Principal')) ?: 'Dean & Principal';
                     $dPhoto = trim((string)($dept['dean_photo'] ?? ''));
                 ?>
-                    <!-- Dean / Principal's Desk Message Section (Only shown when populated) -->
-                    <div class="card p-4 p-md-4 border-0 shadow-sm rounded-4 mb-4 position-relative overflow-hidden bg-white" style="border: 1px solid #e2e8f0 !important; border-left: 5px solid #7a0b0d !important;">
-                        <div class="d-flex flex-column flex-md-row gap-4 align-items-md-center">
-                            
-                            <!-- Dean Photo Column -->
-                            <div class="text-center flex-shrink-0 mx-auto mx-md-0" style="width: 140px;">
-                                <div class="rounded-circle overflow-hidden shadow-xs border border-3 border-light mx-auto mb-2 bg-light" style="width: 110px; height: 110px;">
-                                    <?php if (!empty($dPhoto)): ?>
-                                        <img src="<?php echo (strpos($dPhoto, 'http') === 0) ? $dPhoto : BASE_URL . $dPhoto; ?>" 
-                                             alt="<?php echo sanitize($dName); ?>" 
-                                             class="w-100 h-100 object-fit-cover">
-                                    <?php else: ?>
-                                        <div class="w-100 h-100 bg-light d-flex flex-column align-items-center justify-content-center text-danger">
-                                            <i class="fas fa-user-graduate fs-1"></i>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-                                <h6 class="fw-bold text-navy mb-0" style="font-size: 0.92rem;"><?php echo sanitize($dName); ?></h6>
-                                <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1 mt-1 small" style="font-size: 0.72rem;"><?php echo sanitize($dDesig); ?></span>
+                    <!-- Dean / Principal's Desk Message Section (Centered Top Profile Design) -->
+                    <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 mb-4 position-relative overflow-hidden bg-white" style="border: 1px solid #e2e8f0 !important; border-top: 5px solid #7a0b0d !important;">
+                        
+                        <!-- Top Header Badge -->
+                        <div class="text-center mb-4">
+                            <div class="d-inline-flex align-items-center gap-2 px-3 py-1 bg-navy bg-opacity-10 text-navy rounded-pill small fw-bold mb-2">
+                                <i class="fas fa-quote-left text-warning"></i> Leadership Desk &bull; Message from the <?php echo sanitize($dDesig); ?>
                             </div>
-
-                            <!-- Dean Message Content Column -->
-                            <div class="flex-grow-1 border-start ps-md-4" style="border-color: #f1f5f9 !important;">
-                                <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
-                                    <span class="badge bg-navy text-white px-3 py-1 rounded-pill small fw-bold"><i class="fas fa-quote-left me-1 text-warning"></i> Leadership Desk</span>
-                                    <span class="text-muted small">Message from the <?php echo sanitize($dDesig); ?></span>
-                                </div>
-                                <h3 class="h6 fw-bold text-navy mb-2">Guiding Academic Excellence &amp; Innovation</h3>
-                                <div class="text-secondary lead fs-6 fst-italic position-relative" style="line-height: 1.75; font-size: 0.95rem !important;">
-                                    "<?php echo nl2br(sanitize($dMsg)); ?>"
-                                </div>
-                            </div>
-
                         </div>
+
+                        <!-- Top Centered Profile & Photo -->
+                        <div class="text-center mb-4">
+                            <div class="rounded-circle overflow-hidden shadow-sm border border-4 border-light mx-auto mb-3 bg-light" style="width: 135px; height: 135px;">
+                                <?php if (!empty($dPhoto)): ?>
+                                    <img src="<?php echo (strpos($dPhoto, 'http') === 0) ? $dPhoto : BASE_URL . $dPhoto; ?>" 
+                                         alt="<?php echo sanitize($dName); ?>" 
+                                         class="w-100 h-100 object-fit-cover">
+                                <?php else: ?>
+                                    <div class="w-100 h-100 bg-light d-flex flex-column align-items-center justify-content-center text-danger">
+                                        <i class="fas fa-user-graduate fs-1"></i>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize($dName); ?></h4>
+                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-1 fw-semibold" style="font-size: 0.82rem;"><?php echo sanitize($dDesig); ?> &bull; <?php echo sanitize($dept['name']); ?></span>
+                        </div>
+
+                        <hr class="my-3 opacity-10">
+
+                        <!-- Message Text Below the Photo & Profile -->
+                        <div class="mt-3">
+                            <h5 class="h6 fw-bold text-navy mb-3 text-center">
+                                <i class="fas fa-award text-danger me-2"></i> Guiding Academic Excellence &amp; Innovation
+                            </h5>
+                            <div class="text-secondary lead fs-6 fst-italic position-relative p-3 p-md-4 rounded-4" style="line-height: 1.85; font-size: 0.96rem !important; background: #fafbfc; border-left: 4px solid var(--srku-maroon, #7a0b0d);">
+                                <i class="fas fa-quote-left text-danger opacity-25 fa-2x position-absolute top-0 start-0 translate-middle ms-4 mt-3"></i>
+                                &ldquo;<?php echo nl2br(sanitize($dMsg)); ?>&rdquo;
+                            </div>
+                        </div>
+
                     </div>
                 <?php endif; ?>
 
@@ -478,8 +484,8 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
                         <h4 class="h6 fw-bold text-white mb-0">RKDF IST &mdash; Campus Tour</h4>
                         <span class="badge bg-danger ms-auto small">Official Video</span>
                     </div>
-                    <video class="w-100 d-block" style="max-height:460px; object-fit:cover; background:#000;" autoplay muted loop playsinline>
-                        <source src="https://www.srku.edu.in/rkdf-ist/images/RKDF-IST-College-Tour.mp4" type="video/mp4">
+                    <video class="w-100 d-block" style="max-height:460px; object-fit:cover; background:#000;" autoplay muted loop playsinline controls>
+                        <source src="<?php echo file_exists(__DIR__ . '/assets/videos/rkdf-ist/RKDF-IST-College-Tour.mp4') ? BASE_URL . 'assets/videos/rkdf-ist/RKDF-IST-College-Tour.mp4' : 'https://www.srku.edu.in/rkdf-ist/images/RKDF-IST-College-Tour.mp4'; ?>" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -738,13 +744,13 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
                             ['name' => 'Student Feedback Form',                    'type' => 'PDF',    'icon' => 'fas fa-user-graduate',       'url' => istPdf('feedback/student-feedback.pdf',             'https://www.srku.edu.in/rkdf-ist/images/pdf/ist/STUDENT-FEEDBACK-FORM_page-0001.pdf')],
                             ['name' => 'Teacher Curriculum Feedback',              'type' => 'PDF',    'icon' => 'fas fa-chalkboard-teacher',  'url' => istPdf('feedback/teacher-curriculum-feedback.pdf',  'https://www.srku.edu.in/rkdf-ist/images/pdf/ist/feedback-on-curriculum-for-teachers_page-0001.pdf')],
                             ['name' => 'Parent Feedback Form',                     'type' => 'PDF',    'icon' => 'fas fa-users',               'url' => istPdf('feedback/parent-feedback.pdf',              'https://www.srku.edu.in/rkdf-ist/images/pdf/ist/Parent-Feed-Back-converted_page-0001%20(1).pdf')],
-                            ['name' => 'Online Student Feedback',                  'type' => 'Online', 'icon' => 'fas fa-laptop',              'url' => 'https://www.srku.edu.in/rkdf-ist/student_FeedBack_form.php'],
-                            ['name' => 'Online Curriculum Feedback (Teachers)',    'type' => 'Online', 'icon' => 'fas fa-clipboard-list',      'url' => 'https://www.srku.edu.in/rkdf-ist/Feedback-on-curriculum-by-Teachers.php'],
-                            ['name' => 'Online Parent Feedback Form',              'type' => 'Online', 'icon' => 'fas fa-home',                'url' => 'https://www.srku.edu.in/rkdf-ist/Parents-Feedback-Form.php'],
+                            ['name' => 'Online Student Feedback',                  'type' => 'Online', 'icon' => 'fas fa-laptop',              'url' => BASE_URL . 'rkdf-ist-student-feedback.php'],
+                            ['name' => 'Online Curriculum Feedback (Teachers)',    'type' => 'Online', 'icon' => 'fas fa-clipboard-list',      'url' => BASE_URL . 'rkdf-ist-teacher-feedback.php'],
+                            ['name' => 'Online Parent Feedback Form',              'type' => 'Online', 'icon' => 'fas fa-home',                'url' => BASE_URL . 'rkdf-ist-parent-feedback.php'],
                         ];
                         foreach ($feedbackForms as $fb): ?>
                             <div class="col-12 col-md-6">
-                                <a href="<?php echo $fb['url']; ?>" target="_blank" rel="noopener"
+                                <a href="<?php echo $fb['url']; ?>" <?php echo $fb['type'] === 'PDF' ? 'target="_blank"' : ''; ?> rel="noopener"
                                    class="d-flex align-items-center gap-3 p-3 rounded-3 bg-light border text-decoration-none text-dark h-100" style="transition:all 0.2s;">
                                     <div class="bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm border flex-shrink-0" style="width:40px;height:40px;">
                                         <i class="<?php echo $fb['icon']; ?> text-danger small"></i>
@@ -753,7 +759,7 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
                                         <div class="fw-semibold text-navy" style="font-size:0.85rem;"><?php echo $fb['name']; ?></div>
                                         <span class="badge <?php echo $fb['type'] === 'Online' ? 'bg-success' : 'bg-secondary'; ?> mt-1" style="font-size:0.65rem;"><?php echo $fb['type']; ?></span>
                                     </div>
-                                    <i class="fas fa-<?php echo $fb['type'] === 'Online' ? 'external-link-alt' : 'file-pdf'; ?> text-muted small"></i>
+                                    <i class="fas fa-<?php echo $fb['type'] === 'Online' ? 'arrow-right' : 'file-pdf'; ?> text-muted small"></i>
                                 </a>
                             </div>
                         <?php endforeach; ?>
@@ -893,7 +899,7 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
                             <span class="badge bg-danger-subtle text-danger ms-auto" style="font-size:0.62rem;">Women Helpline</span>
                         </div>
                     </div>
-                    <a href="https://www.srku.edu.in/rkdf-ist/gform.php" target="_blank" rel="noopener" class="btn btn-outline-danger btn-sm w-100 fw-semibold">
+                    <a href="<?php echo BASE_URL; ?>rkdf-ist-grievance.php" class="btn btn-outline-danger btn-sm w-100 fw-semibold">
                         <i class="fas fa-file-signature me-1"></i> Submit Grievance Online
                     </a>
                 </div>
