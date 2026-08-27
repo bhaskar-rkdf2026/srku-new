@@ -7,83 +7,124 @@ require_once __DIR__ . '/includes/header.php';
 
 $selectedDept = sanitize($_GET['dept'] ?? '');
 $selectedLevel = sanitize($_GET['level'] ?? '');
-$searchKeyword = sanitize($_GET['search'] ?? '');
+$searchKeyword = sanitize($_GET['search'] ?? ($_GET['q'] ?? ''));
 
-$courses = getCourses($selectedDept, $selectedLevel, $searchKeyword);
+// Fetch all active courses for client-side instant filtering and deep search
+$courses = getCourses();
 $departments = getDepartments(true);
 ?>
 
 <!-- Dynamic Banner Header -->
 <?php renderPageBanner('courses', 'Academic Programmes & Degrees Catalog', 'Undergraduate (UG), Postgraduate (PG), Diploma & Doctoral Research Programs Across 26 Constituent Units'); ?>
 
-<section class="py-5">
+<section class="py-5 bg-light">
     <div class="container-xl py-2">
         
         <!-- SEARCH & FILTER BAR -->
-        <div class="card p-4 border-0 shadow-sm rounded-4 mb-5 bg-white border">
-            <form action="<?php echo BASE_URL; ?>courses.php" method="GET" class="row g-3 align-items-center">
+        <div class="card p-4 p-lg-4 border-0 shadow-sm rounded-4 mb-4 bg-white">
+            <div class="row g-3 align-items-end">
                 
-                <div class="col-12 col-md-5">
+                <!-- Search Input -->
+                <div class="col-12 col-md-5 col-lg-4">
+                    <label for="courseSearch" class="form-label small fw-bold text-navy mb-1">
+                        <i class="fas fa-search text-danger me-1"></i> Search Course or Subject
+                    </label>
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0"><i class="fas fa-search text-muted"></i></span>
-                        <input type="text" name="search" class="form-control border-start-0" placeholder="Search by course (e.g. MBBS, B.Tech, MPT, MBA, D.Pharm, LL.M.)..." value="<?php echo sanitize($searchKeyword); ?>">
+                        <input type="text" id="courseSearch" class="form-control border-start-0 ps-0" 
+                               placeholder="e.g. MBBS, B.Tech, MBA, D.Pharm, MCA, LL.M..." 
+                               value="<?php echo sanitize($searchKeyword); ?>" 
+                               oninput="applyCourseFilters()">
                     </div>
                 </div>
 
-                <div class="col-12 col-md-4">
-                    <select name="dept" class="form-select bg-light">
-                        <option value="">-- All Constituent Units &amp; Faculties --</option>
+                <!-- Constituent Unit / Faculty Dropdown -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <label for="courseDeptFilter" class="form-label small fw-bold text-navy mb-1">
+                        <i class="fas fa-university text-primary me-1"></i> Constituent Unit / Faculty
+                    </label>
+                    <select id="courseDeptFilter" class="form-select bg-light" onchange="applyCourseFilters()">
+                        <option value="">All Constituent Units &amp; Faculties</option>
                         <?php foreach ($departments as $d): ?>
-                            <option value="<?php echo sanitize($d['slug']); ?>" <?php echo ($selectedDept == $d['slug'] || $selectedDept == $d['name']) ? 'selected' : ''; ?>>
+                            <option value="<?php echo sanitize($d['slug']); ?>" 
+                                    data-name="<?php echo sanitize(strtolower($d['name'])); ?>"
+                                    <?php echo (strcasecmp($selectedDept, $d['slug']) === 0 || strcasecmp($selectedDept, $d['name']) === 0) ? 'selected' : ''; ?>>
                                 <?php echo sanitize($d['name']); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
 
-                <div class="col-12 col-md-3 d-flex gap-2">
-                    <button type="submit" class="btn btn-srku flex-grow-1"><i class="fas fa-filter me-1"></i> Filter Courses</button>
-                    <?php if ($selectedDept || $selectedLevel || $searchKeyword): ?>
-                        <a href="<?php echo BASE_URL; ?>courses.php" class="btn btn-outline-secondary" title="Reset All Filters"><i class="fas fa-times"></i></a>
-                    <?php endif; ?>
+                <!-- Academic Level Dropdown -->
+                <div class="col-12 col-sm-6 col-md-3 col-lg-3">
+                    <label for="courseLevelFilter" class="form-label small fw-bold text-navy mb-1">
+                        <i class="fas fa-layer-group text-warning me-1"></i> Academic Level
+                    </label>
+                    <select id="courseLevelFilter" class="form-select bg-light" onchange="applyCourseFilters()">
+                        <option value="">All Academic Levels</option>
+                        <option value="UG" <?php echo strcasecmp($selectedLevel, 'UG') === 0 ? 'selected' : ''; ?>>Undergraduate (UG)</option>
+                        <option value="PG" <?php echo strcasecmp($selectedLevel, 'PG') === 0 ? 'selected' : ''; ?>>Postgraduate (PG)</option>
+                        <option value="Diploma" <?php echo strcasecmp($selectedLevel, 'Diploma') === 0 ? 'selected' : ''; ?>>Diploma &amp; Polytechnic</option>
+                        <option value="Doctorate" <?php echo strcasecmp($selectedLevel, 'Doctorate') === 0 ? 'selected' : ''; ?>>Doctorate (Ph.D.)</option>
+                    </select>
                 </div>
 
-            </form>
+                <!-- Reset Filters Button -->
+                <div class="col-12 col-md-12 col-lg-2">
+                    <button type="button" class="btn btn-outline-danger w-100 rounded-3 py-2 fw-semibold" onclick="resetAllCourseFilters()">
+                        <i class="fas fa-redo-alt me-1"></i> Reset Filters
+                    </button>
+                </div>
 
-            <!-- Degree Level Pills -->
-            <div class="d-flex flex-wrap gap-2 mt-3 pt-3 border-top justify-content-center">
-                <a href="<?php echo BASE_URL; ?>courses.php<?php echo $selectedDept ? '?dept=' . urlencode($selectedDept) : ''; ?>" 
-                   class="badge px-3 py-2 text-decoration-none rounded-pill <?php echo empty($selectedLevel) ? 'bg-danger text-white' : 'bg-light text-dark border'; ?>">
+            </div>
+
+            <!-- Degree Level Quick Filter Pills -->
+            <div class="d-flex flex-wrap gap-2 mt-3 pt-3 border-top justify-content-center" id="levelQuickPills">
+                <button type="button" class="btn btn-sm rounded-pill px-3 py-1 fw-semibold level-pill-btn active" data-level="" onclick="setLevelFilter('')">
                     All Degrees
-                </a>
-                <a href="<?php echo BASE_URL; ?>courses.php?level=UG<?php echo $selectedDept ? '&dept=' . urlencode($selectedDept) : ''; ?>" 
-                   class="badge px-3 py-2 text-decoration-none rounded-pill <?php echo $selectedLevel == 'UG' ? 'bg-danger text-white' : 'bg-light text-dark border'; ?>">
-                    <i class="fas fa-user-graduate me-1"></i> Undergraduate (UG)
-                </a>
-                <a href="<?php echo BASE_URL; ?>courses.php?level=PG<?php echo $selectedDept ? '&dept=' . urlencode($selectedDept) : ''; ?>" 
-                   class="badge px-3 py-2 text-decoration-none rounded-pill <?php echo $selectedLevel == 'PG' ? 'bg-danger text-white' : 'bg-light text-dark border'; ?>">
-                    <i class="fas fa-graduation-cap me-1"></i> Postgraduate (PG)
-                </a>
-                <a href="<?php echo BASE_URL; ?>courses.php?level=Diploma<?php echo $selectedDept ? '&dept=' . urlencode($selectedDept) : ''; ?>" 
-                   class="badge px-3 py-2 text-decoration-none rounded-pill <?php echo $selectedLevel == 'Diploma' ? 'bg-danger text-white' : 'bg-light text-dark border'; ?>">
-                    <i class="fas fa-certificate me-1"></i> Diploma &amp; Polytechnic
-                </a>
-                <a href="<?php echo BASE_URL; ?>courses.php?level=Doctorate<?php echo $selectedDept ? '&dept=' . urlencode($selectedDept) : ''; ?>" 
-                   class="badge px-3 py-2 text-decoration-none rounded-pill <?php echo $selectedLevel == 'Doctorate' ? 'bg-danger text-white' : 'bg-light text-dark border'; ?>">
-                    <i class="fas fa-award me-1"></i> Doctorate (Ph.D.)
-                </a>
+                </button>
+                <button type="button" class="btn btn-sm rounded-pill px-3 py-1 fw-semibold level-pill-btn btn-light border" data-level="UG" onclick="setLevelFilter('UG')">
+                    <i class="fas fa-user-graduate me-1 text-danger"></i> Undergraduate (UG)
+                </button>
+                <button type="button" class="btn btn-sm rounded-pill px-3 py-1 fw-semibold level-pill-btn btn-light border" data-level="PG" onclick="setLevelFilter('PG')">
+                    <i class="fas fa-graduation-cap me-1 text-primary"></i> Postgraduate (PG)
+                </button>
+                <button type="button" class="btn btn-sm rounded-pill px-3 py-1 fw-semibold level-pill-btn btn-light border" data-level="Diploma" onclick="setLevelFilter('Diploma')">
+                    <i class="fas fa-certificate me-1 text-warning"></i> Diploma &amp; Polytechnic
+                </button>
+                <button type="button" class="btn btn-sm rounded-pill px-3 py-1 fw-semibold level-pill-btn btn-light border" data-level="Doctorate" onclick="setLevelFilter('Doctorate')">
+                    <i class="fas fa-award me-1 text-success"></i> Doctorate (Ph.D.)
+                </button>
+            </div>
+
+            <!-- Active Status Summary -->
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 pt-2 mt-2 border-top small text-muted">
+                <span id="activeCourseFiltersSummary" class="fw-semibold text-navy">
+                    <i class="fas fa-sliders-h text-danger me-1"></i> Showing all academic programmes
+                </span>
             </div>
 
         </div>
 
         <!-- Course Cards Grid -->
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="coursesGrid">
             <?php if (!empty($courses)): ?>
                 <?php foreach ($courses as $c): 
                     $specs = !empty($c['specializations']) ? array_map('trim', explode(',', $c['specializations'])) : [];
+                    $deptSlug = sanitize(strtolower($c['dept_slug'] ?? ''));
+                    $deptName = sanitize(strtolower($c['department'] ?? ''));
+                    $courseName = sanitize(strtolower($c['course_name'] ?? ''));
+                    $levelVal = sanitize($c['level'] ?? '');
+                    $searchData = strtolower($courseName . ' ' . $deptName . ' ' . $deptSlug . ' ' . ($c['specializations'] ?? '') . ' ' . ($c['eligibility'] ?? '') . ' ' . ($c['duration'] ?? ''));
                 ?>
-                    <div class="col">
-                        <div class="srku-course-card h-100 rounded-4 shadow-sm d-flex flex-column position-relative overflow-hidden">
+                    <div class="col course-card-item" 
+                         data-name="<?php echo $courseName; ?>"
+                         data-dept="<?php echo $deptName; ?>"
+                         data-dept-slug="<?php echo $deptSlug; ?>"
+                         data-level="<?php echo sanitize($levelVal); ?>"
+                         data-search="<?php echo htmlspecialchars($searchData); ?>">
+                        
+                        <div class="srku-course-card h-100 rounded-4 shadow-sm d-flex flex-column position-relative overflow-hidden bg-white">
                             
                             <!-- Top Theme Gradient Accent -->
                             <div class="course-card-accent"></div>
@@ -102,7 +143,7 @@ $departments = getDepartments(true);
 
                                 <!-- Course Title -->
                                 <h3 class="course-card-title mb-2">
-                                    <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="text-decoration-none">
+                                    <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="text-decoration-none text-navy">
                                         <?php echo sanitize($c['course_name']); ?>
                                     </a>
                                 </h3>
@@ -151,17 +192,139 @@ $departments = getDepartments(true);
                         </div>
                     </div>
                 <?php endforeach; ?>
-            <?php else: ?>
-                <div class="col-12 text-center py-5">
-                    <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
-                    <h4 class="text-navy fw-bold">No programmes found</h4>
-                    <p class="text-muted">No courses match your filter criteria. Try resetting filters or search terms.</p>
-                    <a href="<?php echo BASE_URL; ?>courses.php" class="btn btn-srku px-4 py-2">Reset All Filters</a>
-                </div>
             <?php endif; ?>
+        </div>
+
+        <!-- Empty State Container (Shows dynamically when no match) -->
+        <div id="courseNoResults" class="card p-5 text-center border-0 shadow-sm rounded-4 bg-white mt-3" style="display: none;">
+            <div class="mb-3">
+                <i class="fas fa-search-minus fa-3x text-danger opacity-50"></i>
+            </div>
+            <h4 class="fw-bold text-navy mb-2">No Academic Programmes Found</h4>
+            <p class="text-muted small mx-auto mb-4" style="max-width: 480px;">
+                No courses match your current filter selections. Try searching with different keywords or reset your filters.
+            </p>
+            <div>
+                <button type="button" class="btn btn-srku px-4 py-2" onclick="resetAllCourseFilters()">
+                    <i class="fas fa-redo-alt me-1"></i> Clear &amp; Reset Filters
+                </button>
+            </div>
         </div>
 
     </div>
 </section>
+
+<script>
+function applyCourseFilters() {
+    var searchInput = document.getElementById('courseSearch');
+    var deptSelect = document.getElementById('courseDeptFilter');
+    var levelSelect = document.getElementById('courseLevelFilter');
+    var statusSummary = document.getElementById('activeCourseFiltersSummary');
+    var noResultsBox = document.getElementById('courseNoResults');
+    var cards = document.querySelectorAll('.course-card-item');
+
+    var query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+    var selectedDept = deptSelect ? deptSelect.value.trim().toLowerCase() : '';
+    var selectedLevel = levelSelect ? levelSelect.value.trim() : '';
+
+    // Update Quick Pills state
+    var pills = document.querySelectorAll('#levelQuickPills .level-pill-btn');
+    pills.forEach(function (pill) {
+        var pillLevel = pill.getAttribute('data-level') || '';
+        if (pillLevel === selectedLevel) {
+            pill.classList.remove('btn-light', 'border');
+            pill.classList.add('btn-danger', 'text-white', 'active');
+        } else {
+            pill.classList.remove('btn-danger', 'text-white', 'active');
+            pill.classList.add('btn-light', 'border');
+        }
+    });
+
+    var visibleCount = 0;
+
+    cards.forEach(function (card) {
+        var cardSearchData = (card.getAttribute('data-search') || '').toLowerCase();
+        var cardDeptSlug = (card.getAttribute('data-dept-slug') || '').toLowerCase();
+        var cardDeptName = (card.getAttribute('data-dept') || '').toLowerCase();
+        var cardLevel = card.getAttribute('data-level') || '';
+
+        var matchesSearch = true;
+        if (query) {
+            matchesSearch = cardSearchData.indexOf(query) !== -1;
+        }
+
+        var matchesDept = true;
+        if (selectedDept) {
+            matchesDept = (cardDeptSlug === selectedDept || cardDeptName.indexOf(selectedDept) !== -1);
+        }
+
+        var matchesLevel = true;
+        if (selectedLevel) {
+            matchesLevel = (cardLevel.toUpperCase() === selectedLevel.toUpperCase());
+        }
+
+        if (matchesSearch && matchesDept && matchesLevel) {
+            card.style.display = '';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    if (noResultsBox) {
+        noResultsBox.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    // Update Status Label (without numeric badges)
+    if (statusSummary) {
+        var activeLabels = [];
+        if (query) activeLabels.push('Search: "' + query + '"');
+        if (selectedDept) {
+            var selectedDeptText = deptSelect.options[deptSelect.selectedIndex].text;
+            activeLabels.push('Faculty: ' + selectedDeptText);
+        }
+        if (selectedLevel) activeLabels.push('Level: ' + selectedLevel);
+
+        if (activeLabels.length > 0) {
+            statusSummary.innerHTML = '<i class="fas fa-filter text-danger me-1"></i> Filtered by: ' + activeLabels.join(' &bull; ');
+        } else {
+            statusSummary.innerHTML = '<i class="fas fa-sliders-h text-danger me-1"></i> Showing all academic programmes';
+        }
+    }
+
+    // Update URL query parameters cleanly
+    try {
+        var url = new URL(window.location);
+        if (query) url.searchParams.set('search', query); else url.searchParams.delete('search');
+        if (selectedDept) url.searchParams.set('dept', selectedDept); else url.searchParams.delete('dept');
+        if (selectedLevel) url.searchParams.set('level', selectedLevel); else url.searchParams.delete('level');
+        window.history.replaceState({}, '', url);
+    } catch (e) {}
+}
+
+function setLevelFilter(level) {
+    var levelSelect = document.getElementById('courseLevelFilter');
+    if (levelSelect) {
+        levelSelect.value = level;
+    }
+    applyCourseFilters();
+}
+
+function resetAllCourseFilters() {
+    var searchInput = document.getElementById('courseSearch');
+    var deptSelect = document.getElementById('courseDeptFilter');
+    var levelSelect = document.getElementById('courseLevelFilter');
+
+    if (searchInput) searchInput.value = '';
+    if (deptSelect) deptSelect.value = '';
+    if (levelSelect) levelSelect.value = '';
+
+    applyCourseFilters();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    applyCourseFilters();
+});
+</script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
