@@ -200,7 +200,8 @@ $vmGalleryImages = [
         <div class="auto-gallery__track" id="vmGalleryTrack">
             <?php foreach ($vmGalleryImages as $image): ?>
                 <div class="auto-gallery__item">
-                    <img src="<?php echo BASE_URL . sanitize($image['path']); ?>"
+                    <img src="<?php echo resolveMediaUrl($image['image_url'] ?? $image['image_path'] ?? '', 'assets/uploads/2026/07/001.webp'); ?>"
+                         loading="lazy"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                          alt="<?php echo sanitize($image['alt']); ?>">
                 </div>
