@@ -961,44 +961,87 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 $homeTestimonials = [
     [
         'name' => 'Ravi Gupta',
+        'dept' => 'B.Tech (Computer Science & Engg.)',
         'city' => 'Bhopal',
-        'text' => 'Graduated from this university with valuable skills and experiences that have helped me succeed in my career. The alumni network is strong and supportive, and the career services office provided excellent guidance to help me secure a job after graduation.',
+        'initials' => 'RG',
+        'text' => 'Graduated from SRKU with valuable technical skills, modern lab exposure, and industry internship experiences that helped me build a rewarding engineering career. The faculty mentorship and career services provided exceptional support.',
     ],
     [
         'name' => 'Nitish Rai',
+        'dept' => 'Faculty of Engineering & Technology',
         'city' => 'Bhopal',
-        'text' => "The professors at this university are some of the best in their fields, and they are genuinely passionate about teaching. I appreciated the diverse range of courses offered, and the opportunities to conduct research alongside faculty members.",
+        'initials' => 'NR',
+        'text' => 'The professors at Sarvepalli Radhakrishnan University are some of the most knowledgeable mentors in their domains. I benefited greatly from the practical project training, advanced workshops, and academic guidance.',
     ],
     [
         'name' => 'Manish Nigam',
+        'dept' => 'Faculty of Management Studies (MBA)',
         'city' => 'Bhopal',
-        'text' => 'Attending this university was one of the best decisions I have made. The faculty and staff were incredibly supportive, and the campus provided a great environment for learning and developing leadership skills.',
+        'initials' => 'MN',
+        'text' => 'Attending SRKU for my management degree was a transformative decision. The corporate seminars, live case studies, and dynamic campus environment helped me develop strong leadership and strategic thinking skills.',
     ],
     [
         'name' => 'Pooja Sharma',
+        'dept' => 'Faculty of Pharmacy',
         'city' => 'Indore',
-        'text' => 'The academic environment and practical labs at SRKU provided me with real-world exposure that prepared me for my corporate career. The faculty mentorship and active campus placement cell helped me secure an excellent role.',
+        'initials' => 'PS',
+        'text' => 'The pharmaceutical research facilities and faculty mentorship at SRKU provided me with deep practical exposure. The dedicated placement guidance helped me secure an excellent role in the healthcare industry.',
+    ],
+    [
+        'name' => 'Aman Verma',
+        'dept' => 'Faculty of Agriculture',
+        'city' => 'Sehore',
+        'initials' => 'AV',
+        'text' => 'The agricultural research farms, modern agronomy labs, and field training offered at SRKU provided deep hands-on learning. The teachers are always ready to guide students towards career excellence.',
+    ],
+    [
+        'name' => 'Neha Chouhan',
+        'dept' => 'Faculty of Paramedical & Nursing',
+        'city' => 'Bhopal',
+        'initials' => 'NC',
+        'text' => 'The clinical rotations at the university teaching hospital gave me great professional confidence. The supportive faculty and disciplined academic environment made my learning journey memorable.',
     ],
 ];
 $testimonialSlides = array_chunk($homeTestimonials, 2);
 ?>
 <section class="testimonial-v2">
     <div class="container-xl" style="max-width: 1140px;">
-        <p class="testimonial-v2__eyebrow">Real Stories</p>
-        <h2 class="testimonial-v2__title">What our <em>Students say</em> about the university</h2>
+        <div class="text-center mb-4">
+            <span class="testimonial-v2__eyebrow">
+                <i class="fas fa-quote-left text-danger me-1"></i> Real Stories &amp; Student Experiences
+            </span>
+            <h2 class="testimonial-v2__title mb-2">What our <em>Students say</em> about the university</h2>
+            <p class="text-muted small mx-auto" style="max-width: 650px;">
+                Discover firsthand experiences, academic highlights, and career journeys shared by our students and alumni across diverse faculties.
+            </p>
+        </div>
 
         <div class="testimonial-v2__carousel" id="testimonialCarousel">
             <?php foreach ($testimonialSlides as $sIdx => $pair): ?>
                 <div class="testimonial-v2__slide<?php echo $sIdx === 0 ? ' active' : ''; ?>">
-                    <div class="row row-cols-1 row-cols-md-2 g-4">
+                    <div class="row g-4">
                         <?php foreach ($pair as $t): ?>
-                            <div class="col">
+                            <div class="col-12 col-md-6">
                                 <div class="testimonial-v2__card">
-                                    <span class="testimonial-v2__avatar" aria-hidden="true"><i class="fas fa-user"></i></span>
+                                    <i class="fas fa-quote-right testimonial-v2__quote-icon" aria-hidden="true"></i>
+                                    <div class="testimonial-v2__stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
                                     <p class="testimonial-v2__text">&ldquo;<?php echo sanitize($t['text']); ?>&rdquo;</p>
-                                    <div class="mt-auto">
-                                        <p class="testimonial-v2__name"><?php echo sanitize($t['name']); ?></p>
-                                        <p class="testimonial-v2__city"><?php echo sanitize($t['city']); ?></p>
+                                    <div class="testimonial-v2__author">
+                                        <div class="testimonial-v2__avatar">
+                                            <?php echo sanitize($t['initials']); ?>
+                                        </div>
+                                        <div>
+                                            <h4 class="testimonial-v2__name"><?php echo sanitize($t['name']); ?></h4>
+                                            <p class="testimonial-v2__city">
+                                                <span><?php echo sanitize($t['dept']); ?></span> &bull; <span><?php echo sanitize($t['city']); ?></span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1008,34 +1051,129 @@ $testimonialSlides = array_chunk($homeTestimonials, 2);
             <?php endforeach; ?>
         </div>
 
-        <div class="testimonial-v2__dots" id="testimonialDots">
-            <?php foreach ($testimonialSlides as $sIdx => $pair): ?>
-                <span class="testimonial-v2__dot<?php echo $sIdx === 0 ? ' active' : ''; ?>" data-index="<?php echo $sIdx; ?>"></span>
-            <?php endforeach; ?>
+        <div class="testimonial-v2__nav-wrap">
+            <button type="button" class="testimonial-v2__nav-btn" id="prevTestimonial" aria-label="Previous Testimonial">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="testimonial-v2__dots" id="testimonialDots">
+                <?php foreach ($testimonialSlides as $sIdx => $pair): ?>
+                    <span class="testimonial-v2__dot<?php echo $sIdx === 0 ? ' active' : ''; ?>" data-index="<?php echo $sIdx; ?>" title="Slide <?php echo ($sIdx + 1); ?>"></span>
+                <?php endforeach; ?>
+            </div>
+            <button type="button" class="testimonial-v2__nav-btn" id="nextTestimonial" aria-label="Next Testimonial">
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
     </div>
 </section>
 <script>
-(function () {
+document.addEventListener('DOMContentLoaded', function () {
+    var carousel = document.getElementById('testimonialCarousel');
     var slides = document.querySelectorAll('#testimonialCarousel .testimonial-v2__slide');
     var dots = document.querySelectorAll('#testimonialDots .testimonial-v2__dot');
+    var prevBtn = document.getElementById('prevTestimonial');
+    var nextBtn = document.getElementById('nextTestimonial');
+
     if (!slides.length) return;
     var current = 0;
+    var timer = null;
 
-    function show(i) {
-        slides.forEach(function (s, idx) { s.classList.toggle('active', idx === i); });
-        dots.forEach(function (d, idx) { d.classList.toggle('active', idx === i); });
-        current = i;
+    function showSlide(index) {
+        if (index < 0) {
+            current = slides.length - 1;
+        } else if (index >= slides.length) {
+            current = 0;
+        } else {
+            current = index;
+        }
+
+        slides.forEach(function (slide, i) {
+            if (i === current) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+
+        dots.forEach(function (dot, i) {
+            if (i === current) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
     }
 
-    dots.forEach(function (d) {
-        d.addEventListener('click', function () { show(parseInt(d.dataset.index, 10)); });
+    function startAutoPlay() {
+        stopAutoPlay();
+        timer = setInterval(function () {
+            showSlide(current + 1);
+        }, 5000);
+    }
+
+    function stopAutoPlay() {
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            showSlide(current - 1);
+            startAutoPlay();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            showSlide(current + 1);
+            startAutoPlay();
+        });
+    }
+
+    dots.forEach(function (dot) {
+        dot.addEventListener('click', function (e) {
+            e.preventDefault();
+            var targetIdx = parseInt(this.getAttribute('data-index'), 10);
+            if (!isNaN(targetIdx)) {
+                showSlide(targetIdx);
+                startAutoPlay();
+            }
+        });
     });
 
-    setInterval(function () {
-        show((current + 1) % slides.length);
-    }, 5000);
-})();
+    if (carousel) {
+        carousel.addEventListener('mouseenter', stopAutoPlay);
+        carousel.addEventListener('mouseleave', startAutoPlay);
+
+        // Touch Swipe Support for Mobile Devices
+        var touchStartX = 0;
+        var touchEndX = 0;
+
+        carousel.addEventListener('touchstart', function (e) {
+            touchStartX = e.changedTouches[0].screenX;
+            stopAutoPlay();
+        }, { passive: true });
+
+        carousel.addEventListener('touchend', function (e) {
+            touchEndX = e.changedTouches[0].screenX;
+            var swipeDiff = touchEndX - touchStartX;
+            if (Math.abs(swipeDiff) > 40) {
+                if (swipeDiff < 0) {
+                    showSlide(current + 1); // Swiped Left -> Next
+                } else {
+                    showSlide(current - 1); // Swiped Right -> Prev
+                }
+            }
+            startAutoPlay();
+        }, { passive: true });
+    }
+
+    startAutoPlay();
+});
 </script>
 
 <!-- ═══════════════════════════════════════════════════════
