@@ -461,10 +461,10 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                         <!-- Megamenu Footer Action Bar -->
                         <div class="d-flex justify-content-between align-items-center pt-3 mt-3 border-top">
                             <a href="<?php echo BASE_URL; ?>departments.php" class="small fw-bold text-danger text-decoration-none d-flex align-items-center gap-1">
-                                <i class="fas fa-th-large"></i> Explore All 26 Constituent Units &amp; Faculties &rarr;
+                                <i class="fas fa-th-large"></i> Explore All Constituent Units &amp; Faculties &rarr;
                             </a>
                             <span class="badge bg-danger-subtle text-danger border border-danger-subtle small fw-semibold">
-                                26+ Constituent Units
+                                Constituent Units &amp; Colleges
                             </span>
                         </div>
 

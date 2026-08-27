@@ -440,9 +440,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             <div>
                 <span class="section-subtitle">COURSES &amp; PROGRAMMES</span>
                 <h2 class="section-title mb-0">How to Get Admission in <span>SRK University</span>, Bhopal?</h2>
-                <p class="text-muted small mb-0">Choose your trajectory from over 140+ meticulously designed programmes and find the pathway that fits your goals.</p>
+                <p class="text-muted small mb-0">Choose your trajectory from our meticulously designed programmes and find the pathway that fits your goals.</p>
             </div>
-            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View all 140+ programmes <i class="fas fa-arrow-right ms-1"></i></a>
+            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View All Programmes <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
             <div class="col">

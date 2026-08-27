@@ -84,7 +84,7 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
                     <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-nursing"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF College of Nursing</a></li>
                     <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-management"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Institute of Mgmt.</a></li>
                     <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=sarvepalli-radhakrishnan-college-of-law"><i class="fas fa-angle-right me-1 text-warning"></i> SRK College of Law</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>constituent-unit.php" class="text-warning fw-bold"><i class="fas fa-arrow-circle-right me-1"></i> View All 24+ Units &rarr;</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>constituent-unit.php" class="text-warning fw-bold"><i class="fas fa-arrow-circle-right me-1"></i> View All Constituent Units &rarr;</a></li>
                 </ul>
             </div>
 
