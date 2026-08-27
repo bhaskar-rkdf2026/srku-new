@@ -1140,23 +1140,15 @@ body {
 
 .testimonial-v2__slide {
     display: none;
+    background: var(--srku-maroon);
+    color: #fff;
+    border-radius: 16px;
+    padding: 2.5rem 2.5rem 2rem;
 }
 
 .testimonial-v2__slide.active {
     display: block;
     animation: testimonialFade 0.5s ease;
-}
-
-.testimonial-v2__card {
-    background: var(--srku-maroon);
-    color: #fff;
-    border-radius: 16px;
-    padding: 2.25rem 2rem 1.85rem;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(122, 11, 13, 0.12);
 }
 
 @keyframes testimonialFade {
