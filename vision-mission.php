@@ -176,19 +176,7 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- CAMPUS GALLERY -->
-<?php
-$vmGalleryImages = [
-    ['path' => 'assets/uploads/2026/08/welcome-srku-campus.jpeg', 'alt' => 'SRK University Main Building'],
-    ['path' => 'assets/uploads/2026/08/srku-main-gate.jpeg', 'alt' => 'SRK University Main Gate'],
-    ['path' => 'assets/uploads/2026/08/srku-academic-block.jpeg', 'alt' => 'SRK University Academic Block'],
-    ['path' => 'assets/uploads/2026/08/srku-rkdf-building.jpeg', 'alt' => 'RKDF Group Campus Building'],
-    ['path' => 'assets/uploads/2026/08/srku-campus-block.jpeg', 'alt' => 'SRK University Campus Block'],
-    ['path' => 'assets/uploads/2026/07/Gallary-slider-07.webp', 'alt' => 'Students in the University Library'],
-    ['path' => 'assets/uploads/2026/07/Gallary-slider-06.webp', 'alt' => 'Clinical Training at SRK University'],
-    ['path' => 'assets/uploads/2026/07/Gallary-slider-10.webp', 'alt' => 'SRK University Faculty Group'],
-    ['path' => 'assets/uploads/2026/07/5.png', 'alt' => 'Student Life at SRK University']
-];
-?>
+<?php $vmGalleryImages = getGalleryImages('Campus', 12); ?>
 <section class="py-5 text-center text-white" style="background: linear-gradient(135deg, var(--srku-maroon), var(--srku-navy));">
     <div class="container-xl py-2 reveal">
         <span class="section-subtitle text-warning">CAMPUS GALLERY</span>
@@ -200,9 +188,10 @@ $vmGalleryImages = [
         <div class="auto-gallery__track" id="vmGalleryTrack">
             <?php foreach ($vmGalleryImages as $image): ?>
                 <div class="auto-gallery__item">
-                    <img src="<?php echo BASE_URL . sanitize($image['path']); ?>"
+                    <img src="<?php echo resolveMediaUrl($image['image_path']); ?>"
+                         loading="lazy"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                         alt="<?php echo sanitize($image['alt']); ?>">
+                         alt="SRK University Campus">
                 </div>
             <?php endforeach; ?>
         </div>

@@ -440,9 +440,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             <div>
                 <span class="section-subtitle">COURSES &amp; PROGRAMMES</span>
                 <h2 class="section-title mb-0">How to Get Admission in <span>SRK University</span>, Bhopal?</h2>
-                <p class="text-muted small mb-0">Choose your trajectory from over 140+ meticulously designed programmes and find the pathway that fits your goals.</p>
+                <p class="text-muted small mb-0">Choose your trajectory from our meticulously designed programmes and find the pathway that fits your goals.</p>
             </div>
-            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View all programmes <i class="fas fa-arrow-right ms-1"></i></a>
+            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View All Programmes <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
             <div class="col">
@@ -756,8 +756,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     GALLERY SECTION (Bootstrap 5-col Grid)
+     GALLERY SECTION (Bootstrap 5-col Grid) — DB Connected
 ═══════════════════════════════════════════════════════ -->
+<?php $homeGridGallery = getGalleryImages('Campus', 10); ?>
 <section class="py-5 bg-cream">
     <div class="container-xl py-2">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -768,11 +769,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
             <a href="<?php echo BASE_URL; ?>gallery.php" class="btn-card-apply">View Full Gallery &rarr;</a>
         </div>
         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-2">
-            <div class="col"><img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Gallary-slider-01.webp" class="gallery-img" alt="Gallery 1" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"></div>
-            <div class="col"><img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Gallary-slider-03.webp" class="gallery-img" alt="Gallery 2" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"></div>
-            <div class="col"><img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Gallary-slider-06.webp" class="gallery-img" alt="Gallery 3" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"></div>
-            <div class="col"><img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Gallary-slider-07.webp" class="gallery-img" alt="Gallery 4" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"></div>
-            <div class="col"><img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Gallary-slider-10.webp" class="gallery-img" alt="Gallery 5" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"></div>
+            <?php foreach (array_slice($homeGridGallery, 0, 10) as $i => $gimg): ?>
+            <div class="col">
+                <img src="<?php echo resolveMediaUrl($gimg['image_path']); ?>" 
+                     class="gallery-img" 
+                     alt="SRK University Campus <?php echo $i + 1; ?>"
+                     loading="lazy"
+                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
+            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
@@ -1018,44 +1023,32 @@ $homeTestimonials = [
 </script>
 
 <!-- ═══════════════════════════════════════════════════════
-     EVENTS GALLERY (auto-scrolling, matches live srku.edu.in design)
+     CAMPUS GALLERY (auto-scrolling) — DB Connected
 ═══════════════════════════════════════════════════════ -->
-<?php
-$eventsGalleryImages = [
-    ['file' => 'Gallary-slider-10.webp', 'alt' => 'Faculty Group Event'],
-    ['file' => 'Gallary-slider-07.webp', 'alt' => 'Library Session'],
-    ['file' => 'Gallary-slider-06.webp', 'alt' => 'Clinical Training Event'],
-    ['file' => 'Gallary-slider-03.webp', 'alt' => 'MRI Lab Tour'],
-    ['file' => '2.png', 'alt' => 'Cultural Dance Event'],
-    ['file' => 'Gallary-slider-01.webp', 'alt' => 'Hospital Ward Visit'],
-    ['file' => '7.png', 'alt' => 'Award Ceremony'],
-    ['file' => '6.png', 'alt' => 'University Event'],
-    ['file' => '5.png', 'alt' => 'University Event'],
-    ['file' => '4.png', 'alt' => 'University Event'],
-    ['file' => 'welcome-srku-campus.jpeg', 'alt' => 'SRK University Main Building', 'month' => '08'],
-    ['file' => 'srku-main-gate.jpeg', 'alt' => 'SRK University Main Gate', 'month' => '08'],
-    ['file' => 'srku-academic-block.jpeg', 'alt' => 'SRK University Academic Block', 'month' => '08'],
-    ['file' => 'srku-rkdf-building.jpeg', 'alt' => 'RKDF Group Campus Building', 'month' => '08'],
-    ['file' => 'srku-campus-block.jpeg', 'alt' => 'SRK University Campus Block', 'month' => '08'],
-];
-?>
+<?php $homeCarouselGallery = getGalleryImages(null, 20); ?>
 <section class="py-5">
     <div class="container-xl py-2 text-center">
-        <span class="section-subtitle">OUR EVENTS GALLERY</span>
-        <h2 class="section-title mb-4">Events <span>at SRK</span> University</h2>
+        <span class="section-subtitle">CAMPUS GALLERY</span>
+        <h2 class="section-title mb-4">A Glimpse Into Life at <span>SRK University</span></h2>
     </div>
     <div class="auto-gallery__viewport" id="eventsGalleryViewport">
         <div class="auto-gallery__track auto-gallery__track--3up" id="eventsGalleryTrack">
-            <?php foreach ($eventsGalleryImages as $img): ?>
+            <?php foreach ($homeCarouselGallery as $gimg): ?>
                 <div class="auto-gallery__item auto-gallery__item--3up">
-                    <img src="<?php echo BASE_URL . 'assets/uploads/2026/' . ($img['month'] ?? '07') . '/' . rawurlencode($img['file']); ?>"
+                    <img src="<?php echo resolveMediaUrl($gimg['image_path']); ?>"
+                         loading="lazy"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                         alt="<?php echo sanitize($img['alt']); ?>">
+                         alt="SRK University Campus">
                 </div>
             <?php endforeach; ?>
         </div>
     </div>
     <div class="auto-gallery__dots" id="eventsGalleryDots"></div>
+    <div class="text-center mt-4">
+        <a href="<?php echo BASE_URL; ?>gallery.php" class="btn btn-srku-gold">
+            <i class="fas fa-images me-2"></i>View Full Gallery
+        </a>
+    </div>
 </section>
 <script>
 (function () {
