@@ -463,9 +463,6 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                             <a href="<?php echo BASE_URL; ?>departments.php" class="small fw-bold text-danger text-decoration-none d-flex align-items-center gap-1">
                                 <i class="fas fa-th-large"></i> Explore All Constituent Units &amp; Faculties &rarr;
                             </a>
-                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle small fw-semibold">
-                                Constituent Units &amp; Colleges
-                            </span>
                         </div>
 
                     </div>

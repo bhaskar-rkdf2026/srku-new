@@ -170,7 +170,7 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
                         </div>
                         <div class="col">
                             <div class="small text-muted mb-1"><i class="fas fa-graduation-cap text-danger me-1"></i> Programs</div>
-                            <div class="fw-bold text-navy fs-6">Degrees / Diplomas</div>
+                            <div class="fw-bold text-navy fs-6"><?php echo count($courses); ?> Degrees / Diplomas</div>
                         </div>
                         <div class="col">
                             <div class="small text-muted mb-1"><i class="fas fa-stamp text-danger me-1"></i> Regulatory Status</div>
@@ -265,7 +265,7 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
                             <h3 class="text-navy fw-bold mb-1"><i class="fas fa-graduation-cap text-danger me-2"></i> Degrees, Diplomas &amp; Specializations</h3>
                             <p class="text-muted small mb-0">Official academic programs offered by <?php echo sanitize($dept['name']); ?></p>
                         </div>
-                        <span class="badge bg-danger px-3 py-2 rounded-pill">Programs Available</span>
+                        <span class="badge bg-danger px-3 py-2 rounded-pill"><?php echo count($courses); ?> Programs Available</span>
                     </div>
 
                     <?php if (!empty($courses)): ?>
@@ -280,10 +280,11 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
                                         <div>
                                             <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
                                                 <span class="badge bg-navy text-white rounded-pill px-3 py-1 fw-semibold small"><?php echo sanitize($c['level']); ?> Programme</span>
+                                                <span class="badge bg-white text-muted border rounded-pill px-3 py-1 small"><i class="far fa-clock me-1 text-danger"></i> <?php echo sanitize($c['duration']); ?></span>
                                             </div>
                                             <h4 class="h5 fw-bold text-navy mb-0">
                                                 <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="text-navy text-decoration-none hover-danger">
-                                                     <?php echo sanitize($c['course_name']); ?>
+                                                    <?php echo sanitize($c['course_name']); ?>
                                                 </a>
                                             </h4>
                                         </div>
@@ -308,7 +309,7 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
                                             <div class="mb-3 pt-1">
                                                 <div class="small fw-bold text-navy mb-2 d-flex align-items-center gap-2">
                                                     <i class="fas fa-layer-group text-danger"></i> 
-                                                    <span>Available Disciplines &amp; Specializations:</span>
+                                                    <span>Available Disciplines &amp; Specializations (<?php echo count($specList); ?>):</span>
                                                 </div>
                                                 <div class="d-flex flex-wrap gap-2">
                                                     <?php foreach ($specList as $sp): ?>
@@ -316,9 +317,6 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
                                                             &bull; <?php echo sanitize($sp); ?>
                                                         </span>
                                                     <?php endforeach; ?>
-                                                    <span class="badge rounded-2 fw-medium py-2 px-3 text-start" style="background: #f8fafc; color: #334155; border: 1px solid #e2e8f0; font-size: 0.83rem; white-space: normal; line-height: 1.4;">
-                                                        &bull; &amp; many more...
-                                                    </span>
                                                 </div>
                                             </div>
                                         <?php endif; ?>
@@ -335,7 +333,7 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
                                                 <div class="col-12 col-md-6">
                                                     <div class="p-3 rounded-3 h-100" style="background: #f8fafc; border-left: 3px solid #3b82f6; border-top: 1px solid #edf2f7; border-right: 1px solid #edf2f7; border-bottom: 1px solid #edf2f7;">
                                                         <div class="small fw-bold text-navy mb-1"><i class="fas fa-briefcase text-primary me-1"></i> Career Scope &amp; Roles</div>
-                                                        <div class="small text-muted" style="line-height: 1.6;"><?php echo sanitize($c['career_scope']); ?><span class="text-secondary fw-semibold">, &amp; many more...</span></div>
+                                                        <div class="small text-muted" style="line-height: 1.6;"><?php echo sanitize($c['career_scope']); ?></div>
                                                     </div>
                                                 </div>
                                             <?php endif; ?>
@@ -467,7 +465,7 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
                         <?php endforeach; ?>
                     </div>
                     <div class="mt-3 pt-2 border-top text-center">
-                        <a href="<?php echo BASE_URL; ?>departments.php" class="btn btn-sm btn-outline-secondary w-100">View All Constituent Units</a>
+                        <a href="<?php echo BASE_URL; ?>departments.php" class="btn btn-sm btn-outline-secondary w-100">View All 26 Units</a>
                     </div>
                 </div>
 

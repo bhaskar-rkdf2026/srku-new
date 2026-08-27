@@ -81,7 +81,7 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                 <i class="fas fa-university me-1"></i> <?php echo sanitize($course['department']); ?>
             </span>
             <?php if (!empty($specList)): ?>
-                <span class="badge bg-danger px-3 py-1">Specializations &amp; Tracks Available</span>
+                <span class="badge bg-danger px-3 py-1"><?php echo count($specList); ?> Disciplines / Specializations</span>
             <?php endif; ?>
         </div>
         <h1 class="fw-bold display-6 mb-2"><?php echo sanitize($course['course_name']); ?></h1>
@@ -152,17 +152,17 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                             <h3 class="text-navy fw-bold mb-0">
                                 <i class="fas fa-sitemap text-danger me-2"></i> Available Disciplines &amp; Specializations
                             </h3>
-                            <span class="badge bg-danger px-3 py-2">Specializations Offered</span>
+                            <span class="badge bg-danger px-3 py-2"><?php echo count($specList); ?> Tracks Offered</span>
                         </div>
                         <p class="text-muted small mb-4">
                             Students pursuing <strong><?php echo sanitize($course['course_name']); ?></strong> can specialize in the following focused tracks during their academic curriculum:
                         </p>
                         <div class="row row-cols-1 row-cols-sm-2 g-3">
-                            <?php foreach ($specList as $spec): ?>
+                            <?php foreach ($specList as $idx => $spec): ?>
                                 <div class="col">
                                     <div class="p-3 bg-light rounded-3 border d-flex align-items-center gap-3 h-100">
-                                        <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:34px; height:34px; font-size:0.85rem;">
-                                            <i class="fas fa-check"></i>
+                                        <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:34px; height:34px; font-size:0.85rem; font-weight:bold;">
+                                            <?php echo ($idx + 1); ?>
                                         </div>
                                         <div class="fw-semibold text-navy small">
                                             <?php echo sanitize($spec); ?>
@@ -170,16 +170,6 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                                     </div>
                                 </div>
                             <?php endforeach; ?>
-                            <div class="col">
-                                <div class="p-3 bg-light rounded-3 border d-flex align-items-center gap-3 h-100">
-                                    <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:34px; height:34px; font-size:0.85rem;">
-                                        <i class="fas fa-check"></i>
-                                    </div>
-                                    <div class="fw-semibold text-navy small">
-                                        &amp; Many More Specializations...
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -206,7 +196,7 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                         Graduates of <strong><?php echo sanitize($course['course_name']); ?></strong> possess exceptional career prospects across leading corporations, healthcare institutions, and research sectors:
                     </p>
                     <div class="p-3 bg-danger-subtle rounded-3 text-danger fw-semibold mb-3 border border-danger-subtle">
-                        <i class="fas fa-star me-2"></i> <?php echo sanitize($course['career_scope'] ?: 'Industry Specialist, R&D Associate, Technical Consultant, Public Sector Officer'); ?><span class="fw-normal">, &amp; many more...</span>
+                        <i class="fas fa-star me-2"></i> <?php echo sanitize($course['career_scope'] ?: 'Industry Specialist, R&D Associate, Technical Consultant, Public Sector Officer'); ?>
                     </div>
                     <p class="text-muted small mb-0">
                         Our centralized Training &amp; Placement Cell conducts regular corporate interviews, mock assessments, and campus recruitment drives with recruiters offering salary packages up to <strong>12 LPA</strong>.
