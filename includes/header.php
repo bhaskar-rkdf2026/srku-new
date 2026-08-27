@@ -495,7 +495,7 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                                 <i class="fas fa-th-large"></i> Explore All Constituent Units &amp; Faculties &rarr;
                             </a>
                             <span class="badge bg-danger-subtle text-danger border border-danger-subtle small fw-semibold">
-                                Constituent Units &amp; Faculties
+                                Constituent Units &amp; Colleges
                             </span>
                         </div>
 

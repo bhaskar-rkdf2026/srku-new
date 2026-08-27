@@ -102,7 +102,7 @@ $filteredDepartments = array_filter($allDepartments, function($dept) use ($selec
                     <i class="fas fa-cogs me-1"></i> Engineering &amp; Tech
                 </a>
                 <a href="<?php echo BASE_URL; ?>departments.php?category=Pharmacy" class="badge px-3 py-2 text-decoration-none rounded-pill <?php echo $selectedCategory == 'Pharmacy' ? 'bg-danger text-white' : 'bg-light text-dark border'; ?>">
-                    <i class="fas fa-pills me-1"></i> Pharmacy
+                    <i class="fas fa-pills me-1"></i> Pharmacy Colleges
                 </a>
                 <a href="<?php echo BASE_URL; ?>departments.php?category=Medical" class="badge px-3 py-2 text-decoration-none rounded-pill <?php echo $selectedCategory == 'Medical' ? 'bg-danger text-white' : 'bg-light text-dark border'; ?>">
                     <i class="fas fa-stethoscope me-1"></i> Medical &amp; Dental
@@ -281,7 +281,7 @@ $filteredDepartments = array_filter($allDepartments, function($dept) use ($selec
                     <i class="fas fa-university fa-3x text-muted mb-3"></i>
                     <h4 class="text-navy fw-bold">No constituent units found</h4>
                     <p class="text-muted">No departments matched your current filter criteria. Please reset filters or try another search term.</p>
-                    <a href="<?php echo BASE_URL; ?>departments.php" class="btn btn-srku px-4 py-2">View All 26 Units</a>
+                    <a href="<?php echo BASE_URL; ?>departments.php" class="btn btn-srku px-4 py-2">View All Constituent Units</a>
                 </div>
             <?php endif; ?>
         </div>

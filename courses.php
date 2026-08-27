@@ -111,7 +111,7 @@ $departments = getDepartments(true);
                                 <?php if (!empty($specs)): ?>
                                     <div class="mb-3">
                                         <span class="course-spec-badge">
-                                            <i class="fas fa-layer-group text-warning me-1"></i> Disciplines &amp; Specializations
+                                            <i class="fas fa-layer-group text-warning me-1"></i> Specializations &amp; Tracks Available
                                         </span>
                                     </div>
                                 <?php else: ?>
