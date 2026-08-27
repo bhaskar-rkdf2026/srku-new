@@ -197,8 +197,32 @@ foreach ($allImages as $img) {
 .lightbox-next { right: 10px; }
 </style>
 
-<!-- Dynamic Banner Header -->
-<?php renderPageBanner('gallery', 'Campus Photo & Facilities Gallery', 'Glimpses of Academic Infrastructure, Sports Complex, Student Gymnasium & Teaching Hospital'); ?>
+<!-- ═══════════════════════════════════════════════════════
+     HERO BANNER
+═══════════════════════════════════════════════════════ -->
+<section class="about-hero-v2">
+    <div class="about-hero-v2__blob about-hero-v2__blob--1"></div>
+    <div class="about-hero-v2__blob about-hero-v2__blob--2"></div>
+    <div class="about-hero-v2__blob about-hero-v2__blob--3"></div>
+    <div class="about-hero-v2__grid"></div>
+    <div class="container-xl about-hero-v2__inner">
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb mb-0 small">
+                <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning"><i class="fas fa-home me-1"></i> Home</a></li>
+                <li class="breadcrumb-item active text-white-50" aria-current="page">Gallery</li>
+            </ol>
+        </nav>
+        <span class="about-hero-v2__eyebrow"><i class="fas fa-star"></i> Est. 1995 &middot; RKDF Education Society</span>
+        <h1 class="about-hero-v2__title" style="max-width:800px;">Campus Photo &amp; <span>Facilities Gallery.</span></h1>
+        <p class="about-hero-v2__desc" style="max-width:760px;">
+            Glimpses of Academic Infrastructure, Sports Complex, Student Gymnasium &amp; Teaching Hospital.
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+            <a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="btn-hero-yellow">Apply For Admission</a>
+            <a href="<?php echo BASE_URL; ?>about.php" class="btn-hero-outline">About SRKU</a>
+        </div>
+    </div>
+</section>
 
 <section class="py-5 bg-light-subtle">
     <div class="container-xl py-2">
@@ -213,7 +237,7 @@ foreach ($allImages as $img) {
             </div>
             <div class="col-12 col-md-auto">
                 <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fw-bold" style="font-size: 0.88rem;">
-                    <i class="fas fa-images me-1"></i> <?php echo count($allImages); ?> High-Definition Photos
+                    <i class="fas fa-images me-1"></i> High-Definition Photos
                 </span>
             </div>
         </div>
@@ -221,19 +245,19 @@ foreach ($allImages as $img) {
         <!-- Filter Tabs (Events removed, Gym added) -->
         <div class="d-flex flex-wrap gap-2 justify-content-center mb-5" id="galleryFilterTabs">
             <button type="button" class="srku-filter-pill <?php echo empty($activeCategory) ? 'active' : ''; ?>" data-filter="all">
-                <i class="fas fa-th-large"></i> All Photos <span class="srku-filter-badge"><?php echo $counts['all']; ?></span>
+                <i class="fas fa-th-large"></i> All Photos
             </button>
             <button type="button" class="srku-filter-pill <?php echo $activeCategory == 'Campus' ? 'active' : ''; ?>" data-filter="Campus">
-                <i class="fas fa-university"></i> Campus &amp; Architecture <span class="srku-filter-badge"><?php echo $counts['Campus']; ?></span>
+                <i class="fas fa-university"></i> Campus &amp; Architecture
             </button>
             <button type="button" class="srku-filter-pill <?php echo $activeCategory == 'Gym' ? 'active' : ''; ?>" data-filter="Gym">
-                <i class="fas fa-dumbbell"></i> Gymnasium &amp; Fitness <span class="srku-filter-badge"><?php echo $counts['Gym']; ?></span>
+                <i class="fas fa-dumbbell"></i> Gymnasium &amp; Fitness
             </button>
             <button type="button" class="srku-filter-pill <?php echo $activeCategory == 'Sports' ? 'active' : ''; ?>" data-filter="Sports">
-                <i class="fas fa-running"></i> Sports Arena &amp; Courts <span class="srku-filter-badge"><?php echo $counts['Sports']; ?></span>
+                <i class="fas fa-running"></i> Sports Arena &amp; Courts
             </button>
             <button type="button" class="srku-filter-pill <?php echo $activeCategory == 'Medical' ? 'active' : ''; ?>" data-filter="Medical">
-                <i class="fas fa-hospital-alt"></i> Medical &amp; Hospitals <span class="srku-filter-badge"><?php echo $counts['Medical']; ?></span>
+                <i class="fas fa-hospital-alt"></i> Medical &amp; Hospitals
             </button>
         </div>
 

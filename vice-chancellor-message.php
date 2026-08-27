@@ -40,7 +40,7 @@ require_once __DIR__ . '/includes/header.php';
                 </p>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="<?php echo BASE_URL; ?>courses.php" class="btn-hero-yellow">
-                        <i class="fas fa-book-open me-1"></i> Explore 120+ Programmes
+                        <i class="fas fa-book-open me-1"></i> Explore All Programmes
                     </a>
                     <a href="<?php echo BASE_URL; ?>chancellor-message.php" class="btn-hero-outline">
                         <i class="fas fa-crown me-1"></i> Chancellor's Message

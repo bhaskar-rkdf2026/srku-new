@@ -60,9 +60,9 @@ require_once __DIR__ . '/includes/header.php';
                         <span class="lbl">Alumni Worldwide</span>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float3">
-                        <i class="fas fa-award"></i>
-                        <span class="num">11+</span>
-                        <span class="lbl">Apex Approvals</span>
+                        <i class="fas fa-bookmark"></i>
+                        <span class="num">95%</span>
+                        <span class="lbl">Passing from Universities</span>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float4">
                         <i class="fas fa-chalkboard-teacher"></i>

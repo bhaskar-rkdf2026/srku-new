@@ -47,9 +47,9 @@ require_once __DIR__ . '/includes/header.php';
                         <span class="lbl">Students</span>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float3">
-                        <i class="fas fa-layer-group"></i>
-                        <span class="num">14</span>
-                        <span class="lbl">Constituent Units</span>
+                        <i class="fas fa-bookmark"></i>
+                        <span class="num">95%</span>
+                        <span class="lbl">Passing from Universities</span>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float4">
                         <i class="fas fa-briefcase"></i>

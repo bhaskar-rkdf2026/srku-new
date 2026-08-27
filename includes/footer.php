@@ -84,7 +84,7 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
                     <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-nursing"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF College of Nursing</a></li>
                     <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-management"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Institute of Mgmt.</a></li>
                     <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=sarvepalli-radhakrishnan-college-of-law"><i class="fas fa-angle-right me-1 text-warning"></i> SRK College of Law</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>constituent-unit.php" class="text-warning fw-bold"><i class="fas fa-arrow-circle-right me-1"></i> View All 24+ Units &rarr;</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>constituent-unit.php" class="text-warning fw-bold">View all Constituent Units</a></li>
                 </ul>
             </div>
 
@@ -97,7 +97,7 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
                     <div>Bhopal,</div>
                     <div class="mb-2">Madhya Pradesh 462026</div>
                     <div class="mb-1"><a href="tel:07554700983" class="text-light-50 text-decoration-none d-inline-block hover-gold">07554700983</a></div>
-                    <div class="mb-1"><a href="tel:07557024144981" class="text-light-50 text-decoration-none d-inline-block hover-gold">0755 7024144981,83,84,85,86</a></div>
+                    <div class="mb-1"><a href="tel:07557024144981" class="text-light-50 text-decoration-none d-inline-block hover-gold">0755 7024144981/83/84/85/86</a></div>
                     <div><a href="mailto:info@srku.edu.in" class="text-warning text-decoration-none d-inline-block hover-gold">info@srku.edu.in</a></div>
                 </div>
             </div>

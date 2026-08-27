@@ -442,7 +442,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 <h2 class="section-title mb-0">How to Get Admission in <span>SRK University</span>, Bhopal?</h2>
                 <p class="text-muted small mb-0">Choose your trajectory from over 140+ meticulously designed programmes and find the pathway that fits your goals.</p>
             </div>
-            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View all 140+ programmes <i class="fas fa-arrow-right ms-1"></i></a>
+            <a href="<?php echo BASE_URL; ?>courses.php" class="btn-card-apply fs-6">View all programmes <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
             <div class="col">
@@ -717,7 +717,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
     <div class="student-life-v2__inner">
         <p class="student-life-v2__eyebrow">Student Life at SRK</p>
         <h2 class="student-life-v2__title">Experience <em>an Unmatched University</em><br>Campus Life in Bhopal</h2>
-        <p class="student-life-v2__desc">A campus that thinks, builds, and celebrates together.<br>200 lush acres, 120+ active student clubs, and 18 annual fests create an unforgettable student journey.</p>
+        <p class="student-life-v2__desc">A campus that thinks, builds, and celebrates together.<br>200 lush acres, 120+ active student clubs, and annual fests create an unforgettable student journey.</p>
 
         <div class="student-life-v2__row">
             <div class="student-life-v2__media">
