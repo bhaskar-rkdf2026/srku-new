@@ -406,22 +406,12 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
                                             </div>
                                         <?php endif; ?>
 
-                                        <!-- 2-Column Info Grid for Eligibility & Career -->
-                                        <div class="row g-3 mt-1">
-                                            <div class="col-12 <?php echo !empty($c['career_scope']) ? 'col-md-6' : ''; ?>">
-                                                <div class="p-3 rounded-3 h-100" style="background: #f8fafc; border-left: 3px solid #10b981; border-top: 1px solid #edf2f7; border-right: 1px solid #edf2f7; border-bottom: 1px solid #edf2f7;">
-                                                    <div class="small fw-bold text-navy mb-1"><i class="fas fa-check-circle text-success me-1"></i> Eligibility Criteria</div>
-                                                    <div class="small text-muted" style="line-height: 1.6;"><?php echo sanitize($c['eligibility']); ?></div>
-                                                </div>
+                                        <!-- Eligibility Info -->
+                                        <div class="mt-3">
+                                            <div class="p-3 rounded-3" style="background: #f8fafc; border-left: 3px solid #10b981; border-top: 1px solid #edf2f7; border-right: 1px solid #edf2f7; border-bottom: 1px solid #edf2f7;">
+                                                <div class="small fw-bold text-navy mb-1"><i class="fas fa-check-circle text-success me-1"></i> Eligibility Criteria</div>
+                                                <div class="small text-muted" style="line-height: 1.6;"><?php echo sanitize($c['eligibility']); ?></div>
                                             </div>
-                                            <?php if (!empty($c['career_scope'])): ?>
-                                                <div class="col-12 col-md-6">
-                                                    <div class="p-3 rounded-3 h-100" style="background: #f8fafc; border-left: 3px solid #3b82f6; border-top: 1px solid #edf2f7; border-right: 1px solid #edf2f7; border-bottom: 1px solid #edf2f7;">
-                                                        <div class="small fw-bold text-navy mb-1"><i class="fas fa-briefcase text-primary me-1"></i> Career Scope &amp; Roles</div>
-                                                        <div class="small text-muted" style="line-height: 1.6;"><?php echo sanitize($c['career_scope']); ?><span class="text-secondary fw-semibold">, &amp; many more...</span></div>
-                                                    </div>
-                                                </div>
-                                            <?php endif; ?>
                                         </div>
 
                                     </div>
