@@ -147,12 +147,12 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
     </div>
 </div>
 
-<section class="py-5">
-    <div class="container-xl py-2">
-        <div class="row g-4 g-lg-5">
+<section class="py-4 py-lg-5">
+    <div class="container-fluid px-3 px-md-4 px-xl-5 py-2" style="max-width: 1520px;">
+        <div class="row g-3 g-lg-4">
             
-            <!-- Left Main Column -->
-            <div class="col-12 col-lg-8">
+            <!-- Left Main Column (Wider Content Area) -->
+            <div class="col-12 col-lg-8 col-xl-9">
                 
                 <!-- Campus / Building Image Feature -->
                 <div class="rounded-4 overflow-hidden mb-4 shadow-sm position-relative border" style="max-height: 380px; background: #0b1526;">
@@ -244,15 +244,15 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
                     <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 mb-4 position-relative overflow-hidden bg-white" style="border: 1px solid #e2e8f0 !important; border-top: 5px solid #7a0b0d !important;">
                         
                         <!-- Top Header Badge -->
-                        <div class="text-center mb-4">
-                            <div class="d-inline-flex align-items-center gap-2 px-3 py-1 bg-navy bg-opacity-10 text-navy rounded-pill small fw-bold mb-2">
+                        <div class="text-center mb-3">
+                            <span class="badge px-3 py-2 rounded-pill text-white fw-semibold shadow-xs d-inline-flex align-items-center gap-2" style="background: #0b1526; font-size: 0.82rem;">
                                 <i class="fas fa-quote-left text-warning"></i> Leadership Desk &bull; Message from the <?php echo sanitize($dDesig); ?>
-                            </div>
+                            </span>
                         </div>
 
                         <!-- Top Centered Profile & Photo -->
                         <div class="text-center mb-4">
-                            <div class="rounded-circle overflow-hidden shadow-sm border border-4 border-light mx-auto mb-3 bg-light" style="width: 135px; height: 135px;">
+                            <div class="rounded-circle overflow-hidden shadow border border-4 border-white mx-auto mb-3 bg-light" style="width: 130px; height: 130px; outline: 2px solid #e2e8f0;">
                                 <?php if (!empty($dPhoto)): ?>
                                     <img src="<?php echo (strpos($dPhoto, 'http') === 0) ? $dPhoto : BASE_URL . $dPhoto; ?>" 
                                          alt="<?php echo sanitize($dName); ?>" 
@@ -264,19 +264,28 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
                                 <?php endif; ?>
                             </div>
                             <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize($dName); ?></h4>
-                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-1 fw-semibold" style="font-size: 0.82rem;"><?php echo sanitize($dDesig); ?> &bull; <?php echo sanitize($dept['name']); ?></span>
+                            <div class="d-flex justify-content-center flex-wrap gap-2 mt-1">
+                                <span class="badge px-3 py-1 rounded-pill fw-semibold" style="background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; font-size: 0.8rem;">
+                                    <?php echo sanitize($dDesig); ?>
+                                </span>
+                                <span class="badge px-3 py-1 rounded-pill fw-semibold" style="background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; font-size: 0.8rem;">
+                                    <?php echo sanitize($dept['name']); ?>
+                                </span>
+                            </div>
                         </div>
 
                         <hr class="my-3 opacity-10">
 
-                        <!-- Message Text Below the Photo & Profile -->
-                        <div class="mt-3">
-                            <h5 class="h6 fw-bold text-navy mb-3 text-center">
-                                <i class="fas fa-award text-danger me-2"></i> Guiding Academic Excellence &amp; Innovation
+                        <!-- Message Text Below Profile -->
+                        <div class="mt-2">
+                            <h5 class="h6 fw-bold text-navy mb-3 text-center d-flex align-items-center justify-content-center gap-2">
+                                <i class="fas fa-award text-danger"></i> Guiding Academic Excellence &amp; Innovation
                             </h5>
-                            <div class="text-secondary lead fs-6 fst-italic position-relative p-3 p-md-4 rounded-4" style="line-height: 1.85; font-size: 0.96rem !important; background: #fafbfc; border-left: 4px solid var(--srku-maroon, #7a0b0d);">
-                                <i class="fas fa-quote-left text-danger opacity-25 fa-2x position-absolute top-0 start-0 translate-middle ms-4 mt-3"></i>
-                                &ldquo;<?php echo nl2br(sanitize($dMsg)); ?>&rdquo;
+                            <div class="position-relative p-4 rounded-4" style="line-height: 1.85; font-size: 0.95rem; background: #f8fafc; border-left: 4px solid #7a0b0d; color: #334155;">
+                                <i class="fas fa-quote-left text-danger position-absolute top-0 start-0 translate-middle ms-4 mt-3" style="opacity: 0.18; font-size: 1.6rem;"></i>
+                                <div class="fst-italic">
+                                    <?php echo nl2br(sanitize($dMsg)); ?>
+                                </div>
                             </div>
                         </div>
 
@@ -741,25 +750,25 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
                     <div class="row g-3">
                         <?php
                         $feedbackForms = [
-                            ['name' => 'Student Feedback Form',                    'type' => 'PDF',    'icon' => 'fas fa-user-graduate',       'url' => istPdf('feedback/student-feedback.pdf',             'https://www.srku.edu.in/rkdf-ist/images/pdf/ist/STUDENT-FEEDBACK-FORM_page-0001.pdf')],
-                            ['name' => 'Teacher Curriculum Feedback',              'type' => 'PDF',    'icon' => 'fas fa-chalkboard-teacher',  'url' => istPdf('feedback/teacher-curriculum-feedback.pdf',  'https://www.srku.edu.in/rkdf-ist/images/pdf/ist/feedback-on-curriculum-for-teachers_page-0001.pdf')],
-                            ['name' => 'Parent Feedback Form',                     'type' => 'PDF',    'icon' => 'fas fa-users',               'url' => istPdf('feedback/parent-feedback.pdf',              'https://www.srku.edu.in/rkdf-ist/images/pdf/ist/Parent-Feed-Back-converted_page-0001%20(1).pdf')],
-                            ['name' => 'Online Student Feedback',                  'type' => 'Online', 'icon' => 'fas fa-laptop',              'url' => BASE_URL . 'rkdf-ist-student-feedback.php'],
-                            ['name' => 'Online Curriculum Feedback (Teachers)',    'type' => 'Online', 'icon' => 'fas fa-clipboard-list',      'url' => BASE_URL . 'rkdf-ist-teacher-feedback.php'],
-                            ['name' => 'Online Parent Feedback Form',              'type' => 'Online', 'icon' => 'fas fa-home',                'url' => BASE_URL . 'rkdf-ist-parent-feedback.php'],
+                            ['name' => 'Student Feedback Form',                    'type' => 'PDF File',   'icon' => 'fas fa-user-graduate',       'url' => istPdf('feedback/student-feedback.pdf',             'https://www.srku.edu.in/rkdf-ist/images/pdf/ist/STUDENT-FEEDBACK-FORM_page-0001.pdf')],
+                            ['name' => 'Online Student Feedback (View & Download)','type' => 'PDF Portal', 'icon' => 'fas fa-eye',                'url' => BASE_URL . 'rkdf-ist-student-feedback.php'],
+                            ['name' => 'Teacher Curriculum Feedback',              'type' => 'PDF File',   'icon' => 'fas fa-chalkboard-teacher',  'url' => istPdf('feedback/teacher-curriculum-feedback.pdf',  'https://www.srku.edu.in/rkdf-ist/images/pdf/ist/feedback-on-curriculum-for-teachers_page-0001.pdf')],
+                            ['name' => 'Online Teacher Feedback (View & Download)','type' => 'PDF Portal', 'icon' => 'fas fa-eye',                'url' => BASE_URL . 'rkdf-ist-teacher-feedback.php'],
+                            ['name' => 'Parent Feedback Form',                     'type' => 'PDF File',   'icon' => 'fas fa-users',               'url' => istPdf('feedback/parent-feedback.pdf',              'https://www.srku.edu.in/rkdf-ist/images/pdf/ist/Parent-Feed-Back-converted_page-0001%20(1).pdf')],
+                            ['name' => 'Online Parent Feedback (View & Download)', 'type' => 'PDF Portal', 'icon' => 'fas fa-eye',                'url' => BASE_URL . 'rkdf-ist-parent-feedback.php'],
                         ];
                         foreach ($feedbackForms as $fb): ?>
                             <div class="col-12 col-md-6">
-                                <a href="<?php echo $fb['url']; ?>" <?php echo $fb['type'] === 'PDF' ? 'target="_blank"' : ''; ?> rel="noopener"
+                                <a href="<?php echo $fb['url']; ?>" <?php echo $fb['type'] === 'PDF File' ? 'target="_blank"' : ''; ?> rel="noopener"
                                    class="d-flex align-items-center gap-3 p-3 rounded-3 bg-light border text-decoration-none text-dark h-100" style="transition:all 0.2s;">
                                     <div class="bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm border flex-shrink-0" style="width:40px;height:40px;">
                                         <i class="<?php echo $fb['icon']; ?> text-danger small"></i>
                                     </div>
                                     <div class="flex-grow-1">
                                         <div class="fw-semibold text-navy" style="font-size:0.85rem;"><?php echo $fb['name']; ?></div>
-                                        <span class="badge <?php echo $fb['type'] === 'Online' ? 'bg-success' : 'bg-secondary'; ?> mt-1" style="font-size:0.65rem;"><?php echo $fb['type']; ?></span>
+                                        <span class="badge <?php echo $fb['type'] === 'PDF Portal' ? 'bg-danger text-white' : 'bg-secondary'; ?> mt-1" style="font-size:0.65rem;"><?php echo $fb['type']; ?></span>
                                     </div>
-                                    <i class="fas fa-<?php echo $fb['type'] === 'Online' ? 'arrow-right' : 'file-pdf'; ?> text-muted small"></i>
+                                    <i class="fas fa-<?php echo $fb['type'] === 'PDF Portal' ? 'arrow-right' : 'file-pdf'; ?> text-muted small"></i>
                                 </a>
                             </div>
                         <?php endforeach; ?>
@@ -771,7 +780,7 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
             </div>
 
             <!-- Right Sidebar Column -->
-            <div class="col-12 col-lg-4">
+            <div class="col-12 col-lg-4 col-xl-3">
                 
                 <!-- Brochure Contact & Direct Apply Box -->
                 <div class="card p-4 border-0 shadow-sm rounded-4 mb-4 bg-maroon text-white" id="apply">
