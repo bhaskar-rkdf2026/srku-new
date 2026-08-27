@@ -137,10 +137,10 @@ foreach ($allFaculty as $f) {
                 <!-- Department / Institute Filter -->
                 <div class="col-12 col-md-4 col-lg-4">
                     <select id="departmentFilterSelect" class="form-select bg-light py-2">
-                        <option value="">All Constituent Colleges &amp; Institutes (<?php echo count($allFaculty); ?>)</option>
+                        <option value="">All Constituent Colleges &amp; Institutes</option>
                         <?php foreach ($facultyDepts as $fd): ?>
                             <option value="<?php echo sanitize($fd['dept_slug']); ?>" <?php echo $selectedDept === $fd['dept_slug'] ? 'selected' : ''; ?>>
-                                <?php echo sanitize($fd['department_name']); ?> (<?php echo $fd['count']; ?>)
+                                <?php echo sanitize($fd['department_name']); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -149,13 +149,13 @@ foreach ($allFaculty as $f) {
                 <!-- Designation Category Filter (Exact Category Match) -->
                 <div class="col-12 col-md-3 col-lg-4 d-flex justify-content-md-end align-items-center gap-2">
                     <select id="designationFilterSelect" class="form-select bg-light py-2" style="max-width: 260px;">
-                        <option value="">All Academic Roles (<?php echo count($allFaculty); ?>)</option>
-                        <option value="dean_principal">Deans &amp; Principals (<?php echo $roleCounts['dean_principal']; ?>)</option>
-                        <option value="professor">Professors &amp; HODs (<?php echo $roleCounts['professor']; ?>)</option>
-                        <option value="associate_professor">Associate Professors &amp; Readers (<?php echo $roleCounts['associate_professor']; ?>)</option>
-                        <option value="assistant_professor">Assistant Professors &amp; Lecturers (<?php echo $roleCounts['assistant_professor']; ?>)</option>
-                        <option value="resident">Senior &amp; Junior Residents (<?php echo $roleCounts['resident']; ?>)</option>
-                        <option value="tutor">Clinical Tutors &amp; Instructors (<?php echo $roleCounts['tutor']; ?>)</option>
+                        <option value="">All Academic Roles</option>
+                        <option value="dean_principal">Deans &amp; Principals</option>
+                        <option value="professor">Professors &amp; HODs</option>
+                        <option value="associate_professor">Associate Professors &amp; Readers</option>
+                        <option value="assistant_professor">Assistant Professors &amp; Lecturers</option>
+                        <option value="resident">Senior &amp; Junior Residents</option>
+                        <option value="tutor">Clinical Tutors &amp; Instructors</option>
                     </select>
 
                     <div class="btn-group border rounded" role="group" aria-label="View toggle">
@@ -165,23 +165,23 @@ foreach ($allFaculty as $f) {
                 </div>
             </div>
 
-            <!-- Quick Filter Chips & Results Count Bar -->
+            <!-- Quick Filter Chips & Status Bar -->
             <div class="pt-3 mt-3 border-top">
                 <div class="d-flex align-items-center gap-1 flex-wrap" id="quickPillsContainer">
                     <span class="small text-muted fw-bold me-1 text-nowrap"><i class="fas fa-filter text-danger me-1"></i> Quick Filters:</span>
-                    <button type="button" class="btn btn-xs rounded-pill px-2 py-1 fw-semibold active-pill text-nowrap" data-category="">All (<?php echo count($allFaculty); ?>)</button>
-                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="medical">Medical (350)</button>
-                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="engineering">Engineering (272)</button>
-                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="pharmacy">Pharmacy (154)</button>
-                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="dental">Dental (102)</button>
-                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="nursing">Nursing (80)</button>
-                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="homoeopathic">Homoeopathy (47)</button>
-                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="ayurveda">Ayurveda (31)</button>
-                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="management">Management (25)</button>
-                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="law">Law (18)</button>
+                    <button type="button" class="btn btn-xs rounded-pill px-2 py-1 fw-semibold active-pill text-nowrap" data-category="">All</button>
+                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="medical">Medical</button>
+                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="engineering">Engineering</button>
+                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="pharmacy">Pharmacy</button>
+                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="dental">Dental</button>
+                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="nursing">Nursing</button>
+                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="homoeopathic">Homoeopathy</button>
+                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="ayurveda">Ayurveda</button>
+                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="management">Management</button>
+                    <button type="button" class="btn btn-xs btn-outline-secondary rounded-pill px-2 py-1 fw-semibold text-nowrap" data-category="law">Law</button>
 
                     <div class="ms-auto text-secondary small fw-bold text-nowrap ps-2">
-                        Showing <span id="visibleCount" class="text-danger fw-bold"><?php echo count($allFaculty); ?></span> of <?php echo count($allFaculty); ?> Faculties
+                        <i class="fas fa-user-tie text-danger me-1"></i> Faculty Members &amp; Academic Staff
                     </div>
                 </div>
             </div>

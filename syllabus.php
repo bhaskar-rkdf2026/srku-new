@@ -9,20 +9,6 @@ require_once __DIR__ . '/includes/header.php';
 
 $departments = getDepartments(true);
 $allCourses = getCourses();
-
-// Categories for filters
-$categories = [
-    'All' => 'All Disciplines',
-    'Engineering & Technology' => 'Engineering & IT',
-    'Pharmacy' => 'Pharmacy',
-    'Medical & Health' => 'Medical, Dental & Ayush',
-    'Nursing' => 'Nursing',
-    'Paramedical' => 'Paramedical',
-    'Law' => 'Law',
-    'Agriculture' => 'Agriculture',
-    'Management' => 'Management & Commerce',
-    'Computer Applications' => 'Computer Applications'
-];
 ?>
 
 <!-- Dynamic Banner Header -->
@@ -42,39 +28,69 @@ $categories = [
             </p>
         </div>
 
-        <!-- Filter & Search Bar -->
-        <div class="card p-3 p-md-4 border-0 shadow-sm rounded-4 mb-5 bg-white">
-            <div class="row g-3 align-items-center">
-                <div class="col-12 col-lg-5">
+        <!-- Filter & Search Controls Bar -->
+        <div class="card p-4 p-lg-4 border-0 shadow-sm rounded-4 mb-5 bg-white">
+            <div class="row g-3 align-items-end">
+                
+                <!-- Search Input -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <label for="syllabusSearch" class="form-label small fw-bold text-navy mb-1">
+                        <i class="fas fa-search text-danger me-1"></i> Search Curriculum
+                    </label>
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0"><i class="fas fa-search text-muted"></i></span>
-                        <input type="text" id="syllabusSearch" class="form-control border-start-0 ps-0" placeholder="Search by course name, branch, or department..." onkeyup="filterSyllabus()">
+                        <input type="text" id="syllabusSearch" class="form-control border-start-0 ps-0" placeholder="Search course, branch, specialization..." oninput="applySyllabusFilters()">
                     </div>
                 </div>
-                <div class="col-12 col-lg-7">
-                    <div class="d-flex flex-wrap gap-2 justify-content-lg-end" id="categoryPills">
-                        <button type="button" class="btn btn-sm btn-danger active-filter rounded-pill px-3 fw-semibold cat-btn" onclick="filterCategory('all', this)">
-                            All Programs
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-semibold cat-btn" onclick="filterCategory('engineering', this)">
-                            Engineering
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-semibold cat-btn" onclick="filterCategory('pharmacy', this)">
-                            Pharmacy
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-semibold cat-btn" onclick="filterCategory('nursing', this)">
-                            Nursing &amp; Paramedical
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-semibold cat-btn" onclick="filterCategory('law', this)">
-                            Law
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-semibold cat-btn" onclick="filterCategory('agriculture', this)">
-                            Agriculture
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-semibold cat-btn" onclick="filterCategory('management', this)">
-                            Management &amp; IT
-                        </button>
-                    </div>
+
+                <!-- Discipline / Faculty Dropdown -->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                    <label for="disciplineFilter" class="form-label small fw-bold text-navy mb-1">
+                        <i class="fas fa-university text-primary me-1"></i> Faculty / Discipline
+                    </label>
+                    <select id="disciplineFilter" class="form-select" onchange="applySyllabusFilters()">
+                        <option value="all">All Faculties &amp; Disciplines</option>
+                        <option value="engineering">Engineering &amp; Technology</option>
+                        <option value="pharmacy">Pharmacy &amp; Pharmaceutical</option>
+                        <option value="medical">Medical, Dental &amp; Ayush</option>
+                        <option value="nursing">Nursing &amp; Paramedical</option>
+                        <option value="law">Law &amp; Legal Studies</option>
+                        <option value="agriculture">Agriculture &amp; Allied</option>
+                        <option value="management">Management &amp; Commerce</option>
+                        <option value="computer">Computer Applications (BCA/MCA)</option>
+                        <option value="science">Sciences, Arts &amp; Yoga</option>
+                    </select>
+                </div>
+
+                <!-- Academic Level Dropdown -->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                    <label for="levelFilter" class="form-label small fw-bold text-navy mb-1">
+                        <i class="fas fa-layer-group text-warning me-1"></i> Academic Level
+                    </label>
+                    <select id="levelFilter" class="form-select" onchange="applySyllabusFilters()">
+                        <option value="all">All Academic Levels</option>
+                        <option value="undergraduate">Undergraduate (UG)</option>
+                        <option value="postgraduate">Postgraduate (PG)</option>
+                        <option value="diploma">Diploma / Polytechnic</option>
+                        <option value="doctorate">Doctorate (Ph.D.)</option>
+                    </select>
+                </div>
+
+                <!-- Reset Filters Button -->
+                <div class="col-12 col-md-6 col-lg-2">
+                    <button type="button" class="btn btn-outline-danger w-100 rounded-3 py-2 fw-semibold" onclick="resetAllSyllabusFilters()">
+                        <i class="fas fa-redo-alt me-1"></i> Reset Filters
+                    </button>
+                </div>
+
+            </div>
+            
+            <!-- Active Filter Status Bar -->
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 pt-3 mt-3 border-top small text-muted">
+                <div>
+                    <span id="activeFiltersSummary" class="fw-semibold text-navy">
+                        <i class="fas fa-sliders-h text-danger me-1"></i> Showing all curriculum schemes
+                    </span>
                 </div>
             </div>
         </div>
@@ -102,7 +118,7 @@ $categories = [
                                     <h3 class="h5 fw-bold text-navy mb-1"><?php echo sanitize($dept['name']); ?></h3>
                                     <div class="d-flex align-items-center gap-2 flex-wrap small">
                                         <span class="badge bg-light text-secondary border"><?php echo sanitize($dept['category'] ?: 'Constituent Unit'); ?></span>
-                                        <span class="text-muted"><i class="fas fa-check-circle text-success me-1"></i><?php echo count($deptCourses); ?> Approved Programmes</span>
+                                        <span class="text-muted"><i class="fas fa-check-circle text-success me-1"></i>Approved Programmes</span>
                                         <?php if ($dept['contact_no']): ?>
                                             <span class="text-muted d-none d-md-inline">&bull; <i class="fas fa-phone-alt text-warning me-1"></i><?php echo sanitize($dept['contact_no']); ?></span>
                                         <?php endif; ?>
@@ -110,8 +126,8 @@ $categories = [
                                 </div>
                             </div>
                             <div>
-                                <a href="<?php echo BASE_URL; ?>department-detail.php?slug=<?php echo urlencode($dept['slug']); ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
-                                    <i class="fas fa-university me-1"></i> Department Page
+                                <a href="<?php echo BASE_URL; ?>department/<?php echo urlencode($dept['slug']); ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                                    <i class="fas fa-university me-1"></i> Department Profile
                                 </a>
                             </div>
                         </div>
@@ -134,11 +150,14 @@ $categories = [
                                         
                                         $schemeHref = $hasScheme ? (strpos($c['scheme_url'], 'http') === 0 ? $c['scheme_url'] : BASE_URL . ltrim($c['scheme_url'], '/')) : '#';
                                         $syllabusHref = $hasSyllabus ? (strpos($c['syllabus_url'], 'http') === 0 ? $c['syllabus_url'] : BASE_URL . ltrim($c['syllabus_url'], '/')) : '#';
+                                        $courseLevel = strtolower($c['level'] ?? '');
                                     ?>
-                                        <tr class="course-row" data-coursename="<?php echo sanitize(strtolower($c['course_name'] . ' ' . $c['specializations'])); ?>">
+                                        <tr class="course-row" 
+                                            data-coursename="<?php echo sanitize(strtolower($c['course_name'] . ' ' . ($c['specializations'] ?? '') . ' ' . $dept['name'])); ?>"
+                                            data-level="<?php echo sanitize($courseLevel); ?>">
                                             <td>
                                                 <div class="fw-bold text-navy fs-6 mb-1">
-                                                    <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="text-navy text-decoration-none hover-maroon">
+                                                    <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="text-navy text-decoration-none hover-maroon">
                                                         <?php echo sanitize($c['course_name']); ?>
                                                     </a>
                                                 </div>
@@ -176,7 +195,7 @@ $categories = [
                                                         </a>
                                                     <?php endif; ?>
 
-                                                    <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="btn btn-sm btn-light border" title="Course Details">
+                                                    <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="btn btn-sm btn-light border" title="Course Details">
                                                         <i class="fas fa-arrow-right"></i>
                                                     </a>
                                                 </div>
@@ -196,9 +215,11 @@ $categories = [
         <div id="noResultsMsg" class="card p-5 text-center border-0 shadow-sm rounded-4 mt-4 d-none">
             <i class="fas fa-search fa-3x text-muted opacity-50 mb-3"></i>
             <h4 class="fw-bold text-navy mb-2">No matching curriculum documents found</h4>
-            <p class="text-muted mb-3">Please try searching with different keywords like 'Pharmacy', 'CSE', 'Agriculture', or 'MBA'.</p>
+            <p class="text-muted mb-3">Please try changing your search keywords or adjusting the Faculty &amp; Academic Level filters.</p>
             <div>
-                <button type="button" class="btn btn-danger btn-sm px-4 rounded-pill" onclick="resetFilters()">Reset All Filters</button>
+                <button type="button" class="btn btn-danger btn-sm px-4 rounded-pill" onclick="resetAllSyllabusFilters()">
+                    <i class="fas fa-redo-alt me-1"></i> Reset All Filters
+                </button>
             </div>
         </div>
 
@@ -225,99 +246,122 @@ $categories = [
 </section>
 
 <script>
-function filterSyllabus() {
-    const query = document.getElementById('syllabusSearch').value.toLowerCase().trim();
+function applySyllabusFilters() {
+    const query = (document.getElementById('syllabusSearch').value || '').toLowerCase().trim();
+    const discipline = document.getElementById('disciplineFilter').value;
+    const level = document.getElementById('levelFilter').value;
+
     const deptBlocks = document.querySelectorAll('.dept-block');
-    let totalVisible = 0;
+    let totalMatchingCourses = 0;
+    let totalVisibleDepts = 0;
 
     deptBlocks.forEach(block => {
+        const catData = (block.getAttribute('data-category') || '').toLowerCase();
+        const deptName = (block.getAttribute('data-deptname') || '').toLowerCase();
+        const deptCombo = catData + ' ' + deptName;
+
+        // Check if department matches selected discipline
+        let deptMatchesDiscipline = false;
+        if (discipline === 'all') {
+            deptMatchesDiscipline = true;
+        } else if (discipline === 'engineering' && (deptCombo.includes('engineering') || deptCombo.includes('science & technology') || deptCombo.includes('polytechnic'))) {
+            deptMatchesDiscipline = true;
+        } else if (discipline === 'pharmacy' && deptCombo.includes('pharmacy')) {
+            deptMatchesDiscipline = true;
+        } else if (discipline === 'medical' && (deptCombo.includes('medical') || deptCombo.includes('dental') || deptCombo.includes('ayurveda') || deptCombo.includes('homoeopathic') || deptCombo.includes('hospital'))) {
+            deptMatchesDiscipline = true;
+        } else if (discipline === 'nursing' && (deptCombo.includes('nursing') || deptCombo.includes('paramedical') || deptCombo.includes('allied'))) {
+            deptMatchesDiscipline = true;
+        } else if (discipline === 'law' && deptCombo.includes('law')) {
+            deptMatchesDiscipline = true;
+        } else if (discipline === 'agriculture' && deptCombo.includes('agri')) {
+            deptMatchesDiscipline = true;
+        } else if (discipline === 'management' && (deptCombo.includes('management') || deptCombo.includes('business') || deptCombo.includes('commerce'))) {
+            deptMatchesDiscipline = true;
+        } else if (discipline === 'computer' && (deptCombo.includes('computer') || deptCombo.includes('mca') || deptCombo.includes('bca'))) {
+            deptMatchesDiscipline = true;
+        } else if (discipline === 'science' && (deptCombo.includes('science') || deptCombo.includes('arts') || deptCombo.includes('yoga') || deptCombo.includes('library') || deptCombo.includes('fashion'))) {
+            deptMatchesDiscipline = true;
+        }
+
+        if (!deptMatchesDiscipline) {
+            block.style.display = 'none';
+            return;
+        }
+
         const rows = block.querySelectorAll('.course-row');
-        let blockHasMatch = false;
+        let deptHasMatchingRows = 0;
 
         rows.forEach(row => {
-            const courseText = row.getAttribute('data-coursename');
-            const deptText = block.getAttribute('data-deptname');
-            if (!query || courseText.includes(query) || deptText.includes(query)) {
+            const courseText = (row.getAttribute('data-coursename') || '').toLowerCase();
+            const courseLevel = (row.getAttribute('data-level') || '').toLowerCase();
+
+            // Search query match
+            const matchesQuery = !query || courseText.includes(query) || deptName.includes(query);
+
+            // Level match
+            let matchesLevel = false;
+            if (level === 'all') {
+                matchesLevel = true;
+            } else if (level === 'undergraduate' && (courseLevel.includes('under') || courseLevel.includes('ug') || courseLevel.includes('bachelor') || courseLevel.includes('b.'))) {
+                matchesLevel = true;
+            } else if (level === 'postgraduate' && (courseLevel.includes('post') || courseLevel.includes('pg') || courseLevel.includes('master') || courseLevel.includes('m.'))) {
+                matchesLevel = true;
+            } else if (level === 'diploma' && (courseLevel.includes('diploma') || courseLevel.includes('polytechnic'))) {
+                matchesLevel = true;
+            } else if (level === 'doctorate' && (courseLevel.includes('doctor') || courseLevel.includes('ph.d') || courseLevel.includes('phd') || courseLevel.includes('research'))) {
+                matchesLevel = true;
+            }
+
+            if (matchesQuery && matchesLevel) {
                 row.style.display = '';
-                blockHasMatch = true;
+                deptHasMatchingRows++;
+                totalMatchingCourses++;
             } else {
                 row.style.display = 'none';
             }
         });
 
-        if (blockHasMatch) {
+        if (deptHasMatchingRows > 0) {
             block.style.display = '';
-            totalVisible++;
+            totalVisibleDepts++;
         } else {
             block.style.display = 'none';
         }
     });
 
+    // Update Summary
+    const summary = document.getElementById('activeFiltersSummary');
     const noMsg = document.getElementById('noResultsMsg');
-    if (totalVisible === 0) {
+
+    if (totalVisibleDepts === 0 || totalMatchingCourses === 0) {
         noMsg.classList.remove('d-none');
+        summary.innerHTML = '<i class="fas fa-exclamation-circle text-danger me-1"></i> No matching curriculum found';
     } else {
         noMsg.classList.add('d-none');
-    }
-}
-
-function filterCategory(cat, btn) {
-    // Update active button state
-    document.querySelectorAll('.cat-btn').forEach(b => {
-        b.classList.remove('btn-danger', 'active-filter');
-        b.classList.add('btn-outline-secondary');
-    });
-    btn.classList.remove('btn-outline-secondary');
-    btn.classList.add('btn-danger', 'active-filter');
-
-    const deptBlocks = document.querySelectorAll('.dept-block');
-    let totalVisible = 0;
-
-    deptBlocks.forEach(block => {
-        const catData = block.getAttribute('data-category') || '';
-        const deptName = block.getAttribute('data-deptname') || '';
-        const combo = (catData + ' ' + deptName).toLowerCase();
-
-        let show = false;
-        if (cat === 'all') {
-            show = true;
-        } else if (cat === 'engineering' && (combo.includes('engineering') || combo.includes('science & technology') || combo.includes('polytechnic'))) {
-            show = true;
-        } else if (cat === 'pharmacy' && combo.includes('pharmacy')) {
-            show = true;
-        } else if (cat === 'nursing' && (combo.includes('nursing') || combo.includes('paramedical') || combo.includes('allied'))) {
-            show = true;
-        } else if (cat === 'law' && combo.includes('law')) {
-            show = true;
-        } else if (cat === 'agriculture' && combo.includes('agri')) {
-            show = true;
-        } else if (cat === 'management' && (combo.includes('management') || combo.includes('computer') || combo.includes('commerce') || combo.includes('mca') || combo.includes('bca'))) {
-            show = true;
-        }
-
-        if (show) {
-            block.style.display = '';
-            // Make sure all rows inside are reset to visible
-            block.querySelectorAll('.course-row').forEach(r => r.style.display = '');
-            totalVisible++;
+        
+        let filterParts = [];
+        if (query) filterParts.push('"' + query + '"');
+        if (discipline !== 'all') filterParts.push(document.getElementById('disciplineFilter').selectedOptions[0].text);
+        if (level !== 'all') filterParts.push(document.getElementById('levelFilter').selectedOptions[0].text);
+        
+        if (filterParts.length > 0) {
+            summary.innerHTML = '<i class="fas fa-filter text-danger me-1"></i> Filtered by: <strong>' + filterParts.join(' &bull; ') + '</strong>';
         } else {
-            block.style.display = 'none';
+            summary.innerHTML = '<i class="fas fa-sliders-h text-danger me-1"></i> Showing all curriculum schemes';
         }
-    });
-
-    const noMsg = document.getElementById('noResultsMsg');
-    if (totalVisible === 0) {
-        noMsg.classList.remove('d-none');
-    } else {
-        noMsg.classList.add('d-none');
     }
 }
 
-function resetFilters() {
+function resetAllSyllabusFilters() {
     document.getElementById('syllabusSearch').value = '';
-    const allBtn = document.querySelector('.cat-btn');
-    if (allBtn) filterCategory('all', allBtn);
+    document.getElementById('disciplineFilter').value = 'all';
+    document.getElementById('levelFilter').value = 'all';
+    applySyllabusFilters();
 }
+
+// Initial execution to ensure sync
+document.addEventListener('DOMContentLoaded', applySyllabusFilters);
 </script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

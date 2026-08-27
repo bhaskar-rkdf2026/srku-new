@@ -62,11 +62,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_phd_lead'])) {
                         Candidates seeking admission to Doctor of Philosophy (Ph.D.) programmes for the academic session 2026-27 can download the prescribed official application forms below.
                     </p>
                     <div class="d-flex flex-wrap gap-3">
-                        <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-application-form.pdf" target="_blank" class="btn btn-warning text-dark fw-bold px-4 py-2 rounded-pill shadow-sm">
-                            <i class="fas fa-file-pdf me-2"></i> Ph.D. Application Form (PDF)
+                        <a href="<?php echo BASE_URL; ?>phd-application-form.php" class="btn btn-warning text-dark fw-bold px-4 py-2 rounded-pill shadow-sm">
+                            <i class="fas fa-file-alt me-2"></i> Ph.D. Application Form &amp; Checklist
                         </a>
-                        <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-entrance-form.pdf" target="_blank" class="btn btn-outline-light fw-bold px-4 py-2 rounded-pill">
-                            <i class="fas fa-file-signature me-2"></i> Ph.D. Entrance Exam Form (PDF)
+                        <a href="<?php echo BASE_URL; ?>phd-entrance-form.php" class="btn btn-outline-light fw-bold px-4 py-2 rounded-pill">
+                            <i class="fas fa-file-signature me-2"></i> Ph.D. Entrance Exam Form
                         </a>
                     </div>
                 </div>
@@ -74,9 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_phd_lead'])) {
                     <div class="p-4 rounded-4 bg-white text-navy shadow-sm">
                         <h5 class="fw-bold text-navy mb-3"><i class="fas fa-info-circle text-danger me-2"></i> Key Documents &amp; Policies</h5>
                         <ul class="list-unstyled d-flex flex-column gap-2 mb-0 small">
-                            <li><a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-admission-policy.pdf" target="_blank" class="text-navy text-decoration-none hover-text-danger d-flex align-items-center justify-content-between p-2 rounded-3 bg-light border"><span class="fw-semibold"><i class="fas fa-gavel text-danger me-2"></i> Ph.D. Admission Policy</span> <i class="fas fa-download text-muted"></i></a></li>
-                            <li><a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-scholars-pursuing.pdf" target="_blank" class="text-navy text-decoration-none hover-text-danger d-flex align-items-center justify-content-between p-2 rounded-3 bg-light border"><span class="fw-semibold"><i class="fas fa-users text-primary me-2"></i> Currently Enrolled Scholars</span> <i class="fas fa-download text-muted"></i></a></li>
-                            <li><a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-scholars-completed.pdf" target="_blank" class="text-navy text-decoration-none hover-text-danger d-flex align-items-center justify-content-between p-2 rounded-3 bg-light border"><span class="fw-semibold"><i class="fas fa-award text-warning me-2"></i> Ph.D. Awarded Scholars</span> <i class="fas fa-download text-muted"></i></a></li>
+                            <li><a href="<?php echo BASE_URL; ?>document/phd-admission-policy" class="text-navy text-decoration-none hover-text-danger d-flex align-items-center justify-content-between p-2 rounded-3 bg-light border"><span class="fw-semibold"><i class="fas fa-gavel text-danger me-2"></i> Ph.D. Admission Policy</span> <i class="fas fa-chevron-right text-muted"></i></a></li>
+                            <li><a href="<?php echo BASE_URL; ?>document/phd-scholars-pursuing" class="text-navy text-decoration-none hover-text-danger d-flex align-items-center justify-content-between p-2 rounded-3 bg-light border"><span class="fw-semibold"><i class="fas fa-users text-primary me-2"></i> Currently Enrolled Scholars</span> <i class="fas fa-chevron-right text-muted"></i></a></li>
+                            <li><a href="<?php echo BASE_URL; ?>document/phd-scholars-completed" class="text-navy text-decoration-none hover-text-danger d-flex align-items-center justify-content-between p-2 rounded-3 bg-light border"><span class="fw-semibold"><i class="fas fa-award text-warning me-2"></i> Ph.D. Awarded Scholars</span> <i class="fas fa-chevron-right text-muted"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -93,17 +93,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_phd_lead'])) {
                     <span class="section-subtitle"><i class="fas fa-check-circle text-danger me-1"></i> ADMISSION GUIDELINES</span>
                     <h3 class="h4 fw-bold text-navy mb-3">Eligibility Criteria for Ph.D. Admission</h3>
                     <p class="text-muted small mb-4" style="line-height: 1.8;">
-                        Admission to Doctor of Philosophy (Ph.D.) programmes is governed strictly by the UGC (Minimum Standards and Procedure for Award of Ph.D. Degree) Regulations and University Ordinances.
+                        Admission to Doctor of Philosophy (Ph.D.) programmes is governed strictly by the UGC, AICTE, and relevant statutory regulatory council norms and University Ordinances.
                     </p>
                     
                     <div class="d-flex flex-column gap-3">
                         <div class="p-3 rounded-3 bg-light border-start border-4 border-danger">
                             <h6 class="fw-bold text-navy mb-1"><i class="fas fa-graduation-cap text-danger me-2"></i> Master&rsquo;s Degree Qualification</h6>
-                            <p class="text-muted small mb-0">Candidate must hold a Master&rsquo;s degree (M.Tech, M.Pharm, MBA, MCA, M.Sc, M.A., LL.M., MD/MS) or equivalent professional degree with at least <strong>55% aggregate marks</strong> (or equivalent CGPA).</p>
+                            <p class="text-muted small mb-0">Candidate must hold a Master&rsquo;s degree (M.Tech, M.Pharm, MBA, MCA, M.Sc, M.A., LL.M., MD/MS) or equivalent postgraduate qualification in the relevant discipline <strong>as per AICTE, UGC &amp; Statutory Council norms</strong>.</p>
                         </div>
                         <div class="p-3 rounded-3 bg-light border-start border-4 border-warning">
-                            <h6 class="fw-bold text-navy mb-1"><i class="fas fa-percentage text-warning me-2"></i> Relaxation for Reserved Categories</h6>
-                            <p class="text-muted small mb-0">A relaxation of <strong>5% marks</strong> (from 55% to 50%) or equivalent grade is allowed for candidates belonging to SC / ST / OBC (non-creamy layer) / Differently-Abled categories.</p>
+                            <h6 class="fw-bold text-navy mb-1"><i class="fas fa-shield-alt text-warning me-2"></i> Statutory Guidelines &amp; Category Relaxation</h6>
+                            <p class="text-muted small mb-0">Eligibility relaxation and reservation policies are applicable for reserved categories (SC / ST / OBC / Differently-Abled) strictly <strong>as per AICTE, UGC &amp; State Government norms</strong>.</p>
                         </div>
                         <div class="p-3 rounded-3 bg-light border-start border-4 border-success">
                             <h6 class="fw-bold text-navy mb-1"><i class="fas fa-award text-success me-2"></i> UGC-NET / GATE / GPAT Exemption</h6>
@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_phd_lead'])) {
                             <div class="p-3 rounded-3 bg-light border h-100">
                                 <div class="badge bg-danger text-white rounded-circle mb-2" style="width: 28px; height: 28px; line-height: 18px;">2</div>
                                 <h6 class="fw-bold text-navy mb-1">Entrance Examination</h6>
-                                <p class="text-muted small mb-0">Appear for the Doctoral Entrance Test (DET) consisting of Research Methodology (50%) &amp; Subject Knowledge (50%).</p>
+                                <p class="text-muted small mb-0">Appear for the Doctoral Entrance Test (DET) covering Research Methodology &amp; Subject Knowledge as per university norms.</p>
                             </div>
                         </div>
                         <div class="col">
@@ -156,25 +156,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_phd_lead'])) {
                     
                     <?php
                     $phdDisciplines = [
-                        ['icon' => 'fa-cogs', 'name' => 'Engineering & Technology', 'subs' => 'CSE, Mechanical, Civil, Electrical, EC'],
-                        ['icon' => 'fa-pills', 'name' => 'Pharmaceutical Sciences', 'subs' => 'Pharmaceutics, Pharmacology, Pharmacognosy, Q.A.'],
-                        ['icon' => 'fa-chart-line', 'name' => 'Management & Commerce', 'subs' => 'Finance, Marketing, HR, Business Analytics'],
-                        ['icon' => 'fa-laptop-code', 'name' => 'Computer Applications & IT', 'subs' => 'Artificial Intelligence, Cloud, Data Science, Cyber Security'],
-                        ['icon' => 'fa-stethoscope', 'name' => 'Medical & Healthcare Sciences', 'subs' => 'Medical Anatomy, Biochemistry, Pathology, Dental'],
-                        ['icon' => 'fa-balance-scale', 'name' => 'Law & Legal Studies', 'subs' => 'Constitutional Law, Criminal Law, Corporate Law'],
-                        ['icon' => 'fa-seedling', 'name' => 'Agricultural Sciences', 'subs' => 'Agronomy, Horticulture, Plant Pathology, Soil Science'],
-                        ['icon' => 'fa-atom', 'name' => 'Basic & Applied Sciences', 'subs' => 'Physics, Chemistry, Mathematics, Biotechnology, Zoology']
+                        ['icon' => 'fa-cogs', 'name' => 'Engineering & Technology', 'subs' => 'CSE, Mechanical, Civil, Electrical, EC & allied disciplines'],
+                        ['icon' => 'fa-pills', 'name' => 'Pharmaceutical Sciences', 'subs' => 'Pharmaceutics, Pharmacology, Pharmacognosy, Q.A. & many more'],
+                        ['icon' => 'fa-chart-line', 'name' => 'Management & Commerce', 'subs' => 'Finance, Marketing, HR, Business Analytics & allied domains'],
+                        ['icon' => 'fa-laptop-code', 'name' => 'Computer Applications & IT', 'subs' => 'AI/ML, Cloud, Data Science, Cyber Security & many more'],
+                        ['icon' => 'fa-stethoscope', 'name' => 'Medical & Healthcare Sciences', 'subs' => 'Medical Anatomy, Biochemistry, Pathology, Dental & allied areas'],
+                        ['icon' => 'fa-balance-scale', 'name' => 'Law & Legal Studies', 'subs' => 'Constitutional Law, Criminal Law, Corporate Law & many more'],
+                        ['icon' => 'fa-seedling', 'name' => 'Agricultural Sciences', 'subs' => 'Agronomy, Horticulture, Plant Pathology, Soil Science & many more'],
+                        ['icon' => 'fa-atom', 'name' => 'Basic & Applied Sciences', 'subs' => 'Physics, Chemistry, Mathematics, Biotechnology, Zoology & allied areas']
                     ];
                     ?>
 
                     <div class="row row-cols-1 row-cols-sm-2 g-3">
                         <?php foreach ($phdDisciplines as $d): ?>
                             <div class="col">
-                                <div class="p-3 rounded-3 bg-light border d-flex gap-3 align-items-start">
+                                <div class="h-100 p-3 rounded-3 bg-light border d-flex gap-3 align-items-start">
                                     <div class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px; font-size: 1.1rem;">
                                         <i class="fas <?php echo $d['icon']; ?>"></i>
                                     </div>
-                                    <div>
+                                    <div class="flex-grow-1">
                                         <h6 class="fw-bold text-navy mb-1" style="font-size: 0.92rem;"><?php echo $d['name']; ?></h6>
                                         <small class="text-muted d-block" style="font-size: 0.78rem;"><?php echo $d['subs']; ?></small>
                                     </div>
@@ -182,7 +182,109 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_phd_lead'])) {
                             </div>
                         <?php endforeach; ?>
                     </div>
+
+                    <div class="mt-3 p-3 rounded-3 bg-light border d-flex align-items-center gap-3 text-muted small">
+                        <div class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 36px; height: 36px;">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div>
+                            <strong class="text-navy">Interdisciplinary &amp; Emerging Areas:</strong> Ph.D. guidance and research supervisors are also available across interdisciplinary, multidisciplinary &amp; allied emerging fields.
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Ph.D. Departments & Doctoral Programmes -->
+                <?php
+                $doctorateCourses = getCourses(null, 'Doctorate');
+                if (!empty($doctorateCourses)):
+                ?>
+                    <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 bg-white mt-4">
+                        <span class="section-subtitle"><i class="fas fa-university text-danger me-1"></i> DOCTORAL PROGRAMMES &amp; DEPARTMENTS</span>
+                        <h3 class="h4 fw-bold text-navy mb-2">Doctorate Programmes by Constituent Departments</h3>
+                        <p class="text-muted small mb-4">Doctor of Philosophy (Ph.D.) research is conducted across recognized constituent institutes and advanced research laboratories with doctoral guides and supervisor mentorship across wide-ranging research topics.</p>
+
+                        <div class="d-flex flex-column gap-4">
+                            <?php foreach ($doctorateCourses as $doc): 
+                                $deptInfo = !empty($doc['dept_slug']) ? getDepartmentBySlug($doc['dept_slug']) : null;
+                                $docSpecs = !empty($doc['specializations']) ? array_map('trim', explode(',', $doc['specializations'])) : [];
+                            ?>
+                                <div class="p-3 p-md-4 rounded-4 bg-light border position-relative">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                                        <span class="badge bg-white text-navy border px-2 py-1 rounded-pill small fw-bold">
+                                            <i class="fas fa-building text-danger me-1"></i> <?php echo sanitize($doc['department']); ?>
+                                        </span>
+                                        <?php if (!empty($deptInfo['approvals'])): ?>
+                                            <span class="badge bg-danger-subtle text-danger px-2 py-1 rounded-pill small fw-semibold">
+                                                <i class="fas fa-certificate me-1"></i> <?php echo sanitize($deptInfo['approvals']); ?> Approved
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <h5 class="fw-bold text-navy mb-2">
+                                        <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($doc['slug'] ?: $doc['id']); ?>" class="text-navy text-decoration-none hover-text-danger">
+                                            <?php echo sanitize($doc['course_name']); ?>
+                                        </a>
+                                    </h5>
+
+                                    <p class="text-muted small mb-3">
+                                        <?php echo sanitize($doc['description']); ?>
+                                    </p>
+
+                                    <!-- Meta Details -->
+                                    <div class="row g-2 mb-3 small">
+                                        <div class="col-12 col-sm-6">
+                                            <div class="p-2 rounded-3 bg-white border h-100">
+                                                <span class="text-muted d-block" style="font-size: 0.75rem;"><i class="far fa-clock text-danger me-1"></i> Duration</span>
+                                                <strong class="text-navy"><?php echo sanitize($doc['duration']); ?></strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="p-2 rounded-3 bg-white border h-100">
+                                                <span class="text-muted d-block" style="font-size: 0.75rem;"><i class="fas fa-user-check text-success me-1"></i> Eligibility</span>
+                                                <strong class="text-navy"><?php echo sanitize($doc['eligibility']); ?></strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Research Thrust Areas -->
+                                    <div class="mb-3">
+                                        <span class="text-muted d-block small mb-1 fw-semibold"><i class="fas fa-microscope text-warning me-1"></i> Key Research Thrust Areas:</span>
+                                        <div class="d-flex flex-wrap gap-1 align-items-center">
+                                            <?php foreach ($docSpecs as $sp): ?>
+                                                <span class="badge bg-white text-secondary border fw-normal" style="font-size: 0.76rem;">
+                                                    <?php echo sanitize($sp); ?>
+                                                </span>
+                                            <?php endforeach; ?>
+                                            <span class="badge bg-white text-secondary border fw-normal" style="font-size: 0.76rem;">
+                                                &amp; Many More Specializations
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Links -->
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 pt-2 border-top">
+                                        <?php if (!empty($doc['dept_slug'])): ?>
+                                            <a href="<?php echo BASE_URL; ?>department/<?php echo urlencode($doc['dept_slug']); ?>" class="text-navy text-decoration-none small fw-bold hover-text-danger">
+                                                <i class="fas fa-university me-1 text-danger"></i> View Department Profile
+                                            </a>
+                                        <?php else: ?>
+                                            <span></span>
+                                        <?php endif; ?>
+
+                                        <div class="d-flex gap-2">
+                                            <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($doc['slug'] ?: $doc['id']); ?>" class="btn btn-sm btn-outline-navy px-3 rounded-pill fw-semibold">
+                                                Programme Details
+                                            </a>
+                                            <a href="#apply" class="btn btn-sm btn-danger px-3 rounded-pill fw-semibold">
+                                                Apply Now <i class="fas fa-arrow-right ms-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
 
             </div>
 
@@ -218,18 +320,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_phd_lead'])) {
                         <div class="mb-3">
                             <label class="form-label fw-bold text-dark small mb-1">Target Research Discipline *</label>
                             <select name="discipline" class="form-select py-2" required>
-                                <option value="">-- Select Research Faculty --</option>
-                                <option value="Computer Science & Engineering">Computer Science &amp; Engineering</option>
-                                <option value="Mechanical Engineering">Mechanical Engineering</option>
-                                <option value="Civil Engineering">Civil Engineering</option>
-                                <option value="Pharmaceutical Sciences">Pharmaceutical Sciences</option>
-                                <option value="Management Studies">Management Studies</option>
-                                <option value="Commerce">Commerce</option>
+                                <option value="">-- Select Research Faculty / Discipline --</option>
+                                <option value="Engineering & Technology">Engineering &amp; Technology (CSE, ME, CE, EE, EC &amp; allied)</option>
+                                <option value="Pharmaceutical Sciences">Pharmaceutical Sciences (Pharmaceutics, Pharmacology &amp; allied)</option>
+                                <option value="Management & Commerce">Management &amp; Commerce</option>
+                                <option value="Computer Applications & IT">Computer Applications &amp; IT / Data Science</option>
+                                <option value="Nursing & Healthcare Sciences">Nursing &amp; Healthcare Sciences</option>
+                                <option value="Medical & Dental Sciences">Medical &amp; Dental Sciences</option>
                                 <option value="Law & Legal Studies">Law &amp; Legal Studies</option>
-                                <option value="Medical & Health Sciences">Medical &amp; Health Sciences</option>
                                 <option value="Agricultural Sciences">Agricultural Sciences</option>
-                                <option value="Biotechnology & Life Sciences">Biotechnology &amp; Life Sciences</option>
-                                <option value="Chemistry / Physics / Mathematics">Chemistry / Physics / Mathematics</option>
+                                <option value="Basic & Applied Sciences">Basic &amp; Applied Sciences (Physics, Chemistry, Maths, Biotech)</option>
+                                <option value="Interdisciplinary & Allied Areas">Interdisciplinary &amp; Allied Areas (and many more)</option>
+                                <option value="Other Specialized Research Area">Other Specialized Research Domain</option>
                             </select>
                         </div>
                         <div class="row g-2 mb-3">

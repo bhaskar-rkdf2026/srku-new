@@ -81,11 +81,11 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                 <i class="fas fa-university me-1"></i> <?php echo sanitize($course['department']); ?>
             </span>
             <?php if (!empty($specList)): ?>
-                <span class="badge bg-danger px-3 py-1"><?php echo count($specList); ?> Disciplines / Specializations</span>
+                <span class="badge bg-danger px-3 py-1">Specializations Available</span>
             <?php endif; ?>
         </div>
         <h1 class="fw-bold display-6 mb-2"><?php echo sanitize($course['course_name']); ?></h1>
-        <p class="text-warning fw-semibold lead mb-0">Sarvepalli Radhakrishnan University &bull; Industry-Aligned &bull; 94% Placement Support</p>
+        <p class="text-warning fw-semibold lead mb-0">Sarvepalli Radhakrishnan University &bull; Industry-Aligned &bull; Dedicated Placement Support</p>
     </div>
 </div>
 
@@ -97,7 +97,7 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                 <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-muted">Home</a></li>
                 <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>courses.php" class="text-decoration-none text-muted">Courses Catalog</a></li>
                 <?php if ($deptInfo): ?>
-                    <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=<?php echo urlencode($deptInfo['slug']); ?>" class="text-decoration-none text-muted"><?php echo sanitize($deptInfo['name']); ?></a></li>
+                    <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>department/<?php echo urlencode($deptInfo['slug']); ?>" class="text-decoration-none text-muted"><?php echo sanitize($deptInfo['name']); ?></a></li>
                 <?php endif; ?>
                 <li class="breadcrumb-item active text-danger fw-semibold" aria-current="page"><?php echo sanitize($course['course_name']); ?></li>
             </ol>
@@ -152,7 +152,7 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                             <h3 class="text-navy fw-bold mb-0">
                                 <i class="fas fa-sitemap text-danger me-2"></i> Available Disciplines &amp; Specializations
                             </h3>
-                            <span class="badge bg-danger px-3 py-2"><?php echo count($specList); ?> Tracks Offered</span>
+                            <span class="badge bg-danger px-3 py-2">Specialization Tracks</span>
                         </div>
                         <p class="text-muted small mb-4">
                             Students pursuing <strong><?php echo sanitize($course['course_name']); ?></strong> can specialize in the following focused tracks during their academic curriculum:

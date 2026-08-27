@@ -43,11 +43,11 @@ require_once __DIR__ . '/includes/header.php';
                         Download the official prescribed application and entrance examination forms for Ph.D. admissions across Engineering, Pharmacy, Management, Computer Applications, Medical, and Science.
                     </p>
                     <div class="d-flex flex-wrap gap-2">
-                        <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-application-form.pdf" target="_blank" class="btn btn-danger btn-sm rounded-pill px-3 fw-bold">
-                            <i class="fas fa-file-pdf me-1"></i> Ph.D. Application Form (PDF)
+                        <a href="<?php echo BASE_URL; ?>phd-application-form.php" class="btn btn-danger btn-sm rounded-pill px-3 fw-bold">
+                            <i class="fas fa-file-alt me-1"></i> Ph.D. Application Form
                         </a>
-                        <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-entrance-form.pdf" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold">
-                            <i class="fas fa-file-signature me-1"></i> Ph.D. Entrance Form (PDF)
+                        <a href="<?php echo BASE_URL; ?>phd-entrance-form.php" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold">
+                            <i class="fas fa-file-signature me-1"></i> Ph.D. Entrance Form
                         </a>
                         <a href="<?php echo BASE_URL; ?>phd-admission.php" class="btn btn-outline-navy btn-sm rounded-pill px-3 fw-bold">
                             View Admission Portal &rarr;
@@ -57,19 +57,19 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="col-12 col-lg-6">
                     <div class="row row-cols-1 row-cols-sm-2 g-2">
                         <div class="col">
-                            <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-admission-policy.pdf" target="_blank" class="p-3 bg-light rounded-3 border text-navy text-decoration-none d-block hover-shadow h-100" style="transition:all 0.2s ease;">
+                            <a href="<?php echo BASE_URL; ?>document/phd-admission-policy" class="p-3 bg-light rounded-3 border text-navy text-decoration-none d-block hover-shadow h-100" style="transition:all 0.2s ease;">
                                 <div class="small fw-bold text-danger mb-1"><i class="fas fa-gavel me-1"></i> Policy</div>
                                 <div class="small fw-semibold text-dark">Ph.D. Admission Policy &rarr;</div>
                             </a>
                         </div>
                         <div class="col">
-                            <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-scholars-pursuing.pdf" target="_blank" class="p-3 bg-light rounded-3 border text-navy text-decoration-none d-block hover-shadow h-100" style="transition:all 0.2s ease;">
+                            <a href="<?php echo BASE_URL; ?>document/phd-scholars-pursuing" class="p-3 bg-light rounded-3 border text-navy text-decoration-none d-block hover-shadow h-100" style="transition:all 0.2s ease;">
                                 <div class="small fw-bold text-primary mb-1"><i class="fas fa-users me-1"></i> Enrolled</div>
                                 <div class="small fw-semibold text-dark">Currently Enrolled Scholars &rarr;</div>
                             </a>
                         </div>
                         <div class="col">
-                            <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-scholars-completed.pdf" target="_blank" class="p-3 bg-light rounded-3 border text-navy text-decoration-none d-block hover-shadow h-100" style="transition:all 0.2s ease;">
+                            <a href="<?php echo BASE_URL; ?>document/phd-scholars-completed" class="p-3 bg-light rounded-3 border text-navy text-decoration-none d-block hover-shadow h-100" style="transition:all 0.2s ease;">
                                 <div class="small fw-bold text-warning mb-1"><i class="fas fa-award me-1"></i> Completed</div>
                                 <div class="small fw-semibold text-dark">Ph.D. Awarded Scholars &rarr;</div>
                             </a>

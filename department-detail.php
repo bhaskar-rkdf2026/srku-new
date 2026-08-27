@@ -170,7 +170,7 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
                         </div>
                         <div class="col">
                             <div class="small text-muted mb-1"><i class="fas fa-graduation-cap text-danger me-1"></i> Programs</div>
-                            <div class="fw-bold text-navy fs-6"><?php echo count($courses); ?> Degrees / Diplomas</div>
+                            <div class="fw-bold text-navy fs-6">Degrees &amp; Diplomas</div>
                         </div>
                         <div class="col">
                             <div class="small text-muted mb-1"><i class="fas fa-stamp text-danger me-1"></i> Regulatory Status</div>
@@ -178,7 +178,7 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
                         </div>
                         <div class="col">
                             <div class="small text-muted mb-1"><i class="fas fa-chart-line text-danger me-1"></i> Placement Record</div>
-                            <div class="fw-bold text-danger fs-6">94% Supported</div>
+                            <div class="fw-bold text-danger fs-6">Active Assistance</div>
                         </div>
                     </div>
                 </div>
@@ -265,7 +265,7 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
                             <h3 class="text-navy fw-bold mb-1"><i class="fas fa-graduation-cap text-danger me-2"></i> Degrees, Diplomas &amp; Specializations</h3>
                             <p class="text-muted small mb-0">Official academic programs offered by <?php echo sanitize($dept['name']); ?></p>
                         </div>
-                        <span class="badge bg-danger px-3 py-2 rounded-pill"><?php echo count($courses); ?> Programs Available</span>
+                        <span class="badge bg-danger px-3 py-2 rounded-pill">Academic Programs Available</span>
                     </div>
 
                     <?php if (!empty($courses)): ?>
@@ -283,13 +283,13 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
                                                 <span class="badge bg-white text-muted border rounded-pill px-3 py-1 small"><i class="far fa-clock me-1 text-danger"></i> <?php echo sanitize($c['duration']); ?></span>
                                             </div>
                                             <h4 class="h5 fw-bold text-navy mb-0">
-                                                <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="text-navy text-decoration-none hover-danger">
+                                                <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="text-navy text-decoration-none hover-danger">
                                                     <?php echo sanitize($c['course_name']); ?>
                                                 </a>
                                             </h4>
                                         </div>
                                         <div class="d-flex gap-2 flex-shrink-0">
-                                            <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="btn btn-sm btn-outline-secondary px-3 py-2 fw-semibold">
+                                            <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="btn btn-sm btn-outline-secondary px-3 py-2 fw-semibold">
                                                 <i class="fas fa-info-circle me-1"></i> Details
                                             </a>
                                             <a href="<?php echo BASE_URL; ?>contact.php?course=<?php echo urlencode($c['course_name']); ?>" class="btn btn-sm btn-srku px-3 py-2 fw-semibold">
@@ -309,7 +309,7 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
                                             <div class="mb-3 pt-1">
                                                 <div class="small fw-bold text-navy mb-2 d-flex align-items-center gap-2">
                                                     <i class="fas fa-layer-group text-danger"></i> 
-                                                    <span>Available Disciplines &amp; Specializations (<?php echo count($specList); ?>):</span>
+                                                    <span>Available Disciplines &amp; Specializations:</span>
                                                 </div>
                                                 <div class="d-flex flex-wrap gap-2">
                                                     <?php foreach ($specList as $sp): ?>

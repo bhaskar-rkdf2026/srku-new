@@ -59,7 +59,7 @@ $filteredNews = array_filter($allNews, function($n) use ($selectedCategory, $sea
             <div class="pt-3 border-top">
                 <div class="srku-filter-row">
                     <a href="<?php echo BASE_URL; ?>news.php" class="srku-filter-btn <?php echo empty($selectedCategory) ? 'active' : ''; ?>">
-                        <i class="fas fa-bullhorn"></i> All Notices (<?php echo count($allNews); ?>)
+                        <i class="fas fa-bullhorn"></i> All Notices
                     </a>
                     <?php 
                     $cats = ['Admission', 'Placement', 'Examination', 'Announcement'];
