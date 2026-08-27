@@ -167,7 +167,7 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
 <header class="site-header-static">
     <style>
         *,*::before,*::after{box-sizing:border-box}
-        .site-header-static{position:relative;min-height:76px;z-index:9990}
+        .site-header-static{position:relative;min-height:76px;z-index:1020}
         .static-nav-wrapper{
             background-color:#ffffff;
             box-shadow:0 2px 12px rgba(0,0,0,0.08);
@@ -176,7 +176,7 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
             top:0;
             left:0;
             right:0;
-            z-index:9999;
+            z-index:1025;
             width:100%;
             transition:background-color 0.3s ease, backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease, box-shadow 0.3s ease, border-bottom 0.3s ease;
         }
@@ -191,8 +191,11 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
             -webkit-backdrop-filter:blur(20px) saturate(180%)!important;
             border-bottom:1px solid rgba(255,255,255,0.65)!important;
             box-shadow:0 10px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.03)!important;
-            z-index:99999!important;
+            z-index:1030!important;
         }
+        /* Ensure Bootstrap Modals and Backdrops Always Appear Above Header & Floating Docks */
+        .modal-backdrop{z-index:100000!important}
+        .modal{z-index:100005!important}
         .static-nav-wrapper.is-scrolled .static-nav-container{
             min-height:66px;
         }
@@ -248,8 +251,9 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
             .static-contact-btn{padding:9px 18px;font-size:13px}
         }
         @media (max-width:1024px){
-            .static-nav-wrapper{position:fixed!important;top:0;left:0;right:0;width:100%}
-            .site-header-static+*{margin-top:76px}
+            .site-header-static{position:relative;min-height:76px;z-index:9990}
+            .static-nav-wrapper{position:relative;top:0;left:0;right:0;width:100%}
+            .site-header-static+*{margin-top:0px!important}
             .static-mobile-toggle{display:flex}
             .static-menu-list{position:fixed;top:0;left:-100%;width:300px;max-width:85vw;height:100vh;background:#fff;flex-direction:column;align-items:stretch;padding:76px 0 30px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:5px 0 24px rgba(0,0,0,0.18);transition:left 0.33s cubic-bezier(.4,0,.2,1);gap:0;z-index:9999}
             .static-menu-list.active{left:0}
@@ -683,8 +687,7 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
         document.querySelectorAll('.static-menu-item > .static-menu-link, .static-dropdown-item > .static-dropdown-link').forEach(function(link){
             link.addEventListener('click', function(e){
                 if(window.innerWidth > 1024) return;
-                var parent = this.parentElement;
-                var hasSub = parent.querySelector(':scope > .static-dropdown-panel');
+                var hasSub = parent.querySelector(':scope > .static-dropdown-panel, :scope > .static-sub-dropdown');
                 if(!hasSub) return;
                 e.preventDefault();
                 e.stopPropagation();
