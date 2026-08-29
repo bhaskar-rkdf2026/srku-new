@@ -47,11 +47,17 @@ if (empty($courses)) {
     $courses = getCourses($dept['name']);
 }
 
+// Filter out Doctorate / PhD programs from department pages
+$courses = array_values(array_filter($courses, function($c) {
+    $lvl = strtolower(trim($c['level'] ?? ''));
+    $degLvl = strtolower(trim($c['degree_level'] ?? ''));
+    return !in_array($lvl, ['doctorate', 'phd', 'ph.d', 'doctoral']) && !in_array($degLvl, ['doctorate', 'phd', 'ph.d', 'doctoral']);
+}));
+
 // Group courses by level
 $ugCourses = array_filter($courses, fn($c) => $c['level'] === 'UG');
 $pgCourses = array_filter($courses, fn($c) => $c['level'] === 'PG');
 $dipCourses = array_filter($courses, fn($c) => in_array($c['level'], ['Diploma', 'Certificate']));
-$docCourses = array_filter($courses, fn($c) => in_array($c['level'], ['Doctorate', 'PhD']));
 
 // Exact 11 Constituent Institutes that possess their own official circular seals
 $exactSeals = [
