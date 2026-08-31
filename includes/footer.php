@@ -294,7 +294,7 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
                             if (!empty($footerCourses)):
                                 $fLevels = ['UG' => 'Undergraduate (UG)', 'PG' => 'Postgraduate (PG)', 'Diploma' => 'Diploma & Certificate', 'Doctorate' => 'Ph.D. & Research'];
                                 foreach ($fLevels as $flKey => $flLabel):
-                                    $fFilt = array_filter($footerCourses, fn($c) => stripos($c['level'], $flKey) !== false || stripos($c['degree_level'], $flKey) !== false);
+                                    $fFilt = array_filter($footerCourses, fn($c) => stripos((string)($c['level'] ?? ''), $flKey) !== false || stripos((string)($c['degree_level'] ?? ''), $flKey) !== false);
                                     if (!empty($fFilt)):
                             ?>
                                         <optgroup label="<?php echo $flLabel; ?>">

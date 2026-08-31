@@ -25,12 +25,15 @@ $counts = [
 ];
 
 foreach ($allImages as $img) {
-    $c = $img['category'] ?? 'Campus';
-    if (isset($counts[$c])) {
-        $counts[$c]++;
-    } else {
-        $counts['Campus']++;
+    $c = trim($img['category'] ?? 'Campus');
+    if (empty($c)) $c = 'Campus';
+    if (!isset($categoryLabels[$c])) {
+        $categoryLabels[$c] = ucfirst($c);
     }
+    if (!isset($counts[$c])) {
+        $counts[$c] = 0;
+    }
+    $counts[$c]++;
 }
 ?>
 
@@ -219,23 +222,27 @@ foreach ($allImages as $img) {
             </div>
         </div>
 
-        <!-- Filter Tabs (Events removed, Gym added) -->
+        <!-- Filter Tabs (Dynamic Categories from DB) -->
         <div class="d-flex flex-wrap gap-2 justify-content-center mb-5" id="galleryFilterTabs">
             <button type="button" class="srku-filter-pill <?php echo empty($activeCategory) ? 'active' : ''; ?>" data-filter="all">
-                <i class="fas fa-th-large"></i> All Photos
+                <i class="fas fa-th-large"></i> All Photos <span class="srku-filter-badge"><?php echo $counts['all']; ?></span>
             </button>
-            <button type="button" class="srku-filter-pill <?php echo $activeCategory == 'Campus' ? 'active' : ''; ?>" data-filter="Campus">
-                <i class="fas fa-university"></i> Campus &amp; Architecture
-            </button>
-            <button type="button" class="srku-filter-pill <?php echo $activeCategory == 'Gym' ? 'active' : ''; ?>" data-filter="Gym">
-                <i class="fas fa-dumbbell"></i> Gymnasium &amp; Fitness
-            </button>
-            <button type="button" class="srku-filter-pill <?php echo $activeCategory == 'Sports' ? 'active' : ''; ?>" data-filter="Sports">
-                <i class="fas fa-running"></i> Sports Arena &amp; Courts
-            </button>
-            <button type="button" class="srku-filter-pill <?php echo $activeCategory == 'Medical' ? 'active' : ''; ?>" data-filter="Medical">
-                <i class="fas fa-hospital-alt"></i> Medical &amp; Hospitals
-            </button>
+            <?php foreach ($categoryLabels as $catKey => $catLabel): 
+                if (($counts[$catKey] ?? 0) === 0) continue;
+                $catIcon = 'fa-images';
+                if (stripos($catKey, 'Campus') !== false) $catIcon = 'fa-university';
+                elseif (stripos($catKey, 'Gym') !== false) $catIcon = 'fa-dumbbell';
+                elseif (stripos($catKey, 'Sport') !== false) $catIcon = 'fa-running';
+                elseif (stripos($catKey, 'Med') !== false || stripos($catKey, 'Hosp') !== false) $catIcon = 'fa-hospital-alt';
+                elseif (stripos($catKey, 'Lab') !== false) $catIcon = 'fa-flask';
+                elseif (stripos($catKey, 'Lib') !== false) $catIcon = 'fa-book-reader';
+                elseif (stripos($catKey, 'Event') !== false) $catIcon = 'fa-calendar-alt';
+            ?>
+                <button type="button" class="srku-filter-pill <?php echo (strcasecmp($activeCategory, $catKey) === 0) ? 'active' : ''; ?>" data-filter="<?php echo sanitize($catKey); ?>">
+                    <i class="fas <?php echo $catIcon; ?>"></i> <?php echo sanitize($catLabel); ?>
+                    <span class="srku-filter-badge"><?php echo $counts[$catKey]; ?></span>
+                </button>
+            <?php endforeach; ?>
         </div>
 
         <!-- Gallery Grid -->
@@ -243,20 +250,20 @@ foreach ($allImages as $img) {
             <?php 
             $index = 0;
             foreach ($allImages as $item): 
-                $itemCat = $item['category'] ?? 'Campus';
-                $itemImg = $item['image_url'] ?? '';
+                $itemCat = trim($item['category'] ?? 'Campus') ?: 'Campus';
+                $itemImg = $item['image_url'] ?? ($item['image'] ?? ($item['file_path'] ?? ($item['img'] ?? ($item['photo'] ?? ''))));
                 $fullImgUrl = resolveMediaUrl($itemImg, 'assets/uploads/2026/07/001.webp');
                 $itemTitle = $item['title'] ?? 'SRKU Campus Photo';
                 $catLabel = $categoryLabels[$itemCat] ?? $itemCat;
             ?>
-                <div class="col gallery-item <?php echo (!empty($activeCategory) && $itemCat !== $activeCategory) ? 'd-none' : ''; ?>" data-category="<?php echo sanitize($itemCat); ?>">
+                <div class="col gallery-item <?php echo (!empty($activeCategory) && strcasecmp($itemCat, $activeCategory) !== 0) ? 'd-none' : ''; ?>" data-category="<?php echo sanitize($itemCat); ?>">
                     <div class="srku-gallery-card h-100" onclick="openLightbox(<?php echo $index; ?>)">
                         <div class="srku-gallery-thumb-wrap">
                             <img src="<?php echo $fullImgUrl; ?>"
                                  loading="lazy"
                                  onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/campus-1.webp';"
                                  class="srku-gallery-thumb" 
-                                 alt="SRKU Campus Photo">
+                                 alt="<?php echo sanitize($itemTitle); ?>">
                             <div class="srku-gallery-overlay"></div>
                             <div class="srku-gallery-zoom-btn" title="View Fullscreen">
                                 <i class="fas fa-expand-alt"></i>
@@ -310,11 +317,12 @@ foreach ($allImages as $img) {
 <script>
 // Gallery Data for Lightbox
 var galleryData = <?php echo json_encode(array_values(array_map(function($item) use ($categoryLabels) {
-    $itemCat = $item['category'] ?? 'Campus';
+    $itemCat = trim($item['category'] ?? 'Campus') ?: 'Campus';
+    $itemImg = $item['image_url'] ?? ($item['image'] ?? ($item['file_path'] ?? ($item['img'] ?? ($item['photo'] ?? ''))));
     return [
-        'category' => $categoryLabels[$itemCat] ?? $itemCat,
+        'category' => $categoryLabels[$itemCat] ?? ucfirst($itemCat),
         'cat_key' => $itemCat,
-        'url' => resolveMediaUrl($item['image_url'] ?? '', 'assets/uploads/2026/07/001.webp')
+        'url' => resolveMediaUrl($itemImg, 'assets/uploads/2026/07/001.webp')
     ];
 }, $allImages))); ?>;
 
@@ -324,7 +332,7 @@ var visibleIndices = [];
 function updateVisibleIndices(filterCat) {
     visibleIndices = [];
     galleryData.forEach(function(item, idx) {
-        if (filterCat === 'all' || item.cat_key === filterCat) {
+        if (filterCat === 'all' || item.cat_key.toLowerCase() === filterCat.toLowerCase()) {
             visibleIndices.push(idx);
         }
     });
@@ -395,7 +403,7 @@ document.querySelectorAll('#galleryFilterTabs .srku-filter-pill').forEach(functi
 
         items.forEach(function(item) {
             var itemCat = item.getAttribute('data-category');
-            if (filter === 'all' || itemCat === filter) {
+            if (filter === 'all' || itemCat.toLowerCase() === filter.toLowerCase()) {
                 item.classList.remove('d-none');
                 visibleCount++;
             } else {

@@ -185,7 +185,7 @@ $filteredDepartments = array_filter($allDepartments, function($dept) use ($selec
                     // Degree levels summary
                     $levels = [];
                     foreach ($deptCourses as $dc) {
-                        $lvl = trim($dc['degree_level'] ?: $dc['level']);
+                        $lvl = trim(($dc['degree_level'] ?? '') ?: ($dc['level'] ?? ''));
                         if (stripos($lvl, 'diploma') !== false && stripos($lvl, 'cert') !== false) {
                             $lvl = 'Diploma / Cert.';
                         } elseif (stripos($lvl, 'doctorate') !== false || stripos($lvl, 'ph.d') !== false) {

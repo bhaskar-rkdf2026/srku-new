@@ -116,7 +116,7 @@ require_once __DIR__ . '/includes/header.php';
                                     <?php 
                                     $levels = ['UG' => 'Undergraduate Degrees (UG)', 'PG' => 'Postgraduate Degrees (PG)', 'Diploma' => 'Diploma & Certificate Courses', 'Doctorate' => 'Ph.D. & Research Programs'];
                                     foreach ($levels as $lvlKey => $lvlLabel): 
-                                        $filtered = array_filter($allCourses, fn($c) => stripos($c['level'], $lvlKey) !== false || stripos($c['degree_level'], $lvlKey) !== false);
+                                        $filtered = array_filter($allCourses, fn($c) => stripos((string)($c['level'] ?? ''), $lvlKey) !== false || stripos((string)($c['degree_level'] ?? ''), $lvlKey) !== false);
                                         if (!empty($filtered)):
                                     ?>
                                         <optgroup label="<?php echo $lvlLabel; ?>">

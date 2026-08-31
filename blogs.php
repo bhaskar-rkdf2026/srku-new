@@ -11,8 +11,15 @@ $search = sanitize($_GET['q'] ?? '');
 $blogsList = getBlogs($category, 18, $search);
 
 // Get distinct categories
-$pdo = getDBConnection();
-$categories = $pdo->query("SELECT DISTINCT category FROM blogs WHERE status = 'published' AND category IS NOT NULL AND category != ''")->fetchAll(PDO::FETCH_COLUMN);
+$categories = [];
+try {
+    $pdo = getDBConnection();
+    if ($pdo) {
+        $categories = $pdo->query("SELECT DISTINCT category FROM blogs WHERE status = 'published' AND category IS NOT NULL AND category != ''")->fetchAll(PDO::FETCH_COLUMN);
+    }
+} catch (Exception $e) {
+    $categories = [];
+}
 
 require_once __DIR__ . '/includes/header.php';
 ?>

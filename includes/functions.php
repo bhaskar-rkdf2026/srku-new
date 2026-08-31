@@ -37,12 +37,24 @@ function normalizeMediaPath($path, $default = '') {
     if (empty($path)) {
         return '';
     }
-    if (preg_match('/^https?:\/\//i', $path) || strpos($path, '//') === 0) {
-        return $path;
-    }
-
-    $cleanPath = ltrim(str_replace('\\', '/', $path), '/');
     $baseDir = dirname(__DIR__);
+
+    // If it's a full URL containing localhost, staging, or server domain, extract the asset path
+    if (preg_match('/^https?:\/\//i', $path) || strpos($path, '//') === 0) {
+        $parsedPath = parse_url($path, PHP_URL_PATH);
+        if ($parsedPath) {
+            $trimmed = ltrim($parsedPath, '/');
+            $trimmed = preg_replace('/^(new-staging|srku-new|srku)\//i', '', $trimmed);
+            if (is_file($baseDir . '/' . $trimmed)) {
+                return $trimmed;
+            }
+            $cleanPath = basename($trimmed);
+        } else {
+            return $path;
+        }
+    } else {
+        $cleanPath = ltrim(str_replace('\\', '/', $path), '/');
+    }
 
     // 1. Direct path exists
     if (is_file($baseDir . '/' . $cleanPath)) {
@@ -74,6 +86,8 @@ function normalizeMediaPath($path, $default = '') {
         'assets/upload/2026/06/',
         'assets/upload/2024/06/',
         'assets/upload/',
+        'assets/gallery/webp/',
+        'assets/gallery/',
         'assets/img/',
         'assets/',
         'wp-content/uploads/'
@@ -436,16 +450,68 @@ function getBanners() {
     }
 }
 
-// Fetch gallery images
-function getGalleryImages($category = null) {
+// Fetch gallery images (with DB support & smart fallback)
+function getGalleryImages($category = null, $limit = null) {
     try {
         $pdo = getDBConnection();
-        if (!empty($category)) {
-            $stmt = $pdo->prepare("SELECT * FROM gallery WHERE category = :c ORDER BY id ASC");
-            $stmt->execute([':c' => $category]);
-            return $stmt->fetchAll();
+        $rows = [];
+        if ($pdo) {
+            $sql = "SELECT * FROM gallery";
+            $params = [];
+            if (!empty($category) && strtolower($category) !== 'all') {
+                $sql .= " WHERE LOWER(TRIM(category)) = LOWER(TRIM(:c))";
+                $params[':c'] = $category;
+            }
+            $sql .= " ORDER BY id DESC";
+            if (!empty($limit) && is_numeric($limit)) {
+                $sql .= " LIMIT " . (int)$limit;
+            }
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        return $pdo->query("SELECT * FROM gallery ORDER BY id ASC")->fetchAll();
+
+        // If DB has 10+ photos, return them
+        if (count($rows) >= 10) {
+            return $rows;
+        }
+
+        // Auto-scan Fallback: If DB table is empty or has fewer than 10 photos, read all 71 webp gallery files
+        $uploadDir = dirname(__DIR__) . '/assets/uploads/gallery/webp/';
+        if (is_dir($uploadDir)) {
+            $files = glob($uploadDir . '*.webp');
+            if (!empty($files) && count($files) > count($rows)) {
+                $fallback = [];
+                $id = 1;
+                foreach ($files as $f) {
+                    $bn = basename($f);
+                    $cat = 'Campus';
+                    if (strpos($bn, 'gym') !== false || in_array($bn, ['dsc06520.webp','dsc06574.webp','dsc06575.webp','dsc06576.webp','dsc06577.webp','dsc06586.webp','dsc06587.webp','dsc06588.webp','dsc06600.webp','dsc06603.webp','dsc06605.webp','dsc06607.webp','dsc06609.webp','dsc06611.webp','dsc06612.webp','dsc06614.webp','dsc06615.webp','dsc06617.webp','dsc06618.webp','dsc06619.webp','dsc06622.webp','dsc06623.webp'])) {
+                        $cat = 'Gym';
+                    } elseif (strpos($bn, 'sport') !== false || in_array($bn, ['dsc06517.webp','dsc06525.webp','dsc06527.webp','dsc06528.webp','dsc06533.webp','dsc06534.webp','dsc06537.webp','dsc06538.webp','dsc06539.webp','dsc06540.webp','dsc06541.webp','dsc06542.webp','dsc06547.webp','dsc06548.webp','dsc06554.webp','dsc06578.webp','dsc06579.webp','dsc06580.webp','dsc06582.webp','dsc06583.webp'])) {
+                        $cat = 'Sports';
+                    } elseif (strpos($bn, 'med') !== false || strpos($bn, 'hosp') !== false || in_array($bn, ['dsc06740.webp','dsc06754.webp','dsc06767.webp','dsc06769.webp','dsc06772.webp','dsc06839.webp','dsc06842.webp','dsc06847.webp','dsc06857.webp'])) {
+                        $cat = 'Medical';
+                    }
+                    
+                    if (empty($category) || strtolower($category) === 'all' || strtolower($category) === strtolower($cat)) {
+                        $fallback[] = [
+                            'id' => $id++,
+                            'title' => 'SRKU Campus & Infrastructure Photo',
+                            'category' => $cat,
+                            'image_url' => 'assets/uploads/gallery/webp/' . $bn,
+                            'created_at' => date('Y-m-d H:i:s')
+                        ];
+                    }
+                }
+                if (!empty($limit) && is_numeric($limit)) {
+                    $fallback = array_slice($fallback, 0, (int)$limit);
+                }
+                return $fallback;
+            }
+        }
+
+        return $rows;
     } catch (Exception $e) {
         return [];
     }
