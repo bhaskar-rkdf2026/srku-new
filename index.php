@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
     <!-- Live ticker pinned to bottom of hero -->
     <?php $tickerNews = getNews(null, 10); ?>
     <div class="hero-ticker">
-        <div class="hero-ticker-label"><i class="fas fa-bolt me-1"></i> LIVE UPDATES</div>
+        <div class="hero-ticker-label"><i class="fas fa-bolt me-1"></i> LIVE UPDATESssss</div>
         <div class="hero-ticker-track">
             <span class="hero-ticker-content">
                 <?php if (!empty($tickerNews)): ?>
@@ -202,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 <div class="stat-txt">Global Alumni</div>
             </div>
             <div class="col stat-box">
-                <div class="stat-val">2555+</div>
+                <div class="stat-val">25+</div>
                 <div class="stat-txt">Years of Excellence</div>
             </div>
         </div>
