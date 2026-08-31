@@ -4,7 +4,20 @@ $pdo = getDBConnection();
 
 $uploadDir = __DIR__ . '/../assets/uploads/gallery/webp/';
 if (!is_dir($uploadDir)) {
-    mkdir($uploadDir, 0777, true);
+    @mkdir($uploadDir, 0777, true);
+}
+
+// Auto-create gallery table if missing
+if ($pdo) {
+    try {
+        $pdo->exec("CREATE TABLE IF NOT EXISTS `gallery` (
+            `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `title` varchar(255) NOT NULL,
+            `category` varchar(100) DEFAULT 'Campus',
+            `image_url` varchar(255) NOT NULL,
+            `created_at` datetime DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    } catch (Exception $e) {}
 }
 
 // Active Management Tab (Default to 'all' so all uploaded images show immediately)
@@ -19,11 +32,13 @@ $categories = [
 
 // Dynamically discover all existing categories from the DB
 try {
-    $dbCatRows = $pdo->query("SELECT DISTINCT category FROM gallery WHERE category IS NOT NULL AND category != ''")->fetchAll(PDO::FETCH_COLUMN);
-    foreach ($dbCatRows as $dCat) {
-        $dCat = trim($dCat);
-        if ($dCat && !isset($categories[$dCat])) {
-            $categories[$dCat] = ['label' => ucfirst($dCat), 'icon' => 'fa-images', 'badge' => 'bg-secondary'];
+    if ($pdo) {
+        $dbCatRows = $pdo->query("SELECT DISTINCT category FROM gallery WHERE category IS NOT NULL AND category != ''")->fetchAll(PDO::FETCH_COLUMN);
+        foreach ($dbCatRows as $dCat) {
+            $dCat = trim($dCat);
+            if ($dCat && !isset($categories[$dCat])) {
+                $categories[$dCat] = ['label' => ucfirst($dCat), 'icon' => 'fa-images', 'badge' => 'bg-secondary'];
+            }
         }
     }
 } catch (Exception $e) {}
@@ -33,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     
     // Quick Category Move
-    if ($action === 'change_category') {
+    if ($action === 'change_category' && $pdo) {
         $photoId = (int)($_POST['id'] ?? 0);
         $newCat = sanitize($_POST['category'] ?? 'Campus');
         if ($photoId > 0) {
@@ -46,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Bulk Import from WebP Uploads Directory
-    if ($action === 'sync_webp') {
+    if ($action === 'sync_webp' && $pdo) {
         $webpDir = dirname(__DIR__) . '/assets/uploads/gallery/webp/';
         $files = glob($webpDir . '*.webp');
         $added = 0;
@@ -59,11 +74,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $checkStmt->execute([':url' => "%$bn%"]);
                 if (!$checkStmt->fetch()) {
                     $cat = 'Campus';
-                    if (strpos($bn, 'gym') !== false) $cat = 'Gym';
-                    elseif (strpos($bn, 'sport') !== false) $cat = 'Sports';
-                    elseif (strpos($bn, 'med') !== false || strpos($bn, 'hosp') !== false) $cat = 'Medical';
+                    if (strpos($bn, 'gym') !== false || in_array($bn, ['dsc06520.webp','dsc06574.webp','dsc06575.webp','dsc06576.webp','dsc06577.webp','dsc06586.webp','dsc06587.webp','dsc06588.webp','dsc06600.webp','dsc06603.webp','dsc06605.webp','dsc06607.webp','dsc06609.webp','dsc06611.webp','dsc06612.webp','dsc06614.webp','dsc06615.webp','dsc06617.webp','dsc06618.webp','dsc06619.webp','dsc06622.webp','dsc06623.webp'])) {
+                        $cat = 'Gym';
+                    } elseif (strpos($bn, 'sport') !== false || in_array($bn, ['dsc06517.webp','dsc06525.webp','dsc06527.webp','dsc06528.webp','dsc06533.webp','dsc06534.webp','dsc06537.webp','dsc06538.webp','dsc06539.webp','dsc06540.webp','dsc06541.webp','dsc06542.webp','dsc06547.webp','dsc06548.webp','dsc06554.webp','dsc06578.webp','dsc06579.webp','dsc06580.webp','dsc06582.webp','dsc06583.webp'])) {
+                        $cat = 'Sports';
+                    } elseif (strpos($bn, 'med') !== false || strpos($bn, 'hosp') !== false || in_array($bn, ['dsc06740.webp','dsc06754.webp','dsc06767.webp','dsc06769.webp','dsc06772.webp','dsc06839.webp','dsc06842.webp','dsc06847.webp','dsc06857.webp'])) {
+                        $cat = 'Medical';
+                    }
                     $insertStmt->execute([
-                        ':title' => 'SRKU Campus Photo (' . pathinfo($bn, PATHINFO_FILENAME) . ')',
+                        ':title' => 'SRKU Campus & Infrastructure Photo',
                         ':cat' => $cat,
                         ':url' => $relUrl
                     ]);
@@ -77,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Add or Edit Photo
-    if ($action === 'add' || $action === 'edit') {
+    if (($action === 'add' || $action === 'edit') && $pdo) {
         $id = (int)($_POST['id'] ?? 0);
         $title = trim(sanitize($_POST['title'] ?? ''));
         $category = trim(sanitize($_POST['category'] ?? $tab));
@@ -155,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Handle Delete
-if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+if (isset($_GET['action']) && $_GET['action'] === 'delete' && $pdo) {
     $delId = (int)($_GET['id'] ?? 0);
     if ($delId > 0) {
         $stmt = $pdo->prepare("DELETE FROM gallery WHERE id = :id");
@@ -166,40 +185,55 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete') {
     exit;
 }
 
-// Auto-seed if gallery table is empty
-$totalCount = (int)$pdo->query("SELECT COUNT(*) FROM gallery")->fetchColumn();
-if ($totalCount === 0) {
-    $webpDir = dirname(__DIR__) . '/assets/uploads/gallery/webp/';
-    $files = glob($webpDir . '*.webp');
-    if (!empty($files)) {
-        $insertStmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url, created_at) VALUES (:title, :cat, :url, NOW())");
-        foreach ($files as $f) {
-            $bn = basename($f);
-            $relUrl = 'assets/uploads/gallery/webp/' . $bn;
-            $cat = 'Campus';
-            if (strpos($bn, 'gym') !== false || in_array($bn, ['dsc06520.webp','dsc06574.webp','dsc06575.webp','dsc06576.webp','dsc06577.webp','dsc06586.webp','dsc06587.webp','dsc06588.webp','dsc06600.webp','dsc06603.webp','dsc06605.webp','dsc06607.webp','dsc06609.webp','dsc06611.webp','dsc06612.webp','dsc06614.webp','dsc06615.webp','dsc06617.webp','dsc06618.webp','dsc06619.webp','dsc06622.webp','dsc06623.webp'])) {
-                $cat = 'Gym';
-            } elseif (strpos($bn, 'sport') !== false || in_array($bn, ['dsc06517.webp','dsc06525.webp','dsc06527.webp','dsc06528.webp','dsc06533.webp','dsc06534.webp','dsc06537.webp','dsc06538.webp','dsc06539.webp','dsc06540.webp','dsc06541.webp','dsc06542.webp','dsc06547.webp','dsc06548.webp','dsc06554.webp','dsc06578.webp','dsc06579.webp','dsc06580.webp','dsc06582.webp','dsc06583.webp'])) {
-                $cat = 'Sports';
-            } elseif (strpos($bn, 'med') !== false || strpos($bn, 'hosp') !== false || in_array($bn, ['dsc06740.webp','dsc06754.webp','dsc06767.webp','dsc06769.webp','dsc06772.webp','dsc06839.webp','dsc06842.webp','dsc06847.webp','dsc06857.webp'])) {
-                $cat = 'Medical';
+// Auto-seed if gallery table has 0 or fewer than 10 photos
+$totalCount = 0;
+try {
+    $totalCount = (int)($pdo ? $pdo->query("SELECT COUNT(*) FROM gallery")->fetchColumn() : 0);
+    if ($pdo && $totalCount < 10) {
+        $webpDir = dirname(__DIR__) . '/assets/uploads/gallery/webp/';
+        $files = glob($webpDir . '*.webp');
+        if (!empty($files)) {
+            $checkStmt = $pdo->prepare("SELECT id FROM gallery WHERE image_url LIKE :url LIMIT 1");
+            $insertStmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url, created_at) VALUES (:title, :cat, :url, NOW())");
+            foreach ($files as $f) {
+                $bn = basename($f);
+                $relUrl = 'assets/uploads/gallery/webp/' . $bn;
+                $checkStmt->execute([':url' => "%$bn%"]);
+                if (!$checkStmt->fetch()) {
+                    $cat = 'Campus';
+                    if (strpos($bn, 'gym') !== false || in_array($bn, ['dsc06520.webp','dsc06574.webp','dsc06575.webp','dsc06576.webp','dsc06577.webp','dsc06586.webp','dsc06587.webp','dsc06588.webp','dsc06600.webp','dsc06603.webp','dsc06605.webp','dsc06607.webp','dsc06609.webp','dsc06611.webp','dsc06612.webp','dsc06614.webp','dsc06615.webp','dsc06617.webp','dsc06618.webp','dsc06619.webp','dsc06622.webp','dsc06623.webp'])) {
+                        $cat = 'Gym';
+                    } elseif (strpos($bn, 'sport') !== false || in_array($bn, ['dsc06517.webp','dsc06525.webp','dsc06527.webp','dsc06528.webp','dsc06533.webp','dsc06534.webp','dsc06537.webp','dsc06538.webp','dsc06539.webp','dsc06540.webp','dsc06541.webp','dsc06542.webp','dsc06547.webp','dsc06548.webp','dsc06554.webp','dsc06578.webp','dsc06579.webp','dsc06580.webp','dsc06582.webp','dsc06583.webp'])) {
+                        $cat = 'Sports';
+                    } elseif (strpos($bn, 'med') !== false || strpos($bn, 'hosp') !== false || in_array($bn, ['dsc06740.webp','dsc06754.webp','dsc06767.webp','dsc06769.webp','dsc06772.webp','dsc06839.webp','dsc06842.webp','dsc06847.webp','dsc06857.webp'])) {
+                        $cat = 'Medical';
+                    }
+                    $insertStmt->execute([
+                        ':title' => 'SRKU Campus & Infrastructure Photo',
+                        ':cat' => $cat,
+                        ':url' => $relUrl
+                    ]);
+                }
             }
-            $insertStmt->execute([
-                ':title' => 'SRKU Campus & Infrastructure Photo',
-                ':cat' => $cat,
-                ':url' => $relUrl
-            ]);
+            $totalCount = (int)$pdo->query("SELECT COUNT(*) FROM gallery")->fetchColumn();
         }
-        $totalCount = (int)$pdo->query("SELECT COUNT(*) FROM gallery")->fetchColumn();
     }
-}
+} catch (Exception $e) {}
 
 // Fetch Category Counts
 $counts = [];
 foreach ($categories as $k => $c) {
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM gallery WHERE category = :cat");
-    $stmt->execute([':cat' => $k]);
-    $counts[$k] = (int)$stmt->fetchColumn();
+    try {
+        $stmt = $pdo ? $pdo->prepare("SELECT COUNT(*) FROM gallery WHERE category = :cat") : null;
+        if ($stmt) {
+            $stmt->execute([':cat' => $k]);
+            $counts[$k] = (int)$stmt->fetchColumn();
+        } else {
+            $counts[$k] = 0;
+        }
+    } catch (Exception $e) {
+        $counts[$k] = 0;
+    }
 }
 $counts['all'] = $totalCount;
 
