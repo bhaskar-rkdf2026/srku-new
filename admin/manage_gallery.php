@@ -7,8 +7,8 @@ if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0777, true);
 }
 
-// Active Management Tab
-$tab = sanitize($_GET['tab'] ?? 'Campus');
+// Active Management Tab (Default to 'all' so all uploaded images show immediately)
+$tab = sanitize($_GET['tab'] ?? 'all');
 
 $categories = [
     'Campus'  => ['label' => 'Campus & Architecture', 'icon' => 'fa-university', 'badge' => 'bg-danger'],
@@ -17,7 +17,18 @@ $categories = [
     'Medical' => ['label' => 'Medical & Hospitals', 'icon' => 'fa-hospital-alt', 'badge' => 'bg-info text-dark']
 ];
 
-// Handle Add / Edit / Category Move
+// Dynamically discover all existing categories from the DB
+try {
+    $dbCatRows = $pdo->query("SELECT DISTINCT category FROM gallery WHERE category IS NOT NULL AND category != ''")->fetchAll(PDO::FETCH_COLUMN);
+    foreach ($dbCatRows as $dCat) {
+        $dCat = trim($dCat);
+        if ($dCat && !isset($categories[$dCat])) {
+            $categories[$dCat] = ['label' => ucfirst($dCat), 'icon' => 'fa-images', 'badge' => 'bg-secondary'];
+        }
+    }
+} catch (Exception $e) {}
+
+// Handle Add / Edit / Category Move / Bulk Sync
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     
@@ -25,12 +36,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'change_category') {
         $photoId = (int)($_POST['id'] ?? 0);
         $newCat = sanitize($_POST['category'] ?? 'Campus');
-        if ($photoId > 0 && isset($categories[$newCat])) {
+        if ($photoId > 0) {
             $stmt = $pdo->prepare("UPDATE gallery SET category = :cat WHERE id = :id");
             $stmt->execute([':cat' => $newCat, ':id' => $photoId]);
             setFlashMsg('success', 'Photo category updated successfully.');
         }
         header("Location: manage_gallery.php?tab=" . urlencode($tab));
+        exit;
+    }
+
+    // Bulk Import from WebP Uploads Directory
+    if ($action === 'sync_webp') {
+        $webpDir = dirname(__DIR__) . '/assets/uploads/gallery/webp/';
+        $files = glob($webpDir . '*.webp');
+        $added = 0;
+        if (!empty($files)) {
+            $checkStmt = $pdo->prepare("SELECT id FROM gallery WHERE image_url LIKE :url LIMIT 1");
+            $insertStmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url, created_at) VALUES (:title, :cat, :url, NOW())");
+            foreach ($files as $f) {
+                $bn = basename($f);
+                $relUrl = 'assets/uploads/gallery/webp/' . $bn;
+                $checkStmt->execute([':url' => "%$bn%"]);
+                if (!$checkStmt->fetch()) {
+                    $cat = 'Campus';
+                    if (strpos($bn, 'gym') !== false) $cat = 'Gym';
+                    elseif (strpos($bn, 'sport') !== false) $cat = 'Sports';
+                    elseif (strpos($bn, 'med') !== false || strpos($bn, 'hosp') !== false) $cat = 'Medical';
+                    $insertStmt->execute([
+                        ':title' => 'SRKU Campus Photo (' . pathinfo($bn, PATHINFO_FILENAME) . ')',
+                        ':cat' => $cat,
+                        ':url' => $relUrl
+                    ]);
+                    $added++;
+                }
+            }
+        }
+        setFlashMsg('success', "Imported {$added} new photos into Gallery Database successfully.");
+        header("Location: manage_gallery.php?tab=all");
         exit;
     }
 
@@ -141,14 +183,14 @@ $sql = "SELECT * FROM gallery WHERE 1=1";
 $params = [];
 
 if ($tab !== 'all' && isset($categories[$tab])) {
-    $sql .= " AND category = :cat";
+    $sql .= " AND LOWER(category) = LOWER(:cat)";
     $params[':cat'] = $tab;
 }
 if (!empty($searchQuery)) {
-    $sql .= " AND image_url LIKE :q";
+    $sql .= " AND (image_url LIKE :q OR title LIKE :q OR category LIKE :q)";
     $params[':q'] = "%{$searchQuery}%";
 }
-$sql .= " ORDER BY id ASC";
+$sql .= " ORDER BY id DESC";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
@@ -161,6 +203,12 @@ $photos = $stmt->fetchAll();
         <p class="text-muted small mb-0">Organize and manage university facility images across Campus, Gym, Sports Arena, and Hospitals.</p>
     </div>
     <div class="d-flex gap-2">
+        <form action="manage_gallery.php" method="POST" class="d-inline" onsubmit="return confirm('Scan and sync all WebP photos from server uploads folder into database?');">
+            <input type="hidden" name="action" value="sync_webp">
+            <button type="submit" class="btn btn-sm btn-outline-success px-3 rounded-pill shadow-sm">
+                <i class="fas fa-sync-alt me-1"></i> Sync Photos from Server
+            </button>
+        </form>
         <a href="<?php echo BASE_URL; ?>gallery.php<?php echo ($tab !== 'all') ? '?category=' . urlencode($tab) : ''; ?>" target="_blank" class="btn btn-sm btn-outline-danger px-3 rounded-pill shadow-sm">
             <i class="fas fa-external-link-alt me-1"></i> View Live Gallery
         </a>
@@ -170,16 +218,16 @@ $photos = $stmt->fetchAll();
 <!-- Category Tabs Header -->
 <div class="card border-0 shadow-sm rounded-4 p-2 mb-4 bg-white">
     <div class="srku-filter-row">
-        <?php foreach ($categories as $catKey => $catInfo): ?>
-            <a href="manage_gallery.php?tab=<?php echo $catKey; ?>" class="srku-filter-btn <?php echo $tab === $catKey ? 'active' : ''; ?>">
-                <i class="fas <?php echo $catInfo['icon']; ?>"></i> <?php echo $catInfo['label']; ?>
-                <span class="badge <?php echo $tab === $catKey ? 'bg-white text-danger' : 'bg-secondary-subtle text-dark'; ?> rounded-pill ms-1"><?php echo $counts[$catKey]; ?></span>
-            </a>
-        <?php endforeach; ?>
         <a href="manage_gallery.php?tab=all" class="srku-filter-btn <?php echo $tab === 'all' ? 'active' : ''; ?>">
             <i class="fas fa-th-large"></i> All Photos
             <span class="badge <?php echo $tab === 'all' ? 'bg-white text-danger' : 'bg-secondary-subtle text-dark'; ?> rounded-pill ms-1"><?php echo $counts['all']; ?></span>
         </a>
+        <?php foreach ($categories as $catKey => $catInfo): ?>
+            <a href="manage_gallery.php?tab=<?php echo $catKey; ?>" class="srku-filter-btn <?php echo $tab === $catKey ? 'active' : ''; ?>">
+                <i class="fas <?php echo $catInfo['icon']; ?>"></i> <?php echo $catInfo['label']; ?>
+                <span class="badge <?php echo $tab === $catKey ? 'bg-white text-danger' : 'bg-secondary-subtle text-dark'; ?> rounded-pill ms-1"><?php echo $counts[$catKey] ?? 0; ?></span>
+            </a>
+        <?php endforeach; ?>
     </div>
 </div>
 
@@ -268,14 +316,15 @@ $photos = $stmt->fetchAll();
             <?php else: ?>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3 g-3">
                     <?php foreach ($photos as $i => $row): 
-                        $resolved = resolveMediaUrl($row['image_url']);
-                        $currentCat = $row['category'] ?? 'Campus';
-                        $catMeta = $categories[$currentCat] ?? ['label' => $currentCat, 'badge' => 'bg-secondary'];
+                        $imgSrc = $row['image_url'] ?? ($row['image'] ?? ($row['file_path'] ?? ($row['img'] ?? ($row['photo'] ?? ''))));
+                        $resolved = resolveMediaUrl($imgSrc, 'assets/uploads/2026/07/001.webp');
+                        $currentCat = trim($row['category'] ?? 'Campus') ?: 'Campus';
+                        $catMeta = $categories[$currentCat] ?? ['label' => ucfirst($currentCat), 'badge' => 'bg-secondary text-white'];
                     ?>
                         <div class="col">
                             <div class="card h-100 border rounded-4 shadow-sm overflow-hidden bg-white">
                                 <div class="position-relative" style="height: 180px; background: #0f172a;">
-                                    <img src="<?php echo $resolved; ?>" alt="Gallery Image" class="w-100 h-100 object-fit-cover" loading="lazy">
+                                    <img src="<?php echo $resolved; ?>" alt="Gallery Image" class="w-100 h-100 object-fit-cover" loading="lazy" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/campus-1.webp';">
                                     <span class="position-absolute top-0 start-0 m-2 badge <?php echo $catMeta['badge']; ?> small shadow-sm">
                                         <?php echo $catMeta['label']; ?>
                                     </span>

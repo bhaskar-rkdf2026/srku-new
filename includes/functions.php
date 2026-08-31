@@ -37,20 +37,35 @@ function normalizeMediaPath($path, $default = '') {
     if (empty($path)) {
         return '';
     }
-    if (preg_match('/^https?:\/\//i', $path) || strpos($path, '//') === 0) {
-        return $path;
-    }
-
-    $cleanPath = ltrim(str_replace('\\', '/', $path), '/');
     $baseDir = dirname(__DIR__);
+
+    // If it's a full URL containing localhost, staging, or server domain, extract the asset path
+    if (preg_match('/^https?:\/\//i', $path) || strpos($path, '//') === 0) {
+        $parsedPath = parse_url($path, PHP_URL_PATH);
+        if ($parsedPath) {
+            $trimmed = ltrim($parsedPath, '/');
+            $trimmed = preg_replace('/^(new-staging|srku-new|srku)\//i', '', $trimmed);
+            if (is_file($baseDir . '/' . $trimmed)) {
+                return $trimmed;
+            }
+            $cleanPath = basename($trimmed);
+        } else {
+            return $path;
+        }
+    } else {
+        $cleanPath = ltrim(str_replace('\\', '/', $path), '/');
+    }
 
     // 1. Direct path exists
     if (is_file($baseDir . '/' . $cleanPath)) {
         return $cleanPath;
     }
 
-    // 2. Search common folders
+    // 2. Search common folders (including gallery directories)
     $candidateDirs = [
+        'assets/uploads/gallery/webp/',
+        'assets/uploads/gallery/',
+        'assets/uploads/gallery/webp_backup/',
         'assets/images/',
         'assets/uploads/2026/08/',
         'assets/uploads/2026/07/',
@@ -60,6 +75,8 @@ function normalizeMediaPath($path, $default = '') {
         'assets/upload/2026/06/',
         'assets/upload/2024/06/',
         'assets/upload/',
+        'assets/gallery/webp/',
+        'assets/gallery/',
         'assets/img/',
         'assets/',
         'wp-content/uploads/'
@@ -422,16 +439,63 @@ function getBanners() {
     }
 }
 
-// Fetch gallery images
-function getGalleryImages($category = null) {
+// Fetch gallery images (with DB support & smart fallback)
+function getGalleryImages($category = null, $limit = null) {
     try {
         $pdo = getDBConnection();
-        if (!empty($category)) {
-            $stmt = $pdo->prepare("SELECT * FROM gallery WHERE category = :c ORDER BY id ASC");
-            $stmt->execute([':c' => $category]);
-            return $stmt->fetchAll();
+        $rows = [];
+        if ($pdo) {
+            $sql = "SELECT * FROM gallery";
+            $params = [];
+            if (!empty($category) && strtolower($category) !== 'all') {
+                $sql .= " WHERE LOWER(TRIM(category)) = LOWER(TRIM(:c))";
+                $params[':c'] = $category;
+            }
+            $sql .= " ORDER BY id DESC";
+            if (!empty($limit) && is_numeric($limit)) {
+                $sql .= " LIMIT " . (int)$limit;
+            }
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        return $pdo->query("SELECT * FROM gallery ORDER BY id ASC")->fetchAll();
+
+        if (!empty($rows)) {
+            return $rows;
+        }
+
+        // Auto-scan Fallback: If DB table is empty or has 0 records, automatically read webp gallery files
+        $uploadDir = dirname(__DIR__) . '/assets/uploads/gallery/webp/';
+        if (is_dir($uploadDir)) {
+            $files = glob($uploadDir . '*.webp');
+            if (!empty($files)) {
+                $fallback = [];
+                $id = 1;
+                foreach ($files as $f) {
+                    $bn = basename($f);
+                    $cat = 'Campus';
+                    if (strpos($bn, 'gym') !== false) $cat = 'Gym';
+                    elseif (strpos($bn, 'sport') !== false) $cat = 'Sports';
+                    elseif (strpos($bn, 'med') !== false || strpos($bn, 'hosp') !== false) $cat = 'Medical';
+                    
+                    if (empty($category) || strtolower($category) === 'all' || strtolower($category) === strtolower($cat)) {
+                        $fallback[] = [
+                            'id' => $id++,
+                            'title' => 'SRKU Campus & Facilities Photo',
+                            'category' => $cat,
+                            'image_url' => 'assets/uploads/gallery/webp/' . $bn,
+                            'created_at' => date('Y-m-d H:i:s')
+                        ];
+                    }
+                }
+                if (!empty($limit) && is_numeric($limit)) {
+                    $fallback = array_slice($fallback, 0, (int)$limit);
+                }
+                return $fallback;
+            }
+        }
+
+        return [];
     } catch (Exception $e) {
         return [];
     }
