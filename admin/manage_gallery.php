@@ -1,13 +1,15 @@
 <?php
-require_once __DIR__ . '/header.php';
-$pdo = getDBConnection();
+// Core Dependencies & Auth Check before any output
+require_once __DIR__ . '/../includes/functions.php';
+checkAdminLogin();
 
-$uploadDir = __DIR__ . '/../assets/uploads/gallery/webp/';
+$pdo = getDBConnection();
+$uploadDir = dirname(__DIR__) . '/assets/uploads/gallery/webp/';
 if (!is_dir($uploadDir)) {
     @mkdir($uploadDir, 0777, true);
 }
 
-// Auto-create gallery table if missing
+// Ensure gallery table exists in database
 if ($pdo) {
     try {
         $pdo->exec("CREATE TABLE IF NOT EXISTS `gallery` (
@@ -20,7 +22,6 @@ if ($pdo) {
     } catch (Exception $e) {}
 }
 
-// Active Management Tab (Default to 'all' so all uploaded images show immediately)
 $tab = sanitize($_GET['tab'] ?? 'all');
 
 $categories = [
@@ -29,6 +30,189 @@ $categories = [
     'Sports'  => ['label' => 'Sports Arena & Courts', 'icon' => 'fa-running', 'badge' => 'bg-success'],
     'Medical' => ['label' => 'Medical & Hospitals', 'icon' => 'fa-hospital-alt', 'badge' => 'bg-info text-dark']
 ];
+
+// Handle POST actions BEFORE header rendering to avoid headers-already-sent / 500 error
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_POST['action'] ?? '';
+    
+    try {
+        // 1. Quick Category Move
+        if ($action === 'change_category' && $pdo) {
+            $photoId = (int)($_POST['id'] ?? 0);
+            $newCat = sanitize($_POST['category'] ?? 'Campus');
+            if ($photoId > 0) {
+                $stmt = $pdo->prepare("UPDATE gallery SET category = :cat WHERE id = :id");
+                $stmt->execute([':cat' => $newCat, ':id' => $photoId]);
+                setFlashMsg('success', 'Photo category updated successfully.');
+            }
+            header("Location: manage_gallery.php?tab=" . urlencode($tab));
+            exit;
+        }
+
+        // 2. Bulk Import from WebP Uploads Directory
+        if ($action === 'sync_webp' && $pdo) {
+            $files = is_dir($uploadDir) ? glob($uploadDir . '*.webp') : [];
+            $added = 0;
+            if (!empty($files)) {
+                $checkStmt = $pdo->prepare("SELECT id FROM gallery WHERE image_url LIKE :url LIMIT 1");
+                $insertStmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url) VALUES (:title, :cat, :url)");
+                foreach ($files as $f) {
+                    $bn = basename($f);
+                    $relUrl = 'assets/uploads/gallery/webp/' . $bn;
+                    $checkStmt->execute([':url' => "%$bn%"]);
+                    if (!$checkStmt->fetch()) {
+                        $cat = 'Campus';
+                        if (strpos($bn, 'gym') !== false || in_array($bn, ['dsc06520.webp','dsc06574.webp','dsc06575.webp','dsc06576.webp','dsc06577.webp','dsc06586.webp','dsc06587.webp','dsc06588.webp','dsc06600.webp','dsc06603.webp','dsc06605.webp','dsc06607.webp','dsc06609.webp','dsc06611.webp','dsc06612.webp','dsc06614.webp','dsc06615.webp','dsc06617.webp','dsc06618.webp','dsc06619.webp','dsc06622.webp','dsc06623.webp'])) {
+                            $cat = 'Gym';
+                        } elseif (strpos($bn, 'sport') !== false || in_array($bn, ['dsc06517.webp','dsc06525.webp','dsc06527.webp','dsc06528.webp','dsc06533.webp','dsc06534.webp','dsc06537.webp','dsc06538.webp','dsc06539.webp','dsc06540.webp','dsc06541.webp','dsc06542.webp','dsc06547.webp','dsc06548.webp','dsc06554.webp','dsc06578.webp','dsc06579.webp','dsc06580.webp','dsc06582.webp','dsc06583.webp'])) {
+                            $cat = 'Sports';
+                        } elseif (strpos($bn, 'med') !== false || strpos($bn, 'hosp') !== false || in_array($bn, ['dsc06740.webp','dsc06754.webp','dsc06767.webp','dsc06769.webp','dsc06772.webp','dsc06839.webp','dsc06842.webp','dsc06847.webp','dsc06857.webp'])) {
+                            $cat = 'Medical';
+                        }
+                        $insertStmt->execute([
+                            ':title' => 'SRKU Campus & Infrastructure Photo',
+                            ':cat' => $cat,
+                            ':url' => $relUrl
+                        ]);
+                        $added++;
+                    }
+                }
+            }
+            setFlashMsg('success', "Imported {$added} new photos into Gallery Database successfully.");
+            header("Location: manage_gallery.php?tab=all");
+            exit;
+        }
+
+        // 3. Add or Edit Photo
+        if (($action === 'add' || $action === 'edit') && $pdo) {
+            $id = (int)($_POST['id'] ?? 0);
+            $title = trim(sanitize($_POST['title'] ?? ''));
+            $category = trim(sanitize($_POST['category'] ?? $tab));
+            if ($category === 'all') $category = 'Campus';
+            $imageUrl = trim($_POST['image_url'] ?? '');
+
+            // Handle Image File Upload with WebP conversion
+            if (isset($_FILES['gallery_file']) && $_FILES['gallery_file']['error'] === UPLOAD_ERR_OK) {
+                $tmp = $_FILES['gallery_file']['tmp_name'];
+                $origName = basename($_FILES['gallery_file']['name']);
+                $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+                $baseClean = 'gallery_' . time() . '_' . rand(100, 999);
+
+                $destWebpName = $baseClean . '.webp';
+                $destPath = $uploadDir . $destWebpName;
+
+                $converted = false;
+                if (extension_loaded('gd')) {
+                    $img = null;
+                    if ($ext === 'jpg' || $ext === 'jpeg') $img = @imagecreatefromjpeg($tmp);
+                    elseif ($ext === 'png') $img = @imagecreatefrompng($tmp);
+                    elseif ($ext === 'webp') $img = @imagecreatefromwebp($tmp);
+
+                    if ($img) {
+                        $origW = imagesx($img);
+                        $origH = imagesy($img);
+                        $maxDim = 1920;
+                        if ($origW > $maxDim || $origH > $maxDim) {
+                            if ($origW >= $origH) {
+                                $newW = $maxDim;
+                                $newH = (int)round(($origH / $origW) * $maxDim);
+                            } else {
+                                $newH = $maxDim;
+                                $newW = (int)round(($origW / $origH) * $maxDim);
+                            }
+                        } else {
+                            $newW = $origW;
+                            $newH = $origH;
+                        }
+                        $target = imagecreatetruecolor($newW, $newH);
+                        imagecopyresampled($target, $img, 0, 0, 0, 0, $newW, $newH, $origW, $origH);
+                        if (imagewebp($target, $destPath, 82)) {
+                            $imageUrl = 'assets/uploads/gallery/webp/' . $destWebpName;
+                            $converted = true;
+                        }
+                        imagedestroy($target);
+                        imagedestroy($img);
+                    }
+                }
+
+                if (!$converted) {
+                    $destDirect = $uploadDir . $destWebpName;
+                    if (move_uploaded_file($tmp, $destDirect)) {
+                        $imageUrl = 'assets/uploads/gallery/webp/' . $destWebpName;
+                    }
+                }
+            }
+
+            if (empty($imageUrl)) {
+                setFlashMsg('danger', 'Please select or upload an image.');
+            } else {
+                if ($action === 'add') {
+                    $stmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url) VALUES (:title, :cat, :url)");
+                    $stmt->execute([':title' => $title, ':cat' => $category, ':url' => $imageUrl]);
+                    setFlashMsg('success', "New photo added to '{$category}' successfully.");
+                } elseif ($action === 'edit' && $id > 0) {
+                    $stmt = $pdo->prepare("UPDATE gallery SET title = :title, category = :cat, image_url = :url WHERE id = :id");
+                    $stmt->execute([':title' => $title, ':cat' => $category, ':url' => $imageUrl, ':id' => $id]);
+                    setFlashMsg('success', 'Gallery photo updated successfully.');
+                }
+                header("Location: manage_gallery.php?tab=" . urlencode($category));
+                exit;
+            }
+        }
+    } catch (Exception $e) {
+        setFlashMsg('danger', 'Database Error: ' . $e->getMessage());
+        header("Location: manage_gallery.php?tab=" . urlencode($tab));
+        exit;
+    }
+}
+
+// Handle Delete
+if (isset($_GET['action']) && $_GET['action'] === 'delete' && $pdo) {
+    try {
+        $delId = (int)($_GET['id'] ?? 0);
+        if ($delId > 0) {
+            $stmt = $pdo->prepare("DELETE FROM gallery WHERE id = :id");
+            $stmt->execute([':id' => $delId]);
+            setFlashMsg('success', 'Gallery photo deleted successfully.');
+        }
+    } catch (Exception $e) {
+        setFlashMsg('danger', 'Delete Error: ' . $e->getMessage());
+    }
+    header("Location: manage_gallery.php?tab=" . urlencode($tab));
+    exit;
+}
+
+// Auto-seed if gallery table has fewer than 10 photos
+try {
+    $currentDbCount = (int)($pdo ? $pdo->query("SELECT COUNT(*) FROM gallery")->fetchColumn() : 0);
+    if ($pdo && $currentDbCount < 10) {
+        $files = is_dir($uploadDir) ? glob($uploadDir . '*.webp') : [];
+        if (!empty($files)) {
+            $checkStmt = $pdo->prepare("SELECT id FROM gallery WHERE image_url LIKE :url LIMIT 1");
+            $insertStmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url) VALUES (:title, :cat, :url)");
+            foreach ($files as $f) {
+                $bn = basename($f);
+                $relUrl = 'assets/uploads/gallery/webp/' . $bn;
+                $checkStmt->execute([':url' => "%$bn%"]);
+                if (!$checkStmt->fetch()) {
+                    $cat = 'Campus';
+                    if (strpos($bn, 'gym') !== false || in_array($bn, ['dsc06520.webp','dsc06574.webp','dsc06575.webp','dsc06576.webp','dsc06577.webp','dsc06586.webp','dsc06587.webp','dsc06588.webp','dsc06600.webp','dsc06603.webp','dsc06605.webp','dsc06607.webp','dsc06609.webp','dsc06611.webp','dsc06612.webp','dsc06614.webp','dsc06615.webp','dsc06617.webp','dsc06618.webp','dsc06619.webp','dsc06622.webp','dsc06623.webp'])) {
+                        $cat = 'Gym';
+                    } elseif (strpos($bn, 'sport') !== false || in_array($bn, ['dsc06517.webp','dsc06525.webp','dsc06527.webp','dsc06528.webp','dsc06533.webp','dsc06534.webp','dsc06537.webp','dsc06538.webp','dsc06539.webp','dsc06540.webp','dsc06541.webp','dsc06542.webp','dsc06547.webp','dsc06548.webp','dsc06554.webp','dsc06578.webp','dsc06579.webp','dsc06580.webp','dsc06582.webp','dsc06583.webp'])) {
+                        $cat = 'Sports';
+                    } elseif (strpos($bn, 'med') !== false || strpos($bn, 'hosp') !== false || in_array($bn, ['dsc06740.webp','dsc06754.webp','dsc06767.webp','dsc06769.webp','dsc06772.webp','dsc06839.webp','dsc06842.webp','dsc06847.webp','dsc06857.webp'])) {
+                        $cat = 'Medical';
+                    }
+                    $insertStmt->execute([
+                        ':title' => 'SRKU Campus & Infrastructure Photo',
+                        ':cat' => $cat,
+                        ':url' => $relUrl
+                    ]);
+                }
+            }
+        }
+    }
+} catch (Exception $e) {}
 
 // Dynamically discover all existing categories from the DB
 try {
@@ -43,219 +227,54 @@ try {
     }
 } catch (Exception $e) {}
 
-// Handle Add / Edit / Category Move / Bulk Sync
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? '';
-    
-    // Quick Category Move
-    if ($action === 'change_category' && $pdo) {
-        $photoId = (int)($_POST['id'] ?? 0);
-        $newCat = sanitize($_POST['category'] ?? 'Campus');
-        if ($photoId > 0) {
-            $stmt = $pdo->prepare("UPDATE gallery SET category = :cat WHERE id = :id");
-            $stmt->execute([':cat' => $newCat, ':id' => $photoId]);
-            setFlashMsg('success', 'Photo category updated successfully.');
-        }
-        header("Location: manage_gallery.php?tab=" . urlencode($tab));
-        exit;
-    }
-
-    // Bulk Import from WebP Uploads Directory
-    if ($action === 'sync_webp' && $pdo) {
-        $webpDir = dirname(__DIR__) . '/assets/uploads/gallery/webp/';
-        $files = glob($webpDir . '*.webp');
-        $added = 0;
-        if (!empty($files)) {
-            $checkStmt = $pdo->prepare("SELECT id FROM gallery WHERE image_url LIKE :url LIMIT 1");
-            $insertStmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url, created_at) VALUES (:title, :cat, :url, NOW())");
-            foreach ($files as $f) {
-                $bn = basename($f);
-                $relUrl = 'assets/uploads/gallery/webp/' . $bn;
-                $checkStmt->execute([':url' => "%$bn%"]);
-                if (!$checkStmt->fetch()) {
-                    $cat = 'Campus';
-                    if (strpos($bn, 'gym') !== false || in_array($bn, ['dsc06520.webp','dsc06574.webp','dsc06575.webp','dsc06576.webp','dsc06577.webp','dsc06586.webp','dsc06587.webp','dsc06588.webp','dsc06600.webp','dsc06603.webp','dsc06605.webp','dsc06607.webp','dsc06609.webp','dsc06611.webp','dsc06612.webp','dsc06614.webp','dsc06615.webp','dsc06617.webp','dsc06618.webp','dsc06619.webp','dsc06622.webp','dsc06623.webp'])) {
-                        $cat = 'Gym';
-                    } elseif (strpos($bn, 'sport') !== false || in_array($bn, ['dsc06517.webp','dsc06525.webp','dsc06527.webp','dsc06528.webp','dsc06533.webp','dsc06534.webp','dsc06537.webp','dsc06538.webp','dsc06539.webp','dsc06540.webp','dsc06541.webp','dsc06542.webp','dsc06547.webp','dsc06548.webp','dsc06554.webp','dsc06578.webp','dsc06579.webp','dsc06580.webp','dsc06582.webp','dsc06583.webp'])) {
-                        $cat = 'Sports';
-                    } elseif (strpos($bn, 'med') !== false || strpos($bn, 'hosp') !== false || in_array($bn, ['dsc06740.webp','dsc06754.webp','dsc06767.webp','dsc06769.webp','dsc06772.webp','dsc06839.webp','dsc06842.webp','dsc06847.webp','dsc06857.webp'])) {
-                        $cat = 'Medical';
-                    }
-                    $insertStmt->execute([
-                        ':title' => 'SRKU Campus & Infrastructure Photo',
-                        ':cat' => $cat,
-                        ':url' => $relUrl
-                    ]);
-                    $added++;
-                }
-            }
-        }
-        setFlashMsg('success', "Imported {$added} new photos into Gallery Database successfully.");
-        header("Location: manage_gallery.php?tab=all");
-        exit;
-    }
-
-    // Add or Edit Photo
-    if (($action === 'add' || $action === 'edit') && $pdo) {
-        $id = (int)($_POST['id'] ?? 0);
-        $title = trim(sanitize($_POST['title'] ?? ''));
-        $category = trim(sanitize($_POST['category'] ?? $tab));
-        if ($category === 'all') $category = 'Campus';
-        $imageUrl = trim($_POST['image_url'] ?? '');
-
-        // Handle Image File Upload with WebP conversion
-        if (isset($_FILES['gallery_file']) && $_FILES['gallery_file']['error'] === UPLOAD_ERR_OK) {
-            $tmp = $_FILES['gallery_file']['tmp_name'];
-            $origName = basename($_FILES['gallery_file']['name']);
-            $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
-            $baseClean = 'gallery_' . time() . '_' . rand(100, 999);
-
-            $destWebpName = $baseClean . '.webp';
-            $destPath = $uploadDir . $destWebpName;
-
-            $converted = false;
-            if (extension_loaded('gd')) {
-                $img = null;
-                if ($ext === 'jpg' || $ext === 'jpeg') $img = @imagecreatefromjpeg($tmp);
-                elseif ($ext === 'png') $img = @imagecreatefrompng($tmp);
-                elseif ($ext === 'webp') $img = @imagecreatefromwebp($tmp);
-
-                if ($img) {
-                    $origW = imagesx($img);
-                    $origH = imagesy($img);
-                    $maxDim = 1920;
-                    if ($origW > $maxDim || $origH > $maxDim) {
-                        if ($origW >= $origH) {
-                            $newW = $maxDim;
-                            $newH = (int)round(($origH / $origW) * $maxDim);
-                        } else {
-                            $newH = $maxDim;
-                            $newW = (int)round(($origW / $origH) * $maxDim);
-                        }
-                    } else {
-                        $newW = $origW;
-                        $newH = $origH;
-                    }
-                    $target = imagecreatetruecolor($newW, $newH);
-                    imagecopyresampled($target, $img, 0, 0, 0, 0, $newW, $newH, $origW, $origH);
-                    if (imagewebp($target, $destPath, 82)) {
-                        $imageUrl = 'assets/uploads/gallery/webp/' . $destWebpName;
-                        $converted = true;
-                    }
-                    imagedestroy($target);
-                    imagedestroy($img);
-                }
-            }
-
-            if (!$converted) {
-                $destDirect = $uploadDir . $destWebpName;
-                if (move_uploaded_file($tmp, $destDirect)) {
-                    $imageUrl = 'assets/uploads/gallery/webp/' . $destWebpName;
-                }
-            }
-        }
-
-        if (empty($imageUrl)) {
-            setFlashMsg('danger', 'Please select or upload an image.');
-        } else {
-            if ($action === 'add') {
-                $stmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url, created_at) VALUES (:title, :cat, :url, NOW())");
-                $stmt->execute([':title' => $title, ':cat' => $category, ':url' => $imageUrl]);
-                setFlashMsg('success', "New photo added to '{$categories[$category]['label']}' successfully.");
-            } elseif ($action === 'edit' && $id > 0) {
-                $stmt = $pdo->prepare("UPDATE gallery SET title = :title, category = :cat, image_url = :url WHERE id = :id");
-                $stmt->execute([':title' => $title, ':cat' => $category, ':url' => $imageUrl, ':id' => $id]);
-                setFlashMsg('success', 'Gallery photo updated successfully.');
-            }
-            header("Location: manage_gallery.php?tab=" . urlencode($category));
-            exit;
-        }
-    }
-}
-
-// Handle Delete
-if (isset($_GET['action']) && $_GET['action'] === 'delete' && $pdo) {
-    $delId = (int)($_GET['id'] ?? 0);
-    if ($delId > 0) {
-        $stmt = $pdo->prepare("DELETE FROM gallery WHERE id = :id");
-        $stmt->execute([':id' => $delId]);
-        setFlashMsg('success', 'Gallery photo deleted successfully.');
-    }
-    header("Location: manage_gallery.php?tab=" . urlencode($tab));
-    exit;
-}
-
-// Auto-seed if gallery table has 0 or fewer than 10 photos
+// Fetch Category Counts
+$counts = [];
 $totalCount = 0;
 try {
     $totalCount = (int)($pdo ? $pdo->query("SELECT COUNT(*) FROM gallery")->fetchColumn() : 0);
-    if ($pdo && $totalCount < 10) {
-        $webpDir = dirname(__DIR__) . '/assets/uploads/gallery/webp/';
-        $files = glob($webpDir . '*.webp');
-        if (!empty($files)) {
-            $checkStmt = $pdo->prepare("SELECT id FROM gallery WHERE image_url LIKE :url LIMIT 1");
-            $insertStmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url, created_at) VALUES (:title, :cat, :url, NOW())");
-            foreach ($files as $f) {
-                $bn = basename($f);
-                $relUrl = 'assets/uploads/gallery/webp/' . $bn;
-                $checkStmt->execute([':url' => "%$bn%"]);
-                if (!$checkStmt->fetch()) {
-                    $cat = 'Campus';
-                    if (strpos($bn, 'gym') !== false || in_array($bn, ['dsc06520.webp','dsc06574.webp','dsc06575.webp','dsc06576.webp','dsc06577.webp','dsc06586.webp','dsc06587.webp','dsc06588.webp','dsc06600.webp','dsc06603.webp','dsc06605.webp','dsc06607.webp','dsc06609.webp','dsc06611.webp','dsc06612.webp','dsc06614.webp','dsc06615.webp','dsc06617.webp','dsc06618.webp','dsc06619.webp','dsc06622.webp','dsc06623.webp'])) {
-                        $cat = 'Gym';
-                    } elseif (strpos($bn, 'sport') !== false || in_array($bn, ['dsc06517.webp','dsc06525.webp','dsc06527.webp','dsc06528.webp','dsc06533.webp','dsc06534.webp','dsc06537.webp','dsc06538.webp','dsc06539.webp','dsc06540.webp','dsc06541.webp','dsc06542.webp','dsc06547.webp','dsc06548.webp','dsc06554.webp','dsc06578.webp','dsc06579.webp','dsc06580.webp','dsc06582.webp','dsc06583.webp'])) {
-                        $cat = 'Sports';
-                    } elseif (strpos($bn, 'med') !== false || strpos($bn, 'hosp') !== false || in_array($bn, ['dsc06740.webp','dsc06754.webp','dsc06767.webp','dsc06769.webp','dsc06772.webp','dsc06839.webp','dsc06842.webp','dsc06847.webp','dsc06857.webp'])) {
-                        $cat = 'Medical';
-                    }
-                    $insertStmt->execute([
-                        ':title' => 'SRKU Campus & Infrastructure Photo',
-                        ':cat' => $cat,
-                        ':url' => $relUrl
-                    ]);
-                }
-            }
-            $totalCount = (int)$pdo->query("SELECT COUNT(*) FROM gallery")->fetchColumn();
-        }
-    }
-} catch (Exception $e) {}
-
-// Fetch Category Counts
-$counts = [];
-foreach ($categories as $k => $c) {
-    try {
-        $stmt = $pdo ? $pdo->prepare("SELECT COUNT(*) FROM gallery WHERE category = :cat") : null;
+    foreach ($categories as $k => $c) {
+        $stmt = $pdo ? $pdo->prepare("SELECT COUNT(*) FROM gallery WHERE LOWER(category) = LOWER(:cat)") : null;
         if ($stmt) {
             $stmt->execute([':cat' => $k]);
             $counts[$k] = (int)$stmt->fetchColumn();
         } else {
             $counts[$k] = 0;
         }
-    } catch (Exception $e) {
-        $counts[$k] = 0;
     }
+} catch (Exception $e) {
+    $totalCount = 0;
 }
 $counts['all'] = $totalCount;
 
 // Query Photos for Active Tab
 $searchQuery = sanitize($_GET['q'] ?? '');
+$photos = [];
 
-$sql = "SELECT * FROM gallery WHERE 1=1";
-$params = [];
+try {
+    if ($pdo) {
+        $sql = "SELECT * FROM gallery WHERE 1=1";
+        $params = [];
 
-if ($tab !== 'all' && isset($categories[$tab])) {
-    $sql .= " AND LOWER(category) = LOWER(:cat)";
-    $params[':cat'] = $tab;
+        if ($tab !== 'all' && isset($categories[$tab])) {
+            $sql .= " AND LOWER(category) = LOWER(:cat)";
+            $params[':cat'] = $tab;
+        }
+        if (!empty($searchQuery)) {
+            $sql .= " AND (image_url LIKE :q OR title LIKE :q OR category LIKE :q)";
+            $params[':q'] = "%{$searchQuery}%";
+        }
+        $sql .= " ORDER BY id DESC";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        $photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+} catch (Exception $e) {
+    $photos = [];
 }
-if (!empty($searchQuery)) {
-    $sql .= " AND (image_url LIKE :q OR title LIKE :q OR category LIKE :q)";
-    $params[':q'] = "%{$searchQuery}%";
-}
-$sql .= " ORDER BY id DESC";
 
-$stmt = $pdo->prepare($sql);
-$stmt->execute($params);
-$photos = $stmt->fetchAll();
+// Include Admin Header (HTML Output starts here)
+require_once __DIR__ . '/header.php';
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
@@ -293,7 +312,7 @@ $photos = $stmt->fetchAll();
 </div>
 
 <div class="row g-4">
-    <!-- Left Column: Simple Add Photo Form (No caption required) -->
+    <!-- Left Column: Simple Add Photo Form -->
     <div class="col-12 col-lg-4">
         <div class="card border-0 shadow-sm rounded-4 p-4 bg-white sticky-top" style="top: 80px;">
             <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
@@ -372,7 +391,7 @@ $photos = $stmt->fetchAll();
                 <div class="text-center py-5 text-muted bg-light rounded-4 my-3">
                     <i class="fas fa-images fa-3x mb-3 text-secondary"></i>
                     <h6 class="fw-bold text-navy">No photos found in this category.</h6>
-                    <p class="small mb-0">Upload a new photo using the form on the left.</p>
+                    <p class="small mb-0">Upload a new photo using the form on the left or click "Sync Photos from Server".</p>
                 </div>
             <?php else: ?>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3 g-3">
@@ -398,7 +417,7 @@ $photos = $stmt->fetchAll();
                                         <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                         <select name="category" class="form-select form-select-sm" style="font-size: 0.78rem;" onchange="this.form.submit()" title="Move to another category tab">
                                             <?php foreach ($categories as $ck => $cv): ?>
-                                                <option value="<?php echo $ck; ?>" <?php echo $currentCat === $ck ? 'selected' : ''; ?>>
+                                                <option value="<?php echo $ck; ?>" <?php echo (strcasecmp($currentCat, $ck) === 0) ? 'selected' : ''; ?>>
                                                     Move to: <?php echo $cv['label']; ?>
                                                 </option>
                                             <?php endforeach; ?>
