@@ -1,0 +1,9 @@
+{
+    "name": "srku/srku-website",
+    "description": "Sarvepalli Radhakrishnan University Portal",
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.4"
+    }
+}
