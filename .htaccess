@@ -71,7 +71,7 @@ Options -Indexes
     RewriteRule ^rkdf-institute-of-management/?$ department-detail.php?slug=rkdf-institute-of-management [L,QSA]
     RewriteRule ^rkdf-institute-of-business-management/?$ department-detail.php?slug=rkdf-institute-of-business-management [L,QSA]
     RewriteRule ^department-of-management/?$ department-detail.php?slug=department-of-management [L,QSA]
-    RewriteRule ^faculty-of-management/?$ department-detail.php?slug=department-of-management [L,QSA]
+    RewriteRule ^faculty-of-management/?$ department-detail.php?slug=faculty-of-management [L,QSA]
 
     RewriteRule ^rkdf-college-of-pharmacy/?$ department-detail.php?slug=rkdf-college-of-pharmacy [L,QSA]
     RewriteRule ^department-of-pharmacy/?$ department-detail.php?slug=rkdf-college-of-pharmacy [L,QSA]
@@ -111,6 +111,9 @@ Options -Indexes
     RewriteRule ^faculty-of-library-science/?$ department-detail.php?slug=faculty-of-library-science [L,QSA]
     RewriteRule ^faculty-of-yoga/?$ department-detail.php?slug=faculty-of-yoga [L,QSA]
     RewriteRule ^faculty-of-fashion-technology-design/?$ department-detail.php?slug=faculty-of-fashion-technology-design [L,QSA]
+    RewriteRule ^allied-sciences/?$ department-detail.php?slug=allied-sciences [L,QSA]
+    RewriteRule ^department-of-allied-sciences/?$ department-detail.php?slug=allied-sciences [L,QSA]
+    RewriteRule ^faculty-of-allied-sciences/?$ department-detail.php?slug=allied-sciences [L,QSA]
 
     # Generic dynamic department route: /department/<slug>
     RewriteRule ^department/([a-zA-Z0-9-]+)/?$ department-detail.php?slug=$1 [L,QSA]

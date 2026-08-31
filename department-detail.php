@@ -36,23 +36,161 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_dept_e
     }
 }
 
+$alliedFacultiesConfig = [
+    'faculty-of-science' => [
+        'name' => 'Faculty of Science',
+        'icon' => 'fa-atom',
+        'color' => '#0284c7'
+    ],
+    'faculty-of-arts' => [
+        'name' => 'Faculty of Arts',
+        'icon' => 'fa-palette',
+        'color' => '#d97706'
+    ],
+    'faculty-of-commerce' => [
+        'name' => 'Faculty of Commerce',
+        'icon' => 'fa-chart-line',
+        'color' => '#059669'
+    ],
+    'faculty-of-management' => [
+        'name' => 'Faculty of Management',
+        'icon' => 'fa-briefcase',
+        'color' => '#7c3aed'
+    ],
+    'faculty-of-computer-application' => [
+        'name' => 'Faculty of Computer Application',
+        'icon' => 'fa-laptop-code',
+        'color' => '#2563eb'
+    ],
+    'faculty-of-library-science' => [
+        'name' => 'Faculty of Library & Information Science',
+        'icon' => 'fa-book-reader',
+        'color' => '#e11d48'
+    ],
+    'faculty-of-yoga' => [
+        'name' => 'Faculty of Yoga',
+        'icon' => 'fa-spa',
+        'color' => '#16a34a'
+    ],
+    'faculty-of-fashion-technology-design' => [
+        'name' => 'Faculty of Fashion Technology & Design',
+        'icon' => 'fa-tshirt',
+        'color' => '#db2777'
+    ]
+];
+
+// Redirect sub-faculty URLs directly to their section in the unified Allied Sciences department page
+if (isset($alliedFacultiesConfig[$dept['slug']])) {
+    header("Location: " . BASE_URL . "allied-sciences#" . $dept['slug']);
+    exit;
+}
+
+$isAlliedSciences = ($dept['slug'] === 'allied-sciences');
+$alliedGroupedCourses = [];
+
 $pageTitle = sanitize($dept['name']) . " | Programmes & Admissions | SRKU";
 $pageDesc = "Explore academic programs, laboratory infrastructure, distinguished faculty, and admissions at " . sanitize($dept['name']) . ", Sarvepalli Radhakrishnan University (SRKU), Bhopal.";
 $pageKeywords = sanitize($dept['name']) . ", SRKU Department, Courses, Admissions Bhopal, Faculty";
 $activeNav = "departments";
 require_once __DIR__ . '/includes/header.php';
 
-$courses = getCourses($dept['slug']);
-if (empty($courses)) {
-    $courses = getCourses($dept['name']);
+if ($isAlliedSciences) {
+    $pdoConn = getDBConnection();
+    $fSlugs = array_keys($alliedFacultiesConfig);
+    $inPlaceholders = implode(',', array_fill(0, count($fSlugs), '?'));
+    $stmtAllied = $pdoConn->prepare("SELECT * FROM courses WHERE dept_slug IN ($inPlaceholders) AND status = 'active' ORDER BY id ASC");
+    $stmtAllied->execute($fSlugs);
+    $allCoursesAllied = $stmtAllied->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($fSlugs as $fSlug) {
+        $alliedGroupedCourses[$fSlug] = [];
+    }
+    foreach ($allCoursesAllied as $c) {
+        $lvl = strtolower(trim($c['level'] ?? ''));
+        $degLvl = strtolower(trim($c['degree_level'] ?? ''));
+        if (in_array($lvl, ['doctorate', 'phd', 'ph.d', 'doctoral']) || in_array($degLvl, ['doctorate', 'phd', 'ph.d', 'doctoral'])) {
+            continue;
+        }
+        $fSlug = $c['dept_slug'];
+        if (isset($alliedGroupedCourses[$fSlug])) {
+            $alliedGroupedCourses[$fSlug][] = $c;
+        }
+    }
+    // Sort each faculty's courses level-wise (Diploma -> UG -> PG)
+    foreach ($alliedGroupedCourses as $fSlug => &$cList) {
+        usort($cList, function($a, $b) {
+            $getLevelRank = function($item) {
+                $lvl = strtolower(trim($item['level'] ?? ''));
+                $degLvl = strtolower(trim($item['degree_level'] ?? ''));
+                $name = strtolower(trim($item['course_name'] ?? ''));
+                if ($lvl === 'diploma' || strpos($name, 'diploma') !== false || strpos($name, 'dca') !== false || strpos($name, 'pgdca') !== false || strpos($name, 'pgdyt') !== false) {
+                    return 10;
+                }
+                if ($lvl === 'ug' || $degLvl === 'ug' || strpos($name, 'b.') !== false || strpos($name, 'bachelor') !== false) {
+                    return 20;
+                }
+                if ($lvl === 'pg' || $degLvl === 'pg' || strpos($name, 'm.') !== false || strpos($name, 'master') !== false || strpos($name, 'msw') !== false) {
+                    return 30;
+                }
+                return 40;
+            };
+            return $getLevelRank($a) <=> $getLevelRank($b);
+        });
+    }
+    unset($cList);
+    $courses = $allCoursesAllied;
+} else {
+    $courses = getCourses($dept['slug']);
+    if (empty($courses)) {
+        $courses = getCourses($dept['name']);
+    }
+
+    // Filter out Doctorate / PhD programs from department pages
+    $courses = array_values(array_filter($courses, function($c) {
+        $lvl = strtolower(trim($c['level'] ?? ''));
+        $degLvl = strtolower(trim($c['degree_level'] ?? ''));
+        return !in_array($lvl, ['doctorate', 'phd', 'ph.d', 'doctoral']) && !in_array($degLvl, ['doctorate', 'phd', 'ph.d', 'doctoral']);
+    }));
 }
 
-// Filter out Doctorate / PhD programs from department pages
-$courses = array_values(array_filter($courses, function($c) {
-    $lvl = strtolower(trim($c['level'] ?? ''));
-    $degLvl = strtolower(trim($c['degree_level'] ?? ''));
-    return !in_array($lvl, ['doctorate', 'phd', 'ph.d', 'doctoral']) && !in_array($degLvl, ['doctorate', 'phd', 'ph.d', 'doctoral']);
-}));
+// Order courses strictly by level hierarchy: Diploma -> UG -> PG (M.Tech/M.E. -> MCA -> MBA -> M.Pharm -> M.Sc -> NPCC -> MDS -> MD)
+usort($courses, function($a, $b) {
+    $getLevelRank = function($item) {
+        $lvl = strtolower(trim($item['level'] ?? ''));
+        $degLvl = strtolower(trim($item['degree_level'] ?? ''));
+        $name = strtolower(trim($item['course_name'] ?? ''));
+
+        // 1. Diploma / Polytechnic / GNM
+        if ($lvl === 'diploma' || strpos($name, 'diploma') !== false || strpos($name, 'polytechnic') !== false || strpos($name, 'gnm') !== false) {
+            return 10;
+        }
+        // 2. UG / Undergraduate / B.Tech / B.Pharm / BHMS / BDS / B.Sc.
+        if ($lvl === 'ug' || $degLvl === 'ug' || strpos($name, 'b.') !== false || strpos($name, 'bachelor') !== false || strpos($name, 'b.tech') !== false || strpos($name, 'bhms') !== false || strpos($name, 'bds') !== false) {
+            if (strpos($name, 'post basic') !== false) return 22;
+            return 20;
+        }
+        // 3. PG / Postgraduate / M.Tech / MCA / MBA / Master / MDS / MD / NPCC
+        if ($lvl === 'pg' || $degLvl === 'pg' || strpos($name, 'm.') !== false || strpos($name, 'master') !== false || strpos($name, 'mba') !== false || strpos($name, 'mca') !== false || strpos($name, 'm.tech') !== false || strpos($name, 'mds') !== false || strpos($name, 'md') !== false || strpos($name, 'npcc') !== false) {
+            if (strpos($name, 'm.tech') !== false || strpos($name, 'm.e') !== false) return 31;
+            if (strpos($name, 'mca') !== false) return 32;
+            if (strpos($name, 'mba') !== false) return 33;
+            if (strpos($name, 'm.pharm') !== false) return 34;
+            if (strpos($name, 'm.sc') !== false) return 35;
+            if (strpos($name, 'npcc') !== false) return 36;
+            if (strpos($name, 'mds') !== false) return 37;
+            if (strpos($name, 'md') !== false) return 38;
+            return 39;
+        }
+        return 50;
+    };
+
+    $rankA = $getLevelRank($a);
+    $rankB = $getLevelRank($b);
+    if ($rankA !== $rankB) {
+        return $rankA <=> $rankB;
+    }
+    return ($a['id'] ?? 0) <=> ($b['id'] ?? 0);
+});
 
 // Group courses by level
 $ugCourses = array_filter($courses, fn($c) => $c['level'] === 'UG');
@@ -104,11 +242,13 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
 // RKDF IST: Dynamic PDF resolver — uses local file if downloaded, else falls back to live URL
 $_istPdfBase = BASE_URL . 'assets/pdf/rkdf-ist/';
 $_istPdfDir  = __DIR__ . '/assets/pdf/rkdf-ist/';
-function istPdf(string $localRelPath, string $fallbackUrl): string {
-    global $_istPdfDir, $_istPdfBase;
-    return file_exists($_istPdfDir . $localRelPath)
-        ? $_istPdfBase . $localRelPath
-        : $fallbackUrl;
+if (!function_exists('istPdf')) {
+    function istPdf(string $localRelPath, string $fallbackUrl): string {
+        global $_istPdfDir, $_istPdfBase;
+        return file_exists($_istPdfDir . $localRelPath)
+            ? $_istPdfBase . $localRelPath
+            : $fallbackUrl;
+    }
 }
 ?>
 
@@ -365,79 +505,228 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
                         <span class="badge bg-danger px-3 py-2 rounded-pill">Programs Available</span>
                     </div>
 
-                    <?php if (!empty($courses)): ?>
-                        <div class="d-flex flex-column gap-4">
-                            <?php foreach ($courses as $c): 
-                                $specList = !empty($c['specializations']) ? array_map('trim', explode(',', $c['specializations'])) : [];
-                            ?>
-                                <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white" style="border: 1px solid #e2e8f0 !important; transition: all 0.25s ease;">
-                                    
-                                    <!-- Course Item Header -->
-                                    <div class="p-4 pb-3 border-bottom bg-light bg-opacity-50 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-                                        <div>
-                                            <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
-                                                <span class="badge bg-navy text-white rounded-pill px-3 py-1 fw-semibold small"><?php echo sanitize($c['level']); ?> Programme</span>
-                                            </div>
-                                            <h4 class="h5 fw-bold text-navy mb-0">
-                                                <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="text-navy text-decoration-none hover-danger">
-                                                     <?php echo sanitize($c['course_name']); ?>
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div class="d-flex gap-2 flex-shrink-0">
-                                            <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="btn btn-sm btn-outline-secondary px-3 py-2 fw-semibold">
-                                                <i class="fas fa-info-circle me-1"></i> Details
-                                            </a>
-                                            <a href="<?php echo BASE_URL; ?>contact.php?course=<?php echo urlencode($c['course_name']); ?>" class="btn btn-sm btn-srku px-3 py-2 fw-semibold">
-                                                <i class="fas fa-paper-plane me-1"></i> Apply Now
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <!-- Course Item Body -->
-                                    <div class="p-4">
-                                        <p class="text-muted small mb-3" style="line-height: 1.75; font-size: 0.93rem;">
-                                            <?php echo sanitize($c['description']); ?>
-                                        </p>
-
-                                        <!-- Specializations / Disciplines Tag Cloud -->
-                                        <?php if (!empty($specList)): ?>
-                                            <div class="mb-3 pt-1">
-                                                <div class="small fw-bold text-navy mb-2 d-flex align-items-center gap-2">
-                                                    <i class="fas fa-layer-group text-danger"></i> 
-                                                    <span>Available Disciplines &amp; Specializations:</span>
-                                                </div>
-                                                <div class="d-flex flex-wrap gap-2">
-                                                    <?php foreach ($specList as $sp): ?>
-                                                        <span class="badge rounded-2 fw-medium py-2 px-3 text-start" style="background: #f8fafc; color: #334155; border: 1px solid #e2e8f0; font-size: 0.83rem; white-space: normal; line-height: 1.4;">
-                                                            &bull; <?php echo sanitize($sp); ?>
-                                                        </span>
-                                                    <?php endforeach; ?>
-                                                    <span class="badge rounded-2 fw-medium py-2 px-3 text-start" style="background: #f8fafc; color: #334155; border: 1px solid #e2e8f0; font-size: 0.83rem; white-space: normal; line-height: 1.4;">
-                                                        &bull; &amp; many more...
-                                                    </span>
-                                                </div>
-                                            </div>
+                    <?php
+                    $renderCourseCard = function($c) {
+                        $specList = !empty($c['specializations']) ? array_map('trim', explode(',', $c['specializations'])) : [];
+                        $cLvlLower = strtolower(trim($c['level'] ?? ''));
+                        $cNameLower = strtolower(trim($c['course_name'] ?? ''));
+                        if ($cLvlLower === 'diploma' || strpos($cNameLower, 'diploma') !== false || strpos($cNameLower, 'polytechnic') !== false || strpos($cNameLower, 'gnm') !== false || strpos($cNameLower, 'dca') !== false || strpos($cNameLower, 'pgdca') !== false || strpos($cNameLower, 'pgdyt') !== false || strpos($cNameLower, 'certificate') !== false) {
+                            if (strpos($cNameLower, 'gnm') !== false || strpos($cNameLower, 'midwifery') !== false) {
+                                $levelBadge = 'Diploma : GNM';
+                            } elseif (strpos($cNameLower, 'agriculture') !== false) {
+                                $levelBadge = 'Diploma : Agriculture';
+                            } elseif (strpos($cNameLower, 'pgdca') !== false) {
+                                $levelBadge = 'PG Diploma : PGDCA';
+                            } elseif (strpos($cNameLower, 'dca') !== false) {
+                                $levelBadge = 'Diploma : DCA';
+                            } elseif (strpos($cNameLower, 'pgdyt') !== false) {
+                                $levelBadge = 'PG Diploma : PGDYT';
+                            } elseif (strpos($cNameLower, 'certificate') !== false) {
+                                $levelBadge = 'Certificate Course';
+                            } elseif (strpos($cNameLower, 'pharm') !== false || strpos($cNameLower, 'd.') !== false) {
+                                $levelBadge = 'Diploma : D.Pharmacy';
+                            } elseif (strpos($cNameLower, 'dmlt') !== false) {
+                                $levelBadge = 'Diploma : DMLT';
+                            } elseif (strpos($cNameLower, 'polytechnic') !== false) {
+                                $levelBadge = 'Diploma : Polytechnic';
+                            } else {
+                                $levelBadge = 'Diploma Course';
+                            }
+                        } elseif ($cLvlLower === 'ug' || strpos($cNameLower, 'b.tech') !== false || strpos($cNameLower, 'bachelor') !== false || strpos($cNameLower, 'b.pharm') !== false || strpos($cNameLower, 'bhms') !== false || strpos($cNameLower, 'bds') !== false || strpos($cNameLower, 'b.sc') !== false || strpos($cNameLower, 'mbbs') !== false || strpos($cNameLower, 'bams') !== false || strpos($cNameLower, 'll.b') !== false || strpos($cNameLower, 'bba') !== false || strpos($cNameLower, 'bca') !== false || strpos($cNameLower, 'bmlt') !== false || strpos($cNameLower, 'bpt') !== false || strpos($cNameLower, 'b.com') !== false || strpos($cNameLower, 'b.a') !== false || strpos($cNameLower, 'b.lib') !== false) {
+                            if (strpos($cNameLower, 'mbbs') !== false) {
+                                $levelBadge = 'UG Degree : MBBS';
+                            } elseif (strpos($cNameLower, 'bams') !== false) {
+                                $levelBadge = 'UG Degree : BAMS';
+                            } elseif (strpos($cNameLower, 'bds') !== false) {
+                                $levelBadge = 'UG Degree : BDS';
+                            } elseif (strpos($cNameLower, 'bhms') !== false) {
+                                $levelBadge = 'UG Degree : BHMS';
+                            } elseif (strpos($cNameLower, 'bba') !== false) {
+                                $levelBadge = 'UG Degree : BBA';
+                            } elseif (strpos($cNameLower, 'bca') !== false) {
+                                $levelBadge = 'UG Degree : BCA';
+                            } elseif (strpos($cNameLower, 'bmlt') !== false) {
+                                $levelBadge = 'UG Degree : BMLT';
+                            } elseif (strpos($cNameLower, 'bpt') !== false) {
+                                $levelBadge = 'UG Degree : BPT';
+                            } elseif (strpos($cNameLower, 'b.lib') !== false) {
+                                $levelBadge = 'UG Degree : B.Lib.';
+                            } elseif (strpos($cNameLower, 'b.com') !== false) {
+                                $levelBadge = 'UG Degree : B.Com.';
+                            } elseif (strpos($cNameLower, 'ba. ll.b') !== false || strpos($cNameLower, 'ba ll.b') !== false) {
+                                $levelBadge = 'UG Degree : BA. LL.B. (Hons.)';
+                            } elseif (strpos($cNameLower, 'll.b') !== false && strpos($cNameLower, 'll.m') === false) {
+                                $levelBadge = 'UG Degree : LL.B.';
+                            } elseif (strpos($cNameLower, 'post basic') !== false) {
+                                $levelBadge = 'UG Degree : Post Basic B.Sc. (Nursing)';
+                            } elseif (strpos($cNameLower, 'agriculture') !== false && strpos($cNameLower, 'b.sc') !== false) {
+                                $levelBadge = 'UG Degree : B.Sc. (Hons.) Agriculture';
+                            } elseif (strpos($cNameLower, 'b.sc') !== false) {
+                                $levelBadge = 'UG Degree : B.Sc.';
+                            } elseif (strpos($cNameLower, 'b.a') !== false || strpos($cNameLower, 'arts') !== false) {
+                                $levelBadge = 'UG Degree : B.A.';
+                            } elseif (strpos($cNameLower, 'journalism') !== false) {
+                                $levelBadge = 'UG Degree : B. Journalism';
+                            } elseif (strpos($cNameLower, 'pharm') !== false) {
+                                $levelBadge = 'Degree : B.Pharmacy';
+                            } else {
+                                $levelBadge = 'UG Degree';
+                            }
+                        } elseif ($cLvlLower === 'pg' || strpos($cNameLower, 'master') !== false || strpos($cNameLower, 'm.tech') !== false || strpos($cNameLower, 'mba') !== false || strpos($cNameLower, 'mca') !== false || strpos($cNameLower, 'm.pharm') !== false || strpos($cNameLower, 'mds') !== false || strpos($cNameLower, 'md') !== false || strpos($cNameLower, 'ms') !== false || strpos($cNameLower, 'm.sc') !== false || strpos($cNameLower, 'npcc') !== false || strpos($cNameLower, 'll.m') !== false || strpos($cNameLower, 'mpt') !== false || strpos($cNameLower, 'mmlt') !== false || strpos($cNameLower, 'm.com') !== false || strpos($cNameLower, 'm.lib') !== false || strpos($cNameLower, 'msw') !== false || strpos($cNameLower, 'm.a') !== false || strpos($cNameLower, 'journalism') !== false) {
+                            if (strpos($cNameLower, 'md / ms') !== false || strpos($cNameLower, 'md/ms') !== false || (strpos($cNameLower, 'surgery') !== false && strpos($cNameLower, 'dental') === false && strpos($cNameLower, 'mds') === false)) {
+                                $levelBadge = 'PG Degree : MD / MS';
+                            } elseif (strpos($cNameLower, 'll.m') !== false) {
+                                $levelBadge = 'PG Degree : LL.M.';
+                            } elseif (strpos($cNameLower, 'mpt') !== false) {
+                                $levelBadge = 'PG Degree : MPT';
+                            } elseif (strpos($cNameLower, 'mmlt') !== false) {
+                                $levelBadge = 'PG Degree : MMLT';
+                            } elseif (strpos($cNameLower, 'm.com') !== false) {
+                                $levelBadge = 'PG Degree : M.Com.';
+                            } elseif (strpos($cNameLower, 'm.lib') !== false) {
+                                $levelBadge = 'PG Degree : M.Lib.';
+                            } elseif (strpos($cNameLower, 'msw') !== false) {
+                                $levelBadge = 'PG Degree : MSW';
+                            } elseif (strpos($cNameLower, 'journalism') !== false) {
+                                $levelBadge = 'PG Degree : M. Journalism';
+                            } elseif (strpos($cNameLower, 'm.a') !== false || strpos($cNameLower, 'master of arts') !== false) {
+                                $levelBadge = 'PG Degree : M.A.';
+                            } elseif (strpos($cNameLower, 'agriculture') !== false && strpos($cNameLower, 'm.sc') !== false) {
+                                $levelBadge = 'PG Degree : M.Sc. Agriculture';
+                            } elseif (strpos($cNameLower, 'mds') !== false) {
+                                $levelBadge = 'PG Degree : MDS';
+                            } elseif (strpos($cNameLower, 'md') !== false && strpos($cNameLower, 'mds') === false) {
+                                $levelBadge = 'PG Degree : MD';
+                            } elseif (strpos($cNameLower, 'npcc') !== false) {
+                                $levelBadge = 'PG Degree : NPCC';
+                            } elseif (strpos($cNameLower, 'm.sc') !== false) {
+                                $levelBadge = 'PG Degree : M.Sc.';
+                            } else {
+                                $levelBadge = 'PG Degree';
+                            }
+                        } else {
+                            $levelBadge = sanitize($c['level']) . ' Programme';
+                        }
+                        ?>
+                        <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white" style="border: 1px solid #e2e8f0 !important; transition: all 0.25s ease;">
+                            <div class="p-4 pb-3 border-bottom bg-light bg-opacity-50 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                                <div>
+                                    <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                                        <span class="badge bg-navy text-white rounded-pill px-3 py-1 fw-semibold small"><?php echo $levelBadge; ?></span>
+                                        <?php if (!empty($c['duration'])): ?>
+                                            <span class="badge bg-white text-secondary border rounded-pill px-3 py-1 fw-semibold small">
+                                                <i class="fas fa-clock text-danger me-1"></i> Duration: <?php echo sanitize($c['duration']); ?>
+                                            </span>
                                         <?php endif; ?>
-
-                                        <!-- Eligibility Info -->
-                                        <div class="mt-3">
-                                            <div class="p-3 rounded-3" style="background: #f8fafc; border-left: 3px solid #10b981; border-top: 1px solid #edf2f7; border-right: 1px solid #edf2f7; border-bottom: 1px solid #edf2f7;">
-                                                <div class="small fw-bold text-navy mb-1"><i class="fas fa-check-circle text-success me-1"></i> Eligibility Criteria</div>
-                                                <div class="small text-muted" style="line-height: 1.6;"><?php echo sanitize($c['eligibility']); ?></div>
-                                            </div>
-                                        </div>
-
                                     </div>
-
+                                    <h4 class="h5 fw-bold text-navy mb-0">
+                                        <a href="<?php echo BASE_URL; ?>course-detail.php?slug=<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="text-navy text-decoration-none hover-danger">
+                                            <?php echo sanitize($c['course_name']); ?>
+                                        </a>
+                                    </h4>
                                 </div>
-                            <?php endforeach; ?>
+                                <div class="d-flex gap-2 flex-shrink-0">
+                                    <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="btn btn-sm btn-outline-secondary px-3 py-2 fw-semibold">
+                                        <i class="fas fa-info-circle me-1"></i> Details
+                                    </a>
+                                    <a href="<?php echo BASE_URL; ?>contact.php?course=<?php echo urlencode($c['course_name']); ?>" class="btn btn-sm btn-srku px-3 py-2 fw-semibold">
+                                        <i class="fas fa-paper-plane me-1"></i> Apply Now
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <p class="text-muted small mb-3" style="line-height: 1.75; font-size: 0.93rem;">
+                                    <?php echo sanitize($c['description']); ?>
+                                </p>
+                                <?php if (!empty($specList)): ?>
+                                    <div class="mb-3 pt-1">
+                                        <div class="small fw-bold text-navy mb-2 d-flex align-items-center gap-2">
+                                            <i class="fas fa-layer-group text-danger"></i> 
+                                            <span>Discipline / Specializations:</span>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <?php foreach ($specList as $sp): ?>
+                                                <span class="badge rounded-2 fw-medium py-2 px-3 text-start" style="background: #f8fafc; color: #334155; border: 1px solid #e2e8f0; font-size: 0.83rem; white-space: normal; line-height: 1.4;">
+                                                    &bull; <?php echo sanitize($sp); ?>
+                                                </span>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                                <div class="mt-3">
+                                    <div class="p-3 rounded-3" style="background: #f8fafc; border-left: 3px solid #10b981; border-top: 1px solid #edf2f7; border-right: 1px solid #edf2f7; border-bottom: 1px solid #edf2f7;">
+                                        <div class="small fw-bold text-navy mb-1"><i class="fas fa-check-circle text-success me-1"></i> Eligibility Criteria</div>
+                                        <div class="small text-muted" style="line-height: 1.6;"><?php echo sanitize($c['eligibility']); ?></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <?php
+                    };
+                    ?>
+
+                    <?php if ($isAlliedSciences): ?>
+                        <!-- Quick Jump Bar for Allied Faculties -->
+                        <div class="card p-3 p-md-4 border-0 shadow-sm rounded-4 mb-4 bg-light border">
+                            <div class="small fw-bold text-navy text-uppercase letter-spacing-1 mb-2 d-flex align-items-center gap-2">
+                                <i class="fas fa-compass text-danger"></i> Constituent Faculties Under Allied Sciences:
+                            </div>
+                            <div class="d-flex flex-wrap gap-2">
+                                <?php foreach ($alliedFacultiesConfig as $fSlug => $fInfo): 
+                                    $fCount = count($alliedGroupedCourses[$fSlug] ?? []);
+                                ?>
+                                    <a href="#<?php echo $fSlug; ?>" class="btn btn-sm btn-white border shadow-sm rounded-pill px-3 py-1 fw-semibold text-navy d-flex align-items-center gap-2 hover-shadow" style="font-size: 0.82rem; background: #fff;">
+                                        <i class="fas <?php echo $fInfo['icon']; ?>" style="color: <?php echo $fInfo['color']; ?>;"></i>
+                                        <span><?php echo $fInfo['name']; ?></span>
+                                        <span class="badge rounded-pill bg-light text-muted border px-2 py-0" style="font-size: 0.72rem;"><?php echo $fCount; ?></span>
+                                    </a>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+
+                        <!-- Render each Faculty as its own Heading Block with courses -->
+                        <?php foreach ($alliedFacultiesConfig as $fSlug => $fInfo): 
+                            $facultyCourses = $alliedGroupedCourses[$fSlug] ?? [];
+                            if (empty($facultyCourses)) continue;
+                        ?>
+                            <div class="allied-faculty-group mb-5" id="<?php echo $fSlug; ?>" style="scroll-margin-top: 90px;">
+                                <div class="d-flex align-items-center justify-content-between p-3 px-4 rounded-4 mb-3 shadow-sm flex-wrap gap-2" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-left: 6px solid <?php echo $fInfo['color']; ?>;">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="d-inline-flex align-items-center justify-content-center rounded-3 shadow-sm" style="width: 44px; height: 44px; background: rgba(255,255,255,0.12); color: #fff; font-size: 1.25rem;">
+                                            <i class="fas <?php echo $fInfo['icon']; ?>" style="color: #fbbf24;"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="h5 fw-bold text-white mb-0"><?php echo $fInfo['name']; ?></h4>
+                                            <span class="text-white-50 small">Allied Sciences Constituent Academic Faculty</span>
+                                        </div>
+                                    </div>
+                                    <span class="badge rounded-pill px-3 py-2 fw-semibold" style="background: rgba(255,255,255,0.18); color: #fff; font-size: 0.82rem;">
+                                        <?php echo count($facultyCourses); ?> Programmes Offered
+                                    </span>
+                                </div>
+                                
+                                <div class="d-flex flex-column gap-3">
+                                    <?php foreach ($facultyCourses as $c): ?>
+                                        <?php $renderCourseCard($c); ?>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
                     <?php else: ?>
-                        <div class="card p-4 border-0 shadow-sm rounded-4 text-center py-4 text-muted">
-                            <i class="fas fa-book-open fa-2x mb-2"></i>
-                            <p class="mb-0">Programmes catalog being updated. Please contact the admission desk for details.</p>
-                        </div>
+                        <!-- Standard Department Courses List -->
+                        <?php if (!empty($courses)): ?>
+                            <div class="d-flex flex-column gap-4">
+                                <?php foreach ($courses as $c): ?>
+                                    <?php $renderCourseCard($c); ?>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php else: ?>
+                            <div class="card p-4 border-0 shadow-sm rounded-4 text-center py-4 text-muted">
+                                <i class="fas fa-book-open fa-2x mb-2"></i>
+                                <p class="mb-0">Programmes catalog being updated. Please contact the admission desk for details.</p>
+                            </div>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
 

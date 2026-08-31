@@ -65,8 +65,161 @@ require_once __DIR__ . '/includes/header.php';
 }
 </script>
 <?php
-$relatedCourses = getCourses($course['dept_slug'] ?: $course['department'], null, null, 4);
+$rawRelated = getCourses($course['dept_slug'] ?: $course['department'], null, null, 10);
+$relatedCourses = array_values(array_filter($rawRelated, function($rc) use ($course) {
+    if ($rc['id'] == $course['id']) return false;
+    $lvl = strtolower(trim($rc['level'] ?? ''));
+    $degLvl = strtolower(trim($rc['degree_level'] ?? ''));
+    return !in_array($lvl, ['doctorate', 'phd', 'ph.d', 'doctoral']) && !in_array($degLvl, ['doctorate', 'phd', 'ph.d', 'doctoral']);
+}));
+$relatedCourses = array_slice($relatedCourses, 0, 5);
 $specList = !empty($course['specializations']) ? array_map('trim', explode(',', $course['specializations'])) : [];
+
+// Determine level and discipline branding matching the official university brochure
+$cLvlLower = strtolower(trim($course['level'] ?? ''));
+$cNameLower = strtolower(trim($course['course_name'] ?? ''));
+if ($cLvlLower === 'diploma' || strpos($cNameLower, 'diploma') !== false || strpos($cNameLower, 'polytechnic') !== false || strpos($cNameLower, 'gnm') !== false || strpos($cNameLower, 'dca') !== false || strpos($cNameLower, 'pgdca') !== false || strpos($cNameLower, 'pgdyt') !== false || strpos($cNameLower, 'certificate') !== false) {
+    if (strpos($cNameLower, 'gnm') !== false || strpos($cNameLower, 'midwifery') !== false) {
+        $courseBadgeLabel = 'Diploma : GNM';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'agriculture') !== false) {
+        $courseBadgeLabel = 'Diploma : Agriculture';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'pgdca') !== false) {
+        $courseBadgeLabel = 'PG Diploma : PGDCA';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'dca') !== false) {
+        $courseBadgeLabel = 'Diploma : DCA';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'pgdyt') !== false) {
+        $courseBadgeLabel = 'PG Diploma : PGDYT';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'certificate') !== false) {
+        $courseBadgeLabel = 'Certificate Course';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'pharm') !== false || strpos($cNameLower, 'd.') !== false) {
+        $courseBadgeLabel = 'Diploma : D.Pharmacy';
+        $isDiscipline = true;
+    } elseif (strpos($cNameLower, 'dmlt') !== false) {
+        $courseBadgeLabel = 'Diploma : DMLT';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'polytechnic') !== false) {
+        $courseBadgeLabel = 'Diploma : Polytechnic';
+        $isDiscipline = true;
+    } else {
+        $courseBadgeLabel = 'Diploma Course';
+        $isDiscipline = false;
+    }
+} elseif ($cLvlLower === 'ug' || strpos($cNameLower, 'b.tech') !== false || strpos($cNameLower, 'bachelor') !== false || strpos($cNameLower, 'b.pharm') !== false || strpos($cNameLower, 'bhms') !== false || strpos($cNameLower, 'bds') !== false || strpos($cNameLower, 'b.sc') !== false || strpos($cNameLower, 'mbbs') !== false || strpos($cNameLower, 'bams') !== false || strpos($cNameLower, 'll.b') !== false || strpos($cNameLower, 'bba') !== false || strpos($cNameLower, 'bca') !== false || strpos($cNameLower, 'bmlt') !== false || strpos($cNameLower, 'bpt') !== false || strpos($cNameLower, 'b.com') !== false || strpos($cNameLower, 'b.a') !== false || strpos($cNameLower, 'b.lib') !== false) {
+    if (strpos($cNameLower, 'mbbs') !== false) {
+        $courseBadgeLabel = 'UG Degree : MBBS';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'bams') !== false) {
+        $courseBadgeLabel = 'UG Degree : BAMS';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'bds') !== false) {
+        $courseBadgeLabel = 'UG Degree : BDS';
+        $isDiscipline = true;
+    } elseif (strpos($cNameLower, 'bhms') !== false) {
+        $courseBadgeLabel = 'UG Degree : BHMS';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'bba') !== false) {
+        $courseBadgeLabel = 'UG Degree : BBA';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'bca') !== false) {
+        $courseBadgeLabel = 'UG Degree : BCA';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'bmlt') !== false) {
+        $courseBadgeLabel = 'UG Degree : BMLT';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'bpt') !== false) {
+        $courseBadgeLabel = 'UG Degree : BPT';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'b.lib') !== false) {
+        $courseBadgeLabel = 'UG Degree : B.Lib.';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'b.com') !== false) {
+        $courseBadgeLabel = 'UG Degree : B.Com.';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'ba. ll.b') !== false || strpos($cNameLower, 'ba ll.b') !== false) {
+        $courseBadgeLabel = 'UG Degree : BA. LL.B. (Hons.)';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'll.b') !== false && strpos($cNameLower, 'll.m') === false) {
+        $courseBadgeLabel = 'UG Degree : LL.B.';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'post basic') !== false) {
+        $courseBadgeLabel = 'UG Degree : Post Basic B.Sc. (Nursing)';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'agriculture') !== false && strpos($cNameLower, 'b.sc') !== false) {
+        $courseBadgeLabel = 'UG Degree : B.Sc. (Hons.) Agriculture';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'b.sc') !== false) {
+        $courseBadgeLabel = 'UG Degree : B.Sc.';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'b.a') !== false || strpos($cNameLower, 'arts') !== false) {
+        $courseBadgeLabel = 'UG Degree : B.A.';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'journalism') !== false) {
+        $courseBadgeLabel = 'UG Degree : B. Journalism';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'pharm') !== false) {
+        $courseBadgeLabel = 'Degree : B.Pharmacy';
+        $isDiscipline = true;
+    } else {
+        $courseBadgeLabel = 'UG Degree';
+        $isDiscipline = true;
+    }
+} elseif ($cLvlLower === 'pg' || strpos($cNameLower, 'master') !== false || strpos($cNameLower, 'm.tech') !== false || strpos($cNameLower, 'mba') !== false || strpos($cNameLower, 'mca') !== false || strpos($cNameLower, 'm.pharm') !== false || strpos($cNameLower, 'mds') !== false || strpos($cNameLower, 'md') !== false || strpos($cNameLower, 'ms') !== false || strpos($cNameLower, 'm.sc') !== false || strpos($cNameLower, 'npcc') !== false || strpos($cNameLower, 'll.m') !== false || strpos($cNameLower, 'mpt') !== false || strpos($cNameLower, 'mmlt') !== false || strpos($cNameLower, 'm.com') !== false || strpos($cNameLower, 'm.lib') !== false || strpos($cNameLower, 'msw') !== false || strpos($cNameLower, 'm.a') !== false || strpos($cNameLower, 'journalism') !== false) {
+    if (strpos($cNameLower, 'md / ms') !== false || strpos($cNameLower, 'md/ms') !== false || (strpos($cNameLower, 'surgery') !== false && strpos($cNameLower, 'dental') === false && strpos($cNameLower, 'mds') === false)) {
+        $courseBadgeLabel = 'PG Degree : MD / MS';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'll.m') !== false) {
+        $courseBadgeLabel = 'PG Degree : LL.M.';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'mpt') !== false) {
+        $courseBadgeLabel = 'PG Degree : MPT';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'mmlt') !== false) {
+        $courseBadgeLabel = 'PG Degree : MMLT';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'm.com') !== false) {
+        $courseBadgeLabel = 'PG Degree : M.Com.';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'm.lib') !== false) {
+        $courseBadgeLabel = 'PG Degree : M.Lib.';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'msw') !== false) {
+        $courseBadgeLabel = 'PG Degree : MSW';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'journalism') !== false) {
+        $courseBadgeLabel = 'PG Degree : M. Journalism';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'm.a') !== false || strpos($cNameLower, 'master of arts') !== false) {
+        $courseBadgeLabel = 'PG Degree : M.A.';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'agriculture') !== false && strpos($cNameLower, 'm.sc') !== false) {
+        $courseBadgeLabel = 'PG Degree : M.Sc. Agriculture';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'mds') !== false) {
+        $courseBadgeLabel = 'PG Degree : MDS';
+        $isDiscipline = true;
+    } elseif (strpos($cNameLower, 'md') !== false && strpos($cNameLower, 'mds') === false) {
+        $courseBadgeLabel = 'PG Degree : MD';
+        $isDiscipline = true;
+    } elseif (strpos($cNameLower, 'npcc') !== false) {
+        $courseBadgeLabel = 'PG Degree : NPCC';
+        $isDiscipline = false;
+    } elseif (strpos($cNameLower, 'm.sc') !== false) {
+        $courseBadgeLabel = 'PG Degree : M.Sc.';
+        $isDiscipline = false;
+    } else {
+        $courseBadgeLabel = 'PG Degree';
+        $isDiscipline = (strpos($cNameLower, 'm.tech') !== false || strpos($cNameLower, 'm.e') !== false || strpos($cNameLower, 'm.pharm') !== false);
+    }
+} else {
+    $courseBadgeLabel = sanitize($course['level']) . ' Programme';
+    $isDiscipline = false;
+}
 
 // Fetch department info if available
 $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
@@ -76,12 +229,12 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
 <div class="py-5 text-center text-white position-relative" style="background: linear-gradient(135deg, var(--srku-navy), var(--srku-maroon));">
     <div class="container-xl py-3">
         <div class="d-inline-flex align-items-center gap-2 mb-2 flex-wrap justify-content-center">
-            <span class="badge bg-warning text-dark px-3 py-1 fw-bold"><?php echo sanitize($course['level']); ?> Programme</span>
+            <span class="badge bg-warning text-dark px-3 py-1 fw-bold"><?php echo $courseBadgeLabel; ?></span>
             <span class="badge bg-white bg-opacity-25 text-white px-3 py-1 border border-white-50">
                 <i class="fas fa-university me-1"></i> <?php echo sanitize($course['department']); ?>
             </span>
             <?php if (!empty($specList)): ?>
-                <span class="badge bg-danger px-3 py-1">Specializations &amp; Tracks Available</span>
+                <span class="badge bg-danger px-3 py-1"><?php echo $isDiscipline ? 'Approved Disciplines' : 'Specializations Available'; ?></span>
             <?php endif; ?>
         </div>
         <h1 class="fw-bold display-6 mb-2"><?php echo sanitize($course['course_name']); ?></h1>
@@ -121,7 +274,7 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                         </div>
                         <div class="col">
                             <div class="small text-muted mb-1"><i class="fas fa-graduation-cap text-danger me-1"></i> Degree Level</div>
-                            <div class="fw-bold text-navy fs-6"><?php echo sanitize($course['level']); ?></div>
+                            <div class="fw-bold text-navy fs-6"><?php echo sanitize($courseBadgeLabel); ?></div>
                         </div>
                         <div class="col">
                             <div class="small text-muted mb-1"><i class="fas fa-user-check text-danger me-1"></i> Admission Session</div>
@@ -150,12 +303,12 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                     <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 mb-4 bg-white border">
                         <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                             <h3 class="text-navy fw-bold mb-0">
-                                <i class="fas fa-sitemap text-danger me-2"></i> Available Disciplines &amp; Specializations
+                                <i class="fas fa-sitemap text-danger me-2"></i> <?php echo $isDiscipline ? 'Offered Disciplines' : 'Available Specializations'; ?>
                             </h3>
-                            <span class="badge bg-danger px-3 py-2">Specializations Offered</span>
+                            <span class="badge bg-danger px-3 py-2"><?php echo $isDiscipline ? 'Disciplines' : 'Specializations'; ?></span>
                         </div>
                         <p class="text-muted small mb-4">
-                            Students pursuing <strong><?php echo sanitize($course['course_name']); ?></strong> can specialize in the following focused tracks during their academic curriculum:
+                            Students pursuing <strong><?php echo sanitize($course['course_name']); ?></strong> can study in the following approved <?php echo $isDiscipline ? 'disciplines' : 'specializations'; ?>:
                         </p>
                         <div class="row row-cols-1 row-cols-sm-2 g-3">
                             <?php foreach ($specList as $spec): ?>
@@ -170,16 +323,6 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                                     </div>
                                 </div>
                             <?php endforeach; ?>
-                            <div class="col">
-                                <div class="p-3 bg-light rounded-3 border d-flex align-items-center gap-3 h-100">
-                                    <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:34px; height:34px; font-size:0.85rem;">
-                                        <i class="fas fa-check"></i>
-                                    </div>
-                                    <div class="fw-semibold text-navy small">
-                                        &amp; Many More Specializations...
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 <?php endif; ?>

@@ -220,7 +220,7 @@ function getDepartmentBySlug($slug) {
             'nursing'    => 'rkdf-college-of-nursing',
             'medical'    => 'rkdf-medical-college',
             'paramedic'  => 'department-of-paramedical-sciences',
-            'allied'     => 'department-of-paramedical-sciences',
+            'allied'     => 'allied-sciences',
             'agricultur' => 'faculty-of-agriculture',
             'law'        => 'sarvepalli-radhakrishnan-college-of-law',
             'science-tech' => 'rkdf-institute-of-science-and-technology',

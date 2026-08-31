@@ -490,8 +490,8 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                                     <span class="name">Faculty of Agriculture</span>
                                     <i class="fas fa-angle-right"></i>
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>faculty-of-science" class="static-megamenu-link">
-                                    <span class="name">Faculty of Science / Arts / Yoga</span>
+                                <a href="<?php echo BASE_URL; ?>allied-sciences" class="static-megamenu-link">
+                                    <span class="name">Allied Sciences</span>
                                     <i class="fas fa-angle-right"></i>
                                 </a>
                             </div>

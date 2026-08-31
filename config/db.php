@@ -360,7 +360,7 @@ function autoInitializeTables($pdo) {
     if ($stmt->fetchColumn() <= 5) {
         $pdo->exec("DELETE FROM departments");
         $departments = [
-            ['RKDF Institute of Science and Technology (1995)', 'rkdf-institute-of-science-and-technology', 'fas fa-microchip', 'assets/images/dept_engg.jpg', 'Faculty of Engineering offers AICTE approved B.Tech, M.Tech and Polytechnic programs with cutting-edge computing, AI/ML, Robotics, IoT and Mechanical labs.', '', '1995'],
+            ['RKDF Institute of Science and Technology (1995)', 'rkdf-institute-of-science-and-technology', 'fas fa-microchip', 'assets/images/dept_engg.jpg', 'Faculty of Engineering offers AICTE approved B.Tech, M.Tech and Polytechnic programs with cutting-edge computing, AI(DSA), and advanced mechanical laboratories.', '', '1995'],
             ['Department of Pharmacy (RKDF College)', 'rkdf-college-of-pharmacy', 'fas fa-pills', 'assets/images/dept_pharma.jpg', 'PCI & AICTE approved pharmacy institute offering B.Pharm, M.Pharm, and Pharm.D with advanced pharmacology and formulation development labs.', '', '1995'],
             ['Sri Sai College of Pharmacy', 'sri-sai-college-of-pharmacy-srk-bhopal', 'fas fa-capsules', 'assets/images/dept_pharma2.jpg', 'Premier institute specializing in pharmaceutical education, clinical research, drug design, and industrial training.', '', '2019'],
             ['Dr. APJ Abdul Kalam College of Pharmacy', 'dr-apj-abdul-kalam-college-of-pharmacy-srk-bhopal', 'fas fa-flask', 'assets/images/dept_pharma3.jpg', 'Dedicated institute fostering advanced research in nanomedicine, pharmacognosy, and pharmaceutical biotechnology.', '', '2018'],
