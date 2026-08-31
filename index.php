@@ -202,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 <div class="stat-txt">Global Alumni</div>
             </div>
             <div class="col stat-box">
-                <div class="stat-val">25+</div>
+                <div class="stat-val">2555+</div>
                 <div class="stat-txt">Years of Excellence</div>
             </div>
         </div>
