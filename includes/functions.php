@@ -277,19 +277,7 @@ function getCourses($deptSlug = null, $level = null, $search = null, $limit = nu
             $params[':kw5'] = '%' . $search . '%';
         }
 
-        $levelOrderCase = "CASE 
-            WHEN level IN ('Diploma', 'Certificate') OR course_name LIKE '%Diploma%' OR course_name LIKE '%Polytechnic%' THEN 10
-            WHEN level IN ('UG', 'Undergraduate') OR course_name LIKE 'B.%' OR course_name LIKE 'Bachelor%' THEN 20
-            WHEN level IN ('PG', 'Postgraduate') OR course_name LIKE 'M.%' OR course_name LIKE 'Master%' OR course_name LIKE 'MBA%' OR course_name LIKE 'MCA%' THEN 30
-            WHEN level = 'Doctorate' OR course_name LIKE 'Ph.D%' THEN 40
-            ELSE 50
-        END";
-
-        if (!empty($deptSlug)) {
-            $sql .= " ORDER BY {$levelOrderCase} ASC, course_name ASC";
-        } else {
-            $sql .= " ORDER BY department ASC, {$levelOrderCase} ASC, course_name ASC";
-        }
+        $sql .= " ORDER BY department ASC, course_name ASC";
         if (!empty($limit)) {
             $sql .= " LIMIT " . (int)$limit;
         }
