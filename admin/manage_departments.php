@@ -66,13 +66,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($editId > 0) {
-        $stmt = $pdo->prepare("UPDATE departments SET name = :n, category = :cat, slug = :s, icon = :i, image = :img, dean_name = :d, dean_designation = :dd, dean_photo = :dp, dean_message = :dm, contact_no = :con, approvals = :app, established_year = :y, description = :desc, status = :st WHERE id = :id");
+        $stmt = $pdo->prepare("UPDATE departments SET name = :n, category = :cat, slug = :s, icon = :i, image = :img, banner_img = :bimg, dean_name = :d, dean_designation = :dd, dean_photo = :dp, dean_message = :dm, contact_no = :con, approvals = :app, established_year = :y, description = :desc, status = :st WHERE id = :id");
         $stmt->execute([
             ':n' => $name,
             ':cat' => $category,
             ':s' => $slug,
             ':i' => $icon,
             ':img' => $image,
+            ':bimg' => $image,
             ':d' => $dean,
             ':dd' => $deanDesignation,
             ':dp' => $deanPhoto,
@@ -86,13 +87,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         setFlashMsg('success', 'Department updated successfully.');
     } else {
-        $stmt = $pdo->prepare("INSERT INTO departments (name, category, slug, icon, image, dean_name, dean_designation, dean_photo, dean_message, contact_no, approvals, established_year, description, status) VALUES (:n, :cat, :s, :i, :img, :d, :dd, :dp, :dm, :con, :app, :y, :desc, :st)");
+        $stmt = $pdo->prepare("INSERT INTO departments (name, category, slug, icon, image, banner_img, dean_name, dean_designation, dean_photo, dean_message, contact_no, approvals, established_year, description, status) VALUES (:n, :cat, :s, :i, :img, :bimg, :d, :dd, :dp, :dm, :con, :app, :y, :desc, :st)");
         $stmt->execute([
             ':n' => $name,
             ':cat' => $category,
             ':s' => $slug,
             ':i' => $icon,
             ':img' => $image,
+            ':bimg' => $image,
             ':d' => $dean,
             ':dd' => $deanDesignation,
             ':dp' => $deanPhoto,
@@ -188,8 +190,16 @@ $departments = $pdo->query("SELECT * FROM departments ORDER BY name ASC")->fetch
                 <div class="row g-3 align-items-center">
                     <div class="col-12 col-md-3 text-center">
                         <?php 
-                        $deptImg = $editItem['image'] ?? 'assets/uploads/2026/07/001.webp';
-                        $deptImgSrc = (strpos($deptImg, 'http') === 0) ? $deptImg : BASE_URL . $deptImg;
+                        $deptImg = !empty($editItem['image']) ? $editItem['image'] : (!empty($editItem['banner_img']) ? $editItem['banner_img'] : '');
+                        if (empty($deptImg) || !file_exists(__DIR__ . '/../' . ltrim(str_replace('\\', '/', $deptImg), '/'))) {
+                            $cand = 'assets/uploads/constituent-units/' . ($editItem['slug'] ?? '') . '.webp';
+                            if (!empty($editItem['slug']) && file_exists(__DIR__ . '/../' . $cand)) {
+                                $deptImg = $cand;
+                            } else {
+                                $deptImg = 'assets/uploads/2026/07/001.webp';
+                            }
+                        }
+                        $deptImgSrc = resolveMediaUrl($deptImg, 'assets/uploads/2026/07/001.webp');
                         ?>
                         <div class="rounded-3 overflow-hidden border shadow-xs bg-light p-1" style="height: 120px;">
                             <img src="<?php echo $deptImgSrc; ?>" 
@@ -304,7 +314,15 @@ $departments = $pdo->query("SELECT * FROM departments ORDER BY name ASC")->fetch
                 </thead>
                 <tbody>
                     <?php foreach ($departments as $d): 
-                        $dImg = $d['image'] ?: 'assets/uploads/2026/07/001.webp';
+                        $dImg = !empty($d['image']) ? $d['image'] : (!empty($d['banner_img']) ? $d['banner_img'] : '');
+                        if (empty($dImg) || !file_exists(__DIR__ . '/../' . ltrim(str_replace('\\', '/', $dImg), '/'))) {
+                            $cand = 'assets/uploads/constituent-units/' . ($d['slug'] ?? '') . '.webp';
+                            if (file_exists(__DIR__ . '/../' . $cand)) {
+                                $dImg = $cand;
+                            } else {
+                                $dImg = 'assets/uploads/2026/07/001.webp';
+                            }
+                        }
                         $dImgSrc = resolveMediaUrl($dImg, 'assets/uploads/2026/07/001.webp');
                     ?>
                         <tr>

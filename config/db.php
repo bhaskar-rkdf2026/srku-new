@@ -67,11 +67,18 @@ function autoInitializeTables($pdo) {
             CREATE TABLE IF NOT EXISTS departments (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
+                category TEXT DEFAULT 'General',
                 slug TEXT UNIQUE NOT NULL,
                 icon TEXT,
+                image TEXT,
                 banner_img TEXT,
                 description TEXT,
                 dean_name TEXT,
+                dean_designation TEXT DEFAULT 'Dean & Principal',
+                dean_photo TEXT,
+                dean_message TEXT,
+                contact_no TEXT DEFAULT '0755-4700983, 7024144981',
+                approvals TEXT DEFAULT 'UGC',
                 established_year TEXT,
                 status TEXT DEFAULT 'active'
             );
@@ -158,9 +165,13 @@ function autoInitializeTables($pdo) {
                 `category` VARCHAR(100) DEFAULT 'General',
                 `slug` VARCHAR(191) NOT NULL UNIQUE,
                 `icon` VARCHAR(100) DEFAULT 'fas fa-graduation-cap',
+                `image` VARCHAR(255) DEFAULT NULL,
                 `banner_img` VARCHAR(255),
                 `description` LONGTEXT,
                 `dean_name` VARCHAR(150),
+                `dean_designation` VARCHAR(150) DEFAULT 'Dean & Principal',
+                `dean_photo` VARCHAR(255) DEFAULT NULL,
+                `dean_message` LONGTEXT DEFAULT NULL,
                 `contact_no` VARCHAR(100) DEFAULT '0755-4700983, 7024144981',
                 `approvals` VARCHAR(255) DEFAULT 'UGC',
                 `established_year` VARCHAR(10),
@@ -241,8 +252,38 @@ function autoInitializeTables($pdo) {
         try {
             $deptCols = $pdo->query("SHOW COLUMNS FROM `departments`")->fetchAll(PDO::FETCH_COLUMN);
             if (!in_array('category', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `category` VARCHAR(100) DEFAULT 'General' AFTER `name`");
+            if (!in_array('image', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `image` VARCHAR(255) DEFAULT NULL AFTER `icon`");
+            if (!in_array('dean_designation', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `dean_designation` VARCHAR(150) DEFAULT 'Dean & Principal' AFTER `dean_name`");
+            if (!in_array('dean_photo', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `dean_photo` VARCHAR(255) DEFAULT NULL AFTER `dean_designation`");
+            if (!in_array('dean_message', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `dean_message` LONGTEXT DEFAULT NULL AFTER `dean_photo`");
             if (!in_array('contact_no', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `contact_no` VARCHAR(100) DEFAULT '0755-4700983, 7024144981' AFTER `dean_name`");
             if (!in_array('approvals', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `approvals` VARCHAR(255) DEFAULT 'UGC' AFTER `contact_no`");
+
+            // Auto-sync constituent unit images from assets/uploads/constituent-units/{slug}.webp if image is empty or default
+            $allDepts = $pdo->query("SELECT id, slug, image, banner_img FROM `departments`")->fetchAll(PDO::FETCH_ASSOC);
+            $syncStmt = $pdo->prepare("UPDATE `departments` SET image = :img, banner_img = :bimg WHERE id = :id");
+            $baseDir = dirname(__DIR__);
+            foreach ($allDepts as $ad) {
+                $candPath = 'assets/uploads/constituent-units/' . $ad['slug'] . '.webp';
+                if (file_exists($baseDir . '/' . $candPath)) {
+                    $needUpdate = false;
+                    $currImg = $ad['image'] ?? '';
+                    $currBanner = $ad['banner_img'] ?? '';
+                    if (empty($currImg) || strpos($currImg, '001.webp') !== false || strpos($currImg, 'dept_') !== false) {
+                        $needUpdate = true;
+                    }
+                    if (empty($currBanner) || strpos($currBanner, '001.webp') !== false || strpos($currBanner, 'dept_') !== false) {
+                        $needUpdate = true;
+                    }
+                    if ($needUpdate) {
+                        $syncStmt->execute([
+                            ':img' => $candPath,
+                            ':bimg' => $candPath,
+                            ':id' => $ad['id']
+                        ]);
+                    }
+                }
+            }
 
             $cols = $pdo->query("SHOW COLUMNS FROM `courses`")->fetchAll(PDO::FETCH_COLUMN);
             if (!in_array('department', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `department` VARCHAR(150) AFTER `id`");
@@ -366,7 +407,7 @@ function autoInitializeTables($pdo) {
 
             // Management & Business
             ['Department of Management', 'department-of-management', 'Master of Business Administration (MBA)', 'mba', 'PG', '2 Years', 'Graduation in any stream (Min 50%)', '₹60,000 / Year', 'Dual specialization in Marketing, Finance, Human Resource, Business Analytics, and International Business.', 'Business Manager, Marketing Executive, Financial Analyst, HR Manager'],
-            ['Department of Management', 'department-of-management', 'Bachelor of Business Administration (BBA)', 'bba', 'UG', '3 Years', '10+2 in any stream (Min 45%)', '₹40,000 / Year', 'Core business administration curriculum with real-world case studies, entrepreneurship, and management internships.', 'Management Trainee, Sales Officer, Business Development Executive'],
+
 
             // Nursing
             ['RKDF College of Nursing', 'rkdf-college-of-nursing', 'B.Sc. Nursing', 'b-sc-nursing', 'UG', '4 Years', '10+2 with PCB and English (Min 45% aggregate)', '₹85,000 / Year', 'INC recognized nursing program with extensive multi-specialty clinical hospital rotations and patient care training.', 'Nursing Officer, ICU Specialist, Staff Nurse (Govt & Private Hospitals)'],
