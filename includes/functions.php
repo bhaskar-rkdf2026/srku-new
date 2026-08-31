@@ -61,11 +61,22 @@ function normalizeMediaPath($path, $default = '') {
         return $cleanPath;
     }
 
-    // 2. Search common folders (including gallery directories)
+    // 1b. Check if cleanPath is missing 'assets/' prefix
+    if (strpos($cleanPath, 'uploads/') === 0 && is_file($baseDir . '/assets/' . $cleanPath)) {
+        return 'assets/' . $cleanPath;
+    }
+    // 1c. Support singular / plural constituent-unit(s) folder
+    $altUnitPath = str_replace('constituent-unit/', 'constituent-units/', $cleanPath);
+    if (is_file($baseDir . '/' . $altUnitPath)) {
+        return $altUnitPath;
+    }
+    if (is_file($baseDir . '/assets/' . $altUnitPath)) {
+        return 'assets/' . $altUnitPath;
+    }
+
+    // 2. Search common folders
     $candidateDirs = [
-        'assets/uploads/gallery/webp/',
-        'assets/uploads/gallery/',
-        'assets/uploads/gallery/webp_backup/',
+        'assets/uploads/constituent-units/',
         'assets/images/',
         'assets/uploads/2026/08/',
         'assets/uploads/2026/07/',
@@ -280,7 +291,19 @@ function getCourses($deptSlug = null, $level = null, $search = null, $limit = nu
             $params[':kw5'] = '%' . $search . '%';
         }
 
-        $sql .= " ORDER BY department ASC, course_name ASC";
+        $levelOrderCase = "CASE 
+            WHEN level IN ('Diploma', 'Certificate') OR course_name LIKE '%Diploma%' OR course_name LIKE '%Polytechnic%' THEN 10
+            WHEN level IN ('UG', 'Undergraduate') OR course_name LIKE 'B.%' OR course_name LIKE 'Bachelor%' THEN 20
+            WHEN level IN ('PG', 'Postgraduate') OR course_name LIKE 'M.%' OR course_name LIKE 'Master%' OR course_name LIKE 'MBA%' OR course_name LIKE 'MCA%' THEN 30
+            WHEN level = 'Doctorate' OR course_name LIKE 'Ph.D%' THEN 40
+            ELSE 50
+        END";
+
+        if (!empty($deptSlug)) {
+            $sql .= " ORDER BY {$levelOrderCase} ASC, course_name ASC";
+        } else {
+            $sql .= " ORDER BY department ASC, {$levelOrderCase} ASC, course_name ASC";
+        }
         if (!empty($limit)) {
             $sql .= " LIMIT " . (int)$limit;
         }

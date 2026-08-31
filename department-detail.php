@@ -54,6 +54,61 @@ $courses = array_values(array_filter($courses, function($c) {
     return !in_array($lvl, ['doctorate', 'phd', 'ph.d', 'doctoral']) && !in_array($degLvl, ['doctorate', 'phd', 'ph.d', 'doctoral']);
 }));
 
+// Arrange courses strictly by degree hierarchy: 1. Diploma -> 2. Bachelors (UG) -> 3. Masters (PG)
+usort($courses, function($a, $b) {
+    $orderVal = function($c) {
+        $lvl = strtolower(trim($c['level'] ?? ''));
+        $degLvl = strtolower(trim($c['degree_level'] ?? ''));
+        $name = strtolower(trim($c['course_name'] ?? ''));
+
+        // 1. Diploma / Polytechnic / Certificate
+        if (strpos($lvl, 'dip') !== false || strpos($lvl, 'cert') !== false || 
+            strpos($degLvl, 'dip') !== false || strpos($degLvl, 'cert') !== false ||
+            strpos($name, 'diploma') !== false || strpos($name, 'polytechnic') !== false) {
+            return 10;
+        }
+
+        // 2. Bachelors / UG / Undergraduate
+        if ($lvl === 'ug' || strpos($lvl, 'undergrad') !== false || 
+            $degLvl === 'ug' || strpos($degLvl, 'undergrad') !== false ||
+            strpos($name, 'b.') !== false || strpos($name, 'bachelor') !== false ||
+            strpos($name, 'bca') !== false || strpos($name, 'bba') !== false ||
+            strpos($name, 'bpt') !== false || strpos($name, 'bmlt') !== false ||
+            strpos($name, 'mbbs') !== false || strpos($name, 'bds') !== false ||
+            strpos($name, 'bams') !== false || strpos($name, 'bhms') !== false) {
+            return 20;
+        }
+
+        // 3. Masters / PG / Postgraduate
+        if ($lvl === 'pg' || strpos($lvl, 'postgrad') !== false || 
+            $degLvl === 'pg' || strpos($degLvl, 'postgrad') !== false ||
+            strpos($name, 'm.') !== false || strpos($name, 'master') !== false ||
+            strpos($name, 'mba') !== false || strpos($name, 'mca') !== false ||
+            strpos($name, 'mpt') !== false || strpos($name, 'md') !== false ||
+            strpos($name, 'ms') !== false) {
+            if (strpos($name, 'm.tech') !== false || strpos($name, 'm.e') !== false) return 31;
+            if (strpos($name, 'mca') !== false) return 32;
+            if (strpos($name, 'mba') !== false) return 33;
+            return 35;
+        }
+
+        // 4. Doctorate / PhD
+        if (strpos($lvl, 'doc') !== false || strpos($lvl, 'phd') !== false ||
+            strpos($name, 'ph.d') !== false || strpos($name, 'doctor') !== false) {
+            return 40;
+        }
+
+        return 50;
+    };
+
+    $valA = $orderVal($a);
+    $valB = $orderVal($b);
+    if ($valA !== $valB) {
+        return $valA <=> $valB;
+    }
+    return strcmp($a['course_name'], $b['course_name']);
+});
+
 // Group courses by level
 $ugCourses = array_filter($courses, fn($c) => $c['level'] === 'UG');
 $pgCourses = array_filter($courses, fn($c) => $c['level'] === 'PG');
@@ -86,7 +141,15 @@ $externalWebsites = [
 
 $sealFile = $exactSeals[$dept['slug']] ?? null;
 $officialWebsite = $externalWebsites[$dept['slug']] ?? null;
-$deptImg = !empty($dept['image']) ? $dept['image'] : 'assets/uploads/2026/07/001.webp';
+$deptImg = !empty($dept['image']) ? $dept['image'] : (!empty($dept['banner_img']) ? $dept['banner_img'] : '');
+if (empty($deptImg) || !file_exists(__DIR__ . '/' . ltrim(str_replace('\\', '/', $deptImg), '/'))) {
+    $cand = 'assets/uploads/constituent-units/' . ($dept['slug'] ?? '') . '.webp';
+    if (file_exists(__DIR__ . '/' . $cand)) {
+        $deptImg = $cand;
+    } else {
+        $deptImg = 'assets/uploads/2026/07/001.webp';
+    }
+}
 $deptImgSrc = resolveMediaUrl($deptImg, 'assets/uploads/2026/07/001.webp');
 
 // Other departments for sidebar
@@ -96,11 +159,13 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
 // RKDF IST: Dynamic PDF resolver — uses local file if downloaded, else falls back to live URL
 $_istPdfBase = BASE_URL . 'assets/pdf/rkdf-ist/';
 $_istPdfDir  = __DIR__ . '/assets/pdf/rkdf-ist/';
-function istPdf(string $localRelPath, string $fallbackUrl): string {
-    global $_istPdfDir, $_istPdfBase;
-    return file_exists($_istPdfDir . $localRelPath)
-        ? $_istPdfBase . $localRelPath
-        : $fallbackUrl;
+if (!function_exists('istPdf')) {
+    function istPdf(string $localRelPath, string $fallbackUrl): string {
+        global $_istPdfDir, $_istPdfBase;
+        return file_exists($_istPdfDir . $localRelPath)
+            ? $_istPdfBase . $localRelPath
+            : $fallbackUrl;
+    }
 }
 ?>
 
@@ -405,9 +470,6 @@ function istPdf(string $localRelPath, string $fallbackUrl): string {
                                                             &bull; <?php echo sanitize($sp); ?>
                                                         </span>
                                                     <?php endforeach; ?>
-                                                    <span class="badge rounded-2 fw-medium py-2 px-3 text-start" style="background: #f8fafc; color: #334155; border: 1px solid #e2e8f0; font-size: 0.83rem; white-space: normal; line-height: 1.4;">
-                                                        &bull; &amp; many more...
-                                                    </span>
                                                 </div>
                                             </div>
                                         <?php endif; ?>

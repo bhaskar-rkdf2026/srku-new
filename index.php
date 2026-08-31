@@ -47,7 +47,7 @@ $vcMsg2 = getSetting('vc_msg2', 'We foster innovation, high-impact research, and
 $enquirySuccess = false;
 $enquiryErr = '';
 $enquiryMsg = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquiry'])) {
     $res = saveEnquiryLead(
         $_POST['name'] ?? '',
         $_POST['email'] ?? '',
@@ -380,8 +380,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
                 $topUnits = $pdo->query("SELECT * FROM departments ORDER BY id ASC LIMIT 8")->fetchAll();
             }
             foreach ($topUnits as $u):
-                $uImg = $u['image'] ?: 'assets/uploads/2026/07/001.webp';
-                $uImgSrc = (strpos($uImg, 'http') === 0) ? $uImg : BASE_URL . $uImg;
+                $uImg = !empty($u['image']) ? $u['image'] : (!empty($u['banner_img']) ? $u['banner_img'] : '');
+                if (empty($uImg) || !file_exists(__DIR__ . '/' . ltrim(str_replace('\\', '/', $uImg), '/'))) {
+                    $cand = 'assets/uploads/constituent-units/' . ($u['slug'] ?? '') . '.webp';
+                    if (file_exists(__DIR__ . '/' . $cand)) {
+                        $uImg = $cand;
+                    } else {
+                        $uImg = 'assets/uploads/2026/07/001.webp';
+                    }
+                }
+                $uImgSrc = resolveMediaUrl($uImg, 'assets/uploads/2026/07/001.webp');
                 $uDesc = !empty($u['description']) ? strip_tags($u['description']) : 'Premier academic and research constituent unit at SRK University.';
                 if (mb_strlen($uDesc) > 95) {
                     $uDesc = mb_substr($uDesc, 0, 92) . '...';

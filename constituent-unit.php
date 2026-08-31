@@ -10,7 +10,15 @@ $units = [];
 
 if (!empty($dbDepartments)) {
     foreach ($dbDepartments as $d) {
-        $img = !empty($d['image']) ? $d['image'] : 'assets/uploads/2026/07/001.webp';
+        $img = !empty($d['image']) ? $d['image'] : (!empty($d['banner_img']) ? $d['banner_img'] : '');
+        if (empty($img) || !file_exists(__DIR__ . '/' . ltrim(str_replace('\\', '/', $img), '/'))) {
+            $cand = 'assets/uploads/constituent-units/' . ($d['slug'] ?? '') . '.webp';
+            if (file_exists(__DIR__ . '/' . $cand)) {
+                $img = $cand;
+            } else {
+                $img = 'assets/uploads/2026/07/001.webp';
+            }
+        }
         $units[] = [
             'title' => $d['name'],
             'subtitle' => !empty($d['category']) ? $d['category'] : 'Constituent Institute',

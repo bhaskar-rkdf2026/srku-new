@@ -166,6 +166,34 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete') {
     exit;
 }
 
+// Auto-seed if gallery table is empty
+$totalCount = (int)$pdo->query("SELECT COUNT(*) FROM gallery")->fetchColumn();
+if ($totalCount === 0) {
+    $webpDir = dirname(__DIR__) . '/assets/uploads/gallery/webp/';
+    $files = glob($webpDir . '*.webp');
+    if (!empty($files)) {
+        $insertStmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url, created_at) VALUES (:title, :cat, :url, NOW())");
+        foreach ($files as $f) {
+            $bn = basename($f);
+            $relUrl = 'assets/uploads/gallery/webp/' . $bn;
+            $cat = 'Campus';
+            if (strpos($bn, 'gym') !== false || in_array($bn, ['dsc06520.webp','dsc06574.webp','dsc06575.webp','dsc06576.webp','dsc06577.webp','dsc06586.webp','dsc06587.webp','dsc06588.webp','dsc06600.webp','dsc06603.webp','dsc06605.webp','dsc06607.webp','dsc06609.webp','dsc06611.webp','dsc06612.webp','dsc06614.webp','dsc06615.webp','dsc06617.webp','dsc06618.webp','dsc06619.webp','dsc06622.webp','dsc06623.webp'])) {
+                $cat = 'Gym';
+            } elseif (strpos($bn, 'sport') !== false || in_array($bn, ['dsc06517.webp','dsc06525.webp','dsc06527.webp','dsc06528.webp','dsc06533.webp','dsc06534.webp','dsc06537.webp','dsc06538.webp','dsc06539.webp','dsc06540.webp','dsc06541.webp','dsc06542.webp','dsc06547.webp','dsc06548.webp','dsc06554.webp','dsc06578.webp','dsc06579.webp','dsc06580.webp','dsc06582.webp','dsc06583.webp'])) {
+                $cat = 'Sports';
+            } elseif (strpos($bn, 'med') !== false || strpos($bn, 'hosp') !== false || in_array($bn, ['dsc06740.webp','dsc06754.webp','dsc06767.webp','dsc06769.webp','dsc06772.webp','dsc06839.webp','dsc06842.webp','dsc06847.webp','dsc06857.webp'])) {
+                $cat = 'Medical';
+            }
+            $insertStmt->execute([
+                ':title' => 'SRKU Campus & Infrastructure Photo',
+                ':cat' => $cat,
+                ':url' => $relUrl
+            ]);
+        }
+        $totalCount = (int)$pdo->query("SELECT COUNT(*) FROM gallery")->fetchColumn();
+    }
+}
+
 // Fetch Category Counts
 $counts = [];
 foreach ($categories as $k => $c) {
@@ -173,7 +201,6 @@ foreach ($categories as $k => $c) {
     $stmt->execute([':cat' => $k]);
     $counts[$k] = (int)$stmt->fetchColumn();
 }
-$totalCount = (int)$pdo->query("SELECT COUNT(*) FROM gallery")->fetchColumn();
 $counts['all'] = $totalCount;
 
 // Query Photos for Active Tab
