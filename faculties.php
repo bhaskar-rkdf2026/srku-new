@@ -233,13 +233,13 @@ foreach ($allFaculty as $f) {
                 $initials = strtoupper(substr($parts[0] ?? 'S', 0, 1) . substr($parts[1] ?? ($parts[0] ?? 'R'), 0, 1));
             ?>
                 <div class="col-12 col-md-6 col-lg-4 faculty-item" 
-                     data-name="<?php echo sanitize(strtolower($name)); ?>"
-                     data-dept="<?php echo sanitize(strtolower($deptSlug . ' ' . $dept)); ?>"
-                     data-desig="<?php echo sanitize(strtolower($desig)); ?>"
-                     data-category="<?php echo sanitize($catKey); ?>"
-                     data-role="<?php echo sanitize($roleCat); ?>"
-                     data-qual="<?php echo sanitize(strtolower($qual)); ?>"
-                     data-exp="<?php echo sanitize(strtolower($exp)); ?>">
+                     data-name="<?php echo sanitize(strtolower((string)$name)); ?>"
+                     data-dept="<?php echo sanitize(strtolower((string)($deptSlug . ' ' . $dept))); ?>"
+                     data-desig="<?php echo sanitize(strtolower((string)$desig)); ?>"
+                     data-category="<?php echo sanitize((string)$catKey); ?>"
+                     data-role="<?php echo sanitize((string)$roleCat); ?>"
+                     data-qual="<?php echo sanitize(strtolower((string)$qual)); ?>"
+                     data-exp="<?php echo sanitize(strtolower((string)$exp)); ?>">
                     
                     <div class="card h-100 border shadow-sm rounded-4 bg-white faculty-card transition-hover position-relative <?php echo $isDean ? 'card-dean' : ''; ?>">
                         <div class="card-body p-4 d-flex flex-column justify-content-between">
@@ -336,13 +336,13 @@ foreach ($allFaculty as $f) {
                             elseif (stripos($tDept, 'Management') !== false || stripos($tDept, 'Business') !== false) $tCatKey = 'management';
                         ?>
                             <tr class="faculty-table-row"
-                                data-name="<?php echo sanitize(strtolower($fac['name'])); ?>"
-                                data-dept="<?php echo sanitize(strtolower($fac['dept_slug'] . ' ' . $fac['department_name'])); ?>"
-                                data-desig="<?php echo sanitize(strtolower($fac['designation'])); ?>"
-                                data-category="<?php echo sanitize($tCatKey); ?>"
-                                data-role="<?php echo sanitize($tRoleCat); ?>"
-                                data-qual="<?php echo sanitize(strtolower($fac['qualification'])); ?>"
-                                data-exp="<?php echo sanitize(strtolower($fac['experience'])); ?>">
+                                data-name="<?php echo sanitize(strtolower((string)($fac['name'] ?? ''))); ?>"
+                                data-dept="<?php echo sanitize(strtolower((string)(($fac['dept_slug'] ?? '') . ' ' . ($fac['department_name'] ?? '')))); ?>"
+                                data-desig="<?php echo sanitize(strtolower((string)($fac['designation'] ?? ''))); ?>"
+                                data-category="<?php echo sanitize((string)$tCatKey); ?>"
+                                data-role="<?php echo sanitize((string)$tRoleCat); ?>"
+                                data-qual="<?php echo sanitize(strtolower((string)($fac['qualification'] ?? ''))); ?>"
+                                data-exp="<?php echo sanitize(strtolower((string)($fac['experience'] ?? ''))); ?>">
                                 <td class="text-muted small"><?php echo $tIdx; ?></td>
                                 <td>
                                     <div class="fw-bold text-navy"><?php echo sanitize($fac['name']); ?></div>

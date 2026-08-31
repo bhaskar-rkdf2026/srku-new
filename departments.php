@@ -174,6 +174,12 @@ $filteredDepartments = array_filter($allDepartments, function($dept) use ($selec
                     if (empty($deptCourses)) {
                         $deptCourses = getCourses($dept['name']);
                     }
+                    // Filter out Doctorate / PhD programs from department listings
+                    $deptCourses = array_values(array_filter($deptCourses, function($dc) {
+                        $lvl = strtolower(trim($dc['level'] ?? ''));
+                        $degLvl = strtolower(trim($dc['degree_level'] ?? ''));
+                        return !in_array($lvl, ['doctorate', 'phd', 'ph.d', 'doctoral']) && !in_array($degLvl, ['doctorate', 'phd', 'ph.d', 'doctoral']);
+                    }));
                     $courseCount = count($deptCourses);
 
                     // Degree levels summary
@@ -183,7 +189,7 @@ $filteredDepartments = array_filter($allDepartments, function($dept) use ($selec
                         if (stripos($lvl, 'diploma') !== false && stripos($lvl, 'cert') !== false) {
                             $lvl = 'Diploma / Cert.';
                         } elseif (stripos($lvl, 'doctorate') !== false || stripos($lvl, 'ph.d') !== false) {
-                            $lvl = 'Doctorate (Ph.D.)';
+                            continue;
                         }
                         if ($lvl && !in_array($lvl, $levels)) {
                             $levels[] = $lvl;

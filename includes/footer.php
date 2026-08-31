@@ -24,6 +24,69 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
 <!-- ═══════════════════════════════════════════════════════
      FOOTER SECTION (Bootstrap 5.3 Responsive Grid)
 ═══════════════════════════════════════════════════════ -->
+<style>
+.srku-footer {
+    background: #11142d;
+    color: #cbd5e1;
+}
+.footer-col h5 {
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    color: #ffffff;
+    font-size: 0.98rem;
+    font-weight: 700;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    border-bottom: 3px solid var(--srku-gold, #f59e0b);
+    display: inline-block;
+    letter-spacing: 0.4px;
+}
+.footer-col ul li {
+    margin-bottom: 6px;
+}
+.footer-col a {
+    color: #cbd5e1;
+    font-size: 0.85rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.2s ease;
+    line-height: 1.4;
+}
+.footer-col a i {
+    transition: transform 0.2s ease, color 0.2s ease;
+    display: inline-block;
+    flex-shrink: 0;
+}
+.footer-col a:hover {
+    color: var(--srku-gold, #f59e0b) !important;
+    padding-left: 0 !important;
+}
+.footer-col a:hover i {
+    transform: translateX(3px);
+    color: #ffffff !important;
+}
+.footer-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--srku-gold, #f59e0b);
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+    margin-right: 6px;
+    text-decoration: none;
+}
+.footer-social a:hover {
+    background: var(--srku-maroon, #7A0B0D);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(122, 11, 13, 0.4);
+}
+</style>
+
 <footer class="srku-footer pt-5">
     <div class="container-xl pb-4">
         <div class="row g-4">
@@ -52,68 +115,67 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
             </div>
 
             <!-- Col 2: Quick Links -->
-            <div class="col-12 col-md-6 col-lg-2 footer-col">
+            <div class="col-12 col-sm-6 col-lg-2 footer-col">
                 <h5 class="fw-bold text-white mb-3">Quick Links</h5>
-                <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+                <ul class="list-unstyled mb-0 d-flex flex-column">
                     <li><a href="<?php echo BASE_URL; ?>chancellor-message.php"><i class="fas fa-angle-right me-1 text-warning"></i> Chancellor's Message</a></li>
                     <li><a href="<?php echo BASE_URL; ?>vice-chancellor-message.php"><i class="fas fa-angle-right me-1 text-warning"></i> VC's Message</a></li>
                     <li><a href="<?php echo BASE_URL; ?>academic-calendar.php"><i class="fas fa-angle-right me-1 text-warning"></i> Academic Calendar</a></li>
                     <li><a href="<?php echo BASE_URL; ?>exam-rules.php"><i class="fas fa-angle-right me-1 text-warning"></i> Examination Rules</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>hostel.php"><i class="fas fa-angle-right me-1 text-warning"></i> Hostel Accommodation</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>hostel.php"><i class="fas fa-angle-right me-1 text-warning"></i> Hostel Facility</a></li>
                     <li><a href="<?php echo BASE_URL; ?>about.php"><i class="fas fa-angle-right me-1 text-warning"></i> About SRKU</a></li>
                     <li><a href="<?php echo BASE_URL; ?>why-srk.php"><i class="fas fa-angle-right me-1 text-warning"></i> Why Choose SRKU</a></li>
                     <li><a href="<?php echo BASE_URL; ?>courses.php"><i class="fas fa-angle-right me-1 text-warning"></i> Academic Programmes</a></li>
                     <li><a href="<?php echo BASE_URL; ?>placements.php"><i class="fas fa-angle-right me-1 text-warning"></i> Placement Records</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>gallery.php"><i class="fas fa-camera-retro me-1 text-warning"></i> Campus Photo Gallery</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>grievance.php"><i class="fas fa-angle-right me-1 text-warning"></i> Grievance / Complaint</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>sitemap.php"><i class="fas fa-sitemap me-1 text-warning"></i> Website Sitemap</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>gallery.php"><i class="fas fa-camera-retro me-1 text-warning"></i> Photo Gallery</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>admission-enquiry.php"><i class="fas fa-angle-right me-1 text-warning"></i> Admission Enquiry</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>grievance.php"><i class="fas fa-angle-right me-1 text-warning"></i> Grievance Cell</a></li>
                 </ul>
             </div>
 
             <!-- Col 3: Constituent Units (Top 10) -->
-            <div class="col-12 col-md-6 col-lg-2 footer-col">
+            <div class="col-12 col-sm-6 col-lg-2 footer-col">
                 <h5 class="fw-bold text-white mb-3">Constituent Units</h5>
-                <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-technology"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF IST (Engineering)</a></li>
+                <ul class="list-unstyled mb-0 d-flex flex-column">
+                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-technology"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF IST (Engg.)</a></li>
                     <li><a href="https://rkdfmedicalcollege.org/" target="_blank"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Medical College</a></li>
-                    <li><a href="http://www.srkcahrc.in/" target="_blank"><i class="fas fa-angle-right me-1 text-warning"></i> SRK College of Ayurveda</a></li>
-                    <li><a href="http://www.rkdfhmc.in/" target="_blank"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Homoeopathic Medical</a></li>
+                    <li><a href="http://www.srkcahrc.in/" target="_blank"><i class="fas fa-angle-right me-1 text-warning"></i> SRK Ayurveda College</a></li>
+                    <li><a href="http://www.rkdfhmc.in/" target="_blank"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Homoeopathy</a></li>
                     <li><a href="http://rkdfdentalcollege.in/" target="_blank"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Dental College</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-pharmacy"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF College of Pharmacy</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=sri-sai-college-of-pharmacy"><i class="fas fa-angle-right me-1 text-warning"></i> Sri Sai Pharmacy College</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-nursing"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF College of Nursing</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-management"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Institute of Mgmt.</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-pharmacy"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Pharmacy College</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=sri-sai-college-of-pharmacy"><i class="fas fa-angle-right me-1 text-warning"></i> Sri Sai Pharmacy</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-nursing"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Nursing College</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-management"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Mgmt. Institute</a></li>
                     <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=sarvepalli-radhakrishnan-college-of-law"><i class="fas fa-angle-right me-1 text-warning"></i> SRK College of Law</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>constituent-unit.php" class="text-warning fw-bold"><i class="fas fa-arrow-circle-right me-1"></i> View All Constituent Units &rarr;</a></li>
+                    <li class="pt-1"><a href="<?php echo BASE_URL; ?>constituent-unit.php" class="text-warning fw-bold"><i class="fas fa-arrow-circle-right me-1"></i> View All Units &rarr;</a></li>
                 </ul>
             </div>
 
             <!-- Col 4: CONTACT INFO -->
             <div class="col-12 col-md-6 col-lg-2 footer-col">
                 <h5 class="fw-bold text-white mb-3">CONTACT INFO</h5>
-                <div class="footer-contact-block text-light-50 small" style="line-height: 1.75; font-size: 0.86rem;">
-                    <div>NH-12, Hoshangabad Road,</div>
-                    <div>Jatkhedi, Misrod,</div>
-                    <div>Bhopal,</div>
+                <div class="footer-contact-block text-light-50 small" style="line-height: 1.75; font-size: 0.85rem;">
+                    <div class="mb-1"><i class="fas fa-map-marker-alt text-warning me-1"></i> NH-12, Hoshangabad Rd,</div>
+                    <div>Jatkhedi, Misrod, Bhopal,</div>
                     <div class="mb-2">Madhya Pradesh 462026</div>
-                    <div class="mb-1"><a href="tel:07554700983" class="text-light-50 text-decoration-none d-inline-block hover-gold">07554700983</a></div>
-                    <div class="mb-1"><a href="tel:07557024144981" class="text-light-50 text-decoration-none d-inline-block hover-gold">0755 7024144981,83,84,85,86</a></div>
-                    <div><a href="mailto:info@srku.edu.in" class="text-warning text-decoration-none d-inline-block hover-gold">info@srku.edu.in</a></div>
+                    <div class="mb-1"><i class="fas fa-phone-alt text-warning me-1"></i> <a href="tel:07554700983" class="text-light-50 text-decoration-none hover-gold">0755 - 4700983</a></div>
+                    <div class="mb-2"><i class="fas fa-mobile-alt text-warning me-1"></i> <a href="tel:7024144981" class="text-light-50 text-decoration-none hover-gold">+91 7024144981</a></div>
+                    <div><i class="fas fa-envelope text-warning me-1"></i> <a href="mailto:info@srku.edu.in" class="text-warning text-decoration-none hover-gold">info@srku.edu.in</a></div>
                 </div>
             </div>
 
             <!-- Col 5: IMPORTANT NO. & MAIL ID -->
             <div class="col-12 col-md-6 col-lg-3 footer-col">
                 <h5 class="fw-bold text-white mb-3">IMPORTANT NO.</h5>
-                <div class="footer-contact-block text-light-50 small" style="line-height: 1.75; font-size: 0.86rem;">
-                    <div class="mb-1">EXAM help line <a href="tel:07554911204" class="text-light-50 text-decoration-none hover-gold fw-semibold">07554911204</a></div>
-                    <div class="mb-1">ACADEMIC help line <a href="tel:07554700982" class="text-light-50 text-decoration-none hover-gold fw-semibold">0755-4700982</a></div>
-                    <div class="mb-3">ADMISSION help line no <a href="tel:7024144981" class="text-light-50 text-decoration-none hover-gold fw-semibold">7024144981</a></div>
+                <div class="footer-contact-block text-light-50 small" style="line-height: 1.75; font-size: 0.85rem;">
+                    <div class="mb-1">EXAM helpline: <a href="tel:07554911204" class="text-light-50 text-decoration-none hover-gold fw-semibold">0755 - 4911204</a></div>
+                    <div class="mb-1">ACADEMIC helpline: <a href="tel:07554700982" class="text-light-50 text-decoration-none hover-gold fw-semibold">0755 - 4700982</a></div>
+                    <div class="mb-3">ADMISSION helpline: <a href="tel:7024144981" class="text-light-50 text-decoration-none hover-gold fw-semibold">+91 7024144981</a></div>
                     
-                    <h6 class="text-white fw-bold mb-2 text-uppercase" style="font-size: 0.88rem; letter-spacing: 0.5px;">IMPORTANT MAIL ID.</h6>
-                    <div class="mb-1">For Document Verification <a href="mailto:exam@srku.edu.in" class="text-warning text-decoration-none hover-gold">exam@srku.edu.in</a></div>
-                    <div class="mb-1">Registrar Office <a href="mailto:registrar@srku.edu.in" class="text-warning text-decoration-none hover-gold">registrar@srku.edu.in</a></div>
-                    <div>VC Office <a href="mailto:vc@srku.edu.in" class="text-warning text-decoration-none hover-gold">vc@srku.edu.in</a></div>
+                    <h6 class="text-white fw-bold mb-2 text-uppercase" style="font-size: 0.85rem; letter-spacing: 0.5px;">IMPORTANT MAIL ID</h6>
+                    <div class="mb-1">Verification: <a href="mailto:exam@srku.edu.in" class="text-warning text-decoration-none hover-gold">exam@srku.edu.in</a></div>
+                    <div class="mb-1">Registrar: <a href="mailto:registrar@srku.edu.in" class="text-warning text-decoration-none hover-gold">registrar@srku.edu.in</a></div>
+                    <div>VC Office: <a href="mailto:vc@srku.edu.in" class="text-warning text-decoration-none hover-gold">vc@srku.edu.in</a></div>
                 </div>
             </div>
 

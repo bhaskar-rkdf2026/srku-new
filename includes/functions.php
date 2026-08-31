@@ -255,10 +255,12 @@ function getCourses($deptSlug = null, $level = null, $search = null, $limit = nu
         }
 
         if (!empty($search)) {
-            $sql .= " AND (course_name LIKE :kw1 OR department LIKE :kw2 OR description LIKE :kw3)";
+            $sql .= " AND (course_name LIKE :kw1 OR department LIKE :kw2 OR description LIKE :kw3 OR specializations LIKE :kw4 OR eligibility LIKE :kw5)";
             $params[':kw1'] = '%' . $search . '%';
             $params[':kw2'] = '%' . $search . '%';
             $params[':kw3'] = '%' . $search . '%';
+            $params[':kw4'] = '%' . $search . '%';
+            $params[':kw5'] = '%' . $search . '%';
         }
 
         $sql .= " ORDER BY department ASC, course_name ASC";
