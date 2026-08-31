@@ -29,7 +29,7 @@ if (!defined('BASE_URL')) {
 if (!defined('DB_HOST')) define('DB_HOST', 'localhost');
 if (!defined('DB_USER')) define('DB_USER', 'root');
 if (!defined('DB_PASS')) define('DB_PASS', '');
-if (!defined('DB_NAME')) define('DB_NAME', 'srku_db');
+if (!defined('DB_NAME')) define('DB_NAME', 'srku_db_new');
 
 // Session Initialization
 if (session_status() == PHP_SESSION_NONE) {

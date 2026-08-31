@@ -13,6 +13,10 @@ Options -Indexes
     # Legacy wp-content uploads mapping to assets/uploads
     RewriteRule ^wp-content/uploads/(.*)$ assets/uploads/$1 [L,NC]
 
+    # Dynamic XML & HTML Sitemap
+    RewriteRule ^sitemap\.xml$ sitemap.php?xml=1 [L,QSA]
+    RewriteRule ^sitemap/?$ sitemap.php [L,QSA]
+
     # Clean URLs for Main Navigation Pages
     RewriteRule ^about/?$ about.php [L,QSA]
     RewriteRule ^about/why-srk/?$ why-srk.php [L,QSA]
@@ -126,6 +130,7 @@ Options -Indexes
 
 # Set Default Charset
 AddDefaultCharset UTF-8
+AddType application/xml .xsl .xml
 
 # Security Headers
 <IfModule mod_headers.c>
