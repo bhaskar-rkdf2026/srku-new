@@ -3,8 +3,18 @@ require_once __DIR__ . '/includes/functions.php';
 
 $vcName = getSetting('vc_name', 'Ms. Priyanka Jaiswal');
 $vcTitle = getSetting('vc_title', 'Vice Chancellor');
-$vcPhoto = getSetting('vc_photo', 'assets/uploads/2026/07/ruchichaubey.webp');
+$vcPhoto = getSetting('vc_photo', '');
+if (strpos($vcPhoto, 'ruchichaubey') !== false) { $vcPhoto = ''; }
 $vcPhotoSrc = (strpos($vcPhoto, 'http') === 0) ? $vcPhoto : BASE_URL . $vcPhoto;
+$vcEmail = getSetting('vc_email', 'vc@srku.edu.in');
+$vcGoalsRaw = getSetting('vc_goals', "Choice Based Credit System (CBCS)\nIndustry-Integrated Curriculum & Internships\nInterdisciplinary Research Publications\nGlobal Academic Partnerships & MOUs");
+$vcGoals = array_filter(array_map('trim', explode("\n", $vcGoalsRaw)));
+$vcHeading = getSetting('vc_heading', 'Empowering Minds for a Knowledge Economy');
+$vcSalutation = getSetting('vc_salutation', 'Dear Students, Scholars, Faculty Colleagues, and Visitors,');
+$vcMsg = getSetting('vc_msg', 'It is my distinct honor and privilege to welcome you to Sarvepalli Radhakrishnan University (SRKU), Bhopal. As Vice Chancellor, my primary commitment is to create an inspiring, inclusive, and forward-looking academic ecosystem where intellectual rigor meets societal responsibility.');
+$vcMsg2 = getSetting('vc_msg2', 'Higher education today is experiencing unprecedented transformation. The rapid advancements in Artificial Intelligence, medical biotechnology, renewable energy, smart manufacturing, and digital jurisprudence require universities to reinvent their pedagogical frameworks. At SRKU, our curriculum is strictly benchmarked with National Education Policy (NEP) guidelines and continuously updated in consultation with apex academic bodies and Fortune 500 industry leaders.');
+$vcMsg3 = getSetting('vc_msg3', 'Our 1,000+ distinguished faculty members—including experienced professors, medical surgeons, scientists, and legal scholars—serve not just as teachers, but as dedicated mentors who nurture the unique talents of each individual student. Through continuous faculty development and active research initiatives, we maintain the highest standards of academic delivery.');
+$vcMsg4 = getSetting('vc_msg4', 'To all our learners: SRKU is your canvas. Strive for excellence, question conventional thinking, embrace multidisciplinary perspectives, and lead with empathy. Together, let us contribute meaningfully to the advancement of knowledge, human welfare, and the nation.');
 $vcFullPage = getSetting('vc_full_page_msg', '');
 
 $pageTitle = "Vice Chancellor's Message | " . $vcName . " | SRKU Bhopal";
@@ -101,23 +111,16 @@ require_once __DIR__ . '/includes/header.php';
                     <div class="card-body p-4 bg-white">
                         <h6 class="fw-bold text-navy mb-3 text-uppercase small" style="letter-spacing: 0.5px;">Academic Strategic Goals</h6>
                         <ul class="list-unstyled mb-4 small text-secondary d-flex flex-column gap-2">
-                            <li class="d-flex align-items-center gap-2">
-                                <i class="fas fa-check-circle text-primary"></i> Choice Based Credit System (CBCS)
-                            </li>
-                            <li class="d-flex align-items-center gap-2">
-                                <i class="fas fa-check-circle text-primary"></i> Industry-Integrated Curriculum &amp; Internships
-                            </li>
-                            <li class="d-flex align-items-center gap-2">
-                                <i class="fas fa-check-circle text-primary"></i> Interdisciplinary Research Publications
-                            </li>
-                            <li class="d-flex align-items-center gap-2">
-                                <i class="fas fa-check-circle text-primary"></i> Global Academic Partnerships &amp; MOUs
-                            </li>
+                            <?php foreach ($vcGoals as $goal): ?>
+                                <li class="d-flex align-items-center gap-2">
+                                    <i class="fas fa-check-circle text-primary"></i> <?php echo sanitize($goal); ?>
+                                </li>
+                            <?php endforeach; ?>
                         </ul>
 
                         <div class="border-top pt-3 text-center">
-                            <a href="mailto:vc@srku.edu.in" class="btn btn-outline-primary btn-sm w-100 rounded-pill fw-semibold py-2">
-                                <i class="fas fa-envelope me-1"></i> vc@srku.edu.in
+                            <a href="mailto:<?php echo sanitize($vcEmail); ?>" class="btn btn-outline-primary btn-sm w-100 rounded-pill fw-semibold py-2">
+                                <i class="fas fa-envelope me-1"></i> <?php echo sanitize($vcEmail); ?>
                             </a>
                         </div>
                     </div>
@@ -133,48 +136,52 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                         <div>
                             <span class="badge bg-navy text-white px-3 py-1 rounded-pill small fw-bold" style="background-color: #0F1E3B;">Vice Chancellor's Vision</span>
-                            <h3 class="fw-bold text-navy mb-0 mt-1">Empowering Minds for a Knowledge Economy</h3>
+                            <h2 class="h3 fw-bold text-navy mb-0 mt-1"><?php echo sanitize($vcHeading); ?></h2>
                         </div>
                     </div>
 
-                    <?php if (!empty($vcFullPage)): ?>
-                        <div class="vc-custom-content text-secondary" style="line-height: 1.85;">
-                            <?php echo $vcFullPage; ?>
-                        </div>
-                    <?php else: ?>
+                    <?php if (!empty($vcSalutation)): ?>
                         <div class="lead text-secondary mb-4" style="line-height: 1.8; font-size: 1.05rem;">
-                            Dear Students, Scholars, Faculty Colleagues, and Visitors,
+                            <?php echo sanitize($vcSalutation); ?>
                         </div>
+                    <?php endif; ?>
 
-                        <p class="text-secondary" style="line-height: 1.8;">
-                            It is my distinct honor and privilege to welcome you to <strong>Sarvepalli Radhakrishnan University (SRKU)</strong>, Bhopal. As Vice Chancellor, my primary commitment is to create an inspiring, inclusive, and forward-looking academic ecosystem where intellectual rigor meets societal responsibility.
+                    <?php if (!empty($vcMsg)): ?>
+                        <p class="text-secondary" style="line-height: 1.85; font-size: 1.02rem;">
+                            <?php echo nl2br(sanitize($vcMsg)); ?>
                         </p>
+                    <?php endif; ?>
 
-                        <p class="text-secondary" style="line-height: 1.8;">
-                            Higher education today is experiencing unprecedented transformation. The rapid advancements in Artificial Intelligence, medical biotechnology, renewable energy, smart manufacturing, and digital jurisprudence require universities to reinvent their pedagogical frameworks. At SRKU, our curriculum is strictly benchmarked with National Education Policy (NEP) guidelines and continuously updated in consultation with apex academic bodies and Fortune 500 industry leaders.
+                    <?php if (!empty($vcMsg2)): ?>
+                        <p class="text-secondary" style="line-height: 1.85; font-size: 1.02rem;">
+                            <?php echo nl2br(sanitize($vcMsg2)); ?>
                         </p>
+                    <?php endif; ?>
 
-                        <div class="row g-3 my-3">
-                            <div class="col-12 col-md-6">
-                                <div class="p-3 bg-light rounded-3 border">
-                                    <h6 class="fw-bold text-navy mb-1"><i class="fas fa-laptop-code text-primary me-2"></i> Experiential Pedagogy</h6>
-                                    <p class="text-muted small mb-0">Project-based learning, simulation labs, industry internships, and live clinical exposure for all students.</p>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="p-3 bg-light rounded-3 border">
-                                    <h6 class="fw-bold text-navy mb-1"><i class="fas fa-microscope text-primary me-2"></i> Research First Mindset</h6>
-                                    <p class="text-muted small mb-0">Encouraging undergraduate and doctoral research, patent filing, seed funding, and indexed journal publications.</p>
-                                </div>
+                    <div class="row g-3 my-3">
+                        <div class="col-12 col-md-6">
+                            <div class="p-3 bg-light rounded-3 border">
+                                <h6 class="fw-bold text-navy mb-1"><i class="fas fa-laptop-code text-primary me-2"></i> Experiential Pedagogy</h6>
+                                <p class="text-muted small mb-0">Project-based learning, simulation labs, industry internships, and live clinical exposure for all students.</p>
                             </div>
                         </div>
+                        <div class="col-12 col-md-6">
+                            <div class="p-3 bg-light rounded-3 border">
+                                <h6 class="fw-bold text-navy mb-1"><i class="fas fa-microscope text-primary me-2"></i> Research First Mindset</h6>
+                                <p class="text-muted small mb-0">Encouraging undergraduate and doctoral research, patent filing, seed funding, and indexed journal publications.</p>
+                            </div>
+                        </div>
+                    </div>
 
-                        <p class="text-secondary" style="line-height: 1.8;">
-                            Our 1,000+ distinguished faculty members—including experienced professors, medical surgeons, scientists, and legal scholars—serve not just as teachers, but as dedicated mentors who nurture the unique talents of each individual student. Through continuous faculty development and active research initiatives, we maintain the highest standards of academic delivery.
+                    <?php if (!empty($vcMsg3)): ?>
+                        <p class="text-secondary" style="line-height: 1.85; font-size: 1.02rem;">
+                            <?php echo nl2br(sanitize($vcMsg3)); ?>
                         </p>
+                    <?php endif; ?>
 
-                        <p class="text-secondary" style="line-height: 1.8;">
-                            I invite you to explore our university, engage with our vibrant campus culture, and embark on a fulfilling educational odyssey that will equip you with the knowledge, skills, and values required to thrive in a globalized world.
+                    <?php if (!empty($vcMsg4)): ?>
+                        <p class="text-secondary" style="line-height: 1.85; font-size: 1.02rem;">
+                            <?php echo nl2br(sanitize($vcMsg4)); ?>
                         </p>
                     <?php endif; ?>
 
@@ -185,9 +192,9 @@ require_once __DIR__ . '/includes/header.php';
                             <small class="text-muted">Sarvepalli Radhakrishnan University, Bhopal</small>
                         </div>
                         <div class="text-sm-end">
-                            <span class="badge bg-light text-secondary border px-3 py-2 rounded-pill small">
-                                <i class="fas fa-envelope text-primary me-1"></i> vc@srku.edu.in
-                            </span>
+                            <a href="mailto:<?php echo sanitize($vcEmail); ?>" class="badge bg-light text-secondary border px-3 py-2 rounded-pill small text-decoration-none">
+                                <i class="fas fa-envelope text-primary me-1"></i> <?php echo sanitize($vcEmail); ?>
+                            </a>
                         </div>
                     </div>
                 </div>

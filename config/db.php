@@ -138,6 +138,22 @@ function autoInitializeTables($pdo) {
                 setting_key TEXT UNIQUE NOT NULL,
                 setting_value TEXT
             );
+            CREATE TABLE IF NOT EXISTS syllabi (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                category_slug TEXT NOT NULL,
+                category_title TEXT NOT NULL,
+                department TEXT,
+                title TEXT NOT NULL,
+                type TEXT DEFAULT 'Syllabus',
+                file_path TEXT NOT NULL,
+                filename TEXT,
+                original_url TEXT,
+                file_size INTEGER DEFAULT 0,
+                status TEXT DEFAULT 'active',
+                sort_order INTEGER DEFAULT 0,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
         ");
     } else {
         $pdo->exec("
@@ -245,6 +261,27 @@ function autoInitializeTables($pdo) {
                 `id` INT AUTO_INCREMENT PRIMARY KEY,
                 `setting_key` VARCHAR(100) NOT NULL UNIQUE,
                 `setting_value` TEXT
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `syllabi` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `category_slug` VARCHAR(100) NOT NULL,
+                `category_title` VARCHAR(150) NOT NULL,
+                `department` VARCHAR(150) DEFAULT NULL,
+                `title` VARCHAR(255) NOT NULL,
+                `type` VARCHAR(50) DEFAULT 'Syllabus',
+                `file_path` VARCHAR(255) NOT NULL,
+                `filename` VARCHAR(255) DEFAULT NULL,
+                `original_url` TEXT DEFAULT NULL,
+                `file_size` INT DEFAULT 0,
+                `status` ENUM('active','inactive') DEFAULT 'active',
+                `sort_order` INT DEFAULT 0,
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                INDEX `idx_category` (`category_slug`),
+                INDEX `idx_status` (`status`),
+                INDEX `idx_type` (`type`),
+                INDEX `idx_order` (`sort_order`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
         ");
 

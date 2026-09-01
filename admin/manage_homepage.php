@@ -109,15 +109,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_homepage_section
         'chancellor_heading' => sanitize($_POST['chancellor_heading'] ?? 'A Legacy of Excellence, A Vision for Tomorrow'),
         'chancellor_msg' => $_POST['chancellor_msg'] ?? '',
         'chancellor_msg2' => $_POST['chancellor_msg2'] ?? '',
+        'chancellor_msg_hindi' => $_POST['chancellor_msg_hindi'] ?? '',
         'chancellor_full_page_msg' => $_POST['chancellor_full_page_msg'] ?? '',
 
         // Section 6: Vice Chancellor
         'vc_name' => sanitize($_POST['vc_name'] ?? 'Ms. Priyanka Jaiswal'),
         'vc_title' => sanitize($_POST['vc_title'] ?? 'Vice Chancellor'),
         'vc_photo' => $vcPhoto,
-        'vc_heading' => sanitize($_POST['vc_heading'] ?? 'Pioneering Excellence, Empowering Future Leaders'),
+        'vc_email' => sanitize($_POST['vc_email'] ?? 'vc@srku.edu.in'),
+        'vc_goals' => $_POST['vc_goals'] ?? '',
+        'vc_heading' => sanitize($_POST['vc_heading'] ?? 'Empowering Minds for a Knowledge Economy'),
+        'vc_salutation' => sanitize($_POST['vc_salutation'] ?? 'Dear Students, Scholars, Faculty Colleagues, and Visitors,'),
         'vc_msg' => $_POST['vc_msg'] ?? '',
         'vc_msg2' => $_POST['vc_msg2'] ?? '',
+        'vc_msg3' => $_POST['vc_msg3'] ?? '',
+        'vc_msg4' => $_POST['vc_msg4'] ?? '',
         'vc_full_page_msg' => $_POST['vc_full_page_msg'] ?? ''
     ];
 
@@ -158,15 +164,21 @@ $chancellorPhoto = getSetting('chancellor_photo', 'assets/uploads/2026/08/chance
 $chancellorHeading = getSetting('chancellor_heading', 'A Legacy of Excellence, A Vision for Tomorrow');
 $chancellorMsg = getSetting('chancellor_msg', 'It is a matter of great joy that the notification for the establishment of Sarvepalli Radhakrishnan University, Bhopal, has been issued by the State Government.');
 $chancellorMsg2 = getSetting('chancellor_msg2', "In order to maintain quality in the field of higher education in the state, it is an important responsibility of private universities, alongside government universities, to bring about change in research and exploration. It is hoped that Sarvepalli Radhakrishnan University will, in the future, deliver unprecedented performance on quality standards and establish itself as the state's foremost institution of education.");
+$chancellorMsgHindi = getSetting('chancellor_msg_hindi', 'यह अत्यंत हर्ष का विषय है कि सर्वपल्ली राधाकृष्णन विश्वविद्यालय भोपाल की स्थापना की अधिसूचना राज्य शासन द्वारा जारी की गई है। प्रदेश में उच्च शिक्षा के क्षेत्र में गुणवत्ता बनाये रखने हेतु शासकीय विश्वविद्यालय के साथ-साथ निजी विश्वविद्यालय की भी अहम जिम्मेदारी है कि रिसर्च और अन्वेषण में परिवर्तन लावें। आशा है कि सर्वपल्ली राधाकृष्णन विश्वविद्यालय भविष्य में गुणवत्ता के पैमाने पर अभूतपूर्व प्रदर्शन कर, राज्य के सर्वश्रेष्ठ शिक्षा संस्थान के रूप में अपना स्थान बना सकेगा।');
 $chancellorFullPage = getSetting('chancellor_full_page_msg', '');
 
 $vcName = getSetting('vc_name', 'Ms. Priyanka Jaiswal');
 $vcTitle = getSetting('vc_title', 'Vice Chancellor');
 $vcPhoto = getSetting('vc_photo', '');
 if (strpos($vcPhoto, 'ruchichaubey') !== false) { $vcPhoto = ''; }
-$vcHeading = getSetting('vc_heading', 'Pioneering Excellence, Empowering Future Leaders');
-$vcMsg = getSetting('vc_msg', 'At SRK University, our mission is to transform ambitious learners into visionary global leaders through outcome-based education and cutting-edge research.');
-$vcMsg2 = getSetting('vc_msg2', 'We foster innovation, high-impact research, and multi-disciplinary excellence. Our state-of-the-art infrastructure and faculty mentorship ensure every graduate is prepared for global careers.');
+$vcEmail = getSetting('vc_email', 'vc@srku.edu.in');
+$vcGoals = getSetting('vc_goals', "Choice Based Credit System (CBCS)\nIndustry-Integrated Curriculum & Internships\nInterdisciplinary Research Publications\nGlobal Academic Partnerships & MOUs");
+$vcHeading = getSetting('vc_heading', 'Empowering Minds for a Knowledge Economy');
+$vcSalutation = getSetting('vc_salutation', 'Dear Students, Scholars, Faculty Colleagues, and Visitors,');
+$vcMsg = getSetting('vc_msg', 'It is my distinct honor and privilege to welcome you to Sarvepalli Radhakrishnan University (SRKU), Bhopal. As Vice Chancellor, my primary commitment is to create an inspiring, inclusive, and forward-looking academic ecosystem where intellectual rigor meets societal responsibility.');
+$vcMsg2 = getSetting('vc_msg2', 'Higher education today is experiencing unprecedented transformation. The rapid advancements in Artificial Intelligence, medical biotechnology, renewable energy, smart manufacturing, and digital jurisprudence require universities to reinvent their pedagogical frameworks. At SRKU, our curriculum is strictly benchmarked with National Education Policy (NEP) guidelines and continuously updated in consultation with apex academic bodies and Fortune 500 industry leaders.');
+$vcMsg3 = getSetting('vc_msg3', 'Our 1,000+ distinguished faculty members—including experienced professors, medical surgeons, scientists, and legal scholars—serve not just as teachers, but as dedicated mentors who nurture the unique talents of each individual student. Through continuous faculty development and active research initiatives, we maintain the highest standards of academic delivery.');
+$vcMsg4 = getSetting('vc_msg4', 'To all our learners: SRKU is your canvas. Strive for excellence, question conventional thinking, embrace multidisciplinary perspectives, and lead with empathy. Together, let us contribute meaningfully to the advancement of knowledge, human welfare, and the nation.');
 $vcFullPage = getSetting('vc_full_page_msg', '');
 ?>
 
@@ -570,16 +582,16 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
                         <small class="text-muted">Appears under the highlight box on the homepage.</small>
                     </div>
 
-                    <!-- 4. Full Page Message (for chancellor-message.php) -->
-                    <div class="mb-3 pt-2 border-top">
+                    <!-- 4. Original Hindi Address (मूल संदेश) -->
+                    <div class="mb-3">
                         <label class="form-label small fw-bold text-navy mb-1">
-                            <i class="fas fa-file-alt text-success me-1"></i> Full Detailed Message for Chancellor Page (Optional Override)
+                            <i class="fas fa-language text-danger me-1"></i> Original Hindi Message (मूल संदेश - Chancellor's Page)
                         </label>
-                        <textarea name="chancellor_full_page_msg" class="form-control rich-editor" rows="5"><?php echo sanitize($chancellorFullPage); ?></textarea>
-                        <small class="text-muted">Leave empty to use structured institutional address template.</small>
+                        <textarea name="chancellor_msg_hindi" class="form-control" rows="4"><?php echo sanitize($chancellorMsgHindi); ?></textarea>
+                        <small class="text-muted">Appears in the &ldquo;Original Address &bull; मूल संदेश&rdquo; card on the Chancellor's Message page.</small>
                     </div>
 
-                    <div class="text-end pt-3">
+                    <div class="text-end pt-3 border-top mt-4">
                         <button type="submit" class="btn btn-danger px-4 py-2 rounded-pill fw-bold shadow-sm">
                             <i class="fas fa-save me-1"></i> Save Chancellor Settings
                         </button>
@@ -636,9 +648,22 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
                             <label class="form-label small fw-bold text-navy mb-1">Vice Chancellor Name</label>
                             <input type="text" name="vc_name" class="form-control form-control-sm" value="<?php echo sanitize($vcName); ?>">
                         </div>
-                        <div>
+                        <div class="mb-3">
                             <label class="form-label small fw-bold text-navy mb-1">Official Designation</label>
                             <input type="text" name="vc_title" class="form-control form-control-sm" value="<?php echo sanitize($vcTitle); ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-navy mb-1">
+                                <i class="fas fa-envelope text-primary me-1"></i> Official Email
+                            </label>
+                            <input type="text" name="vc_email" class="form-control form-control-sm" value="<?php echo sanitize($vcEmail); ?>" placeholder="vc@srku.edu.in">
+                        </div>
+                        <div>
+                            <label class="form-label small fw-bold text-navy mb-1">
+                                <i class="fas fa-check-circle text-primary me-1"></i> Academic Strategic Goals
+                            </label>
+                            <textarea name="vc_goals" class="form-control form-control-sm" rows="4" placeholder="One goal per line"><?php echo sanitize($vcGoals); ?></textarea>
+                            <small class="text-muted" style="font-size:0.75rem;">Enter one goal per line for the left sidebar.</small>
                         </div>
                     </div>
                 </div>
@@ -647,34 +672,48 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
                 <div class="col-12 col-lg-8">
                     
                     <div class="mb-3">
-                        <label class="form-label small fw-bold text-navy mb-1">VC Section Heading</label>
+                        <label class="form-label small fw-bold text-navy mb-1">VC Section &amp; Page Main Title</label>
                         <input type="text" name="vc_heading" class="form-control" value="<?php echo sanitize($vcHeading); ?>">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-navy mb-1">
-                            <i class="fas fa-quote-left text-primary me-1"></i> Highlight Quote Box (Lead Vision)
+                            <i class="fas fa-handshake text-secondary me-1"></i> Welcome Salutation
                         </label>
-                        <textarea name="vc_msg" class="form-control" rows="3"><?php echo sanitize($vcMsg); ?></textarea>
+                        <input type="text" name="vc_salutation" class="form-control" value="<?php echo sanitize($vcSalutation); ?>" placeholder="Dear Students, Scholars, Faculty Colleagues, and Visitors,">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-navy mb-1">
-                            <i class="fas fa-paragraph text-info me-1"></i> Main Extended Paragraph Body
+                            <i class="fas fa-quote-left text-primary me-1"></i> Paragraph 1: Welcome &amp; Primary Academic Commitment
+                        </label>
+                        <textarea name="vc_msg" class="form-control" rows="3"><?php echo sanitize($vcMsg); ?></textarea>
+                        <small class="text-muted">Appears in the opening highlight paragraph.</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-navy mb-1">
+                            <i class="fas fa-graduation-cap text-info me-1"></i> Paragraph 2: NEP 2020 &amp; Higher Education Vision
                         </label>
                         <textarea name="vc_msg2" class="form-control" rows="4"><?php echo sanitize($vcMsg2); ?></textarea>
                     </div>
 
-                    <!-- Full Page Message for VC Page -->
-                    <div class="mb-3 pt-2 border-top">
+                    <div class="mb-3">
                         <label class="form-label small fw-bold text-navy mb-1">
-                            <i class="fas fa-file-alt text-primary me-1"></i> Full Detailed Message for VC Page (Optional Override)
+                            <i class="fas fa-chalkboard-teacher text-success me-1"></i> Paragraph 3: Faculty Mentorship &amp; Research Culture
                         </label>
-                        <textarea name="vc_full_page_msg" class="form-control rich-editor" rows="5"><?php echo sanitize($vcFullPage); ?></textarea>
+                        <textarea name="vc_msg3" class="form-control" rows="3"><?php echo sanitize($vcMsg3); ?></textarea>
                     </div>
 
-                    <div class="text-end pt-3">
-                        <button type="submit" class="btn btn-danger px-4 py-2 rounded-pill fw-bold shadow-sm">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-navy mb-1">
+                            <i class="fas fa-bullhorn text-warning me-1"></i> Paragraph 4: Concluding Call to Learners
+                        </label>
+                        <textarea name="vc_msg4" class="form-control" rows="3"><?php echo sanitize($vcMsg4); ?></textarea>
+                    </div>
+
+                    <div class="text-end pt-3 border-top mt-4">
+                        <button type="submit" class="btn btn-primary px-4 py-2 rounded-pill fw-bold shadow-sm">
                             <i class="fas fa-save me-1"></i> Save VC Settings
                         </button>
                     </div>

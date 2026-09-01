@@ -1,6 +1,11 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
-require_once __DIR__ . '/includes/syllabus_data.php';
+
+// Dynamic Database Fetch (With file fallback)
+$syllabusCategories = getDynamicSyllabusData(true);
+if (empty($syllabusCategories) && file_exists(__DIR__ . '/includes/syllabus_data.php')) {
+    require_once __DIR__ . '/includes/syllabus_data.php';
+}
 
 $pageTitle = "Scheme & Syllabus | Semester Curriculum & PDF Downloads | SRKU";
 $pageDesc = "Download official course schemes, semester-wise syllabus, examination guidelines, and grading patterns for all degree and diploma programs at Sarvepalli Radhakrishnan University (SRKU), Bhopal.";
@@ -43,7 +48,7 @@ require_once __DIR__ . '/includes/header.php';
             </div>
             <h2 class="fw-bold text-navy display-6 mb-2">Download Course Scheme &amp; Syllabus</h2>
             <p class="text-secondary lead fs-6">
-                Access official university curriculum outlines, detailed semester-wise subject schemes, credit distribution, internal assessment criteria, and prescribed syllabi directly with fast local downloads.
+                Access official university curriculum outlines, detailed semester-wise subject schemes, credit distribution, internal assessment criteria, and prescribed syllabus directly with fast local downloads.
             </p>
         </div>
 
@@ -255,7 +260,7 @@ require_once __DIR__ . '/includes/header.php';
                     <div>
                         <h3 class="fw-bold text-navy mb-2">Need Past Question Papers or Previous Schemes?</h3>
                         <p class="text-secondary mb-0">
-                            If you require archival syllabi prior to 2015, special back-log examination schemes, or subject equivalence certificates for migration, please submit a request to the Controller of Examinations.
+                            If you require archival syllabus prior to 2015, special back-log examination schemes, or subject equivalence certificates for migration, please submit a request to the Controller of Examinations.
                         </p>
                     </div>
                 </div>
@@ -570,11 +575,15 @@ function resetSyllabusFilters() {
     switchCategory('all');
 }
 
-// On page load, handle any hash anchors like #allied-courses or query params
+// On page load, handle any query params (?course=b-pharmacy) or hash anchors (#allied-courses)
 window.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseParam = urlParams.get('course');
     const hash = window.location.hash.replace('#', '').trim();
-    if (hash && document.getElementById('cat-block-' + hash)) {
-        switchCategory(hash);
+    const target = (courseParam && courseParam !== 'all') ? courseParam : hash;
+
+    if (target && document.getElementById('cat-block-' + target)) {
+        switchCategory(target);
     } else {
         filterSyllabus();
     }

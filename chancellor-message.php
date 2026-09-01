@@ -5,6 +5,10 @@ $chancellorName = getSetting('chancellor_name', 'Mrs. Janak Kapoor');
 $chancellorTitle = getSetting('chancellor_title', 'Chancellor');
 $chancellorPhoto = getSetting('chancellor_photo', 'assets/uploads/2026/08/chancellor.jpeg');
 $chancellorPhotoSrc = (strpos($chancellorPhoto, 'http') === 0) ? $chancellorPhoto : BASE_URL . $chancellorPhoto;
+$chancellorHeading = getSetting('chancellor_heading', 'A Legacy of Excellence, A Vision for Tomorrow');
+$chancellorMsg = getSetting('chancellor_msg', 'It is a matter of great joy that the notification for the establishment of Sarvepalli Radhakrishnan University, Bhopal, has been issued by the State Government.');
+$chancellorMsg2 = getSetting('chancellor_msg2', "In order to maintain quality in the field of higher education in the state, it is an important responsibility of private universities, alongside government universities, to bring about change in research and exploration. It is hoped that Sarvepalli Radhakrishnan University will, in the future, deliver unprecedented performance on quality standards and establish itself as the state's foremost institution of education.");
+$chancellorMsgHindi = getSetting('chancellor_msg_hindi', 'यह अत्यंत हर्ष का विषय है कि सर्वपल्ली राधाकृष्णन विश्वविद्यालय भोपाल की स्थापना की अधिसूचना राज्य शासन द्वारा जारी की गई है। प्रदेश में उच्च शिक्षा के क्षेत्र में गुणवत्ता बनाये रखने हेतु शासकीय विश्वविद्यालय के साथ-साथ निजी विश्वविद्यालय की भी अहम जिम्मेदारी है कि रिसर्च और अन्वेषण में परिवर्तन लावें। आशा है कि सर्वपल्ली राधाकृष्णन विश्वविद्यालय भविष्य में गुणवत्ता के पैमाने पर अभूतपूर्व प्रदर्शन कर, राज्य के सर्वश्रेष्ठ शिक्षा संस्थान के रूप में अपना स्थान बना सकेगा।');
 $chancellorFullPage = getSetting('chancellor_full_page_msg', '');
 
 $pageTitle = "Chancellor's Message | " . $chancellorName . " | SRKU Bhopal";
@@ -131,41 +135,32 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                         <div>
                             <span class="badge bg-warning text-dark px-3 py-1 rounded-pill small fw-bold">Chancellor's Address</span>
-                            <h3 class="fw-bold text-navy mb-0 mt-1">Warm Greetings &amp; Welcome to SRKU</h3>
+                            <h2 class="h3 fw-bold text-navy mb-0 mt-1"><?php echo sanitize($chancellorHeading); ?></h2>
                         </div>
                     </div>
 
-                    <?php if (!empty($chancellorFullPage)): ?>
-                        <div class="chancellor-custom-content text-secondary" style="line-height: 1.85;">
-                            <?php echo $chancellorFullPage; ?>
-                        </div>
-                    <?php else: ?>
-                        <div class="lead text-secondary mb-4" style="line-height: 1.8; font-size: 1.05rem;">
-                            Dear Students, Parents, Educators, and Esteemed Partners,
-                        </div>
-
-                        <p class="text-secondary" style="line-height: 1.8;">
-                            It gives me immense pleasure and pride to welcome you to <strong>Sarvepalli Radhakrishnan University (SRKU)</strong>, Bhopal — an institution established on the enduring philosophical foundations of Dr. Sarvepalli Radhakrishnan, who believed that <em>"The true teachers are those who help us think for ourselves."</em>
+                    <!-- Main Quote Lead Box (Same as Homepage) -->
+                    <div class="p-4 rounded-4 mb-4" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-left: 5px solid #ea580c;">
+                        <p class="mb-0 fw-semibold text-dark" style="line-height: 1.85; font-size: 1.08rem;">
+                            &ldquo;<?php echo sanitize($chancellorMsg); ?>&rdquo;
                         </p>
+                    </div>
 
-                        <p class="text-secondary" style="line-height: 1.8;">
-                            Since our inception under the aegis of the RKDF Education Society in 1995, our journey has been defined by an unwavering dedication to democratizing quality higher education. We envisioned creating a world-class academic hub in central India that brings together cutting-edge engineering, life-saving medical sciences, advanced pharmacy, holistic AYUSH healthcare, agricultural breakthroughs, legal acumen, and entrepreneurial leadership under one vibrant umbrella.
-                        </p>
+                    <!-- Main Paragraph Body (Same as Homepage) -->
+                    <p class="text-secondary mb-4" style="line-height: 1.9; font-size: 1.02rem;">
+                        <?php echo nl2br(sanitize($chancellorMsg2)); ?>
+                    </p>
 
-                        <div class="p-4 rounded-4 my-4" style="background: linear-gradient(135deg, #fdfbf7 0%, #f7f1e5 100%); border-left: 4px solid var(--srku-maroon);">
-                            <h5 class="fw-bold text-navy mb-2"><i class="fas fa-lightbulb text-warning me-2"></i> Our Educational Philosophy</h5>
-                            <p class="text-muted small mb-0" style="line-height: 1.7;">
-                                "In an era of rapid technological disruption, our mission is not merely to impart textbook knowledge, but to ignite curiosity, foster critical thinking, instill ethical integrity, and nurture resilient global citizens capable of solving 21st-century challenges."
+                    <!-- Original Hindi Address Card (Verbatim from Chancellor / Admin Connected) -->
+                    <?php if (!empty($chancellorMsgHindi)): ?>
+                        <div class="p-4 rounded-4 my-4" style="background: #f8fafc; border-left: 4px solid var(--srku-maroon); border: 1px solid #e2e8f0;">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <span class="badge bg-danger-subtle text-danger fw-bold px-2 py-1 rounded-pill small">Original Address &bull; मूल संदेश</span>
+                            </div>
+                            <p class="text-dark mb-0 fw-medium" style="line-height: 1.85; font-size: 0.98rem;">
+                                &ldquo;<?php echo nl2br(sanitize($chancellorMsgHindi)); ?>&rdquo;
                             </p>
                         </div>
-
-                        <p class="text-secondary" style="line-height: 1.8;">
-                            At SRKU, we take immense pride in our state-of-the-art infrastructure comprising 42+ advanced research laboratories, digital libraries, an operational multi-specialty teaching hospital, simulation suites, and an active startup incubation centre. Our world-class faculty mentors work tirelessly to ensure that our students receive experiential, outcome-based pedagogy that bridges the gap between academic theory and real-world industrial practice.
-                        </p>
-
-                        <p class="text-secondary" style="line-height: 1.8;">
-                            To every aspiring student joining our campus: I assure you that your years at SRKU will be transformative. You will be encouraged to explore, question, experiment, and excel. We are committed to standing by you as you craft your dreams and build a glorious future for yourself and the nation.
-                        </p>
                     <?php endif; ?>
 
                     <div class="mt-5 pt-4 border-top d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">

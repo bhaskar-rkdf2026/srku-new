@@ -131,9 +131,11 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 $dbConn = getDBConnection();
                 $deptsCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM departments")->fetchColumn();
                 $galleryCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM gallery")->fetchColumn();
+                $syllabusCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM syllabi")->fetchColumn();
             } catch(Exception $e) { 
                 $deptsCountBadge = 26; 
                 $galleryCountBadge = 71;
+                $syllabusCountBadge = 267;
             }
             ?>
             <a href="manage_departments.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_departments.php' ? 'active' : ''; ?>">
@@ -141,6 +143,9 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
             </a>
             <a href="manage_courses.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_courses.php' ? 'active' : ''; ?>">
                 <i class="fas fa-graduation-cap"></i> Courses &amp; Programs
+            </a>
+            <a href="manage_syllabus.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_syllabus.php' ? 'active' : ''; ?>">
+                <i class="fas fa-file-pdf text-danger"></i> Syllabus &amp; Schemes (<?php echo $syllabusCountBadge; ?>)
             </a>
             <a href="manage_faculty.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_faculty.php' ? 'active' : ''; ?>">
                 <i class="fas fa-chalkboard-teacher"></i> Faculty Directory (1,000+)

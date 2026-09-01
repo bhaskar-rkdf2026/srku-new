@@ -843,3 +843,119 @@ function getFacultyStats() {
     }
 }
 
+// -------------------------------------------------------------
+// DYNAMIC SYLLABUS & EXAMINATION SCHEME FUNCTIONS
+// -------------------------------------------------------------
+
+/**
+ * Returns icon and department metadata for a given category slug
+ */
+function getSyllabusCategoryMeta($slug) {
+    static $meta = [
+        'ba-llb' => ['icon' => 'fas fa-gavel', 'dept' => 'Law & Legal Studies', 'color' => '#8b0000'],
+        'bjmc' => ['icon' => 'fas fa-newspaper', 'dept' => 'Journalism & Mass Communication', 'color' => '#d9534f'],
+        'llb' => ['icon' => 'fas fa-balance-scale', 'dept' => 'Law & Legal Studies', 'color' => '#8b0000'],
+        'llm' => ['icon' => 'fas fa-graduation-cap', 'dept' => 'Law & Legal Studies', 'color' => '#8b0000'],
+        'b-pharmacy' => ['icon' => 'fas fa-pills', 'dept' => 'Pharmacy', 'color' => '#0284c7'],
+        'd-pharmacy' => ['icon' => 'fas fa-capsules', 'dept' => 'Pharmacy', 'color' => '#0284c7'],
+        'm-pharma' => ['icon' => 'fas fa-prescription', 'dept' => 'Pharmacy', 'color' => '#0284c7'],
+        'nursing' => ['icon' => 'fas fa-user-nurse', 'dept' => 'Nursing Sciences', 'color' => '#059669'],
+        'polytechnic-engineering' => ['icon' => 'fas fa-tools', 'dept' => 'Engineering & Technology', 'color' => '#d97706'],
+        'agriculture-courses' => ['icon' => 'fas fa-seedling', 'dept' => 'Agricultural Sciences', 'color' => '#16a34a'],
+        'paramedical' => ['icon' => 'fas fa-stethoscope', 'dept' => 'Paramedical Sciences', 'color' => '#dc2626'],
+        'be-btech' => ['icon' => 'fas fa-laptop-code', 'dept' => 'Engineering & Technology', 'color' => '#2563eb'],
+        'm-tech' => ['icon' => 'fas fa-microchip', 'dept' => 'Engineering & Technology', 'color' => '#4f46e5'],
+        'mba' => ['icon' => 'fas fa-briefcase', 'dept' => 'Management Studies', 'color' => '#7c3aed'],
+        'bca' => ['icon' => 'fas fa-desktop', 'dept' => 'Computer Applications', 'color' => '#0d9488'],
+        'mca' => ['icon' => 'fas fa-network-wired', 'dept' => 'Computer Applications', 'color' => '#0891b2'],
+        'library-course' => ['icon' => 'fas fa-book-reader', 'dept' => 'Library & Information Science', 'color' => '#b45309'],
+        'computer-science' => ['icon' => 'fas fa-code', 'dept' => 'Computer Science & IT', 'color' => '#475569'],
+        'allied-courses' => ['icon' => 'fas fa-atom', 'dept' => 'Allied Sciences & Humanities', 'color' => '#9333ea'],
+    ];
+    return $meta[$slug] ?? ['icon' => 'fas fa-book-open', 'dept' => 'Academic Studies', 'color' => '#7a0b0d'];
+}
+
+/**
+ * Fetch dynamic syllabus data organized by categories for frontend and admin
+ */
+function getDynamicSyllabusData($onlyActive = true) {
+    try {
+        $pdo = getDBConnection();
+        $where = $onlyActive ? "WHERE status = 'active'" : "";
+        $stmt = $pdo->query("SELECT * FROM syllabi $where ORDER BY sort_order ASC, id ASC");
+        $rows = $stmt->fetchAll();
+
+        if (empty($rows)) {
+            // Fallback to static file if table is empty
+            if (file_exists(__DIR__ . '/syllabus_data.php')) {
+                require __DIR__ . '/syllabus_data.php';
+                if (isset($syllabusCategories)) return $syllabusCategories;
+            }
+            return [];
+        }
+
+        $categories = [];
+        foreach ($rows as $row) {
+            $slug = $row['category_slug'];
+            if (!isset($categories[$slug])) {
+                $meta = getSyllabusCategoryMeta($slug);
+                $categories[$slug] = [
+                    'slug' => $slug,
+                    'title' => $row['category_title'],
+                    'dept' => !empty($row['department']) ? $row['department'] : $meta['dept'],
+                    'icon' => $meta['icon'],
+                    'color' => $meta['color'],
+                    'total_pdfs' => 0,
+                    'items' => []
+                ];
+            }
+
+            $categories[$slug]['items'][] = [
+                'id' => (int)$row['id'],
+                'title' => $row['title'],
+                'type' => $row['type'],
+                'filename' => $row['filename'] ?: basename($row['file_path']),
+                'local_url' => $row['file_path'],
+                'original_url' => $row['original_url'],
+                'file_size' => (int)$row['file_size'],
+                'status' => $row['status'],
+                'sort_order' => (int)$row['sort_order'],
+                'exists' => file_exists(dirname(__DIR__) . '/' . ltrim($row['file_path'], '/'))
+            ];
+            $categories[$slug]['total_pdfs']++;
+        }
+
+        return $categories;
+    } catch (Exception $e) {
+        if (file_exists(__DIR__ . '/syllabus_data.php')) {
+            require __DIR__ . '/syllabus_data.php';
+            if (isset($syllabusCategories)) return $syllabusCategories;
+        }
+        return [];
+    }
+}
+
+/**
+ * Get quick count stats for syllabus
+ */
+function getSyllabusQuickStats() {
+    try {
+        $pdo = getDBConnection();
+        $total = (int)$pdo->query("SELECT COUNT(*) FROM syllabi")->fetchColumn();
+        $active = (int)$pdo->query("SELECT COUNT(*) FROM syllabi WHERE status = 'active'")->fetchColumn();
+        $schemes = (int)$pdo->query("SELECT COUNT(*) FROM syllabi WHERE type LIKE '%Scheme%'")->fetchColumn();
+        $syllabi = (int)$pdo->query("SELECT COUNT(*) FROM syllabi WHERE type LIKE '%Syllabus%'")->fetchColumn();
+        $categories = (int)$pdo->query("SELECT COUNT(DISTINCT category_slug) FROM syllabi")->fetchColumn();
+        return [
+            'total' => $total,
+            'active' => $active,
+            'schemes' => $schemes,
+            'syllabi' => $syllabi,
+            'categories' => $categories
+        ];
+    } catch (Exception $e) {
+        return ['total' => 267, 'active' => 267, 'schemes' => 110, 'syllabi' => 157, 'categories' => 19];
+    }
+}
+
+

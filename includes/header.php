@@ -534,7 +534,7 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                         </div>
                         <!-- Section Label -->
                         <div class="px-2 pb-1 mb-1 d-flex align-items-center justify-content-between text-muted" style="font-size: 11px; letter-spacing: .5px; text-transform: uppercase; font-weight: 700;">
-                            <span><i class="fas fa-book-open text-danger me-1"></i> Course Schemes &amp; Syllabi:</span>
+                            <span><i class="fas fa-book-open text-danger me-1"></i> Course Schemes &amp; Syllabus:</span>
                         </div>
                         <!-- 19 Syllabus Categories Grid (Direct 2-Column Links) -->
                         <div class="syllabus-grid">

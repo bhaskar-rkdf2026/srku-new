@@ -212,18 +212,55 @@ $exactSeals = [
     'faculty-of-agriculture' => 'logo-srk-agriculture.png'
 ];
 
-// Dedicated External Websites Map for standalone portals
-$externalWebsites = [
-    'rkdf-medical-college' => 'https://rkdfmedicalcollege.org/',
-    'rkdf-dental-college' => 'http://rkdfdentalcollege.in/',
-    'rkdf-homoeopathic-medical-college' => 'http://www.rkdfhmc.in/',
-    'sarvepalli-radhakrishnan-college-of-ayurveda' => 'https://www.srkcahrc.in/',
-    'rkdf-institute-of-science-and-technology' => 'https://srku.edu.in/rkdf-ist/index.php',
-    'faculty-of-agriculture' => 'https://srku.edu.in/agriculture/index.php'
+// Dedicated External Websites Map for standalone portals with rich metadata
+$externalWebsiteMeta = [
+    'rkdf-medical-college' => [
+        'url' => 'https://rkdfmedicalcollege.org/',
+        'btn' => 'Visit Official Hospital & Medical College Website',
+        'badge' => '750+ Bed Teaching Hospital & Super-Specialty Healthcare',
+        'desc' => 'Visit the dedicated hospital portal for 24x7 Emergency, Trauma Care, OPD Timings, Bed Availability, Blood Bank, and Clinical Departments.',
+        'icon' => 'fa-hospital-user'
+    ],
+    'rkdf-dental-college' => [
+        'url' => 'http://rkdfdentalcollege.in/',
+        'btn' => 'Visit Official Dental College & Hospital Website',
+        'badge' => '250+ Dental Treatment Chairs & Specialized OPD Clinics',
+        'desc' => 'Access the official dental portal for patient consultations, maxillofacial surgery, orthodontic clinic, and dental hospital services.',
+        'icon' => 'fa-tooth'
+    ],
+    'rkdf-homoeopathic-medical-college' => [
+        'url' => 'http://www.rkdfhmc.in/',
+        'btn' => 'Visit Official Homoeopathic Hospital Website',
+        'badge' => 'Homoeopathic Clinical Hospital & OPD Services',
+        'desc' => 'Explore the dedicated portal for hospital clinical services, patient consultations, and academic BHMS details.',
+        'icon' => 'fa-clinic-medical'
+    ],
+    'sarvepalli-radhakrishnan-college-of-ayurveda' => [
+        'url' => 'https://www.srkcahrc.in/',
+        'btn' => 'Visit Official Ayurveda Hospital & College Website',
+        'badge' => '60-Bed Ayurvedic Hospital with Panchakarma & Herbal Pharmacy',
+        'desc' => 'Visit the official portal for Ayurvedic OPD consultations, Panchakarma therapies, in-house herbal pharmacy, and BAMS admissions.',
+        'icon' => 'fa-leaf'
+    ],
+    'rkdf-institute-of-science-and-technology' => [
+        'url' => 'https://srku.edu.in/rkdf-ist/index.php',
+        'btn' => 'Visit Official RKDF IST Engineering Portal',
+        'badge' => 'Pioneer Engineering Institution Est. 1995',
+        'desc' => 'Access technical laboratories, departmental workshops, campus placements, AICTE compliance, and incubation centres.',
+        'icon' => 'fa-cogs'
+    ],
+    'faculty-of-agriculture' => [
+        'url' => 'https://srku.edu.in/agriculture/index.php',
+        'btn' => 'Visit Official Faculty of Agriculture Portal',
+        'badge' => 'Experimental Research Farms & Crop Polyhouses',
+        'desc' => 'Explore agricultural research labs, crop fields, soil testing facilities, and ICAR 6th Dean committee curriculum details.',
+        'icon' => 'fa-seedling'
+    ]
 ];
 
 $sealFile = $exactSeals[$dept['slug']] ?? null;
-$officialWebsite = $externalWebsites[$dept['slug']] ?? null;
+$extMeta = $externalWebsiteMeta[$dept['slug']] ?? null;
+$officialWebsite = $extMeta['url'] ?? null;
 $deptImg = !empty($dept['image']) ? $dept['image'] : (!empty($dept['banner_img']) ? $dept['banner_img'] : '');
 if (empty($deptImg) || !file_exists(__DIR__ . '/' . ltrim(str_replace('\\', '/', $deptImg), '/'))) {
     $cand = 'assets/uploads/constituent-units/' . ($dept['slug'] ?? '') . '.webp';
@@ -281,7 +318,7 @@ if (!function_exists('istPdf')) {
         <?php if ($officialWebsite): ?>
             <div class="mt-3">
                 <a href="<?php echo $officialWebsite; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-warning btn-lg fw-bold text-dark px-4 py-2 shadow rounded-pill d-inline-flex align-items-center gap-2" style="font-size:0.95rem;">
-                    <i class="fas fa-globe"></i> Visit Official College Website <i class="fas fa-external-link-alt ms-1" style="font-size:0.75rem;"></i>
+                    <i class="fas <?php echo $extMeta['icon'] ?? 'fa-globe'; ?>"></i> <?php echo sanitize($extMeta['btn'] ?? 'Visit Official Website'); ?> <i class="fas fa-external-link-alt ms-1" style="font-size:0.75rem;"></i>
                 </a>
             </div>
         <?php endif; ?>
@@ -347,21 +384,24 @@ if (!function_exists('istPdf')) {
                     </div>
                 </div>
 
-                <?php if ($officialWebsite): ?>
+                <?php if ($officialWebsite && $extMeta): ?>
                     <!-- Official Website Callout Box -->
                     <div class="card p-3 p-md-4 border-0 rounded-4 mb-4 shadow-sm" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-left: 5px solid #ea580c !important;">
                         <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
                             <div class="d-flex align-items-center gap-3">
-                                <div class="bg-white rounded-circle p-2 shadow-xs border d-flex align-items-center justify-content-center" style="width:52px; height:52px; flex-shrink:0;">
-                                    <i class="fas fa-globe text-danger fs-4"></i>
+                                <div class="bg-white rounded-circle p-2 shadow-xs border d-flex align-items-center justify-content-center" style="width:56px; height:56px; flex-shrink:0;">
+                                    <i class="fas <?php echo $extMeta['icon']; ?> text-danger fs-3"></i>
                                 </div>
                                 <div>
-                                    <h4 class="h6 fw-bold text-dark mb-1">Dedicated Official Website Available</h4>
-                                    <p class="text-muted small mb-0">Visit the standalone institutional portal for specialized hospital OPD timings, clinical facilities &amp; department details.</p>
+                                    <div class="badge bg-danger text-white rounded-pill px-2 py-1 small fw-semibold mb-1">
+                                        <?php echo sanitize($extMeta['badge']); ?>
+                                    </div>
+                                    <h4 class="h6 fw-bold text-dark mb-1"><?php echo sanitize($extMeta['btn']); ?></h4>
+                                    <p class="text-muted small mb-0"><?php echo sanitize($extMeta['desc']); ?></p>
                                 </div>
                             </div>
-                            <a href="<?php echo $officialWebsite; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-danger btn-sm px-3 py-2 fw-semibold text-nowrap rounded-pill d-inline-flex align-items-center gap-1 shadow-sm">
-                                <span>Check Official Web</span> <i class="fas fa-external-link-alt" style="font-size:0.75rem;"></i>
+                            <a href="<?php echo $officialWebsite; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-danger btn-sm px-4 py-2 fw-semibold text-nowrap rounded-pill d-inline-flex align-items-center gap-2 shadow-sm">
+                                <span>Explore Portal</span> <i class="fas fa-external-link-alt" style="font-size:0.75rem;"></i>
                             </a>
                         </div>
                     </div>
@@ -393,6 +433,8 @@ if (!function_exists('istPdf')) {
                 if (!empty($dName) && !empty($dMsg)): 
                     $dDesig = trim((string)($dept['dean_designation'] ?? 'Dean & Principal')) ?: 'Dean & Principal';
                     $dPhoto = trim((string)($dept['dean_photo'] ?? ''));
+                    $firstDesig = trim(explode('|', $dDesig)[0]);
+                    $cleanRole = trim(preg_replace('/\s*\([^)]*(?:PhD|Ph\.D|MD|MBBS|MSc|MA|M\.Pharm|PGDCA|Total Exp)[^)]*\)/i', '', $firstDesig)) ?: 'Dean & Principal';
                 ?>
                     <!-- Dean / Principal's Desk Message Section (Centered Top Profile Design) -->
                     <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 mb-4 position-relative overflow-hidden bg-white" style="border: 1px solid #e2e8f0 !important; border-top: 5px solid #7a0b0d !important;">
@@ -400,7 +442,7 @@ if (!function_exists('istPdf')) {
                         <!-- Top Header Badge -->
                         <div class="text-center mb-3">
                             <span class="badge px-3 py-2 rounded-pill text-white fw-semibold shadow-xs d-inline-flex align-items-center gap-2" style="background: #0b1526; font-size: 0.82rem;">
-                                <i class="fas fa-quote-left text-warning"></i> Leadership Desk &bull; Message from the <?php echo sanitize($dDesig); ?>
+                                <i class="fas fa-quote-left text-warning"></i> Leadership Desk &bull; Message from the <?php echo sanitize($cleanRole); ?>
                             </span>
                         </div>
 
@@ -418,12 +460,38 @@ if (!function_exists('istPdf')) {
                                 <?php endif; ?>
                             </div>
                             <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize($dName); ?></h4>
-                            <div class="d-flex justify-content-center flex-wrap gap-2 mt-1">
-                                <span class="badge px-3 py-1 rounded-pill fw-semibold" style="background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; font-size: 0.8rem;">
-                                    <?php echo sanitize($dDesig); ?>
-                                </span>
+                            <div class="d-flex justify-content-center flex-wrap gap-2 mt-2">
+                                <?php 
+                                $desigParts = array_filter(array_map('trim', explode('|', $dDesig)));
+                                foreach ($desigParts as $partIdx => $part):
+                                    $isPub = (stripos($part, 'Publication') !== false);
+                                    $isExp = (stripos($part, 'Exp') !== false);
+                                    $isQual = (stripos($part, 'Qualification') !== false);
+                                ?>
+                                    <?php if ($isPub): ?>
+                                        <span class="badge px-3 py-1 rounded-pill fw-bold text-dark shadow-xs" style="background: linear-gradient(135deg, #fef08a, #facc15); border: 1px solid #eab308; font-size: 0.82rem;">
+                                            <i class="fas fa-book-open text-danger me-1"></i> <?php echo sanitize($part); ?>
+                                        </span>
+                                    <?php elseif ($isExp): ?>
+                                        <span class="badge px-3 py-1 rounded-pill fw-semibold" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; font-size: 0.8rem;">
+                                            <i class="fas fa-briefcase text-primary me-1"></i> <?php echo sanitize($part); ?>
+                                        </span>
+                                    <?php elseif ($isQual): ?>
+                                        <span class="badge px-3 py-1 rounded-pill fw-semibold" style="background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; font-size: 0.8rem;">
+                                            <i class="fas fa-graduation-cap text-success me-1"></i> <?php echo sanitize($part); ?>
+                                        </span>
+                                    <?php elseif ($partIdx === 0): ?>
+                                        <span class="badge px-3 py-1 rounded-pill fw-semibold" style="background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; font-size: 0.8rem;">
+                                            <i class="fas fa-user-tie text-danger me-1"></i> <?php echo sanitize($part); ?>
+                                        </span>
+                                    <?php else: ?>
+                                        <span class="badge px-3 py-1 rounded-pill fw-semibold" style="background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; font-size: 0.8rem;">
+                                            <?php echo sanitize($part); ?>
+                                        </span>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                                 <span class="badge px-3 py-1 rounded-pill fw-semibold" style="background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; font-size: 0.8rem;">
-                                    <?php echo sanitize($dept['name']); ?>
+                                    <i class="fas fa-university me-1 text-muted"></i> <?php echo sanitize($dept['name']); ?>
                                 </span>
                             </div>
                         </div>

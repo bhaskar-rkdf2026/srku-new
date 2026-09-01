@@ -5,6 +5,7 @@ $pdo = getDBConnection();
 $totalDepts = (int)$pdo->query("SELECT COUNT(*) FROM departments")->fetchColumn();
 $totalFaculty = (int)$pdo->query("SELECT COUNT(*) FROM faculty")->fetchColumn();
 $totalCourses = (int)$pdo->query("SELECT COUNT(*) FROM courses")->fetchColumn();
+$totalSyllabus = (int)$pdo->query("SELECT COUNT(*) FROM syllabi")->fetchColumn();
 $totalNews = (int)$pdo->query("SELECT COUNT(*) FROM news")->fetchColumn();
 try {
     $totalBlogs = (int)$pdo->query("SELECT COUNT(*) FROM blogs")->fetchColumn();
@@ -193,6 +194,20 @@ $recentEnquiries = $pdo->query("SELECT * FROM enquiries ORDER BY id DESC LIMIT 6
                     <div>
                         <strong class="d-block text-navy" style="font-size: 0.92rem;">Header &amp; Footer</strong>
                         <small class="text-muted" style="font-size: 0.75rem;">Navigation &amp; quick links</small>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="manage_syllabus.php" class="card h-100 p-3 rounded-4 text-decoration-none border bg-light hover-shadow" style="transition: all 0.2s ease;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="p-2 rounded-circle bg-danger text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; flex-shrink: 0;">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div>
+                        <strong class="d-block text-navy" style="font-size: 0.92rem;">Syllabus &amp; Schemes</strong>
+                        <small class="text-muted" style="font-size: 0.75rem;">Manage <?php echo $totalSyllabus; ?> curriculum PDFs</small>
                     </div>
                 </div>
             </a>
