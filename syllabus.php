@@ -1,367 +1,584 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/includes/syllabus_data.php';
 
 $pageTitle = "Scheme & Syllabus | Semester Curriculum & PDF Downloads | SRKU";
-$pageDesc = "Download official course schemes, semester-wise syllabus, examination guidelines, and grading patterns for all degree programs at Sarvepalli Radhakrishnan University (SRKU), Bhopal.";
-$pageKeywords = "SRKU Syllabus, Scheme of Examination, BTech Syllabus, Pharmacy Syllabus Bhopal, University Curriculum PDF";
-$activeNav = "courses";
-require_once __DIR__ . '/includes/header.php';
+$pageDesc = "Download official course schemes, semester-wise syllabus, examination guidelines, and grading patterns for all degree and diploma programs at Sarvepalli Radhakrishnan University (SRKU), Bhopal.";
+$pageKeywords = "SRKU Syllabus, Scheme of Examination, BTech Syllabus, Pharmacy Syllabus Bhopal, University Curriculum PDF, NEP 2020 Syllabus";
+$activeNav = "syllabus";
 
-$departments = getDepartments(true);
-$allCourses = getCourses();
+// Count total PDFs across all categories
+$grandTotalPdfs = 0;
+foreach ($syllabusCategories as $cat) {
+    $grandTotalPdfs += $cat['total_pdfs'];
+}
+
+// Check if a specific course is requested via query param
+$selectedCourse = isset($_GET['course']) ? trim($_GET['course']) : 'all';
+if (!empty($selectedCourse) && !isset($syllabusCategories[$selectedCourse])) {
+    $selectedCourse = 'all';
+}
+
+require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Dynamic Banner Header -->
 <?php renderPageBanner('syllabus', 'Academic Curriculum & Syllabus', 'Official Semester-Wise Scheme of Examination, Course Structures & Learning Outcomes for 2026-27'); ?>
 
-<section class="py-5 bg-light-subtle">
-    <div class="container-xl py-3">
+<section class="py-5 bg-light-subtle" id="syllabusApp">
+    <div class="container-xl py-2">
         
-        <!-- Section Header Intro -->
-        <div class="text-center mb-5" style="max-width:850px; margin:auto;">
-            <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fw-bold text-uppercase mb-2" style="letter-spacing:1px;">
-                <i class="fas fa-file-pdf me-1"></i> UGC, AICTE, PCI &amp; NEP-2020 Aligned
-            </span>
-            <h2 class="fw-bold text-navy display-6 mb-3">Download Course Scheme &amp; Syllabus</h2>
+        <!-- Section Header Intro & Key Badges -->
+        <div class="text-center mb-4" style="max-width:860px; margin:auto;">
+            <div class="d-flex flex-wrap justify-content-center gap-2 mb-2">
+                <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fw-bold text-uppercase" style="letter-spacing:.5px;">
+                    <i class="fas fa-file-pdf me-1"></i> UGC, AICTE, PCI, BCI, INC &amp; NEP-2020 Aligned
+                </span>
+                <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-bold text-uppercase" style="letter-spacing:.5px;">
+                    <i class="fas fa-university me-1"></i> 19 Academic Disciplines
+                </span>
+                <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-bold text-uppercase" style="letter-spacing:.5px;">
+                    <i class="fas fa-download me-1"></i> <?php echo $grandTotalPdfs; ?>+ Offline Local PDFs
+                </span>
+            </div>
+            <h2 class="fw-bold text-navy display-6 mb-2">Download Course Scheme &amp; Syllabus</h2>
             <p class="text-secondary lead fs-6">
-                Access official curriculum outlines, detailed semester-wise subject schemes, credit distribution, internal assessment criteria, and prescribed textbooks directly from SRK University academic repository.
+                Access official university curriculum outlines, detailed semester-wise subject schemes, credit distribution, internal assessment criteria, and prescribed syllabi directly with fast local downloads.
             </p>
         </div>
 
         <!-- Filter & Search Controls Bar -->
-        <div class="card p-4 p-lg-4 border-0 shadow-sm rounded-4 mb-5 bg-white">
+        <div class="card p-3 p-lg-4 border-0 shadow-sm rounded-4 mb-4 bg-white sticky-top" style="top: 80px; z-index: 1010;">
             <div class="row g-3 align-items-end">
                 
                 <!-- Search Input -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-5 col-lg-5">
                     <label for="syllabusSearch" class="form-label small fw-bold text-navy mb-1">
-                        <i class="fas fa-search text-danger me-1"></i> Search Curriculum
+                        <i class="fas fa-search text-danger me-1"></i> Search Curriculum Documents
                     </label>
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0"><i class="fas fa-search text-muted"></i></span>
-                        <input type="text" id="syllabusSearch" class="form-control border-start-0 ps-0" placeholder="Search course, branch, specialization..." oninput="applySyllabusFilters()">
+                        <input type="text" id="syllabusSearch" class="form-control border-start-0 ps-0" placeholder="Search by course, subject, branch, semester, NEP..." oninput="filterSyllabus()">
+                        <button class="btn btn-light border border-start-0 text-muted" type="button" id="clearSearchBtn" onclick="clearSearch()" style="display:none;" title="Clear search">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Discipline / Faculty Dropdown -->
-                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                    <label for="disciplineFilter" class="form-label small fw-bold text-navy mb-1">
-                        <i class="fas fa-university text-primary me-1"></i> Faculty / Discipline
+                <!-- Discipline / Course Filter -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                    <label for="courseFilterSelect" class="form-label small fw-bold text-navy mb-1">
+                        <i class="fas fa-filter text-primary me-1"></i> Academic Discipline
                     </label>
-                    <select id="disciplineFilter" class="form-select" onchange="applySyllabusFilters()">
-                        <option value="all">All Faculties &amp; Disciplines</option>
-                        <option value="engineering">Engineering &amp; Technology</option>
-                        <option value="pharmacy">Pharmacy &amp; Pharmaceutical</option>
-                        <option value="medical">Medical, Dental &amp; Ayush</option>
-                        <option value="nursing">Nursing &amp; Paramedical</option>
-                        <option value="law">Law &amp; Legal Studies</option>
-                        <option value="agriculture">Agriculture &amp; Allied</option>
-                        <option value="management">Management &amp; Commerce</option>
-                        <option value="computer">Computer Applications (BCA/MCA)</option>
-                        <option value="science">Sciences, Arts &amp; Yoga</option>
+                    <select id="courseFilterSelect" class="form-select" onchange="switchCategory(this.value)">
+                        <option value="all" <?php echo ($selectedCourse === 'all') ? 'selected' : ''; ?>>All Disciplines (<?php echo $grandTotalPdfs; ?> PDFs)</option>
+                        <?php foreach ($syllabusCategories as $slug => $cat): ?>
+                            <option value="<?php echo $slug; ?>" <?php echo ($selectedCourse === $slug) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($cat['title']); ?> (<?php echo $cat['total_pdfs']; ?>)
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
 
-                <!-- Academic Level Dropdown -->
-                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                    <label for="levelFilter" class="form-label small fw-bold text-navy mb-1">
-                        <i class="fas fa-layer-group text-warning me-1"></i> Academic Level
+                <!-- Document Type Filter -->
+                <div class="col-6 col-sm-3 col-md-3 col-lg-2">
+                    <label for="docTypeFilter" class="form-label small fw-bold text-navy mb-1">
+                        <i class="fas fa-file-alt text-warning me-1"></i> Document Type
                     </label>
-                    <select id="levelFilter" class="form-select" onchange="applySyllabusFilters()">
-                        <option value="all">All Academic Levels</option>
-                        <option value="undergraduate">Undergraduate (UG)</option>
-                        <option value="postgraduate">Postgraduate (PG)</option>
-                        <option value="diploma">Diploma / Polytechnic</option>
-                        <option value="doctorate">Doctorate (Ph.D.)</option>
+                    <select id="docTypeFilter" class="form-select" onchange="filterSyllabus()">
+                        <option value="all">All Types</option>
+                        <option value="scheme">Scheme Only</option>
+                        <option value="syllabus">Syllabus Only</option>
                     </select>
                 </div>
 
-                <!-- Reset Filters Button -->
-                <div class="col-12 col-md-6 col-lg-2">
-                    <button type="button" class="btn btn-outline-danger w-100 rounded-3 py-2 fw-semibold" onclick="resetAllSyllabusFilters()">
-                        <i class="fas fa-redo-alt me-1"></i> Reset Filters
+                <!-- Reset Button -->
+                <div class="col-6 col-sm-3 col-md-12 col-lg-1">
+                    <button type="button" class="btn btn-outline-danger w-100 rounded-3 py-2 fw-semibold" onclick="resetSyllabusFilters()" title="Reset all filters">
+                        <i class="fas fa-redo-alt"></i> <span class="d-none d-sm-inline d-lg-none">Reset</span>
                     </button>
                 </div>
 
             </div>
             
-            <!-- Active Filter Status Bar -->
+            <!-- Active Status Summary -->
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 pt-3 mt-3 border-top small text-muted">
                 <div>
                     <span id="activeFiltersSummary" class="fw-semibold text-navy">
-                        <i class="fas fa-sliders-h text-danger me-1"></i> Showing all curriculum schemes
+                        <i class="fas fa-check-circle text-success me-1"></i> Showing all <span id="visibleDocCount"><?php echo $grandTotalPdfs; ?></span> curriculum documents
                     </span>
+                </div>
+                <div class="d-none d-md-flex align-items-center gap-2">
+                    <span class="text-muted small">Quick Jump:</span>
+                    <a href="javascript:void(0)" onclick="switchCategory('be-btech')" class="badge bg-light text-navy border text-decoration-none">B.E. / B.Tech</a>
+                    <a href="javascript:void(0)" onclick="switchCategory('allied-courses')" class="badge bg-light text-navy border text-decoration-none">Allied Courses</a>
+                    <a href="javascript:void(0)" onclick="switchCategory('mba')" class="badge bg-light text-navy border text-decoration-none">MBA</a>
+                    <a href="javascript:void(0)" onclick="switchCategory('paramedical')" class="badge bg-light text-navy border text-decoration-none">Paramedical</a>
                 </div>
             </div>
         </div>
 
-        <!-- Syllabus Department Blocks -->
-        <div class="row g-4" id="syllabusContainer">
-            <?php foreach ($departments as $dept): 
-                $deptCourses = getCourses($dept['slug']);
-                if (empty($deptCourses)) {
-                    $deptCourses = getCourses($dept['name']);
-                }
-                if (empty($deptCourses)) continue;
-                $deptCategory = strtolower($dept['category'] . ' ' . $dept['name']);
+        <!-- Discipline Category Tabs (Horizontal Scrollable Pills) -->
+        <div class="category-pills-wrap mb-4 pb-1">
+            <div class="d-flex gap-2 flex-nowrap overflow-x-auto pb-2" id="categoryTabsContainer">
+                <button type="button" class="btn cat-pill <?php echo ($selectedCourse === 'all') ? 'active' : ''; ?>" data-cat="all" onclick="switchCategory('all')">
+                    <i class="fas fa-th-large me-1"></i> All Courses <span class="badge bg-white text-dark ms-1"><?php echo $grandTotalPdfs; ?></span>
+                </button>
+                <?php foreach ($syllabusCategories as $slug => $cat): ?>
+                    <button type="button" class="btn cat-pill <?php echo ($selectedCourse === $slug) ? 'active' : ''; ?>" data-cat="<?php echo $slug; ?>" onclick="switchCategory('<?php echo $slug; ?>')">
+                        <i class="<?php echo $cat['icon']; ?> me-1"></i> <?php echo htmlspecialchars($cat['title']); ?> 
+                        <span class="badge bg-white text-dark ms-1"><?php echo $cat['total_pdfs']; ?></span>
+                    </button>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <!-- Main Syllabus Container (19 Categories) -->
+        <div id="syllabusMainList">
+            <?php foreach ($syllabusCategories as $slug => $cat): 
+                $items = $cat['items'];
+                if (empty($items)) continue;
+                $isCategorySelected = ($selectedCourse === 'all' || $selectedCourse === $slug);
             ?>
-                <div class="col-12 dept-block" data-category="<?php echo sanitize($deptCategory); ?>" data-deptname="<?php echo sanitize(strtolower($dept['name'])); ?>">
-                    <div class="card p-4 p-md-4 border-0 shadow-sm rounded-4 bg-white">
-                        
-                        <!-- Department Title Bar -->
-                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="bg-danger-subtle text-danger rounded-3 d-flex align-items-center justify-content-center p-3 shadow-xs" style="width:52px; height:52px; font-size:1.3rem;">
-                                    <i class="<?php echo sanitize($dept['icon'] ?: 'fas fa-graduation-cap'); ?>"></i>
-                                </div>
-                                <div>
-                                    <h3 class="h5 fw-bold text-navy mb-1"><?php echo sanitize($dept['name']); ?></h3>
-                                    <div class="d-flex align-items-center gap-2 flex-wrap small">
-                                        <span class="badge bg-light text-secondary border"><?php echo sanitize($dept['category'] ?: 'Constituent Unit'); ?></span>
-                                        <span class="text-muted"><i class="fas fa-check-circle text-success me-1"></i>Approved Programmes</span>
-                                        <?php if ($dept['contact_no']): ?>
-                                            <span class="text-muted d-none d-md-inline">&bull; <i class="fas fa-phone-alt text-warning me-1"></i><?php echo sanitize($dept['contact_no']); ?></span>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
+                <div class="category-block mb-5 <?php echo $isCategorySelected ? '' : 'd-none'; ?>" id="cat-block-<?php echo $slug; ?>" data-cat-slug="<?php echo $slug; ?>">
+                    
+                    <!-- Category Header Bar -->
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 p-3 px-md-4 mb-3 rounded-4 bg-white border shadow-xs border-start border-4" style="border-left-color: <?php echo $cat['color']; ?> !important;">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="cat-icon-badge rounded-3 d-flex align-items-center justify-content-center" style="background-color: <?php echo $cat['color']; ?>15; color: <?php echo $cat['color']; ?>; width:48px; height:48px; font-size:1.3rem;">
+                                <i class="<?php echo $cat['icon']; ?>"></i>
                             </div>
                             <div>
-                                <a href="<?php echo BASE_URL; ?>department/<?php echo urlencode($dept['slug']); ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
-                                    <i class="fas fa-university me-1"></i> Department Profile
-                                </a>
+                                <h3 class="h5 fw-bold text-navy mb-0"><?php echo htmlspecialchars($cat['title']); ?></h3>
+                                <div class="d-flex align-items-center gap-2 flex-wrap small text-muted">
+                                    <span class="badge bg-light text-secondary border"><?php echo htmlspecialchars($cat['dept']); ?></span>
+                                    <span>&bull;</span>
+                                    <span class="fw-semibold text-danger"><i class="fas fa-file-pdf me-1"></i><?php echo count($items); ?> PDF Documents</span>
+                                </div>
                             </div>
                         </div>
-
-                        <!-- Courses Scheme & Syllabus Table -->
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-0">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th style="width:38%;">Course / Academic Programme</th>
-                                        <th style="width:12%;">Level</th>
-                                        <th style="width:12%;">Duration</th>
-                                        <th style="width:38%;" class="text-end text-nowrap">Curriculum Documents (PDF)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                     <?php foreach ($deptCourses as $c): 
-                                        $hasScheme = !empty($c['scheme_url']) && $c['scheme_url'] !== '#';
-                                        $hasSyllabus = !empty($c['syllabus_url']) && $c['syllabus_url'] !== '#';
-                                        
-                                        $schemeHref = $hasScheme ? (strpos($c['scheme_url'], 'http') === 0 ? $c['scheme_url'] : BASE_URL . ltrim($c['scheme_url'], '/')) : '#';
-                                        $syllabusHref = $hasSyllabus ? (strpos($c['syllabus_url'], 'http') === 0 ? $c['syllabus_url'] : BASE_URL . ltrim($c['syllabus_url'], '/')) : '#';
-                                        $courseLevel = strtolower($c['level'] ?? '');
-                                    ?>
-                                        <tr class="course-row" 
-                                            data-coursename="<?php echo sanitize(strtolower($c['course_name'] . ' ' . ($c['specializations'] ?? '') . ' ' . $dept['name'])); ?>"
-                                            data-level="<?php echo sanitize($courseLevel); ?>">
-                                            <td>
-                                                <div class="fw-bold text-navy fs-6 mb-1">
-                                                    <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="text-navy text-decoration-none hover-maroon">
-                                                        <?php echo sanitize($c['course_name']); ?>
-                                                    </a>
-                                                </div>
-                                                <?php if (!empty($c['specializations'])): ?>
-                                                    <small class="text-muted d-block text-truncate" style="max-width: 420px;" title="<?php echo sanitize($c['specializations']); ?>">
-                                                        <i class="fas fa-layer-group text-danger me-1"></i><?php echo sanitize($c['specializations']); ?>
-                                                    </small>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-level-navy text-white px-2 py-1"><?php echo sanitize($c['level']); ?></span>
-                                            </td>
-                                            <td>
-                                                <span class="text-secondary small fw-semibold"><i class="far fa-clock me-1"></i><?php echo sanitize($c['duration']); ?></span>
-                                            </td>
-                                            <td class="text-end text-nowrap">
-                                                <div class="d-inline-flex gap-2">
-                                                    <?php if ($hasScheme): ?>
-                                                        <a href="<?php echo sanitize($schemeHref); ?>" target="_blank" class="btn btn-sm btn-outline-danger shadow-xs fw-semibold" title="Download Scheme PDF">
-                                                            <i class="fas fa-file-pdf text-danger me-1"></i> Scheme
-                                                        </a>
-                                                    <?php else: ?>
-                                                        <a href="#" class="btn btn-sm btn-outline-secondary opacity-60 shadow-xs fw-semibold" title="Scheme available upon request" onclick="return false;">
-                                                            <i class="fas fa-file-alt me-1"></i> Scheme
-                                                        </a>
-                                                    <?php endif; ?>
-                                                    
-                                                    <?php if ($hasSyllabus): ?>
-                                                        <a href="<?php echo sanitize($syllabusHref); ?>" target="_blank" class="btn btn-sm btn-danger shadow-xs fw-semibold" title="Download Syllabus PDF">
-                                                            <i class="fas fa-download me-1"></i> Syllabus
-                                                        </a>
-                                                    <?php else: ?>
-                                                        <a href="#" class="btn btn-sm btn-secondary opacity-60 shadow-xs fw-semibold" title="Syllabus available upon request" onclick="return false;">
-                                                            <i class="fas fa-clock me-1"></i> On Request
-                                                        </a>
-                                                    <?php endif; ?>
-
-                                                    <a href="<?php echo BASE_URL; ?>course/<?php echo urlencode($c['slug'] ?: $c['id']); ?>" class="btn btn-sm btn-light border" title="Course Details">
-                                                        <i class="fas fa-arrow-right"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                        <div>
+                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3" onclick="switchCategory('<?php echo $slug; ?>')">
+                                <i class="fas fa-filter me-1"></i> Focus Discipline
+                            </button>
                         </div>
-
                     </div>
+
+                    <!-- Cards Grid (Matching Old Web PDF Cards + Modern Polish) -->
+                    <div class="row g-3 g-md-4">
+                        <?php foreach ($items as $item): 
+                            $localHref = BASE_URL . $item['local_url'];
+                            $typeBadgeClass = 'bg-danger-subtle text-danger';
+                            if (strtolower($item['type']) === 'scheme') {
+                                $typeBadgeClass = 'bg-primary-subtle text-primary';
+                            } elseif (stripos($item['type'], '&') !== false) {
+                                $typeBadgeClass = 'bg-success-subtle text-success';
+                            }
+                        ?>
+                            <div class="col-12 col-md-6 col-lg-4 syllabus-item-col" 
+                                 data-category="<?php echo $slug; ?>"
+                                 data-doctype="<?php echo strtolower($item['type']); ?>"
+                                 data-title="<?php echo htmlspecialchars(strtolower($item['title'] . ' ' . $cat['title'] . ' ' . $item['type'])); ?>">
+                                
+                                <div class="card h-100 border-0 rounded-4 syllabus-card-pro bg-white">
+                                    <div class="card-body p-3 p-md-4 d-flex flex-column">
+                                        <!-- Top Header Bar: Document Type Badge & PDF Indicator -->
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <span class="badge <?php echo $typeBadgeClass; ?> rounded-pill px-3 py-1-5 fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: .4px;">
+                                                <i class="<?php echo (strtolower($item['type']) === 'scheme' ? 'fas fa-clipboard-list' : 'fas fa-book'); ?> me-1"></i>
+                                                <?php echo htmlspecialchars($item['type']); ?>
+                                            </span>
+                                            <div class="pdf-icon-indicator" title="Official PDF Document">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </div>
+                                        </div>
+
+                                        <!-- Document Title -->
+                                        <h4 class="syllabus-card-title mb-2" title="<?php echo htmlspecialchars($item['title']); ?>">
+                                            <?php echo htmlspecialchars($item['title']); ?>
+                                        </h4>
+
+                                        <!-- Course Discipline Subtitle -->
+                                        <div class="syllabus-card-sub text-muted small mb-3 mt-auto">
+                                            <i class="fas fa-graduation-cap text-danger me-1"></i> 
+                                            <span><?php echo htmlspecialchars($cat['title']); ?></span>
+                                        </div>
+
+                                        <!-- Action Buttons: View PDF & Download -->
+                                        <div class="card-actions-wrapper pt-3 border-top d-flex gap-2">
+                                            <a href="<?php echo $localHref; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-view-pdf flex-grow-1">
+                                                <i class="fas fa-eye me-1"></i> View PDF
+                                            </a>
+                                            <a href="<?php echo $localHref; ?>" download="<?php echo htmlspecialchars($item['filename']); ?>" class="btn btn-download-pdf" title="Download to Device">
+                                                <i class="fas fa-download me-1"></i> <span class="d-none d-sm-inline">Download</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
                 </div>
             <?php endforeach; ?>
         </div>
 
         <!-- Empty Results Alert -->
-        <div id="noResultsMsg" class="card p-5 text-center border-0 shadow-sm rounded-4 mt-4 d-none">
-            <i class="fas fa-search fa-3x text-muted opacity-50 mb-3"></i>
-            <h4 class="fw-bold text-navy mb-2">No matching curriculum documents found</h4>
-            <p class="text-muted mb-3">Please try changing your search keywords or adjusting the Faculty &amp; Academic Level filters.</p>
-            <div>
-                <button type="button" class="btn btn-danger btn-sm px-4 rounded-pill" onclick="resetAllSyllabusFilters()">
-                    <i class="fas fa-redo-alt me-1"></i> Reset All Filters
-                </button>
+        <div id="noResultsMsg" class="card p-5 text-center border-0 shadow-sm rounded-4 mt-4 d-none bg-white">
+            <div class="py-4">
+                <i class="fas fa-search fa-3x text-muted opacity-50 mb-3"></i>
+                <h4 class="fw-bold text-navy mb-2">No matching curriculum documents found</h4>
+                <p class="text-muted mb-3" style="max-width:550px; margin:auto;">
+                    We couldn't find any scheme or syllabus matching your search query. Please verify the keywords or reset the discipline filter.
+                </p>
+                <div>
+                    <button type="button" class="btn btn-danger px-4 py-2 rounded-pill fw-semibold" onclick="resetSyllabusFilters()">
+                        <i class="fas fa-redo-alt me-1"></i> Reset All Filters
+                    </button>
+                </div>
             </div>
         </div>
 
     </div>
 </section>
 
-<!-- Curriculum Guidelines FAQ / Notice Box -->
+<!-- Additional Examination & Curriculum Notice -->
 <section class="py-5 bg-white border-top">
     <div class="container-xl">
         <div class="row g-4 align-items-center">
             <div class="col-lg-8">
-                <h3 class="fw-bold text-navy mb-2">Need Syllabus Assistance or Subject Credits Help?</h3>
-                <p class="text-secondary mb-0">
-                    If you are an enrolled student or faculty requiring previous years' archive question schemes, elective course guidelines, or credit conversion certificates, please reach out to the University Examination Cell.
-                </p>
+                <div class="d-flex align-items-start gap-3">
+                    <div class="p-3 bg-danger-subtle text-danger rounded-circle d-none d-md-flex">
+                        <i class="fas fa-question-circle fa-2x"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold text-navy mb-2">Need Past Question Papers or Previous Schemes?</h3>
+                        <p class="text-secondary mb-0">
+                            If you require archival syllabi prior to 2015, special back-log examination schemes, or subject equivalence certificates for migration, please submit a request to the Controller of Examinations.
+                        </p>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-4 text-lg-end">
-                <a href="<?php echo BASE_URL; ?>contact.php" class="btn btn-maroon px-4 py-2 fw-bold">
-                    <i class="fas fa-headset me-1"></i> Contact Examination Desk
-                </a>
+                <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+                    <a href="<?php echo BASE_URL; ?>contact.php" class="btn btn-maroon px-4 py-2 fw-bold rounded-pill">
+                        <i class="fas fa-headset me-1"></i> Examination Cell
+                    </a>
+                    <a href="<?php echo BASE_URL; ?>exam-rules.php" class="btn btn-outline-navy px-3 py-2 fw-semibold rounded-pill">
+                        <i class="fas fa-book me-1"></i> Exam Rules
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
+<!-- Page Styles -->
+<style>
+/* Category Pills & Invisible Scrollbar */
+.category-pills-wrap,
+#categoryTabsContainer {
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE 10+ */
+}
+.category-pills-wrap::-webkit-scrollbar,
+#categoryTabsContainer::-webkit-scrollbar {
+    display: none !important; /* Chrome, Safari, Edge */
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.cat-pill {
+    white-space: nowrap;
+    background: #ffffff;
+    color: #1e293b;
+    border: 1px solid #e2e8f0;
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.cat-pill:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #7a0b0d;
+}
+.cat-pill.active {
+    background: #7a0b0d !important;
+    color: #ffffff !important;
+    border-color: #7a0b0d !important;
+    box-shadow: 0 4px 12px rgba(122,11,13,0.25);
+}
+.cat-pill.active .badge {
+    background: #ffffff !important;
+    color: #7a0b0d !important;
+}
+
+/* Premium Pro Syllabus Card Design */
+.syllabus-card-pro {
+    background: #ffffff;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.syllabus-card-pro::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #7A0B0D, #dc2626);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+.syllabus-card-pro:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 32px -4px rgba(122, 11, 13, 0.1), 0 4px 12px rgba(15, 23, 42, 0.04) !important;
+    border-color: rgba(122, 11, 13, 0.25) !important;
+}
+.syllabus-card-pro:hover::before {
+    opacity: 1;
+}
+
+.syllabus-card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.85em;
+    letter-spacing: -0.1px;
+    transition: color 0.2s ease;
+}
+.syllabus-card-pro:hover .syllabus-card-title {
+    color: #7a0b0d;
+}
+
+.pdf-icon-indicator {
+    width: 36px;
+    height: 36px;
+    background: #fee2e2;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #dc2626;
+    font-size: 1.05rem;
+    transition: all 0.25s ease;
+}
+.syllabus-card-pro:hover .pdf-icon-indicator {
+    transform: scale(1.08);
+    background: #fecaca;
+}
+
+/* Action Buttons */
+.btn-view-pdf {
+    background: #ffffff;
+    color: #7a0b0d;
+    border: 1.5px solid #7a0b0d;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-weight: 600;
+    font-size: 0.84rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.btn-view-pdf:hover {
+    background: #7a0b0d;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(122, 11, 13, 0.25);
+}
+
+.btn-download-pdf {
+    background: #f8fafc;
+    color: #475569;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-weight: 600;
+    font-size: 0.84rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.btn-download-pdf:hover {
+    background: #7a0b0d;
+    color: #ffffff !important;
+    border-color: #7a0b0d;
+    box-shadow: 0 4px 12px rgba(122, 11, 13, 0.25);
+}
+
+.text-navy {
+    color: #0f172a;
+}
+.btn-outline-navy {
+    border-color: #1e293b;
+    color: #1e293b;
+}
+.btn-outline-navy:hover {
+    background-color: #1e293b;
+    color: #ffffff;
+}
+</style>
+
+<!-- Live Interactive Filtering & Deep-Linking Script -->
 <script>
-function applySyllabusFilters() {
-    const query = (document.getElementById('syllabusSearch').value || '').toLowerCase().trim();
-    const discipline = document.getElementById('disciplineFilter').value;
-    const level = document.getElementById('levelFilter').value;
+let currentCategory = '<?php echo $selectedCourse; ?>';
 
-    const deptBlocks = document.querySelectorAll('.dept-block');
-    let totalMatchingCourses = 0;
-    let totalVisibleDepts = 0;
+function switchCategory(catSlug) {
+    currentCategory = catSlug;
+    
+    // Update select dropdown
+    const select = document.getElementById('courseFilterSelect');
+    if (select) select.value = catSlug;
 
-    deptBlocks.forEach(block => {
-        const catData = (block.getAttribute('data-category') || '').toLowerCase();
-        const deptName = (block.getAttribute('data-deptname') || '').toLowerCase();
-        const deptCombo = catData + ' ' + deptName;
-
-        // Check if department matches selected discipline
-        let deptMatchesDiscipline = false;
-        if (discipline === 'all') {
-            deptMatchesDiscipline = true;
-        } else if (discipline === 'engineering' && (deptCombo.includes('engineering') || deptCombo.includes('science & technology') || deptCombo.includes('polytechnic'))) {
-            deptMatchesDiscipline = true;
-        } else if (discipline === 'pharmacy' && deptCombo.includes('pharmacy')) {
-            deptMatchesDiscipline = true;
-        } else if (discipline === 'medical' && (deptCombo.includes('medical') || deptCombo.includes('dental') || deptCombo.includes('ayurveda') || deptCombo.includes('homoeopathic') || deptCombo.includes('hospital'))) {
-            deptMatchesDiscipline = true;
-        } else if (discipline === 'nursing' && (deptCombo.includes('nursing') || deptCombo.includes('paramedical') || deptCombo.includes('allied'))) {
-            deptMatchesDiscipline = true;
-        } else if (discipline === 'law' && deptCombo.includes('law')) {
-            deptMatchesDiscipline = true;
-        } else if (discipline === 'agriculture' && deptCombo.includes('agri')) {
-            deptMatchesDiscipline = true;
-        } else if (discipline === 'management' && (deptCombo.includes('management') || deptCombo.includes('business') || deptCombo.includes('commerce'))) {
-            deptMatchesDiscipline = true;
-        } else if (discipline === 'computer' && (deptCombo.includes('computer') || deptCombo.includes('mca') || deptCombo.includes('bca'))) {
-            deptMatchesDiscipline = true;
-        } else if (discipline === 'science' && (deptCombo.includes('science') || deptCombo.includes('arts') || deptCombo.includes('yoga') || deptCombo.includes('library') || deptCombo.includes('fashion'))) {
-            deptMatchesDiscipline = true;
-        }
-
-        if (!deptMatchesDiscipline) {
-            block.style.display = 'none';
-            return;
-        }
-
-        const rows = block.querySelectorAll('.course-row');
-        let deptHasMatchingRows = 0;
-
-        rows.forEach(row => {
-            const courseText = (row.getAttribute('data-coursename') || '').toLowerCase();
-            const courseLevel = (row.getAttribute('data-level') || '').toLowerCase();
-
-            // Search query match
-            const matchesQuery = !query || courseText.includes(query) || deptName.includes(query);
-
-            // Level match
-            let matchesLevel = false;
-            if (level === 'all') {
-                matchesLevel = true;
-            } else if (level === 'undergraduate' && (courseLevel.includes('under') || courseLevel.includes('ug') || courseLevel.includes('bachelor') || courseLevel.includes('b.'))) {
-                matchesLevel = true;
-            } else if (level === 'postgraduate' && (courseLevel.includes('post') || courseLevel.includes('pg') || courseLevel.includes('master') || courseLevel.includes('m.'))) {
-                matchesLevel = true;
-            } else if (level === 'diploma' && (courseLevel.includes('diploma') || courseLevel.includes('polytechnic'))) {
-                matchesLevel = true;
-            } else if (level === 'doctorate' && (courseLevel.includes('doctor') || courseLevel.includes('ph.d') || courseLevel.includes('phd') || courseLevel.includes('research'))) {
-                matchesLevel = true;
-            }
-
-            if (matchesQuery && matchesLevel) {
-                row.style.display = '';
-                deptHasMatchingRows++;
-                totalMatchingCourses++;
-            } else {
-                row.style.display = 'none';
-            }
-        });
-
-        if (deptHasMatchingRows > 0) {
-            block.style.display = '';
-            totalVisibleDepts++;
+    // Update pill buttons
+    const pills = document.querySelectorAll('.cat-pill');
+    pills.forEach(pill => {
+        if (pill.dataset.cat === catSlug) {
+            pill.classList.add('active');
+            // scroll pill into view in container
+            pill.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
         } else {
-            block.style.display = 'none';
+            pill.classList.remove('active');
         }
     });
 
-    // Update Summary
-    const summary = document.getElementById('activeFiltersSummary');
-    const noMsg = document.getElementById('noResultsMsg');
-
-    if (totalVisibleDepts === 0 || totalMatchingCourses === 0) {
-        noMsg.classList.remove('d-none');
-        summary.innerHTML = '<i class="fas fa-exclamation-circle text-danger me-1"></i> No matching curriculum found';
+    // Update browser URL query param without reload
+    const url = new URL(window.location);
+    if (catSlug === 'all') {
+        url.searchParams.delete('course');
     } else {
-        noMsg.classList.add('d-none');
-        
-        let filterParts = [];
-        if (query) filterParts.push('"' + query + '"');
-        if (discipline !== 'all') filterParts.push(document.getElementById('disciplineFilter').selectedOptions[0].text);
-        if (level !== 'all') filterParts.push(document.getElementById('levelFilter').selectedOptions[0].text);
-        
-        if (filterParts.length > 0) {
-            summary.innerHTML = '<i class="fas fa-filter text-danger me-1"></i> Filtered by: <strong>' + filterParts.join(' &bull; ') + '</strong>';
-        } else {
-            summary.innerHTML = '<i class="fas fa-sliders-h text-danger me-1"></i> Showing all curriculum schemes';
+        url.searchParams.set('course', catSlug);
+    }
+    window.history.replaceState({}, '', url);
+
+    filterSyllabus();
+
+    // If a specific category was clicked, scroll to its section
+    if (catSlug !== 'all') {
+        const section = document.getElementById('cat-block-' + catSlug);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }
 }
 
-function resetAllSyllabusFilters() {
-    document.getElementById('syllabusSearch').value = '';
-    document.getElementById('disciplineFilter').value = 'all';
-    document.getElementById('levelFilter').value = 'all';
-    applySyllabusFilters();
+function filterSyllabus() {
+    const searchInput = document.getElementById('syllabusSearch');
+    const query = (searchInput.value || '').toLowerCase().trim();
+    const docType = (document.getElementById('docTypeFilter').value || 'all').toLowerCase();
+    const clearBtn = document.getElementById('clearSearchBtn');
+
+    if (clearBtn) {
+        clearBtn.style.display = query.length > 0 ? 'inline-block' : 'none';
+    }
+
+    const categoryBlocks = document.querySelectorAll('.category-block');
+    let totalVisible = 0;
+
+    categoryBlocks.forEach(block => {
+        const catSlug = block.dataset.catSlug;
+        const isCatMatch = (currentCategory === 'all' || currentCategory === catSlug);
+        
+        if (!isCatMatch) {
+            block.classList.add('d-none');
+            return;
+        }
+
+        const items = block.querySelectorAll('.syllabus-item-col');
+        let visibleInCat = 0;
+
+        items.forEach(col => {
+            const titleData = col.dataset.title || '';
+            const typeData = col.dataset.doctype || '';
+
+            // Check doc type match
+            let matchesDocType = true;
+            if (docType === 'scheme') {
+                matchesDocType = (typeData.indexOf('scheme') !== -1);
+            } else if (docType === 'syllabus') {
+                matchesDocType = (typeData.indexOf('syllabus') !== -1);
+            }
+
+            // Check text query match
+            const matchesQuery = (query === '' || titleData.indexOf(query) !== -1);
+
+            if (matchesDocType && matchesQuery) {
+                col.classList.remove('d-none');
+                visibleInCat++;
+                totalVisible++;
+            } else {
+                col.classList.add('d-none');
+            }
+        });
+
+        // Hide category block if 0 items match search
+        if (visibleInCat > 0) {
+            block.classList.remove('d-none');
+        } else {
+            block.classList.add('d-none');
+        }
+    });
+
+    // Update count display
+    const countSpan = document.getElementById('visibleDocCount');
+    if (countSpan) countSpan.textContent = totalVisible;
+
+    // Show empty state if 0 visible
+    const noResultsMsg = document.getElementById('noResultsMsg');
+    if (noResultsMsg) {
+        if (totalVisible === 0) {
+            noResultsMsg.classList.remove('d-none');
+        } else {
+            noResultsMsg.classList.add('d-none');
+        }
+    }
 }
 
-// Initial execution to ensure sync
-document.addEventListener('DOMContentLoaded', applySyllabusFilters);
+function clearSearch() {
+    const input = document.getElementById('syllabusSearch');
+    if (input) {
+        input.value = '';
+        filterSyllabus();
+        input.focus();
+    }
+}
+
+function resetSyllabusFilters() {
+    const input = document.getElementById('syllabusSearch');
+    if (input) input.value = '';
+    
+    const docType = document.getElementById('docTypeFilter');
+    if (docType) docType.value = 'all';
+
+    switchCategory('all');
+}
+
+// On page load, handle any hash anchors like #allied-courses or query params
+window.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.replace('#', '').trim();
+    if (hash && document.getElementById('cat-block-' + hash)) {
+        switchCategory(hash);
+    } else {
+        filterSyllabus();
+    }
+});
 </script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

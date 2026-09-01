@@ -231,8 +231,14 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
         .static-megamenu-link:hover{background-color:#fef9f0;color:#7a0b0d;padding-left:11px}
         .static-megamenu-link span.name{flex:1;white-space:normal}
         .static-megamenu-link span.badge-yr{font-size:9.5px;color:#64748b;background:#f1f5f9;padding:1px 5px;border-radius:4px;border:1px solid #e2e8f0;flex-shrink:0}
-        .static-megamenu-link i.fa-angle-right{font-size:10px;color:#cbd5e1;flex-shrink:0}
         .static-megamenu-link:hover i.fa-angle-right{color:#7a0b0d}
+        .syllabus-megamenu-panel{width:560px!important;left:-100px!important;padding:14px 16px!important;border-radius:10px}
+        .syllabus-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px}
+        .syllabus-grid .static-dropdown-link{padding:6px 10px;font-size:12px;border-radius:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .syllabus-grid .static-dropdown-link:hover{background-color:#fef9f0;color:#7a0b0d;padding-left:14px}
+        .syllabus-sub-dropdown{min-width:275px!important;max-height:460px;overflow-y:auto;scrollbar-width:thin;box-shadow:0 14px 40px rgba(0,0,0,0.16)!important}
+        .syllabus-sub-dropdown::-webkit-scrollbar{width:5px}
+        .syllabus-sub-dropdown::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
         .static-menu-list-footer{display:none}
         .static-contact-btn-mobile{display:none}
         .static-contact-btn{display:inline-flex;align-items:center;flex-shrink:0;background:#7a0b0d;color:#ffffff!important;font-size:13.5px;font-weight:700;padding:10px 22px;border-radius:30px;text-decoration:none;box-shadow:0 3px 12px rgba(236,51,55,0.3);transition:background 0.2s ease,box-shadow 0.2s ease,transform 0.2s ease;white-space:nowrap;letter-spacing:.2px}
@@ -511,15 +517,48 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                     </div>
                 </li>
 
-                <!-- Courses -->
-                <li class="static-menu-item <?php echo (isset($activeNav) && $activeNav == 'courses') ? 'active' : ''; ?>">
+                <!-- Courses (Direct Megamenu with All Courses & 19 Syllabus Disciplines) -->
+                <li class="static-menu-item <?php echo (isset($activeNav) && in_array($activeNav, ['courses', 'syllabus'])) ? 'active' : ''; ?>">
                     <a href="<?php echo BASE_URL; ?>courses" class="static-menu-link">
                         Courses <span class="static-dropdown-arrow"></span>
                     </a>
-                    <ul class="static-dropdown-panel">
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>courses" class="static-dropdown-link">All Academic Courses</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>syllabus" class="static-dropdown-link">Scheme &amp; Syllabus</a></li>
-                    </ul>
+                    <div class="static-dropdown-panel syllabus-megamenu-panel shadow-lg" style="width: 590px !important; left: -110px !important; padding: 16px 18px !important;">
+                        <!-- Top Header Bar: All Academic Courses & View All Syllabi -->
+                        <div class="d-flex align-items-center justify-content-between pb-2 mb-2 border-bottom px-2">
+                            <a href="<?php echo BASE_URL; ?>courses" class="fw-bold text-navy text-decoration-none d-flex align-items-center gap-2" style="font-size: 13px;">
+                                <i class="fas fa-graduation-cap text-primary"></i> All Academic Courses (90+ Degrees)
+                            </a>
+                            <a href="<?php echo BASE_URL; ?>syllabus" class="small fw-bold text-danger text-decoration-none" style="font-size: 11.5px;">
+                                <i class="fas fa-file-pdf me-1"></i> View All Syllabus / Scheme &rarr;
+                            </a>
+                        </div>
+                        <!-- Section Label -->
+                        <div class="px-2 pb-1 mb-1 d-flex align-items-center justify-content-between text-muted" style="font-size: 11px; letter-spacing: .5px; text-transform: uppercase; font-weight: 700;">
+                            <span><i class="fas fa-book-open text-danger me-1"></i> Course Schemes &amp; Syllabi:</span>
+                        </div>
+                        <!-- 19 Syllabus Categories Grid (Direct 2-Column Links) -->
+                        <div class="syllabus-grid">
+                            <a title="BA LLB (HONS.)" href="<?php echo BASE_URL; ?>syllabus?course=ba-llb" class="static-dropdown-link"><i class="fas fa-gavel text-danger me-1"></i> BA LLB (HONS.)</a>
+                            <a title="BJMC Syllabus &amp; Scheme" href="<?php echo BASE_URL; ?>syllabus?course=bjmc" class="static-dropdown-link"><i class="fas fa-newspaper text-danger me-1"></i> BJMC Syllabus &amp; Scheme</a>
+                            <a title="LLB." href="<?php echo BASE_URL; ?>syllabus?course=llb" class="static-dropdown-link"><i class="fas fa-balance-scale text-danger me-1"></i> LLB.</a>
+                            <a title="LLM" href="<?php echo BASE_URL; ?>syllabus?course=llm" class="static-dropdown-link"><i class="fas fa-graduation-cap text-danger me-1"></i> LLM</a>
+                            <a title="B.pharmacy" href="<?php echo BASE_URL; ?>syllabus?course=b-pharmacy" class="static-dropdown-link"><i class="fas fa-pills text-danger me-1"></i> B.pharmacy</a>
+                            <a title="D.Pharmacy" href="<?php echo BASE_URL; ?>syllabus?course=d-pharmacy" class="static-dropdown-link"><i class="fas fa-capsules text-danger me-1"></i> D.Pharmacy</a>
+                            <a title="M.Pharma" href="<?php echo BASE_URL; ?>syllabus?course=m-pharma" class="static-dropdown-link"><i class="fas fa-prescription text-danger me-1"></i> M.Pharma</a>
+                            <a title="Nursing" href="<?php echo BASE_URL; ?>syllabus?course=nursing" class="static-dropdown-link"><i class="fas fa-user-nurse text-danger me-1"></i> Nursing</a>
+                            <a title="Polytechnic Engineering" href="<?php echo BASE_URL; ?>syllabus?course=polytechnic-engineering" class="static-dropdown-link"><i class="fas fa-tools text-danger me-1"></i> Polytechnic Engineering</a>
+                            <a title="Agriculture Courses" href="<?php echo BASE_URL; ?>syllabus?course=agriculture-courses" class="static-dropdown-link"><i class="fas fa-seedling text-danger me-1"></i> Agriculture Courses</a>
+                            <a title="Paramedical" href="<?php echo BASE_URL; ?>syllabus?course=paramedical" class="static-dropdown-link"><i class="fas fa-stethoscope text-danger me-1"></i> Paramedical</a>
+                            <a title="B.E. / B.Tech" href="<?php echo BASE_URL; ?>syllabus?course=be-btech" class="static-dropdown-link"><i class="fas fa-laptop-code text-danger me-1"></i> B.E. / B.Tech</a>
+                            <a title="M.Tech" href="<?php echo BASE_URL; ?>syllabus?course=m-tech" class="static-dropdown-link"><i class="fas fa-microchip text-danger me-1"></i> M.Tech</a>
+                            <a title="MBA" href="<?php echo BASE_URL; ?>syllabus?course=mba" class="static-dropdown-link"><i class="fas fa-briefcase text-danger me-1"></i> MBA</a>
+                            <a title="BCA" href="<?php echo BASE_URL; ?>syllabus?course=bca" class="static-dropdown-link"><i class="fas fa-desktop text-danger me-1"></i> BCA</a>
+                            <a title="MCA" href="<?php echo BASE_URL; ?>syllabus?course=mca" class="static-dropdown-link"><i class="fas fa-network-wired text-danger me-1"></i> MCA</a>
+                            <a title="Library Course" href="<?php echo BASE_URL; ?>syllabus?course=library-course" class="static-dropdown-link"><i class="fas fa-book-reader text-danger me-1"></i> Library Course</a>
+                            <a title="Computer Science" href="<?php echo BASE_URL; ?>syllabus?course=computer-science" class="static-dropdown-link"><i class="fas fa-code text-danger me-1"></i> Computer Science</a>
+                            <a title="Allied Courses" href="<?php echo BASE_URL; ?>syllabus?course=allied-courses" class="static-dropdown-link"><i class="fas fa-atom text-danger me-1"></i> Allied Courses</a>
+                        </div>
+                    </div>
                 </li>
 
                 <!-- Academics -->
@@ -687,6 +726,8 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
         document.querySelectorAll('.static-menu-item > .static-menu-link, .static-dropdown-item > .static-dropdown-link').forEach(function(link){
             link.addEventListener('click', function(e){
                 if(window.innerWidth > 1024) return;
+                var parent = link.parentElement;
+                if(!parent) return;
                 var hasSub = parent.querySelector(':scope > .static-dropdown-panel, :scope > .static-sub-dropdown');
                 if(!hasSub) return;
                 e.preventDefault();

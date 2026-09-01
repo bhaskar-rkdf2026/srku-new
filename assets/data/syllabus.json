@@ -1,0 +1,2862 @@
+{
+    "ba-llb": {
+        "slug": "ba-llb",
+        "title": "BA LLB (HONS.)",
+        "dept": "Law & Legal Studies",
+        "icon": "fas fa-gavel",
+        "color": "#8b0000",
+        "total_pdfs": 2,
+        "items": [
+            {
+                "title": "BA LLB (HONS.) SCHEME",
+                "type": "Scheme",
+                "filename": "BALLB_MARKS_SCHEME.pdf",
+                "local_url": "assets/pdf/syllabus/ba-llb/BALLB_MARKS_SCHEME.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/law/23-09-2025/BALLB_MARKS_SCHEME.pdf",
+                "file_size": 322647,
+                "formatted_size": "315 KB",
+                "exists": true
+            },
+            {
+                "title": "BA LLB (HONS.) SYLLABUS",
+                "type": "Syllabus",
+                "filename": "ballb_syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/ba-llb/ballb_syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/law/23-09-2025/ballb_syllabus.pdf",
+                "file_size": 977970,
+                "formatted_size": "955 KB",
+                "exists": true
+            }
+        ]
+    },
+    "bjmc": {
+        "slug": "bjmc",
+        "title": "BJMC Syllabus & Scheme",
+        "dept": "Journalism & Mass Communication",
+        "icon": "fas fa-newspaper",
+        "color": "#d9534f",
+        "total_pdfs": 1,
+        "items": [
+            {
+                "title": "BJMC Syllabus & Scheme",
+                "type": "Scheme & Syllabus",
+                "filename": "Srk-University-BJMC-syllabus-scheme.pdf",
+                "local_url": "assets/pdf/syllabus/bjmc/Srk-University-BJMC-syllabus-scheme.pdf",
+                "original_url": "https://www.srku.edu.in/rkdf-ist/images/pdf/Srk-University-BJMC-syllabus-scheme.pdf",
+                "file_size": 18165635,
+                "formatted_size": "17.32 MB",
+                "exists": true
+            }
+        ]
+    },
+    "llb": {
+        "slug": "llb",
+        "title": "LLB.",
+        "dept": "Law & Legal Studies",
+        "icon": "fas fa-balance-scale",
+        "color": "#8b0000",
+        "total_pdfs": 4,
+        "items": [
+            {
+                "title": "B.A.L.L.B. MARKS SCHEME SCHEME",
+                "type": "Scheme",
+                "filename": "BALLB_MARKS_SCHEME.pdf",
+                "local_url": "assets/pdf/syllabus/llb/BALLB_MARKS_SCHEME.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/law/23-09-2025/BALLB_MARKS_SCHEME.pdf",
+                "file_size": 322647,
+                "formatted_size": "315 KB",
+                "exists": true
+            },
+            {
+                "title": "FINAL B.A.L.L.B.-Syllabus SYLLABUS",
+                "type": "Syllabus",
+                "filename": "ballb_syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/llb/ballb_syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/law/23-09-2025/ballb_syllabus.pdf",
+                "file_size": 977970,
+                "formatted_size": "955 KB",
+                "exists": true
+            },
+            {
+                "title": "final LLB-SYLLABUS SYLLABUS",
+                "type": "Syllabus",
+                "filename": "LLB-SYLLABUS.pdf",
+                "local_url": "assets/pdf/syllabus/llb/LLB-SYLLABUS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/law/23-09-2025/LLB-SYLLABUS.pdf",
+                "file_size": 689947,
+                "formatted_size": "674 KB",
+                "exists": true
+            },
+            {
+                "title": "L.LB. MARKS SCHEME SCHEME",
+                "type": "Scheme",
+                "filename": "LLB_MARKS_SCHEME.pdf",
+                "local_url": "assets/pdf/syllabus/llb/LLB_MARKS_SCHEME.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/law/23-09-2025/LLB_MARKS_SCHEME.pdf",
+                "file_size": 239447,
+                "formatted_size": "234 KB",
+                "exists": true
+            }
+        ]
+    },
+    "llm": {
+        "slug": "llm",
+        "title": "LLM",
+        "dept": "Law & Legal Studies",
+        "icon": "fas fa-graduation-cap",
+        "color": "#8b0000",
+        "total_pdfs": 2,
+        "items": [
+            {
+                "title": "llm MARK-SCHEME",
+                "type": "Scheme",
+                "filename": "LLM-MARKS-SCHEME.pdf",
+                "local_url": "assets/pdf/syllabus/llm/LLM-MARKS-SCHEME.pdf",
+                "original_url": "https://www.srku.edu.in/rkdf-ist/images/pdf/LLM-MARKS-SCHEME.pdf",
+                "file_size": 260088,
+                "formatted_size": "254 KB",
+                "exists": true
+            },
+            {
+                "title": "LLM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "FINAL-LLM-SYLLABUS.pdf",
+                "local_url": "assets/pdf/syllabus/llm/FINAL-LLM-SYLLABUS.pdf",
+                "original_url": "https://www.srku.edu.in/rkdf-ist/images/pdf/FINAL-LLM-SYLLABUS.pdf",
+                "file_size": 849121,
+                "formatted_size": "829 KB",
+                "exists": true
+            }
+        ]
+    },
+    "b-pharmacy": {
+        "slug": "b-pharmacy",
+        "title": "B.Pharmacy",
+        "dept": "Pharmacy",
+        "icon": "fas fa-pills",
+        "color": "#0284c7",
+        "total_pdfs": 18,
+        "items": [
+            {
+                "title": "B.Phamra III SEM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "Syllabus_B_Pharm-semester-III.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Syllabus_B_Pharm-semester-III.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Syllabus_B_Pharm-semester-III.pdf",
+                "file_size": 49479,
+                "formatted_size": "48 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharm I SEM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "Syllabus_B_Pharm-semester-I.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Syllabus_B_Pharm-semester-I.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Syllabus_B_Pharm-semester-I.pdf",
+                "file_size": 63534,
+                "formatted_size": "62 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharm II SEM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "Syllabus_B_Pharm-semester-II.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Syllabus_B_Pharm-semester-II.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Syllabus_B_Pharm-semester-II.pdf",
+                "file_size": 61807,
+                "formatted_size": "60 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharm IX SEM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "Syllabus_B_Pharm-semester-IX.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Syllabus_B_Pharm-semester-IX.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Syllabus_B_Pharm-semester-IX.pdf",
+                "file_size": 54887,
+                "formatted_size": "54 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharm SCHEME FOR I SEM",
+                "type": "Scheme",
+                "filename": "Schemes_B_Pharm-1.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Schemes_B_Pharm-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Schemes_B_Pharm-1.pdf",
+                "file_size": 66926,
+                "formatted_size": "65 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharm SCHEME FOR II SEM",
+                "type": "Scheme",
+                "filename": "Scheme_B_Pharm-2.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Scheme_B_Pharm-2.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Scheme_B_Pharm-2.pdf",
+                "file_size": 61393,
+                "formatted_size": "60 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharm SCHEME FOR III SEM",
+                "type": "Scheme",
+                "filename": "Scheme_B_Pharm-3.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Scheme_B_Pharm-3.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Scheme_B_Pharm-3.pdf",
+                "file_size": 59809,
+                "formatted_size": "58 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharm SCHEME FOR IV SEM",
+                "type": "Scheme",
+                "filename": "Scheme_B_Pharm-4.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Scheme_B_Pharm-4.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Scheme_B_Pharm-4.pdf",
+                "file_size": 59808,
+                "formatted_size": "58 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharm SCHEME FOR IX SEM",
+                "type": "Scheme",
+                "filename": "Scheme_B_Pharm-9.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Scheme_B_Pharm-9.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Scheme_B_Pharm-9.pdf",
+                "file_size": 64205,
+                "formatted_size": "63 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharm SCHEME FOR V SEM",
+                "type": "Scheme",
+                "filename": "Scheme_B_Pharm-5.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Scheme_B_Pharm-5.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Scheme_B_Pharm-5.pdf",
+                "file_size": 59157,
+                "formatted_size": "58 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharm SCHEME FOR VI SEM",
+                "type": "Scheme",
+                "filename": "Scheme_B_Pharm-7.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Scheme_B_Pharm-7.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Scheme_B_Pharm-7.pdf",
+                "file_size": 58857,
+                "formatted_size": "57 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharm SCHEME FOR VII SEM",
+                "type": "Scheme",
+                "filename": "Scheme_B_Pharm-6.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Scheme_B_Pharm-6.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Scheme_B_Pharm-6.pdf",
+                "file_size": 60103,
+                "formatted_size": "59 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharm SCHEME FOR VIII SEM",
+                "type": "Scheme",
+                "filename": "Scheme_B_Pharm-8.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Scheme_B_Pharm-8.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Scheme_B_Pharm-8.pdf",
+                "file_size": 61600,
+                "formatted_size": "60 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharma IV SEM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "Syllabus_B_Pharm-semester-IV.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Syllabus_B_Pharm-semester-IV.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Syllabus_B_Pharm-semester-IV.pdf",
+                "file_size": 50716,
+                "formatted_size": "50 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharma V SEM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "Syllabus_B_Pharm-semester-V.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Syllabus_B_Pharm-semester-V.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Syllabus_B_Pharm-semester-V.pdf",
+                "file_size": 47115,
+                "formatted_size": "46 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharma VI SEM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "Syllabus_B_Pharm-semester-VI.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Syllabus_B_Pharm-semester-VI.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Syllabus_B_Pharm-semester-VI.pdf",
+                "file_size": 85114,
+                "formatted_size": "83 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharma VII SEM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "Syllabus_B_Pharm-semester-VII.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Syllabus_B_Pharm-semester-VII.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Syllabus_B_Pharm-semester-VII.pdf",
+                "file_size": 69780,
+                "formatted_size": "68 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Pharma VIII SEM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "Syllabus_B_Pharm-semester-VIII.pdf",
+                "local_url": "assets/pdf/syllabus/b-pharmacy/Syllabus_B_Pharm-semester-VIII.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Syllabus_B_Pharm-semester-VIII.pdf",
+                "file_size": 68550,
+                "formatted_size": "67 KB",
+                "exists": true
+            }
+        ]
+    },
+    "d-pharmacy": {
+        "slug": "d-pharmacy",
+        "title": "D.Pharmacy",
+        "dept": "Pharmacy",
+        "icon": "fas fa-capsules",
+        "color": "#0284c7",
+        "total_pdfs": 3,
+        "items": [
+            {
+                "title": "D PHARMACY PART II",
+                "type": "Syllabus",
+                "filename": "D-PHARMACY-PART-II.pdf",
+                "local_url": "assets/pdf/syllabus/d-pharmacy/D-PHARMACY-PART-II.pdf",
+                "original_url": "",
+                "file_size": 121340,
+                "formatted_size": "118 KB",
+                "exists": true
+            },
+            {
+                "title": "D.Pharm I & II YEAR SCHEME",
+                "type": "Scheme",
+                "filename": "1st-year-D.Pharm-sch_syll.pdf",
+                "local_url": "assets/pdf/syllabus/d-pharmacy/1st-year-D.Pharm-sch_syll.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/1st-year-D.Pharm-sch_syll.pdf",
+                "file_size": 130968,
+                "formatted_size": "128 KB",
+                "exists": true
+            },
+            {
+                "title": "D.Pharm I YEAR SYLLABUS",
+                "type": "Syllabus",
+                "filename": "1st-year-D.Pharm-syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/d-pharmacy/1st-year-D.Pharm-syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/1st-year-D.Pharm-syllabus.pdf",
+                "file_size": 188010,
+                "formatted_size": "184 KB",
+                "exists": true
+            }
+        ]
+    },
+    "m-pharma": {
+        "slug": "m-pharma",
+        "title": "M.Pharma",
+        "dept": "Pharmacy",
+        "icon": "fas fa-prescription",
+        "color": "#0284c7",
+        "total_pdfs": 6,
+        "items": [
+            {
+                "title": "M.Phamra (PHARMACOGNOSY) I SEM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "Syllabus_M_Pharm-16.pdf",
+                "local_url": "assets/pdf/syllabus/m-pharma/Syllabus_M_Pharm-16.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Syllabus_M_Pharm-16.pdf",
+                "file_size": 119454,
+                "formatted_size": "117 KB",
+                "exists": true
+            },
+            {
+                "title": "M.Pharm SCHEME",
+                "type": "Scheme",
+                "filename": "complete-scheme.pdf",
+                "local_url": "assets/pdf/syllabus/m-pharma/complete-scheme.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/complete-scheme.pdf",
+                "file_size": 326596,
+                "formatted_size": "319 KB",
+                "exists": true
+            },
+            {
+                "title": "M.Pharma (CHEMISTRY) I SEM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "PHARMACEUTICAL-CHEMISTRY-I-SEMESTER-1.pdf",
+                "local_url": "assets/pdf/syllabus/m-pharma/PHARMACEUTICAL-CHEMISTRY-I-SEMESTER-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/PHARMACEUTICAL-CHEMISTRY-I-SEMESTER-1.pdf",
+                "file_size": 258030,
+                "formatted_size": "252 KB",
+                "exists": true
+            },
+            {
+                "title": "M.Pharma (CHEMISTRY) II SEM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "PHARMACEUTICAL-CHEMISTRY-II-SEMESTER.pdf",
+                "local_url": "assets/pdf/syllabus/m-pharma/PHARMACEUTICAL-CHEMISTRY-II-SEMESTER.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/PHARMACEUTICAL-CHEMISTRY-II-SEMESTER.pdf",
+                "file_size": 275759,
+                "formatted_size": "269 KB",
+                "exists": true
+            },
+            {
+                "title": "M.Pharma (PHARMACEUTICS) I SEM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "Syllabus_M_Pharm-20.pdf",
+                "local_url": "assets/pdf/syllabus/m-pharma/Syllabus_M_Pharm-20.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Syllabus_M_Pharm-20.pdf",
+                "file_size": 123691,
+                "formatted_size": "121 KB",
+                "exists": true
+            },
+            {
+                "title": "M.Pharma (PHARMACOLOGY) I SEM SYLLABUS",
+                "type": "Syllabus",
+                "filename": "Syllabus_M_Pharm-15.pdf",
+                "local_url": "assets/pdf/syllabus/m-pharma/Syllabus_M_Pharm-15.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/Syllabus_M_Pharm-15.pdf",
+                "file_size": 120732,
+                "formatted_size": "118 KB",
+                "exists": true
+            }
+        ]
+    },
+    "nursing": {
+        "slug": "nursing",
+        "title": "Nursing",
+        "dept": "Nursing Sciences",
+        "icon": "fas fa-user-nurse",
+        "color": "#10b981",
+        "total_pdfs": 4,
+        "items": [
+            {
+                "title": "RKDF CON - MSc Nursing SYLLABUS",
+                "type": "Syllabus",
+                "filename": "RKDF-CON-MSc-Nursing-Syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/nursing/RKDF-CON-MSc-Nursing-Syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/RKDF-CON-MSc-Nursing-Syllabus.pdf",
+                "file_size": 85725,
+                "formatted_size": "84 KB",
+                "exists": true
+            },
+            {
+                "title": "RKDF CON - NPCC SYLLABUS",
+                "type": "Syllabus",
+                "filename": "RKDF-CON-NPCC-Syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/nursing/RKDF-CON-NPCC-Syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/RKDF-CON-NPCC-Syllabus.pdf",
+                "file_size": 85683,
+                "formatted_size": "84 KB",
+                "exists": true
+            },
+            {
+                "title": "RKDF CON - PBBSc Nursing SYLLABUS",
+                "type": "Syllabus",
+                "filename": "RKDF-CON-PBBSc-Nursing-Syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/nursing/RKDF-CON-PBBSc-Nursing-Syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/RKDF-CON-PBBSc-Nursing-Syllabus.pdf",
+                "file_size": 85737,
+                "formatted_size": "84 KB",
+                "exists": true
+            },
+            {
+                "title": "RKDF CON BSc Nursing SYLLABUS",
+                "type": "Syllabus",
+                "filename": "RKDF-CON-BSc-Nursing-Syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/nursing/RKDF-CON-BSc-Nursing-Syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/RKDF-CON-BSc-Nursing-Syllabus.pdf",
+                "file_size": 85725,
+                "formatted_size": "84 KB",
+                "exists": true
+            }
+        ]
+    },
+    "polytechnic-engineering": {
+        "slug": "polytechnic-engineering",
+        "title": "Polytechnic Engineering",
+        "dept": "Polytechnic Engineering",
+        "icon": "fas fa-tools",
+        "color": "#f59e0b",
+        "total_pdfs": 9,
+        "items": [
+            {
+                "title": "DIPLOMA ( ALL BRANCH) I - II SEM SCHEME (REG 2019 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "DIPLOMA-ALL-BRANCH-I-II-SEM-SCHEME-REG2019-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/polytechnic-engineering/DIPLOMA-ALL-BRANCH-I-II-SEM-SCHEME-REG2019-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/DIPLOMA-ALL-BRANCH-I-II-SEM-SCHEME-REG2019-BATCH-ONWARDS.pdf",
+                "file_size": 103186,
+                "formatted_size": "101 KB",
+                "exists": true
+            },
+            {
+                "title": "DIPLOMA ( ALL BRANCH) I - II SEM SYLLABUS (REG 2019 BATCH ONWARDS)",
+                "type": "Syllabus",
+                "filename": "DIPLOMA-ALL-BRANCH-I-II-SEM-SYLLABUS-REG2019-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/polytechnic-engineering/DIPLOMA-ALL-BRANCH-I-II-SEM-SYLLABUS-REG2019-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/DIPLOMA-ALL-BRANCH-I-II-SEM-SYLLABUS-REG2019-BATCH-ONWARDS.pdf",
+                "file_size": 381074,
+                "formatted_size": "372 KB",
+                "exists": true
+            },
+            {
+                "title": "DIPLOMA ( MECHANICAL) III - VI SEM SCHEME (REG 2019 BATCH ONWARDS)",
+                "type": "Scheme",
+                "filename": "DIPLOMA-MECHANICAL-III-VI-SEM-SCHEME-REG-2019-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/polytechnic-engineering/DIPLOMA-MECHANICAL-III-VI-SEM-SCHEME-REG-2019-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/DIPLOMA-MECHANICAL-III-VI-SEM-SCHEME-REG-2019-BATCH-ONWARDS.pdf",
+                "file_size": 291656,
+                "formatted_size": "285 KB",
+                "exists": true
+            },
+            {
+                "title": "DIPLOMA ( MECHANICAL) III - VI SEM SYLLABUS (REG 2019 BATCH ONWARDS)",
+                "type": "Syllabus",
+                "filename": "DIPLOMA-MECHANICAL-III-VI-SEM-SYLLABUS-REG-2019-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/polytechnic-engineering/DIPLOMA-MECHANICAL-III-VI-SEM-SYLLABUS-REG-2019-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/DIPLOMA-MECHANICAL-III-VI-SEM-SYLLABUS-REG-2019-BATCH-ONWARDS.pdf",
+                "file_size": 866620,
+                "formatted_size": "846 KB",
+                "exists": true
+            },
+            {
+                "title": "DIPLOMA IN (ME & CE) ENGINEERING I-II SEM(REG 2015 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "DIPLOMA-IN-ME-CE-ENGINEERING-I-II-SEMREG-2015-BATCH-ON-WARDS.pdf",
+                "local_url": "assets/pdf/syllabus/polytechnic-engineering/DIPLOMA-IN-ME-CE-ENGINEERING-I-II-SEMREG-2015-BATCH-ON-WARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/DIPLOMA-IN-ME-CE-ENGINEERING-I-II-SEMREG-2015-BATCH-ON-WARDS.pdf",
+                "file_size": 1566218,
+                "formatted_size": "1.49 MB",
+                "exists": true
+            },
+            {
+                "title": "DIPLOMA IN CIVIL ENGG. III-VI SEM(REG 2015 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "DIPLOMA-IN-CIVIL-ENGG.-III-VI-SEMREG-2015-BATCH-ON-WARDS.pdf",
+                "local_url": "assets/pdf/syllabus/polytechnic-engineering/DIPLOMA-IN-CIVIL-ENGG.-III-VI-SEMREG-2015-BATCH-ON-WARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/DIPLOMA-IN-CIVIL-ENGG.-III-VI-SEMREG-2015-BATCH-ON-WARDS.pdf",
+                "file_size": 2182453,
+                "formatted_size": "2.08 MB",
+                "exists": true
+            },
+            {
+                "title": "DIPLOMA IN MECHANICAL ENGG. III-VI SEM(REG 2015 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "DIPLOMA-IN-MECHANICAL-ENGG.-III-VI-SEMREG-2015-BATCH-ON-WARDS.pdf",
+                "local_url": "assets/pdf/syllabus/polytechnic-engineering/DIPLOMA-IN-MECHANICAL-ENGG.-III-VI-SEMREG-2015-BATCH-ON-WARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/DIPLOMA-IN-MECHANICAL-ENGG.-III-VI-SEMREG-2015-BATCH-ON-WARDS.pdf",
+                "file_size": 1813571,
+                "formatted_size": "1.73 MB",
+                "exists": true
+            },
+            {
+                "title": "DIPLOMA(CIVIL)III-VI SEM SCHEME(REG-2019 BATCH ONWARDS)",
+                "type": "Scheme",
+                "filename": "DIPLOMACIVILIII-VI-SEM-SCHEMEREG-2019-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/polytechnic-engineering/DIPLOMACIVILIII-VI-SEM-SCHEMEREG-2019-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/DIPLOMACIVILIII-VI-SEM-SCHEMEREG-2019-BATCH-ONWARDS.pdf",
+                "file_size": 341375,
+                "formatted_size": "333 KB",
+                "exists": true
+            },
+            {
+                "title": "DIPLOMA(CIVIL)III-VI SEM SYLLABUS (REG-2019 BATCH ONWARDS",
+                "type": "Syllabus",
+                "filename": "DIPLOMACIVILIII-VI-SEM-SYLLABUS-REG-2019-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/polytechnic-engineering/DIPLOMACIVILIII-VI-SEM-SYLLABUS-REG-2019-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/DIPLOMACIVILIII-VI-SEM-SYLLABUS-REG-2019-BATCH-ONWARDS.pdf",
+                "file_size": 504643,
+                "formatted_size": "493 KB",
+                "exists": true
+            }
+        ]
+    },
+    "agriculture-courses": {
+        "slug": "agriculture-courses",
+        "title": "Agriculture Courses",
+        "dept": "Faculty of Agriculture",
+        "icon": "fas fa-seedling",
+        "color": "#16a34a",
+        "total_pdfs": 14,
+        "items": [
+            {
+                "title": "B.Sc. (Agriculture) COURCE CURRICULUM AND SYLLABUS",
+                "type": "Syllabus",
+                "filename": "bsc-ag-new-syllbus-5th-deans-committee.pdf",
+                "local_url": "assets/pdf/syllabus/agriculture-courses/bsc-ag-new-syllbus-5th-deans-committee.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/bsc-ag-new-syllbus-5th-deans-committee.pdf",
+                "file_size": 710658,
+                "formatted_size": "694 KB",
+                "exists": true
+            },
+            {
+                "title": "b.sc. Agriculture Ist Sem to III Sem (Batch 2019-2020)",
+                "type": "Syllabus",
+                "filename": "Agriculture-Scheme-and-syllabus-only.pdf",
+                "local_url": "assets/pdf/syllabus/agriculture-courses/Agriculture-Scheme-and-syllabus-only.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads//2025/09/agriculture/Agriculture-Scheme-and-syllabus-only.pdf",
+                "file_size": 433212,
+                "formatted_size": "423 KB",
+                "exists": true
+            },
+            {
+                "title": "b.sc.(Hons.) Agriculture Scheme & Syllabus From 2025",
+                "type": "Scheme & Syllabus",
+                "filename": "SRKU-AG-SYLLABUS.pdf",
+                "local_url": "assets/pdf/syllabus/agriculture-courses/SRKU-AG-SYLLABUS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads//2025/09/agriculture/SRKU-AG-SYLLABUS.pdf",
+                "file_size": 1379430,
+                "formatted_size": "1.32 MB",
+                "exists": true
+            },
+            {
+                "title": "Diploma of Agriculture 1ST SEMESTER",
+                "type": "Syllabus",
+                "filename": "1st-sem-DIPLOMA-MAIL.pdf",
+                "local_url": "assets/pdf/syllabus/agriculture-courses/1st-sem-DIPLOMA-MAIL.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/1st-sem-DIPLOMA-MAIL.pdf",
+                "file_size": 176497,
+                "formatted_size": "172 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma of Agriculture 2ND SEMESTER",
+                "type": "Syllabus",
+                "filename": "2-ND-SEM-DIPLOMA.pdf",
+                "local_url": "assets/pdf/syllabus/agriculture-courses/2-ND-SEM-DIPLOMA.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/2-ND-SEM-DIPLOMA.pdf",
+                "file_size": 225252,
+                "formatted_size": "220 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma of Agriculture 2ND SEMESTER",
+                "type": "Syllabus",
+                "filename": "2-nd-sem-DIPLOMA-MAIL.pdf",
+                "local_url": "assets/pdf/syllabus/agriculture-courses/2-nd-sem-DIPLOMA-MAIL.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/2-nd-sem-DIPLOMA-MAIL.pdf",
+                "file_size": 221430,
+                "formatted_size": "216 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma of Agriculture 3RD SEMESTER",
+                "type": "Syllabus",
+                "filename": "3-rd-sem-DIPLOMA-MAIL.pdf",
+                "local_url": "assets/pdf/syllabus/agriculture-courses/3-rd-sem-DIPLOMA-MAIL.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/3-rd-sem-DIPLOMA-MAIL.pdf",
+                "file_size": 181382,
+                "formatted_size": "177 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma of Agriculture 4TH SEMESTER",
+                "type": "Syllabus",
+                "filename": "4-th-sem-DIPLOMA-syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/agriculture-courses/4-th-sem-DIPLOMA-syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/4-th-sem-DIPLOMA-syllabus.pdf",
+                "file_size": 220031,
+                "formatted_size": "215 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma of Agriculture 4TH SEMESTER",
+                "type": "Syllabus",
+                "filename": "MAIL-4-th-sem-diploma-ANU.pdf",
+                "local_url": "assets/pdf/syllabus/agriculture-courses/MAIL-4-th-sem-diploma-ANU.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MAIL-4-th-sem-diploma-ANU.pdf",
+                "file_size": 511418,
+                "formatted_size": "499 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma of Agriculture 5TH SEMESTER",
+                "type": "Syllabus",
+                "filename": "5-th-sem-DIPLOMA-MAIL.pdf",
+                "local_url": "assets/pdf/syllabus/agriculture-courses/5-th-sem-DIPLOMA-MAIL.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/5-th-sem-DIPLOMA-MAIL.pdf",
+                "file_size": 234988,
+                "formatted_size": "229 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma of Agriculture 6TH SEMESTER",
+                "type": "Syllabus",
+                "filename": "6-sem-DIPLOMA-MAIL.pdf",
+                "local_url": "assets/pdf/syllabus/agriculture-courses/6-sem-DIPLOMA-MAIL.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/6-sem-DIPLOMA-MAIL.pdf",
+                "file_size": 37862,
+                "formatted_size": "37 KB",
+                "exists": true
+            },
+            {
+                "title": "II year 4TH SEMESTER",
+                "type": "Syllabus",
+                "filename": "mail-srk-4rth-Semester-2ndyear.pdf",
+                "local_url": "assets/pdf/syllabus/agriculture-courses/mail-srk-4rth-Semester-2ndyear.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/mail-srk-4rth-Semester-2ndyear.pdf",
+                "file_size": 290346,
+                "formatted_size": "284 KB",
+                "exists": true
+            },
+            {
+                "title": "III year 6TH SEMESTER",
+                "type": "Syllabus",
+                "filename": "mail-6th-Semester-ag-3rd-year.pdf",
+                "local_url": "assets/pdf/syllabus/agriculture-courses/mail-6th-Semester-ag-3rd-year.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/mail-6th-Semester-ag-3rd-year.pdf",
+                "file_size": 471101,
+                "formatted_size": "460 KB",
+                "exists": true
+            },
+            {
+                "title": "Scheme for all 1st Sem to 8th semester B.Sc. Agriculture According to 6th Dean Committee",
+                "type": "Scheme",
+                "filename": "BSc-AG-1st-8thsem.pdf",
+                "local_url": "assets/pdf/syllabus/agriculture-courses/BSc-AG-1st-8thsem.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BSc-AG-1st-8thsem.pdf",
+                "file_size": 385696,
+                "formatted_size": "377 KB",
+                "exists": true
+            }
+        ]
+    },
+    "paramedical": {
+        "slug": "paramedical",
+        "title": "Paramedical",
+        "dept": "Paramedical Sciences",
+        "icon": "fas fa-stethoscope",
+        "color": "#06b6d4",
+        "total_pdfs": 23,
+        "items": [
+            {
+                "title": "Bachelor of Human Nutrition SCHEME For 1St.Year",
+                "type": "Scheme",
+                "filename": "Scheme-for-BACHELOR-OF-HUMAN-HUTRITION.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/Scheme-for-BACHELOR-OF-HUMAN-HUTRITION.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/Scheme-for-BACHELOR-OF-HUMAN-HUTRITION.pdf",
+                "file_size": 166945,
+                "formatted_size": "163 KB",
+                "exists": true
+            },
+            {
+                "title": "Bachelor of medical lab technician SCHEME For 1St.Year",
+                "type": "Scheme",
+                "filename": "BACHELOR-OF-MEDICAL-LAB-TECHNICIAN.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/BACHELOR-OF-MEDICAL-LAB-TECHNICIAN.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/BACHELOR-OF-MEDICAL-LAB-TECHNICIAN.pdf",
+                "file_size": 134596,
+                "formatted_size": "131 KB",
+                "exists": true
+            },
+            {
+                "title": "BACHELOR OF PHYSIOTHERAPY SCHEME",
+                "type": "Scheme",
+                "filename": "Scheme-BPT.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/Scheme-BPT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/Scheme-BPT.pdf",
+                "file_size": 85611,
+                "formatted_size": "84 KB",
+                "exists": true
+            },
+            {
+                "title": "Bachelor of physiotherapy SCHEME For 1St.Year",
+                "type": "Scheme",
+                "filename": "BACHELOR-OF-PHYSIOTHERAPY.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/BACHELOR-OF-PHYSIOTHERAPY.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/BACHELOR-OF-PHYSIOTHERAPY.pdf",
+                "file_size": 111295,
+                "formatted_size": "109 KB",
+                "exists": true
+            },
+            {
+                "title": "BACHELOR OF PHYSIOTHERAPY SYLLABUS",
+                "type": "Syllabus",
+                "filename": "SYLLABUS-FOR-BACHELOR-OF-PHYSIOTHERAPY.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/SYLLABUS-FOR-BACHELOR-OF-PHYSIOTHERAPY.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/SYLLABUS-FOR-BACHELOR-OF-PHYSIOTHERAPY.pdf",
+                "file_size": 85779,
+                "formatted_size": "84 KB",
+                "exists": true
+            },
+            {
+                "title": "BMLT SCHEME",
+                "type": "Scheme",
+                "filename": "BMLT-Scheme.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/BMLT-Scheme.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BMLT-Scheme.pdf",
+                "file_size": 748125,
+                "formatted_size": "731 KB",
+                "exists": true
+            },
+            {
+                "title": "bmlt SCHEME for 1St. Year to 3Rd. Common for all Branch",
+                "type": "Scheme",
+                "filename": "BACHELOR-OF-MEDICAL-LAB-TECHNICIAN24-25.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/BACHELOR-OF-MEDICAL-LAB-TECHNICIAN24-25.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/BACHELOR-OF-MEDICAL-LAB-TECHNICIAN24-25.pdf",
+                "file_size": 445604,
+                "formatted_size": "435 KB",
+                "exists": true
+            },
+            {
+                "title": "BMLT SYLLABUS",
+                "type": "Syllabus",
+                "filename": "BMLT-SYLLABUS.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/BMLT-SYLLABUS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BMLT-SYLLABUS.pdf",
+                "file_size": 535397,
+                "formatted_size": "523 KB",
+                "exists": true
+            },
+            {
+                "title": "DIPLOMA IN ANESTHESIA TECHNICIAN SCHEME",
+                "type": "Scheme",
+                "filename": "diploma-in-anesthisia-technician.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/diploma-in-anesthisia-technician.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/diploma-in-anesthisia-technician.pdf",
+                "file_size": 420066,
+                "formatted_size": "410 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma in Ayuvedic Pharmacy SCHEME For 1St.Year",
+                "type": "Scheme",
+                "filename": "DIPLOMA-IN-AYURVEDIC-PHARMACY.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/DIPLOMA-IN-AYURVEDIC-PHARMACY.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/DIPLOMA-IN-AYURVEDIC-PHARMACY.pdf",
+                "file_size": 123565,
+                "formatted_size": "121 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma in DIAlysis technician SCHEME for 1St. Year",
+                "type": "Scheme",
+                "filename": "DIPLOMA-IN-DIALYSIS-TECHNICIAN.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/DIPLOMA-IN-DIALYSIS-TECHNICIAN.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/DIPLOMA-IN-DIALYSIS-TECHNICIAN.pdf",
+                "file_size": 119615,
+                "formatted_size": "117 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma in DMLT SCHEME for 1St. Year",
+                "type": "Scheme",
+                "filename": "DIPLOMA-IN-DMLT.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/DIPLOMA-IN-DMLT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/DIPLOMA-IN-DMLT.pdf",
+                "file_size": 119866,
+                "formatted_size": "117 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma in homoeopathic Pharamacy SCHEME for 1St. Year",
+                "type": "Scheme",
+                "filename": "DIPLOMA-IN-HOMOEOPATHIC-PHARMACY.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/DIPLOMA-IN-HOMOEOPATHIC-PHARMACY.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/DIPLOMA-IN-HOMOEOPATHIC-PHARMACY.pdf",
+                "file_size": 125336,
+                "formatted_size": "122 KB",
+                "exists": true
+            },
+            {
+                "title": "DIPLOMA IN HUMAN NUTRITION SYLLABUS & SCHEME",
+                "type": "Scheme & Syllabus",
+                "filename": "DIPLOMA-IN-HUMAN-NUTRITION-syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/DIPLOMA-IN-HUMAN-NUTRITION-syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/DIPLOMA-IN-HUMAN-NUTRITION-syllabus.pdf",
+                "file_size": 521003,
+                "formatted_size": "509 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma in naturopathy SCHEME for 1St. Year",
+                "type": "Scheme",
+                "filename": "DIPLOMA-IN-NATUROPATHY.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/DIPLOMA-IN-NATUROPATHY.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/DIPLOMA-IN-NATUROPATHY.pdf",
+                "file_size": 119739,
+                "formatted_size": "117 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma in ophthalmic assistant SCHEME for 1St. Year",
+                "type": "Scheme",
+                "filename": "DIPLOMA-IN-OPHTHALMIC-ASSISTANT.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/DIPLOMA-IN-OPHTHALMIC-ASSISTANT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/DIPLOMA-IN-OPHTHALMIC-ASSISTANT.pdf",
+                "file_size": 119895,
+                "formatted_size": "117 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma in optometry refraction SCHEME for 1St. Year",
+                "type": "Scheme",
+                "filename": "DIPLOMA-IN-OPTOMETRIC-REFRACTION.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/DIPLOMA-IN-OPTOMETRIC-REFRACTION.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/DIPLOMA-IN-OPTOMETRIC-REFRACTION.pdf",
+                "file_size": 119786,
+                "formatted_size": "117 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma in X ray SYLLABUS & SCHEME",
+                "type": "Scheme & Syllabus",
+                "filename": "Diploma-in-X-ray-syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/Diploma-in-X-ray-syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/Diploma-in-X-ray-syllabus.pdf",
+                "file_size": 510532,
+                "formatted_size": "499 KB",
+                "exists": true
+            },
+            {
+                "title": "Diploma in XRAY SCHEME for 1St. Year",
+                "type": "Scheme",
+                "filename": "DIPLOMA-IN-XRAY.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/DIPLOMA-IN-XRAY.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/DIPLOMA-IN-XRAY.pdf",
+                "file_size": 121446,
+                "formatted_size": "119 KB",
+                "exists": true
+            },
+            {
+                "title": "DMLT SYLLABUS & SCHEME",
+                "type": "Scheme & Syllabus",
+                "filename": "DMLT-SYLLABUS.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/DMLT-SYLLABUS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/DMLT-SYLLABUS.pdf",
+                "file_size": 526077,
+                "formatted_size": "514 KB",
+                "exists": true
+            },
+            {
+                "title": "MMLT SCHEME for 1St. Year",
+                "type": "Scheme",
+                "filename": "MMLT.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/MMLT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/MMLT.pdf",
+                "file_size": 217544,
+                "formatted_size": "212 KB",
+                "exists": true
+            },
+            {
+                "title": "MPT SCHEME for 1St. Year Common for all Branch",
+                "type": "Scheme",
+                "filename": "MPT-for-all-branch.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/MPT-for-all-branch.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/07/syllabus/paramedical/MPT-for-all-branch.pdf",
+                "file_size": 180904,
+                "formatted_size": "177 KB",
+                "exists": true
+            },
+            {
+                "title": "OPTOMETRIC SYLLABUS",
+                "type": "Syllabus",
+                "filename": "optometry-syallbus.pdf",
+                "local_url": "assets/pdf/syllabus/paramedical/optometry-syallbus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/optometry-syallbus.pdf",
+                "file_size": 450961,
+                "formatted_size": "440 KB",
+                "exists": true
+            }
+        ]
+    },
+    "be-btech": {
+        "slug": "be-btech",
+        "title": "B.E. / B.Tech",
+        "dept": "Engineering & Technology",
+        "icon": "fas fa-laptop-code",
+        "color": "#2563eb",
+        "total_pdfs": 64,
+        "items": [
+            {
+                "title": "B. TECH. (ALL BRANCH ) I & II ND SEMESTER SCHEME (REG 2021 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "b-tech-all-branches-scheme.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/b-tech-all-branches-scheme.pdf",
+                "original_url": "http://srku.edu.in/rkdf-ist/images/pdf/b-tech-all-branches-scheme.pdf",
+                "file_size": 156569,
+                "formatted_size": "153 KB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (ALL BRANCH) I & iI ND SEMESTER SYLLABUS (REG 2021 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "syllabus2021.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/syllabus2021.pdf",
+                "original_url": "http://srku.edu.in/rkdf-ist/images/pdf/syllabus2021.pdf",
+                "file_size": 8329528,
+                "formatted_size": "7.94 MB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (CS) III-VIII TH SEMESTER SCHEME (REG 2021 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "B.TECHCSIII-VIII-SEMESTER-SCHEMER4EG-2021-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECHCSIII-VIII-SEMESTER-SCHEMER4EG-2021-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHCSIII-VIII-SEMESTER-SCHEMER4EG-2021-BATCH-ONWARDS.pdf",
+                "file_size": 226629,
+                "formatted_size": "221 KB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (CSE) III-VIII TH SEMESTER SYLLABUS (REG 2021 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "B.TECHCSEIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECHCSEIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHCSEIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "file_size": 4284461,
+                "formatted_size": "4.09 MB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (EC) III-VIII TH SEMESTER SCHEME (REG 2021 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "B.TECHECIII-VIII-SEMESTER-SCHEMEREG2021-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECHECIII-VIII-SEMESTER-SCHEMEREG2021-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHECIII-VIII-SEMESTER-SCHEMEREG2021-BATCH-ONWARDS.pdf",
+                "file_size": 487022,
+                "formatted_size": "476 KB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (ec) III-VIII TH SEMESTER SYLLABUS (REG 2021 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "B.TECHECIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECHECIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHECIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "file_size": 3718388,
+                "formatted_size": "3.55 MB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (EE) III SEMESTER SYLLABUS (REG 2021 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "EE-SYLLABUS-III.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/EE-SYLLABUS-III.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/btech/EE-SYLLABUS-III.pdf",
+                "file_size": 1663437,
+                "formatted_size": "1.59 MB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (EE) III-VIII TH SEMESTER SCHEME (REG 2021 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "B.TECHEEIII-VIII-SEMESTER-SCHEMEREG-2021-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECHEEIII-VIII-SEMESTER-SCHEMEREG-2021-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHEEIII-VIII-SEMESTER-SCHEMEREG-2021-BATCH-ONWARDS.pdf",
+                "file_size": 666012,
+                "formatted_size": "650 KB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (EE) III-VIII TH SEMESTER SYLLABUS (REG 2021 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "B.TECHEEIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECHEEIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHEEIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "file_size": 13278149,
+                "formatted_size": "12.66 MB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (EEE) III SEMESTER SYLLABUS (REG 2021 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "EEE-SYLLABUS-III.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/EEE-SYLLABUS-III.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/btech/EEE-SYLLABUS-III.pdf",
+                "file_size": 1752035,
+                "formatted_size": "1.67 MB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (eEE) III-VIII SEMESTER (YEAR-2) SCHEME (REG 2021 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "B-TECH(EEE)III-VIII-SCHEMS-YEARS-2.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B-TECH%28EEE%29III-VIII-SCHEMS-YEARS-2.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/btech/B-TECH(EEE)III-VIII-SCHEMS-YEARS-2.pdf",
+                "file_size": 658982,
+                "formatted_size": "644 KB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (EEE) III-VIII TH SEMESTER SCHEME (REG 2021 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "B.TECHEEEIII-VIII-SEMESTER-SCHEMEREG-2021-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECHEEEIII-VIII-SEMESTER-SCHEMEREG-2021-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHEEEIII-VIII-SEMESTER-SCHEMEREG-2021-BATCH-ONWARDS.pdf",
+                "file_size": 658982,
+                "formatted_size": "644 KB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (EEE) III-VIII TH SEMESTER SYLLABUS (REG 2021 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "B.TECHEEEIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECHEEEIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHEEEIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "file_size": 13311163,
+                "formatted_size": "12.69 MB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (EI) III-VIII TH SEMESTER SCHEME (REG 2021 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "B.TECHEIIII-VIII-SEMESTER-SCHEMEREG-2021-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECHEIIII-VIII-SEMESTER-SCHEMEREG-2021-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHEIIII-VIII-SEMESTER-SCHEMEREG-2021-BATCH-ONWARDS.pdf",
+                "file_size": 498625,
+                "formatted_size": "487 KB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (EI) III-VIII TH SEMESTER SYLLABUS (REG 2021 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "B.TECHEIIII-VIIII-SEMESTER-SYLLABUSREG-2021-ONWARDS-22.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECHEIIII-VIIII-SEMESTER-SYLLABUSREG-2021-ONWARDS-22.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHEIIII-VIIII-SEMESTER-SYLLABUSREG-2021-ONWARDS-22.pdf",
+                "file_size": 3880953,
+                "formatted_size": "3.7 MB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (IT) III-VIII TH SEMESTER SCHEME (REG 2021 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "BE-IT-3-8-SCHEME.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BE-IT-3-8-SCHEME.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BE-IT-3-8-SCHEME.pdf",
+                "file_size": 132532,
+                "formatted_size": "129 KB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (IT) III-VIII TH SEMESTER SYLLABUS (REG 2021 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "B.TECHITIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECHITIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHITIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "file_size": 4256123,
+                "formatted_size": "4.06 MB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (MECH) III-VIII TH SEMESTER SCHEME (REG 2021 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "B.TECHMECHANICAL-III-VIII-SEM-SCHEME-REG-2021-BATCHONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECHMECHANICAL-III-VIII-SEM-SCHEME-REG-2021-BATCHONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHMECHANICAL-III-VIII-SEM-SCHEME-REG-2021-BATCHONWARDS.pdf",
+                "file_size": 523621,
+                "formatted_size": "511 KB",
+                "exists": true
+            },
+            {
+                "title": "B. TECH. (MECH) III-VIII TH SEMESTER SYLLABUS (REG 2021 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "B-tech-Mech-III-VIII-SEM-Syllbus-Reg.2021-Admitted-student-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B-tech-Mech-III-VIII-SEM-Syllbus-Reg.2021-Admitted-student-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B-tech-Mech-III-VIII-SEM-Syllbus-Reg.2021-Admitted-student-1.pdf",
+                "file_size": 9855864,
+                "formatted_size": "9.4 MB",
+                "exists": true
+            },
+            {
+                "title": "B. Tech. ee - III-Viii semester (year -2) SCHEME (REG 2021 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "B.TECH(EE)III-VIII-SCHEME-year-2.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECH%28EE%29III-VIII-SCHEME-year-2.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/btech/B.TECH(EE)III-VIII-SCHEME-year-2.pdf",
+                "file_size": 666012,
+                "formatted_size": "650 KB",
+                "exists": true
+            },
+            {
+                "title": "B.TECH. (CE) III-VIII TH SEMESTER SCHEME (REG 2021 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "B.TECHCEIII-VIII-SEMESTER-SCEME-REG-ULAR-2021-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECHCEIII-VIII-SEMESTER-SCEME-REG-ULAR-2021-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHCEIII-VIII-SEMESTER-SCEME-REG-ULAR-2021-BATCH-ONWARDS.pdf",
+                "file_size": 248581,
+                "formatted_size": "243 KB",
+                "exists": true
+            },
+            {
+                "title": "B.TECH. (civil) III-VIII TH SEMESTER SYLLABUS (REG 2021 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "B.TECHCIVILIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.TECHCIVILIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHCIVILIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf",
+                "file_size": 2889632,
+                "formatted_size": "2.76 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (ALL BRACHES) I-ST YEAR SYLLABUS (REG 2015 BATCH ONWARD)",
+                "type": "Syllabus",
+                "filename": "BEALL-BRANCH-IST-YEAR-syllabus-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BEALL-BRANCH-IST-YEAR-syllabus-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BEALL-BRANCH-IST-YEAR-syllabus-1.pdf",
+                "file_size": 255144,
+                "formatted_size": "249 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (ALL BRANCH) I & II ND SEMESTER SYLLABUS (REG 2020 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "BE-ALL-BRANCH-I-II-SEM-SYLLABUS-REG-2020-BATCH-ONWARDS-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BE-ALL-BRANCH-I-II-SEM-SYLLABUS-REG-2020-BATCH-ONWARDS-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BE-ALL-BRANCH-I-II-SEM-SYLLABUS-REG-2020-BATCH-ONWARDS-1.pdf",
+                "file_size": 398394,
+                "formatted_size": "389 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (ALL BRANCH) II & II SEMESTER SCHEME (REG 2019 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "BE-ALL-BRANCH-I-II-SEM-SCHEME-REG-2019_BATCH-ON-WARDS-1-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BE-ALL-BRANCH-I-II-SEM-SCHEME-REG-2019_BATCH-ON-WARDS-1-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BE-ALL-BRANCH-I-II-SEM-SCHEME-REG-2019_BATCH-ON-WARDS-1-1.pdf",
+                "file_size": 332789,
+                "formatted_size": "325 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (ALL BRANCH) II & II SEMESTER SYLLABUS (REG 2019 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "BE-ALL-BRANCH-I-II-SEM-SYLLABUS-REG-2019-BATCH-ONWARDS-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BE-ALL-BRANCH-I-II-SEM-SYLLABUS-REG-2019-BATCH-ONWARDS-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BE-ALL-BRANCH-I-II-SEM-SYLLABUS-REG-2019-BATCH-ONWARDS-1.pdf",
+                "file_size": 285764,
+                "formatted_size": "279 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (ALL BRANCH) II & IIND SEMESTER SCHEME (REG 2020 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "BE-ALL-BRANCH-I-II-SEM-SCHEME-REG-2020-BATCH-ON-WARDS-1-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BE-ALL-BRANCH-I-II-SEM-SCHEME-REG-2020-BATCH-ON-WARDS-1-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BE-ALL-BRANCH-I-II-SEM-SCHEME-REG-2020-BATCH-ON-WARDS-1-1.pdf",
+                "file_size": 119694,
+                "formatted_size": "117 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (ALL BRANCH) II-ND SEM SCHEME SET-B(REG 2015 BATCH ONWARD)",
+                "type": "Scheme",
+                "filename": "BE-MECHANICAL-III-VIII-SEM-SYLLABUS-2021-BATCH.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BE-MECHANICAL-III-VIII-SEM-SYLLABUS-2021-BATCH.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BE-MECHANICAL-III-VIII-SEM-SYLLABUS-2021-BATCH.pdf",
+                "file_size": 1423722,
+                "formatted_size": "1.36 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (ALL BRANCHES) I-ST SEM SCHEME SET-A(REG 2015 BATCH ON-WARD)",
+                "type": "Scheme",
+                "filename": "BEALL-BRACH-I-ST-SEM-SCHEME-SET-AREG-2015-BATCH-ON-WARD-2.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BEALL-BRACH-I-ST-SEM-SCHEME-SET-AREG-2015-BATCH-ON-WARD-2.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BEALL-BRACH-I-ST-SEM-SCHEME-SET-AREG-2015-BATCH-ON-WARD-2.pdf",
+                "file_size": 219914,
+                "formatted_size": "215 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (CE) III- VIII SEM II YEAR SYLLABUS REG (2015 LETERAL BATCH)",
+                "type": "Syllabus",
+                "filename": "BECE-III-VIIIth_SEMREG-2015-2016-LATERAL-BATCH-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BECE-III-VIIIth_SEMREG-2015-2016-LATERAL-BATCH-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BECE-III-VIIIth_SEMREG-2015-2016-LATERAL-BATCH-1.pdf",
+                "file_size": 1066647,
+                "formatted_size": "1.02 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (CE) III-VIIITH SEM (REG 2016 BATCH ON-WARD)",
+                "type": "Syllabus",
+                "filename": "BECE-III-VIIIth_SEMREG-2016-BATCH-ON-WORD-1-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BECE-III-VIIIth_SEMREG-2016-BATCH-ON-WORD-1-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BECE-III-VIIIth_SEMREG-2016-BATCH-ON-WORD-1-1.pdf",
+                "file_size": 948076,
+                "formatted_size": "926 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (CIVIL) III & VIII SEMESTER SYLLABUS (REG 2019 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "BE-SYLLABUS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BE-SYLLABUS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BE-SYLLABUS.pdf",
+                "file_size": 492365,
+                "formatted_size": "481 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (CS) III & VIII SEMESTER SCHEME (REG 2019 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "BE_CSE_-III-VIII-SCHEME.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BE_CSE_-III-VIII-SCHEME.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BE_CSE_-III-VIII-SCHEME.pdf",
+                "file_size": 205988,
+                "formatted_size": "201 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (CSE) III-VIIITH SEM (REG 2016 LATERAL BATCH)",
+                "type": "Syllabus",
+                "filename": "BECSE-III-VIII-SEMREG-2016-BATCH-ON-WORD-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BECSE-III-VIII-SEMREG-2016-BATCH-ON-WORD-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BECSE-III-VIII-SEMREG-2016-BATCH-ON-WORD-1.pdf",
+                "file_size": 2077287,
+                "formatted_size": "1.98 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (EC) III & VIII SEMESTER SCHEME (REG 2019 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "scheme-EC-2019.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/scheme-EC-2019.pdf",
+                "original_url": "https://srku.edu.in/rkdf-ist/images/pdf/scheme-EC-2019.pdf",
+                "file_size": 2106605,
+                "formatted_size": "2.01 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (EC) III-VIIITH SEM (REG 2016 LATERAL BATCH)",
+                "type": "Syllabus",
+                "filename": "BEEC-III-VIIITH-SEM-REG-2016-BATCH-ONWARD-2.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BEEC-III-VIIITH-SEM-REG-2016-BATCH-ONWARD-2.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BEEC-III-VIIITH-SEM-REG-2016-BATCH-ONWARD-2.pdf",
+                "file_size": 1866368,
+                "formatted_size": "1.78 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (ece) IIND SEMESTER SYLLABUS (REG 2020 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "aicte BE-ECE SRKU Syllabus 2020.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/aicte%20BE-ECE%20SRKU%20Syllabus%202020.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/ece/aicte%20BE-ECE%20SRKU%20Syllabus%202020.pdf",
+                "file_size": 85813,
+                "formatted_size": "84 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (EE) III & VIII SEMESTER SCHEME (REG 2019 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "22-DEC-BE-EE.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/22-DEC-BE-EE.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/22-DEC-BE-EE.pdf",
+                "file_size": 956676,
+                "formatted_size": "934 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (EE) III & VIII SEMESTER SYLLABUS (REG 2019 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "EE-SYLLABUS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/EE-SYLLABUS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/EE-SYLLABUS.pdf",
+                "file_size": 1663437,
+                "formatted_size": "1.59 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (EE) III-VIIITH SEM (REG 2016 BATCH ONWARD)",
+                "type": "Syllabus",
+                "filename": "BEEE-III-VIIITH_SEMREG-2016-BATCH-ON-WORD-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BEEE-III-VIIITH_SEMREG-2016-BATCH-ON-WORD-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BEEE-III-VIIITH_SEMREG-2016-BATCH-ON-WORD-1.pdf",
+                "file_size": 1736647,
+                "formatted_size": "1.66 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (EEE) III & VIII SEMESTER SCHEME (REG 2019 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "22-DECBE-EEE.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/22-DECBE-EEE.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/22-DECBE-EEE.pdf",
+                "file_size": 804953,
+                "formatted_size": "786 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (EEE) III & VIII SEMESTER SYLLABUS (REG 2019 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "EEE-syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/EEE-syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/EEE-syllabus.pdf",
+                "file_size": 1752035,
+                "formatted_size": "1.67 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (EEE) III-VIIITH SEM (REG 2016 BATCH ONWARD)",
+                "type": "Syllabus",
+                "filename": "BEEEE-III-VIIITH_SEMREG-2016-BATCH-ON-WORD-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BEEEE-III-VIIITH_SEMREG-2016-BATCH-ON-WORD-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BEEEE-III-VIIITH_SEMREG-2016-BATCH-ON-WORD-1.pdf",
+                "file_size": 2201770,
+                "formatted_size": "2.1 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (EI) III & VIII SEMESTER SCHEME (REG 2019 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "scheme-EI-2019.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/scheme-EI-2019.pdf",
+                "original_url": "https://srku.edu.in/rkdf-ist/images/pdf/scheme-EI-2019.pdf",
+                "file_size": 1918347,
+                "formatted_size": "1.83 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (electronics & communication) III-VIII SEMESTER I - IV year SYLLABUS (REG 2019 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "Complete-scheme.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/Complete-scheme.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/be-scheme-2019/Complete-scheme.pdf",
+                "file_size": 258863,
+                "formatted_size": "253 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (electronics & instrumentation) III SEMESTER II year SYLLABUS (REG 2019 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "IIsem.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/IIsem.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/be-scheme-2019/IIsem.pdf",
+                "file_size": 91504,
+                "formatted_size": "89 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (electronics & instrumentation) IV SEMESTER II year SYLLABUS (REG 2019 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "IVsem.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/IVsem.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/be-scheme-2019/IVsem.pdf",
+                "file_size": 92292,
+                "formatted_size": "90 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (electronics & instrumentation) V SEMESTER III year SYLLABUS (REG 2019 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "Vsem.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/Vsem.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/be-scheme-2019/Vsem.pdf",
+                "file_size": 159457,
+                "formatted_size": "156 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (electronics & instrumentation) VI SEMESTER III year SYLLABUS (REG 2019 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "VIsem.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/VIsem.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/be-scheme-2019/VIsem.pdf",
+                "file_size": 155028,
+                "formatted_size": "151 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (electronics & instrumentation) VII SEMESTER IV year SYLLABUS (REG 2019 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "VIIsem.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/VIIsem.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/be-scheme-2019/VIIsem.pdf",
+                "file_size": 162998,
+                "formatted_size": "159 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (electronics & instrumentation) VIII SEMESTER IV year SYLLABUS (REG 2019 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "VIIIsem.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/VIIIsem.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/be-scheme-2019/VIIIsem.pdf",
+                "file_size": 84158,
+                "formatted_size": "82 KB",
+                "exists": true
+            },
+            {
+                "title": "be (ELECTRONICS) III-VIII semESTER SCHEME (REG 2019 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "BE-ELECTRONICS-III-VIII-sem-SCHEME-reg-2019-batch-onwards-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BE-ELECTRONICS-III-VIII-sem-SCHEME-reg-2019-batch-onwards-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BE-ELECTRONICS-III-VIII-sem-SCHEME-reg-2019-batch-onwards-1.pdf",
+                "file_size": 618736,
+                "formatted_size": "604 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (IE) III-VIIITH SEM (REG 2016 BATCH ONWARD)",
+                "type": "Syllabus",
+                "filename": "BEEI-III-VIIITH-REG-2016-BATCH-ON-WORD-2.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BEEI-III-VIIITH-REG-2016-BATCH-ON-WORD-2.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BEEI-III-VIIITH-REG-2016-BATCH-ON-WORD-2.pdf",
+                "file_size": 1976280,
+                "formatted_size": "1.88 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (IT) III & VIII SEMESTER SCHEME (REG 2019 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "BE_IT_-III-VIII-SCHEME.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BE_IT_-III-VIII-SCHEME.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BE_IT_-III-VIII-SCHEME.pdf",
+                "file_size": 213281,
+                "formatted_size": "208 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (it) III-VIIITH (REG 2016 BATCH ON-WARD)",
+                "type": "Syllabus",
+                "filename": "BEITIII-VIII-REG-2016-BATCH-ON-WORD-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BEITIII-VIII-REG-2016-BATCH-ON-WORD-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BEITIII-VIII-REG-2016-BATCH-ON-WORD-1.pdf",
+                "file_size": 1856102,
+                "formatted_size": "1.77 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (ME) III & VIII SEMESTER SCHEME (REG 2019 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "BE-MECHANICAL-III-VIII-SEM-SCHEME-REG-2019-BATCH-ONWARDS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BE-MECHANICAL-III-VIII-SEM-SCHEME-REG-2019-BATCH-ONWARDS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BE-MECHANICAL-III-VIII-SEM-SCHEME-REG-2019-BATCH-ONWARDS.pdf",
+                "file_size": 210340,
+                "formatted_size": "205 KB",
+                "exists": true
+            },
+            {
+                "title": "BE (ME) III & VIII SEMESTER SYLLABUS (REG 2019 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "BE-MECHANICAL-III-VIII-SEM-SYLLABUS-2021-BATCH-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BE-MECHANICAL-III-VIII-SEM-SYLLABUS-2021-BATCH-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BE-MECHANICAL-III-VIII-SEM-SYLLABUS-2021-BATCH-1.pdf",
+                "file_size": 1423722,
+                "formatted_size": "1.36 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (ME) III-VIII TH SEM SYLLABUS (REG 2016 BATCH ONWARD)",
+                "type": "Syllabus",
+                "filename": "BEME-III-VIII-TH_SEMREG-2016-BATCH-ON-WORD-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BEME-III-VIII-TH_SEMREG-2016-BATCH-ON-WORD-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BEME-III-VIII-TH_SEMREG-2016-BATCH-ON-WORD-1.pdf",
+                "file_size": 1473874,
+                "formatted_size": "1.41 MB",
+                "exists": true
+            },
+            {
+                "title": "BE (MECH) III & VIIITH SEMESTER SCHEME (REG 2020 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "BE-MECHANICAL-III-VIII-SEM-SCHEME-2020.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/BE-MECHANICAL-III-VIII-SEM-SCHEME-2020.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BE-MECHANICAL-III-VIII-SEM-SCHEME-2020.pdf",
+                "file_size": 626268,
+                "formatted_size": "612 KB",
+                "exists": true
+            },
+            {
+                "title": "BE electronics & instrumentation iii SEM ii YEAR SCHEME (REG 2019 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "B.E. IIIsem IIyear scheme  EI AICTE 2019.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/B.E.%20IIIsem%20IIyear%20scheme%20%20EI%20AICTE%202019.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/be-ei-scheme/B.E.%20IIIsem%20IIyear%20scheme%20%20EI%20AICTE%202019.pdf",
+                "file_size": 91504,
+                "formatted_size": "89 KB",
+                "exists": true
+            },
+            {
+                "title": "First Semester-Master of Technology ee SCHEME (REG 2020 BATCH ON-WARDS)",
+                "type": "Scheme",
+                "filename": "M-TECH-EE-SCHEME-1.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/M-TECH-EE-SCHEME-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/btech/M-TECH-EE-SCHEME-1.pdf",
+                "file_size": 270764,
+                "formatted_size": "264 KB",
+                "exists": true
+            },
+            {
+                "title": "M. TECH. (EE , EEE) SYLLABUS (REG 2021 BATCH ON-WARDS)",
+                "type": "Syllabus",
+                "filename": "MTECH-SYLLABUS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/MTECH-SYLLABUS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/btech/MTECH-SYLLABUS.pdf",
+                "file_size": 1243234,
+                "formatted_size": "1.19 MB",
+                "exists": true
+            },
+            {
+                "title": "Revised Scheme & Syllabus Ist years as per BOS 2025 onwards",
+                "type": "Scheme & Syllabus",
+                "filename": "Revised-scheme-and-syllabus-(engineering-1-Year)-as-per-BOS.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/Revised-scheme-and-syllabus-%28engineering-1-Year%29-as-per-BOS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/newscheme/Revised-scheme-and-syllabus-(engineering-1-Year)-as-per-BOS.pdf",
+                "file_size": 43143,
+                "formatted_size": "42 KB",
+                "exists": true
+            },
+            {
+                "title": "Revised Syllabus Ist years as per BOS 2025 onwards",
+                "type": "Syllabus",
+                "filename": "syllabus2025.pdf",
+                "local_url": "assets/pdf/syllabus/be-btech/syllabus2025.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/newscheme/syllabus2025.pdf",
+                "file_size": 7189075,
+                "formatted_size": "6.86 MB",
+                "exists": true
+            }
+        ]
+    },
+    "m-tech": {
+        "slug": "m-tech",
+        "title": "M.Tech",
+        "dept": "Engineering & Technology",
+        "icon": "fas fa-microchip",
+        "color": "#3b82f6",
+        "total_pdfs": 18,
+        "items": [
+            {
+                "title": "M.E.(DC) I-IV SEM(REG 2016 BATCH ON -WORD)",
+                "type": "Syllabus",
+                "filename": "M.E.DC-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/M.E.DC-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/M.E.DC-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "file_size": 595324,
+                "formatted_size": "581 KB",
+                "exists": true
+            },
+            {
+                "title": "M.E.(THERMAL) I-IVTH_SEM(BATACH 2016 ON-WARD)",
+                "type": "Syllabus",
+                "filename": "M.E.THERMAL-I-IVTH_SEMBATACH-2016-ON-WARD.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/M.E.THERMAL-I-IVTH_SEMBATACH-2016-ON-WARD.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/M.E.THERMAL-I-IVTH_SEMBATACH-2016-ON-WARD.pdf",
+                "file_size": 576232,
+                "formatted_size": "563 KB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH (CSE) I - IV SEM SCHEME & SYLLABUS (REG 2020 BATCH ONWARDS)",
+                "type": "Scheme & Syllabus",
+                "filename": "computer-science-2020-complete.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/computer-science-2020-complete.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/computer-science-2020-complete.pdf",
+                "file_size": 1544296,
+                "formatted_size": "1.47 MB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH (IT) I - IV SEM SYLLABUS (REG 2020 BATCH ONWARDS)",
+                "type": "Syllabus",
+                "filename": "MTECH-IT-SCHEME.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/MTECH-IT-SCHEME.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MTECH-IT-SCHEME.pdf",
+                "file_size": 138686,
+                "formatted_size": "135 KB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH (PE) I - IV SEM SCHEME & SYLLABUS (REG 2020 BATCH ONWARDS)",
+                "type": "Scheme & Syllabus",
+                "filename": "M-tech-pe-scheme-syllabus2020-complete.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/M-tech-pe-scheme-syllabus2020-complete.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/M-tech-pe-scheme-syllabus2020-complete.pdf",
+                "file_size": 1396216,
+                "formatted_size": "1.33 MB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH (SE) I - IV SEM SCHEME (REG 2020 BATCH ONWARDS)",
+                "type": "Scheme",
+                "filename": "MTECH-SE-SCHEME.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/MTECH-SE-SCHEME.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MTECH-SE-SCHEME.pdf",
+                "file_size": 138387,
+                "formatted_size": "135 KB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH (STRUCTURE) I - IV SEM SCHEME & SYLLABUS (REG 2020 BATCH ONWARDS)",
+                "type": "Scheme & Syllabus",
+                "filename": "MTECH-SYLLABUS_COMPLETE.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/MTECH-SYLLABUS_COMPLETE.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MTECH-SYLLABUS_COMPLETE.pdf",
+                "file_size": 392102,
+                "formatted_size": "383 KB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH (THERMAL) I - IV SEM SYLLABUS & SYLLABUS (REG 2020 BATCH ONWARDS",
+                "type": "Syllabus",
+                "filename": "M.Tech-thermal-I_IV-sem_complete.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/M.Tech-thermal-I_IV-sem_complete.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/M.Tech-thermal-I_IV-sem_complete.pdf",
+                "file_size": 381119,
+                "formatted_size": "372 KB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH (VLSI) I - IV SEM SCHEME & SYLLABUS (REG 2020 BATCH ONWARDS)",
+                "type": "Scheme & Syllabus",
+                "filename": "M-Tech_VLSI-I-IV_sem_scheme_syllabus_2020.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/M-Tech_VLSI-I-IV_sem_scheme_syllabus_2020.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/M-Tech_VLSI-I-IV_sem_scheme_syllabus_2020.pdf",
+                "file_size": 707924,
+                "formatted_size": "691 KB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH(CSE) I-IV SEM(REG 2016 BATCH ON -WORD)",
+                "type": "Syllabus",
+                "filename": "SYLLABUS-M-TECH-CSE.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/SYLLABUS-M-TECH-CSE.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/SYLLABUS-M-TECH-CSE.pdf",
+                "file_size": 85665,
+                "formatted_size": "84 KB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH(IT) I-IV SEM(REG 2016 BATCH ON -WORD)",
+                "type": "Syllabus",
+                "filename": "M.TECHIT-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/M.TECHIT-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/M.TECHIT-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "file_size": 546936,
+                "formatted_size": "534 KB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH(MW) I-IV SEM(REG 2016 BATCH ON -WORD)",
+                "type": "Syllabus",
+                "filename": "M.TECHMW-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/M.TECHMW-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/M.TECHMW-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "file_size": 699956,
+                "formatted_size": "684 KB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH(PE) I-IV SEM(REG 2016 BATCH ON -WORD)",
+                "type": "Syllabus",
+                "filename": "M.TECHPE-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/M.TECHPE-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/M.TECHPE-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "file_size": 339389,
+                "formatted_size": "331 KB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH(SE) I-IV SEM(REG 2016 BATCH ON -WORD)",
+                "type": "Syllabus",
+                "filename": "SYLLABUS-M-TECH-SE.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/SYLLABUS-M-TECH-SE.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/SYLLABUS-M-TECH-SE.pdf",
+                "file_size": 85659,
+                "formatted_size": "84 KB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH(STRUCTURAL) I-IV SEM(REG 2016 BATCH ON -WORD)",
+                "type": "Syllabus",
+                "filename": "M.TECHSTRUCTURAL-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/M.TECHSTRUCTURAL-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/M.TECHSTRUCTURAL-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "file_size": 766197,
+                "formatted_size": "748 KB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH(VLSI) I-IV SEM(REG 2016 BATCH ON -WORD)",
+                "type": "Syllabus",
+                "filename": "M.TECHVLSI-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/M.TECHVLSI-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/M.TECHVLSI-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf",
+                "file_size": 704326,
+                "formatted_size": "688 KB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH. (MWM) I - IV SEM SCHEME & SYLLABUS (REG BATCH 2020 ONWARDS)",
+                "type": "Scheme & Syllabus",
+                "filename": "complete-syllabus_merged_MWM.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/complete-syllabus_merged_MWM.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mtmw/complete-syllabus_merged_MWM.pdf",
+                "file_size": 842384,
+                "formatted_size": "823 KB",
+                "exists": true
+            },
+            {
+                "title": "M.TECH. digital communication I - IV SEM SCHEME & SYLLABUS (REG BATCH 2020 ONWARDS)",
+                "type": "Scheme & Syllabus",
+                "filename": "CD I-IV SEM SCHEME WITH SYLLABUS 2020.pdf",
+                "local_url": "assets/pdf/syllabus/m-tech/CD%20I-IV%20SEM%20SCHEME%20WITH%20SYLLABUS%202020.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mtmw/CD%20I-IV%20SEM%20SCHEME%20WITH%20SYLLABUS%202020.pdf",
+                "file_size": 861800,
+                "formatted_size": "842 KB",
+                "exists": true
+            }
+        ]
+    },
+    "mba": {
+        "slug": "mba",
+        "title": "MBA",
+        "dept": "Management Studies",
+        "icon": "fas fa-briefcase",
+        "color": "#7c3aed",
+        "total_pdfs": 51,
+        "items": [
+            {
+                "title": "MBA (Full Time) SYLLABUS",
+                "type": "Syllabus",
+                "filename": "MBAFT-1st-year-syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/mba/MBAFT-1st-year-syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MBAFT-1st-year-syllabus.pdf",
+                "file_size": 187581,
+                "formatted_size": "183 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA (Part Time) SYLLABUS",
+                "type": "Syllabus",
+                "filename": "MBA-PartTime-syllabus-1Year.pdf",
+                "local_url": "assets/pdf/syllabus/mba/MBA-PartTime-syllabus-1Year.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MBA-PartTime-syllabus-1Year.pdf",
+                "file_size": 401744,
+                "formatted_size": "392 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA accounting for manager SYLLABUS SECOND SEMESTER SESSION 2017-2018 onwards",
+                "type": "Syllabus",
+                "filename": "accounting for manager.pdf",
+                "local_url": "assets/pdf/syllabus/mba/accounting%20for%20manager.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/accounting%20for%20manager.pdf",
+                "file_size": 121889,
+                "formatted_size": "119 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA businesh policy and strategic analysis SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "businesh policy and strategic analysis.pdf",
+                "local_url": "assets/pdf/syllabus/mba/businesh%20policy%20and%20strategic%20analysis.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/businesh%20policy%20and%20strategic%20analysis.pdf",
+                "file_size": 60847,
+                "formatted_size": "59 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA business communiction SYLLABUS FIRST SEMESTER SESSION 2017-2018 onwards",
+                "type": "Syllabus",
+                "filename": "business communiction.pdf",
+                "local_url": "assets/pdf/syllabus/mba/business%20communiction.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/business%20communiction.pdf",
+                "file_size": 71832,
+                "formatted_size": "70 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA BUSINESS LEGISLATION SYLLABUS FOURTH SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "BUSINESS LEGISLATION.pdf",
+                "local_url": "assets/pdf/syllabus/mba/BUSINESS%20LEGISLATION.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/BUSINESS%20LEGISLATION.pdf",
+                "file_size": 6846,
+                "formatted_size": "7 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA CORPORATE EVOLUATION AND STRATEGIC MANAGEMENT SYLLABUS FOURTH SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "CORPORATE EVOLUATION AND STRATEGIC MANAGEMENT.pdf",
+                "local_url": "assets/pdf/syllabus/mba/CORPORATE%20EVOLUATION%20AND%20STRATEGIC%20MANAGEMENT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/CORPORATE%20EVOLUATION%20AND%20STRATEGIC%20MANAGEMENT.pdf",
+                "file_size": 8052,
+                "formatted_size": "8 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA DECISION SUPPORT SYSTEMS AND MANAGEMENT INFORMATION SYSTEM SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "DECISION SUPPORT SYSTEMS AND.pdf",
+                "local_url": "assets/pdf/syllabus/mba/DECISION%20SUPPORT%20SYSTEMS%20AND.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/DECISION%20SUPPORT%20SYSTEMS%20AND.pdf",
+                "file_size": 122709,
+                "formatted_size": "120 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA dual spelization SCHEME & SYLLABUS 2020-2021 ONWARDS",
+                "type": "Scheme & Syllabus",
+                "filename": "scheme and syllabus complete.pdf",
+                "local_url": "assets/pdf/syllabus/mba/scheme%20and%20syllabus%20complete.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/new/scheme%20and%20syllabus%20complete.pdf",
+                "file_size": 753210,
+                "formatted_size": "736 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA Dual Spelization SYLLABUS & SCHEME 2017-18 ON-WARDS",
+                "type": "Scheme & Syllabus",
+                "filename": "MBA syllabus Dual Specialization 2017.pdf",
+                "local_url": "assets/pdf/syllabus/mba/MBA%20syllabus%20Dual%20Specialization%202017.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/MBA%20syllabus%20Dual%20Specialization%202017.pdf",
+                "file_size": 650881,
+                "formatted_size": "636 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE -PRODUCTION MANAGEMENT VALUE MANAGEMENT AND WASTE CONTROL SYLLABUS FOURTH SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE -PRODUCTION MANAGEMENT VALUE MANAGEMENT AND WASTE CONTROL.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE%20-PRODUCTION%20MANAGEMENT%20VALUE%20MANAGEMENT%20AND%20WASTE%20CONTROL.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE%20-PRODUCTION%20MANAGEMENT%20VALUE%20MANAGEMENT%20AND%20WASTE%20CONTROL.pdf",
+                "file_size": 122766,
+                "formatted_size": "120 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE \u2013 RURAL MANAGEMENT CO-OPERATIVE MANAGEMENT SYLLABUS FOURTH SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE \u2013 RURAL MANAGEMENT CO-OPERATIVE MANAGEMENT.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE%20%E2%80%93%20RURAL%20MANAGEMENT%20CO-OPERATIVE%20MANAGEMENT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE%20\u2013%20RURAL%20MANAGEMENT%20CO-OPERATIVE%20MANAGEMENT.pdf",
+                "file_size": 73296,
+                "formatted_size": "72 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- (HR) HUMAN RESOURCE PLANNING AND DEVELOPMENT SYLLABUS FOURTH SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- HR HUMAN RESOURCE PLANNING AND DEVELOPMENT.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20HR%20HUMAN%20RESOURCE%20PLANNING%20AND%20DEVELOPMENT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20HR%20HUMAN%20RESOURCE%20PLANNING%20AND%20DEVELOPMENT.pdf",
+                "file_size": 69926,
+                "formatted_size": "68 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- EVENT MANAGEMENT CONTROL & EVALUATION SYLLABUS FOURTH SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- EVENT MANAGEMENT CONTROL & EVALUATION.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20EVENT%20MANAGEMENT%20CONTROL%20%26%20EVALUATION.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20EVENT%20MANAGEMENT%20CONTROL%20&#038;%20EVALUATION.pdf",
+                "file_size": 69684,
+                "formatted_size": "68 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- EVENT MANAGEMENT PRINCIPLES OF EVENT MANAGEMENT SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- EVENT MANAGEMENT PRINCIPLES OF EVENT MANAGEMENT.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20EVENT%20MANAGEMENT%20PRINCIPLES%20OF%20EVENT%20MANAGEMENT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20EVENT%20MANAGEMENT%20PRINCIPLES%20OF%20EVENT%20MANAGEMENT.pdf",
+                "file_size": 120573,
+                "formatted_size": "118 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- EVENT MANAGEMENT REOURCE PLANNING & MARKETING SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- EVENT MANAGEMENT REOURCE PLANNING & MARKETING.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20EVENT%20MANAGEMENT%20REOURCE%20PLANNING%20%26%20MARKETING.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20EVENT%20MANAGEMENT%20REOURCE%20PLANNING%20&#038;%20MARKETING.pdf",
+                "file_size": 69383,
+                "formatted_size": "68 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- FINANCE INTERNATIONAL FINANCIAL MANAGEMENT SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- FINANCE INTERNATIONAL FINANCIAL MANAGEMENT.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20FINANCE%20INTERNATIONAL%20FINANCIAL%20MANAGEMENT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20FINANCE%20INTERNATIONAL%20FINANCIAL%20MANAGEMENT.pdf",
+                "file_size": 73613,
+                "formatted_size": "72 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- FINANCE SECURITY ANALYSIS AND INVESTMENT MANAGEMENT SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "SECURITY ANALYSIS AND INVESTMENT MANAGEMENT.pdf",
+                "local_url": "assets/pdf/syllabus/mba/SECURITY%20ANALYSIS%20AND%20INVESTMENT%20MANAGEMENT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/SECURITY%20ANALYSIS%20AND%20INVESTMENT%20MANAGEMENT.pdf",
+                "file_size": 71280,
+                "formatted_size": "70 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- HR MANAGEMENT OF INDUSTRIAL RELATIONS SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- HR MANAGEMENT TRAINING AND DEVELOPMENT.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20HR%20MANAGEMENT%20TRAINING%20AND%20DEVELOPMENT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20HR%20MANAGEMENT%20TRAINING%20AND%20DEVELOPMENT.pdf",
+                "file_size": 135220,
+                "formatted_size": "132 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- Information Technology SYSTEM ANALYSIS AND DESIGN SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- Information Technology SYSTEM ANALYSIS AND DESIGN.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20Information%20Technology%20SYSTEM%20ANALYSIS%20AND%20DESIGN.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20Information%20Technology%20SYSTEM%20ANALYSIS%20AND%20DESIGN.pdf",
+                "file_size": 72173,
+                "formatted_size": "70 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- INTERNATIONAL BUSINESS EXPORT IMPORT PROCEDURES, DOCUMENTATION SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- INTERNATIONAL BUSINESS EXPORT IMPORT PROCEDURES, DOCUMENTATION.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20INTERNATIONAL%20BUSINESS%20EXPORT%20IMPORT%20PROCEDURES%2C%20DOCUMENTATION.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20INTERNATIONAL%20BUSINESS%20EXPORT%20IMPORT%20PROCEDURES,%20DOCUMENTATION.pdf",
+                "file_size": 70197,
+                "formatted_size": "69 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- INTERNATIONAL BUSINESS INTERNATIONAL ECONOMIC ORGANISATIONS & REGIONAL BLOCKS SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- INTERNATIONAL BUSINESS INTERNATIONAL ECONOMIC ORGANISATIONS & REGIONAL BLOCKS.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20INTERNATIONAL%20BUSINESS%20INTERNATIONAL%20ECONOMIC%20ORGANISATIONS%20%26%20REGIONAL%20BLOCKS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20INTERNATIONAL%20BUSINESS%20INTERNATIONAL%20ECONOMIC%20ORGANISATIONS%20&#038;%20REGIONAL%20BLOCKS.pdf",
+                "file_size": 135365,
+                "formatted_size": "132 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- IT (Information Technology) DATA BASE MANAGEMENT SYSTEMS SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- IT (Information Technology) dbm.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20IT%20%28Information%20Technology%29%20dbm.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20IT%20(Information%20Technology)%20dbm.pdf",
+                "file_size": 72731,
+                "formatted_size": "71 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- MARKETING ADVERTISING MANAGEMENT SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- MARKETING ADVERTISING MANAGEMENT.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20MARKETING%20ADVERTISING%20MANAGEMENT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20MARKETING%20ADVERTISING%20MANAGEMENT.pdf",
+                "file_size": 123007,
+                "formatted_size": "120 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- MARKETING CONSUMER BEHAVIOUR SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- MARKETING CONSUMER BEHAVIOUR.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20MARKETING%20CONSUMER%20BEHAVIOUR.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20MARKETING%20CONSUMER%20BEHAVIOUR.pdf",
+                "file_size": 59884,
+                "formatted_size": "58 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- PRODUCTION & OPERATION MGT. PRODUCTION AND OPERATIONS MANAGEMENT SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- PRODUCTION & OPERATION MGT. PRODUCTION AND OPERATIONS MANAGEMENT.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20PRODUCTION%20%26%20OPERATION%20MGT.%20PRODUCTION%20AND%20OPERATIONS%20MANAGEMENT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20PRODUCTION%20&#038;%20OPERATION%20MGT.%20PRODUCTION%20AND%20OPERATIONS%20MANAGEMENT.pdf",
+                "file_size": 73026,
+                "formatted_size": "71 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- PRODUCTION & OPERATION MGT.PROJECT MANAGEMENT SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- PRODUCTION & OPERATION MGT.PROJECT MANAGEMENT.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20PRODUCTION%20%26%20OPERATION%20MGT.PROJECT%20MANAGEMENT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20PRODUCTION%20&#038;%20OPERATION%20MGT.PROJECT%20MANAGEMENT.pdf",
+                "file_size": 121920,
+                "formatted_size": "119 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- RETAIL MANAGEMENT MARKETING CONCEPTS IN RETAIL MANAGEMENT SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- RETAIL MANAGEMENT MARKETING CONCEPTS IN RETAIL MANAGEMENT.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20RETAIL%20MANAGEMENT%20MARKETING%20CONCEPTS%20IN%20RETAIL%20MANAGEMENT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20RETAIL%20MANAGEMENT%20MARKETING%20CONCEPTS%20IN%20RETAIL%20MANAGEMENT.pdf",
+                "file_size": 57679,
+                "formatted_size": "56 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- RETAIL MANAGEMENT RETAIL CONCEPTS AND PRACTICES SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- RETAIL MANAGEMENT RETAIL CONCEPTS AND PRACTICES.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20RETAIL%20MANAGEMENT%20RETAIL%20CONCEPTS%20AND%20PRACTICES.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20RETAIL%20MANAGEMENT%20RETAIL%20CONCEPTS%20AND%20PRACTICES.pdf",
+                "file_size": 57649,
+                "formatted_size": "56 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- RURAL MANAGEMENT RURAL INDUSTRIALIZATION SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- RURAL MANAGEMENT RURAL INDUSTRIALIZATION.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20RURAL%20MANAGEMENT%20RURAL%20INDUSTRIALIZATION.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20RURAL%20MANAGEMENT%20RURAL%20INDUSTRIALIZATION.pdf",
+                "file_size": 72817,
+                "formatted_size": "71 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE- RURAL MANAGEMENT RURAL MARKETING SYLLABUS THIRD SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE- RURAL MANAGEMENT RURAL MARKETING.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-%20RURAL%20MANAGEMENT%20RURAL%20MARKETING.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-%20RURAL%20MANAGEMENT%20RURAL%20MARKETING.pdf",
+                "file_size": 72211,
+                "formatted_size": "71 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE-FINANCE CORPORATE TAXATION SYLLABUS FOURTH SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE-FINANCE CORPORATE TAXATION.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-FINANCE%20CORPORATE%20TAXATION.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-FINANCE%20CORPORATE%20TAXATION.pdf",
+                "file_size": 10012,
+                "formatted_size": "10 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE-FINANCE MANAGEMENT OF FINANCIAL SERVICES SYLLABUS FOURTH SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE-FINANCE MANAGEMENT OF FINANCIAL SERVICES.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-FINANCE%20MANAGEMENT%20OF%20FINANCIAL%20SERVICES.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-FINANCE%20MANAGEMENT%20OF%20FINANCIAL%20SERVICES.pdf",
+                "file_size": 10002,
+                "formatted_size": "10 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE-IT STRATEGIC MANAGEMENT OF INFORMATION TECHNOLOGY SYLLABUS FOURTH SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE-IT STRATEGIC MANAGEMENT OF INFORMATION TECHNOLOGY.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-IT%20STRATEGIC%20MANAGEMENT%20OF%20INFORMATION%20TECHNOLOGY.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-IT%20STRATEGIC%20MANAGEMENT%20OF%20INFORMATION%20TECHNOLOGY.pdf",
+                "file_size": 73293,
+                "formatted_size": "72 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE-MARKETING INTERNATIONAL MARKETING SYLLABUS FOURTH SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE-MARKETING INTERNATIONAL MARKETING.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-MARKETING%20INTERNATIONAL%20MARKETING.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-MARKETING%20INTERNATIONAL%20MARKETING.pdf",
+                "file_size": 72028,
+                "formatted_size": "70 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE-MARKETING SALES AND DISTRIBUTION MANAGEMENT SYLLABUS FOURTH SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE-MARKETING SALES AND DISTRIBUTION MANAGEMENT.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-MARKETING%20SALES%20AND%20DISTRIBUTION%20MANAGEMENT.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-MARKETING%20SALES%20AND%20DISTRIBUTION%20MANAGEMENT.pdf",
+                "file_size": 122300,
+                "formatted_size": "119 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVE-RETAIL MANAGEMENT RETAIL STRATEGIES AND OPERATIONS SYLLABUS FOURTH SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVE-RETAIL MANAGEMENT RETAIL STRATEGIES AND OPERATIONS.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVE-RETAIL%20MANAGEMENT%20RETAIL%20STRATEGIES%20AND%20OPERATIONS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVE-RETAIL%20MANAGEMENT%20RETAIL%20STRATEGIES%20AND%20OPERATIONS.pdf",
+                "file_size": 57706,
+                "formatted_size": "56 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ELECTIVES- PRODUCTION MANAGEMENT MATERIAL MANAGEMENT AND INVENTORY CONTROL.p SYLLABUS FOURTH SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ELECTIVES- PRODUCTION MANAGEMENT MATERIAL MANAGEMENT AND INVENTORY CONTROL.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ELECTIVES-%20PRODUCTION%20MANAGEMENT%20MATERIAL%20MANAGEMENT%20AND%20INVENTORY%20CONTROL.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ELECTIVES-%20PRODUCTION%20MANAGEMENT%20MATERIAL%20MANAGEMENT%20AND%20INVENTORY%20CONTROL.pdf",
+                "file_size": 124003,
+                "formatted_size": "121 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA financial management SYLLABUS SECOND SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "financial management.pdf",
+                "local_url": "assets/pdf/syllabus/mba/financial%20management.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/financial%20management.pdf",
+                "file_size": 123846,
+                "formatted_size": "121 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA fundamentals of computer SYLLABUS FIRST SEMESTER SESSION 2017-2018 onwards",
+                "type": "Syllabus",
+                "filename": "fundamentals of computer.pdf",
+                "local_url": "assets/pdf/syllabus/mba/fundamentals%20of%20computer.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/fundamentals%20of%20computer.pdf",
+                "file_size": 71635,
+                "formatted_size": "70 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA human resource management SYLLABUS SECOND SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "human resource management.pdf",
+                "local_url": "assets/pdf/syllabus/mba/human%20resource%20management.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/human%20resource%20management.pdf",
+                "file_size": 136305,
+                "formatted_size": "133 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA management economics SYLLABUS FIRST SEMESTER SESSION 2017-2018 onwards",
+                "type": "Syllabus",
+                "filename": "management economics.pdf",
+                "local_url": "assets/pdf/syllabus/mba/management%20economics.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/management%20economics.pdf",
+                "file_size": 121680,
+                "formatted_size": "119 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA management science SYLLABUS SECPND SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "management science.pdf",
+                "local_url": "assets/pdf/syllabus/mba/management%20science.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/management%20science.pdf",
+                "file_size": 72186,
+                "formatted_size": "70 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA mangement concept and practices SYLLABUS",
+                "type": "Syllabus",
+                "filename": "mangement concept and practices.pdf",
+                "local_url": "assets/pdf/syllabus/mba/mangement%20concept%20and%20practices.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/mangement%20concept%20and%20practices.pdf",
+                "file_size": 70711,
+                "formatted_size": "69 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA markecting management SYLLABUS SECOND SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "markecting management.pdf",
+                "local_url": "assets/pdf/syllabus/mba/markecting%20management.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/markecting%20management.pdf",
+                "file_size": 72926,
+                "formatted_size": "71 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA ORGANISATIONAL BEHAVIOUR SYLLABUS SECOND SEMESTER SESSION 2017-2018",
+                "type": "Syllabus",
+                "filename": "ORGANISATIONAL BEHAVIOUR.pdf",
+                "local_url": "assets/pdf/syllabus/mba/ORGANISATIONAL%20BEHAVIOUR.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/ORGANISATIONAL%20BEHAVIOUR.pdf",
+                "file_size": 72233,
+                "formatted_size": "71 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA quantitative method SYLLABUS",
+                "type": "Syllabus",
+                "filename": "quantitative method.pdf",
+                "local_url": "assets/pdf/syllabus/mba/quantitative%20method.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/quantitative%20method.pdf",
+                "file_size": 122120,
+                "formatted_size": "119 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA SCHEME FIRST YEAR IST SEMESTER BATCH 2017-2018 ON-WARDS",
+                "type": "Scheme",
+                "filename": "MBA-syllabus-Dual-Specialization-2017-2018.pdf",
+                "local_url": "assets/pdf/syllabus/mba/MBA-syllabus-Dual-Specialization-2017-2018.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/MBA-syllabus-Dual-Specialization-2017-2018.pdf",
+                "file_size": 126380,
+                "formatted_size": "123 KB",
+                "exists": true
+            },
+            {
+                "title": "MBA SCHEME SECOND YEAR 3RD SEMESTER",
+                "type": "Scheme",
+                "filename": "MBA-syllabus-Dual-Specialization-2017-2018-2year-3sem.pdf",
+                "local_url": "assets/pdf/syllabus/mba/MBA-syllabus-Dual-Specialization-2017-2018-2year-3sem.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2024/syllabus-scheme/mba/MBA-syllabus-Dual-Specialization-2017-2018-2year-3sem.pdf",
+                "file_size": 352160,
+                "formatted_size": "344 KB",
+                "exists": true
+            },
+            {
+                "title": "updated MBA - FT 2020 AICTE SCHEME",
+                "type": "Scheme",
+                "filename": "updated-scheme-mba-ft-2020-AICTE-1.pdf",
+                "local_url": "assets/pdf/syllabus/mba/updated-scheme-mba-ft-2020-AICTE-1.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/updated-scheme-mba-ft-2020-AICTE-1.pdf",
+                "file_size": 85755,
+                "formatted_size": "84 KB",
+                "exists": true
+            },
+            {
+                "title": "UPDATED MBA PART TIME SCHEME",
+                "type": "Scheme",
+                "filename": "UPDATED-MBA-PART-TIME-Scheme.pdf",
+                "local_url": "assets/pdf/syllabus/mba/UPDATED-MBA-PART-TIME-Scheme.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/UPDATED-MBA-PART-TIME-Scheme.pdf",
+                "file_size": 85719,
+                "formatted_size": "84 KB",
+                "exists": true
+            }
+        ]
+    },
+    "bca": {
+        "slug": "bca",
+        "title": "BCA",
+        "dept": "Computer Applications",
+        "icon": "fas fa-desktop",
+        "color": "#6366f1",
+        "total_pdfs": 4,
+        "items": [
+            {
+                "title": "BCA IIIrd Years SCHEME & SYLLABUS 2017-2018 ON-WARDS",
+                "type": "Scheme & Syllabus",
+                "filename": "SRK BCA 3RD YEAR.pdf",
+                "local_url": "assets/pdf/syllabus/bca/SRK%20BCA%203RD%20YEAR.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BCA-2024/SRK%20BCA%203RD%20YEAR.pdf",
+                "file_size": 195539,
+                "formatted_size": "191 KB",
+                "exists": true
+            },
+            {
+                "title": "BCA IInd year SCHEME & SYLLABUS 2017-2018 ON-WARDS",
+                "type": "Scheme & Syllabus",
+                "filename": "SRK_BCA_2ND_YEAR.pdf",
+                "local_url": "assets/pdf/syllabus/bca/SRK_BCA_2ND_YEAR.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BCA-2024/SRK_BCA_2ND_YEAR.pdf",
+                "file_size": 233618,
+                "formatted_size": "228 KB",
+                "exists": true
+            },
+            {
+                "title": "BCA Ist Year SCHEME & SYLLABUS 2017-2018 ON-WARDS",
+                "type": "Scheme & Syllabus",
+                "filename": "SRK_BCA_1ST_YEAR.pdf",
+                "local_url": "assets/pdf/syllabus/bca/SRK_BCA_1ST_YEAR.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BCA-2024/SRK_BCA_1ST_YEAR.pdf",
+                "file_size": 236897,
+                "formatted_size": "231 KB",
+                "exists": true
+            },
+            {
+                "title": "pg dca SCHEME & SYLLABUS 2011 ON-WARDS",
+                "type": "Scheme & Syllabus",
+                "filename": "pgdca scheme and syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/bca/pgdca%20scheme%20and%20syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/BCA-2024/pgdca%20scheme%20and%20syllabus.pdf",
+                "file_size": 8539894,
+                "formatted_size": "8.14 MB",
+                "exists": true
+            }
+        ]
+    },
+    "mca": {
+        "slug": "mca",
+        "title": "MCA",
+        "dept": "Computer Applications",
+        "icon": "fas fa-network-wired",
+        "color": "#6366f1",
+        "total_pdfs": 13,
+        "items": [
+            {
+                "title": "MCA (FIRST SEMESTER) SCHEME & SYLLABUS (REG 2020 BATCH ONWARDS)",
+                "type": "Scheme & Syllabus",
+                "filename": "MCA-I-Sem-Scheme-Syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/mca/MCA-I-Sem-Scheme-Syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-I-Sem-Scheme-Syllabus.pdf",
+                "file_size": 137460,
+                "formatted_size": "134 KB",
+                "exists": true
+            },
+            {
+                "title": "MCA (first SEMESTER) SCHEME (REG 2020 BATCH ONWARDS)",
+                "type": "Scheme",
+                "filename": "MCA-I-Sem-Scheme-2020.pdf",
+                "local_url": "assets/pdf/syllabus/mca/MCA-I-Sem-Scheme-2020.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-2020/MCA-I-Sem-Scheme-2020.pdf",
+                "file_size": 27014,
+                "formatted_size": "26 KB",
+                "exists": true
+            },
+            {
+                "title": "MCA (first SEMESTER) SYLLABUS (REG 2020 BATCH ONWARDS)",
+                "type": "Syllabus",
+                "filename": "MCA-I-Sem-Syllabus-2020.pdf",
+                "local_url": "assets/pdf/syllabus/mca/MCA-I-Sem-Syllabus-2020.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-2020/MCA-I-Sem-Syllabus-2020.pdf",
+                "file_size": 138071,
+                "formatted_size": "135 KB",
+                "exists": true
+            },
+            {
+                "title": "MCA (FOURTH SEMESTER) SCHEME & SYLLABUS (REG 2020 BATCH ONWARDS)",
+                "type": "Scheme & Syllabus",
+                "filename": "MCA-IV-Sem-Scheme-Syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/mca/MCA-IV-Sem-Scheme-Syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-IV-Sem-Scheme-Syllabus.pdf",
+                "file_size": 49488,
+                "formatted_size": "48 KB",
+                "exists": true
+            },
+            {
+                "title": "MCA (FOURTH SEMESTER) SCHEME (REG 2020 BATCH ONWARDS)",
+                "type": "Scheme",
+                "filename": "MCA-IV-Sem-scheme-2020.pdf",
+                "local_url": "assets/pdf/syllabus/mca/MCA-IV-Sem-scheme-2020.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-2020/MCA-IV-Sem-scheme-2020.pdf",
+                "file_size": 28348,
+                "formatted_size": "28 KB",
+                "exists": true
+            },
+            {
+                "title": "MCA (SECOND SEMESTER) SCHEME & SYLLABUS (REG 2020 BATCH ONWARDS)",
+                "type": "Scheme & Syllabus",
+                "filename": "MCA-II-Sem-Scheme-Syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/mca/MCA-II-Sem-Scheme-Syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-II-Sem-Scheme-Syllabus.pdf",
+                "file_size": 105931,
+                "formatted_size": "103 KB",
+                "exists": true
+            },
+            {
+                "title": "MCA (second SEMESTER) SCHEME (REG 2020 BATCH ONWARDS)",
+                "type": "Scheme",
+                "filename": "MCA-II-Sem-Syllabus-2020.pdf",
+                "local_url": "assets/pdf/syllabus/mca/MCA-II-Sem-Syllabus-2020.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-2020/MCA-II-Sem-Syllabus-2020.pdf",
+                "file_size": 33442,
+                "formatted_size": "33 KB",
+                "exists": true
+            },
+            {
+                "title": "MCA (second SEMESTER) SYLLABUS (REG 2020 BATCH ONWARDS)",
+                "type": "Syllabus",
+                "filename": "MCA-II-Sem-scheme-2020.pdf",
+                "local_url": "assets/pdf/syllabus/mca/MCA-II-Sem-scheme-2020.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-2020/MCA-II-Sem-scheme-2020.pdf",
+                "file_size": 129526,
+                "formatted_size": "126 KB",
+                "exists": true
+            },
+            {
+                "title": "MCA (THIRD SEMESTER) SCHEME & SYLLABUS (REG 2020 BATCH ONWARDS)",
+                "type": "Scheme & Syllabus",
+                "filename": "MCA-III-Sem-Scheme-Syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/mca/MCA-III-Sem-Scheme-Syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-III-Sem-Scheme-Syllabus.pdf",
+                "file_size": 122038,
+                "formatted_size": "119 KB",
+                "exists": true
+            },
+            {
+                "title": "MCA (third SEMESTER) SCHEME (REG 2020 BATCH ONWARDS)",
+                "type": "Scheme",
+                "filename": "MCA-III-Sem-scheme-2020.pdf",
+                "local_url": "assets/pdf/syllabus/mca/MCA-III-Sem-scheme-2020.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-2020/MCA-III-Sem-scheme-2020.pdf",
+                "file_size": 35184,
+                "formatted_size": "34 KB",
+                "exists": true
+            },
+            {
+                "title": "MCA (THIRDSEMESTER) SYLLABUS (REG 2020 BATCH ONWARDS)",
+                "type": "Syllabus",
+                "filename": "MCA-III-Sem-Syllabus-2020.pdf",
+                "local_url": "assets/pdf/syllabus/mca/MCA-III-Sem-Syllabus-2020.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-2020/MCA-III-Sem-Syllabus-2020.pdf",
+                "file_size": 158777,
+                "formatted_size": "155 KB",
+                "exists": true
+            },
+            {
+                "title": "MCA V Sem SCHEME & SYLLABUS",
+                "type": "Scheme & Syllabus",
+                "filename": "MCA-V-Sem-Scheme-Syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/mca/MCA-V-Sem-Scheme-Syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-V-Sem-Scheme-Syllabus.pdf",
+                "file_size": 113724,
+                "formatted_size": "111 KB",
+                "exists": true
+            },
+            {
+                "title": "MCA VI Sem SCHEME & SYLLABUS",
+                "type": "Scheme & Syllabus",
+                "filename": "MCA-VI-Sem-Scheme-Syllabus.pdf",
+                "local_url": "assets/pdf/syllabus/mca/MCA-VI-Sem-Scheme-Syllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-VI-Sem-Scheme-Syllabus.pdf",
+                "file_size": 74285,
+                "formatted_size": "73 KB",
+                "exists": true
+            }
+        ]
+    },
+    "library-course": {
+        "slug": "library-course",
+        "title": "Library Course",
+        "dept": "Library Science",
+        "icon": "fas fa-book-reader",
+        "color": "#ea580c",
+        "total_pdfs": 2,
+        "items": [
+            {
+                "title": "B. Lib. SCHEME & SYLLABUS (REG 2023 - 2024 BATCH)",
+                "type": "Scheme & Syllabus",
+                "filename": "B.Lib. Scheme & Syllabus 2023-24.pdf",
+                "local_url": "assets/pdf/syllabus/library-course/B.Lib.%20Scheme%20%26%20Syllabus%202023-24.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/Blib/B.Lib.%20Scheme%20&#038;%20Syllabus%202023-24.pdf",
+                "file_size": 971202,
+                "formatted_size": "948 KB",
+                "exists": true
+            },
+            {
+                "title": "M. Lib. SCHEME & SYLLABUS (REG 2023 - 2024 BATCH)",
+                "type": "Scheme & Syllabus",
+                "filename": "M. Lib. Scheme & Syllabus 2023-24.pdf",
+                "local_url": "assets/pdf/syllabus/library-course/M.%20Lib.%20Scheme%20%26%20Syllabus%202023-24.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/Blib/M.%20Lib.%20Scheme%20&#038;%20Syllabus%202023-24.pdf",
+                "file_size": 794296,
+                "formatted_size": "776 KB",
+                "exists": true
+            }
+        ]
+    },
+    "computer-science": {
+        "slug": "computer-science",
+        "title": "Computer Science",
+        "dept": "Computer Applications",
+        "icon": "fas fa-code",
+        "color": "#4f46e5",
+        "total_pdfs": 2,
+        "items": [
+            {
+                "title": "D.c.a. Syllabus & Scheme",
+                "type": "Scheme & Syllabus",
+                "filename": "DcaSyllabus.pdf",
+                "local_url": "assets/pdf/syllabus/computer-science/DcaSyllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023//05/DcaSyllabus.pdf",
+                "file_size": 21299020,
+                "formatted_size": "20.31 MB",
+                "exists": true
+            },
+            {
+                "title": "p.g.d.c.a. Syllabus & Scheme",
+                "type": "Scheme & Syllabus",
+                "filename": "pgdcaSyllabus-Scheme.pdf",
+                "local_url": "assets/pdf/syllabus/computer-science/pgdcaSyllabus-Scheme.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2023/05/pgdcaSyllabus-Scheme.pdf",
+                "file_size": 8539893,
+                "formatted_size": "8.14 MB",
+                "exists": true
+            }
+        ]
+    },
+    "allied-courses": {
+        "slug": "allied-courses",
+        "title": "Allied Courses",
+        "dept": "Science, Arts & Commerce",
+        "icon": "fas fa-atom",
+        "color": "#059669",
+        "total_pdfs": 27,
+        "items": [
+            {
+                "title": "All Scheme",
+                "type": "Scheme",
+                "filename": "syllabus-faculty-of-arts2025-26.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-faculty-of-arts2025-26.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-faculty-of-arts2025-26.pdf",
+                "file_size": 3921027,
+                "formatted_size": "3.74 MB",
+                "exists": true
+            },
+            {
+                "title": "All Schemes",
+                "type": "Scheme",
+                "filename": "Final Scheme.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/Final%20Scheme.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/Final%20Scheme.pdf",
+                "file_size": 11142768,
+                "formatted_size": "10.63 MB",
+                "exists": true
+            },
+            {
+                "title": "B. A. Syllabus & Scheme Ist IInd & IIIrd Year 2017 onwards",
+                "type": "Scheme & Syllabus",
+                "filename": "BA-Scheme-and-Syllabus-2017-onwards.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/BA-Scheme-and-Syllabus-2017-onwards.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/BA-Scheme-and-Syllabus-2017-onwards.pdf",
+                "file_size": 933363,
+                "formatted_size": "911 KB",
+                "exists": true
+            },
+            {
+                "title": "B.Com Scheme & Syllabus I, II, & III Year",
+                "type": "Scheme & Syllabus",
+                "filename": "bcom-I-II-III.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/bcom-I-II-III.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/bcom-I-II-III.pdf",
+                "file_size": 499735,
+                "formatted_size": "488 KB",
+                "exists": true
+            },
+            {
+                "title": "BBA Scheme & Syllabus I, II, & III Year",
+                "type": "Scheme & Syllabus",
+                "filename": "BBASchemeSyllabus.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/BBASchemeSyllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/BBASchemeSyllabus.pdf",
+                "file_size": 367072,
+                "formatted_size": "358 KB",
+                "exists": true
+            },
+            {
+                "title": "BCA Scheme & Syllabus I, II, & III Year",
+                "type": "Scheme & Syllabus",
+                "filename": "BcaSchemeSyllabus.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/BcaSchemeSyllabus.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/BcaSchemeSyllabus.pdf",
+                "file_size": 10643290,
+                "formatted_size": "10.15 MB",
+                "exists": true
+            },
+            {
+                "title": "Scheme & syllabus Syllabus For Major & Minor",
+                "type": "Scheme & Syllabus",
+                "filename": "syllabus of faculty of commerce.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus%20of%20faculty%20of%20commerce.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus%20of%20faculty%20of%20commerce.pdf",
+                "file_size": 10093031,
+                "formatted_size": "9.63 MB",
+                "exists": true
+            },
+            {
+                "title": "Scheme & Syllabus Syllabus For Major & Minor",
+                "type": "Scheme & Syllabus",
+                "filename": "BBA-FirstYear-Nep.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/BBA-FirstYear-Nep.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/BBA-FirstYear-Nep.pdf",
+                "file_size": 13567316,
+                "formatted_size": "12.94 MB",
+                "exists": true
+            },
+            {
+                "title": "Scheme & Syllabus Syllabus For Major & Minor",
+                "type": "Scheme & Syllabus",
+                "filename": "BCA-NEP-SYLLABUS.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/BCA-NEP-SYLLABUS.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/BCA-NEP-SYLLABUS.pdf",
+                "file_size": 10659470,
+                "formatted_size": "10.17 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of ancient indian history",
+                "type": "Syllabus",
+                "filename": "syllabus-of-ancient-indian-history.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-ancient-indian-history.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-ancient-indian-history.pdf",
+                "file_size": 5290892,
+                "formatted_size": "5.05 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of botany Ist Year Batch (2025) Major & Minor Subjects",
+                "type": "Syllabus",
+                "filename": "syllabus-of-botany.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-botany.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-botany.pdf",
+                "file_size": 12385260,
+                "formatted_size": "11.81 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of chemistry Ist Year Batch(2025) Major & Minor Subjects",
+                "type": "Syllabus",
+                "filename": "syllabus-of-chemistry.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-chemistry.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-chemistry.pdf",
+                "file_size": 9055375,
+                "formatted_size": "8.64 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of computer science Ist Year Batch (2025) Major & Minor Subjects",
+                "type": "Syllabus",
+                "filename": "syllabus-of-computer-science.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-computer-science.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-computer-science.pdf",
+                "file_size": 8989875,
+                "formatted_size": "8.57 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of economics",
+                "type": "Syllabus",
+                "filename": "syllabus-of-economics.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-economics.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-economics.pdf",
+                "file_size": 13475759,
+                "formatted_size": "12.85 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of education",
+                "type": "Syllabus",
+                "filename": "syllabus-of-education.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-education.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-education.pdf",
+                "file_size": 13302260,
+                "formatted_size": "12.69 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of electronics Ist Year Batch (2025) Major & Minor Subjects",
+                "type": "Syllabus",
+                "filename": "syllabus-of-electronics.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-electronics.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-electronics.pdf",
+                "file_size": 10796885,
+                "formatted_size": "10.3 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of english Literature",
+                "type": "Syllabus",
+                "filename": "syllabus-of-english-Literature.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-english-Literature.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-english-Literature.pdf",
+                "file_size": 8093724,
+                "formatted_size": "7.72 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of fashion design Ist Year Batch (2025) Major & Minor Subjects",
+                "type": "Syllabus",
+                "filename": "syllabus-of-fashion-design.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-fashion-design.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-fashion-design.pdf",
+                "file_size": 8580500,
+                "formatted_size": "8.18 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of hindi literature",
+                "type": "Syllabus",
+                "filename": "syllabus-of-hindi-literature.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-hindi-literature.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-hindi-literature.pdf",
+                "file_size": 7293239,
+                "formatted_size": "6.96 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of maths Ist Year Batch (2025) Major & Minor Subjects",
+                "type": "Syllabus",
+                "filename": "syllabus-of-maths.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-maths.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-maths.pdf",
+                "file_size": 8596875,
+                "formatted_size": "8.2 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of microbiology Ist Year Batch (2025) Major & Minor Subjects",
+                "type": "Syllabus",
+                "filename": "syllabus-of-microbiology.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-microbiology.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-microbiology.pdf",
+                "file_size": 8646000,
+                "formatted_size": "8.25 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of physics Ist Year Batch (2025) Major & Minor Subjects",
+                "type": "Syllabus",
+                "filename": "syllabus-of-physics.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-physics.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-physics.pdf",
+                "file_size": 10715010,
+                "formatted_size": "10.22 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of political sicence",
+                "type": "Syllabus",
+                "filename": "syllabus-of-political-sicence.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-political-sicence.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-political-sicence.pdf",
+                "file_size": 13744385,
+                "formatted_size": "13.11 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of psychology",
+                "type": "Syllabus",
+                "filename": "syllabus-of-psychology.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-psychology.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-psychology.pdf",
+                "file_size": 15201760,
+                "formatted_size": "14.5 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of sociology",
+                "type": "Syllabus",
+                "filename": "syllabus-of-sociology.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-sociology.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-sociology.pdf",
+                "file_size": 12411723,
+                "formatted_size": "11.84 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of yoga science Ist Year Batch (2025) Major & Minor Subjects",
+                "type": "Syllabus",
+                "filename": "syllabus-of-yoga-science.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-yoga-science.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-yoga-science.pdf",
+                "file_size": 5256375,
+                "formatted_size": "5.01 MB",
+                "exists": true
+            },
+            {
+                "title": "syllabus of zoology Ist Year Batch (2025) Major & Minor Subjects",
+                "type": "Syllabus",
+                "filename": "syllabus-of-zoology.pdf",
+                "local_url": "assets/pdf/syllabus/allied-courses/syllabus-of-zoology.pdf",
+                "original_url": "https://www.srku.edu.in/wp-content/uploads/2025/allied/nep/syllabus-of-zoology.pdf",
+                "file_size": 6631875,
+                "formatted_size": "6.32 MB",
+                "exists": true
+            }
+        ]
+    }
+}

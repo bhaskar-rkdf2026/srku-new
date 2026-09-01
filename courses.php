@@ -258,6 +258,22 @@ $departments = getDepartments(true);
 
         </div>
 
+        <!-- Syllabus Repository Callout Banner -->
+        <div class="alert alert-light border shadow-sm rounded-4 p-3 mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3" style="background: linear-gradient(90deg, #fff5f5 0%, #ffffff 100%); border-left: 5px solid #7A0B0D !important;">
+            <div class="d-flex align-items-center gap-3">
+                <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger-subtle text-danger flex-shrink-0" style="width: 44px; height: 44px; font-size: 1.2rem;">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div>
+                    <h6 class="mb-0 fw-bold text-navy">Looking for Semester Schemes &amp; Syllabus PDFs?</h6>
+                    <span class="text-secondary small">Download official curriculum outlines, subject schemes, and grading patterns across all 19 academic disciplines (266+ local PDFs).</span>
+                </div>
+            </div>
+            <a href="<?php echo BASE_URL; ?>syllabus" class="btn btn-danger btn-sm rounded-pill px-4 py-2 fw-bold text-nowrap">
+                <i class="fas fa-download me-1"></i> View Syllabus Repository &rarr;
+            </a>
+        </div>
+
         <!-- Course Cards Grid -->
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="coursesGrid">
             <?php if (!empty($courses)): ?>
