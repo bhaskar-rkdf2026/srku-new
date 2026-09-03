@@ -25,11 +25,11 @@ if (!defined('BASE_URL')) {
     define('BASE_URL', $protocol . $host . $basePath);
 }
 
-// Database Credentials (Easily editable for GoDaddy cPanel MySQL)
-if (!defined('DB_HOST')) define('DB_HOST', 'localhost');
-if (!defined('DB_USER')) define('DB_USER', 'root');
-if (!defined('DB_PASS')) define('DB_PASS', '');
-if (!defined('DB_NAME')) define('DB_NAME', 'srku_db_new');
+// Database Credentials (Auto-resolves with fallback for Localhost & GoDaddy cPanel MySQL)
+if (!defined('DB_HOST')) define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+if (!defined('DB_USER')) define('DB_USER', getenv('DB_USER') ?: 'root');
+if (!defined('DB_PASS')) define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
+if (!defined('DB_NAME')) define('DB_NAME', getenv('DB_NAME') ?: 'srku_db_new');
 
 // Session Initialization
 if (session_status() == PHP_SESSION_NONE) {

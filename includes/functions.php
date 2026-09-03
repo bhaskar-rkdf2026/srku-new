@@ -958,4 +958,685 @@ function getSyllabusQuickStats() {
     }
 }
 
+// -------------------------------------------------------------
+// MASTER DATABASE SYNCHRONIZATION & HEALTH ENGINE (1-CLICK SYNC)
+// -------------------------------------------------------------
 
+/**
+ * Returns diagnostic metadata and health status for the active database connection
+ */
+function getDatabaseStatusInfo() {
+    try {
+        $pdo = getDBConnection();
+        $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+        $tables = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
+        
+        $tableCounts = [];
+        $totalRows = 0;
+        foreach ($tables as $t) {
+            try {
+                $c = (int)$pdo->query("SELECT COUNT(*) FROM `$t`")->fetchColumn();
+                $tableCounts[$t] = $c;
+                $totalRows += $c;
+            } catch (Exception $ex) {
+                $tableCounts[$t] = 0;
+            }
+        }
+
+        return [
+            'connected' => true,
+            'driver' => $driver,
+            'host' => defined('DB_HOST') ? DB_HOST : 'localhost',
+            'dbname' => defined('DB_NAME') ? DB_NAME : 'srku_db_new',
+            'tables_count' => count($tables),
+            'tables' => $tableCounts,
+            'total_rows' => $totalRows,
+            'error' => null
+        ];
+    } catch (Exception $e) {
+        return [
+            'connected' => false,
+            'driver' => 'unknown',
+            'host' => defined('DB_HOST') ? DB_HOST : 'localhost',
+            'dbname' => defined('DB_NAME') ? DB_NAME : 'srku_db_new',
+            'tables_count' => 0,
+            'tables' => [],
+            'total_rows' => 0,
+            'error' => $e->getMessage()
+        ];
+    }
+}
+
+/**
+ * 1-Click Master Database Synchronizer: Migrates schema and populates master DB data
+ *
+ * @param string $target 'all', 'departments', 'courses', 'faculty', 'syllabi', 'gallery', 'blogs', 'news', 'banners', 'pages', 'settings'
+ * @param bool $force If true, truncates/refreshes the table with master data
+ * @return array Result report with status and row counts
+ */
+function syncDatabaseMasterData($target = 'all', $force = false) {
+    $report = [
+        'success' => true,
+        'target' => $target,
+        'counts' => [],
+        'messages' => [],
+        'timestamp' => date('Y-m-d H:i:s')
+    ];
+
+    try {
+        $pdo = getDBConnection();
+        $baseDir = dirname(__DIR__);
+        $sqlMasterFile = $baseDir . '/srku_db.sql';
+        $masterSql = file_exists($sqlMasterFile) ? file_get_contents($sqlMasterFile) : '';
+
+        // 1. Ensure all schemas and columns are fully created & aligned
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS `users` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `username` VARCHAR(50) NOT NULL UNIQUE,
+                `password` VARCHAR(255) NOT NULL,
+                `email` VARCHAR(100),
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `pages` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `title` VARCHAR(255) NOT NULL,
+                `slug` VARCHAR(191) NOT NULL UNIQUE,
+                `content` LONGTEXT,
+                `meta_description` TEXT,
+                `banner_title` VARCHAR(255) DEFAULT NULL,
+                `banner_subtitle` VARCHAR(255) DEFAULT NULL,
+                `banner_img` VARCHAR(255) DEFAULT NULL,
+                `status` ENUM('published','draft') DEFAULT 'published',
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `departments` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `name` VARCHAR(255) NOT NULL,
+                `category` VARCHAR(100) DEFAULT 'General',
+                `slug` VARCHAR(191) NOT NULL UNIQUE,
+                `icon` VARCHAR(100) DEFAULT 'fas fa-graduation-cap',
+                `image` VARCHAR(255) DEFAULT NULL,
+                `banner_img` VARCHAR(255),
+                `description` LONGTEXT,
+                `dean_name` VARCHAR(150),
+                `dean_designation` VARCHAR(150) DEFAULT 'Dean & Principal',
+                `dean_photo` VARCHAR(255) DEFAULT NULL,
+                `dean_message` LONGTEXT DEFAULT NULL,
+                `contact_no` VARCHAR(100) DEFAULT '0755-4700983, 7024144981',
+                `approvals` VARCHAR(255) DEFAULT 'UGC',
+                `established_year` VARCHAR(10),
+                `status` ENUM('active','inactive') DEFAULT 'active'
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `courses` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `department` VARCHAR(150) NOT NULL,
+                `dept_slug` VARCHAR(100),
+                `faculty_id` INT DEFAULT NULL,
+                `course_name` VARCHAR(255) NOT NULL,
+                `slug` VARCHAR(191),
+                `level` VARCHAR(50) DEFAULT 'UG',
+                `degree_level` VARCHAR(50) DEFAULT NULL,
+                `duration` VARCHAR(50),
+                `eligibility` TEXT,
+                `fees` VARCHAR(100),
+                `specializations` TEXT,
+                `description` LONGTEXT,
+                `career_scope` TEXT,
+                `syllabus_url` VARCHAR(255),
+                `scheme_url` VARCHAR(255),
+                `fees_per_year` VARCHAR(50) DEFAULT 'As per university norms',
+                `status` VARCHAR(20) DEFAULT 'active',
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `faculty` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `department_name` VARCHAR(255) NOT NULL,
+                `dept_slug` VARCHAR(191) NOT NULL,
+                `name` VARCHAR(255) NOT NULL,
+                `designation` VARCHAR(150) NOT NULL,
+                `qualification` VARCHAR(255) DEFAULT NULL,
+                `experience` VARCHAR(100) DEFAULT NULL,
+                `status` ENUM('active','inactive') DEFAULT 'active',
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `syllabi` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `category_slug` VARCHAR(100) NOT NULL,
+                `category_title` VARCHAR(150) NOT NULL,
+                `department` VARCHAR(150) DEFAULT NULL,
+                `title` VARCHAR(255) NOT NULL,
+                `type` VARCHAR(50) DEFAULT 'Syllabus',
+                `file_path` VARCHAR(255) NOT NULL,
+                `filename` VARCHAR(255) DEFAULT NULL,
+                `original_url` TEXT DEFAULT NULL,
+                `file_size` INT DEFAULT 0,
+                `status` ENUM('active','inactive') DEFAULT 'active',
+                `sort_order` INT DEFAULT 0,
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                INDEX `idx_category` (`category_slug`),
+                INDEX `idx_status` (`status`),
+                INDEX `idx_type` (`type`),
+                INDEX `idx_order` (`sort_order`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `gallery` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `title` VARCHAR(255) NOT NULL,
+                `category` VARCHAR(50) DEFAULT 'Campus',
+                `image_url` VARCHAR(255) NOT NULL,
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `blogs` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `title` VARCHAR(255) NOT NULL,
+                `slug` VARCHAR(191) NOT NULL UNIQUE,
+                `author` VARCHAR(100) NOT NULL DEFAULT 'SRKU Editorial Board',
+                `category` VARCHAR(100) NOT NULL DEFAULT 'Campus Life',
+                `short_description` TEXT DEFAULT NULL,
+                `content` LONGTEXT NOT NULL,
+                `image_url` VARCHAR(255) DEFAULT NULL,
+                `publish_date` DATE DEFAULT NULL,
+                `views` INT DEFAULT 0,
+                `status` VARCHAR(20) NOT NULL DEFAULT 'published',
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `news` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `title` VARCHAR(255) NOT NULL,
+                `slug` VARCHAR(191),
+                `content` LONGTEXT,
+                `category` VARCHAR(50) DEFAULT 'Announcement',
+                `publish_date` DATE,
+                `image_url` VARCHAR(255),
+                `is_ticker` TINYINT(1) DEFAULT 0,
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `banners` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `page_slug` VARCHAR(100) DEFAULT 'home',
+                `title` VARCHAR(255) NOT NULL,
+                `subtitle` TEXT,
+                `image_url` VARCHAR(255),
+                `btn_text` VARCHAR(50),
+                `btn_link` VARCHAR(255),
+                `sort_order` INT DEFAULT 0
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `settings` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `setting_key` VARCHAR(100) NOT NULL UNIQUE,
+                `setting_value` TEXT
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `enquiries` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `name` VARCHAR(100) NOT NULL,
+                `father_name` VARCHAR(150),
+                `email` VARCHAR(100) NOT NULL,
+                `phone` VARCHAR(20) NOT NULL,
+                `course` VARCHAR(150),
+                `city` VARCHAR(100),
+                `state` VARCHAR(100),
+                `source` VARCHAR(150),
+                `message` TEXT,
+                `status` VARCHAR(50) DEFAULT 'New',
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `complaints` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `name` VARCHAR(150) NOT NULL,
+                `father_name` VARCHAR(150) NULL,
+                `enrollment_number` VARCHAR(100) NULL,
+                `email` VARCHAR(150) NOT NULL,
+                `phone` VARCHAR(50) NOT NULL,
+                `institute_name` VARCHAR(255) NULL,
+                `course_name` VARCHAR(255) NULL,
+                `year_semester` VARCHAR(100) NULL,
+                `complaint_type` VARCHAR(100) NOT NULL DEFAULT 'General',
+                `complaint_details` TEXT NOT NULL,
+                `status` VARCHAR(50) NOT NULL DEFAULT 'New',
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        ");
+
+        // Schema migrations for legacy/existing tables
+        try {
+            $bcols = $pdo->query("SHOW COLUMNS FROM `banners`")->fetchAll(PDO::FETCH_COLUMN);
+            if (!in_array('page_slug', $bcols)) $pdo->exec("ALTER TABLE `banners` ADD `page_slug` VARCHAR(100) DEFAULT 'home' AFTER `id`");
+
+            $pcols = $pdo->query("SHOW COLUMNS FROM `pages`")->fetchAll(PDO::FETCH_COLUMN);
+            if (!in_array('banner_title', $pcols)) $pdo->exec("ALTER TABLE `pages` ADD `banner_title` VARCHAR(255) DEFAULT NULL");
+            if (!in_array('banner_subtitle', $pcols)) $pdo->exec("ALTER TABLE `pages` ADD `banner_subtitle` VARCHAR(255) DEFAULT NULL");
+            if (!in_array('banner_img', $pcols)) $pdo->exec("ALTER TABLE `pages` ADD `banner_img` VARCHAR(255) DEFAULT NULL");
+
+            $ccols = $pdo->query("SHOW COLUMNS FROM `courses`")->fetchAll(PDO::FETCH_COLUMN);
+            if (!in_array('faculty_id', $ccols)) $pdo->exec("ALTER TABLE `courses` ADD `faculty_id` INT NULL AFTER `dept_slug`");
+            if (!in_array('degree_level', $ccols)) $pdo->exec("ALTER TABLE `courses` ADD `degree_level` VARCHAR(50) NULL AFTER `level`");
+            if (!in_array('fees_per_year', $ccols)) $pdo->exec("ALTER TABLE `courses` ADD `fees_per_year` VARCHAR(50) DEFAULT 'As per university norms' AFTER `scheme_url`");
+            if (!in_array('created_at', $ccols)) $pdo->exec("ALTER TABLE `courses` ADD `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP AFTER `status`");
+
+            $dcols = $pdo->query("SHOW COLUMNS FROM `departments`")->fetchAll(PDO::FETCH_COLUMN);
+            if (!in_array('category', $dcols)) $pdo->exec("ALTER TABLE `departments` ADD `category` VARCHAR(100) DEFAULT 'General' AFTER `name`");
+            if (!in_array('image', $dcols)) $pdo->exec("ALTER TABLE `departments` ADD `image` VARCHAR(255) DEFAULT NULL AFTER `icon`");
+            if (!in_array('dean_designation', $dcols)) $pdo->exec("ALTER TABLE `departments` ADD `dean_designation` VARCHAR(150) DEFAULT 'Dean & Principal' AFTER `dean_name`");
+            if (!in_array('dean_photo', $dcols)) $pdo->exec("ALTER TABLE `departments` ADD `dean_photo` VARCHAR(255) DEFAULT NULL AFTER `dean_designation`");
+            if (!in_array('dean_message', $dcols)) $pdo->exec("ALTER TABLE `departments` ADD `dean_message` LONGTEXT DEFAULT NULL AFTER `dean_photo`");
+            if (!in_array('contact_no', $dcols)) $pdo->exec("ALTER TABLE `departments` ADD `contact_no` VARCHAR(100) DEFAULT '0755-4700983, 7024144981' AFTER `dean_name`");
+            if (!in_array('approvals', $dcols)) $pdo->exec("ALTER TABLE `departments` ADD `approvals` VARCHAR(255) DEFAULT 'UGC' AFTER `contact_no`");
+        } catch (Exception $e) {}
+
+        // 2. SYLLABI (267 items from syllabus_data.php)
+        if ($target === 'all' || $target === 'syllabi') {
+            $currSylCount = (int)$pdo->query("SELECT COUNT(*) FROM `syllabi`")->fetchColumn();
+            if ($currSylCount < 250 || $force) {
+                $syllabiFile = $baseDir . '/includes/syllabus_data.php';
+                if (file_exists($syllabiFile)) {
+                    require $syllabiFile;
+                    if (isset($syllabusCategories) && is_array($syllabusCategories)) {
+                        $pdo->exec("TRUNCATE TABLE `syllabi`");
+                        $insSyl = $pdo->prepare("INSERT INTO `syllabi` (`category_slug`, `category_title`, `department`, `title`, `type`, `file_path`, `filename`, `original_url`, `file_size`, `status`, `sort_order`) VALUES (:cat_slug, :cat_title, :dept, :title, :type, :file_path, :filename, :original_url, :file_size, :status, :sort_order)");
+                        
+                        $sylCount = 0;
+                        $order = 1;
+                        foreach ($syllabusCategories as $catSlug => $cat) {
+                            $catTitle = $cat['title'] ?? ucfirst(str_replace('-', ' ', $catSlug));
+                            $dept = $cat['dept'] ?? 'General';
+                            if (!empty($cat['items'])) {
+                                foreach ($cat['items'] as $item) {
+                                    $insSyl->execute([
+                                        ':cat_slug' => $catSlug,
+                                        ':cat_title' => $catTitle,
+                                        ':dept' => $dept,
+                                        ':title' => $item['title'],
+                                        ':type' => $item['type'] ?? 'Syllabus',
+                                        ':file_path' => $item['local_url'] ?? '',
+                                        ':filename' => $item['filename'] ?? basename($item['local_url'] ?? ''),
+                                        ':original_url' => $item['original_url'] ?? '',
+                                        ':file_size' => (int)($item['file_size'] ?? 0),
+                                        ':status' => 'active',
+                                        ':sort_order' => $order++
+                                    ]);
+                                    $sylCount++;
+                                }
+                            }
+                        }
+                        $report['counts']['syllabi'] = $sylCount;
+                        $report['messages'][] = "Syllabus & Schemes synchronized ($sylCount items).";
+                    }
+                }
+            } else {
+                $report['counts']['syllabi'] = $currSylCount;
+            }
+        }
+
+        // 3. FACULTY (1,074 entries from master SQL)
+        if ($target === 'all' || $target === 'faculty') {
+            $currFacCount = (int)$pdo->query("SELECT COUNT(*) FROM `faculty`")->fetchColumn();
+            if ($currFacCount < 500 || $force) {
+                if ($masterSql && preg_match_all('/INSERT INTO `faculty`[^\;]+;/s', $masterSql, $matches)) {
+                    $pdo->exec("TRUNCATE TABLE `faculty`");
+                    foreach ($matches[0] as $stmt) {
+                        $pdo->exec($stmt);
+                    }
+                    $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `faculty`")->fetchColumn();
+                    $report['counts']['faculty'] = $newCount;
+                    $report['messages'][] = "Faculty Directory synchronized ($newCount members).";
+                }
+            } else {
+                $report['counts']['faculty'] = $currFacCount;
+            }
+        }
+
+        // 4. DEPARTMENTS (All 26 Constituent Colleges & Units)
+        if ($target === 'all' || $target === 'departments') {
+            $currDeptCount = (int)$pdo->query("SELECT COUNT(*) FROM `departments`")->fetchColumn();
+            if ($currDeptCount < 20 || $force) {
+                if ($masterSql && preg_match('/INSERT INTO `departments`[^\;]+;/s', $masterSql, $m)) {
+                    $pdo->exec("TRUNCATE TABLE `departments`");
+                    $pdo->exec($m[0]);
+                    $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `departments`")->fetchColumn();
+                    $report['counts']['departments'] = $newCount;
+                    $report['messages'][] = "Constituent Units & Departments synchronized ($newCount colleges).";
+                }
+            } else {
+                $report['counts']['departments'] = $currDeptCount;
+            }
+
+            // Auto-link constituent unit images from assets/uploads/constituent-units/{slug}.webp
+            $allDepts = $pdo->query("SELECT id, slug, image, banner_img FROM `departments`")->fetchAll(PDO::FETCH_ASSOC);
+            $syncStmt = $pdo->prepare("UPDATE `departments` SET image = :img, banner_img = :bimg WHERE id = :id");
+            foreach ($allDepts as $ad) {
+                $candPath = 'assets/uploads/constituent-units/' . $ad['slug'] . '.webp';
+                if (file_exists($baseDir . '/' . $candPath)) {
+                    $currImg = $ad['image'] ?? '';
+                    $currBanner = $ad['banner_img'] ?? '';
+                    if (empty($currImg) || strpos($currImg, '001.webp') !== false || strpos($currImg, 'dept_') !== false || empty($currBanner)) {
+                        $syncStmt->execute([
+                            ':img' => $candPath,
+                            ':bimg' => $candPath,
+                            ':id' => $ad['id']
+                        ]);
+                    }
+                }
+            }
+        }
+
+        // 5. COURSES (All 95 Academic Degree & Diploma Programs)
+        if ($target === 'all' || $target === 'courses') {
+            $currCourseCount = (int)$pdo->query("SELECT COUNT(*) FROM `courses`")->fetchColumn();
+            if ($currCourseCount < 50 || $force) {
+                if ($masterSql && preg_match_all('/INSERT INTO `courses`[^\;]+;/s', $masterSql, $m2)) {
+                    $pdo->exec("TRUNCATE TABLE `courses`");
+                    foreach ($m2[0] as $stmt) {
+                        $pdo->exec($stmt);
+                    }
+                    $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `courses`")->fetchColumn();
+                    $report['counts']['courses'] = $newCount;
+                    $report['messages'][] = "Courses & Academic Catalog synchronized ($newCount courses).";
+                }
+            } else {
+                $report['counts']['courses'] = $currCourseCount;
+            }
+        }
+
+        // 6. GALLERY (All 71 WebP Photos)
+        if ($target === 'all' || $target === 'gallery') {
+            $currGalCount = (int)$pdo->query("SELECT COUNT(*) FROM `gallery`")->fetchColumn();
+            if ($currGalCount < 70 || $force) {
+                $pdo->exec("TRUNCATE TABLE `gallery`");
+                $webpDir = $baseDir . '/assets/uploads/gallery/webp/';
+                if (is_dir($webpDir)) {
+                    $files = glob($webpDir . '*.webp');
+                    $insGal = $pdo->prepare("INSERT INTO `gallery` (`title`, `category`, `image_url`) VALUES (:t, :c, :img)");
+                    $gCount = 0;
+                    foreach ($files as $f) {
+                        $bn = basename($f);
+                        $cat = 'Campus';
+                        if (strpos($bn, 'gym') !== false || in_array($bn, ['dsc06520.webp','dsc06574.webp','dsc06575.webp','dsc06576.webp','dsc06577.webp','dsc06586.webp','dsc06587.webp','dsc06588.webp','dsc06600.webp','dsc06603.webp','dsc06605.webp','dsc06607.webp','dsc06609.webp','dsc06611.webp','dsc06612.webp','dsc06614.webp','dsc06615.webp','dsc06617.webp','dsc06618.webp','dsc06619.webp','dsc06622.webp','dsc06623.webp'])) {
+                            $cat = 'Gym';
+                        } elseif (strpos($bn, 'sport') !== false || in_array($bn, ['dsc06517.webp','dsc06525.webp','dsc06527.webp','dsc06528.webp','dsc06533.webp','dsc06534.webp','dsc06537.webp','dsc06538.webp','dsc06539.webp','dsc06540.webp','dsc06541.webp','dsc06542.webp','dsc06547.webp','dsc06548.webp','dsc06554.webp','dsc06578.webp','dsc06579.webp','dsc06580.webp','dsc06582.webp','dsc06583.webp'])) {
+                            $cat = 'Sports';
+                        } elseif (strpos($bn, 'med') !== false || strpos($bn, 'hosp') !== false || in_array($bn, ['dsc06740.webp','dsc06754.webp','dsc06767.webp','dsc06769.webp','dsc06772.webp','dsc06839.webp','dsc06842.webp','dsc06847.webp','dsc06857.webp'])) {
+                            $cat = 'Medical';
+                        }
+                        $insGal->execute([
+                            ':t' => 'SRKU Campus & Infrastructure Photo',
+                            ':c' => $cat,
+                            ':img' => 'assets/uploads/gallery/webp/' . $bn
+                        ]);
+                        $gCount++;
+                    }
+                    $report['counts']['gallery'] = $gCount;
+                    $report['messages'][] = "Photo Gallery synchronized ($gCount photos).";
+                }
+            } else {
+                $report['counts']['gallery'] = $currGalCount;
+            }
+        }
+
+        // 7. BLOGS (6 Master Articles)
+        if ($target === 'all' || $target === 'blogs') {
+            $currBlogCount = (int)$pdo->query("SELECT COUNT(*) FROM `blogs`")->fetchColumn();
+            if ($currBlogCount == 0 || $force) {
+                $pdo->exec("TRUNCATE TABLE `blogs`");
+                $blogsMaster = [
+                    [
+                        'Tarang 2026: Annual Inter-University Cultural & Sports Extravaganza',
+                        'tarang-annual-fest-2026',
+                        'Student Affairs Committee',
+                        'Campus Life',
+                        'A grand 3-day carnival bringing together over 5,000 students across central India for national-level music, dance, hackathons, and athletic tournaments.',
+                        '<p>Sarvepalli Radhakrishnan University (SRKU) celebrated its flagship annual inter-university cultural and athletic fest, <strong>Tarang 2026</strong>, with unprecedented zeal and grandeur on the lush green Bhopal campus. Spanning over three high-octane days, the mega event witnessed enthusiastic participation from more than 45 colleges and universities across India.</p><h3>Electrifying Events & Competitions</h3><p>The cultural fest featured a diverse array of competitive events covering fine arts, classical dance, battle of the bands, street plays (Nukkad Natak), fashion parade, and a 24-hour national hackathon organized by the Department of Computer Science & Engineering.</p><ul><li><strong>National Hackathon 2026:</strong> Over 120 tech teams developed AI-driven sustainable solutions for rural agriculture and healthcare robotics.</li><li><strong>Battle of Bands:</strong> High-voltage rock and classical fusion performances judged by national celebrity musicians.</li><li><strong>Sports Championships:</strong> Inter-collegiate tournaments in Cricket, Basketball, Football, Volleyball, and Badminton.</li></ul><p>The fest concluded with a mega celebrity concert, laser show, and an award distribution ceremony where outstanding student performers were awarded trophies and cash prizes worth ₹5 Lakhs.</p>',
+                        'assets/uploads/2026/07/001.webp',
+                        '2026-08-15',
+                        7
+                    ],
+                    [
+                        'International Conference on Emerging Horizons in AI, Machine Learning & Drug Discovery',
+                        'international-conference-ai-drug-discovery',
+                        'Faculty of Engineering & Pharmacy',
+                        'Research & Tech',
+                        'Renowned scientists, pharmacologists, and AI researchers from 12 countries convened at SRKU to explore computational biotechnology and automated healthcare diagnostics.',
+                        '<p>The Faculty of Engineering & Technology and Sri Sai College of Pharmacy at SRKU successfully hosted a two-day <strong>International Conference on Artificial Intelligence and Bio-Pharmaceutical Innovation (ICABPI 2026)</strong> in hybrid mode.</p><h3>Highlights of the Research Summit</h3><p>The conference brought together distinguished keynote speakers from premier global institutions, including IITs, AIIMS, and top pharmaceutical R&D labs from the USA, Germany, and Japan.</p><blockquote>\"The convergence of generative AI algorithms and molecular docking is drastically reducing drug discovery cycles from 10 years to mere months,\" remarked the keynote speaker during the inaugural address.</blockquote><p>Over 140 peer-reviewed research papers were presented by Ph.D. scholars, faculty members, and industrial researchers. All accepted manuscripts will be published in Scopus-indexed and UGC-CARE approved journals.</p>',
+                        'assets/uploads/2026/07/002.webp',
+                        '2026-08-10',
+                        1
+                    ],
+                    [
+                        'National Campus Placement Drive 2026: Record Offers & Highest Package of ₹12 LPA',
+                        'national-campus-placement-drive-2026',
+                        'Central Training & Placement Cell',
+                        'Placements',
+                        'Over 500 marquee recruiters including TCS, Wipro, Infosys, Sun Pharma, Cipla, and Tech Mahindra recruited graduating batches across technical and medical streams.',
+                        '<p>The Training and Placement Cell (T&P) at Sarvepalli Radhakrishnan University announced record-shattering outcomes for the 2026 graduating batch. With over 85 corporate recruiters visiting the campus in Phase-I alone, more than 820 job offers were extended to students across engineering, management, pharmacy, paramedical, and agriculture disciplines.</p><h3>Key Placement Highlights 2026</h3><ul><li><strong>Highest Package:</strong> ₹12.00 LPA secured by B.Tech CSE students in AI Product Engineering.</li><li><strong>Average Package:</strong> Significant 28% year-on-year jump reaching ₹5.20 LPA.</li><li><strong>Top Recruiting Partners:</strong> TCS, Infosys, Wipro, Cipla, Lupin, Sun Pharma, HCL Technologies, ICICI Bank, and Byju’s.</li></ul><p>SRKU’s dedicated corporate relations division provides rigorous pre-placement grooming including mock interviews, coding bootcamps, resume review clinics, and soft-skill development modules starting from the 3rd year.</p>',
+                        'assets/uploads/2026/07/003.webp',
+                        '2026-08-05',
+                        1
+                    ],
+                    [
+                        'Admissions Open 2026-27: Comprehensive Career Guide to 95+ Degree Programs',
+                        'admissions-open-academic-session-2026-27',
+                        'Office of Academic Admissions',
+                        'Admissions',
+                        'Explore premier academic pathways across Engineering, Medical, Dental, Ayurveda, Homoeopathy, Law, Nursing, Agriculture, and Management with merit scholarships.',
+                        '<p>Sarvepalli Radhakrishnan University (SRKU), Bhopal announces the commencement of online and campus admissions for the upcoming academic session <strong>2026-27</strong>. Applications are invited for over 95 multidisciplinary undergraduate, postgraduate, integrated, diploma, and doctoral (Ph.D.) programs.</p><h3>Why Choose SRK University?</h3><p>Recognized by UGC under Section 2(f) of the UGC Act 1956 and approved by statutory national councils (NMC, DCI, NCISM, NCH, AICTE, PCI, BCI, INC), the university offers modern experiential education backed by:</p><ul><li>750-Bed Teaching Multi-Specialty Hospital for live medical internships.</li><li>42+ State-of-the-Art Research Laboratories & High-Performance Computing Centers.</li><li>Merit Scholarships for meritorious students, sports champions, and reserved category candidates.</li><li>On-campus hostel accommodations, gymnasiums, sports arenas, and university-wide bus transportation.</li></ul><p>Interested candidates can apply online directly through the university website or visit the central counseling center at the Bhopal campus.</p>',
+                        'assets/uploads/2026/07/004.webp',
+                        '2026-08-01',
+                        0
+                    ],
+                    [
+                        'Modern Advancements in Ayurvedic & Integrative Medicine: SRKU Hospital Insights',
+                        'advancements-ayurvedic-integrative-medicine',
+                        'SRK College of Ayurveda Hospital',
+                        'Medical & Health',
+                        'How ancient Ayurvedic wisdom and modern clinical diagnostics combine to deliver holistic wellness and effective chronic disease management.',
+                        '<p>The Sarvepalli Radhakrishnan College of Ayurveda Hospital & Research Centre is leading the paradigm shift towards evidence-based integrative healthcare in Central India. Combining ancient Panchakarma therapies with state-of-the-art diagnostic imaging and pathology labs, the 100-bed Ayurvedic hospital treats over 200 patients daily.</p><h3>Specialized Treatment Wings</h3><ul><li><strong>Kayachikitsa (Internal Medicine):</strong> Holistic management of metabolic, joint, and chronic lifestyle disorders.</li><li><strong>Panchakarma Center:</strong> Specialized detoxification treatments including Vamana, Virechana, Basti, Nasya, and Raktamokshana.</li><li><strong>Shalya Tantra:</strong> Advanced Kshara Sutra therapy for anorectal ailments with zero recurrence.</li></ul><p>Students of BAMS and MD Ayurveda receive direct hands-on clinical rotations under senior Ayurvedic doctors and clinical researchers.</p>',
+                        'assets/uploads/2026/07/001.webp',
+                        '2026-07-25',
+                        0
+                    ],
+                    [
+                        'Sustainable Smart Agriculture & Drone Technology in Precision Farming',
+                        'sustainable-smart-agriculture-drone-technology',
+                        'Faculty of Agriculture',
+                        'Agriculture & Bio',
+                        'SRKU Faculty of Agriculture integrates IoT soil sensors, automated drip irrigation, and aerial drone surveillance across its 50-acre experiential farm.',
+                        '<p>The Faculty of Agriculture at SRKU is transforming traditional agricultural education into high-tech sustainable agri-business. With 50+ acres of dedicated experimental farms, polyhouses, and vermicompost units, students gain firsthand experience in organic cultivation, seed technology, and drone-assisted crop monitoring.</p><h3>Key Training Verticals</h3><ul><li><strong>Precision Spraying:</strong> Agricultural drones for micro-nutrient spraying and pest infestation scanning.</li><li><strong>Hydroponics & Greenhouses:</strong> Soil-less vegetable cultivation and climate-controlled floriculture.</li><li><strong>Soil Health Laboratories:</strong> Rapid testing of NPK ratios and organic carbon levels for local farmers.</li></ul><p>Graduates from B.Sc. (Hons) Agriculture secure prestigious roles in NABARD, IFFCO, agrochemical multinationals, and state agricultural departments.</p>',
+                        'assets/uploads/2026/07/002.webp',
+                        '2026-07-18',
+                        3
+                    ]
+                ];
+                $insBlog = $pdo->prepare("INSERT INTO `blogs` (`title`, `slug`, `author`, `category`, `short_description`, `content`, `image_url`, `publish_date`, `views`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'published')");
+                foreach ($blogsMaster as $b) {
+                    $insBlog->execute($b);
+                }
+                $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `blogs`")->fetchColumn();
+                $report['counts']['blogs'] = $newCount;
+                $report['messages'][] = "Blogs & Research Articles synchronized ($newCount articles).";
+            } else {
+                $report['counts']['blogs'] = $currBlogCount;
+            }
+        }
+
+        // 8. NEWS & NOTICES
+        if ($target === 'all' || $target === 'news') {
+            $currNewsCount = (int)$pdo->query("SELECT COUNT(*) FROM `news`")->fetchColumn();
+            if ($currNewsCount == 0 || $force) {
+                $pdo->exec("TRUNCATE TABLE `news`");
+                $newsMaster = [
+                    ['Admissions Open for Academic Session 2026-27', 'admissions-open-2026', 'Applications are invited for UG, PG, Diploma, and Ph.D. programs across Engineering, Pharmacy, Nursing, Management, Agriculture, Law, and Medicine.', 'Admission', '2026-08-01', 'assets/images/news1.jpg', 1],
+                    ['National Campus Placement Drive 2026 - Highest Package 12 LPA', 'placement-drive-2026', 'Top tier recruiters including TCS, Wipro, Infosys, Cipla, and Sun Pharma participated in the annual mega placement drive.', 'Placement', '2026-08-05', 'assets/images/news2.jpg', 1],
+                    ['International Conference on Advanced Research in Pharmaceuticals & AI', 'intl-conference-2026', 'SRKU hosted delegates from 12 countries to discuss AI in drug discovery and sustainable energy.', 'Event', '2026-08-10', 'assets/images/news3.jpg', 0],
+                    ['Tarang 2026 - Annual Inter-University Sports & Cultural Fest Announced', 'tarang-annual-fest-2026', 'Three days of vibrant cultural performances, sports tournaments, and tech competitions.', 'Campus Life', '2026-08-15', 'assets/images/news4.jpg', 0]
+                ];
+                $insNews = $pdo->prepare("INSERT INTO `news` (`title`, `slug`, `content`, `category`, `publish_date`, `image_url`, `is_ticker`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                foreach ($newsMaster as $n) {
+                    $insNews->execute($n);
+                }
+                $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `news`")->fetchColumn();
+                $report['counts']['news'] = $newCount;
+                $report['messages'][] = "News & Notices synchronized ($newCount items).";
+            } else {
+                $report['counts']['news'] = $currNewsCount;
+            }
+        }
+
+        // 9. BANNERS & SLIDERS
+        if ($target === 'all' || $target === 'banners') {
+            $currBannerCount = (int)$pdo->query("SELECT COUNT(*) FROM `banners`")->fetchColumn();
+            if ($currBannerCount == 0 || $force) {
+                $pdo->exec("TRUNCATE TABLE `banners`");
+                $bannersMaster = [
+                    ['home', 'Welcome to SRK University, Bhopal', 'UGC-Recognized Premier University in MP offering Engineering, Pharmacy, Medicine & Management', 'assets/images/banner1.jpg', 'Apply Now', 'admission-enquiry.php', 1],
+                    ['home', 'Excellence in Research & 94% Placements', '42+ High-Tech Labs with 120+ Top Recruiter Partnerships', 'assets/images/banner2.jpg', 'Explore Courses', 'courses.php', 2],
+                    ['home', 'State-of-the-Art Multi-Disciplinary Campus', 'Spread over lush green campus with 750+ Bed Teaching Hospital & Sports Complex', 'assets/images/banner3.jpg', 'Campus Tour', 'facilities.php', 3]
+                ];
+                $insBanner = $pdo->prepare("INSERT INTO `banners` (`page_slug`, `title`, `subtitle`, `image_url`, `btn_text`, `btn_link`, `sort_order`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                foreach ($bannersMaster as $b) {
+                    $insBanner->execute($b);
+                }
+                $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `banners`")->fetchColumn();
+                $report['counts']['banners'] = $newCount;
+                $report['messages'][] = "Banners & Sliders synchronized ($newCount banners).";
+            } else {
+                $report['counts']['banners'] = $currBannerCount;
+            }
+        }
+
+        // 10. DYNAMIC PAGES
+        if ($target === 'all' || $target === 'pages') {
+            $currPagesCount = (int)$pdo->query("SELECT COUNT(*) FROM `pages`")->fetchColumn();
+            if ($currPagesCount == 0 || $force) {
+                $pdo->exec("TRUNCATE TABLE `pages`");
+                $pagesMaster = [
+                    [
+                        'Why SRK University',
+                        'why-srk',
+                        '<div class="why-srk-content"><h2 class="text-maroon fw-bold mb-4">Why Choose Sarvepalli Radhakrishnan University, Bhopal?</h2><p class="lead text-dark">Sarvepalli Radhakrishnan University (SRKU) is Central India\'s premier academic and research powerhouse, established by Madhya Pradesh Niji Vishwavidyalaya Act and recognized by the University Grants Commission (UGC) under Section 2(f).</p><div class="row g-4 my-4"><div class="col-md-6"><div class="p-4 bg-light rounded-4 border-start border-4 border-danger h-100"><h4 class="text-navy fw-bold"><i class="fas fa-microscope text-danger me-2"></i> 42+ Modern Laboratories</h4><p class="text-muted mb-0">High-end computing labs, pharmaceutical analysis suites, robotic testbeds, agricultural experimental farms, and clinical simulation centers.</p></div></div><div class="col-md-6"><div class="p-4 bg-light rounded-4 border-start border-4 border-danger h-100"><h4 class="text-navy fw-bold"><i class="fas fa-briefcase text-danger me-2"></i> 94% Placement Record</h4><p class="text-muted mb-0">Strong industry linkages with 120+ MNC recruiting partners delivering highest package of 12 LPA and consistent corporate placements.</p></div></div><div class="col-md-6"><div class="p-4 bg-light rounded-4 border-start border-4 border-danger h-100"><h4 class="text-navy fw-bold"><i class="fas fa-user-graduate text-danger me-2"></i> Multi-Disciplinary Ecosystem</h4><p class="text-muted mb-0">Over 90+ degree programs spanning Engineering, Pharmacy, Medicine, Nursing, Management, Law, Agriculture, and Paramedical Sciences.</p></div></div><div class="col-md-6"><div class="p-4 bg-light rounded-4 border-start border-4 border-danger h-100"><h4 class="text-navy fw-bold"><i class="fas fa-hospital-user text-danger me-2"></i> 750+ Bed Teaching Hospital</h4><p class="text-muted mb-0">On-campus super-specialty hospital providing live hands-on clinical exposure for medical, nursing, and paramedical students.</p></div></div></div></div>',
+                        'Why Choose Sarvepalli Radhakrishnan University Bhopal - 42+ Labs, 94% Placement Record, UGC Recognized',
+                        'Why Choose Sarvepalli Radhakrishnan University',
+                        'Academic Excellence, Innovative Research & Industry-Ready Placements',
+                        'assets/uploads/2026/07/001.webp'
+                    ],
+                    [
+                        'Vision & Mission',
+                        'vision-mission',
+                        '<div class="vision-mission-content"><div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 mb-4 bg-light"><div class="d-flex align-items-center gap-3 mb-3"><div class="bg-danger-subtle text-danger rounded-circle p-3"><i class="fas fa-eye fa-2x"></i></div><h2 class="text-maroon fw-bold mb-0">Our Vision</h2></div><p class="text-dark lead mb-0">"To emerge as a premier global university dedicated to value-based technical, medical, and higher education, pioneering groundbreaking research, fostering innovation, and empowering students with ethical leadership to transform society."</p></div><div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 mb-4 bg-light"><div class="d-flex align-items-center gap-3 mb-3"><div class="bg-danger-subtle text-danger rounded-circle p-3"><i class="fas fa-bullseye fa-2x"></i></div><h2 class="text-navy fw-bold mb-0">Our Mission</h2></div><ul class="list-unstyled d-flex flex-column gap-3 mb-0 text-dark" style="font-size:1.05rem;"><li><i class="fas fa-check-circle text-danger me-2"></i> <strong>Quality Education:</strong> Imparting experiential and industry-relevant education that nurtures critical thinking, technical proficiency, and creative innovation.</li><li><i class="fas fa-check-circle text-danger me-2"></i> <strong>Research & Development:</strong> Fostering an interdisciplinary research ecosystem to address national and global societal challenges.</li><li><i class="fas fa-check-circle text-danger me-2"></i> <strong>Industry Integration:</strong> Collaborating with leading global corporations and research institutions for curriculum alignment and student career advancement.</li><li><i class="fas fa-check-circle text-danger me-2"></i> <strong>Ethical Character:</strong> Inculcating moral integrity, environmental sustainability, social responsibility, and national values in future leaders.</li></ul></div></div>',
+                        'Vision and Mission of Sarvepalli Radhakrishnan University Bhopal',
+                        'Our Vision & Strategic Mission',
+                        'Pioneering Groundbreaking Research, Experiential Learning & Ethical Leadership',
+                        'assets/uploads/2026/07/002.webp'
+                    ],
+                    [
+                        'Statutory Accreditations & Approvals',
+                        'accreditation',
+                        '<div class="accreditation-content"><h2 class="text-maroon fw-bold mb-3">Statutory Approvals & Accreditations</h2><p class="lead text-muted mb-4">Sarvepalli Radhakrishnan University is established by Madhya Pradesh Act No. 17 of 2015 and duly recognized by the University Grants Commission (UGC) under section 2(f) of the UGC Act, 1956.</p></div>',
+                        'Statutory Approvals and Accreditations - UGC, AICTE, PCI, INC, BCI, NMC',
+                        'Accreditation & Statutory Approvals',
+                        'Recognized by UGC, AICTE, PCI, INC, BCI, NMC, DCI & NCISM',
+                        'assets/uploads/2026/07/003.webp'
+                    ],
+                    [
+                        'Board of Management',
+                        'board-of-management',
+                        '<div class="board-content"><h2 class="text-maroon fw-bold mb-4">Board of Management & University Leadership</h2><p class="text-muted mb-4">The governance of Sarvepalli Radhakrishnan University is overseen by visionary academicians, eminent scientists, and administrators committed to institutional excellence.</p></div>',
+                        'Board of Management and Key Governance Officers of SRKU Bhopal',
+                        'Board of Management & Leadership',
+                        'Eminent Academicians, Scientists & Visionary Leadership',
+                        'assets/uploads/2026/07/004.webp'
+                    ],
+                    [
+                        'Constituent Units & Colleges',
+                        'constituent-unit',
+                        '<div class="units-content"><h2 class="text-maroon fw-bold mb-4">Constituent Colleges & Schools of SRKU</h2><p class="lead text-muted mb-4">The university houses dedicated constituent institutes offering specialized degree and research programs with world-class faculty and facilities.</p></div>',
+                        'Constituent Colleges and Schools of Sarvepalli Radhakrishnan University',
+                        'Constituent Colleges & Schools',
+                        '26 Recognized Academic Units Offering 90+ Degree Programmes',
+                        'assets/uploads/2026/07/001.webp'
+                    ],
+                    [
+                        'Admission Guidelines',
+                        'admission',
+                        '<div class="admission-content"><h2 class="text-maroon fw-bold mb-3">Admission Guidelines 2026-27</h2><p class="lead text-muted mb-4">Admissions at Sarvepalli Radhakrishnan University are transparent, merit-based, and aligned with statutory regulatory norms.</p></div>',
+                        'SRKU Admission Process, Guidelines and Eligibility 2026-27',
+                        'Admission Guidelines 2026-27',
+                        'Simple, Transparent & Merit-Based Admissions Across All Streams',
+                        'assets/uploads/2026/07/002.webp'
+                    ]
+                ];
+                $insPage = $pdo->prepare("INSERT INTO `pages` (`title`, `slug`, `content`, `meta_description`, `banner_title`, `banner_subtitle`, `banner_img`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?, 'published')");
+                foreach ($pagesMaster as $p) {
+                    $insPage->execute($p);
+                }
+                $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `pages`")->fetchColumn();
+                $report['counts']['pages'] = $newCount;
+                $report['messages'][] = "Dynamic Pages synchronized ($newCount pages).";
+            } else {
+                $report['counts']['pages'] = $currPagesCount;
+            }
+        }
+
+        // 11. SETTINGS & SITE CONFIGURATIONS
+        if ($target === 'all' || $target === 'settings') {
+            $defaultSettings = [
+                'site_title' => 'Sarvepalli Radhakrishnan University (SRKU), Bhopal',
+                'helpline' => '0755 - 4911204',
+                'email' => 'exam@srku.edu.in',
+                'admissions_phone' => '+91 755 4911204 / 94250 12345',
+                'address' => 'NH-12 Hoshangabad Road, Misrod, Bhopal, MP - 462026',
+                'ticker_text' => 'Admissions Open 2026-27 | UGC Recognized Premier University in MP | Apply Now for UG, PG & PhD Programs in Engineering, Pharmacy, Management & Medicine | 94% Placement Record',
+                'highest_package' => '12 LPA',
+                'placement_record' => '94%',
+                'recruiting_partners' => '120+',
+                'total_labs' => '42+',
+                'facebook_url' => 'https://facebook.com/srku.bhopal',
+                'instagram_url' => 'https://instagram.com/srku.bhopal',
+                'youtube_url' => 'https://youtube.com/@srkuniversity',
+                'linkedin_url' => 'https://linkedin.com/school/srk-university'
+            ];
+            $insSetting = $pdo->prepare("INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES (:k, :v) ON DUPLICATE KEY UPDATE `setting_value` = VALUES(`setting_value`)");
+            $sCount = 0;
+            foreach ($defaultSettings as $sk => $sv) {
+                $insSetting->execute([':k' => $sk, ':v' => $sv]);
+                $sCount++;
+            }
+            $report['counts']['settings'] = (int)$pdo->query("SELECT COUNT(*) FROM `settings`")->fetchColumn();
+            $report['messages'][] = "Global University Settings synchronized ($sCount settings verified).";
+        }
+
+        // 12. ADMIN USERS
+        if ($target === 'all' || $target === 'users') {
+            $adminCount = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE username = 'admin'")->fetchColumn();
+            if ($adminCount == 0) {
+                $passHash = password_hash('admin123', PASSWORD_DEFAULT);
+                $insUser = $pdo->prepare("INSERT INTO `users` (`username`, `password`, `email`) VALUES ('admin', :p, 'admin@srku.edu.in')");
+                $insUser->execute([':p' => $passHash]);
+                $report['messages'][] = "Default Admin User initialized (admin / admin123).";
+            }
+            $report['counts']['users'] = (int)$pdo->query("SELECT COUNT(*) FROM `users`")->fetchColumn();
+        }
+
+        return $report;
+    } catch (Exception $e) {
+        return [
+            'success' => false,
+            'target' => $target,
+            'counts' => [],
+            'error' => $e->getMessage(),
+            'timestamp' => date('Y-m-d H:i:s')
+        ];
+    }
+}

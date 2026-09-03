@@ -183,6 +183,9 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
             <a href="manage_settings.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_settings.php' ? 'active' : ''; ?>">
                 <i class="fas fa-cog"></i> Global Settings
             </a>
+            <a href="manage_dbsync.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_dbsync.php' ? 'active' : ''; ?>">
+                <i class="fas fa-database text-warning"></i> DB Sync &amp; Health
+            </a>
             <a href="<?php echo BASE_URL; ?>" target="_blank" class="sidebar-nav-link">
                 <i class="fas fa-external-link-alt"></i> Live Website
             </a>
@@ -205,6 +208,9 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 </div>
             </div>
             <div class="d-flex align-items-center gap-2">
+                <a href="manage_dbsync.php" class="btn btn-sm btn-warning fw-bold text-dark px-2 px-md-3 shadow-sm rounded-pill d-inline-flex align-items-center gap-1">
+                    <i class="fas fa-sync-alt fa-spin-hover text-danger"></i> <span>1-Click DB Sync</span>
+                </a>
                 <a href="<?php echo BASE_URL; ?>" target="_blank" class="btn btn-sm btn-danger px-2 px-md-3">
                     <i class="fas fa-globe me-1"></i> <span class="d-none d-sm-inline">View Live Site</span>
                 </a>

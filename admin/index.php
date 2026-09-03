@@ -214,6 +214,20 @@ $recentEnquiries = $pdo->query("SELECT * FROM enquiries ORDER BY id DESC LIMIT 6
         </div>
 
         <div class="col-12 col-sm-6 col-lg-3">
+            <a href="manage_dbsync.php" class="card h-100 p-3 rounded-4 text-decoration-none border bg-light hover-shadow" style="transition: all 0.2s ease; border-left: 3px solid #f59e0b !important;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="p-2 rounded-circle bg-warning text-dark d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; flex-shrink: 0;">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div>
+                        <strong class="d-block text-navy" style="font-size: 0.92rem;">1-Click DB Sync</strong>
+                        <small class="text-muted" style="font-size: 0.75rem;">Sync &amp; repair database</small>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
             <a href="manage_enquiries.php?action=export" class="card h-100 p-3 rounded-4 text-decoration-none border bg-light hover-shadow" style="transition: all 0.2s ease;">
                 <div class="d-flex align-items-center gap-3">
                     <div class="p-2 rounded-circle bg-success text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; flex-shrink: 0;">
