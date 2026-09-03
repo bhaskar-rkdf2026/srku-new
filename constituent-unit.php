@@ -327,32 +327,6 @@ foreach ($units as $u) {
                                     </a>
                                 </h3>
 
-                                <!-- Leadership snippet if available -->
-                                <?php if (!empty($u['dean_name'])): 
-                                    $rawDesig = $u['dean_desig'] ?? '';
-                                    $desigFirst = trim(explode('|', $rawDesig)[0]);
-                                    $hasPub = preg_match('/Total Publication:\s*([0-9]+)/i', $rawDesig, $mPub);
-                                    $pubCount = $hasPub ? $mPub[1] : null;
-                                ?>
-                                    <div class="small text-muted mb-3 d-flex align-items-center justify-content-between gap-2 flex-wrap">
-                                        <div class="d-flex align-items-center gap-2 text-truncate" style="max-width: 80%;">
-                                            <div class="rounded-circle bg-light d-flex align-items-center justify-content-center text-danger flex-shrink-0" style="width: 26px; height: 26px;">
-                                                <i class="fas fa-user-tie fa-xs"></i>
-                                            </div>
-                                            <span class="text-truncate">
-                                                <strong><?php echo sanitize($u['dean_name']); ?></strong>
-                                                <?php if (!empty($desigFirst)): ?>
-                                                    <small class="text-muted">(<?php echo sanitize($desigFirst); ?>)</small>
-                                                <?php endif; ?>
-                                            </span>
-                                        </div>
-                                        <?php if ($pubCount): ?>
-                                            <span class="badge bg-warning text-dark px-2 py-1 rounded-pill small fw-bold" title="<?php echo $pubCount; ?> Research Publications">
-                                                <i class="fas fa-book-open text-danger me-1"></i> <?php echo $pubCount; ?> Pubs
-                                            </span>
-                                        <?php endif; ?>
-                                    </div>
-                                <?php endif; ?>
                             </div>
 
                             <!-- Footer Actions -->

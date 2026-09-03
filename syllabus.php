@@ -124,15 +124,18 @@ require_once __DIR__ . '/includes/header.php';
         </div>
 
         <!-- Discipline Category Tabs (Horizontal Scrollable Pills) -->
-        <div class="category-pills-wrap mb-4 pb-1">
-            <div class="d-flex gap-2 flex-nowrap overflow-x-auto pb-2" id="categoryTabsContainer">
+        <div class="category-pills-wrap mb-4 position-relative">
+            <div class="d-flex gap-2 flex-nowrap overflow-x-auto pb-2 px-1" id="categoryTabsContainer">
                 <button type="button" class="btn cat-pill <?php echo ($selectedCourse === 'all') ? 'active' : ''; ?>" data-cat="all" onclick="switchCategory('all')">
-                    <i class="fas fa-th-large me-1"></i> All Courses <span class="badge bg-white text-dark ms-1"><?php echo $grandTotalPdfs; ?></span>
+                    <span class="cat-pill-icon"><i class="fas fa-th-large"></i></span>
+                    <span class="cat-pill-label">All Courses</span>
+                    <span class="cat-pill-count"><?php echo $grandTotalPdfs; ?></span>
                 </button>
                 <?php foreach ($syllabusCategories as $slug => $cat): ?>
                     <button type="button" class="btn cat-pill <?php echo ($selectedCourse === $slug) ? 'active' : ''; ?>" data-cat="<?php echo $slug; ?>" onclick="switchCategory('<?php echo $slug; ?>')">
-                        <i class="<?php echo $cat['icon']; ?> me-1"></i> <?php echo htmlspecialchars($cat['title']); ?> 
-                        <span class="badge bg-white text-dark ms-1"><?php echo $cat['total_pdfs']; ?></span>
+                        <span class="cat-pill-icon"><i class="<?php echo $cat['icon']; ?>"></i></span>
+                        <span class="cat-pill-label"><?php echo htmlspecialchars($cat['title']); ?></span>
+                        <span class="cat-pill-count"><?php echo $cat['total_pdfs']; ?></span>
                     </button>
                 <?php endforeach; ?>
             </div>
@@ -147,25 +150,36 @@ require_once __DIR__ . '/includes/header.php';
             ?>
                 <div class="category-block mb-5 <?php echo $isCategorySelected ? '' : 'd-none'; ?>" id="cat-block-<?php echo $slug; ?>" data-cat-slug="<?php echo $slug; ?>">
                     
-                    <!-- Category Header Bar -->
-                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 p-3 px-md-4 mb-3 rounded-4 bg-white border shadow-xs border-start border-4" style="border-left-color: <?php echo $cat['color']; ?> !important;">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="cat-icon-badge rounded-3 d-flex align-items-center justify-content-center" style="background-color: <?php echo $cat['color']; ?>15; color: <?php echo $cat['color']; ?>; width:48px; height:48px; font-size:1.3rem;">
-                                <i class="<?php echo $cat['icon']; ?>"></i>
-                            </div>
-                            <div>
-                                <h3 class="h5 fw-bold text-navy mb-0"><?php echo htmlspecialchars($cat['title']); ?></h3>
-                                <div class="d-flex align-items-center gap-2 flex-wrap small text-muted">
-                                    <span class="badge bg-light text-secondary border"><?php echo htmlspecialchars($cat['dept']); ?></span>
-                                    <span>&bull;</span>
-                                    <span class="fw-semibold text-danger"><i class="fas fa-file-pdf me-1"></i><?php echo count($items); ?> PDF Documents</span>
+                    <!-- Category Header Bar (Modern Elevated Ribbon Design) -->
+                    <div class="category-header-banner p-3 px-md-4 mb-3 rounded-4 shadow-sm position-relative overflow-hidden">
+                        <div class="category-header-accent" style="background: <?php echo $cat['color']; ?>;"></div>
+                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 position-relative" style="z-index: 2;">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="cat-icon-badge shadow-xs rounded-3 d-flex align-items-center justify-content-center" 
+                                     style="background: linear-gradient(135deg, <?php echo $cat['color']; ?>15 0%, <?php echo $cat['color']; ?>28 100%); color: <?php echo $cat['color']; ?>; width: 48px; height: 48px; font-size: 1.35rem; border: 1.5px solid <?php echo $cat['color']; ?>30;">
+                                    <i class="<?php echo $cat['icon']; ?>"></i>
+                                </div>
+                                <div>
+                                    <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+                                        <h3 class="h5 fw-bold text-navy mb-0" style="letter-spacing: -0.2px; font-size: 1.15rem;">
+                                            <?php echo htmlspecialchars($cat['title']); ?>
+                                        </h3>
+                                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-2.5 py-1 small fw-bold">
+                                            <i class="fas fa-file-pdf me-1"></i> <?php echo count($items); ?> PDF Documents
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 small text-muted">
+                                        <span class="dept-badge text-secondary fw-medium">
+                                            <i class="fas fa-university me-1 text-muted"></i> <?php echo htmlspecialchars($cat['dept']); ?>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3" onclick="switchCategory('<?php echo $slug; ?>')">
-                                <i class="fas fa-filter me-1"></i> Focus Discipline
-                            </button>
+                            <div class="d-flex align-items-center gap-2">
+                                <button type="button" class="btn btn-focus-discipline shadow-xs rounded-pill px-3 py-1.5 fw-semibold" onclick="switchCategory('<?php echo $slug; ?>')">
+                                    <i class="fas fa-filter text-danger me-1"></i> Focus Discipline
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -287,39 +301,154 @@ require_once __DIR__ . '/includes/header.php';
     scrollbar-width: none !important; /* Firefox */
     -ms-overflow-style: none !important; /* IE 10+ */
 }
-.category-pills-wrap::-webkit-scrollbar,
-#categoryTabsContainer::-webkit-scrollbar {
-    display: none !important; /* Chrome, Safari, Edge */
-    width: 0 !important;
-    height: 0 !important;
+.category-pills-wrap {
+    position: relative;
 }
 
+#categoryTabsContainer {
+    padding: 4px 2px 10px 2px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+#categoryTabsContainer::-webkit-scrollbar {
+    height: 5px;
+}
+#categoryTabsContainer::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+#categoryTabsContainer::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+#categoryTabsContainer::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Category Pill Styling */
 .cat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     white-space: nowrap;
     background: #ffffff;
-    color: #1e293b;
-    border: 1px solid #e2e8f0;
-    border-radius: 30px;
-    padding: 8px 16px;
-    font-size: 13px;
+    color: #334155;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-size: 13.5px;
     font-weight: 600;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 5px rgba(15, 23, 42, 0.04);
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.cat-pill-icon {
+    font-size: 13px;
+    color: #64748b;
+    transition: color 0.2s ease;
+}
+
+.cat-pill-count {
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
     transition: all 0.2s ease;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
+
 .cat-pill:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
-    color: #7a0b0d;
+    background: #ffffff;
+    border-color: #7A0B0D;
+    color: #7A0B0D;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(122, 11, 13, 0.12);
 }
+.cat-pill:hover .cat-pill-icon {
+    color: #7A0B0D;
+}
+.cat-pill:hover .cat-pill-count {
+    background: #fee2e2;
+    color: #991b1b;
+    border-color: #fecaca;
+}
+
+/* Active Category Pill */
 .cat-pill.active {
-    background: #7a0b0d !important;
+    background: linear-gradient(135deg, #7A0B0D 0%, #a8171b 100%) !important;
     color: #ffffff !important;
-    border-color: #7a0b0d !important;
-    box-shadow: 0 4px 12px rgba(122,11,13,0.25);
+    border-color: #7A0B0D !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(122, 11, 13, 0.3) !important;
 }
-.cat-pill.active .badge {
-    background: #ffffff !important;
-    color: #7a0b0d !important;
+.cat-pill.active .cat-pill-icon {
+    color: #fbbf24 !important;
+}
+.cat-pill.active .cat-pill-count {
+    background: rgba(255, 255, 255, 0.25) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.35) !important;
+    backdrop-filter: blur(4px);
+}
+
+/* Category Header Banner */
+.category-header-banner {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    position: relative;
+    box-shadow: 0 3px 14px rgba(15, 23, 42, 0.04);
+    transition: all 0.3s ease;
+}
+.category-header-banner:hover {
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.07);
+    border-color: #cbd5e1;
+}
+.category-header-accent {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 6px;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+.cat-icon-badge {
+    transition: transform 0.25s ease;
+}
+.category-header-banner:hover .cat-icon-badge {
+    transform: scale(1.05);
+}
+
+.dept-badge {
+    background: #f1f5f9;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.btn-focus-discipline {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    color: #1e293b;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+.btn-focus-discipline:hover {
+    background: #7A0B0D;
+    color: #ffffff !important;
+    border-color: #7A0B0D;
+    box-shadow: 0 4px 12px rgba(122, 11, 13, 0.2);
+}
+.btn-focus-discipline:hover i {
+    color: #ffffff !important;
 }
 
 /* Premium Pro Syllabus Card Design */
