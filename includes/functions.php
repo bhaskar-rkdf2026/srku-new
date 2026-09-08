@@ -26,6 +26,51 @@ function getSetting($key, $default = '') {
     }
 }
 
+// Fetch JSON setting as array
+function getJsonSetting($key, $default = []) {
+    $val = getSetting($key, '');
+    if (empty($val)) return $default;
+    $decoded = json_decode($val, true);
+    return is_array($decoded) ? $decoded : $default;
+}
+
+// Fetch Board of Management members
+function getBoardMembers($status = 'active') {
+    try {
+        $pdo = getDBConnection();
+        $stmt = $pdo->prepare("SELECT * FROM board_members WHERE status = :st ORDER BY sort_order ASC, id ASC");
+        $stmt->execute([':st' => $status]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+// Standardized University Statistics
+function getUniversityStats() {
+    return [
+        'students'    => getSetting('stat_students', '20,000+'),
+        'faculty'     => getSetting('stat_faculty', '600+'),
+        'alumni'      => getSetting('stat_alumni', '1,10,000+'),
+        'programs'    => getSetting('stat_programs', '120+'),
+        'papers'      => getSetting('stat_papers', '1,400+'),
+        'partners'    => getSetting('stat_partners', '42+'),
+        'placements'  => getSetting('stat_placements', '35,000+'),
+        'years'       => getSetting('stat_years', '31st Year'),
+        'units'       => getSetting('stat_units', '14'),
+        'acres'       => getSetting('stat_campus_acres', '100+ Acres'),
+        'hospital_beds' => getSetting('stat_hospital_beds', '750+'),
+        'patents'     => getSetting('stat_patents', '160+'),
+        'labs'        => getSetting('total_labs', '42+'),
+        'highest_pkg' => getSetting('highest_package', '12 LPA'),
+        'placement_pct' => getSetting('placement_record', '94%'),
+        'recruiters'  => getSetting('recruiting_partners', '120+'),
+        'teaching_days' => getSetting('stat_teaching_days', '180+'),
+        'days_semester' => getSetting('stat_days_semester', '90'),
+        'min_attendance' => getSetting('stat_min_attendance', '75%'),
+    ];
+}
+
 /**
  * Normalizes a relative or bare filename to the correct relative path in the workspace.
  */

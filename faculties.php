@@ -384,59 +384,6 @@ foreach ($allFaculty as $f) {
     </div>
 </section>
 
-<!-- Custom Styles for Faculty Directory -->
-<style>
-.backdrop-blur {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-}
-.bg-navy {
-    background-color: #0F1E3B !important;
-}
-.bg-dark-maroon {
-    background-color: #5B1614 !important;
-}
-.faculty-card {
-    border: 1px solid #E2E8F0 !important;
-    border-top: 3.5px solid #0F1E3B !important;
-    border-radius: 14px !important;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-.faculty-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 28px -6px rgba(15, 30, 59, 0.12) !important;
-    border-color: #CBD5E1 !important;
-    border-top-color: #B91C1C !important;
-}
-.faculty-card.card-dean {
-    border-top: 3.5px solid #DC2626 !important;
-}
-.avatar-gold {
-    background: linear-gradient(135deg, #5B1614 0%, #991B1B 100%);
-    color: #FDE68A;
-    border: 2px solid #FCD34D;
-}
-.avatar-navy {
-    background: linear-gradient(135deg, #0F1E3B 0%, #1E3A8A 100%);
-    color: #DBEAFE;
-    border: 2px solid #93C5FD;
-}
-.avatar-standard {
-    background: linear-gradient(135deg, #334155 0%, #475569 100%);
-    color: #F8FAFC;
-    border: 2px solid #CBD5E1;
-}
-.btn-xs {
-    padding: 0.25rem 0.65rem;
-    font-size: 0.78rem;
-}
-.active-pill {
-    background-color: #5B1614 !important;
-    color: #ffffff !important;
-    border-color: #5B1614 !important;
-}
-</style>
-
 <!-- Dynamic Search & Filter Script -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {

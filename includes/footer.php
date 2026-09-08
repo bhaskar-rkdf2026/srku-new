@@ -24,69 +24,6 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
 <!-- ═══════════════════════════════════════════════════════
      FOOTER SECTION (Bootstrap 5.3 Responsive Grid)
 ═══════════════════════════════════════════════════════ -->
-<style>
-.srku-footer {
-    background: #11142d;
-    color: #cbd5e1;
-}
-.footer-col h5 {
-    font-family: var(--font-heading, 'Outfit', sans-serif);
-    color: #ffffff;
-    font-size: 0.98rem;
-    font-weight: 700;
-    padding-bottom: 8px;
-    margin-bottom: 16px;
-    border-bottom: 3px solid var(--srku-gold, #f59e0b);
-    display: inline-block;
-    letter-spacing: 0.4px;
-}
-.footer-col ul li {
-    margin-bottom: 6px;
-}
-.footer-col a {
-    color: #cbd5e1;
-    font-size: 0.85rem;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    transition: color 0.2s ease;
-    line-height: 1.4;
-}
-.footer-col a i {
-    transition: transform 0.2s ease, color 0.2s ease;
-    display: inline-block;
-    flex-shrink: 0;
-}
-.footer-col a:hover {
-    color: var(--srku-gold, #f59e0b) !important;
-    padding-left: 0 !important;
-}
-.footer-col a:hover i {
-    transform: translateX(3px);
-    color: #ffffff !important;
-}
-.footer-social a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--srku-gold, #f59e0b);
-    font-size: 0.95rem;
-    transition: all 0.25s ease;
-    margin-right: 6px;
-    text-decoration: none;
-}
-.footer-social a:hover {
-    background: var(--srku-maroon, #7A0B0D);
-    color: #ffffff !important;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(122, 11, 13, 0.4);
-}
-</style>
-
 <footer class="srku-footer pt-5">
     <div class="container-xl pb-4">
         <div class="row g-4">

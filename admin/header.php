@@ -132,10 +132,14 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 $deptsCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM departments")->fetchColumn();
                 $galleryCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM gallery")->fetchColumn();
                 $syllabusCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM syllabi")->fetchColumn();
+                $boardCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM board_members")->fetchColumn();
+                $facultyCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM faculty")->fetchColumn();
             } catch(Exception $e) { 
                 $deptsCountBadge = 26; 
                 $galleryCountBadge = 71;
                 $syllabusCountBadge = 267;
+                $boardCountBadge = 7;
+                $facultyCountBadge = 1074;
             }
             ?>
             <a href="manage_departments.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_departments.php' ? 'active' : ''; ?>">
@@ -148,7 +152,10 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 <i class="fas fa-file-pdf text-danger"></i> Syllabus &amp; Schemes (<?php echo $syllabusCountBadge; ?>)
             </a>
             <a href="manage_faculty.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_faculty.php' ? 'active' : ''; ?>">
-                <i class="fas fa-chalkboard-teacher"></i> Faculty Directory (1,000+)
+                <i class="fas fa-chalkboard-teacher"></i> Faculty Directory (<?php echo number_format($facultyCountBadge ?: 1074); ?>)
+            </a>
+            <a href="manage_board.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_board.php' ? 'active' : ''; ?>">
+                <i class="fas fa-users-cog text-warning"></i> Board of Management (<?php echo $boardCountBadge; ?>)
             </a>
             <a href="manage_blogs.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_blogs.php' ? 'active' : ''; ?>">
                 <i class="fas fa-newspaper"></i> Blogs &amp; Articles

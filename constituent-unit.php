@@ -526,24 +526,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<style>
-.unit-box-hover:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12) !important;
-}
-.unit-box-hover:hover .transition-zoom {
-    transform: scale(1.05);
-}
-.transition-zoom {
-    transition: transform 0.4s ease;
-}
-.hover-danger:hover {
-    color: #b91c1c !important;
-}
-.text-purple {
-    color: #7c3aed !important;
-}
-</style>
-
 <script src="<?php echo BASE_URL; ?>assets/js/reveal.js" defer></script>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

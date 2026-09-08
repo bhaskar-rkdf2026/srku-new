@@ -5,15 +5,19 @@ $pageKeywords = "SRKU Board of Management, University Leadership, SRKU Governanc
 $activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
 
-$boardMembers = [
-    ['name' => 'Shri. Ratnesh Jain', 'title' => 'Member (Sponsoring Body)'],
-    ['name' => 'Dr. Amarjeet Singh', 'title' => 'Member (Sponsoring Body)'],
-    ['name' => 'Dr. Aparna Paliwal', 'title' => 'Member'],
-    ['name' => 'Dr. Vikram Singh', 'title' => 'Member'],
-    ['name' => 'Mr. Santosh Negi', 'title' => 'Member'],
-    ['name' => 'Dr. Neha Dubey', 'title' => 'Member'],
-    ['name' => 'Dr. S.S. Pawar', 'title' => 'Member Secretary'],
-];
+$boardMembers = getBoardMembers('active');
+if (empty($boardMembers)) {
+    $boardMembers = [
+        ['name' => 'Shri. Ratnesh Jain', 'designation' => 'Member (Sponsoring Body)'],
+        ['name' => 'Dr. Amarjeet Singh', 'designation' => 'Member (Sponsoring Body)'],
+        ['name' => 'Dr. Aparna Paliwal', 'designation' => 'Member'],
+        ['name' => 'Dr. Vikram Singh', 'designation' => 'Member'],
+        ['name' => 'Mr. Santosh Negi', 'designation' => 'Member'],
+        ['name' => 'Dr. Neha Dubey', 'designation' => 'Member'],
+        ['name' => 'Dr. S.S. Pawar', 'designation' => 'Member Secretary'],
+    ];
+}
+$stats = getUniversityStats();
 ?>
 
 <!-- ═══════════════════════════════════════════════════════
@@ -48,23 +52,23 @@ $boardMembers = [
     <div class="container-xl">
         <div class="row row-cols-2 row-cols-md-5 g-0 text-center">
             <div class="col stat-box">
-                <div class="stat-val">18,000+</div>
+                <div class="stat-val"><?php echo $stats['students']; ?></div>
                 <div class="stat-txt">Students</div>
             </div>
             <div class="col stat-box">
-                <div class="stat-val">600+</div>
+                <div class="stat-val"><?php echo $stats['faculty']; ?></div>
                 <div class="stat-txt">Faculty</div>
             </div>
             <div class="col stat-box">
-                <div class="stat-val">120+</div>
+                <div class="stat-val"><?php echo $stats['programs']; ?></div>
                 <div class="stat-txt">Programs</div>
             </div>
             <div class="col stat-box">
-                <div class="stat-val">1,400+</div>
+                <div class="stat-val"><?php echo $stats['papers']; ?></div>
                 <div class="stat-txt">Research Papers</div>
             </div>
             <div class="col stat-box">
-                <div class="stat-val">42+</div>
+                <div class="stat-val"><?php echo $stats['partners']; ?></div>
                 <div class="stat-txt">Global Partners</div>
             </div>
         </div>
@@ -86,13 +90,13 @@ $boardMembers = [
                 <div class="col-12 col-md-9">
                     <i class="fas fa-quote-left text-warning fs-2 mb-2 d-block"></i>
                     <p class="text-muted mb-3" style="line-height:1.85; font-size:0.95rem;">
-                        &ldquo;Education is the foundation of progress, empowering individuals with knowledge, values, and the confidence to shape a better future.&rdquo; At SRK University, our vision is to provide quality education that combines academic excellence with practical learning, innovation, and strong ethical values. We are committed to creating an environment where students can explore their potential, develop professional skills, and prepare themselves to meet the challenges of a rapidly changing world.
+                        &ldquo;<?php echo sanitize(getSetting('chairman_story_quote', 'Education is the foundation of progress, empowering individuals with knowledge, values, and the confidence to shape a better future. At SRK University, our vision is to provide quality education that combines academic excellence with practical learning, innovation, and strong ethical values. We are committed to creating an environment where students can explore their potential, develop professional skills, and prepare themselves to meet the challenges of a rapidly changing world.')); ?>&rdquo;
                         <br><br>
                         I welcome every student to SRK University and wish them a rewarding journey of learning, growth, and success.
                     </p>
                     <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
-                        <strong class="text-maroon fst-italic">Dr. A. K. Shrivastav</strong>
-                        <span class="text-muted small">Chairman</span>
+                        <strong class="text-maroon fst-italic"><?php echo sanitize(getSetting('chairman_name', 'Dr. A. K. Shrivastav')); ?></strong>
+                        <span class="text-muted small"><?php echo sanitize(getSetting('chairman_title', 'Chairman')); ?></span>
                     </div>
                 </div>
             </div>
@@ -101,7 +105,7 @@ $boardMembers = [
 </section>
 
 <!-- BOARD OF MANAGEMENT -->
-<section class="py-5">
+<section class="py-5" id="board-members">
     <div class="container-xl py-3">
         <div class="text-center mb-5">
             <span class="section-subtitle">OUR LEADERS</span>
@@ -111,15 +115,19 @@ $boardMembers = [
             <?php foreach ($boardMembers as $m): ?>
                 <div class="col">
                     <div class="card h-100 p-4 text-center border-0 shadow-sm rounded-4 reveal" style="background: var(--srku-cream);">
-                        <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width:90px; height:90px; font-size:2.2rem; color:#adb5bd;">
-                            <i class="fas fa-user-tie"></i>
+                        <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width:90px; height:90px; font-size:2.2rem; color:#adb5bd; overflow:hidden;">
+                            <?php if (!empty($m['photo'])): ?>
+                                <img src="<?php echo BASE_URL . sanitize($m['photo']); ?>" alt="<?php echo sanitize($m['name']); ?>" style="width:100%; height:100%; object-fit:cover;">
+                            <?php else: ?>
+                                <i class="fas fa-user-tie"></i>
+                            <?php endif; ?>
                         </div>
                         <h4 class="h6 fw-bold text-navy mb-1"><?php echo sanitize($m['name']); ?></h4>
-                        <p class="text-muted small mb-3"><?php echo sanitize($m['title']); ?></p>
+                        <p class="text-muted small mb-3"><?php echo sanitize($m['designation'] ?? $m['title'] ?? 'Member'); ?></p>
                         <div class="d-flex justify-content-center gap-2">
                             <a href="#" class="board-social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                             <a href="#" class="board-social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="board-social-icon" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                            <a href="#" class="board-social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                 </div>

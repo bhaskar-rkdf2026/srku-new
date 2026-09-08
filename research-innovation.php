@@ -43,10 +43,10 @@ require_once __DIR__ . '/includes/header.php';
                         Download the official prescribed application and entrance examination forms for Ph.D. admissions across Engineering, Pharmacy, Management, Computer Applications, Medical, and Science.
                     </p>
                     <div class="d-flex flex-wrap gap-2">
-                        <a href="<?php echo BASE_URL; ?>phd-application-form.php" class="btn btn-danger btn-sm rounded-pill px-3 fw-bold">
+                        <a href="<?php echo BASE_URL . getSetting('phd_app_pdf', 'assets/uploads/pdf/phd-application-form.pdf'); ?>" class="btn btn-danger btn-sm rounded-pill px-3 fw-bold" download>
                             <i class="fas fa-file-alt me-1"></i> Ph.D. Application Form
                         </a>
-                        <a href="<?php echo BASE_URL; ?>phd-entrance-form.php" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold">
+                        <a href="<?php echo BASE_URL . getSetting('phd_entrance_pdf', 'assets/uploads/pdf/phd-entrance-form.pdf'); ?>" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold" download>
                             <i class="fas fa-file-signature me-1"></i> Ph.D. Entrance Form
                         </a>
                         <a href="<?php echo BASE_URL; ?>phd-admission.php" class="btn btn-outline-navy btn-sm rounded-pill px-3 fw-bold">

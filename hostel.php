@@ -28,10 +28,10 @@ require_once __DIR__ . '/includes/header.php';
                 <span class="about-hero-v2__eyebrow"><i class="fas fa-bed"></i> Safe &amp; Vibrant Campus Living</span>
                 <h1 class="about-hero-v2__title">On-Campus <span>Hostels &amp; Living</span></h1>
                 <p class="about-hero-v2__desc">
-                    A home away from home: separate modern residential hostel blocks for boys and girls with 24/7 biometric security, nutritious dining mess, high-speed Wi-Fi, sports, and hospital healthcare.
+                    <?php echo sanitize(getSetting('hostel_desc', 'A home away from home: separate modern residential hostel blocks for boys and girls with 24/7 biometric security, nutritious dining mess, high-speed Wi-Fi, sports, and hospital healthcare.')); ?>
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="btn-hero-yellow">
+                    <a href="<?php echo BASE_URL; ?>contact.php#apply" class="btn-hero-yellow">
                         <i class="fas fa-key me-1"></i> Apply for Hostel Room
                     </a>
                     <a href="<?php echo BASE_URL; ?>facilities.php" class="btn-hero-outline">

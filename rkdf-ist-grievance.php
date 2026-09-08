@@ -7,9 +7,35 @@ $activeNav = "departments";
 
 $submitted = false;
 $msg = '';
+$err = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_grievance'])) {
-    $submitted = true;
-    $msg = "Your grievance has been submitted securely to the Grievance Redressal Committee. Reference ID: GRV-" . rand(10000, 99999) . ". You will be contacted within 48 hours.";
+    $name = trim($_POST['name'] ?? '');
+    $regNo = trim($_POST['reg_no'] ?? '');
+    $phone = trim($_POST['phone'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $category = trim($_POST['category'] ?? 'General');
+    $role = trim($_POST['role'] ?? 'Student');
+    $description = trim($_POST['description'] ?? '');
+
+    $res = saveComplaint(
+        $name,
+        '',
+        $regNo,
+        $email,
+        $phone,
+        'RKDF Institute of Science & Technology',
+        $role,
+        '',
+        $category,
+        $description
+    );
+
+    if ($res['success']) {
+        $submitted = true;
+        $msg = "Your grievance has been submitted securely to the Grievance Redressal Committee. Reference ID: GRV-" . rand(10000, 99999) . ". You will be contacted within 48 hours.";
+    } else {
+        $err = $res['error'] ?? 'An error occurred while submitting your grievance. Please try again.';
+    }
 }
 
 require_once __DIR__ . '/includes/header.php';
@@ -40,6 +66,12 @@ require_once __DIR__ . '/includes/header.php';
                         <a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-and-technology" class="btn btn-srku px-4 py-2">Back to RKDF IST</a>
                     </div>
                 <?php else: ?>
+                    <?php if (!empty($err)): ?>
+                        <div class="alert alert-danger d-flex align-items-center gap-2 p-3 rounded-3 mb-4">
+                            <i class="fas fa-exclamation-circle text-danger"></i>
+                            <div><?php echo sanitize($err); ?></div>
+                        </div>
+                    <?php endif; ?>
                     
                     <div class="border-bottom pb-3 mb-4">
                         <h4 class="fw-bold text-navy mb-1">Submit Grievance / Complaint</h4>

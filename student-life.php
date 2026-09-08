@@ -31,42 +31,43 @@ require_once __DIR__ . '/includes/header.php';
         </div>
 
         <!-- Student Life Highlights -->
+        <?php
+        $defaultHighlights = [
+            [
+                'icon' => 'fas fa-guitar',
+                'badge_class' => 'bg-danger-subtle text-danger',
+                'title' => 'Tarang — Annual Cultural Fest',
+                'desc' => 'Three days of star-studded musical concerts, fashion shows, dance competitions, and theatrical performances with 10,000+ attendees.'
+            ],
+            [
+                'icon' => 'fas fa-trophy',
+                'badge_class' => 'bg-warning-subtle text-warning',
+                'title' => 'Inter-University Sports Meet',
+                'desc' => 'Annual tournaments across Cricket, Football, Basketball, Volleyball, Badminton, Table Tennis, and Track & Field athletics.'
+            ],
+            [
+                'icon' => 'fas fa-hands-helping',
+                'badge_class' => 'bg-success-subtle text-success',
+                'title' => 'NSS & Community Service',
+                'desc' => 'Active National Service Scheme units organizing blood donation camps, free health checkups, tree plantation, and rural literacy drives.'
+            ]
+        ];
+        $studentHighlights = getJsonSetting('student_life_highlights', $defaultHighlights);
+        ?>
         <div class="row row-cols-1 row-cols-md-3 g-4">
+            <?php foreach ($studentHighlights as $item): ?>
             <div class="col">
                 <div class="card reveal p-4 border-0 shadow-sm rounded-4 h-100">
-                    <div class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center mb-3" style="width:60px; height:60px; font-size:1.6rem;">
-                        <i class="fas fa-guitar"></i>
+                    <div class="<?php echo htmlspecialchars($item['badge_class'] ?? 'bg-danger-subtle text-danger'); ?> rounded-circle d-flex align-items-center justify-content-center mb-3" style="width:60px; height:60px; font-size:1.6rem;">
+                        <i class="<?php echo htmlspecialchars($item['icon'] ?? 'fas fa-star'); ?>"></i>
                     </div>
-                    <h3 class="h5 fw-bold text-navy mb-2">Tarang — Annual Cultural Fest</h3>
+                    <h3 class="h5 fw-bold text-navy mb-2"><?php echo htmlspecialchars($item['title'] ?? ''); ?></h3>
                     <p class="text-muted small mb-0" style="line-height:1.7;">
-                        Three days of star-studded musical concerts, fashion shows, dance competitions, and theatrical performances with 10,000+ attendees.
+                        <?php echo htmlspecialchars($item['desc'] ?? ''); ?>
                     </p>
                 </div>
             </div>
-
-            <div class="col">
-                <div class="card reveal p-4 border-0 shadow-sm rounded-4 h-100">
-                    <div class="bg-warning-subtle text-warning rounded-circle d-flex align-items-center justify-content-center mb-3" style="width:60px; height:60px; font-size:1.6rem;">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <h3 class="h5 fw-bold text-navy mb-2">Inter-University Sports Meet</h3>
-                    <p class="text-muted small mb-0" style="line-height:1.7;">
-                        Annual tournaments across Cricket, Football, Basketball, Volleyball, Badminton, Table Tennis, and Track &amp; Field athletics.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card reveal p-4 border-0 shadow-sm rounded-4 h-100">
-                    <div class="bg-success-subtle text-success rounded-circle d-flex align-items-center justify-content-center mb-3" style="width:60px; height:60px; font-size:1.6rem;">
-                        <i class="fas fa-hands-helping"></i>
-                    </div>
-                    <h3 class="h5 fw-bold text-navy mb-2">NSS &amp; Community Service</h3>
-                    <p class="text-muted small mb-0" style="line-height:1.7;">
-                        Active National Service Scheme units organizing blood donation camps, free health checkups, tree plantation, and rural literacy drives.
-                    </p>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
 
     </div>

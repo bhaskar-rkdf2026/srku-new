@@ -31,7 +31,7 @@ require_once __DIR__ . '/includes/header.php';
                     Comprehensive semester roadmap, teaching schedules, internal assessments, continuous evaluations, university examinations, cultural festivals, and gazetted holiday schedules.
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Academic-Calendar.pdf" target="_blank" class="btn-hero-yellow">
+                    <a href="<?php echo BASE_URL . getSetting('academic_calendar_pdf', 'assets/uploads/2026/07/Academic-Calendar.pdf'); ?>" target="_blank" class="btn-hero-yellow">
                         <i class="fas fa-file-pdf me-1"></i> Download Official Calendar (PDF)
                     </a>
                     <a href="<?php echo BASE_URL; ?>exam-rules.php" class="btn-hero-outline">
@@ -43,12 +43,12 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="about-hero-v2__cards">
                     <div class="about-hero-v2__card about-hero-v2__card--float1">
                         <i class="fas fa-calendar-check"></i>
-                        <span class="num">180+</span>
+                        <span class="num"><?php echo getSetting('stat_teaching_days', '180+'); ?></span>
                         <span class="lbl">Teaching Days / Year</span>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float2">
                         <i class="fas fa-clock"></i>
-                        <span class="num">90</span>
+                        <span class="num"><?php echo getSetting('stat_days_semester', '90'); ?></span>
                         <span class="lbl">Days / Semester</span>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float3">

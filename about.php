@@ -38,22 +38,22 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="about-hero-v2__cards">
                     <div class="about-hero-v2__card about-hero-v2__card--float1">
                         <i class="fas fa-calendar-check"></i>
-                        <span class="num">31<sup>st</sup></span>
+                        <span class="num"><?php echo getSetting('stat_years', '31st'); ?></span>
                         <span class="lbl">Year of Excellence</span>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float2">
                         <i class="fas fa-user-graduate"></i>
-                        <span class="num">20,000+</span>
+                        <span class="num"><?php echo getSetting('stat_students', '20,000+'); ?></span>
                         <span class="lbl">Students</span>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float3">
                         <i class="fas fa-layer-group"></i>
-                        <span class="num">14</span>
+                        <span class="num"><?php echo getSetting('stat_units', '14'); ?></span>
                         <span class="lbl">Constituent Units</span>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float4">
                         <i class="fas fa-briefcase"></i>
-                        <span class="num">35,000+</span>
+                        <span class="num"><?php echo getSetting('stat_placements', '35,000+'); ?></span>
                         <span class="lbl">Placements</span>
                     </div>
                 </div>
@@ -95,13 +95,13 @@ require_once __DIR__ . '/includes/header.php';
 <!-- STATS MILESTONE TIMELINE -->
 <?php
 $aboutMilestoneStats = [
-    ['icon' => 'fa-award', 'num' => '31<sup>st</sup>', 'lbl' => 'Year of Excellence'],
-    ['icon' => 'fa-user-graduate', 'num' => '20,000+', 'lbl' => 'Students'],
-    ['icon' => 'fa-briefcase', 'num' => '35,000+', 'lbl' => 'Placements'],
-    ['icon' => 'fa-handshake', 'num' => '300+', 'lbl' => 'Industry Linkages'],
-    ['icon' => 'fa-users', 'num' => '1,10,000+', 'lbl' => 'Alumni'],
-    ['icon' => 'fa-chalkboard-teacher', 'num' => '1,000+', 'lbl' => 'Faculty'],
-    ['icon' => 'fa-lightbulb', 'num' => '160+', 'lbl' => 'Patents'],
+    ['icon' => 'fa-award', 'num' => getSetting('stat_years', '31<sup>st</sup>'), 'lbl' => 'Year of Excellence'],
+    ['icon' => 'fa-user-graduate', 'num' => getSetting('stat_students', '20,000+'), 'lbl' => 'Students'],
+    ['icon' => 'fa-briefcase', 'num' => getSetting('stat_placements', '35,000+'), 'lbl' => 'Placements'],
+    ['icon' => 'fa-handshake', 'num' => getSetting('stat_partners', '42+') . ' (300+ Linkages)', 'lbl' => 'Industry Linkages'],
+    ['icon' => 'fa-users', 'num' => getSetting('stat_alumni', '1,10,000+'), 'lbl' => 'Alumni'],
+    ['icon' => 'fa-chalkboard-teacher', 'num' => getSetting('stat_faculty', '600+'), 'lbl' => 'Faculty'],
+    ['icon' => 'fa-lightbulb', 'num' => getSetting('stat_patents', '160+'), 'lbl' => 'Patents'],
     ['icon' => 'fa-gift', 'num' => '&#10003;', 'lbl' => 'Scholarship Available'],
 ];
 ?>
@@ -176,9 +176,9 @@ $aboutMilestoneStats = [
 
         <div class="vm-panel-wrap reveal">
             <div class="vm-panel active" id="vm-panel-vision" role="tabpanel">
-                <p class="vm-panel__quote">&ldquo;Learn about Education that helps Society&rdquo;</p>
+                <p class="vm-panel__quote">&ldquo;<?php echo sanitize(getSetting('vision_quote', 'Learn about Education that helps Society')); ?>&rdquo;</p>
                 <p class="vm-panel__text">
-                    Sarvepalli Radhakrishnan University is an academic fraternity of individuals dedicated to the motto of &ldquo;Learn about Education that helps Society&rdquo;. To emerge as a World-Class University in creating and disseminating knowledge, and providing students a unique learning experience in Science, Technology, Medicine, Management and other areas of life that will best serve the world and betterment of society. To create a knowledge-based society with scientific temper, team spirit, and dignity of labour to face global competitive challenges.
+                    <?php echo sanitize(getSetting('vision_text', 'Sarvepalli Radhakrishnan University is an academic fraternity of individuals dedicated to the motto of "Learn about Education that helps Society". To emerge as a World-Class University in creating and disseminating knowledge, and providing students a unique learning experience in Science, Technology, Medicine, Management and other areas of life that will best serve the world and betterment of society. To create a knowledge-based society with scientific temper, team spirit, and dignity of labour to face global competitive challenges.')); ?>
                 </p>
             </div>
             <div class="vm-panel" id="vm-panel-mission" role="tabpanel">

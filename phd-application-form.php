@@ -22,6 +22,11 @@ require_once __DIR__ . '/includes/header.php';
         </nav>
 
         <!-- Top Action Callout Banner -->
+        <?php
+        $phdAppPdf = getSetting('phd_application_pdf', BASE_URL . 'assets/uploads/pdf/phd-application-form.pdf');
+        $phdHelpline = getSetting('phd_helpline', getSetting('helpline', '7024144981'));
+        $phdEmail = getSetting('phd_email', getSetting('email', 'info@srku.edu.in'));
+        ?>
         <div class="card p-4 p-lg-5 border-0 shadow rounded-4 text-white mb-5 position-relative overflow-hidden" style="background: linear-gradient(135deg, #7A0B0D 0%, #16233f 100%);">
             <div class="row align-items-center g-4 position-relative z-2">
                 <div class="col-12 col-lg-8">
@@ -33,10 +38,10 @@ require_once __DIR__ . '/includes/header.php';
                         This official application form is to be submitted by all candidates seeking admission to the Doctor of Philosophy (Ph.D.) programme at Sarvepalli Radhakrishnan University (SRKU), either for appearing in the Doctoral Entrance Test (DET) or claiming entrance exemption (UGC-NET / GATE / SLET / GPAT / JRF / M.Phil).
                     </p>
                     <div class="d-flex flex-wrap gap-3">
-                        <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-application-form.pdf" download class="btn btn-warning text-dark fw-bold px-4 py-3 rounded-pill shadow">
+                        <a href="<?php echo htmlspecialchars($phdAppPdf); ?>" download class="btn btn-warning text-dark fw-bold px-4 py-3 rounded-pill shadow">
                             <i class="fas fa-download me-2"></i> Download Official PDF Form
                         </a>
-                        <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-application-form.pdf" target="_blank" class="btn btn-outline-light fw-bold px-4 py-3 rounded-pill">
+                        <a href="<?php echo htmlspecialchars($phdAppPdf); ?>" target="_blank" class="btn btn-outline-light fw-bold px-4 py-3 rounded-pill">
                             <i class="fas fa-external-link-alt me-2"></i> View PDF in Full Screen
                         </a>
                         <a href="#pdf-viewer" class="btn btn-light text-navy fw-bold px-4 py-3 rounded-pill">
@@ -83,20 +88,20 @@ require_once __DIR__ . '/includes/header.php';
                             <h3 class="h4 fw-bold text-navy mb-0">Interactive Form Document</h3>
                         </div>
                         <div class="d-flex gap-2">
-                            <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-application-form.pdf" download class="btn btn-sm btn-danger rounded-pill px-3 fw-bold">
+                            <a href="<?php echo htmlspecialchars($phdAppPdf); ?>" download class="btn btn-sm btn-danger rounded-pill px-3 fw-bold">
                                 <i class="fas fa-download me-1"></i> Download PDF
                             </a>
-                            <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-application-form.pdf" target="_blank" class="btn btn-sm btn-outline-navy rounded-pill px-3 fw-bold">
+                            <a href="<?php echo htmlspecialchars($phdAppPdf); ?>" target="_blank" class="btn btn-sm btn-outline-navy rounded-pill px-3 fw-bold">
                                 <i class="fas fa-external-link-alt me-1"></i> Open Fullscreen
                             </a>
                         </div>
                     </div>
 
                     <div class="ratio ratio-4x3 border rounded-4 overflow-hidden shadow-sm bg-light" style="min-height: 550px;">
-                        <iframe src="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-application-form.pdf#toolbar=1" class="w-100 h-100" style="border:none;" title="Ph.D. Application Form PDF">
+                        <iframe src="<?php echo htmlspecialchars($phdAppPdf); ?>#toolbar=1" class="w-100 h-100" style="border:none;" title="Ph.D. Application Form PDF">
                             <p class="p-4 text-center text-muted">
                                 Your browser does not support embedded PDF viewing. 
-                                <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/phd-application-form.pdf" target="_blank" class="btn btn-danger btn-sm ms-2">Click here to download and view the PDF.</a>
+                                <a href="<?php echo htmlspecialchars($phdAppPdf); ?>" target="_blank" class="btn btn-danger btn-sm ms-2">Click here to download and view the PDF.</a>
                             </p>
                         </iframe>
                     </div>
@@ -120,11 +125,11 @@ require_once __DIR__ . '/includes/header.php';
                         Bhopal, Madhya Pradesh - 462026
                     </div>
                     <div class="d-flex flex-column gap-2 small">
-                        <a href="tel:7024144981" class="text-decoration-none text-navy fw-semibold p-2 rounded-3 bg-light border d-flex align-items-center">
-                            <i class="fas fa-phone-alt text-danger me-2"></i> Ph.D. Helpline: 7024144981
+                        <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $phdHelpline); ?>" class="text-decoration-none text-navy fw-semibold p-2 rounded-3 bg-light border d-flex align-items-center">
+                            <i class="fas fa-phone-alt text-danger me-2"></i> Ph.D. Helpline: <?php echo htmlspecialchars($phdHelpline); ?>
                         </a>
-                        <a href="mailto:info@srku.edu.in" class="text-decoration-none text-navy fw-semibold p-2 rounded-3 bg-light border d-flex align-items-center">
-                            <i class="fas fa-envelope text-primary me-2"></i> info@srku.edu.in
+                        <a href="mailto:<?php echo htmlspecialchars($phdEmail); ?>" class="text-decoration-none text-navy fw-semibold p-2 rounded-3 bg-light border d-flex align-items-center">
+                            <i class="fas fa-envelope text-primary me-2"></i> <?php echo htmlspecialchars($phdEmail); ?>
                         </a>
                     </div>
                 </div>

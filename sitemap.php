@@ -23,7 +23,7 @@ $staticPages = [
     ['title' => 'Constituent Units & Colleges', 'url' => $baseUrl . 'constituent-unit.php', 'priority' => '0.85', 'freq' => 'weekly'],
     ['title' => 'Departments Directory', 'url' => $baseUrl . 'departments.php', 'priority' => '0.95', 'freq' => 'weekly'],
     ['title' => 'Academic Courses Catalog', 'url' => $baseUrl . 'courses.php', 'priority' => '0.95', 'freq' => 'daily'],
-    ['title' => 'Admissions 2026-27', 'url' => $baseUrl . 'admissions.php', 'priority' => '0.95', 'freq' => 'daily'],
+    ['title' => 'Admissions 2026-27', 'url' => $baseUrl . 'admission-enquiry.php', 'priority' => '0.95', 'freq' => 'daily'],
     ['title' => 'Ph.D. Doctoral Admissions', 'url' => $baseUrl . 'phd-admission.php', 'priority' => '0.90', 'freq' => 'weekly'],
     ['title' => 'Ph.D. Application Form', 'url' => $baseUrl . 'phd-application-form.php', 'priority' => '0.90', 'freq' => 'weekly'],
     ['title' => 'Curriculum Schemes & Syllabus', 'url' => $baseUrl . 'syllabus.php', 'priority' => '0.80', 'freq' => 'monthly'],
@@ -324,21 +324,5 @@ require_once __DIR__ . '/includes/header.php';
 
     </div>
 </section>
-
-<style>
-.hover-link {
-    transition: all 0.2s ease;
-    border-radius: 4px;
-    padding-left: 4px;
-}
-.hover-link:hover {
-    color: #a91d27 !important;
-    background-color: #f8fafc;
-    transform: translateX(3px);
-}
-.hover-link:hover i {
-    color: #a91d27 !important;
-}
-</style>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

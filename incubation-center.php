@@ -40,7 +40,7 @@ require_once __DIR__ . '/includes/header.php';
                     </p>
                 </div>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/incubation-centre.pdf" target="_blank" class="btn btn-srku px-4 py-2 shadow-sm rounded-pill fw-bold">
+                    <a href="<?php echo BASE_URL . getSetting('incubation_pdf', 'assets/uploads/pdf/incubation-centre.pdf'); ?>" target="_blank" class="btn btn-srku px-4 py-2 shadow-sm rounded-pill fw-bold">
                         <i class="fas fa-file-pdf me-2"></i> Download Official Policy (PDF)
                     </a>
                     <a href="<?php echo BASE_URL; ?>contact.php#apply" class="btn btn-outline-danger px-4 py-2 rounded-pill fw-bold">
@@ -67,7 +67,7 @@ require_once __DIR__ . '/includes/header.php';
                         <li><i class="fas fa-check-circle text-warning me-2"></i> Pipeline: Solar Energy, Ayurveda &amp; Homoeopathy Startups</li>
                         <li><i class="fas fa-check-circle text-warning me-2"></i> Capacity Building &amp; VC Investor Pitch Days</li>
                     </ul>
-                    <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/incubation-centre.pdf" target="_blank" class="btn btn-warning text-dark fw-bold rounded-pill w-100 py-2">
+                    <a href="<?php echo BASE_URL . getSetting('incubation_pdf', 'assets/uploads/pdf/incubation-centre.pdf'); ?>" target="_blank" class="btn btn-warning text-dark fw-bold rounded-pill w-100 py-2">
                         <i class="fas fa-download me-1"></i> View Official Circular (PDF)
                     </a>
                 </div>

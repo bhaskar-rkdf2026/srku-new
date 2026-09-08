@@ -326,39 +326,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
     </div>
 </section>
 
-<style>
-.constituent-carousel-container {
-    overflow: hidden;
-    white-space: nowrap;
-    width: 100%;
-    position: relative;
-}
-.constituent-marquee-track {
-    display: flex;
-    gap: 16px;
-    width: max-content;
-    animation: constituentScroll 32s linear infinite;
-}
-.constituent-marquee-track:hover {
-    animation-play-state: paused;
-}
-.seal-card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-.seal-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 18px rgba(15, 30, 59, 0.12) !important;
-    border-color: #DC2626 !important;
-}
-@keyframes constituentScroll {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
-</style>
+
+
 
 <!-- ═══════════════════════════════════════════════════════
      EXPLORE PROGRAMMES SECTION (Bootstrap 4-col Grid)

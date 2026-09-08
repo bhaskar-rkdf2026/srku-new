@@ -4,6 +4,27 @@ require_once __DIR__ . '/includes/functions.php';
 $slug = sanitize($_GET['slug'] ?? 'rkdf-institute-of-science-and-technology');
 $dept = getDepartmentBySlug($slug);
 
+if (!$dept && ($slug === 'allied-sciences' || $slug === 'department-of-allied-sciences' || $slug === 'faculty-of-allied-sciences')) {
+    $dept = [
+        'id' => 73,
+        'name' => 'Faculty of Allied Sciences & Humanities',
+        'category' => 'Allied Sciences',
+        'slug' => 'allied-sciences',
+        'icon' => 'fas fa-atom',
+        'image' => 'assets/uploads/constituent-units/allied-sciences.webp',
+        'banner_img' => 'assets/uploads/constituent-units/allied-sciences.webp',
+        'description' => 'The Faculty of Allied Sciences & Humanities at Sarvepalli Radhakrishnan University (SRKU) delivers premier interdisciplinary education spanning Basic & Applied Sciences, Arts & Humanities, Commerce, Computer Applications, Library & Information Science, Yoga, and Fashion Technology. With modern scientific laboratories, digital libraries, and experienced faculty, the department provides an integrated ecosystem for academic excellence, creative arts, and research.',
+        'dean_name' => 'Prof. (Dr.) S. K. Singh',
+        'dean_designation' => 'Dean & Principal',
+        'dean_photo' => 'assets/uploads/constituent-units/allied-sciences.webp',
+        'dean_message' => 'Welcome to the Faculty of Allied Sciences & Humanities at Sarvepalli Radhakrishnan University. Our multidisciplinary approach empowers students across pure sciences, arts, commerce, computing, and creative design with experiential learning and research excellence.',
+        'contact_no' => '0755-4700983, 7024144981',
+        'approvals' => 'UGC',
+        'established_year' => '2015',
+        'status' => 'active'
+    ];
+}
+
 if (!$dept) {
     // If not found by exact slug, try matching first department
     $departments = getDepartments(true);
@@ -80,7 +101,7 @@ $alliedFacultiesConfig = [
 ];
 
 // Redirect sub-faculty URLs directly to their section in the unified Allied Sciences department page
-if (isset($alliedFacultiesConfig[$dept['slug']])) {
+if ($slug !== 'allied-sciences' && ($dept['slug'] ?? '') !== 'allied-sciences' && isset($alliedFacultiesConfig[$dept['slug']])) {
     header("Location: " . BASE_URL . "allied-sciences#" . $dept['slug']);
     exit;
 }

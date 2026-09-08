@@ -31,7 +31,7 @@ require_once __DIR__ . '/includes/header.php';
                     Comprehensive academic ordinances governing internal assessments, final examinations, attendance prerequisites, 10-point CBCS grading system, ATKT rules, and grievance redressal.
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="<?php echo BASE_URL; ?>assets/uploads/2026/07/statutes-ordinances-pertaining-to-academics-examination.pdf" target="_blank" class="btn-hero-yellow">
+                    <a href="<?php echo BASE_URL . getSetting('exam_rules_pdf', 'assets/uploads/2026/07/statutes-ordinances-pertaining-to-academics-examination.pdf'); ?>" target="_blank" class="btn-hero-yellow">
                         <i class="fas fa-file-pdf me-1"></i> Download Examination Statutes (PDF)
                     </a>
                     <a href="<?php echo BASE_URL; ?>academic-calendar.php" class="btn-hero-outline">
@@ -43,7 +43,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="about-hero-v2__cards">
                     <div class="about-hero-v2__card about-hero-v2__card--float1">
                         <i class="fas fa-percentage"></i>
-                        <span class="num">75%</span>
+                        <span class="num"><?php echo getSetting('stat_min_attendance', '75%'); ?></span>
                         <span class="lbl">Min. Attendance</span>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float2">

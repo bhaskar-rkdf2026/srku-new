@@ -33,28 +33,41 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </section>
 
+<?php
+$stats = getUniversityStats();
+$defaultReasons = [
+    ['num' => '01', 'title' => 'Multidisciplinary Education', 'desc' => 'We offer over 50 diverse programmes spanning Medical, Dental, Nursing, Engineering, Management, Law, Commerce, Agriculture, Science, and Humanities. Students choose courses aligned with their aspirations and the National Education Policy 2020.'],
+    ['num' => '02', 'title' => 'State-of-the-Art Infrastructure', 'desc' => 'Our lush green campus spans a cosmopolitan setting with modern laboratories, interactive learning spaces, high-tech medical facilities, and libraries equipped with the latest technology and resources.'],
+    ['num' => '03', 'title' => 'NAAC-Graded Excellence', 'desc' => 'SRK University is NAAC-accredited, ensuring quality education meets international standards. Our commitment to continuous improvement and academic rigor sets us apart from other private universities in Bhopal.'],
+    ['num' => '04', 'title' => 'Industry & Research Partnerships', 'desc' => 'We foster strong collaborations with leading industries for internships, placements, and research initiatives, ensuring students gain hands-on experience and are job-ready upon graduation.'],
+    ['num' => '05', 'title' => 'Diverse Student Community', 'desc' => 'Our campus welcomes students from all corners of India, creating a multicultural environment that enriches learning and promotes cross-cultural understanding.'],
+    ['num' => '06', 'title' => 'Holistic Student Development', 'desc' => 'At SRK University, students grow beyond academics through sports, cultural activities, leadership programmes, innovation, and community engagement, building confidence, teamwork, and essential life skills for future success.']
+];
+$reasons = getJsonSetting('why_srku_reasons', $defaultReasons);
+?>
+
 <!-- STATS STRIP -->
 <div class="stats-strip py-2">
     <div class="container-xl">
         <div class="row row-cols-2 row-cols-md-5 g-0 text-center">
             <div class="col stat-box">
-                <div class="stat-val">18,000+</div>
+                <div class="stat-val"><?php echo $stats['students']; ?></div>
                 <div class="stat-txt">Students</div>
             </div>
             <div class="col stat-box">
-                <div class="stat-val">600+</div>
+                <div class="stat-val"><?php echo $stats['faculty']; ?></div>
                 <div class="stat-txt">Faculty</div>
             </div>
             <div class="col stat-box">
-                <div class="stat-val">120+</div>
+                <div class="stat-val"><?php echo $stats['programs']; ?></div>
                 <div class="stat-txt">Programs</div>
             </div>
             <div class="col stat-box">
-                <div class="stat-val">1,400+</div>
+                <div class="stat-val"><?php echo $stats['papers']; ?></div>
                 <div class="stat-txt">Research Papers</div>
             </div>
             <div class="col stat-box">
-                <div class="stat-val">42+</div>
+                <div class="stat-val"><?php echo $stats['partners']; ?></div>
                 <div class="stat-txt">Global Partners</div>
             </div>
         </div>
@@ -87,13 +100,13 @@ require_once __DIR__ . '/includes/header.php';
                      alt="RKDF Group Campus Building" class="welcome-img">
                 <div class="row g-2 mt-3 text-center">
                     <div class="col-4">
-                        <div class="welcome-badge"><strong>18,000+</strong><small>Students</small></div>
+                        <div class="welcome-badge"><strong><?php echo $stats['students']; ?></strong><small>Students</small></div>
                     </div>
                     <div class="col-4">
-                        <div class="welcome-badge"><strong>600+</strong><small>Faculty Members</small></div>
+                        <div class="welcome-badge"><strong><?php echo $stats['faculty']; ?></strong><small>Faculty Members</small></div>
                     </div>
                     <div class="col-4">
-                        <div class="welcome-badge"><strong>120+</strong><small>Academic Programmes</small></div>
+                        <div class="welcome-badge"><strong><?php echo $stats['programs']; ?></strong><small>Academic Programmes</small></div>
                     </div>
                 </div>
             </div>
@@ -109,48 +122,15 @@ require_once __DIR__ . '/includes/header.php';
             <h2 class="section-title">Why Choose <span>SRK University?</span></h2>
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 reveal">
-                    <div class="about-num-badge">01</div>
-                    <h4 class="h5 fw-bold text-navy mb-2">Multidisciplinary Education</h4>
-                    <p class="text-muted small mb-0" style="line-height:1.75;">We offer over 50 diverse programmes spanning Medical, Dental, Nursing, Engineering, Management, Law, Commerce, Agriculture, Science, and Humanities. Students choose courses aligned with their aspirations and the National Education Policy 2020.</p>
+            <?php foreach ($reasons as $r): ?>
+                <div class="col">
+                    <div class="card h-100 p-4 border-0 shadow-sm rounded-4 reveal">
+                        <div class="about-num-badge"><?php echo sanitize($r['num'] ?? '01'); ?></div>
+                        <h4 class="h5 fw-bold text-navy mb-2"><?php echo sanitize($r['title']); ?></h4>
+                        <p class="text-muted small mb-0" style="line-height:1.75;"><?php echo sanitize($r['desc']); ?></p>
+                    </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 reveal">
-                    <div class="about-num-badge">02</div>
-                    <h4 class="h5 fw-bold text-navy mb-2">State-of-the-Art Infrastructure</h4>
-                    <p class="text-muted small mb-0" style="line-height:1.75;">Our lush green campus spans a cosmopolitan setting with modern laboratories, interactive learning spaces, high-tech medical facilities, and libraries equipped with the latest technology and resources.</p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 reveal">
-                    <div class="about-num-badge">03</div>
-                    <h4 class="h5 fw-bold text-navy mb-2">NAAC-Graded Excellence</h4>
-                    <p class="text-muted small mb-0" style="line-height:1.75;">SRK University is NAAC-accredited, ensuring quality education meets international standards. Our commitment to continuous improvement and academic rigor sets us apart from other private universities in Bhopal.</p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 reveal">
-                    <div class="about-num-badge">04</div>
-                    <h4 class="h5 fw-bold text-navy mb-2">Industry &amp; Research Partnerships</h4>
-                    <p class="text-muted small mb-0" style="line-height:1.75;">We foster strong collaborations with leading industries for internships, placements, and research initiatives, ensuring students gain hands-on experience and are job-ready upon graduation.</p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 reveal">
-                    <div class="about-num-badge">05</div>
-                    <h4 class="h5 fw-bold text-navy mb-2">Diverse Student Community</h4>
-                    <p class="text-muted small mb-0" style="line-height:1.75;">Our campus welcomes students from all corners of India, creating a multicultural environment that enriches learning and promotes cross-cultural understanding.</p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100 p-4 border-0 shadow-sm rounded-4 reveal">
-                    <div class="about-num-badge">06</div>
-                    <h4 class="h5 fw-bold text-navy mb-2">Holistic Student Development</h4>
-                    <p class="text-muted small mb-0" style="line-height:1.75;">At SRK University, students grow beyond academics through sports, cultural activities, leadership programmes, innovation, and community engagement, building confidence, teamwork, and essential life skills for future success.</p>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>

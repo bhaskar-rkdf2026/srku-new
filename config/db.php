@@ -154,6 +154,28 @@ function autoInitializeTables($pdo) {
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );
+            CREATE TABLE IF NOT EXISTS board_members (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                designation TEXT NOT NULL,
+                role TEXT DEFAULT 'Member',
+                bio TEXT,
+                photo TEXT,
+                sort_order INTEGER DEFAULT 0,
+                status TEXT DEFAULT 'active',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+            CREATE TABLE IF NOT EXISTS faculty (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                department_name TEXT NOT NULL,
+                dept_slug TEXT NOT NULL,
+                name TEXT NOT NULL,
+                designation TEXT NOT NULL,
+                qualification TEXT,
+                experience TEXT,
+                status TEXT DEFAULT 'active',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
         ");
     } else {
         $pdo->exec("
@@ -283,6 +305,32 @@ function autoInitializeTables($pdo) {
                 INDEX `idx_type` (`type`),
                 INDEX `idx_order` (`sort_order`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `board_members` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `name` VARCHAR(255) NOT NULL,
+                `designation` VARCHAR(255) NOT NULL,
+                `role` VARCHAR(100) DEFAULT 'Member',
+                `bio` TEXT,
+                `photo` VARCHAR(255),
+                `sort_order` INT DEFAULT 0,
+                `status` ENUM('active','inactive') DEFAULT 'active',
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `faculty` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `department_name` VARCHAR(255) NOT NULL,
+                `dept_slug` VARCHAR(191) NOT NULL,
+                `name` VARCHAR(255) NOT NULL,
+                `designation` VARCHAR(150) NOT NULL,
+                `qualification` VARCHAR(255) DEFAULT NULL,
+                `experience` VARCHAR(100) DEFAULT NULL,
+                `status` ENUM('active','inactive') DEFAULT 'active',
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                INDEX `idx_faculty_dept` (`dept_slug`),
+                INDEX `idx_faculty_status` (`status`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
         ");
 
         // Schema migrations for MySQL if table previously existed with older columns
@@ -385,7 +433,55 @@ function autoInitializeTables($pdo) {
         'facebook_url' => 'https://facebook.com/srku.bhopal',
         'instagram_url' => 'https://instagram.com/srku.bhopal',
         'youtube_url' => 'https://youtube.com/@srkuniversity',
-        'linkedin_url' => 'https://linkedin.com/school/srk-university'
+        'linkedin_url' => 'https://linkedin.com/school/srk-university',
+
+        // Standardized Institutional Statistics (consistent across all pages)
+        'stat_students' => '20,000+',
+        'stat_faculty' => '600+',
+        'stat_alumni' => '1,10,000+',
+        'stat_programs' => '120+',
+        'stat_papers' => '1,400+',
+        'stat_partners' => '42+',
+        'stat_placements' => '35,000+',
+        'stat_years' => '31st Year',
+        'stat_campus_acres' => '100+ Acres',
+        'stat_hospital_beds' => '750+',
+        'stat_patents' => '160+',
+        'stat_teaching_days' => '180+',
+        'stat_days_semester' => '90',
+        'stat_min_attendance' => '75%',
+
+        // Leadership & Quotes
+        'chairman_name' => 'Dr. A. K. Shrivastav',
+        'chairman_title' => 'Chairman',
+        'chairman_story_quote' => 'Education is the foundation of progress, empowering individuals with knowledge, values, and the confidence to shape a better future. At SRK University, our vision is to provide quality education that combines academic excellence with practical learning, innovation, and strong ethical values.',
+
+        // Vision & Mission
+        'vision_quote' => 'Learn about Education that helps Society',
+        'vision_text' => 'Sarvepalli Radhakrishnan University is an academic fraternity of individuals dedicated to the motto of "Learn about Education that helps Society". To emerge as a World-Class University in creating and disseminating knowledge, and providing students a unique learning experience in Science, Technology, Medicine, Management and other areas of life that will best serve the world and betterment of society.',
+
+        // PDFs & Official Documents
+        'academic_calendar_pdf' => 'assets/uploads/2026/07/Academic-Calendar.pdf',
+        'calendar_odd_pdf' => 'assets/uploads/2026/07/Academic-Calendar.pdf',
+        'calendar_even_pdf' => 'assets/uploads/pdf/academic-calendar-even-2026.pdf',
+        'exam_rules_pdf' => 'assets/uploads/2026/07/statutes-ordinances-pertaining-to-academics-examination.pdf',
+        'exam_rules_ordinance_pdf' => 'assets/uploads/2026/07/statutes-ordinances-pertaining-to-academics-examination.pdf',
+        'exam_reval_pdf' => 'assets/uploads/pdf/exam-revaluation-form.pdf',
+        'exam_degree_pdf' => 'assets/uploads/pdf/degree-application-form.pdf',
+        'incubation_pdf' => 'assets/uploads/pdf/incubation-centre.pdf',
+        'incubation_policy_pdf' => 'assets/uploads/pdf/incubation-centre.pdf',
+        'incubation_application_pdf' => 'assets/uploads/pdf/incubation-application-form.pdf',
+        'phd_app_pdf' => 'assets/uploads/pdf/phd-application-form.pdf',
+        'phd_application_pdf' => 'assets/uploads/pdf/phd-application-form.pdf',
+        'phd_entrance_pdf' => 'assets/uploads/pdf/phd-entrance-form.pdf',
+        'phd_synopsis_pdf' => 'assets/uploads/pdf/phd-synopsis-format.pdf',
+
+        // Hostel & Facilities
+        'hostel_boys_fee' => '₹65,000',
+        'hostel_girls_fee' => '₹70,000',
+        'hostel_contact_phone' => '0755 - 4911204',
+        'hostel_contact_email' => 'hostel@srku.edu.in',
+        'facilities_desc' => 'Sarvepalli Radhakrishnan University (SRKU) provides world-class infrastructure and holistic amenities designed to enrich student learning, research innovation, physical fitness, and community living.'
     ];
     foreach ($defaultSettings as $key => $val) {
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM settings WHERE setting_key = :k");
@@ -395,6 +491,27 @@ function autoInitializeTables($pdo) {
             $ins->execute([':k' => $key, ':v' => $val]);
         }
     }
+
+    // Seed Board of Management
+    try {
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM board_members");
+        $stmt->execute();
+        if ($stmt->fetchColumn() == 0) {
+            $boardSeed = [
+                ['Shri. Ratnesh Jain', 'Member (Sponsoring Body)', 'Sponsoring Body', 1],
+                ['Dr. Amarjeet Singh', 'Member (Sponsoring Body)', 'Sponsoring Body', 2],
+                ['Dr. Aparna Paliwal', 'Member', 'Academician', 3],
+                ['Dr. Vikram Singh', 'Member', 'Academician', 4],
+                ['Mr. Santosh Negi', 'Member', 'Administrator', 5],
+                ['Dr. Neha Dubey', 'Member', 'Academician', 6],
+                ['Dr. S.S. Pawar', 'Member Secretary', 'Secretary', 7],
+            ];
+            $insBoard = $pdo->prepare("INSERT INTO board_members (name, designation, role, sort_order) VALUES (?, ?, ?, ?)");
+            foreach ($boardSeed as $bm) {
+                $insBoard->execute($bm);
+            }
+        }
+    } catch (Exception $e) {}
 
     // Seed Departments (All 18 Constituent Colleges & Departments from new.srku.edu.in)
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM departments");
