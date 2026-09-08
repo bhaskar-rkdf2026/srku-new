@@ -2311,14 +2311,481 @@ body {
 
 .enquiry-form-box {
     background: #ffffff !important;
-    border-radius: 16px;
-    padding: 36px 30px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    border-radius: 28px;
+    padding: 42px 38px;
+    box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.enquiry-form-box label {
-    color: #1e1e4a !important;
+.enquiry-form-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #7a0b0d 0%, #e5a93b 50%, #d62529 100%);
+}
+
+/* ── Pulsing Live Admissions Badge ── */
+.srku-badge-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 0.78rem;
     font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.srku-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    position: relative;
+    display: inline-block;
+}
+
+.srku-pulse-dot::after {
+    content: '';
+    position: absolute;
+    top: -3px; left: -3px; right: -3px; bottom: -3px;
+    border-radius: 50%;
+    background: rgba(34,197,94,0.4);
+    animation: srkuPulse 1.8s infinite;
+}
+
+@keyframes srkuPulse {
+    0%   { transform: scale(1);   opacity: 0.8; }
+    50%  { transform: scale(2.2); opacity: 0; }
+    100% { transform: scale(1);   opacity: 0; }
+}
+
+/* ── Form Labels ── */
+.srku-label {
+    display: flex;
+    align-items: center;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1e293b !important;
+    margin-bottom: 7px;
+    letter-spacing: 0.2px;
+}
+
+.srku-label .req-star {
+    color: #dc2626;
+    font-weight: 800;
+    margin-left: 3px;
+}
+
+/* ── Input Wrapper ── */
+.srku-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.srku-field-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 1rem;
+    pointer-events: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+    z-index: 3;
+}
+
+.srku-input-wrap:focus-within .srku-field-icon {
+    color: #7a0b0d;
+    transform: translateY(-50%) scale(1.08);
+}
+
+/* Placeholder state for custom dropdown trigger */
+.srku-dd-placeholder {
+    color: #94a3b8 !important;
+    font-weight: 400;
+}
+
+/* ── Text / Email / Tel Inputs ── */
+.srku-input {
+    width: 100%;
+    height: 52px;
+    padding: 12px 18px 12px 48px;
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    font-size: 0.94rem;
+    font-weight: 500;
+    color: #0f172a;
+    transition: all 0.22s cubic-bezier(0.4,0,0.2,1);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.srku-input::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+.srku-input:hover {
+    border-color: #cbd5e1;
+    background: #ffffff;
+}
+
+.srku-input:focus {
+    background: #ffffff;
+    border-color: #7a0b0d;
+    box-shadow: 0 0 0 4px rgba(122,11,13,0.12), 0 4px 12px rgba(122,11,13,0.05);
+    color: #0f172a;
+}
+
+/* ── Phone Prefix ── */
+.srku-phone-prefix {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 700;
+    color: #475569;
+    font-size: 0.92rem;
+    pointer-events: none;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-right: 10px;
+    border-right: 1.5px solid #cbd5e1;
+    line-height: 1;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.srku-input-wrap:focus-within .srku-phone-prefix {
+    color: #7a0b0d;
+    border-right-color: #7a0b0d;
+}
+
+.srku-phone-input {
+    padding-left: 82px;
+}
+
+/* ══════════════════════════════════════════
+   CUSTOM SEARCHABLE DROPDOWN
+══════════════════════════════════════════ */
+.srku-dd-wrap {
+    position: relative;
+    width: 100%;
+}
+
+/* The clickable trigger */
+.srku-dd-trigger {
+    width: 100%;
+    height: 52px;
+    padding: 0 46px 0 48px;
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    font-size: 0.94rem;
+    font-weight: 500;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.22s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    text-align: left;
+    outline: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-appearance: none;
+    border: 1.5px solid #e2e8f0;
+}
+
+.srku-dd-trigger.has-value {
+    color: #0f172a;
+}
+
+.srku-dd-trigger:hover {
+    border-color: #cbd5e1;
+    background: #ffffff;
+}
+
+.srku-dd-trigger.open {
+    background: #ffffff;
+    border-color: #7a0b0d;
+    box-shadow: 0 0 0 4px rgba(122,11,13,0.12);
+}
+
+/* Chevron icon */
+.srku-dd-chevron {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    transition: transform 0.25s ease;
+    color: #64748b;
+    flex-shrink: 0;
+}
+
+.srku-dd-trigger.open .srku-dd-chevron {
+    transform: translateY(-50%) rotate(180deg);
+    color: #7a0b0d;
+}
+
+/* Dropdown panel */
+.srku-dd-panel {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px -10px rgba(0,0,0,0.22), 0 8px 20px -5px rgba(0,0,0,0.1);
+    overflow: hidden;
+    animation: srkuDropIn 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+.srku-dd-panel.open {
+    display: block;
+}
+
+@keyframes srkuDropIn {
+    from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Search box inside panel */
+.srku-dd-search-wrap {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f8fafc;
+}
+
+.srku-dd-search-icon {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.srku-dd-search {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #0f172a;
+    outline: none;
+    padding: 2px 0;
+}
+
+.srku-dd-search::placeholder {
+    color: #b0bccc;
+    font-weight: 400;
+}
+
+/* Scrollable list */
+.srku-dd-list {
+    max-height: 240px;
+    overflow-y: auto;
+    padding: 6px 0;
+    scrollbar-width: thin;
+    scrollbar-color: #e2e8f0 transparent;
+}
+
+.srku-dd-list::-webkit-scrollbar { width: 5px; }
+.srku-dd-list::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 99px; }
+
+/* Group header (replaces optgroup) */
+.srku-dd-group {
+    padding: 8px 14px 4px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #7a0b0d;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    background: #fff8f8;
+    border-top: 1px solid #fef2f2;
+    margin-top: 4px;
+}
+
+.srku-dd-group:first-child {
+    margin-top: 0;
+    border-top: none;
+}
+
+/* Individual option */
+.srku-dd-option {
+    padding: 10px 16px;
+    font-size: 0.91rem;
+    font-weight: 500;
+    color: #334155;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: normal;
+    line-height: 1.35;
+}
+
+.srku-dd-option:hover,
+.srku-dd-option.highlighted {
+    background: #fef2f2;
+    color: #7a0b0d;
+}
+
+.srku-dd-option.selected {
+    background: #fef2f2;
+    color: #7a0b0d;
+    font-weight: 700;
+}
+
+.srku-dd-option.selected::after {
+    content: '\2713';
+    margin-left: auto;
+    color: #7a0b0d;
+    font-size: 0.85rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.srku-dd-option.hidden {
+    display: none;
+}
+
+/* Empty state */
+.srku-dd-empty {
+    padding: 18px 16px;
+    text-align: center;
+    font-size: 0.88rem;
+    color: #94a3b8;
+    font-style: italic;
+    display: none;
+}
+
+.srku-dd-empty.visible {
+    display: block;
+}
+
+/* Hidden native select for form submission */
+.srku-dd-native {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+/* ── Submit Button ── */
+.btn-srku-submit-v2 {
+    width: 100%;
+    height: 56px;
+    background: linear-gradient(135deg, #e5a93b 0%, #f59e0b 50%, #d97706 100%);
+    color: #1e1e4a !important;
+    border: none;
+    border-radius: 16px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: 0.3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 14px 28px -6px rgba(229,169,59,0.55), 0 4px 10px rgba(0,0,0,0.06);
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.btn-srku-submit-v2::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(60deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+    transform: rotate(25deg) translateY(-100%);
+    transition: transform 0.75s ease;
+}
+
+.btn-srku-submit-v2:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 38px -6px rgba(229,169,59,0.7);
+    color: #000000 !important;
+}
+
+.btn-srku-submit-v2:hover::after {
+    transform: rotate(25deg) translateY(100%);
+}
+
+.btn-srku-submit-v2:active { transform: translateY(0); }
+
+.btn-srku-submit-v2 .btn-arrow-icon { transition: transform 0.25s ease; }
+.btn-srku-submit-v2:hover .btn-arrow-icon { transform: translateX(4px); }
+
+/* ── Trust Strip ── */
+.srku-trust-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.srku-trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.srku-trust-item i { font-size: 0.95rem; }
+
+@media (max-width: 576px) {
+    .enquiry-form-box {
+        padding: 28px 20px !important;
+        border-radius: 20px !important;
+    }
+    .srku-input {
+        height: 48px;
+        font-size: 0.91rem;
+        padding-left: 44px;
+    }
+    .srku-dd-trigger {
+        height: 48px;
+        font-size: 0.91rem;
+    }
+    .srku-phone-input { padding-left: 76px; }
+    .btn-srku-submit-v2 { height: 52px; font-size: 0.98rem; }
 }
 
 /* ══════════════════════════════════════
@@ -5680,17 +6147,7 @@ body {
     font-weight: 800;
 }
 
-.enquiry-form-box {
-    background: #ffffff !important;
-    border-radius: 16px;
-    padding: 36px 30px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-}
-
-.enquiry-form-box label {
-    color: #1e1e4a !important;
-    font-weight: 700;
-}
+/* Enquiry form box styled in core section above */
 
 /* ══════════════════════════════════════
    PAGE TOP BANNER (High-Contrast & Dynamic)

@@ -57,7 +57,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
         'Homepage Admission Section',
         $_POST['father_name'] ?? '',
         $_POST['city'] ?? '',
-        $_POST['state'] ?? ''
+        $_POST['state'] ?? '',
+        $_POST['college'] ?? ''
     );
     if ($res['success']) {
         $enquirySuccess = true;
@@ -122,8 +123,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
                 <?php echo sanitize($heroDesc); ?>
             </p>
             <div class="d-flex flex-wrap gap-3 mt-4">
-                <a href="#apply" class="btn-hero-yellow">Apply Now</a>
-                <a href="<?php echo BASE_URL; ?>courses.php" class="btn-hero-outline">Explore Programmes</a>
+                <a href="#apply" class="btn-hero-yellow">Apply for Admission <i class="fas fa-arrow-right ms-2"></i></a>
+                <a href="<?php echo BASE_URL; ?>courses.php" class="btn-hero-outline">Explore Programmes <i class="fas fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </div>
@@ -834,86 +835,583 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     ADMISSION FORM SECTION (Bootstrap Maroon 2-col Form)
+     ADMISSION FORM SECTION (Redesigned with Dependent College & Course Dropdowns)
 ═══════════════════════════════════════════════════════ -->
-<section class="enquiry-section py-5" id="apply">
-    <div class="container-xl py-3">
+<?php
+$homeDepts = getDepartments(true);
+$homeCourses = getCourses();
+
+// Group departments by academic category for organized optgroups
+$deptsByCategory = [];
+foreach ($homeDepts as $d) {
+    $cat = $d['category'] ?: 'Constituent Institutes';
+    if (!isset($deptsByCategory[$cat])) {
+        $deptsByCategory[$cat] = [];
+    }
+    $deptsByCategory[$cat][] = $d;
+}
+
+// Build map of dept slug -> courses for instant JS filtering
+$deptCoursesMap = [];
+foreach ($homeDepts as $d) {
+    $deptCoursesMap[$d['slug']] = [];
+}
+foreach ($homeCourses as $c) {
+    $s = $c['dept_slug'] ?? '';
+    if (isset($deptCoursesMap[$s])) {
+        $deptCoursesMap[$s][] = [
+            'name' => $c['course_name'],
+            'level' => $c['level'] ?? '',
+            'duration' => $c['duration'] ?? '',
+        ];
+    } else {
+        foreach ($homeDepts as $d) {
+            if ($d['name'] === ($c['department'] ?? '')) {
+                $deptCoursesMap[$d['slug']][] = [
+                    'name' => $c['course_name'],
+                    'level' => $c['level'] ?? '',
+                    'duration' => $c['duration'] ?? '',
+                ];
+                break;
+            }
+        }
+    }
+}
+
+$postedCollege = sanitize($_POST['college'] ?? '');
+$postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
+?>
+<section class="enquiry-section py-5 position-relative" id="apply">
+    <div class="container-xl py-4">
         <div class="row align-items-center g-4 g-lg-5">
             
+            <!-- Left Info Column -->
             <div class="col-12 col-lg-5 text-white">
-                <span class="section-subtitle text-warning">ADMISSION SESSION 2026-27</span>
-                <h2 class="text-white fw-bold mb-3">Apply For <span class="text-warning">Admissions 2026</span></h2>
-                <p class="text-white-50 mb-4" style="line-height:1.7;">
-                    Fill out your details and our admission counselor will call you within 24 hours. Seats are limited — apply early!
+                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold text-uppercase mb-3 shadow-sm">
+                    <i class="fas fa-award me-1"></i> ADMISSION SESSION 2026-27
+                </span>
+                <h2 class="text-white fw-bold mb-3 display-6" style="line-height:1.2;">
+                    Apply For <span class="text-warning">Admissions 2026</span>
+                </h2>
+                <p class="text-white-50 mb-4" style="line-height:1.75; font-size:1.02rem;">
+                    Step into an ecosystem of innovation, world-class labs, and 94% placement track record. Select your preferred college to discover all approved degree &amp; diploma programmes.
                 </p>
-                <ul class="list-unstyled text-white-50 d-flex flex-column gap-2">
-                    <li><i class="fas fa-check-circle text-warning me-2"></i> UGC Recognized &amp; AICTE/PCI Approved</li>
-                    <li><i class="fas fa-check-circle text-warning me-2"></i> 94% Campus Placement Record</li>
-                    <li><i class="fas fa-check-circle text-warning me-2"></i> Scholarship &amp; Fee Concessions Available</li>
-                    <li><i class="fas fa-check-circle text-warning me-2"></i> Modern On-Campus Hostels &amp; Transport</li>
-                </ul>
+
+                <div class="d-flex flex-column gap-3 mb-4">
+                    <div class="d-flex align-items-start gap-3 p-3 rounded-4" style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(8px);">
+                        <div class="text-warning fs-4 mt-1"><i class="fas fa-university"></i></div>
+                        <div>
+                            <h6 class="text-white fw-bold mb-1">26+ Constituent Colleges &amp; Faculties</h6>
+                            <p class="text-white-50 small mb-0">UGC Recognized under Section 2(f) &bull; AICTE, PCI, NMC, DCI, INC, BCI, ICAR Approved</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-start gap-3 p-3 rounded-4" style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(8px);">
+                        <div class="text-warning fs-4 mt-1"><i class="fas fa-chart-line"></i></div>
+                        <div>
+                            <h6 class="text-white fw-bold mb-1">94% Campus Placements</h6>
+                            <p class="text-white-50 small mb-0">12 LPA Highest Package &bull; 120+ Corporate Recruitment Partners</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-start gap-3 p-3 rounded-4" style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(8px);">
+                        <div class="text-warning fs-4 mt-1"><i class="fas fa-hand-holding-usd"></i></div>
+                        <div>
+                            <h6 class="text-white fw-bold mb-1">Scholarships &amp; Fee Concessions</h6>
+                            <p class="text-white-50 small mb-0">Merit scholarships, sports awards &amp; government welfare assistance schemes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direct Counseling Helpline -->
+                <div class="p-3 rounded-4" style="background: rgba(245, 158, 11, 0.14); border: 1.5px dashed rgba(245, 158, 11, 0.5);">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width:48px;height:48px; min-width:48px;">
+                            <i class="fas fa-headset fa-lg"></i>
+                        </div>
+                        <div>
+                            <div class="text-warning small fw-bold text-uppercase" style="letter-spacing:0.5px;">Admissions Helpline Desk</div>
+                            <a href="tel:07554700983" class="text-white fw-bold fs-5 text-decoration-none">0755-4700983 / 7024144981</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
+            <!-- Right Form Column -->
             <div class="col-12 col-lg-7">
                 <div class="enquiry-form-box">
+                    
+                    <!-- Form Header Inside Card -->
+                    <div class="d-flex flex-wrap align-items-center justify-content-between mb-3 pb-3 border-bottom gap-2">
+                        <div>
+                            <span class="srku-badge-live">
+                                <span class="srku-pulse-dot"></span> Admissions Open 2026-27
+                            </span>
+                            <h3 class="h4 fw-bold text-dark mt-2 mb-1" style="letter-spacing:-0.3px;">Direct Admission &amp; Counseling</h3>
+                            <p class="text-muted small mb-0">Fill out your details below to get instant fee structures, eligibility &amp; scholarship assistance.</p>
+                        </div>
+                    </div>
+
                     <?php if ($enquirySuccess): ?>
-                        <div class="alert alert-success"><i class="fas fa-check-circle me-1"></i> Thank you! Your admission enquiry has been submitted successfully. Our team will contact you shortly.</div>
+                        <div class="alert alert-success d-flex align-items-center gap-3 p-3 rounded-3 mb-4 shadow-sm">
+                            <i class="fas fa-check-circle fa-2x text-success"></i>
+                            <div>
+                                <strong class="d-block text-success">Application Received Successfully!</strong>
+                                <span class="small text-dark"><?php echo sanitize($enquiryMsg); ?></span>
+                            </div>
+                        </div>
                     <?php elseif ($enquiryErr): ?>
-                        <div class="alert alert-danger"><?php echo sanitize($enquiryErr); ?></div>
+                        <div class="alert alert-danger d-flex align-items-center gap-2 p-3 rounded-3 mb-4">
+                            <i class="fas fa-exclamation-circle text-danger"></i>
+                            <span><?php echo sanitize($enquiryErr); ?></span>
+                        </div>
                     <?php endif; ?>
 
-                    <form action="<?php echo BASE_URL; ?>#apply" method="POST">
+                    <form action="<?php echo BASE_URL; ?>#apply" method="POST" id="homeAdmissionForm">
+                        
+                        <!-- Row 1: Name & Father's Name -->
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label class="form-label fw-bold text-dark small mb-1">Your Name *</label>
-                                <input type="text" name="name" class="form-control py-2" placeholder="Enter your full name" minlength="2" maxlength="80" required>
+                                <label class="srku-label" for="homeEnquiryName">
+                                    Your Full Name <span class="req-star">*</span>
+                                </label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-user srku-field-icon"></i>
+                                    <input type="text" id="homeEnquiryName" name="name" class="srku-input" placeholder="Enter your full name" minlength="2" maxlength="80" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['name'] ?? ''); ?>" required>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-bold text-dark small mb-1">Father's Name</label>
-                                <input type="text" name="father_name" class="form-control py-2" placeholder="Enter father's name" maxlength="80">
+                                <label class="srku-label" for="homeEnquiryFatherName">
+                                    Father's Name
+                                </label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-user-tie srku-field-icon"></i>
+                                    <input type="text" id="homeEnquiryFatherName" name="father_name" class="srku-input" placeholder="Enter father's name" maxlength="80" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['father_name'] ?? ''); ?>">
+                                </div>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold text-dark small mb-1">Courses</label>
-                            <select name="course" class="form-select py-2">
-                                <option value="">-- Please choose an option --</option>
-                                <option>B.Tech Computer Science &amp; Engineering</option>
-                                <option>B.Tech Artificial Intelligence &amp; Data Science</option>
-                                <option>Bachelor of Pharmacy (B.Pharm)</option>
-                                <option>Diploma in Pharmacy (D.Pharm)</option>
-                                <option>MBA — Master of Business Administration</option>
-                                <option>MCA — Master of Computer Applications</option>
-                                <option>B.Sc. Nursing</option>
-                                <option>LL.B — Bachelor of Laws</option>
-                                <option>B.Sc. (Hons) Agriculture</option>
-                                <option>BPT — Bachelor of Physiotherapy</option>
-                                <option>Other University Programme</option>
-                            </select>
-                        </div>
+
+                        <!-- Row 2: College Dropdown & Dependent Course Dropdown -->
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label class="form-label fw-bold text-dark small mb-1">Mail ID *</label>
-                                <input type="email" name="email" class="form-control py-2" placeholder="yourname@gmail.com" required>
+                                <label class="srku-label" for="homeEnquiryCollege">
+                                    Constituent College / Department <span class="req-star">*</span>
+                                </label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-university srku-field-icon"></i>
+                                    <!-- Custom Searchable Dropdown: College -->
+                                    <div class="srku-dd-wrap" id="homeCollegeDDWrap">
+                                        <button type="button" class="srku-dd-trigger" id="homeCollegeTrigger" aria-haspopup="listbox" aria-expanded="false">
+                                            <span class="srku-dd-label srku-dd-placeholder">Select College / Department</span>
+                                            <svg class="srku-dd-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                                        </button>
+                                        <div class="srku-dd-panel" id="homeCollegePanel">
+                                            <div class="srku-dd-search-wrap">
+                                                <i class="fas fa-search srku-dd-search-icon"></i>
+                                                <input type="text" class="srku-dd-search" id="homeCollegeSearch" placeholder="Search college or department..." autocomplete="off">
+                                            </div>
+                                            <div class="srku-dd-list" id="homeCollegeList">
+                                                <?php foreach ($deptsByCategory as $catName => $catDepts): ?>
+                                                    <div class="srku-dd-group"><?php echo sanitize($catName); ?></div>
+                                                    <?php foreach ($catDepts as $dept): ?>
+                                                        <div class="srku-dd-option"
+                                                             data-value="<?php echo sanitize($dept['name']); ?>"
+                                                             data-slug="<?php echo sanitize($dept['slug']); ?>"
+                                                             <?php echo (($postedCollege === $dept['name'] || $postedCollege === $dept['slug']) ? 'data-preselected="1"' : ''); ?>>
+                                                            <?php echo sanitize($dept['name']); ?>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                <?php endforeach; ?>
+                                                <div class="srku-dd-empty">No results found</div>
+                                            </div>
+                                        </div>
+                                        <!-- Hidden native select for form submission -->
+                                        <select name="college" id="homeEnquiryCollege" class="srku-dd-native" required>
+                                            <option value="">-- Choose College / Department --</option>
+                                            <?php foreach ($deptsByCategory as $catName => $catDepts): ?>
+                                                <?php foreach ($catDepts as $dept): ?>
+                                                    <option value="<?php echo sanitize($dept['name']); ?>"
+                                                            data-slug="<?php echo sanitize($dept['slug']); ?>"
+                                                            <?php echo (($postedCollege === $dept['name'] || $postedCollege === $dept['slug']) ? 'selected' : ''); ?>>
+                                                        <?php echo sanitize($dept['name']); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-bold text-dark small mb-1">Mobile Number *</label>
-                                <input type="tel" name="phone" class="form-control py-2" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" title="Please enter a valid 10-digit mobile number" required>
+                                <label class="srku-label" for="homeEnquiryCourse">
+                                    Course / Programme <span class="req-star">*</span>
+                                </label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-graduation-cap srku-field-icon"></i>
+                                    <!-- Custom Searchable Dropdown: Course -->
+                                    <div class="srku-dd-wrap" id="homeCourseDDWrap">
+                                        <button type="button" class="srku-dd-trigger" id="homeCourseTrigger" aria-haspopup="listbox" aria-expanded="false">
+                                            <span class="srku-dd-label srku-dd-placeholder">Select Course / Programme</span>
+                                            <svg class="srku-dd-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                                        </button>
+                                        <div class="srku-dd-panel" id="homeCoursePanel">
+                                            <div class="srku-dd-search-wrap">
+                                                <i class="fas fa-search srku-dd-search-icon"></i>
+                                                <input type="text" class="srku-dd-search" id="homeCourseSearch" placeholder="Search course or programme..." autocomplete="off">
+                                            </div>
+                                            <div class="srku-dd-list" id="homeCourseList">
+                                                <div class="srku-dd-empty visible">Please select a college first to see available courses</div>
+                                            </div>
+                                        </div>
+                                        <!-- Hidden native select for form submission -->
+                                        <select name="course" id="homeEnquiryCourse" class="srku-dd-native" required>
+                                            <option value="">-- Please Choose a College First --</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Row 3: Email ID & Mobile Number -->
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label class="form-label fw-bold text-dark small mb-1">City</label>
-                                <input type="text" name="city" class="form-control py-2" placeholder="Enter your city" maxlength="100">
+                                <label class="srku-label" for="homeEnquiryEmail">
+                                    Email Address <span class="req-star">*</span>
+                                </label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-envelope srku-field-icon"></i>
+                                    <input type="email" id="homeEnquiryEmail" name="email" class="srku-input" placeholder="e.g. yourname@gmail.com" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['email'] ?? ''); ?>" required>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-bold text-dark small mb-1">State</label>
-                                <input type="text" name="state" class="form-control py-2" placeholder="Enter your state" maxlength="100">
+                                <label class="srku-label" for="homeEnquiryPhone">
+                                    Mobile Number <span class="req-star">*</span>
+                                </label>
+                                <div class="srku-input-wrap">
+                                    <span class="srku-phone-prefix">+91</span>
+                                    <input type="tel" id="homeEnquiryPhone" name="phone" class="srku-input srku-phone-input" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" title="Please enter a valid 10-digit mobile number" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['phone'] ?? ''); ?>" required>
+                                </div>
                             </div>
                         </div>
-                        <button type="submit" name="submit_enquiry" class="btn btn-warning w-100 py-2 fw-bold text-dark">
-                            <i class="fas fa-paper-plane me-1"></i> Submit
+
+                        <!-- Row 4: City & State -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="srku-label" for="homeEnquiryCity">
+                                    City / District
+                                </label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-map-marker-alt srku-field-icon"></i>
+                                    <input type="text" id="homeEnquiryCity" name="city" class="srku-input" placeholder="Enter your city (e.g. Bhopal)" maxlength="100" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['city'] ?? ''); ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="srku-label" for="homeEnquiryState">
+                                    State
+                                </label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-globe-asia srku-field-icon"></i>
+                                    <input type="text" id="homeEnquiryState" name="state" class="srku-input" placeholder="Enter your state (e.g. MP)" maxlength="100" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['state'] ?? ''); ?>">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" name="submit_enquiry" id="homeEnquirySubmitBtn" class="btn-srku-submit-v2">
+                            <i class="fas fa-paper-plane"></i> <span>Submit Admission Enquiry</span> <i class="fas fa-arrow-right btn-arrow-icon"></i>
                         </button>
+
+                        <!-- Trust & Privacy Assurance -->
+                        <div class="srku-trust-strip">
+                            <span class="srku-trust-item"><i class="fas fa-shield-alt text-success"></i> Official University Portal</span>
+                            <span class="srku-trust-item"><i class="fas fa-bolt text-warning"></i> Call-back within 24 Hours</span>
+                            <span class="srku-trust-item"><i class="fas fa-lock text-primary"></i> 100% Privacy Protected</span>
+                        </div>
                     </form>
+
+                    <!-- Searchable Dropdown Engine -->
+                    <script>
+                    (function() {
+                        'use strict';
+
+                        const deptCoursesMap = <?php echo json_encode($deptCoursesMap, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+                        const preselectedCourse = <?php echo json_encode($postedCourse ?? ''); ?>;
+                        const levelLabels = {
+                            'UG': 'Undergraduate Programmes (UG)',
+                            'PG': 'Postgraduate Programmes (PG)',
+                            'Diploma': 'Diploma & Certificate Programmes',
+                            'Doctorate': 'Doctoral (Ph.D.) Research'
+                        };
+                        const levelsOrder = ['UG', 'PG', 'Diploma', 'Doctorate'];
+
+                        /* ── Generic Searchable Dropdown ── */
+                        function initDropdown(cfg) {
+                            const trigger  = document.getElementById(cfg.triggerId);
+                            const panel    = document.getElementById(cfg.panelId);
+                            const search   = document.getElementById(cfg.searchId);
+                            const list     = document.getElementById(cfg.listId);
+                            const native   = document.getElementById(cfg.nativeId);
+                            if (!trigger || !panel || !list || !native) return;
+
+                            let isOpen = false;
+
+                            function getLabelEl() { return trigger.querySelector('.srku-dd-label'); }
+                            function getEmptyEl() { return list.querySelector('.srku-dd-empty'); }
+
+                            function open() {
+                                isOpen = true;
+                                trigger.classList.add('open');
+                                panel.classList.add('open');
+                                trigger.setAttribute('aria-expanded', 'true');
+                                if (search) { search.value = ''; filterOptions(''); search.focus(); }
+                            }
+
+                            function close() {
+                                isOpen = false;
+                                trigger.classList.remove('open');
+                                panel.classList.remove('open');
+                                trigger.setAttribute('aria-expanded', 'false');
+                            }
+
+                            trigger.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                isOpen ? close() : open();
+                            });
+
+                            // Close on outside click
+                            document.addEventListener('click', function(e) {
+                                if (!trigger.contains(e.target) && !panel.contains(e.target)) close();
+                            });
+
+                            // Search filter
+                            if (search) {
+                                search.addEventListener('input', function() { filterOptions(this.value.trim()); });
+                                search.addEventListener('click', function(e) { e.stopPropagation(); });
+                            }
+
+                            function filterOptions(query) {
+                                const q = query.toLowerCase();
+                                const options = list.querySelectorAll('.srku-dd-option');
+                                const groups  = list.querySelectorAll('.srku-dd-group');
+                                let anyVisible = false;
+
+                                // Show/hide options
+                                options.forEach(function(opt) {
+                                    const text = opt.textContent.toLowerCase();
+                                    const match = !q || text.includes(q);
+                                    opt.classList.toggle('hidden', !match);
+                                    if (match) anyVisible = true;
+                                });
+
+                                // Hide groups that have no visible children
+                                groups.forEach(function(grp) {
+                                    let sib = grp.nextElementSibling;
+                                    let hasVisible = false;
+                                    while (sib && !sib.classList.contains('srku-dd-group') && !sib.classList.contains('srku-dd-empty')) {
+                                        if (!sib.classList.contains('hidden')) hasVisible = true;
+                                        sib = sib.nextElementSibling;
+                                    }
+                                    grp.classList.toggle('hidden', !hasVisible);
+                                });
+
+                                const emptyEl = getEmptyEl();
+                                if (emptyEl) emptyEl.classList.toggle('visible', !anyVisible);
+                            }
+
+                            // Option click
+                            list.addEventListener('click', function(e) {
+                                const opt = e.target.closest('.srku-dd-option');
+                                if (!opt) return;
+                                selectOption(opt.dataset.value, opt.dataset.slug || '', opt.textContent.trim());
+                                close();
+                                if (cfg.onChange) cfg.onChange(opt.dataset.value, opt.dataset.slug || '');
+                            });
+
+                            function selectOption(value, slug, label) {
+                                // Update trigger label
+                                getLabelEl().textContent = label;
+                                getLabelEl().classList.remove('srku-dd-placeholder');
+                                trigger.classList.add('has-value');
+
+                                // Mark selected in list
+                                list.querySelectorAll('.srku-dd-option').forEach(function(o) {
+                                    o.classList.toggle('selected', o.dataset.value === value);
+                                });
+
+                                // Update hidden native select
+                                native.value = value;
+                                // Trigger change on native select for any other listeners
+                                native.dispatchEvent(new Event('change', { bubbles: true }));
+                            }
+
+                            // Public API
+                            cfg._selectOption = selectOption;
+                            cfg._open = open;
+                            cfg._close = close;
+                            cfg._rebuildList = rebuildList;
+
+                            function rebuildList(groups, restoreValue) {
+                                // groups: [{label, options: [{value, slug, text, data}]}]
+                                list.innerHTML = '';
+                                let hasOptions = false;
+                                groups.forEach(function(g) {
+                                    if (g.label) {
+                                        const grpEl = document.createElement('div');
+                                        grpEl.className = 'srku-dd-group';
+                                        grpEl.textContent = g.label;
+                                        list.appendChild(grpEl);
+                                    }
+                                    g.options.forEach(function(o) {
+                                        const optEl = document.createElement('div');
+                                        optEl.className = 'srku-dd-option';
+                                        optEl.dataset.value = o.value;
+                                        if (o.slug) optEl.dataset.slug = o.slug;
+                                        optEl.textContent = o.text;
+                                        list.appendChild(optEl);
+                                        hasOptions = true;
+                                    });
+                                });
+
+                                // Empty message
+                                const emptyEl = document.createElement('div');
+                                emptyEl.className = 'srku-dd-empty';
+                                if (!hasOptions) emptyEl.classList.add('visible');
+                                list.appendChild(emptyEl);
+
+                                // Restore selection
+                                if (restoreValue) {
+                                    const matchEl = list.querySelector('.srku-dd-option[data-value="' + CSS.escape(restoreValue) + '"]') ||
+                                                    Array.from(list.querySelectorAll('.srku-dd-option')).find(function(el) {
+                                                        return el.dataset.value.toLowerCase() === restoreValue.toLowerCase();
+                                                    });
+                                    if (matchEl) {
+                                        selectOption(matchEl.dataset.value, matchEl.dataset.slug || '', matchEl.textContent.trim());
+                                    }
+                                } else {
+                                    // Reset trigger
+                                    getLabelEl().textContent = cfg.placeholder || '-- Select --';
+                                    getLabelEl().classList.add('srku-dd-placeholder');
+                                    trigger.classList.remove('has-value');
+                                }
+
+                                // Update native select options
+                                while (native.options.length > 1) native.remove(1);
+                                groups.forEach(function(g) {
+                                    g.options.forEach(function(o) {
+                                        const nOpt = document.createElement('option');
+                                        nOpt.value = o.value;
+                                        nOpt.textContent = o.text;
+                                        if (o.slug) nOpt.dataset.slug = o.slug;
+                                        native.appendChild(nOpt);
+                                    });
+                                });
+                                if (restoreValue) native.value = restoreValue;
+                            }
+
+                            return cfg;
+                        }
+
+                        /* ── College Dropdown ── */
+                        const collegeCfg = initDropdown({
+                            triggerId : 'homeCollegeTrigger',
+                            panelId   : 'homeCollegePanel',
+                            searchId  : 'homeCollegeSearch',
+                            listId    : 'homeCollegeList',
+                            nativeId  : 'homeEnquiryCollege',
+                            placeholder: '-- Choose College / Department --',
+                            onChange  : function(value, slug) { populateCourses(slug, ''); }
+                        });
+
+                        /* ── Course Dropdown ── */
+                        const courseCfg = initDropdown({
+                            triggerId : 'homeCourseTrigger',
+                            panelId   : 'homeCoursePanel',
+                            searchId  : 'homeCourseSearch',
+                            listId    : 'homeCourseList',
+                            nativeId  : 'homeEnquiryCourse',
+                            placeholder: '-- Please Choose a College First --'
+                        });
+
+                        /* ── Populate course list based on selected college ── */
+                        function populateCourses(slug, restoreCourse) {
+                            const courseTrigger = document.getElementById('homeCourseTrigger');
+                            const courseLabelEl = courseTrigger ? courseTrigger.querySelector('.srku-dd-label') : null;
+
+                            if (!slug || !deptCoursesMap[slug]) {
+                                if (courseCfg && courseCfg._rebuildList) {
+                                    courseCfg._rebuildList([{ label: '', options: [] }], '');
+                                    if (courseLabelEl) {
+                                        courseLabelEl.textContent = 'Select Course / Programme';
+                                        courseLabelEl.classList.add('srku-dd-placeholder');
+                                    }
+                                }
+                                return;
+                            }
+
+                            const courses = deptCoursesMap[slug];
+                            if (!courses || courses.length === 0) {
+                                if (courseCfg && courseCfg._rebuildList) {
+                                    courseCfg._rebuildList([{ label: '', options: [{ value: 'General Admission Enquiry', text: 'General Admission Enquiry / Other Degree' }] }], restoreCourse);
+                                }
+                                return;
+                            }
+
+                            const grouped = {};
+                            courses.forEach(function(c) {
+                                const lvl = c.level || 'Other';
+                                if (!grouped[lvl]) grouped[lvl] = [];
+                                grouped[lvl].push(c);
+                            });
+
+                            const sortedLevels = [
+                                ...levelsOrder.filter(function(l) { return grouped[l]; }),
+                                ...Object.keys(grouped).filter(function(l) { return !levelsOrder.includes(l); })
+                            ];
+
+                            const groups = sortedLevels.map(function(lvl) {
+                                return {
+                                    label: levelLabels[lvl] || lvl,
+                                    options: grouped[lvl].map(function(c) {
+                                        return {
+                                            value: c.name,
+                                            text : c.name + (c.duration ? ' (' + c.duration + ')' : '')
+                                        };
+                                    })
+                                };
+                            });
+
+                            if (courseCfg && courseCfg._rebuildList) {
+                                courseCfg._rebuildList(groups, restoreCourse);
+                                if (courseLabelEl && !restoreCourse) {
+                                    courseLabelEl.textContent = 'Choose Course (' + courses.length + ' Available)';
+                                    courseLabelEl.classList.remove('srku-dd-placeholder');
+                                }
+                            }
+                        }
+
+                        /* ── On-load: restore postback selections ── */
+                        (function restorePostback() {
+                            const collegeList   = document.getElementById('homeCollegeList');
+                            const collegeTrigger= document.getElementById('homeCollegeTrigger');
+                            if (!collegeList || !collegeTrigger) return;
+
+                            const preselectedOpt = collegeList.querySelector('.srku-dd-option[data-preselected="1"]');
+                            if (preselectedOpt) {
+                                const labelEl = collegeTrigger.querySelector('.srku-dd-label');
+                                if (labelEl) labelEl.textContent = preselectedOpt.textContent.trim();
+                                collegeTrigger.classList.add('has-value');
+                                preselectedOpt.classList.add('selected');
+                                const nativeCollege = document.getElementById('homeEnquiryCollege');
+                                if (nativeCollege) nativeCollege.value = preselectedOpt.dataset.value;
+
+                                // Then populate courses
+                                const slug = preselectedOpt.dataset.slug || '';
+                                populateCourses(slug, preselectedCourse);
+                            }
+                        })();
+
+                    })();
+                    </script>
+
                 </div>
             </div>
 

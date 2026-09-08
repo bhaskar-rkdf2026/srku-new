@@ -333,6 +333,10 @@ function autoInitializeTables($pdo) {
             if (!in_array('career_scope', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `career_scope` TEXT AFTER `description`");
             if (!in_array('syllabus_url', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `syllabus_url` VARCHAR(255) AFTER `career_scope`");
             if (!in_array('scheme_url', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `scheme_url` VARCHAR(255) AFTER `syllabus_url`");
+            if (!in_array('faculty_id', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `faculty_id` INT(11) DEFAULT NULL AFTER `dept_slug`");
+            if (!in_array('degree_level', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `degree_level` VARCHAR(50) NOT NULL DEFAULT '' AFTER `level`");
+            if (!in_array('fees_per_year', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `fees_per_year` VARCHAR(50) DEFAULT 'As per university norms' AFTER `scheme_url`");
+            if (!in_array('created_at', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP AFTER `status`");
         } catch (Exception $e) {}
 
         try {
@@ -345,6 +349,7 @@ function autoInitializeTables($pdo) {
         try {
             $cols = $pdo->query("SHOW COLUMNS FROM `enquiries`")->fetchAll(PDO::FETCH_COLUMN);
             if (!in_array('father_name', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `father_name` VARCHAR(150) AFTER `name`");
+            if (!in_array('college', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `college` VARCHAR(255) AFTER `father_name`");
             if (!in_array('city', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `city` VARCHAR(100) AFTER `course`");
             if (!in_array('state', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `state` VARCHAR(100) AFTER `city`");
             if (!in_array('source', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `source` VARCHAR(150) AFTER `state`");

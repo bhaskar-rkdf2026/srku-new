@@ -20,7 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         'Online Admission Form',
         $_POST['father_name'] ?? '',
         $_POST['city'] ?? '',
-        $_POST['state'] ?? ''
+        $_POST['state'] ?? '',
+        $_POST['college'] ?? ''
     );
     if ($res['success']) {
         $enquirySuccess = true;
@@ -30,9 +31,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
     }
 }
 
-// Fetch all database courses grouped by level
+// Fetch all database courses & departments
 $allCourses = getCourses();
-$selectedCourseParam = sanitize($_GET['course'] ?? '');
+$allDepartments = getDepartments(true);
+$selectedCourseParam = sanitize($_GET['course'] ?? ($_POST['course'] ?? ''));
+$postedCollege = sanitize($_POST['college'] ?? '');
+
+// Group departments by academic category
+$deptsByCategory = [];
+foreach ($allDepartments as $d) {
+    $cat = $d['category'] ?: 'Constituent Institutes';
+    if (!isset($deptsByCategory[$cat])) {
+        $deptsByCategory[$cat] = [];
+    }
+    $deptsByCategory[$cat][] = $d;
+}
+
+// Build map of dept slug -> courses
+$deptCoursesMap = [];
+foreach ($allDepartments as $d) {
+    $deptCoursesMap[$d['slug']] = [];
+}
+foreach ($allCourses as $c) {
+    $s = $c['dept_slug'] ?? '';
+    if (isset($deptCoursesMap[$s])) {
+        $deptCoursesMap[$s][] = [
+            'name' => $c['course_name'],
+            'level' => $c['level'] ?? '',
+            'duration' => $c['duration'] ?? '',
+        ];
+    } else {
+        foreach ($allDepartments as $d) {
+            if ($d['name'] === ($c['department'] ?? '')) {
+                $deptCoursesMap[$d['slug']][] = [
+                    'name' => $c['course_name'],
+                    'level' => $c['level'] ?? '',
+                    'duration' => $c['duration'] ?? '',
+                ];
+                break;
+            }
+        }
+    }
+}
 
 $address = getSetting('address', 'NH-12 Hoshangabad Road, Misrod, Bhopal, MP - 462026');
 $helpline = getSetting('helpline', '0755 - 4700983, 7024144981');
@@ -85,87 +125,318 @@ require_once __DIR__ . '/includes/header.php';
                     <form action="<?php echo BASE_URL; ?>admission-enquiry.php#apply" method="POST">
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label class="form-label fw-bold text-dark small mb-1">Candidate Full Name *</label>
-                                <input type="text" name="name" class="form-control py-2" placeholder="Enter candidate's full name" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['name'] ?? ''); ?>" minlength="2" maxlength="80" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-bold text-dark small mb-1">Father's / Guardian's Name</label>
-                                <input type="text" name="father_name" class="form-control py-2" placeholder="Enter father's / guardian's name" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['father_name'] ?? ''); ?>" maxlength="80">
-                            </div>
-                        </div>
-
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-bold text-dark small mb-1">Mobile Number (WhatsApp) *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light text-muted small">+91</span>
-                                    <input type="tel" name="phone" class="form-control py-2" placeholder="10-digit mobile number" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['phone'] ?? ''); ?>" pattern="[0-9]{10}" maxlength="10" title="Please enter a valid 10-digit mobile number" required>
+                                <label class="srku-label" for="admissionName">Candidate Full Name <span class="req-star">*</span></label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-user srku-field-icon"></i>
+                                    <input type="text" id="admissionName" name="name" class="srku-input" placeholder="Enter candidate's full name" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['name'] ?? ''); ?>" minlength="2" maxlength="80" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-bold text-dark small mb-1">Email Address *</label>
-                                <input type="email" name="email" class="form-control py-2" placeholder="yourname@gmail.com" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['email'] ?? ''); ?>" required>
+                                <label class="srku-label" for="admissionFatherName">Father's / Guardian's Name</label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-user-tie srku-field-icon"></i>
+                                    <input type="text" id="admissionFatherName" name="father_name" class="srku-input" placeholder="Enter father's / guardian's name" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['father_name'] ?? ''); ?>" maxlength="80">
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-bold text-dark small mb-1">Select Program / Course of Interest *</label>
-                            <select name="course" class="form-select py-2" required>
-                                <option value="">-- Choose Academic Course (90+ Programs Available) --</option>
-                                <?php if (!empty($allCourses)): ?>
-                                    <?php 
-                                    $levels = ['UG' => 'Undergraduate Degrees (UG)', 'PG' => 'Postgraduate Degrees (PG)', 'Diploma' => 'Diploma & Certificate Courses', 'Doctorate' => 'Ph.D. & Research Programs'];
-                                    foreach ($levels as $lvlKey => $lvlLabel): 
-                                        $filtered = array_filter($allCourses, fn($c) => stripos((string)($c['level'] ?? ''), $lvlKey) !== false || stripos((string)($c['degree_level'] ?? ''), $lvlKey) !== false);
-                                        if (!empty($filtered)):
-                                    ?>
-                                        <optgroup label="<?php echo $lvlLabel; ?>">
-                                            <?php foreach ($filtered as $c): ?>
-                                                <option value="<?php echo sanitize($c['course_name']); ?>" <?php echo ($selectedCourseParam == $c['course_name'] || ($selectedCourseParam == $c['slug'])) ? 'selected' : ''; ?>>
-                                                    <?php echo sanitize($c['course_name']); ?> (<?php echo sanitize($c['duration']); ?>)
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </optgroup>
-                                    <?php 
-                                        endif;
-                                    endforeach; 
-                                    ?>
-                                <?php else: ?>
-                                    <option value="B.Tech Computer Science & Engineering">B.Tech Computer Science &amp; Engineering</option>
-                                    <option value="Bachelor of Pharmacy (B.Pharm)">Bachelor of Pharmacy (B.Pharm)</option>
-                                    <option value="MBA — Master of Business Administration">MBA — Master of Business Administration</option>
-                                    <option value="B.Sc. Nursing">B.Sc. Nursing</option>
-                                    <option value="B.Sc. (Hons) Agriculture">B.Sc. (Hons) Agriculture</option>
-                                    <option value="BPT — Bachelor of Physiotherapy">BPT — Bachelor of Physiotherapy</option>
-                                    <option value="LL.B — Bachelor of Laws">LL.B — Bachelor of Laws</option>
-                                <?php endif; ?>
-                                <option value="Other / General University Program">Other University Programme</option>
-                            </select>
                         </div>
 
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label class="form-label fw-bold text-dark small mb-1">City / District</label>
-                                <input type="text" name="city" class="form-control py-2" placeholder="e.g. Bhopal, Indore, Patna, etc." value="<?php echo $enquirySuccess ? '' : sanitize($_POST['city'] ?? ''); ?>" maxlength="100">
+                                <label class="srku-label" for="admissionPhone">Mobile Number (WhatsApp) <span class="req-star">*</span></label>
+                                <div class="srku-input-wrap">
+                                    <span class="srku-phone-prefix">+91</span>
+                                    <input type="tel" id="admissionPhone" name="phone" class="srku-input srku-phone-input" placeholder="10-digit mobile number" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['phone'] ?? ''); ?>" pattern="[0-9]{10}" maxlength="10" title="Please enter a valid 10-digit mobile number" required>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-bold text-dark small mb-1">State</label>
-                                <input type="text" name="state" class="form-control py-2" placeholder="e.g. Madhya Pradesh, Bihar, UP" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['state'] ?? ''); ?>" maxlength="100">
+                                <label class="srku-label" for="admissionEmail">Email Address <span class="req-star">*</span></label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-envelope srku-field-icon"></i>
+                                    <input type="email" id="admissionEmail" name="email" class="srku-input" placeholder="yourname@gmail.com" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['email'] ?? ''); ?>" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="srku-label" for="admissionCollege">Select College / Department <span class="req-star">*</span></label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-university srku-field-icon"></i>
+                                    <div class="srku-dd-wrap" id="admCollegeDDWrap">
+                                        <button type="button" class="srku-dd-trigger" id="admCollegeTrigger" aria-haspopup="listbox" aria-expanded="false">
+                                            <span class="srku-dd-label srku-dd-placeholder">Select College / Department</span>
+                                            <svg class="srku-dd-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                                        </button>
+                                        <div class="srku-dd-panel" id="admCollegePanel">
+                                            <div class="srku-dd-search-wrap">
+                                                <i class="fas fa-search srku-dd-search-icon"></i>
+                                                <input type="text" class="srku-dd-search" id="admCollegeSearch" placeholder="Search college or department..." autocomplete="off">
+                                            </div>
+                                            <div class="srku-dd-list" id="admCollegeList">
+                                                <?php foreach ($deptsByCategory as $catName => $catDepts): ?>
+                                                    <div class="srku-dd-group"><?php echo sanitize($catName); ?></div>
+                                                    <?php foreach ($catDepts as $dept): ?>
+                                                        <div class="srku-dd-option"
+                                                             data-value="<?php echo sanitize($dept['name']); ?>"
+                                                             data-slug="<?php echo sanitize($dept['slug']); ?>"
+                                                             <?php echo (($postedCollege === $dept['name'] || $postedCollege === $dept['slug']) ? 'data-preselected="1"' : ''); ?>>
+                                                            <?php echo sanitize($dept['name']); ?>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                <?php endforeach; ?>
+                                                <div class="srku-dd-empty">No results found</div>
+                                            </div>
+                                        </div>
+                                        <select name="college" id="admissionCollege" class="srku-dd-native" required>
+                                            <option value="">-- Choose College / Constituent Unit --</option>
+                                            <?php foreach ($deptsByCategory as $catName => $catDepts): ?>
+                                                <?php foreach ($catDepts as $dept): ?>
+                                                    <option value="<?php echo sanitize($dept['name']); ?>"
+                                                            data-slug="<?php echo sanitize($dept['slug']); ?>"
+                                                            <?php echo (($postedCollege === $dept['name'] || $postedCollege === $dept['slug']) ? 'selected' : ''); ?>>
+                                                        <?php echo sanitize($dept['name']); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="srku-label" for="admissionCourse">Select Program / Course of Interest <span class="req-star">*</span></label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-graduation-cap srku-field-icon"></i>
+                                    <div class="srku-dd-wrap" id="admCourseDDWrap">
+                                        <button type="button" class="srku-dd-trigger" id="admCourseTrigger" aria-haspopup="listbox" aria-expanded="false">
+                                            <span class="srku-dd-label srku-dd-placeholder">Select Course / Programme</span>
+                                            <svg class="srku-dd-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                                        </button>
+                                        <div class="srku-dd-panel" id="admCoursePanel">
+                                            <div class="srku-dd-search-wrap">
+                                                <i class="fas fa-search srku-dd-search-icon"></i>
+                                                <input type="text" class="srku-dd-search" id="admCourseSearch" placeholder="Search course or programme..." autocomplete="off">
+                                            </div>
+                                            <div class="srku-dd-list" id="admCourseList">
+                                                <div class="srku-dd-empty visible">Please select a college first to see available courses</div>
+                                            </div>
+                                        </div>
+                                        <select name="course" id="admissionCourse" class="srku-dd-native" required>
+                                            <option value="">-- Please Choose a College First --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="srku-label" for="admissionCity">City / District</label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-map-marker-alt srku-field-icon"></i>
+                                    <input type="text" id="admissionCity" name="city" class="srku-input" placeholder="e.g. Bhopal, Indore, Patna, etc." value="<?php echo $enquirySuccess ? '' : sanitize($_POST['city'] ?? ''); ?>" maxlength="100">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="srku-label" for="admissionState">State</label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-globe-asia srku-field-icon"></i>
+                                    <input type="text" id="admissionState" name="state" class="srku-input" placeholder="e.g. Madhya Pradesh, Bihar, UP" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['state'] ?? ''); ?>" maxlength="100">
+                                </div>
                             </div>
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label fw-bold text-dark small mb-1">Specific Query / Academic Background (Optional)</label>
-                            <textarea name="message" class="form-control py-2" rows="3" placeholder="Enter any specific queries regarding fee installments, hostel accommodation, bus transport, or direct counseling..."><?php echo $enquirySuccess ? '' : sanitize($_POST['message'] ?? ''); ?></textarea>
+                            <label class="srku-label" for="admissionMessage">Specific Query / Academic Background (Optional)</label>
+                            <textarea id="admissionMessage" name="message" class="form-control p-3" rows="3" style="border-radius:14px; border:1.5px solid #e2e8f0; font-size:0.94rem; background:#f8fafc;" placeholder="Enter any specific queries regarding fee installments, hostel accommodation, bus transport, or direct counseling..."><?php echo $enquirySuccess ? '' : sanitize($_POST['message'] ?? ''); ?></textarea>
                         </div>
 
                         <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
-                            <button type="submit" name="submit_enquiry" class="btn btn-srku px-5 py-3 fw-bold d-flex align-items-center justify-content-center gap-2 shadow">
-                                <i class="fas fa-paper-plane"></i> <span>Submit Admission Form</span>
+                            <button type="submit" name="submit_enquiry" class="btn-srku-submit-v2" style="max-width:320px;">
+                                <i class="fas fa-paper-plane"></i> <span>Submit Admission Form</span> <i class="fas fa-arrow-right btn-arrow-icon"></i>
                             </button>
                             <span class="text-muted small"><i class="fas fa-lock text-success me-1"></i> Your details are 100% confidential.</span>
                         </div>
                     </form>
+
+                    <script>
+                    (function() {
+                        'use strict';
+
+                        const deptCoursesMap = <?php echo json_encode($deptCoursesMap, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+                        const preselectedCourse = <?php echo json_encode($selectedCourseParam ?? ''); ?>;
+                        const levelLabels = {
+                            'UG': 'Undergraduate Programmes (UG)',
+                            'PG': 'Postgraduate Programmes (PG)',
+                            'Diploma': 'Diploma & Certificate Programmes',
+                            'Doctorate': 'Doctoral (Ph.D.) Research'
+                        };
+                        const levelsOrder = ['UG', 'PG', 'Diploma', 'Doctorate'];
+
+                        function initDropdown(cfg) {
+                            const trigger = document.getElementById(cfg.triggerId);
+                            const panel   = document.getElementById(cfg.panelId);
+                            const search  = document.getElementById(cfg.searchId);
+                            const list    = document.getElementById(cfg.listId);
+                            const native  = document.getElementById(cfg.nativeId);
+                            if (!trigger || !panel || !list || !native) return;
+
+                            let isOpen = false;
+                            function getLabelEl() { return trigger.querySelector('.srku-dd-label'); }
+                            function getEmptyEl() { return list.querySelector('.srku-dd-empty'); }
+
+                            function open() {
+                                isOpen = true;
+                                trigger.classList.add('open'); panel.classList.add('open');
+                                trigger.setAttribute('aria-expanded', 'true');
+                                if (search) { search.value = ''; filterOptions(''); search.focus(); }
+                            }
+                            function close() {
+                                isOpen = false;
+                                trigger.classList.remove('open'); panel.classList.remove('open');
+                                trigger.setAttribute('aria-expanded', 'false');
+                            }
+
+                            trigger.addEventListener('click', function(e) { e.stopPropagation(); isOpen ? close() : open(); });
+                            document.addEventListener('click', function(e) { if (!trigger.contains(e.target) && !panel.contains(e.target)) close(); });
+
+                            if (search) {
+                                search.addEventListener('input', function() { filterOptions(this.value.trim()); });
+                                search.addEventListener('click', function(e) { e.stopPropagation(); });
+                            }
+
+                            function filterOptions(query) {
+                                const q = query.toLowerCase();
+                                const opts = list.querySelectorAll('.srku-dd-option');
+                                const grps = list.querySelectorAll('.srku-dd-group');
+                                let anyVisible = false;
+                                opts.forEach(function(opt) {
+                                    const match = !q || opt.textContent.toLowerCase().includes(q);
+                                    opt.classList.toggle('hidden', !match);
+                                    if (match) anyVisible = true;
+                                });
+                                grps.forEach(function(grp) {
+                                    let sib = grp.nextElementSibling, hasVis = false;
+                                    while (sib && !sib.classList.contains('srku-dd-group') && !sib.classList.contains('srku-dd-empty')) {
+                                        if (!sib.classList.contains('hidden')) hasVis = true;
+                                        sib = sib.nextElementSibling;
+                                    }
+                                    grp.classList.toggle('hidden', !hasVis);
+                                });
+                                const em = getEmptyEl(); if (em) em.classList.toggle('visible', !anyVisible);
+                            }
+
+                            list.addEventListener('click', function(e) {
+                                const opt = e.target.closest('.srku-dd-option'); if (!opt) return;
+                                selectOption(opt.dataset.value, opt.dataset.slug || '', opt.textContent.trim());
+                                close();
+                                if (cfg.onChange) cfg.onChange(opt.dataset.value, opt.dataset.slug || '');
+                            });
+
+                            function selectOption(value, slug, label) {
+                                getLabelEl().textContent = label;
+                                getLabelEl().classList.remove('srku-dd-placeholder');
+                                trigger.classList.add('has-value');
+                                list.querySelectorAll('.srku-dd-option').forEach(function(o) { o.classList.toggle('selected', o.dataset.value === value); });
+                                native.value = value;
+                                native.dispatchEvent(new Event('change', { bubbles: true }));
+                            }
+
+                            cfg._selectOption = selectOption;
+                            cfg._rebuildList = rebuildList;
+
+                            function rebuildList(groups, restoreValue) {
+                                list.innerHTML = '';
+                                let hasOptions = false;
+                                groups.forEach(function(g) {
+                                    if (g.label) { const el = document.createElement('div'); el.className = 'srku-dd-group'; el.textContent = g.label; list.appendChild(el); }
+                                    g.options.forEach(function(o) {
+                                        const el = document.createElement('div'); el.className = 'srku-dd-option';
+                                        el.dataset.value = o.value; if (o.slug) el.dataset.slug = o.slug;
+                                        el.textContent = o.text; list.appendChild(el); hasOptions = true;
+                                    });
+                                });
+                                const emEl = document.createElement('div'); emEl.className = 'srku-dd-empty';
+                                if (!hasOptions) emEl.classList.add('visible'); list.appendChild(emEl);
+
+                                if (restoreValue) {
+                                    const matchEl = Array.from(list.querySelectorAll('.srku-dd-option')).find(function(el) { return el.dataset.value.toLowerCase() === restoreValue.toLowerCase(); });
+                                    if (matchEl) selectOption(matchEl.dataset.value, matchEl.dataset.slug || '', matchEl.textContent.trim());
+                                } else {
+                                    getLabelEl().textContent = cfg.placeholder || '-- Select --';
+                                    getLabelEl().classList.add('srku-dd-placeholder');
+                                    trigger.classList.remove('has-value');
+                                }
+                                while (native.options.length > 1) native.remove(1);
+                                groups.forEach(function(g) { g.options.forEach(function(o) { const n = document.createElement('option'); n.value = o.value; n.textContent = o.text; native.appendChild(n); }); });
+                                if (restoreValue) native.value = restoreValue;
+                            }
+                            return cfg;
+                        }
+
+                        const collegeCfg = initDropdown({
+                            triggerId: 'admCollegeTrigger', panelId: 'admCollegePanel',
+                            searchId: 'admCollegeSearch', listId: 'admCollegeList',
+                            nativeId: 'admissionCollege',
+                            placeholder: '-- Choose College / Constituent Unit --',
+                            onChange: function(value, slug) { populateCourses(slug, ''); }
+                        });
+
+                        const courseCfg = initDropdown({
+                            triggerId: 'admCourseTrigger', panelId: 'admCoursePanel',
+                            searchId: 'admCourseSearch', listId: 'admCourseList',
+                            nativeId: 'admissionCourse',
+                            placeholder: '-- Please Choose a College First --'
+                        });
+
+                        function populateCourses(slug, restoreCourse) {
+                            const lbl = document.querySelector('#admCourseTrigger .srku-dd-label');
+                            if (!slug || !deptCoursesMap[slug] || deptCoursesMap[slug].length === 0) {
+                                if (courseCfg && courseCfg._rebuildList) {
+                                    const opts = (!slug || !deptCoursesMap[slug]) ? [] : [{ value: 'General Admission Enquiry', text: 'General Admission Enquiry' }];
+                                    courseCfg._rebuildList([{ label: '', options: opts }], restoreCourse);
+                                    if (lbl && !opts.length) {
+                                        lbl.textContent = 'Select Course / Programme';
+                                        lbl.classList.add('srku-dd-placeholder');
+                                    }
+                                }
+                                return;
+                            }
+                            const courses = deptCoursesMap[slug];
+                            const grouped = {};
+                            courses.forEach(function(c) { const l = c.level || 'Other'; if (!grouped[l]) grouped[l] = []; grouped[l].push(c); });
+                            const sortedLevels = [...levelsOrder.filter(function(l) { return grouped[l]; }), ...Object.keys(grouped).filter(function(l) { return !levelsOrder.includes(l); })];
+                            const groups = sortedLevels.map(function(lvl) {
+                                return { label: levelLabels[lvl] || lvl, options: grouped[lvl].map(function(c) { return { value: c.name, text: c.name + (c.duration ? ' (' + c.duration + ')' : '') }; }) };
+                            });
+                            if (courseCfg && courseCfg._rebuildList) {
+                                courseCfg._rebuildList(groups, restoreCourse);
+                                if (lbl && !restoreCourse) {
+                                    lbl.textContent = 'Choose Course (' + courses.length + ' Available)';
+                                    lbl.classList.remove('srku-dd-placeholder');
+                                }
+                            }
+                        }
+
+                        // Restore postback
+                        (function() {
+                            const list = document.getElementById('admCollegeList');
+                            const trig = document.getElementById('admCollegeTrigger');
+                            if (!list || !trig) return;
+                            const pre = list.querySelector('.srku-dd-option[data-preselected="1"]');
+                            if (pre) {
+                                const lbl = trig.querySelector('.srku-dd-label');
+                                if (lbl) lbl.textContent = pre.textContent.trim();
+                                trig.classList.add('has-value');
+                                pre.classList.add('selected');
+                                const nat = document.getElementById('admissionCollege');
+                                if (nat) nat.value = pre.dataset.value;
+                                populateCourses(pre.dataset.slug || '', preselectedCourse);
+                            }
+                        })();
+
+                    })();
+                    </script>
+
                 </div>
             </div>
 

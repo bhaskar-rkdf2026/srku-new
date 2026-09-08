@@ -621,7 +621,7 @@ function renderPageBanner($pageSlug, $defaultTitle, $defaultSubtitle = '', $defa
 }
 
 // Save and validate student enquiry or lead with source tagging
-function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $source = '', $fatherName = '', $city = '', $state = '') {
+function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $source = '', $fatherName = '', $city = '', $state = '', $college = '') {
     $name = trim((string)$name);
     $email = trim((string)$email);
     $phone = trim((string)$phone);
@@ -630,6 +630,7 @@ function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $so
     $fatherName = trim((string)$fatherName);
     $city = trim((string)$city);
     $state = trim((string)$state);
+    $college = trim((string)$college);
 
     // Validation
     if (strlen($name) < 2) {
@@ -644,8 +645,13 @@ function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $so
     }
 
     $fullMsg = $message;
-    if ($source) {
-        $fullMsg = "[" . $source . "]\n" . ($message ?: 'Seat Inquiry / Direct Admission Application');
+    $detailsParts = [];
+    if ($source) $detailsParts[] = "[$source]";
+    if ($college) $detailsParts[] = "College/Institute: $college";
+    if ($course) $detailsParts[] = "Course: $course";
+    if (!empty($detailsParts)) {
+        $prefix = implode(" | ", $detailsParts) . "\n";
+        $fullMsg = $prefix . ($message ?: 'Seat Inquiry / Direct Admission Application');
     }
 
     try {
@@ -654,18 +660,20 @@ function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $so
         // Ensure columns exist
         $cols = $pdo->query("SHOW COLUMNS FROM `enquiries`")->fetchAll(PDO::FETCH_COLUMN);
         if (!in_array('father_name', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `father_name` VARCHAR(150) AFTER `name`");
+        if (!in_array('college', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `college` VARCHAR(255) AFTER `father_name`");
         if (!in_array('city', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `city` VARCHAR(100) AFTER `course`");
         if (!in_array('state', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `state` VARCHAR(100) AFTER `city`");
         if (!in_array('source', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `source` VARCHAR(150) AFTER `state`");
         if (!in_array('status', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `status` VARCHAR(50) DEFAULT 'New' AFTER `message`");
 
-        $stmt = $pdo->prepare("INSERT INTO enquiries (name, father_name, email, phone, course, city, state, source, message, status, created_at) VALUES (:n, :fn, :e, :p, :c, :city, :state, :src, :m, 'New', CURRENT_TIMESTAMP)");
+        $stmt = $pdo->prepare("INSERT INTO enquiries (name, father_name, college, email, phone, course, city, state, source, message, status, created_at) VALUES (:n, :fn, :col, :e, :p, :c, :city, :state, :src, :m, 'New', CURRENT_TIMESTAMP)");
         $stmt->execute([
             ':n' => $name,
             ':fn' => $fatherName ?: null,
+            ':col' => $college ?: null,
             ':e' => $email ?: 'not-provided@srku.edu.in',
             ':p' => $phone,
-            ':c' => $course ?: 'General Admission Enquiry',
+            ':c' => $course ?: ($college ? "Admission Enquiry ($college)" : 'General Admission Enquiry'),
             ':city' => $city ?: null,
             ':state' => $state ?: null,
             ':src' => $source ?: 'Website',
@@ -680,7 +688,7 @@ function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $so
                 ':n' => $name,
                 ':e' => $email ?: 'lead@srku.edu.in',
                 ':p' => $phone,
-                ':c' => $course ?: 'General Admission Enquiry',
+                ':c' => $course ?: ($college ? "Admission Enquiry ($college)" : 'General Admission Enquiry'),
                 ':m' => $fullMsg
             ]);
             return ['success' => true, 'message' => 'Thank you! Your inquiry has been submitted successfully. Our counselor will contact you shortly.'];
