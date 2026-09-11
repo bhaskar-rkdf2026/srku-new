@@ -232,6 +232,35 @@ $syncModules = [
     </div>
 </div>
 
+<?php if (strtolower($dbStatus['driver'] ?? '') === 'sqlite'): ?>
+<!-- Advisory when running on SQLite Fallback -->
+<div class="alert alert-warning border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4" style="background: #fffbeb; border-left: 5px solid #f59e0b !important;">
+    <div class="d-flex align-items-start gap-3">
+        <div class="p-2 bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; flex-shrink: 0;">
+            <i class="fas fa-database fs-5"></i>
+        </div>
+        <div class="flex-grow-1">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-1">
+                <h6 class="fw-bold text-dark mb-0"><i class="fas fa-info-circle text-warning me-1"></i> Running on SQLite Engine (<code>database.sqlite</code>)</h6>
+                <span class="badge bg-warning text-dark fw-bold px-3 py-1">SQLite Auto-Synced</span>
+            </div>
+            <p class="text-secondary small mb-2" style="line-height: 1.6;">
+                1-Click DB Sync is working and self-healing in SQLite mode with zero column errors. If your goal on live hosting (e.g. GoDaddy / cPanel) is to connect directly to your <strong>phpMyAdmin MySQL Database</strong>, please enter your live cPanel MySQL credentials in <code>config/config.php</code>:
+            </p>
+            <div class="bg-white p-2 p-md-3 rounded-3 border mb-2 d-flex flex-wrap gap-2 gap-md-4 font-monospace small">
+                <div><span class="text-muted">Host:</span> <strong class="text-navy"><?php echo defined('DB_HOST') ? DB_HOST : 'localhost'; ?></strong></div>
+                <div><span class="text-muted">User:</span> <strong class="text-success"><?php echo defined('DB_USER') ? DB_USER : 'root'; ?></strong></div>
+                <div><span class="text-muted">Database:</span> <strong class="text-danger"><?php echo defined('DB_NAME') ? DB_NAME : 'srku_db_new'; ?></strong></div>
+                <div><span class="text-muted">Password:</span> <strong class="text-muted"><?php echo defined('DB_PASS') && DB_PASS !== '' ? '••••••••' : '(empty / not set)'; ?></strong></div>
+            </div>
+            <small class="text-muted">
+                <i class="fas fa-lightbulb text-warning me-1"></i> Tip: On GoDaddy / cPanel, database names & users have a prefix (e.g., <code>cpuser_srkudb</code>). Once saved in <code>config/config.php</code>, this page will automatically display <strong>MYSQL Engine</strong>.
+            </small>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
 <!-- ═══════════════════════════════════════════════════════
      SYNC PROGRESS / STATUS ALERT BOX (AJAX Interactive)
 ═══════════════════════════════════════════════════════ -->

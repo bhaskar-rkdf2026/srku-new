@@ -66,6 +66,100 @@ function getDBConnection() {
     return $pdo;
 }
 
+/**
+ * Universal helper to retrieve column names (lowercase) for any active PDO connection
+ */
+function getDbTableColumns($pdo, $table) {
+    try {
+        $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+        if ($driver === 'sqlite') {
+            $rows = $pdo->query("PRAGMA table_info(`{$table}`)")->fetchAll(PDO::FETCH_ASSOC);
+            return array_map('strtolower', array_column($rows, 'name'));
+        } else {
+            $rows = $pdo->query("SHOW COLUMNS FROM `{$table}`")->fetchAll(PDO::FETCH_COLUMN);
+            return array_map('strtolower', $rows);
+        }
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+/**
+ * Universal helper to safely ensure a column exists in both MySQL and SQLite
+ */
+function ensureDbTableColumn($pdo, $table, $column, $mysqlTypeDef, $sqliteTypeDef = 'TEXT', $after = null) {
+    $cols = getDbTableColumns($pdo, $table);
+    $columnLower = strtolower($column);
+    if (!in_array($columnLower, $cols)) {
+        $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+        try {
+            if ($driver === 'sqlite') {
+                $pdo->exec("ALTER TABLE `{$table}` ADD COLUMN `{$column}` {$sqliteTypeDef}");
+            } else {
+                $afterClause = $after ? " AFTER `{$after}`" : "";
+                $pdo->exec("ALTER TABLE `{$table}` ADD `{$column}` {$mysqlTypeDef}{$afterClause}");
+            }
+        } catch (Exception $e) {
+            // Silently ignore if column already exists or table locked
+        }
+    }
+}
+
+/**
+ * Universal schema migrations for both MySQL and SQLite
+ * Ensures older existing databases receive newly added columns without exceptions.
+ */
+function runUniversalDatabaseMigrations($pdo) {
+    try {
+        // 1. Departments table columns
+        ensureDbTableColumn($pdo, 'departments', 'category', "VARCHAR(100) DEFAULT 'General'", "TEXT DEFAULT 'General'", 'name');
+        ensureDbTableColumn($pdo, 'departments', 'image', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'icon');
+        ensureDbTableColumn($pdo, 'departments', 'banner_img', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'image');
+        ensureDbTableColumn($pdo, 'departments', 'dean_designation', "VARCHAR(150) DEFAULT 'Dean & Principal'", "TEXT DEFAULT 'Dean & Principal'", 'dean_name');
+        ensureDbTableColumn($pdo, 'departments', 'dean_photo', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'dean_designation');
+        ensureDbTableColumn($pdo, 'departments', 'dean_message', "LONGTEXT DEFAULT NULL", "TEXT DEFAULT NULL", 'dean_photo');
+        ensureDbTableColumn($pdo, 'departments', 'contact_no', "VARCHAR(100) DEFAULT '0755-4700983, 7024144981'", "TEXT DEFAULT '0755-4700983, 7024144981'", 'dean_name');
+        ensureDbTableColumn($pdo, 'departments', 'approvals', "VARCHAR(255) DEFAULT 'UGC'", "TEXT DEFAULT 'UGC'", 'contact_no');
+
+        // 2. Courses table columns
+        ensureDbTableColumn($pdo, 'courses', 'department', "VARCHAR(150) DEFAULT ''", "TEXT DEFAULT ''", 'id');
+        ensureDbTableColumn($pdo, 'courses', 'dept_slug', "VARCHAR(100) DEFAULT ''", "TEXT DEFAULT ''", 'department');
+        ensureDbTableColumn($pdo, 'courses', 'faculty_id', "INT(11) DEFAULT NULL", "INTEGER DEFAULT NULL", 'dept_slug');
+        ensureDbTableColumn($pdo, 'courses', 'slug', "VARCHAR(191) DEFAULT ''", "TEXT DEFAULT ''", 'course_name');
+        ensureDbTableColumn($pdo, 'courses', 'level', "VARCHAR(50) DEFAULT 'UG'", "TEXT DEFAULT 'UG'", 'slug');
+        ensureDbTableColumn($pdo, 'courses', 'degree_level', "VARCHAR(50) DEFAULT ''", "TEXT DEFAULT ''", 'level');
+        ensureDbTableColumn($pdo, 'courses', 'fees', "VARCHAR(100) DEFAULT ''", "TEXT DEFAULT ''", 'eligibility');
+        ensureDbTableColumn($pdo, 'courses', 'specializations', "TEXT DEFAULT NULL", "TEXT DEFAULT NULL", 'fees');
+        ensureDbTableColumn($pdo, 'courses', 'description', "LONGTEXT DEFAULT NULL", "TEXT DEFAULT NULL", 'specializations');
+        ensureDbTableColumn($pdo, 'courses', 'career_scope', "TEXT DEFAULT NULL", "TEXT DEFAULT NULL", 'description');
+        ensureDbTableColumn($pdo, 'courses', 'syllabus_url', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'career_scope');
+        ensureDbTableColumn($pdo, 'courses', 'scheme_url', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'syllabus_url');
+        ensureDbTableColumn($pdo, 'courses', 'fees_per_year', "VARCHAR(50) DEFAULT 'As per university norms'", "TEXT DEFAULT 'As per university norms'", 'scheme_url');
+        ensureDbTableColumn($pdo, 'courses', 'created_at', "DATETIME DEFAULT CURRENT_TIMESTAMP", "DATETIME DEFAULT NULL", 'status');
+
+        // 3. Pages table columns
+        ensureDbTableColumn($pdo, 'pages', 'banner_title', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'meta_description');
+        ensureDbTableColumn($pdo, 'pages', 'banner_subtitle', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'banner_title');
+        ensureDbTableColumn($pdo, 'pages', 'banner_img', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'banner_subtitle');
+
+        // 4. Banners table columns
+        ensureDbTableColumn($pdo, 'banners', 'page_slug', "VARCHAR(100) DEFAULT 'home'", "TEXT DEFAULT 'home'", 'id');
+
+        // 5. News table columns
+        ensureDbTableColumn($pdo, 'news', 'slug', "VARCHAR(191) DEFAULT ''", "TEXT DEFAULT ''", 'title');
+        ensureDbTableColumn($pdo, 'news', 'image_url', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'publish_date');
+        ensureDbTableColumn($pdo, 'news', 'is_ticker', "TINYINT(1) DEFAULT 0", "INTEGER DEFAULT 0", 'image_url');
+
+        // 6. Enquiries table columns
+        ensureDbTableColumn($pdo, 'enquiries', 'father_name', "VARCHAR(150) DEFAULT NULL", "TEXT DEFAULT NULL", 'name');
+        ensureDbTableColumn($pdo, 'enquiries', 'college', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'father_name');
+        ensureDbTableColumn($pdo, 'enquiries', 'city', "VARCHAR(100) DEFAULT NULL", "TEXT DEFAULT NULL", 'course');
+        ensureDbTableColumn($pdo, 'enquiries', 'state', "VARCHAR(100) DEFAULT NULL", "TEXT DEFAULT NULL", 'city');
+        ensureDbTableColumn($pdo, 'enquiries', 'source', "VARCHAR(150) DEFAULT NULL", "TEXT DEFAULT NULL", 'state');
+        ensureDbTableColumn($pdo, 'enquiries', 'status', "VARCHAR(50) DEFAULT 'New'", "TEXT DEFAULT 'New'", 'message');
+    } catch (Exception $e) {}
+}
+
 function autoInitializeTables($pdo) {
     $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
 
@@ -84,6 +178,9 @@ function autoInitializeTables($pdo) {
                 slug TEXT UNIQUE NOT NULL,
                 content TEXT,
                 meta_description TEXT,
+                banner_title TEXT,
+                banner_subtitle TEXT,
+                banner_img TEXT,
                 status TEXT DEFAULT 'published',
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );
@@ -109,18 +206,26 @@ function autoInitializeTables($pdo) {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 department TEXT NOT NULL,
                 dept_slug TEXT,
+                faculty_id INTEGER DEFAULT NULL,
                 course_name TEXT NOT NULL,
                 slug TEXT,
                 level TEXT DEFAULT 'UG',
+                degree_level TEXT DEFAULT '',
                 duration TEXT,
                 eligibility TEXT,
                 fees TEXT,
+                specializations TEXT,
                 description TEXT,
                 career_scope TEXT,
-                status TEXT DEFAULT 'active'
+                syllabus_url TEXT,
+                scheme_url TEXT,
+                fees_per_year TEXT DEFAULT 'As per university norms',
+                status TEXT DEFAULT 'active',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );
             CREATE TABLE IF NOT EXISTS banners (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                page_slug TEXT DEFAULT 'home',
                 title TEXT NOT NULL,
                 subtitle TEXT,
                 image_url TEXT,
@@ -142,9 +247,14 @@ function autoInitializeTables($pdo) {
             CREATE TABLE IF NOT EXISTS enquiries (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
+                father_name TEXT,
+                college TEXT,
                 email TEXT NOT NULL,
                 phone TEXT NOT NULL,
                 course TEXT,
+                city TEXT,
+                state TEXT,
+                source TEXT,
                 message TEXT,
                 status TEXT DEFAULT 'New',
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -155,6 +265,21 @@ function autoInitializeTables($pdo) {
                 category TEXT DEFAULT 'Campus',
                 image_url TEXT NOT NULL,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+            CREATE TABLE IF NOT EXISTS blogs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                slug TEXT UNIQUE NOT NULL,
+                author TEXT DEFAULT 'SRKU Editorial Board',
+                category TEXT DEFAULT 'Campus Life',
+                short_description TEXT,
+                content TEXT NOT NULL,
+                image_url TEXT,
+                publish_date DATE,
+                views INTEGER DEFAULT 0,
+                status TEXT DEFAULT 'published',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );
             CREATE TABLE IF NOT EXISTS settings (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -176,6 +301,21 @@ function autoInitializeTables($pdo) {
                 sort_order INTEGER DEFAULT 0,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+            CREATE TABLE IF NOT EXISTS complaints (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                father_name TEXT,
+                enrollment_number TEXT,
+                email TEXT NOT NULL,
+                phone TEXT NOT NULL,
+                institute_name TEXT,
+                course_name TEXT,
+                year_semester TEXT,
+                complaint_type TEXT DEFAULT 'General',
+                complaint_details TEXT NOT NULL,
+                status TEXT DEFAULT 'New',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );
             CREATE TABLE IF NOT EXISTS board_members (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -356,18 +496,11 @@ function autoInitializeTables($pdo) {
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
         ");
 
-        // Schema migrations for MySQL if table previously existed with older columns
-        try {
-            $deptCols = $pdo->query("SHOW COLUMNS FROM `departments`")->fetchAll(PDO::FETCH_COLUMN);
-            if (!in_array('category', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `category` VARCHAR(100) DEFAULT 'General' AFTER `name`");
-            if (!in_array('image', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `image` VARCHAR(255) DEFAULT NULL AFTER `icon`");
-            if (!in_array('dean_designation', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `dean_designation` VARCHAR(150) DEFAULT 'Dean & Principal' AFTER `dean_name`");
-            if (!in_array('dean_photo', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `dean_photo` VARCHAR(255) DEFAULT NULL AFTER `dean_designation`");
-            if (!in_array('dean_message', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `dean_message` LONGTEXT DEFAULT NULL AFTER `dean_photo`");
-            if (!in_array('contact_no', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `contact_no` VARCHAR(100) DEFAULT '0755-4700983, 7024144981' AFTER `dean_name`");
-            if (!in_array('approvals', $deptCols)) $pdo->exec("ALTER TABLE `departments` ADD `approvals` VARCHAR(255) DEFAULT 'UGC' AFTER `contact_no`");
+        // Run universal schema migrations for both MySQL & SQLite
+        runUniversalDatabaseMigrations($pdo);
 
-            // Auto-sync constituent unit images from assets/uploads/constituent-units/{slug}.webp if image is empty or default
+        // Auto-sync constituent unit images from assets/uploads/constituent-units/{slug}.webp if image is empty or default
+        try {
             $allDepts = $pdo->query("SELECT id, slug, image, banner_img FROM `departments`")->fetchAll(PDO::FETCH_ASSOC);
             $syncStmt = $pdo->prepare("UPDATE `departments` SET image = :img, banner_img = :bimg WHERE id = :id");
             $baseDir = dirname(__DIR__);
@@ -392,39 +525,6 @@ function autoInitializeTables($pdo) {
                     }
                 }
             }
-
-            $cols = $pdo->query("SHOW COLUMNS FROM `courses`")->fetchAll(PDO::FETCH_COLUMN);
-            if (!in_array('department', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `department` VARCHAR(150) AFTER `id`");
-            if (!in_array('dept_slug', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `dept_slug` VARCHAR(100) AFTER `department`");
-            if (!in_array('slug', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `slug` VARCHAR(191) AFTER `course_name`");
-            if (!in_array('level', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `level` VARCHAR(50) DEFAULT 'UG' AFTER `slug`");
-            if (!in_array('fees', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `fees` VARCHAR(100) AFTER `eligibility`");
-            if (!in_array('specializations', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `specializations` TEXT AFTER `fees`");
-            if (!in_array('description', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `description` LONGTEXT AFTER `specializations`");
-            if (!in_array('career_scope', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `career_scope` TEXT AFTER `description`");
-            if (!in_array('syllabus_url', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `syllabus_url` VARCHAR(255) AFTER `career_scope`");
-            if (!in_array('scheme_url', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `scheme_url` VARCHAR(255) AFTER `syllabus_url`");
-            if (!in_array('faculty_id', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `faculty_id` INT(11) DEFAULT NULL AFTER `dept_slug`");
-            if (!in_array('degree_level', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `degree_level` VARCHAR(50) NOT NULL DEFAULT '' AFTER `level`");
-            if (!in_array('fees_per_year', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `fees_per_year` VARCHAR(50) DEFAULT 'As per university norms' AFTER `scheme_url`");
-            if (!in_array('created_at', $cols)) $pdo->exec("ALTER TABLE `courses` ADD `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP AFTER `status`");
-        } catch (Exception $e) {}
-
-        try {
-            $cols = $pdo->query("SHOW COLUMNS FROM `news`")->fetchAll(PDO::FETCH_COLUMN);
-            if (!in_array('slug', $cols)) $pdo->exec("ALTER TABLE `news` ADD `slug` VARCHAR(191) AFTER `title`");
-            if (!in_array('image_url', $cols)) $pdo->exec("ALTER TABLE `news` ADD `image_url` VARCHAR(255) AFTER `publish_date`");
-            if (!in_array('is_ticker', $cols)) $pdo->exec("ALTER TABLE `news` ADD `is_ticker` TINYINT(1) DEFAULT 0 AFTER `image_url`");
-        } catch (Exception $e) {}
-
-        try {
-            $cols = $pdo->query("SHOW COLUMNS FROM `enquiries`")->fetchAll(PDO::FETCH_COLUMN);
-            if (!in_array('father_name', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `father_name` VARCHAR(150) AFTER `name`");
-            if (!in_array('college', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `college` VARCHAR(255) AFTER `father_name`");
-            if (!in_array('city', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `city` VARCHAR(100) AFTER `course`");
-            if (!in_array('state', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `state` VARCHAR(100) AFTER `city`");
-            if (!in_array('source', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `source` VARCHAR(150) AFTER `state`");
-            if (!in_array('status', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `status` VARCHAR(50) DEFAULT 'New' AFTER `message`");
         } catch (Exception $e) {}
     }
 

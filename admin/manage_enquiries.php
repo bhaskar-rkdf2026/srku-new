@@ -2,15 +2,8 @@
 require_once __DIR__ . '/header.php';
 $pdo = getDBConnection();
 
-// Ensure all columns exist in `enquiries`
-try {
-    $cols = $pdo->query("SHOW COLUMNS FROM `enquiries`")->fetchAll(PDO::FETCH_COLUMN);
-    if (!in_array('father_name', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `father_name` VARCHAR(150) AFTER `name`");
-    if (!in_array('city', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `city` VARCHAR(100) AFTER `course`");
-    if (!in_array('state', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `state` VARCHAR(100) AFTER `city`");
-    if (!in_array('source', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `source` VARCHAR(150) AFTER `state`");
-    if (!in_array('status', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `status` VARCHAR(50) DEFAULT 'New' AFTER `message`");
-} catch (Exception $e) {}
+// Ensure all columns exist in `enquiries` and across database
+runUniversalDatabaseMigrations($pdo);
 
 // Filters & Search
 $search = sanitize($_GET['q'] ?? '');

@@ -701,15 +701,7 @@ function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $so
 
     try {
         $pdo = getDBConnection();
-        
-        // Ensure columns exist
-        $cols = $pdo->query("SHOW COLUMNS FROM `enquiries`")->fetchAll(PDO::FETCH_COLUMN);
-        if (!in_array('father_name', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `father_name` VARCHAR(150) AFTER `name`");
-        if (!in_array('college', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `college` VARCHAR(255) AFTER `father_name`");
-        if (!in_array('city', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `city` VARCHAR(100) AFTER `course`");
-        if (!in_array('state', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `state` VARCHAR(100) AFTER `city`");
-        if (!in_array('source', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `source` VARCHAR(150) AFTER `state`");
-        if (!in_array('status', $cols)) $pdo->exec("ALTER TABLE `enquiries` ADD `status` VARCHAR(50) DEFAULT 'New' AFTER `message`");
+        runUniversalDatabaseMigrations($pdo);
 
         $stmt = $pdo->prepare("INSERT INTO enquiries (name, father_name, college, email, phone, course, city, state, source, message, status, created_at) VALUES (:n, :fn, :col, :e, :p, :c, :city, :state, :src, :m, 'New', CURRENT_TIMESTAMP)");
         $stmt->execute([
@@ -1085,8 +1077,18 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
         $pdo = getDBConnection();
         $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
         $baseDir = dirname(__DIR__);
-        $sqlMasterFile = $baseDir . '/srku_db_new.sql';
-        $masterSql = file_exists($sqlMasterFile) ? file_get_contents($sqlMasterFile) : '';
+        $sqlCandidates = [
+            $baseDir . '/srku_db_new.sql',
+            $baseDir . '/srku_db.sql',
+            $baseDir . '/database.sql'
+        ];
+        $masterSql = '';
+        foreach ($sqlCandidates as $cand) {
+            if (file_exists($cand) && filesize($cand) > 1000) {
+                $masterSql = file_get_contents($cand);
+                break;
+            }
+        }
 
         // Safe table cleanup helper for both MySQL (TRUNCATE) and SQLite (DELETE FROM)
         $cleanTable = function($tbl) use ($pdo, $driver) {
@@ -1296,31 +1298,8 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
             ");
         }
 
-        // Schema migrations for legacy/existing tables
-        try {
-            $bcols = $pdo->query("SHOW COLUMNS FROM `banners`")->fetchAll(PDO::FETCH_COLUMN);
-            if (!in_array('page_slug', $bcols)) $pdo->exec("ALTER TABLE `banners` ADD `page_slug` VARCHAR(100) DEFAULT 'home' AFTER `id`");
-
-            $pcols = $pdo->query("SHOW COLUMNS FROM `pages`")->fetchAll(PDO::FETCH_COLUMN);
-            if (!in_array('banner_title', $pcols)) $pdo->exec("ALTER TABLE `pages` ADD `banner_title` VARCHAR(255) DEFAULT NULL");
-            if (!in_array('banner_subtitle', $pcols)) $pdo->exec("ALTER TABLE `pages` ADD `banner_subtitle` VARCHAR(255) DEFAULT NULL");
-            if (!in_array('banner_img', $pcols)) $pdo->exec("ALTER TABLE `pages` ADD `banner_img` VARCHAR(255) DEFAULT NULL");
-
-            $ccols = $pdo->query("SHOW COLUMNS FROM `courses`")->fetchAll(PDO::FETCH_COLUMN);
-            if (!in_array('faculty_id', $ccols)) $pdo->exec("ALTER TABLE `courses` ADD `faculty_id` INT NULL AFTER `dept_slug`");
-            if (!in_array('degree_level', $ccols)) $pdo->exec("ALTER TABLE `courses` ADD `degree_level` VARCHAR(50) NULL AFTER `level`");
-            if (!in_array('fees_per_year', $ccols)) $pdo->exec("ALTER TABLE `courses` ADD `fees_per_year` VARCHAR(50) DEFAULT 'As per university norms' AFTER `scheme_url`");
-            if (!in_array('created_at', $ccols)) $pdo->exec("ALTER TABLE `courses` ADD `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP AFTER `status`");
-
-            $dcols = $pdo->query("SHOW COLUMNS FROM `departments`")->fetchAll(PDO::FETCH_COLUMN);
-            if (!in_array('category', $dcols)) $pdo->exec("ALTER TABLE `departments` ADD `category` VARCHAR(100) DEFAULT 'General' AFTER `name`");
-            if (!in_array('image', $dcols)) $pdo->exec("ALTER TABLE `departments` ADD `image` VARCHAR(255) DEFAULT NULL AFTER `icon`");
-            if (!in_array('dean_designation', $dcols)) $pdo->exec("ALTER TABLE `departments` ADD `dean_designation` VARCHAR(150) DEFAULT 'Dean & Principal' AFTER `dean_name`");
-            if (!in_array('dean_photo', $dcols)) $pdo->exec("ALTER TABLE `departments` ADD `dean_photo` VARCHAR(255) DEFAULT NULL AFTER `dean_designation`");
-            if (!in_array('dean_message', $dcols)) $pdo->exec("ALTER TABLE `departments` ADD `dean_message` LONGTEXT DEFAULT NULL AFTER `dean_photo`");
-            if (!in_array('contact_no', $dcols)) $pdo->exec("ALTER TABLE `departments` ADD `contact_no` VARCHAR(100) DEFAULT '0755-4700983, 7024144981' AFTER `dean_name`");
-            if (!in_array('approvals', $dcols)) $pdo->exec("ALTER TABLE `departments` ADD `approvals` VARCHAR(255) DEFAULT 'UGC' AFTER `contact_no`");
-        } catch (Exception $e) {}
+        // Run universal schema migrations for both MySQL & SQLite
+        runUniversalDatabaseMigrations($pdo);
 
         // 2. SYLLABI (267 items from syllabus_data.php)
         if ($target === 'all' || $target === 'syllabi') {
@@ -1400,22 +1379,27 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
             }
 
             // Auto-link constituent unit images from assets/uploads/constituent-units/{slug}.webp
-            $allDepts = $pdo->query("SELECT id, slug, image, banner_img FROM `departments`")->fetchAll(PDO::FETCH_ASSOC);
-            $syncStmt = $pdo->prepare("UPDATE `departments` SET image = :img, banner_img = :bimg WHERE id = :id");
-            foreach ($allDepts as $ad) {
-                $candPath = 'assets/uploads/constituent-units/' . $ad['slug'] . '.webp';
-                if (file_exists($baseDir . '/' . $candPath)) {
-                    $currImg = $ad['image'] ?? '';
-                    $currBanner = $ad['banner_img'] ?? '';
-                    if (empty($currImg) || strpos($currImg, '001.webp') !== false || strpos($currImg, 'dept_') !== false || empty($currBanner)) {
-                        $syncStmt->execute([
-                            ':img' => $candPath,
-                            ':bimg' => $candPath,
-                            ':id' => $ad['id']
-                        ]);
+            try {
+                ensureDbTableColumn($pdo, 'departments', 'image', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'icon');
+                ensureDbTableColumn($pdo, 'departments', 'banner_img', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'image');
+
+                $allDepts = $pdo->query("SELECT id, slug, image, banner_img FROM `departments`")->fetchAll(PDO::FETCH_ASSOC);
+                $syncStmt = $pdo->prepare("UPDATE `departments` SET image = :img, banner_img = :bimg WHERE id = :id");
+                foreach ($allDepts as $ad) {
+                    $candPath = 'assets/uploads/constituent-units/' . $ad['slug'] . '.webp';
+                    if (file_exists($baseDir . '/' . $candPath)) {
+                        $currImg = $ad['image'] ?? '';
+                        $currBanner = $ad['banner_img'] ?? '';
+                        if (empty($currImg) || strpos($currImg, '001.webp') !== false || strpos($currImg, 'dept_') !== false || empty($currBanner)) {
+                            $syncStmt->execute([
+                                ':img' => $candPath,
+                                ':bimg' => $candPath,
+                                ':id' => $ad['id']
+                            ]);
+                        }
                     }
                 }
-            }
+            } catch (Exception $e) {}
         }
 
         // 5. COURSES (All 95 Academic Degree & Diploma Programs)
@@ -1692,7 +1676,11 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
                 'youtube_url' => 'https://youtube.com/@srkuniversity',
                 'linkedin_url' => 'https://linkedin.com/school/srk-university'
             ];
-            $insSetting = $pdo->prepare("INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES (:k, :v) ON DUPLICATE KEY UPDATE `setting_value` = VALUES(`setting_value`)");
+            if ($driver === 'sqlite') {
+                $insSetting = $pdo->prepare("INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES (:k, :v) ON CONFLICT(`setting_key`) DO UPDATE SET `setting_value` = excluded.`setting_value`");
+            } else {
+                $insSetting = $pdo->prepare("INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES (:k, :v) ON DUPLICATE KEY UPDATE `setting_value` = VALUES(`setting_value`)");
+            }
             $sCount = 0;
             foreach ($defaultSettings as $sk => $sv) {
                 $insSetting->execute([':k' => $sk, ':v' => $sv]);
