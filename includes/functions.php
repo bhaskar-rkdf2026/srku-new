@@ -1040,7 +1040,7 @@ function getDatabaseStatusInfo() {
             'connected' => true,
             'driver' => $driver,
             'host' => defined('DB_HOST') ? DB_HOST : 'localhost',
-            'dbname' => defined('DB_NAME') ? DB_NAME : 'srku_db',
+            'dbname' => defined('DB_NAME') ? DB_NAME : 'srku_db_new',
             'tables_count' => count($tables),
             'tables' => $tableCounts,
             'total_rows' => $totalRows,
@@ -1051,7 +1051,7 @@ function getDatabaseStatusInfo() {
             'connected' => false,
             'driver' => 'unknown',
             'host' => defined('DB_HOST') ? DB_HOST : 'localhost',
-            'dbname' => defined('DB_NAME') ? DB_NAME : 'srku_db',
+            'dbname' => defined('DB_NAME') ? DB_NAME : 'srku_db_new',
             'tables_count' => 0,
             'tables' => [],
             'total_rows' => 0,
@@ -1079,7 +1079,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
     try {
         $pdo = getDBConnection();
         $baseDir = dirname(__DIR__);
-        $sqlMasterFile = $baseDir . '/srku_db.sql';
+        $sqlMasterFile = $baseDir . '/srku_db_new.sql';
         $masterSql = file_exists($sqlMasterFile) ? file_get_contents($sqlMasterFile) : '';
 
         // 1. Ensure all schemas and columns are fully created & aligned

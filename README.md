@@ -42,7 +42,7 @@ This repository contains the custom PHP website and Admin CMS for Sarvepalli Rad
    - Main Site: `http://localhost/srku-new/`
    - Admin Panel: `http://localhost/srku-new/admin/login.php`
 4. Database Auto-Setup:
-   - The app automatically creates the MySQL database `srku_db` and all required tables upon first visit!
+   - The app automatically creates the MySQL database `srku_db_new` and all required tables upon first visit!
    - Alternatively, you can manually import `database.sql` into phpMyAdmin.
 
 ---

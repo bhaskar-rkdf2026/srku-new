@@ -352,7 +352,7 @@ $syncModules = [
             <div class="p-3 bg-light rounded-4 h-100 border">
                 <div class="fw-bold text-navy mb-1"><i class="fas fa-upload text-danger me-2"></i> Step 1: Upload Files</div>
                 <p class="small text-muted mb-0">
-                    Upload all project files (including <code>srku_db.sql</code>, <code>config/</code>, <code>includes/</code>, <code>assets/</code>) to your GoDaddy cPanel <code>public_html/</code> directory.
+                    Upload all project files (including <code>srku_db_new.sql</code>, <code>config/</code>, <code>includes/</code>, <code>assets/</code>) to your GoDaddy cPanel <code>public_html/</code> directory.
                 </p>
             </div>
         </div>

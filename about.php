@@ -29,9 +29,11 @@ require_once __DIR__ . '/includes/header.php';
                 <p class="about-hero-v2__desc">
                     Welcome to Sarvepalli Radhakrishnan University, commonly known as SRK University, one of Madhya Pradesh's leading private universities. Named after Dr. Sarvepalli Radhakrishnan, India's First Vice President, our institution embodies excellence, innovation, and commitment to holistic education.
                 </p>
-                <div class="d-flex flex-wrap gap-3">
-                    <a href="<?php echo BASE_URL; ?>contact.php#apply" class="btn-hero-yellow">Apply Now</a>
-                    <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn-hero-outline">Meet the Leadership</a>
+                <div class="d-flex flex-wrap gap-2 pt-2">
+                    <a href="#leadership" class="btn-hero-yellow"><i class="fas fa-users-cog me-1"></i> Meet the Leadership</a>
+                    <a href="#chairman-story" class="btn-hero-outline"><i class="fas fa-user-tie me-1"></i> Chairman's Story</a>
+                    <a href="<?php echo BASE_URL; ?>board-members.php" class="btn-hero-outline"><i class="fas fa-id-badge me-1"></i> View Board Members</a>
+                    <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn-hero-outline"><i class="fas fa-landmark me-1"></i> Board of Management</a>
                 </div>
             </div>
             <div class="col-12 col-lg-4">
@@ -157,6 +159,95 @@ $aboutMilestoneStats = [
     </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════
+     CHAIRMAN'S STORY & VISION
+═══════════════════════════════════════════════════════ -->
+<section class="chairman-story-section py-5 position-relative" id="chairman-story">
+    <div class="container-xl py-3">
+        <div class="row align-items-center g-4 g-lg-5">
+            <div class="col-12 col-lg-5 reveal">
+                <div class="chairman-card-wrap">
+                    <div class="chairman-card-frame shadow-lg">
+                        <div class="chairman-card-banner">
+                            <span class="badge bg-warning text-dark fw-bold px-3 py-1 rounded-pill"><i class="fas fa-star me-1"></i> EST. 1995</span>
+                            <span class="text-white-50 small fw-semibold">RKDF Education Society</span>
+                        </div>
+                        <div class="chairman-avatar-box">
+                            <div class="chairman-avatar-circle">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                        </div>
+                        <div class="chairman-card-body text-center">
+                            <h3 class="chairman-name mb-1"><?php echo sanitize(getSetting('chairman_name', 'Dr. Sunil Kapoor')); ?></h3>
+                            <p class="chairman-title text-danger fw-bold mb-3"><?php echo sanitize(getSetting('chairman_title', 'Chairman &amp; Founder Patron')); ?></p>
+                            
+                            <p class="text-muted small mb-3" style="line-height:1.6;">
+                                Pioneering multidisciplinary higher education across Central India, nurturing excellence in medical, dental, pharmacy, engineering, and doctoral research.
+                            </p>
+
+                            <div class="chairman-pillars d-flex justify-content-center gap-2 flex-wrap mb-4">
+                                <span class="badge-pill-soft"><i class="fas fa-certificate text-warning me-1"></i> 31+ Years Legacy</span>
+                                <span class="badge-pill-soft"><i class="fas fa-university text-primary me-1"></i> 14 Units</span>
+                                <span class="badge-pill-soft"><i class="fas fa-user-graduate text-success me-1"></i> 1,10,000+ Alumni</span>
+                            </div>
+
+                            <div class="chairman-actions d-flex justify-content-center gap-2 flex-wrap">
+                                <a href="<?php echo BASE_URL; ?>board-members.php" class="btn btn-sm btn-maroon rounded-pill px-3 py-2">
+                                    <i class="fas fa-users me-1"></i> View Board Members
+                                </a>
+                                <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2">
+                                    <i class="fas fa-landmark me-1"></i> Board of Management
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-7 reveal">
+                <span class="section-subtitle">FOUNDER &amp; CHAIRMAN'S DESK</span>
+                <h2 class="section-title mb-3">Shaping Future <span>Leaders Through</span> Value-Based Education</h2>
+                
+                <div class="chairman-quote-card mb-4 shadow-sm">
+                    <i class="fas fa-quote-left text-warning fs-3 mb-2 d-block"></i>
+                    <p class="lead-quote mb-0">
+                        &ldquo;<?php echo sanitize(getSetting('chairman_story_quote', 'Education is the foundation of progress, empowering individuals with knowledge, values, and the confidence to shape a better future. At SRK University, our vision is to provide quality education that combines academic excellence with practical learning, innovation, and strong ethical values. We are committed to creating an environment where students can explore their potential, develop professional skills, and prepare themselves to meet the challenges of a rapidly changing world.')); ?>&rdquo;
+                    </p>
+                </div>
+
+                <p class="text-dark mb-3" style="line-height:1.85; font-size:0.96rem;">
+                    When RKDF Education Society laid its foundations in 1995, it set forth on a visionary mission: to build a benchmarked educational powerhouse in Central India that brings world-class technical, healthcare, and humanistic learning within reach of every aspirational learner.
+                </p>
+
+                <p class="text-muted mb-4" style="line-height:1.85; font-size:0.96rem;">
+                    From starting pioneer technical institutes to founding Sarvepalli Radhakrishnan University with 14 constituent units, 750+ hospital beds, and 160+ patents, the journey represents three decades of relentless dedication to societal upliftment and national development.
+                </p>
+
+                <div class="row g-3 pt-1">
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-start gap-3 p-3 rounded-3 bg-light border">
+                            <div class="icon-circle bg-navy text-white"><i class="fas fa-graduation-cap"></i></div>
+                            <div>
+                                <h6 class="fw-bold text-navy mb-1">Inclusive Access</h6>
+                                <p class="text-muted small mb-0">Democratizing professional, legal, and medical sciences with extensive scholarships and state-of-the-art campus amenities.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-start gap-3 p-3 rounded-3 bg-light border">
+                            <div class="icon-circle" style="background:#7A0B0D; color:#fff;"><i class="fas fa-flask"></i></div>
+                            <div>
+                                <h6 class="fw-bold text-navy mb-1">Innovation Ecosystem</h6>
+                                <p class="text-muted small mb-0">Over 160 filed patents, cutting-edge Incubation Centre, and 300+ active industry-research MoUs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- VISION & MISSION -->
 <section class="py-5 bg-cream" id="vision">
     <div class="container-xl py-3">
@@ -211,6 +302,228 @@ $aboutMilestoneStats = [
     });
 })();
 </script>
+
+<!-- ═══════════════════════════════════════════════════════
+     MEET THE LEADERSHIP
+═══════════════════════════════════════════════════════ -->
+<section class="py-5 bg-white position-relative" id="leadership">
+    <div class="container-xl py-3">
+        <div class="text-center mb-5">
+            <span class="section-subtitle">UNIVERSITY GOVERNANCE</span>
+            <h2 class="section-title">Meet the <span>Leadership</span></h2>
+            <p class="text-muted mx-auto" style="max-width:720px; font-size:0.95rem;">
+                Guided by distinguished academicians, visionary administrators, and eminent mentors steering SRK University's academic excellence and institutional integrity.
+            </p>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            <!-- 1. Chancellor -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm rounded-4 leadership-card-v2 reveal">
+                    <div class="leadership-card-v2__badge">Statutory Head</div>
+                    <div class="leadership-card-v2__photo-wrap">
+                        <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/chancellor.jpeg"
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                             alt="<?php echo sanitize(getSetting('chancellor_name', 'Mrs. Janak Kapoor')); ?>"
+                             class="leadership-card-v2__img">
+                    </div>
+                    <div class="card-body p-4 text-center d-flex flex-column">
+                        <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize(getSetting('chancellor_name', 'Mrs. Janak Kapoor')); ?></h4>
+                        <span class="text-danger small fw-bold mb-2 d-block"><?php echo sanitize(getSetting('chancellor_title', 'Hon\'ble Chancellor')); ?></span>
+                        <p class="text-muted small mb-3 flex-grow-1" style="line-height:1.65;">
+                            Apex presiding authority, guiding university convocations, and upholding the noble legacy of Dr. Sarvepalli Radhakrishnan.
+                        </p>
+                        <div class="mt-auto pt-2 border-top">
+                            <a href="<?php echo BASE_URL; ?>chancellor-message.php" class="btn btn-sm btn-outline-danger w-100 rounded-pill">
+                                <i class="fas fa-crown me-1"></i> Chancellor's Desk
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Vice Chancellor -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm rounded-4 leadership-card-v2 reveal">
+                    <div class="leadership-card-v2__badge bg-maroon">Academic Executive</div>
+                    <div class="leadership-card-v2__photo-wrap leadership-card-v2__photo-wrap--icon">
+                        <div class="leadership-icon-avatar">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                    </div>
+                    <div class="card-body p-4 text-center d-flex flex-column">
+                        <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize(getSetting('vc_name', 'Ms. Priyanka Jaiswal')); ?></h4>
+                        <span class="text-danger small fw-bold mb-2 d-block"><?php echo sanitize(getSetting('vc_title', 'Vice Chancellor')); ?></span>
+                        <p class="text-muted small mb-3 flex-grow-1" style="line-height:1.65;">
+                            Leading academic affairs, curriculum innovation under NEP 2020, national accreditations, and interdisciplinary research excellence.
+                        </p>
+                        <div class="mt-auto pt-2 border-top">
+                            <a href="<?php echo BASE_URL; ?>vice-chancellor-message.php" class="btn btn-sm btn-outline-danger w-100 rounded-pill">
+                                <i class="fas fa-comment-dots me-1"></i> VC's Message
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Chairman & Founder -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm rounded-4 leadership-card-v2 reveal">
+                    <div class="leadership-card-v2__badge bg-gold text-navy">Founder &amp; Patron</div>
+                    <div class="leadership-card-v2__photo-wrap leadership-card-v2__photo-wrap--icon">
+                        <div class="leadership-icon-avatar bg-gold-soft text-navy">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                    </div>
+                    <div class="card-body p-4 text-center d-flex flex-column">
+                        <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize(getSetting('chairman_name', 'Dr. Sunil Kapoor')); ?></h4>
+                        <span class="text-danger small fw-bold mb-2 d-block"><?php echo sanitize(getSetting('chairman_title', 'Chairman &amp; Chief Patron')); ?></span>
+                        <p class="text-muted small mb-3 flex-grow-1" style="line-height:1.65;">
+                            Visionary founder of RKDF Group since 1995, building accessible healthcare and multidisciplinary education across Central India.
+                        </p>
+                        <div class="mt-auto pt-2 border-top">
+                            <a href="#chairman-story" class="btn btn-sm btn-outline-navy w-100 rounded-pill">
+                                <i class="fas fa-book-reader me-1"></i> Chairman's Story
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Registrar -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm rounded-4 leadership-card-v2 reveal">
+                    <div class="leadership-card-v2__badge bg-navy">Administration</div>
+                    <div class="leadership-card-v2__photo-wrap leadership-card-v2__photo-wrap--icon">
+                        <div class="leadership-icon-avatar bg-navy-soft text-navy">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                    </div>
+                    <div class="card-body p-4 text-center d-flex flex-column">
+                        <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize(getSetting('registrar_name', 'Dr. S.S. Pawar')); ?></h4>
+                        <span class="text-danger small fw-bold mb-2 d-block"><?php echo sanitize(getSetting('registrar_title', 'Registrar &amp; Member Secretary')); ?></span>
+                        <p class="text-muted small mb-3 flex-grow-1" style="line-height:1.65;">
+                            Custodian of university seal and records, overseeing administrative operations, statutory councils, and regulatory compliances.
+                        </p>
+                        <div class="mt-auto pt-2 border-top">
+                            <a href="<?php echo BASE_URL; ?>board-members.php" class="btn btn-sm btn-outline-secondary w-100 rounded-pill">
+                                <i class="fas fa-users-cog me-1"></i> View Secretariat
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     BOARD OF MANAGEMENT SHOWCASE
+═══════════════════════════════════════════════════════ -->
+<section class="py-5 bg-cream position-relative" id="board-management-showcase">
+    <div class="container-xl py-3">
+        <div class="row align-items-center mb-4 g-3">
+            <div class="col-12 col-md-8">
+                <span class="section-subtitle">STATUTORY APEX GOVERNING BODY</span>
+                <h2 class="section-title mb-2">Board of <span>Management</span></h2>
+                <p class="text-muted mb-0" style="max-width:720px; font-size:0.95rem;">
+                    Constituted under the statutory mandate of MP Niji Vishwavidyalaya Adhiniyam 2007. The Board of Management is the apex executive organ steering policy decisions, financial sanctions, and academic excellence.
+                </p>
+            </div>
+            <div class="col-12 col-md-4 text-md-end">
+                <a href="<?php echo BASE_URL; ?>board-members.php" class="btn btn-maroon rounded-pill px-4 py-2 shadow-sm">
+                    <i class="fas fa-users-cog me-2"></i> View Board Members
+                </a>
+            </div>
+        </div>
+
+        <!-- Representation Highlights Grid -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3 mb-4">
+            <div class="col">
+                <div class="card h-100 p-3 border-0 shadow-sm rounded-3 bg-white">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle bg-navy text-white d-flex align-items-center justify-content-center" style="width:48px; height:48px; font-size:1.2rem; flex-shrink:0;">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-navy mb-0">Sponsoring Body</h6>
+                            <span class="text-muted small">RKDF Education Society</span>
+                        </div>
+                    </div>
+                    <p class="text-muted small mt-2 mb-0" style="line-height:1.5;">Nominees providing institutional resource planning, endowment governance, and development oversight.</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 p-3 border-0 shadow-sm rounded-3 bg-white">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle bg-maroon text-white d-flex align-items-center justify-content-center" style="width:48px; height:48px; font-size:1.2rem; flex-shrink:0;">
+                            <i class="fas fa-book-reader"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-navy mb-0">Eminent Academics</h6>
+                            <span class="text-muted small">Senior Faculty &amp; Deans</span>
+                        </div>
+                    </div>
+                    <p class="text-muted small mt-2 mb-0" style="line-height:1.5;">Distinguished professors shaping curriculum design, NEP 2020 alignments, and doctoral research review.</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 p-3 border-0 shadow-sm rounded-3 bg-white">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle bg-warning text-dark d-flex align-items-center justify-content-center" style="width:48px; height:48px; font-size:1.2rem; flex-shrink:0;">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-navy mb-0">Industry &amp; Admin</h6>
+                            <span class="text-muted small">Corporate Experts</span>
+                        </div>
+                    </div>
+                    <p class="text-muted small mt-2 mb-0" style="line-height:1.5;">External industry stalwarts steering collaborative MoUs, corporate recruitment, and incubation.</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 p-3 border-0 shadow-sm rounded-3 bg-white">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center" style="width:48px; height:48px; font-size:1.2rem; flex-shrink:0;">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-navy mb-0">Statutory Secretariat</h6>
+                            <span class="text-muted small">Registrar's Office</span>
+                        </div>
+                    </div>
+                    <p class="text-muted small mt-2 mb-0" style="line-height:1.5;">Ensuring total compliance with UGC, MPPURC, regulatory councils, and statutory record audit.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Members Strip -->
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white reveal">
+            <div class="row align-items-center g-3">
+                <div class="col-12 col-lg-8">
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                        <span class="badge bg-danger text-white px-3 py-1 rounded-pill small fw-bold">Statutory Governance</span>
+                        <span class="text-muted small"><i class="fas fa-calendar-check me-1 text-primary"></i> Academic Year 2026-27</span>
+                    </div>
+                    <h5 class="fw-bold text-navy mb-1">Board of Management &amp; Governing Body Directory</h5>
+                    <p class="text-muted small mb-0">
+                        Explore complete details of university board members, statutory executive functions, regulatory mandates, and gazette notifications.
+                    </p>
+                </div>
+                <div class="col-12 col-lg-4 text-lg-end">
+                    <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+                        <a href="<?php echo BASE_URL; ?>board-members.php" class="btn btn-maroon px-3 py-2 rounded-pill">
+                            <i class="fas fa-id-badge me-1"></i> View Board Members
+                        </a>
+                        <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn btn-outline-navy px-3 py-2 rounded-pill">
+                            <i class="fas fa-landmark me-1"></i> Board of Management
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- WHY CHOOSE SRK UNIVERSITY -->
 <section class="py-5" id="why">
