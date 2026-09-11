@@ -1022,7 +1022,12 @@ function getDatabaseStatusInfo() {
     try {
         $pdo = getDBConnection();
         $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
-        $tables = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
+        
+        if ($driver === 'sqlite') {
+            $tables = $pdo->query("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")->fetchAll(PDO::FETCH_COLUMN);
+        } else {
+            $tables = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
+        }
         
         $tableCounts = [];
         $totalRows = 0;
@@ -1078,191 +1083,218 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
 
     try {
         $pdo = getDBConnection();
+        $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
         $baseDir = dirname(__DIR__);
         $sqlMasterFile = $baseDir . '/srku_db_new.sql';
         $masterSql = file_exists($sqlMasterFile) ? file_get_contents($sqlMasterFile) : '';
 
+        // Safe table cleanup helper for both MySQL (TRUNCATE) and SQLite (DELETE FROM)
+        $cleanTable = function($tbl) use ($pdo, $driver) {
+            if ($driver === 'sqlite') {
+                $pdo->exec("DELETE FROM `{$tbl}`");
+                try { $pdo->exec("DELETE FROM sqlite_sequence WHERE name='{$tbl}'"); } catch (Exception $e) {}
+            } else {
+                $pdo->exec("TRUNCATE TABLE `{$tbl}`");
+            }
+        };
+
         // 1. Ensure all schemas and columns are fully created & aligned
-        $pdo->exec("
-            CREATE TABLE IF NOT EXISTS `users` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `username` VARCHAR(50) NOT NULL UNIQUE,
-                `password` VARCHAR(255) NOT NULL,
-                `email` VARCHAR(100),
-                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        if ($driver === 'sqlite') {
+            autoInitializeTables($pdo);
+        } else {
+            $pdo->exec("
+                CREATE TABLE IF NOT EXISTS `users` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `username` VARCHAR(50) NOT NULL UNIQUE,
+                    `password` VARCHAR(255) NOT NULL,
+                    `email` VARCHAR(100),
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS `pages` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `title` VARCHAR(255) NOT NULL,
-                `slug` VARCHAR(191) NOT NULL UNIQUE,
-                `content` LONGTEXT,
-                `meta_description` TEXT,
-                `banner_title` VARCHAR(255) DEFAULT NULL,
-                `banner_subtitle` VARCHAR(255) DEFAULT NULL,
-                `banner_img` VARCHAR(255) DEFAULT NULL,
-                `status` ENUM('published','draft') DEFAULT 'published',
-                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                CREATE TABLE IF NOT EXISTS `pages` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `title` VARCHAR(255) NOT NULL,
+                    `slug` VARCHAR(191) NOT NULL UNIQUE,
+                    `content` LONGTEXT,
+                    `meta_description` TEXT,
+                    `banner_title` VARCHAR(255) DEFAULT NULL,
+                    `banner_subtitle` VARCHAR(255) DEFAULT NULL,
+                    `banner_img` VARCHAR(255) DEFAULT NULL,
+                    `status` ENUM('published','draft') DEFAULT 'published',
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS `departments` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `name` VARCHAR(255) NOT NULL,
-                `category` VARCHAR(100) DEFAULT 'General',
-                `slug` VARCHAR(191) NOT NULL UNIQUE,
-                `icon` VARCHAR(100) DEFAULT 'fas fa-graduation-cap',
-                `image` VARCHAR(255) DEFAULT NULL,
-                `banner_img` VARCHAR(255),
-                `description` LONGTEXT,
-                `dean_name` VARCHAR(150),
-                `dean_designation` VARCHAR(150) DEFAULT 'Dean & Principal',
-                `dean_photo` VARCHAR(255) DEFAULT NULL,
-                `dean_message` LONGTEXT DEFAULT NULL,
-                `contact_no` VARCHAR(100) DEFAULT '0755-4700983, 7024144981',
-                `approvals` VARCHAR(255) DEFAULT 'UGC',
-                `established_year` VARCHAR(10),
-                `status` ENUM('active','inactive') DEFAULT 'active'
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                CREATE TABLE IF NOT EXISTS `departments` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `name` VARCHAR(255) NOT NULL,
+                    `category` VARCHAR(100) DEFAULT 'General',
+                    `slug` VARCHAR(191) NOT NULL UNIQUE,
+                    `icon` VARCHAR(100) DEFAULT 'fas fa-graduation-cap',
+                    `image` VARCHAR(255) DEFAULT NULL,
+                    `banner_img` VARCHAR(255),
+                    `description` LONGTEXT,
+                    `dean_name` VARCHAR(150),
+                    `dean_designation` VARCHAR(150) DEFAULT 'Dean & Principal',
+                    `dean_photo` VARCHAR(255) DEFAULT NULL,
+                    `dean_message` LONGTEXT DEFAULT NULL,
+                    `contact_no` VARCHAR(100) DEFAULT '0755-4700983, 7024144981',
+                    `approvals` VARCHAR(255) DEFAULT 'UGC',
+                    `established_year` VARCHAR(10),
+                    `status` ENUM('active','inactive') DEFAULT 'active'
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS `courses` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `department` VARCHAR(150) NOT NULL,
-                `dept_slug` VARCHAR(100),
-                `faculty_id` INT DEFAULT NULL,
-                `course_name` VARCHAR(255) NOT NULL,
-                `slug` VARCHAR(191),
-                `level` VARCHAR(50) DEFAULT 'UG',
-                `degree_level` VARCHAR(50) DEFAULT NULL,
-                `duration` VARCHAR(50),
-                `eligibility` TEXT,
-                `fees` VARCHAR(100),
-                `specializations` TEXT,
-                `description` LONGTEXT,
-                `career_scope` TEXT,
-                `syllabus_url` VARCHAR(255),
-                `scheme_url` VARCHAR(255),
-                `fees_per_year` VARCHAR(50) DEFAULT 'As per university norms',
-                `status` VARCHAR(20) DEFAULT 'active',
-                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                CREATE TABLE IF NOT EXISTS `courses` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `department` VARCHAR(150) NOT NULL,
+                    `dept_slug` VARCHAR(100),
+                    `faculty_id` INT DEFAULT NULL,
+                    `course_name` VARCHAR(255) NOT NULL,
+                    `slug` VARCHAR(191),
+                    `level` VARCHAR(50) DEFAULT 'UG',
+                    `degree_level` VARCHAR(50) DEFAULT NULL,
+                    `duration` VARCHAR(50),
+                    `eligibility` TEXT,
+                    `fees` VARCHAR(100),
+                    `specializations` TEXT,
+                    `description` LONGTEXT,
+                    `career_scope` TEXT,
+                    `syllabus_url` VARCHAR(255),
+                    `scheme_url` VARCHAR(255),
+                    `fees_per_year` VARCHAR(50) DEFAULT 'As per university norms',
+                    `status` VARCHAR(20) DEFAULT 'active',
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS `faculty` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `department_name` VARCHAR(255) NOT NULL,
-                `dept_slug` VARCHAR(191) NOT NULL,
-                `name` VARCHAR(255) NOT NULL,
-                `designation` VARCHAR(150) NOT NULL,
-                `qualification` VARCHAR(255) DEFAULT NULL,
-                `experience` VARCHAR(100) DEFAULT NULL,
-                `status` ENUM('active','inactive') DEFAULT 'active',
-                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                CREATE TABLE IF NOT EXISTS `faculty` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `department_name` VARCHAR(255) NOT NULL,
+                    `dept_slug` VARCHAR(191) NOT NULL,
+                    `name` VARCHAR(255) NOT NULL,
+                    `designation` VARCHAR(150) NOT NULL,
+                    `qualification` VARCHAR(255) DEFAULT NULL,
+                    `experience` VARCHAR(100) DEFAULT NULL,
+                    `status` ENUM('active','inactive') DEFAULT 'active',
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS `syllabi` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `category_slug` VARCHAR(100) NOT NULL,
-                `category_title` VARCHAR(150) NOT NULL,
-                `department` VARCHAR(150) DEFAULT NULL,
-                `title` VARCHAR(255) NOT NULL,
-                `type` VARCHAR(50) DEFAULT 'Syllabus',
-                `file_path` VARCHAR(255) NOT NULL,
-                `filename` VARCHAR(255) DEFAULT NULL,
-                `original_url` TEXT DEFAULT NULL,
-                `file_size` INT DEFAULT 0,
-                `status` ENUM('active','inactive') DEFAULT 'active',
-                `sort_order` INT DEFAULT 0,
-                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                INDEX `idx_category` (`category_slug`),
-                INDEX `idx_status` (`status`),
-                INDEX `idx_type` (`type`),
-                INDEX `idx_order` (`sort_order`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                CREATE TABLE IF NOT EXISTS `syllabi` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `category_slug` VARCHAR(100) NOT NULL,
+                    `category_title` VARCHAR(150) NOT NULL,
+                    `department` VARCHAR(150) DEFAULT NULL,
+                    `title` VARCHAR(255) NOT NULL,
+                    `type` VARCHAR(50) DEFAULT 'Syllabus',
+                    `file_path` VARCHAR(255) NOT NULL,
+                    `filename` VARCHAR(255) DEFAULT NULL,
+                    `original_url` TEXT DEFAULT NULL,
+                    `file_size` INT DEFAULT 0,
+                    `status` ENUM('active','inactive') DEFAULT 'active',
+                    `sort_order` INT DEFAULT 0,
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    INDEX `idx_category` (`category_slug`),
+                    INDEX `idx_status` (`status`),
+                    INDEX `idx_type` (`type`),
+                    INDEX `idx_order` (`sort_order`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS `gallery` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `title` VARCHAR(255) NOT NULL,
-                `category` VARCHAR(50) DEFAULT 'Campus',
-                `image_url` VARCHAR(255) NOT NULL,
-                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                CREATE TABLE IF NOT EXISTS `gallery` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `title` VARCHAR(255) NOT NULL,
+                    `category` VARCHAR(50) DEFAULT 'Campus',
+                    `image_url` VARCHAR(255) NOT NULL,
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS `blogs` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `title` VARCHAR(255) NOT NULL,
-                `slug` VARCHAR(191) NOT NULL UNIQUE,
-                `author` VARCHAR(100) NOT NULL DEFAULT 'SRKU Editorial Board',
-                `category` VARCHAR(100) NOT NULL DEFAULT 'Campus Life',
-                `short_description` TEXT DEFAULT NULL,
-                `content` LONGTEXT NOT NULL,
-                `image_url` VARCHAR(255) DEFAULT NULL,
-                `publish_date` DATE DEFAULT NULL,
-                `views` INT DEFAULT 0,
-                `status` VARCHAR(20) NOT NULL DEFAULT 'published',
-                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                CREATE TABLE IF NOT EXISTS `blogs` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `title` VARCHAR(255) NOT NULL,
+                    `slug` VARCHAR(191) NOT NULL UNIQUE,
+                    `author` VARCHAR(100) NOT NULL DEFAULT 'SRKU Editorial Board',
+                    `category` VARCHAR(100) NOT NULL DEFAULT 'Campus Life',
+                    `short_description` TEXT DEFAULT NULL,
+                    `content` LONGTEXT NOT NULL,
+                    `image_url` VARCHAR(255) DEFAULT NULL,
+                    `publish_date` DATE DEFAULT NULL,
+                    `views` INT DEFAULT 0,
+                    `status` VARCHAR(20) NOT NULL DEFAULT 'published',
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS `news` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `title` VARCHAR(255) NOT NULL,
-                `slug` VARCHAR(191),
-                `content` LONGTEXT,
-                `category` VARCHAR(50) DEFAULT 'Announcement',
-                `publish_date` DATE,
-                `image_url` VARCHAR(255),
-                `is_ticker` TINYINT(1) DEFAULT 0,
-                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                CREATE TABLE IF NOT EXISTS `news` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `title` VARCHAR(255) NOT NULL,
+                    `slug` VARCHAR(191),
+                    `content` LONGTEXT,
+                    `category` VARCHAR(50) DEFAULT 'Announcement',
+                    `publish_date` DATE,
+                    `image_url` VARCHAR(255),
+                    `is_ticker` TINYINT(1) DEFAULT 0,
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS `banners` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `page_slug` VARCHAR(100) DEFAULT 'home',
-                `title` VARCHAR(255) NOT NULL,
-                `subtitle` TEXT,
-                `image_url` VARCHAR(255),
-                `btn_text` VARCHAR(50),
-                `btn_link` VARCHAR(255),
-                `sort_order` INT DEFAULT 0
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                CREATE TABLE IF NOT EXISTS `banners` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `page_slug` VARCHAR(100) DEFAULT 'home',
+                    `title` VARCHAR(255) NOT NULL,
+                    `subtitle` TEXT,
+                    `image_url` VARCHAR(255),
+                    `btn_text` VARCHAR(50),
+                    `btn_link` VARCHAR(255),
+                    `sort_order` INT DEFAULT 0
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS `settings` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `setting_key` VARCHAR(100) NOT NULL UNIQUE,
-                `setting_value` TEXT
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                CREATE TABLE IF NOT EXISTS `settings` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `setting_key` VARCHAR(100) NOT NULL UNIQUE,
+                    `setting_value` TEXT
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS `enquiries` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `name` VARCHAR(100) NOT NULL,
-                `father_name` VARCHAR(150),
-                `email` VARCHAR(100) NOT NULL,
-                `phone` VARCHAR(20) NOT NULL,
-                `course` VARCHAR(150),
-                `city` VARCHAR(100),
-                `state` VARCHAR(100),
-                `source` VARCHAR(150),
-                `message` TEXT,
-                `status` VARCHAR(50) DEFAULT 'New',
-                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                CREATE TABLE IF NOT EXISTS `enquiries` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `name` VARCHAR(100) NOT NULL,
+                    `father_name` VARCHAR(150),
+                    `email` VARCHAR(100) NOT NULL,
+                    `phone` VARCHAR(20) NOT NULL,
+                    `course` VARCHAR(150),
+                    `city` VARCHAR(100),
+                    `state` VARCHAR(100),
+                    `source` VARCHAR(150),
+                    `message` TEXT,
+                    `status` VARCHAR(50) DEFAULT 'New',
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-            CREATE TABLE IF NOT EXISTS `complaints` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `name` VARCHAR(150) NOT NULL,
-                `father_name` VARCHAR(150) NULL,
-                `enrollment_number` VARCHAR(100) NULL,
-                `email` VARCHAR(150) NOT NULL,
-                `phone` VARCHAR(50) NOT NULL,
-                `institute_name` VARCHAR(255) NULL,
-                `course_name` VARCHAR(255) NULL,
-                `year_semester` VARCHAR(100) NULL,
-                `complaint_type` VARCHAR(100) NOT NULL DEFAULT 'General',
-                `complaint_details` TEXT NOT NULL,
-                `status` VARCHAR(50) NOT NULL DEFAULT 'New',
-                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-        ");
+                CREATE TABLE IF NOT EXISTS `complaints` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `name` VARCHAR(150) NOT NULL,
+                    `father_name` VARCHAR(150) NULL,
+                    `enrollment_number` VARCHAR(100) NULL,
+                    `email` VARCHAR(150) NOT NULL,
+                    `phone` VARCHAR(50) NOT NULL,
+                    `institute_name` VARCHAR(255) NULL,
+                    `course_name` VARCHAR(255) NULL,
+                    `year_semester` VARCHAR(100) NULL,
+                    `complaint_type` VARCHAR(100) NOT NULL DEFAULT 'General',
+                    `complaint_details` TEXT NOT NULL,
+                    `status` VARCHAR(50) NOT NULL DEFAULT 'New',
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                CREATE TABLE IF NOT EXISTS `board_members` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `name` VARCHAR(255) NOT NULL,
+                    `designation` VARCHAR(255) NOT NULL,
+                    `role` VARCHAR(100) DEFAULT 'Member',
+                    `bio` TEXT,
+                    `photo` VARCHAR(255),
+                    `sort_order` INT DEFAULT 0,
+                    `status` ENUM('active','inactive') DEFAULT 'active',
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            ");
+        }
 
         // Schema migrations for legacy/existing tables
         try {
@@ -1298,7 +1330,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
                 if (file_exists($syllabiFile)) {
                     require $syllabiFile;
                     if (isset($syllabusCategories) && is_array($syllabusCategories)) {
-                        $pdo->exec("TRUNCATE TABLE `syllabi`");
+                        $cleanTable('syllabi');
                         $insSyl = $pdo->prepare("INSERT INTO `syllabi` (`category_slug`, `category_title`, `department`, `title`, `type`, `file_path`, `filename`, `original_url`, `file_size`, `status`, `sort_order`) VALUES (:cat_slug, :cat_title, :dept, :title, :type, :file_path, :filename, :original_url, :file_size, :status, :sort_order)");
                         
                         $sylCount = 0;
@@ -1339,7 +1371,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
             $currFacCount = (int)$pdo->query("SELECT COUNT(*) FROM `faculty`")->fetchColumn();
             if ($currFacCount < 500 || $force) {
                 if ($masterSql && preg_match_all('/INSERT INTO `faculty`[^\;]+;/s', $masterSql, $matches)) {
-                    $pdo->exec("TRUNCATE TABLE `faculty`");
+                    $cleanTable('faculty');
                     foreach ($matches[0] as $stmt) {
                         $pdo->exec($stmt);
                     }
@@ -1357,7 +1389,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
             $currDeptCount = (int)$pdo->query("SELECT COUNT(*) FROM `departments`")->fetchColumn();
             if ($currDeptCount < 20 || $force) {
                 if ($masterSql && preg_match('/INSERT INTO `departments`[^\;]+;/s', $masterSql, $m)) {
-                    $pdo->exec("TRUNCATE TABLE `departments`");
+                    $cleanTable('departments');
                     $pdo->exec($m[0]);
                     $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `departments`")->fetchColumn();
                     $report['counts']['departments'] = $newCount;
@@ -1391,7 +1423,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
             $currCourseCount = (int)$pdo->query("SELECT COUNT(*) FROM `courses`")->fetchColumn();
             if ($currCourseCount < 50 || $force) {
                 if ($masterSql && preg_match_all('/INSERT INTO `courses`[^\;]+;/s', $masterSql, $m2)) {
-                    $pdo->exec("TRUNCATE TABLE `courses`");
+                    $cleanTable('courses');
                     foreach ($m2[0] as $stmt) {
                         $pdo->exec($stmt);
                     }
@@ -1408,7 +1440,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
         if ($target === 'all' || $target === 'gallery') {
             $currGalCount = (int)$pdo->query("SELECT COUNT(*) FROM `gallery`")->fetchColumn();
             if ($currGalCount < 70 || $force) {
-                $pdo->exec("TRUNCATE TABLE `gallery`");
+                $cleanTable('gallery');
                 $webpDir = $baseDir . '/assets/uploads/gallery/webp/';
                 if (is_dir($webpDir)) {
                     $files = glob($webpDir . '*.webp');
@@ -1443,7 +1475,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
         if ($target === 'all' || $target === 'blogs') {
             $currBlogCount = (int)$pdo->query("SELECT COUNT(*) FROM `blogs`")->fetchColumn();
             if ($currBlogCount == 0 || $force) {
-                $pdo->exec("TRUNCATE TABLE `blogs`");
+                $cleanTable('blogs');
                 $blogsMaster = [
                     [
                         'Tarang 2026: Annual Inter-University Cultural & Sports Extravaganza',
@@ -1528,7 +1560,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
         if ($target === 'all' || $target === 'news') {
             $currNewsCount = (int)$pdo->query("SELECT COUNT(*) FROM `news`")->fetchColumn();
             if ($currNewsCount == 0 || $force) {
-                $pdo->exec("TRUNCATE TABLE `news`");
+                $cleanTable('news');
                 $newsMaster = [
                     ['Admissions Open for Academic Session 2026-27', 'admissions-open-2026', 'Applications are invited for UG, PG, Diploma, and Ph.D. programs across Engineering, Pharmacy, Nursing, Management, Agriculture, Law, and Medicine.', 'Admission', '2026-08-01', 'assets/images/news1.jpg', 1],
                     ['National Campus Placement Drive 2026 - Highest Package 12 LPA', 'placement-drive-2026', 'Top tier recruiters including TCS, Wipro, Infosys, Cipla, and Sun Pharma participated in the annual mega placement drive.', 'Placement', '2026-08-05', 'assets/images/news2.jpg', 1],
@@ -1551,7 +1583,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
         if ($target === 'all' || $target === 'banners') {
             $currBannerCount = (int)$pdo->query("SELECT COUNT(*) FROM `banners`")->fetchColumn();
             if ($currBannerCount == 0 || $force) {
-                $pdo->exec("TRUNCATE TABLE `banners`");
+                $cleanTable('banners');
                 $bannersMaster = [
                     ['home', 'Welcome to SRK University, Bhopal', 'UGC-Recognized Premier University in MP offering Engineering, Pharmacy, Medicine & Management', 'assets/images/banner1.jpg', 'Apply Now', 'admission-enquiry.php', 1],
                     ['home', 'Excellence in Research & 94% Placements', '42+ High-Tech Labs with 120+ Top Recruiter Partnerships', 'assets/images/banner2.jpg', 'Explore Courses', 'courses.php', 2],
@@ -1573,7 +1605,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
         if ($target === 'all' || $target === 'pages') {
             $currPagesCount = (int)$pdo->query("SELECT COUNT(*) FROM `pages`")->fetchColumn();
             if ($currPagesCount == 0 || $force) {
-                $pdo->exec("TRUNCATE TABLE `pages`");
+                $cleanTable('pages');
                 $pagesMaster = [
                     [
                         'Why SRK University',

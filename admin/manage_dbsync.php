@@ -1,10 +1,13 @@
 <?php
-require_once __DIR__ . '/header.php';
-$pdo = getDBConnection();
+require_once __DIR__ . '/../includes/functions.php';
+checkAdminLogin();
 
-// Handle AJAX Sync Request
+// Handle AJAX Sync Request BEFORE any HTML output
 if (isset($_REQUEST['ajax_sync'])) {
-    header('Content-Type: application/json');
+    if (ob_get_length()) {
+        ob_clean();
+    }
+    header('Content-Type: application/json; charset=utf-8');
     $target = sanitize($_REQUEST['target'] ?? 'all');
     $force = isset($_REQUEST['force']) && $_REQUEST['force'] == '1';
     
@@ -15,7 +18,7 @@ if (isset($_REQUEST['ajax_sync'])) {
     exit;
 }
 
-// Handle Form POST Sync Request
+// Handle Form POST Sync Request BEFORE header.php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     $target = sanitize($_POST['target'] ?? 'all');
@@ -38,6 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
+
+require_once __DIR__ . '/header.php';
+$pdo = getDBConnection();
 
 $dbStatus = getDatabaseStatusInfo();
 $tables = $dbStatus['tables'] ?? [];

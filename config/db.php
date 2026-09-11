@@ -7,34 +7,57 @@ function getDBConnection() {
         return $pdo;
     }
 
-    try {
-        // Try connecting to existing MySQL database
-        $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
-        $pdo = new PDO($dsn, DB_USER, DB_PASS, [
+    $dbHost = defined('DB_HOST') ? DB_HOST : 'localhost';
+    $dbName = defined('DB_NAME') ? DB_NAME : 'srku_db_new';
+    $dbUser = defined('DB_USER') ? DB_USER : 'root';
+    $dbPass = defined('DB_PASS') ? DB_PASS : '';
+
+    // Hosts to attempt: configured host, plus 127.0.0.1 / localhost alternative
+    $hostsToTry = [$dbHost];
+    if ($dbHost === 'localhost' && !in_array('127.0.0.1', $hostsToTry)) {
+        $hostsToTry[] = '127.0.0.1';
+    } elseif ($dbHost === '127.0.0.1' && !in_array('localhost', $hostsToTry)) {
+        $hostsToTry[] = 'localhost';
+    }
+
+    // 1. Try connecting to MySQL
+    foreach ($hostsToTry as $host) {
+        try {
+            $dsn = "mysql:host={$host};dbname={$dbName};charset=utf8mb4";
+            $pdo = new PDO($dsn, $dbUser, $dbPass, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
+            ]);
+            break;
+        } catch (PDOException $e) {
+            // If database does not exist on MySQL, create it automatically
+            if ($e->getCode() == 1049 || stripos($e->getMessage(), 'Unknown database') !== false) {
+                try {
+                    $rootDsn = "mysql:host={$host};charset=utf8mb4";
+                    $rootPdo = new PDO($rootDsn, $dbUser, $dbPass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+                    $rootPdo->exec("CREATE DATABASE IF NOT EXISTS `{$dbName}` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+                    
+                    $dsn = "mysql:host={$host};dbname={$dbName};charset=utf8mb4";
+                    $pdo = new PDO($dsn, $dbUser, $dbPass, [
+                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    ]);
+                    break;
+                } catch (PDOException $ex) {
+                    // Try next host
+                }
+            }
+        }
+    }
+
+    // 2. Fallback to SQLite only if all MySQL attempts failed
+    if ($pdo === null) {
+        $sqlitePath = __DIR__ . '/../database.sqlite';
+        $pdo = new PDO("sqlite:" . $sqlitePath, null, null, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
         ]);
-    } catch (PDOException $e) {
-        // Try creating MySQL DB if missing on local server
-        try {
-            $rootDsn = "mysql:host=" . DB_HOST . ";charset=utf8mb4";
-            $rootPdo = new PDO($rootDsn, DB_USER, DB_PASS);
-            $rootPdo->exec("CREATE DATABASE IF NOT EXISTS `" . DB_NAME . "` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
-            
-            $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
-            $pdo = new PDO($dsn, DB_USER, DB_PASS, [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            ]);
-        } catch (PDOException $ex) {
-            // Fallback to SQLite if MySQL is not available
-            $sqlitePath = __DIR__ . '/../database.sqlite';
-            $pdo = new PDO("sqlite:" . $sqlitePath, null, null, [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            ]);
-        }
     }
 
     // Auto setup schema & seed data
