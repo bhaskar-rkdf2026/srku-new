@@ -32,6 +32,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="d-flex flex-wrap gap-2 pt-2">
                     <a href="#leadership" class="btn-hero-yellow"><i class="fas fa-users-cog me-1"></i> Meet the Leadership</a>
                     <a href="#chairman-story" class="btn-hero-outline"><i class="fas fa-user-tie me-1"></i> Chairman's Story</a>
+                    <a href="#all-committees" class="btn-hero-outline"><i class="fas fa-users-cog me-1"></i> All Committees &amp; Boards</a>
                     <a href="<?php echo BASE_URL; ?>board-members.php" class="btn-hero-outline"><i class="fas fa-id-badge me-1"></i> View Board Members</a>
                     <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn-hero-outline"><i class="fas fa-landmark me-1"></i> Board of Management</a>
                 </div>
@@ -418,22 +419,28 @@ $aboutMilestoneStats = [
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     BOARD OF MANAGEMENT SHOWCASE
+     APEX BOARDS & ALL COMMITTEES SHOWCASE
 ═══════════════════════════════════════════════════════ -->
-<section class="py-5 bg-cream position-relative" id="board-management-showcase">
+<section class="py-5 bg-cream position-relative" id="all-committees">
+    <span id="board-management-showcase" style="position:absolute; top:-70px;"></span>
     <div class="container-xl py-3">
         <div class="row align-items-center mb-4 g-3">
             <div class="col-12 col-md-8">
-                <span class="section-subtitle">STATUTORY APEX GOVERNING BODY</span>
-                <h2 class="section-title mb-2">Board of <span>Management</span></h2>
-                <p class="text-muted mb-0" style="max-width:720px; font-size:0.95rem;">
-                    Constituted under the statutory mandate of MP Niji Vishwavidyalaya Adhiniyam 2007. The Board of Management is the apex executive organ steering policy decisions, financial sanctions, and academic excellence.
+                <span class="section-subtitle">STATUTORY APEX GOVERNANCE &amp; COMMITTEES</span>
+                <h2 class="section-title mb-2">Apex Boards &amp; <span>All Committees</span></h2>
+                <p class="text-muted mb-0" style="max-width:760px; font-size:0.95rem;">
+                    Constituted under the statutory mandate of MP Niji Vishwavidyalaya Adhiniyam 2007, UGC regulations, and statutory bodies. Explore the apex executive organs, Board of Management, Board Members, and all statutory student welfare and redressal committees.
                 </p>
             </div>
             <div class="col-12 col-md-4 text-md-end">
-                <a href="<?php echo BASE_URL; ?>board-members.php" class="btn btn-maroon rounded-pill px-4 py-2 shadow-sm">
-                    <i class="fas fa-users-cog me-2"></i> View Board Members
-                </a>
+                <div class="d-flex flex-wrap gap-2 justify-content-md-end">
+                    <a href="<?php echo BASE_URL; ?>board-members.php" class="btn btn-maroon rounded-pill px-3 py-2 shadow-sm">
+                        <i class="fas fa-users-cog me-1"></i> Board Members
+                    </a>
+                    <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn btn-navy text-white rounded-pill px-3 py-2 shadow-sm">
+                        <i class="fas fa-landmark me-1"></i> Board of Management
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -498,11 +505,11 @@ $aboutMilestoneStats = [
         </div>
 
         <!-- Featured Members Strip -->
-        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white reveal">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white reveal mb-4">
             <div class="row align-items-center g-3">
                 <div class="col-12 col-lg-8">
                     <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
-                        <span class="badge bg-danger text-white px-3 py-1 rounded-pill small fw-bold">Statutory Governance</span>
+                        <span class="badge bg-danger text-white px-3 py-1 rounded-pill small fw-bold">Apex Statutory Governance</span>
                         <span class="text-muted small"><i class="fas fa-calendar-check me-1 text-primary"></i> Academic Year 2026-27</span>
                     </div>
                     <h5 class="fw-bold text-navy mb-1">Board of Management &amp; Governing Body Directory</h5>
@@ -518,6 +525,135 @@ $aboutMilestoneStats = [
                         <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn btn-outline-navy px-3 py-2 rounded-pill">
                             <i class="fas fa-landmark me-1"></i> Board of Management
                         </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Statutory Committees Grid -->
+        <div class="mt-4 pt-2">
+            <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
+                <div>
+                    <span class="badge bg-warning text-dark px-3 py-1 rounded-pill small fw-bold mb-1">Mandatory Statutory Bodies</span>
+                    <h4 class="fw-bold text-navy mb-0">University Statutory Committees &amp; Cells</h4>
+                </div>
+                <a href="<?php echo BASE_URL; ?>grievance.php" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 mt-2 mt-sm-0">
+                    <i class="fas fa-balance-scale me-1"></i> Online Grievance Portal
+                </a>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                <!-- 1. Student Grievance -->
+                <div class="col">
+                    <div class="card h-100 p-3 border-0 shadow-sm rounded-3 bg-white">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center" style="width:42px; height:42px; font-size:1.1rem; flex-shrink:0;">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="fw-bold text-navy mb-1">Student Grievance Committee</h6>
+                                <p class="text-muted small mb-2" style="font-size:0.84rem; line-height:1.4;">Dedicated redressal mechanism for academic, administrative, and student life queries.</p>
+                                <div class="d-flex flex-wrap gap-2 align-items-center">
+                                    <a href="<?php echo BASE_URL; ?>document/student-grievance-committee" class="text-danger small fw-semibold text-decoration-none">
+                                        <i class="fas fa-file-pdf me-1"></i> View Committee
+                                    </a>
+                                    <span class="text-muted small">&middot;</span>
+                                    <a href="<?php echo BASE_URL; ?>grievance.php" class="text-navy small fw-semibold text-decoration-none">
+                                        <i class="fas fa-paper-plane me-1"></i> Lodge Grievance
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Anti Ragging -->
+                <div class="col">
+                    <div class="card h-100 p-3 border-0 shadow-sm rounded-3 bg-white">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="rounded-circle bg-warning text-dark d-flex align-items-center justify-content-center" style="width:42px; height:42px; font-size:1.1rem; flex-shrink:0;">
+                                <i class="fas fa-hand-paper"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="fw-bold text-navy mb-1">Anti-Ragging Committee</h6>
+                                <p class="text-muted small mb-2" style="font-size:0.84rem; line-height:1.4;">Strict zero-tolerance policy against ragging with 24x7 squad monitoring and helpline.</p>
+                                <a href="<?php echo BASE_URL; ?>document/anti-ragging" class="text-danger small fw-semibold text-decoration-none">
+                                    <i class="fas fa-file-pdf me-1"></i> Constitution &amp; Guidelines
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Internal Complaints Committee (Women Grievance) -->
+                <div class="col">
+                    <div class="card h-100 p-3 border-0 shadow-sm rounded-3 bg-white">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="rounded-circle bg-maroon text-white d-flex align-items-center justify-content-center" style="width:42px; height:42px; font-size:1.1rem; flex-shrink:0;">
+                                <i class="fas fa-female"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="fw-bold text-navy mb-1">Women Grievance / ICC</h6>
+                                <p class="text-muted small mb-2" style="font-size:0.84rem; line-height:1.4;">Constituted as per POSH Act 2013 ensuring safety and gender dignity of women on campus.</p>
+                                <a href="<?php echo BASE_URL; ?>document/women-grievance-committee" class="text-danger small fw-semibold text-decoration-none">
+                                    <i class="fas fa-file-pdf me-1"></i> Members &amp; SOP
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. OBC & Minority Committee -->
+                <div class="col">
+                    <div class="card h-100 p-3 border-0 shadow-sm rounded-3 bg-white">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="rounded-circle bg-navy text-white d-flex align-items-center justify-content-center" style="width:42px; height:42px; font-size:1.1rem; flex-shrink:0;">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="fw-bold text-navy mb-1">OBC &amp; Minority Committee</h6>
+                                <p class="text-muted small mb-2" style="font-size:0.84rem; line-height:1.4;">Empowerment, scholarship awareness, and academic handholding for minority &amp; OBC students.</p>
+                                <a href="<?php echo BASE_URL; ?>document/obc-minority" class="text-danger small fw-semibold text-decoration-none">
+                                    <i class="fas fa-file-pdf me-1"></i> Notification &amp; Members
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. SC & ST Grievance Committee -->
+                <div class="col">
+                    <div class="card h-100 p-3 border-0 shadow-sm rounded-3 bg-white">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center" style="width:42px; height:42px; font-size:1.1rem; flex-shrink:0;">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="fw-bold text-navy mb-1">SC &amp; ST Grievance Committee</h6>
+                                <p class="text-muted small mb-2" style="font-size:0.84rem; line-height:1.4;">Safeguarding constitutional rights, welfare schemes, and non-discrimination on premises.</p>
+                                <a href="<?php echo BASE_URL; ?>document/sc-st-grievance-committee" class="text-danger small fw-semibold text-decoration-none">
+                                    <i class="fas fa-file-pdf me-1"></i> Committee Notification
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Equal Opportunity Cell -->
+                <div class="col">
+                    <div class="card h-100 p-3 border-0 shadow-sm rounded-3 bg-white">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="rounded-circle bg-info text-white d-flex align-items-center justify-content-center" style="width:42px; height:42px; font-size:1.1rem; flex-shrink:0;">
+                                <i class="fas fa-universal-access"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="fw-bold text-navy mb-1">Equal Opportunity Cell</h6>
+                                <p class="text-muted small mb-2" style="font-size:0.84rem; line-height:1.4;">Ensuring barrier-free campus access, assistive tools, and equal growth opportunities for all.</p>
+                                <a href="<?php echo BASE_URL; ?>document/equal-opportunity-cell" class="text-danger small fw-semibold text-decoration-none">
+                                    <i class="fas fa-file-pdf me-1"></i> Cell Details &amp; Mandate
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

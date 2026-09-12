@@ -216,6 +216,8 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                                 <i class="fas fa-users-cog text-warning me-1"></i> All Committee <span class="static-dropdown-arrow static-sub-arrow"></span>
                             </a>
                             <ul class="static-dropdown-panel static-sub-dropdown">
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>board-members.php" class="static-dropdown-link fw-bold text-danger"><i class="fas fa-id-badge me-1"></i> Board of Members</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>board-of-management.php" class="static-dropdown-link fw-bold text-navy"><i class="fas fa-landmark me-1"></i> Board of Management</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>grievance.php" class="static-dropdown-link fw-bold text-danger"><i class="fas fa-balance-scale me-1"></i> Student Grievance Portal</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/student-grievance-committee" class="static-dropdown-link">Student Grievance Committee</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/anti-ragging" class="static-dropdown-link">Anti Ragging Committee</a></li>
@@ -534,8 +536,8 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                     <ul class="static-dropdown-panel">
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/sports-facilities" class="static-dropdown-link"><i class="fas fa-dumbbell text-primary me-1"></i> Sports Facilities</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/ncc-nss" class="static-dropdown-link"><i class="fas fa-medal text-warning me-1"></i> NCC &amp; NSS</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>hostel.php" class="static-dropdown-link"><i class="fas fa-bed text-warning me-1"></i> Hostel Details</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>placements" class="static-dropdown-link"><i class="fas fa-briefcase text-success me-1"></i> Placement Cell</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/hostel-details" class="static-dropdown-link"><i class="fas fa-bed text-warning me-1"></i> Hostel Details</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/placement-cell" class="static-dropdown-link"><i class="fas fa-briefcase text-success me-1"></i> Placement Cell</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/student-grievance-committee" class="static-dropdown-link">Student Grievance Committee</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/ombudsman" class="static-dropdown-link">Ombudsman</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/health-facility" class="static-dropdown-link"><i class="fas fa-heartbeat text-danger me-1"></i> Health Facility</a></li>

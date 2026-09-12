@@ -1644,6 +1644,114 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
                         'Admission Guidelines 2026-27',
                         'Simple, Transparent & Merit-Based Admissions Across All Streams',
                         'assets/uploads/2026/07/002.webp'
+                    ],
+                    [
+                        'Sports Facilities',
+                        'sports-facilities',
+                        '<p>Official documentation and facilities guide for Sports and Athletics at Sarvepalli Radhakrishnan University (SRKU), Bhopal.</p>',
+                        'Overview of world-class outdoor and indoor sports facilities, athletic tracks, cricket ground, football arena, basketball courts, and fitness centers at SRK University.',
+                        'Sports Facilities & Athletic Complex',
+                        'Sports Infrastructure, Athletic Complexes & University Gymnasium',
+                        'assets/uploads/2025/10/new-update/sports-Facilities.pdf'
+                    ],
+                    [
+                        'NCC & NSS',
+                        'ncc-nss',
+                        '<p>Official records of National Cadet Corps (NCC) and National Service Scheme (NSS) at SRK University, Bhopal.</p>',
+                        'Details of the active NCC battalions and NSS units at SRKU promoting leadership, community service, discipline, and defense career preparedness.',
+                        'NCC & NSS Activities',
+                        'National Cadet Corps & National Service Scheme Activities & Units',
+                        'assets/uploads/2025/10/new-update/NCC-NSS-Details.pdf'
+                    ],
+                    [
+                        'Hostel Details',
+                        'hostel-details',
+                        '<p>Official accommodation, dining, and hostel fee details for students at Sarvepalli Radhakrishnan University, Bhopal.</p>',
+                        'Comprehensive documentation of on-campus boys and girls hostels featuring furnished rooms, 24x7 security, dining mess, and resident warden support.',
+                        'Hostel Accommodation & Campus Residence',
+                        'On-Campus Student Residential Facilities, Dining, Security & Amenities',
+                        'assets/uploads/2025/10/new-update/Hostel-Details.pdf'
+                    ],
+                    [
+                        'Placement Cell',
+                        'placement-cell',
+                        '<p>Official reports, company recruitment tie-ups, and placement statistics for Sarvepalli Radhakrishnan University (SRKU), Bhopal.</p>',
+                        'Official overview of the University Training & Placement Cell coordinating corporate tie-ups, internships, and campus recruitment drives.',
+                        'Training & Placement Cell',
+                        'Corporate Relations, Soft Skill Training, Internships & Campus Recruitment',
+                        'assets/uploads/2025/10/new-update/placement-cell.pdf'
+                    ],
+                    [
+                        'Student Grievance Committee',
+                        'student-grievance-committee',
+                        '<p>Constitution, committee members, and procedure of the Student Grievance Redressal Committee at SRKU Bhopal.</p>',
+                        'Official constitution, composition, and redressal procedure of the Student Grievance Redressal Committee (SGRC) as per UGC norms.',
+                        'Student Grievance Redressal Committee',
+                        'Institutional Student Grievance Redressal Mechanism & Regulations',
+                        'assets/uploads/2025/10/new-update/student-grievance-committee.pdf'
+                    ],
+                    [
+                        'Ombudsman',
+                        'ombudsman',
+                        '<p>Statutory notification of the appointment of Ombudsman at Sarvepalli Radhakrishnan University, Bhopal.</p>',
+                        'Official appointment, jurisdiction, and contact details of the University Ombudsman appointed under UGC grievance redressal regulations.',
+                        'University Ombudsman',
+                        'Statutory University Ombudsman for Student Grievance Adjudication',
+                        'assets/uploads/2025/10/new-update/ombudsman.pdf'
+                    ],
+                    [
+                        'Health Facility',
+                        'health-facility',
+                        '<p>Healthcare and medical infrastructure facilities provided for students and faculty at SRK University Bhopal.</p>',
+                        'Comprehensive overview of health facilities, emergency medical care, qualified physicians, pharmacy, and hospital association at SRKU.',
+                        'Health Facility & Medical Care',
+                        '24x7 Campus Medical Care, On-Site Hospital & Emergency Services',
+                        'assets/uploads/2025/10/new-update/Health-facility.pdf'
+                    ],
+                    [
+                        'Internal Complaint Committee',
+                        'internal-complaint-committee',
+                        '<p>Official constitution and members of the Internal Complaints Committee (ICC) at Sarvepalli Radhakrishnan University Bhopal.</p>',
+                        'Official constitution and inquiry procedure of the Internal Complaints Committee (ICC) constituted under the POSH Act 2013.',
+                        'Internal Complaint Committee (ICC)',
+                        'Gender Sensitization, POSH Compliance & Safe Campus Redressal',
+                        'assets/uploads/2025/10/new-update/InternalComplaint-Committee.pdf'
+                    ],
+                    [
+                        'Anti Ragging Committee',
+                        'anti-ragging',
+                        '<p>Zero-tolerance anti-ragging measures and committee members at Sarvepalli Radhakrishnan University Bhopal.</p>',
+                        'Statutory committee composition, flying monitoring squads, 24x7 helpline numbers, and UGC mandated declarations against ragging.',
+                        'Anti-Ragging Committee & Squads',
+                        'Strict Zero-Tolerance Anti-Ragging Guidelines & Monitoring Squads',
+                        'assets/uploads/2025/10/new-update/AntiRaggingCommittee.pdf'
+                    ],
+                    [
+                        'Equal Opportunity Cell',
+                        'equal-opportunity-cell',
+                        '<p>Mandate, committee details, and activities of the Equal Opportunity Cell at SRK University Bhopal.</p>',
+                        'Official mandate and operations of the Equal Opportunity Cell facilitating holistic support and non-discrimination for all students.',
+                        'Equal Opportunity Cell',
+                        'Inclusive Campus Framework, Accessibility & Equal Development',
+                        'assets/uploads/2025/10/new-update/EqualOpportunityCell.pdf'
+                    ],
+                    [
+                        'Socio Economically Disadvantaged Groups Cell (SEDG)',
+                        'sedg-cell',
+                        '<p>Constitution and functions of the Socio Economically Disadvantaged Groups Cell (SEDG) at SRK University Bhopal.</p>',
+                        'Institutional framework of the SEDG Cell constituted in alignment with NEP 2020 and UGC guidelines to empower disadvantaged students.',
+                        'SEDG Cell',
+                        'UGC NEP-2020 Aligned SEDG Cell for Equity & Holistic Support',
+                        'assets/uploads/2025/10/new-update/Socio-Economically-Disadvantaged-Groups-Cell-(SEDG).pdf'
+                    ],
+                    [
+                        'Facilities For Differently Abled Students',
+                        'differently-abled-facilities',
+                        '<p>Campus accessibility infrastructure and assistive facilities for differently-abled students at Sarvepalli Radhakrishnan University Bhopal.</p>',
+                        'Documentation of barrier-free campus infrastructure including wheelchair ramps, accessible elevators, and assistive tools for differently-abled students.',
+                        'Facilities For Differently Abled Students',
+                        'Barrier-Free Built Environment, Assistive Infrastructure & Ramps',
+                        'assets/uploads/2025/10/new-update/FACILITIES-FOR-DIFFERENTLY-ABLED-STUDENTS.pdf'
                     ]
                 ];
                 $insPage = $pdo->prepare("INSERT INTO `pages` (`title`, `slug`, `content`, `meta_description`, `banner_title`, `banner_subtitle`, `banner_img`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?, 'published')");

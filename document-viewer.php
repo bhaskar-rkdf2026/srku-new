@@ -126,7 +126,7 @@ $documentsRegistry = [
         'title' => 'Internal Complaint Committee (ICC)',
         'category' => 'Administration',
         'subtitle' => 'Grievance Redressal, Gender Sensitization & Women Safety at Workplace',
-        'pdf_path' => 'assets/uploads/2026/07/Internal-Complaint-Committee.pdf',
+        'pdf_path' => 'assets/uploads/2025/10/new-update/InternalComplaint-Committee.pdf',
         'description' => 'Official constitution, mandate, and contact details of the Internal Complaint Committee established in compliance with POSH Act regulations to ensure a secure, respectful, and gender-inclusive campus environment.',
         'highlights' => [
             'Prevention, prohibition, and redressal of sexual harassment and discrimination.',
@@ -283,7 +283,7 @@ $documentsRegistry = [
         'title' => 'Student Grievance Redressal Committee',
         'category' => 'Act & Statutes',
         'subtitle' => 'Institutional Student Grievance Redressal Committee & Regulations',
-        'pdf_path' => 'assets/uploads/2026/07/Student_Grievance_Committee.pdf',
+        'pdf_path' => 'assets/uploads/2025/10/new-update/student-grievance-committee.pdf',
         'description' => 'Official constitution, composition, and redressal procedure of the Student Grievance Redressal Committee (SGRC) as per UGC norms.',
         'highlights' => []
     ],
@@ -291,7 +291,7 @@ $documentsRegistry = [
         'title' => 'Anti-Ragging Regulations & Committee',
         'category' => 'Act & Statutes',
         'subtitle' => 'Zero Tolerance Policy, Anti-Ragging Squad & Student Welfare Mandate',
-        'pdf_path' => 'assets/uploads/2026/07/AntiRagging.pdf',
+        'pdf_path' => 'assets/uploads/2025/10/new-update/AntiRaggingCommittee.pdf',
         'description' => 'Strict anti-ragging policies, monitoring squads, helpline numbers, and statutory regulations compliant with UGC and Supreme Court mandates.',
         'highlights' => []
     ],
@@ -323,7 +323,7 @@ $documentsRegistry = [
         'title' => 'Equal Opportunity Cell',
         'category' => 'Act & Statutes',
         'subtitle' => 'Inclusive Campus Environment, Accessibility & Student Support',
-        'pdf_path' => 'assets/uploads/2026/07/EqualOppurtunityCell.pdf',
+        'pdf_path' => 'assets/uploads/2025/10/new-update/EqualOpportunityCell.pdf',
         'description' => 'Mandate and operations of the Equal Opportunity Cell facilitating holistic support for persons with disabilities and marginalized groups.',
         'highlights' => []
     ],
@@ -390,14 +390,168 @@ $documentsRegistry = [
         'pdf_path' => 'assets/uploads/2026/07/UniversityLibrary.pdf',
         'description' => 'Overview of central library resources, print volumes, national & international e-journal subscriptions, DELNET access, and reading room services.',
         'highlights' => []
+    ],
+    // ═══════════════════════════════════════════════════════
+    // STUDENT LIFE DOCUMENTS (OFFICIAL DIRECT PDFS)
+    // ═══════════════════════════════════════════════════════
+    'sports-facilities' => [
+        'title' => 'Sports Facilities',
+        'category' => 'Student Life',
+        'subtitle' => 'Sports Infrastructure, Athletic Complexes & University Gymnasium',
+        'pdf_path' => 'assets/uploads/2025/10/new-update/sports-Facilities.pdf',
+        'description' => 'Overview of world-class outdoor and indoor sports facilities, athletic tracks, cricket ground, football arena, basketball courts, and fitness centers at SRK University.',
+        'highlights' => [
+            'Olympic-standard athletic track and multipurpose sports grounds.',
+            'Dedicated indoor complex for Badminton, Table Tennis, Chess, and Carrom.',
+            'Modern fitness center and gymnasium with certified trainers.',
+            'Annual sports meet, inter-university tournaments, and athletic scholarships.'
+        ]
+    ],
+    'ncc-nss' => [
+        'title' => 'NCC & NSS',
+        'category' => 'Student Life',
+        'subtitle' => 'National Cadet Corps & National Service Scheme Activities & Units',
+        'pdf_path' => 'assets/uploads/2025/10/new-update/NCC-NSS-Details.pdf',
+        'description' => 'Details of the active NCC battalions and NSS units at SRKU promoting leadership, community service, discipline, social outreach, and defense career preparedness.',
+        'highlights' => [
+            'Authorized NCC Senior Division army wings offering B & C certificates.',
+            'Active NSS volunteer units organizing regular blood donation and rural health camps.',
+            'Special reservation and career advantage for defense forces and public services.',
+            'Participation in Republic Day Parade and National Integration Camps.'
+        ]
+    ],
+    'hostel-details' => [
+        'title' => 'Hostel Details',
+        'category' => 'Student Life',
+        'subtitle' => 'On-Campus Student Residential Facilities, Dining, Security & Amenities',
+        'pdf_path' => 'assets/uploads/2025/10/new-update/Hostel-Details.pdf',
+        'description' => 'Comprehensive documentation of on-campus boys and girls hostels featuring furnished rooms, 24x7 security, dining mess, and resident warden support.',
+        'highlights' => [
+            'Separate hostel blocks for boys and girls with 24x7 CCTV and security personnel.',
+            'Nutritious vegetarian and multi-cuisine dining hall supervised by food safety auditors.',
+            'High-speed Wi-Fi connectivity, laundry services, and solar hot water facility.',
+            'Resident wardens, anti-ragging squad coverage, and medical emergency transport.'
+        ]
+    ],
+    'hostel' => [
+        'title' => 'Hostel Details',
+        'category' => 'Student Life',
+        'subtitle' => 'On-Campus Student Residential Facilities, Dining, Security & Amenities',
+        'pdf_path' => 'assets/uploads/2025/10/new-update/Hostel-Details.pdf',
+        'description' => 'Comprehensive documentation of on-campus boys and girls hostels featuring furnished rooms, 24x7 security, dining mess, and resident warden support.',
+        'highlights' => []
+    ],
+    'placement-cell' => [
+        'title' => 'Placement Cell',
+        'category' => 'Student Life',
+        'subtitle' => 'Corporate Relations, Soft Skill Training, Internships & Campus Recruitment',
+        'pdf_path' => 'assets/uploads/2025/10/new-update/placement-cell.pdf',
+        'description' => 'Official overview of the University Training & Placement Cell coordinating corporate tie-ups, personality enhancement workshops, mock interviews, internships, and campus recruitment drives.',
+        'highlights' => [
+            '120+ leading corporate recruitment partners and Fortune 500 hiring tie-ups.',
+            'Specialized technical aptitude, coding bootcamps, and soft skill grooming.',
+            'Highest package benchmarks, average pay growth, and multi-offer opportunities.',
+            'Dedicated industry internship liaison and summer project mentorship.'
+        ]
+    ],
+    'ombudsman' => [
+        'title' => 'University Ombudsman',
+        'category' => 'Student Life',
+        'subtitle' => 'Statutory University Ombudsman for Student Grievance Adjudication',
+        'pdf_path' => 'assets/uploads/2025/10/new-update/ombudsman.pdf',
+        'description' => 'Official appointment, jurisdiction, and contact details of the University Ombudsman appointed in accordance with UGC grievance redressal regulations for independent adjudication.',
+        'highlights' => [
+            'Statutory independent appellate authority for aggrieved university students.',
+            'Senior Academician / Former District Judge appointed under UGC regulations.',
+            'Impartial hearing and binding recommendations on contested grievances.',
+            'Guaranteed protection against victimization or unfair treatment.'
+        ]
+    ],
+    'health-facility' => [
+        'title' => 'Health Facility',
+        'category' => 'Student Life',
+        'subtitle' => '24x7 Campus Medical Care, On-Site Hospital & Emergency Services',
+        'pdf_path' => 'assets/uploads/2025/10/new-update/Health-facility.pdf',
+        'description' => 'Comprehensive overview of on-campus health facilities, round-the-clock emergency medical care, qualified medical officers, pharmacy, ambulances, and association with 750+ bed teaching hospital.',
+        'highlights' => [
+            'Immediate on-campus primary care center with resident medical officers and nurses.',
+            'Direct linkage with SRK University 750+ Bed Super-Specialty Teaching Hospital.',
+            '24x7 emergency response with dedicated ambulances on standby.',
+            'Annual health checkups, vaccination drives, and student wellness support.'
+        ]
+    ],
+    'sedg-cell' => [
+        'title' => 'Socio Economically Disadvantaged Groups Cell (SEDG)',
+        'category' => 'Student Life',
+        'subtitle' => 'UGC NEP-2020 Aligned SEDG Cell for Equity & Holistic Support',
+        'pdf_path' => 'assets/uploads/2025/10/new-update/Socio-Economically-Disadvantaged-Groups-Cell-(SEDG).pdf',
+        'description' => 'Institutional framework of the SEDG Cell constituted in alignment with National Education Policy (NEP 2020) and UGC guidelines to empower socio-economically disadvantaged students.',
+        'highlights' => [
+            'Institutionalized financial guidance, scholarship assistance, and fee concessions.',
+            'Academic bridge courses, language development, and remedial mentoring.',
+            'Psychosocial counseling and peer support networks.',
+            'Special placement preparation and corporate sponsorship linkage.'
+        ]
+    ],
+    'differently-abled-facilities' => [
+        'title' => 'Facilities For Differently Abled Students',
+        'category' => 'Student Life',
+        'subtitle' => 'Barrier-Free Built Environment, Assistive Infrastructure & Ramps',
+        'pdf_path' => 'assets/uploads/2025/10/new-update/FACILITIES-FOR-DIFFERENTLY-ABLED-STUDENTS.pdf',
+        'description' => 'Documentation of barrier-free campus infrastructure including wheelchair ramps, accessible elevators, tactile pathways, designated washrooms, and assistive software tools for differently-abled students.',
+        'highlights' => [
+            'Barrier-free architectural design with wheelchair ramps and handrails across all blocks.',
+            'Elevators equipped with Braille keypads and voice announcements.',
+            'Specially designed, barrier-free accessible washrooms on all academic floors.',
+            'Assistive reading software, screen readers, and dedicated library seating.'
+        ]
     ]
 ];
 
-// Match by slug or fallback
+// Match by slug (case-insensitive & aliases)
 $doc = null;
-if (!empty($slug) && isset($documentsRegistry[$slug])) {
-    $doc = $documentsRegistry[$slug];
-} elseif (!empty($fileParam)) {
+$cleanSlug = strtolower(trim($slug));
+
+if (!empty($cleanSlug)) {
+    // 1. Direct registry check
+    if (isset($documentsRegistry[$slug])) {
+        $doc = $documentsRegistry[$slug];
+    } elseif (isset($documentsRegistry[$cleanSlug])) {
+        $doc = $documentsRegistry[$cleanSlug];
+        $slug = $cleanSlug;
+    } else {
+        foreach ($documentsRegistry as $k => $item) {
+            if (strtolower($k) === $cleanSlug) {
+                $doc = $item;
+                $slug = $k;
+                break;
+            }
+        }
+    }
+
+    // 2. Check Database pages table (Admin editable CMS)
+    if (!$doc) {
+        try {
+            $pdo = getDBConnection();
+            $stmt = $pdo->prepare("SELECT * FROM pages WHERE slug = :s OR slug = :clean LIMIT 1");
+            $stmt->execute([':s' => $slug, ':clean' => $cleanSlug]);
+            $pRow = $stmt->fetch();
+            if ($pRow && !empty($pRow['banner_img']) && preg_match('/\.pdf$/i', $pRow['banner_img'])) {
+                $doc = [
+                    'title' => $pRow['title'],
+                    'category' => 'Student Life',
+                    'subtitle' => !empty($pRow['banner_subtitle']) ? $pRow['banner_subtitle'] : (!empty($pRow['banner_title']) ? $pRow['banner_title'] : $pRow['title']),
+                    'pdf_path' => $pRow['banner_img'],
+                    'description' => !empty($pRow['meta_description']) ? $pRow['meta_description'] : strip_tags($pRow['content']),
+                    'highlights' => []
+                ];
+            }
+        } catch (Exception $e) {}
+    }
+}
+
+// 3. Match by fileParam
+if (!$doc && !empty($fileParam)) {
     foreach ($documentsRegistry as $k => $item) {
         if (basename($item['pdf_path']) === basename($fileParam) || $item['pdf_path'] === $fileParam) {
             $doc = $item;
@@ -424,8 +578,34 @@ if (!empty($slug) && isset($documentsRegistry[$slug])) {
     }
 }
 
+// 4. Auto-detect from new-update PDF directory if slug matches a PDF filename
+if (!$doc && !empty($cleanSlug)) {
+    $pdfDir = __DIR__ . '/assets/uploads/2025/10/new-update/';
+    if (is_dir($pdfDir)) {
+        $scan = scandir($pdfDir);
+        $normSlug = preg_replace('/[^a-z0-9]/', '', $cleanSlug);
+        foreach ($scan as $file) {
+            if (preg_match('/\.pdf$/i', $file)) {
+                $normFile = strtolower(preg_replace('/[^a-z0-9]/', '', str_replace('.pdf', '', $file)));
+                if ($normFile === $normSlug || strpos($normFile, $normSlug) !== false || strpos($normSlug, $normFile) !== false) {
+                    $cleanTitle = ucwords(str_replace(['-', '_', '.pdf'], ' ', $file));
+                    $doc = [
+                        'title' => $cleanTitle,
+                        'category' => 'Student Life',
+                        'subtitle' => 'Official University Publication & Information Document',
+                        'pdf_path' => 'assets/uploads/2025/10/new-update/' . $file,
+                        'description' => 'Official published document of Sarvepalli Radhakrishnan University (SRKU), Bhopal for student and faculty reference.',
+                        'highlights' => []
+                    ];
+                    break;
+                }
+            }
+        }
+    }
+}
+
 if (!$doc) {
-    // Default to first document
+    // Default to first document only if completely unmatched
     $doc = reset($documentsRegistry);
     $slug = key($documentsRegistry);
 }
