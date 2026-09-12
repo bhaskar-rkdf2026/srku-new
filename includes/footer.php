@@ -55,6 +55,7 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
             <div class="col-12 col-sm-6 col-lg-2 footer-col">
                 <h5 class="fw-bold text-white mb-3">Quick Links</h5>
                 <ul class="list-unstyled mb-0 d-flex flex-column">
+                    <li><a href="<?php echo BASE_URL; ?>founder-story.php"><i class="fas fa-angle-right me-1 text-warning"></i> Founder's Story</a></li>
                     <li><a href="<?php echo BASE_URL; ?>chancellor-message.php"><i class="fas fa-angle-right me-1 text-warning"></i> Chancellor's Message</a></li>
                     <li><a href="<?php echo BASE_URL; ?>vice-chancellor-message.php"><i class="fas fa-angle-right me-1 text-warning"></i> VC's Message</a></li>
                     <li><a href="<?php echo BASE_URL; ?>academic-calendar.php"><i class="fas fa-angle-right me-1 text-warning"></i> Academic Calendar</a></li>

@@ -122,8 +122,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_settings
         'stat_patents' => sanitize($_POST['stat_patents'] ?? '50+'),
 
         // Section 7: Founder Chairman & Vision
-        'chairman_name' => sanitize($_POST['chairman_name'] ?? 'Late Er. Sunil Kapoor'),
-        'chairman_title' => sanitize($_POST['chairman_title'] ?? 'Hon’ble Founder Chairman'),
+        'chairman_name' => sanitize($_POST['chairman_name'] ?? 'Dr. Sunil Kapoor'),
+        'chairman_title' => sanitize($_POST['chairman_title'] ?? 'Chairman & Founder Patron'),
         'chairman_story_quote' => $_POST['chairman_story_quote'] ?? '',
         'vision_quote' => $_POST['vision_quote'] ?? '',
         'vision_text' => $_POST['vision_text'] ?? '',
@@ -213,8 +213,8 @@ $statHospitalBeds = getSetting('stat_hospital_beds', '350+');
 $statPatents = getSetting('stat_patents', '50+');
 
 // Section 7: Founder Chairman & Vision
-$chairmanName = getSetting('chairman_name', 'Late Er. Sunil Kapoor');
-$chairmanTitle = getSetting('chairman_title', 'Hon’ble Founder Chairman');
+$chairmanName = getSetting('chairman_name', 'Dr. Sunil Kapoor');
+$chairmanTitle = getSetting('chairman_title', 'Chairman & Founder Patron');
 $chairmanStoryQuote = getSetting('chairman_story_quote', 'The journey of RKDF and Sarvepalli Radhakrishnan University began with a simple yet profound conviction: every young mind in central India deserves access to world-class technical education, modern healthcare training, and unbounded opportunities.');
 $visionQuote = getSetting('vision_quote', 'Education is not just about academic instruction; it is about character building, ethical leadership, and empowering communities to solve humanity’s grandest challenges.');
 $visionText = getSetting('vision_text', 'To become a globally acclaimed center of academic and research excellence, empowering diverse learners with cutting-edge skills, ethical integrity, and social responsibility to lead sustainable transformation.');

@@ -172,30 +172,37 @@ $aboutMilestoneStats = [
                             <span class="text-white-50 small fw-semibold">RKDF Education Society</span>
                         </div>
                         <div class="chairman-avatar-box">
-                            <div class="chairman-avatar-circle">
-                                <i class="fas fa-user-tie"></i>
+                            <div class="chairman-avatar-circle" style="overflow:hidden; padding:0; background:#fff; border:4px solid #ffffff; box-shadow:0 8px 24px rgba(0,0,0,0.15);">
+                                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/dr-sunil-kapoor.jpeg"
+                                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                                     alt="<?php echo sanitize(getSetting('chairman_name', 'Dr. Sunil Kapoor')); ?>"
+                                     style="width:100%; height:100%; object-fit:cover; object-position:top center;">
                             </div>
                         </div>
                         <div class="chairman-card-body text-center">
                             <h3 class="chairman-name mb-1"><?php echo sanitize(getSetting('chairman_name', 'Dr. Sunil Kapoor')); ?></h3>
-                            <p class="chairman-title text-danger fw-bold mb-3"><?php echo sanitize(getSetting('chairman_title', 'Chairman &amp; Founder Patron')); ?></p>
+                            <p class="chairman-title text-danger fw-bold mb-2"><?php echo sanitize(getSetting('chairman_title', 'Chairman &amp; Founder Patron')); ?></p>
+                            <span class="badge bg-light text-navy border fw-semibold small mb-3 d-inline-block px-3 py-1">
+                                MBBS, DCH, MIAP, PGDBM (Finance), Ph.D. (UK)
+                            </span>
                             
                             <p class="text-muted small mb-3" style="line-height:1.6;">
-                                Pioneering multidisciplinary higher education across Central India, nurturing excellence in medical, dental, pharmacy, engineering, and doctoral research.
+                                Pioneering multidisciplinary education, healthcare innovation, and technology infrastructure across Central India since 1995.
                             </p>
 
                             <div class="chairman-pillars d-flex justify-content-center gap-2 flex-wrap mb-4">
                                 <span class="badge-pill-soft"><i class="fas fa-certificate text-warning me-1"></i> 31+ Years Legacy</span>
                                 <span class="badge-pill-soft"><i class="fas fa-university text-primary me-1"></i> 14 Units</span>
+                                <span class="badge-pill-soft"><i class="fas fa-hospital text-danger me-1"></i> 750+ Beds</span>
                                 <span class="badge-pill-soft"><i class="fas fa-user-graduate text-success me-1"></i> 1,10,000+ Alumni</span>
                             </div>
 
                             <div class="chairman-actions d-flex justify-content-center gap-2 flex-wrap">
-                                <a href="#leadership" class="btn btn-sm btn-maroon rounded-pill px-3 py-2 shadow-sm">
-                                    <i class="fas fa-users-cog me-1"></i> Meet Leadership
+                                <a href="<?php echo BASE_URL; ?>founder-story.php" class="btn btn-sm btn-maroon rounded-pill px-3 py-2 shadow-sm">
+                                    <i class="fas fa-feather-alt me-1"></i> Full Founder Story
                                 </a>
-                                <a href="#all-committees" class="btn btn-sm btn-navy rounded-pill px-3 py-2 shadow-sm">
-                                    <i class="fas fa-landmark me-1"></i> Statutory Boards
+                                <a href="#leadership" class="btn btn-sm btn-navy rounded-pill px-3 py-2 shadow-sm">
+                                    <i class="fas fa-users-cog me-1"></i> Leadership
                                 </a>
                             </div>
                         </div>
@@ -210,25 +217,25 @@ $aboutMilestoneStats = [
                 <div class="chairman-quote-card mb-4 shadow-sm">
                     <i class="fas fa-quote-left text-warning fs-3 mb-2 d-block"></i>
                     <p class="lead-quote mb-0">
-                        &ldquo;<?php echo sanitize(getSetting('chairman_story_quote', 'Education is the foundation of progress, empowering individuals with knowledge, values, and the confidence to shape a better future. At SRK University, our vision is to provide quality education that combines academic excellence with practical learning, innovation, and strong ethical values. We are committed to creating an environment where students can explore their potential, develop professional skills, and prepare themselves to meet the challenges of a rapidly changing world.')); ?>&rdquo;
+                        &ldquo;<?php echo sanitize(getSetting('chairman_story_quote', 'Modern education demands far more than mere classroom instruction. A student needs an empowering blend of cutting-edge knowledge, practical skill mastery, innovative thinking, and deeply rooted ethical values. At SRK University, our lifelong commitment is to build multidisciplinary institutions that democratize healthcare and higher learning for the betterment of society.')); ?>&rdquo;
                     </p>
                 </div>
 
                 <p class="text-dark mb-3" style="line-height:1.85; font-size:0.96rem;">
-                    When RKDF Education Society laid its foundations in 1995, it set forth on a visionary mission: to build a benchmarked educational powerhouse in Central India that brings world-class technical, healthcare, and humanistic learning within reach of every aspirational learner.
+                    When RKDF Education Society laid its foundations in 1995 under the visionary leadership of <strong>Dr. Sunil Kapoor</strong>, it set forth on an ambitious mission: to establish a benchmarked educational and healthcare ecosystem in Central India that brings world-class technical, clinical, and humanistic training within reach of every aspirational youth.
                 </p>
 
-                <p class="text-muted mb-4" style="line-height:1.85; font-size:0.96rem;">
-                    From starting pioneer technical institutes to founding Sarvepalli Radhakrishnan University with 14 constituent units, 750+ hospital beds, and 160+ patents, the journey represents three decades of relentless dedication to societal upliftment and national development.
+                <p class="text-muted mb-3" style="line-height:1.85; font-size:0.96rem;">
+                    Combining profound medical expertise (MBBS, DCH, MIAP) with doctoral financial and governance acumen (PGDBM, UK Ph.D.), Dr. Kapoor has guided the institution's evolution from pioneer colleges to a comprehensive university encompassing 14 constituent units, a 750+ bed multispecialty hospital, 160+ patents, and partnerships with leading industry bodies.
                 </p>
 
-                <div class="row g-3 pt-1">
+                <div class="row g-3 pt-1 mb-3">
                     <div class="col-sm-6">
                         <div class="d-flex align-items-start gap-3 p-3 rounded-3 bg-light border">
                             <div class="icon-circle bg-navy text-white"><i class="fas fa-graduation-cap"></i></div>
                             <div>
                                 <h6 class="fw-bold text-navy mb-1">Inclusive Access</h6>
-                                <p class="text-muted small mb-0">Democratizing professional, legal, and medical sciences with extensive scholarships and state-of-the-art campus amenities.</p>
+                                <p class="text-muted small mb-0">Democratizing professional, legal, and medical sciences with extensive scholarships and modern campus amenities.</p>
                             </div>
                         </div>
                     </div>
@@ -236,11 +243,17 @@ $aboutMilestoneStats = [
                         <div class="d-flex align-items-start gap-3 p-3 rounded-3 bg-light border">
                             <div class="icon-circle" style="background:#7A0B0D; color:#fff;"><i class="fas fa-flask"></i></div>
                             <div>
-                                <h6 class="fw-bold text-navy mb-1">Innovation Ecosystem</h6>
-                                <p class="text-muted small mb-0">Over 160 filed patents, cutting-edge Incubation Centre, and 300+ active industry-research MoUs.</p>
+                                <h6 class="fw-bold text-navy mb-1">Healthcare &amp; Innovation</h6>
+                                <p class="text-muted small mb-0">Over 160 filed patents, 750+ hospital beds, on-campus Incubation Centre, and 300+ industry-research MoUs.</p>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div>
+                    <a href="<?php echo BASE_URL; ?>founder-story.php" class="btn btn-outline-maroon rounded-pill px-4 py-2 shadow-sm fw-semibold">
+                        <i class="fas fa-book-reader me-2"></i> Read Complete Founder's Story &amp; Message &rarr;
+                    </a>
                 </div>
             </div>
         </div>
@@ -321,10 +334,11 @@ $aboutMilestoneStats = [
                 <div class="card h-100 border-0 shadow-sm rounded-4 leadership-card-v2 reveal">
                     <div class="leadership-card-v2__badge">Statutory Head</div>
                     <div class="leadership-card-v2__photo-wrap">
-                        <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/chancellor.jpeg"
-                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                             alt="<?php echo sanitize(getSetting('chancellor_name', 'Mrs. Janak Kapoor')); ?>"
-                             class="leadership-card-v2__img">
+                        <div class="leadership-card-v2__avatar leadership-card-v2__avatar--chancellor">
+                            <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/chancellor.jpeg"
+                                 onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                                 alt="<?php echo sanitize(getSetting('chancellor_name', 'Mrs. Janak Kapoor')); ?>">
+                        </div>
                     </div>
                     <div class="card-body p-4 text-center d-flex flex-column">
                         <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize(getSetting('chancellor_name', 'Mrs. Janak Kapoor')); ?></h4>
@@ -345,8 +359,8 @@ $aboutMilestoneStats = [
             <div class="col">
                 <div class="card h-100 border-0 shadow-sm rounded-4 leadership-card-v2 reveal">
                     <div class="leadership-card-v2__badge bg-maroon">Academic Executive</div>
-                    <div class="leadership-card-v2__photo-wrap leadership-card-v2__photo-wrap--icon">
-                        <div class="leadership-icon-avatar">
+                    <div class="leadership-card-v2__photo-wrap">
+                        <div class="leadership-card-v2__avatar bg-maroon-soft text-maroon">
                             <i class="fas fa-user-graduate"></i>
                         </div>
                     </div>
@@ -369,20 +383,22 @@ $aboutMilestoneStats = [
             <div class="col">
                 <div class="card h-100 border-0 shadow-sm rounded-4 leadership-card-v2 reveal">
                     <div class="leadership-card-v2__badge bg-gold text-navy">Founder &amp; Patron</div>
-                    <div class="leadership-card-v2__photo-wrap leadership-card-v2__photo-wrap--icon">
-                        <div class="leadership-icon-avatar bg-gold-soft text-navy">
-                            <i class="fas fa-crown"></i>
+                    <div class="leadership-card-v2__photo-wrap">
+                        <div class="leadership-card-v2__avatar leadership-card-v2__avatar--founder">
+                            <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/dr-sunil-kapoor.jpeg"
+                                 onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                                 alt="<?php echo sanitize(getSetting('chairman_name', 'Dr. Sunil Kapoor')); ?>">
                         </div>
                     </div>
                     <div class="card-body p-4 text-center d-flex flex-column">
                         <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize(getSetting('chairman_name', 'Dr. Sunil Kapoor')); ?></h4>
-                        <span class="text-danger small fw-bold mb-2 d-block"><?php echo sanitize(getSetting('chairman_title', 'Chairman &amp; Chief Patron')); ?></span>
+                        <span class="text-danger small fw-bold mb-2 d-block"><?php echo sanitize(getSetting('chairman_title', 'Chairman & Founder Patron')); ?></span>
                         <p class="text-muted small mb-3 flex-grow-1" style="line-height:1.65;">
-                            Visionary founder of RKDF Group since 1995, building accessible healthcare and multidisciplinary education across Central India.
+                            Visionary educationist &amp; healthcare leader bridging medicine, finance, and technology; founder of RKDF Group &amp; SRKU since 1995.
                         </p>
                         <div class="mt-auto pt-2 border-top">
-                            <a href="#chairman-story" class="btn btn-sm btn-outline-navy w-100 rounded-pill">
-                                <i class="fas fa-book-reader me-1"></i> Chairman's Story
+                            <a href="<?php echo BASE_URL; ?>founder-story.php" class="btn btn-sm btn-outline-navy w-100 rounded-pill">
+                                <i class="fas fa-feather-alt me-1"></i> Founder's Story
                             </a>
                         </div>
                     </div>
@@ -393,14 +409,14 @@ $aboutMilestoneStats = [
             <div class="col">
                 <div class="card h-100 border-0 shadow-sm rounded-4 leadership-card-v2 reveal">
                     <div class="leadership-card-v2__badge bg-navy">Administration</div>
-                    <div class="leadership-card-v2__photo-wrap leadership-card-v2__photo-wrap--icon">
-                        <div class="leadership-icon-avatar bg-navy-soft text-navy">
+                    <div class="leadership-card-v2__photo-wrap">
+                        <div class="leadership-card-v2__avatar bg-navy-soft text-navy">
                             <i class="fas fa-id-card"></i>
                         </div>
                     </div>
                     <div class="card-body p-4 text-center d-flex flex-column">
                         <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize(getSetting('registrar_name', 'Dr. S.S. Pawar')); ?></h4>
-                        <span class="text-danger small fw-bold mb-2 d-block"><?php echo sanitize(getSetting('registrar_title', 'Registrar &amp; Member Secretary')); ?></span>
+                        <span class="text-danger small fw-bold mb-2 d-block"><?php echo sanitize(getSetting('registrar_title', 'Registrar & Member Secretary')); ?></span>
                         <p class="text-muted small mb-3 flex-grow-1" style="line-height:1.65;">
                             Custodian of university seal and records, overseeing administrative operations, statutory councils, and regulatory compliances.
                         </p>

@@ -95,8 +95,8 @@ $stats = getUniversityStats();
                         I welcome every student to SRK University and wish them a rewarding journey of learning, growth, and success.
                     </p>
                     <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
-                        <strong class="text-maroon fst-italic"><?php echo sanitize(getSetting('chairman_name', 'Dr. A. K. Shrivastav')); ?></strong>
-                        <span class="text-muted small"><?php echo sanitize(getSetting('chairman_title', 'Chairman')); ?></span>
+                        <strong class="text-maroon fst-italic"><?php echo sanitize(getSetting('chairman_name', 'Dr. Sunil Kapoor')); ?></strong>
+                        <span class="text-muted small"><?php echo sanitize(getSetting('chairman_title', 'Chairman & Founder Patron')); ?></span>
                     </div>
                 </div>
             </div>

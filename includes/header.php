@@ -246,6 +246,7 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                         </li>
 
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/ugc-information" class="static-dropdown-link"><i class="fas fa-certificate text-success me-1"></i> UGC Information</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>founder-story.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-feather-alt text-warning me-1"></i> Founder's Story &amp; Vision</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>chancellor-message.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-crown text-warning me-1"></i> Chancellor's Message</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>vice-chancellor-message.php" class="static-dropdown-link fw-semibold text-navy"><i class="fas fa-user-tie text-primary me-1"></i> Vice Chancellor's Message</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>gallery.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-camera-retro text-danger me-1"></i> Picture Gallery</a></li>

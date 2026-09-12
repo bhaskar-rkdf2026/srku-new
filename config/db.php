@@ -575,9 +575,10 @@ function autoInitializeTables($pdo) {
         'stat_min_attendance' => '75%',
 
         // Leadership & Quotes
-        'chairman_name' => 'Dr. A. K. Shrivastav',
-        'chairman_title' => 'Chairman',
-        'chairman_story_quote' => 'Education is the foundation of progress, empowering individuals with knowledge, values, and the confidence to shape a better future. At SRK University, our vision is to provide quality education that combines academic excellence with practical learning, innovation, and strong ethical values.',
+        'chairman_name' => 'Dr. Sunil Kapoor',
+        'chairman_title' => 'Chairman & Founder Patron',
+        'chairman_photo' => 'assets/uploads/2026/08/dr-sunil-kapoor.jpeg',
+        'chairman_story_quote' => 'Modern education demands far more than mere classroom instruction. A student needs an empowering blend of cutting-edge knowledge, practical skill mastery, innovative thinking, and deeply rooted ethical values. At SRK University, our lifelong commitment is to build multidisciplinary institutions that democratize healthcare and higher learning for the betterment of society.',
 
         // Vision & Mission
         'vision_quote' => 'Learn about Education that helps Society',
