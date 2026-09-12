@@ -30,11 +30,9 @@ require_once __DIR__ . '/includes/header.php';
                     Welcome to Sarvepalli Radhakrishnan University, commonly known as SRK University, one of Madhya Pradesh's leading private universities. Named after Dr. Sarvepalli Radhakrishnan, India's First Vice President, our institution embodies excellence, innovation, and commitment to holistic education.
                 </p>
                 <div class="d-flex flex-wrap gap-2 pt-2">
-                    <a href="#leadership" class="btn-hero-yellow"><i class="fas fa-users-cog me-1"></i> Meet the Leadership</a>
+                    <a href="#leadership" class="btn-hero-yellow"><i class="fas fa-users-cog me-1"></i> Meet Leadership</a>
                     <a href="#chairman-story" class="btn-hero-outline"><i class="fas fa-user-tie me-1"></i> Chairman's Story</a>
-                    <a href="#all-committees" class="btn-hero-outline"><i class="fas fa-users-cog me-1"></i> All Committees &amp; Boards</a>
-                    <a href="<?php echo BASE_URL; ?>board-members.php" class="btn-hero-outline"><i class="fas fa-id-badge me-1"></i> View Board Members</a>
-                    <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn-hero-outline"><i class="fas fa-landmark me-1"></i> Board of Management</a>
+                    <a href="#all-committees" class="btn-hero-outline"><i class="fas fa-landmark me-1"></i> Statutory Governance &amp; Boards</a>
                 </div>
             </div>
             <div class="col-12 col-lg-4">
@@ -193,11 +191,11 @@ $aboutMilestoneStats = [
                             </div>
 
                             <div class="chairman-actions d-flex justify-content-center gap-2 flex-wrap">
-                                <a href="<?php echo BASE_URL; ?>board-members.php" class="btn btn-sm btn-maroon rounded-pill px-3 py-2">
-                                    <i class="fas fa-users me-1"></i> View Board Members
+                                <a href="#leadership" class="btn btn-sm btn-maroon rounded-pill px-3 py-2 shadow-sm">
+                                    <i class="fas fa-users-cog me-1"></i> Meet Leadership
                                 </a>
-                                <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2">
-                                    <i class="fas fa-landmark me-1"></i> Board of Management
+                                <a href="#all-committees" class="btn btn-sm btn-navy rounded-pill px-3 py-2 shadow-sm">
+                                    <i class="fas fa-landmark me-1"></i> Statutory Boards
                                 </a>
                             </div>
                         </div>
@@ -425,22 +423,12 @@ $aboutMilestoneStats = [
     <span id="board-management-showcase" style="position:absolute; top:-70px;"></span>
     <div class="container-xl py-3">
         <div class="row align-items-center mb-4 g-3">
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-lg-10">
                 <span class="section-subtitle">STATUTORY APEX GOVERNANCE &amp; COMMITTEES</span>
                 <h2 class="section-title mb-2">Apex Boards &amp; <span>All Committees</span></h2>
-                <p class="text-muted mb-0" style="max-width:760px; font-size:0.95rem;">
-                    Constituted under the statutory mandate of MP Niji Vishwavidyalaya Adhiniyam 2007, UGC regulations, and statutory bodies. Explore the apex executive organs, Board of Management, Board Members, and all statutory student welfare and redressal committees.
+                <p class="text-muted mb-0" style="max-width:820px; font-size:0.95rem;">
+                    Constituted under the statutory mandate of MP Niji Vishwavidyalaya Adhiniyam 2007, UGC regulations, and statutory councils. Explore the apex executive organs, Board of Management, Board Members, and all statutory student welfare and redressal committees.
                 </p>
-            </div>
-            <div class="col-12 col-md-4 text-md-end">
-                <div class="d-flex flex-wrap gap-2 justify-content-md-end">
-                    <a href="<?php echo BASE_URL; ?>board-members.php" class="btn btn-maroon rounded-pill px-3 py-2 shadow-sm">
-                        <i class="fas fa-users-cog me-1"></i> Board Members
-                    </a>
-                    <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn btn-navy text-white rounded-pill px-3 py-2 shadow-sm">
-                        <i class="fas fa-landmark me-1"></i> Board of Management
-                    </a>
-                </div>
             </div>
         </div>
 
@@ -505,9 +493,9 @@ $aboutMilestoneStats = [
         </div>
 
         <!-- Featured Members Strip -->
-        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white reveal mb-4">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white reveal mb-4" style="border-left: 5px solid #7A0B0D !important;">
             <div class="row align-items-center g-3">
-                <div class="col-12 col-lg-8">
+                <div class="col-12 col-lg-7">
                     <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
                         <span class="badge bg-danger text-white px-3 py-1 rounded-pill small fw-bold">Apex Statutory Governance</span>
                         <span class="text-muted small"><i class="fas fa-calendar-check me-1 text-primary"></i> Academic Year 2026-27</span>
@@ -517,12 +505,12 @@ $aboutMilestoneStats = [
                         Explore complete details of university board members, statutory executive functions, regulatory mandates, and gazette notifications.
                     </p>
                 </div>
-                <div class="col-12 col-lg-4 text-lg-end">
+                <div class="col-12 col-lg-5 text-lg-end">
                     <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
-                        <a href="<?php echo BASE_URL; ?>board-members.php" class="btn btn-maroon px-3 py-2 rounded-pill">
+                        <a href="<?php echo BASE_URL; ?>board-members.php" class="btn btn-maroon px-4 py-2 rounded-pill shadow-sm">
                             <i class="fas fa-id-badge me-1"></i> View Board Members
                         </a>
-                        <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn btn-outline-navy px-3 py-2 rounded-pill">
+                        <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn btn-navy px-4 py-2 rounded-pill shadow-sm">
                             <i class="fas fa-landmark me-1"></i> Board of Management
                         </a>
                     </div>
