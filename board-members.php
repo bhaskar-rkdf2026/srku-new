@@ -14,7 +14,7 @@ $canonicalBoardMembers = [
         'representation' => 'Founder & Visionary, RKDF Education Society',
         'bio' => 'Guiding the RKDF group and SRK University since 1995 with an inspiring mission of affordable, benchmarked multidisciplinary higher education.',
         'icon' => 'fa-crown',
-        'photo' => ''
+        'photo' => 'assets/uploads/2026/08/dr-sunil-kapoor.jpeg'
     ],
     [
         'name' => 'Mrs. Janak Kapoor',

@@ -83,8 +83,11 @@ $stats = getUniversityStats();
         <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 reveal" style="border-left: 5px solid var(--srku-maroon) !important;">
             <div class="row align-items-center g-4">
                 <div class="col-12 col-md-3 text-center">
-                    <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width:130px; height:130px; font-size:3.5rem; color:#adb5bd;">
-                        <i class="fas fa-user-tie"></i>
+                    <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-sm" style="width:130px; height:130px; overflow:hidden; border:3px solid var(--srku-maroon, #7A0B0D); background:#fdf2f2;">
+                        <img src="<?php echo BASE_URL . sanitize(getSetting('chairman_photo', 'assets/uploads/2026/08/dr-sunil-kapoor.jpeg')); ?>"
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                             alt="<?php echo sanitize(getSetting('chairman_name', 'Dr. Sunil Kapoor')); ?>"
+                             style="width:100%; height:100%; object-fit:cover; object-position:center top;">
                     </div>
                 </div>
                 <div class="col-12 col-md-9">
