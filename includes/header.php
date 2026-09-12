@@ -7,6 +7,7 @@ $aicteLink = getSetting('header_topbar_aicte_link', 'https://sarswati.aicte.gov.
 $logoUrl = getSetting('header_logo_url', 'assets/uploads/2026/07/SRK-logo.webp');
 $ctaText = getSetting('header_cta_text', 'Contact Us');
 $ctaLink = getSetting('header_cta_link', 'contact.php');
+$webmailLink = getSetting('header_topbar_webmail_link', 'http://email.godaddy.com/');
 $customHeadCode = getSetting('header_custom_head_code', '');
 // SEO & AEO Canonical & Meta Defaults
 $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
@@ -147,18 +148,19 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
     <div class="container-xl">
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-none d-md-flex gap-3">
-                <a href="<?php echo sanitize($erpLink); ?>" target="_blank" class="topbar-link"><i class="fas fa-user-graduate me-1 text-warning"></i> STUDENT PORTAL</a>
-                <a href="<?php echo BASE_URL; ?>faculties.php" class="topbar-link"><i class="fas fa-chalkboard-teacher me-1 text-warning"></i> FACULTIES</a>
-                <a href="<?php echo BASE_URL; ?>alumni.php" class="topbar-link"><i class="fas fa-users me-1 text-warning"></i> ALUMNI</a>
-                <a href="<?php echo BASE_URL; ?>career.php" class="topbar-link"><i class="fas fa-briefcase me-1 text-warning"></i> CAREERS</a>
-                <a href="<?php echo BASE_URL; ?>grievance.php" class="topbar-link"><i class="fas fa-balance-scale me-1 text-warning"></i> GRIEVANCE CELL</a>
-                <a href="<?php echo sanitize($aicteLink); ?>" target="_blank" class="topbar-link"><i class="fas fa-award me-1 text-warning"></i> AICTE SCHOLARSHIP</a>
+                <a href="<?php echo sanitize($erpLink); ?>" target="_blank" class="topbar-link"><i class="fas fa-user-graduate me-1 text-warning"></i> Student Portal</a>
+                <a href="<?php echo BASE_URL; ?>faculties.php" class="topbar-link"><i class="fas fa-chalkboard-teacher me-1 text-warning"></i> Faculties</a>
+                <a href="<?php echo BASE_URL; ?>alumni.php" class="topbar-link"><i class="fas fa-users me-1 text-warning"></i> Alumni</a>
+                <a href="<?php echo BASE_URL; ?>career.php" class="topbar-link"><i class="fas fa-briefcase me-1 text-warning"></i> Careers</a>
+                <a href="<?php echo BASE_URL; ?>grievance.php" class="topbar-link"><i class="fas fa-balance-scale me-1 text-warning"></i> Grievance Cell</a>
+                <a href="<?php echo sanitize($aicteLink); ?>" target="_blank" class="topbar-link"><i class="fas fa-award me-1 text-warning"></i> AICTE Scholarship</a>
+                <a href="<?php echo BASE_URL; ?>exam-time-table.php" class="topbar-link text-warning fw-bold"><i class="fas fa-calendar-alt me-1"></i> Exam Time Table</a>
                 <a href="<?php echo BASE_URL; ?>document/nirf-2026" class="topbar-link text-warning fw-bold"><i class="fas fa-file-contract me-1"></i> NIRF 2026</a>
             </div>
             <div class="d-flex align-items-center gap-3 ms-auto ms-md-0">
                 <span class="topbar-info"><i class="fas fa-phone-alt me-1 text-warning"></i> <?php echo sanitize($helpline); ?></span>
                 <a href="mailto:<?php echo sanitize($email); ?>" class="topbar-info d-none d-sm-inline"><i class="fas fa-envelope me-1 text-warning"></i> <?php echo sanitize($email); ?></a>
-                <a href="<?php echo BASE_URL; ?>admin/login.php" class="topbar-link text-warning fw-bold"><i class="fas fa-lock me-1"></i> Admin</a>
+                <a href="<?php echo sanitize($webmailLink); ?>" target="_blank" class="topbar-link text-warning fw-bold"><i class="fas fa-envelope-open-text me-1"></i> Webmail</a>
             </div>
         </div>
     </div>
@@ -329,6 +331,7 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                     </a>
                     <ul class="static-dropdown-panel">
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>academic-calendar.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-calendar-alt text-warning me-1"></i> Academic Calendar 2026-27</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>exam-time-table.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-calendar-check text-danger me-1"></i> Exam Time Table</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>exam-rules.php" class="static-dropdown-link fw-semibold text-navy"><i class="fas fa-clipboard-check text-primary me-1"></i> Examination Rules &amp; Ordinances</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/details-of-academic-programmes" class="static-dropdown-link"><i class="fas fa-th-list text-danger me-1"></i> Details of Academic Programmes</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/statutes-ordinances-academics-examination" class="static-dropdown-link"><i class="fas fa-scroll text-secondary me-1"></i> Statutes Ordinances</a></li>
