@@ -202,11 +202,11 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>about.php" class="static-dropdown-link"><i class="fas fa-info-circle me-1 text-primary"></i> University Overview</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/act-statutes" class="static-dropdown-link">Act &amp; Statutes</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/institutional-development-plan" class="static-dropdown-link">Institutional Development Plan</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>about/constituent-unit" class="static-dropdown-link">Constituent Units</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>about/accreditation" class="static-dropdown-link">Accreditation &amp; Ranking</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/constituent-units" class="static-dropdown-link">Constituent Units</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/accreditation-ranking" class="static-dropdown-link">Accreditation &amp; Ranking</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/recognition-approval" class="static-dropdown-link">Recognition Approval</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/recognition-approval" class="static-dropdown-link">Annual Report 2024-25</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>about/board-of-management" class="static-dropdown-link">Details of Sponsoring Body</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/annual-report" class="static-dropdown-link">Annual Report 2024-25</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/details-of-sponsoring-body" class="static-dropdown-link">Details of Sponsoring Body</a></li>
                             </ul>
                         </li>
 
@@ -243,7 +243,7 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                             </ul>
                         </li>
 
-                        <li class="static-dropdown-item"><a href="http://www.srku.edu.in/wp-content/uploads/2023/05/annexure-I-UGCinfo.pdf" target="_blank" class="static-dropdown-link">UGC Information</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/ugc-information" class="static-dropdown-link">UGC Information</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>chancellor-message.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-crown text-warning me-1"></i> Chancellor's Message</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>vice-chancellor-message.php" class="static-dropdown-link fw-semibold text-navy"><i class="fas fa-user-tie text-primary me-1"></i> Vice Chancellor's Message</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>gallery.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-camera-retro text-danger me-1"></i> Picture Gallery</a></li>
@@ -375,6 +375,7 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/central-facilities-research" class="static-dropdown-link">Central Facilities for Research and Development</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/ethics-board" class="static-dropdown-link">Ethics Board to Maintain Research Integrity</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/consultancy-projects" class="static-dropdown-link">Consultancy Projects</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/constitution-of-research-advisory-committee" class="static-dropdown-link">Constitution of Research Advisory Committee</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/phd-scholars-pursuing" class="static-dropdown-link">Ph.D. Scholars Currently Enrolled</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/phd-scholars-completed" class="static-dropdown-link">Ph.D. Awarded Scholars List</a></li>
                     </ul>
@@ -547,6 +548,44 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/sedg-cell" class="static-dropdown-link">Socio Economically Disadvantaged Groups Cell (SEDG)</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/differently-abled-facilities" class="static-dropdown-link">Facilities For Differently Abled Students</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>blogs" class="static-dropdown-link"><i class="fas fa-newspaper text-info me-1"></i> News, Events &amp; Blogs</a></li>
+                    </ul>
+                </li>
+
+                <!-- 10. Alumni -->
+                <li class="static-menu-item <?php echo (isset($activeNav) && $activeNav == 'alumni') ? 'active' : ''; ?>">
+                    <a href="<?php echo BASE_URL; ?>alumni" class="static-menu-link">
+                        Alumni <span class="static-dropdown-arrow"></span>
+                    </a>
+                    <ul class="static-dropdown-panel">
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/alumni-registration-certificate" class="static-dropdown-link"><i class="fas fa-certificate text-primary me-1"></i> Alumni Registration Certificate</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/alumni-bylaws" class="static-dropdown-link"><i class="fas fa-book text-warning me-1"></i> Alumni Bylaws</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/alumni-committee" class="static-dropdown-link"><i class="fas fa-users text-success me-1"></i> Alumni Committee</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>alumni" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-user-graduate me-1"></i> Alumni Portal</a></li>
+                    </ul>
+                </li>
+
+                <!-- 11. Information Corner -->
+                <li class="static-menu-item <?php echo (isset($activeNav) && in_array($activeNav, ['information corner', 'info', 'rti'])) ? 'active' : ''; ?>">
+                    <a href="#" class="static-menu-link">
+                        Info Corner <span class="static-dropdown-arrow"></span>
+                    </a>
+                    <ul class="static-dropdown-panel">
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/rti" class="static-dropdown-link"><i class="fas fa-balance-scale text-primary me-1"></i> RTI</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/nirf-2026" class="static-dropdown-link"><i class="fas fa-award text-warning me-1"></i> NIRF 2026</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/vacancy" class="static-dropdown-link"><i class="fas fa-briefcase text-success me-1"></i> Job Openings / Vacancy</a></li>
+                        <!-- Ph.D Details Submenu -->
+                        <li class="static-dropdown-item">
+                            <a href="#" class="static-dropdown-link">
+                                <i class="fas fa-user-graduate text-danger me-1"></i> Ph.D Details <span class="static-dropdown-arrow static-sub-arrow"></span>
+                            </a>
+                            <ul class="static-dropdown-panel static-sub-dropdown">
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/phd-pursuing" class="static-dropdown-link">Ph. D. Pursuing</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/phd-completed" class="static-dropdown-link">Ph. D. Completed</a></li>
+                            </ul>
+                        </li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>placements" class="static-dropdown-link"><i class="fas fa-chart-line text-info me-1"></i> Placement Record</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>gallery.php" class="static-dropdown-link"><i class="fas fa-camera text-danger me-1"></i> Picture Gallery</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>blogs" class="static-dropdown-link"><i class="fas fa-bullhorn text-secondary me-1"></i> Circulars &amp; Notices</a></li>
                     </ul>
                 </li>
                 
