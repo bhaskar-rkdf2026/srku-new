@@ -162,6 +162,47 @@ function runUniversalDatabaseMigrations($pdo) {
         ensureDbTableColumn($pdo, 'board_members', 'category', "VARCHAR(50) DEFAULT 'Executive Leadership'", "TEXT DEFAULT 'Executive Leadership'", 'designation');
         ensureDbTableColumn($pdo, 'board_members', 'representation', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'category');
         ensureDbTableColumn($pdo, 'board_members', 'icon', "VARCHAR(100) DEFAULT 'fa-user-tie'", "TEXT DEFAULT 'fa-user-tie'", 'representation');
+        ensureDbTableColumn($pdo, 'board_members', 'photo', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'icon');
+        ensureDbTableColumn($pdo, 'board_members', 'sort_order', "INT DEFAULT 0", "INTEGER DEFAULT 0", 'photo');
+
+        // 8. Exam timetables columns
+        ensureDbTableColumn($pdo, 'exam_timetables', 'category', "VARCHAR(100) NOT NULL DEFAULT 'General'", "TEXT DEFAULT 'General'", 'id');
+        ensureDbTableColumn($pdo, 'exam_timetables', 'course_title', "VARCHAR(255) NOT NULL DEFAULT ''", "TEXT DEFAULT ''", 'category');
+        ensureDbTableColumn($pdo, 'exam_timetables', 'details', "TEXT DEFAULT NULL", "TEXT DEFAULT NULL", 'course_title');
+        ensureDbTableColumn($pdo, 'exam_timetables', 'file_url', "VARCHAR(500) DEFAULT NULL", "TEXT DEFAULT NULL", 'details');
+        ensureDbTableColumn($pdo, 'exam_timetables', 'filename', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'file_url');
+        ensureDbTableColumn($pdo, 'exam_timetables', 'sort_order', "INT DEFAULT 0", "INTEGER DEFAULT 0", 'filename');
+        ensureDbTableColumn($pdo, 'exam_timetables', 'status', "VARCHAR(20) DEFAULT 'active'", "TEXT DEFAULT 'active'", 'sort_order');
+
+        // 9. Facilities columns
+        ensureDbTableColumn($pdo, 'facilities', 'title', "VARCHAR(255) NOT NULL DEFAULT ''", "TEXT DEFAULT ''", 'id');
+        ensureDbTableColumn($pdo, 'facilities', 'icon', "VARCHAR(100) DEFAULT 'fa-building'", "TEXT DEFAULT 'fa-building'", 'title');
+        ensureDbTableColumn($pdo, 'facilities', 'image', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'icon');
+        ensureDbTableColumn($pdo, 'facilities', 'description', "TEXT DEFAULT NULL", "TEXT DEFAULT NULL", 'image');
+        ensureDbTableColumn($pdo, 'facilities', 'sort_order', "INT DEFAULT 0", "INTEGER DEFAULT 0", 'description');
+        ensureDbTableColumn($pdo, 'facilities', 'status', "VARCHAR(20) DEFAULT 'active'", "TEXT DEFAULT 'active'", 'sort_order');
+
+        // 10. Accreditations columns
+        ensureDbTableColumn($pdo, 'accreditations', 'code', "VARCHAR(50) NOT NULL DEFAULT ''", "TEXT DEFAULT ''", 'id');
+        ensureDbTableColumn($pdo, 'accreditations', 'name', "VARCHAR(255) NOT NULL DEFAULT ''", "TEXT DEFAULT ''", 'code');
+        ensureDbTableColumn($pdo, 'accreditations', 'domain', "VARCHAR(150) DEFAULT NULL", "TEXT DEFAULT NULL", 'name');
+        ensureDbTableColumn($pdo, 'accreditations', 'description', "TEXT DEFAULT NULL", "TEXT DEFAULT NULL", 'domain');
+        ensureDbTableColumn($pdo, 'accreditations', 'sort_order', "INT DEFAULT 0", "INTEGER DEFAULT 0", 'description');
+        ensureDbTableColumn($pdo, 'accreditations', 'status', "VARCHAR(20) DEFAULT 'active'", "TEXT DEFAULT 'active'", 'sort_order');
+
+        // 11. Incubation members columns
+        ensureDbTableColumn($pdo, 'incubation_members', 'name', "VARCHAR(150) NOT NULL DEFAULT ''", "TEXT DEFAULT ''", 'id');
+        ensureDbTableColumn($pdo, 'incubation_members', 'role', "VARCHAR(150) NOT NULL DEFAULT ''", "TEXT DEFAULT ''", 'name');
+        ensureDbTableColumn($pdo, 'incubation_members', 'highlight', "TINYINT(1) DEFAULT 0", "INTEGER DEFAULT 0", 'role');
+        ensureDbTableColumn($pdo, 'incubation_members', 'sort_order', "INT DEFAULT 0", "INTEGER DEFAULT 0", 'highlight');
+        ensureDbTableColumn($pdo, 'incubation_members', 'status', "VARCHAR(20) DEFAULT 'active'", "TEXT DEFAULT 'active'", 'sort_order');
+
+        // 12. Placements columns
+        ensureDbTableColumn($pdo, 'placements', 'company_name', "VARCHAR(150) NOT NULL DEFAULT ''", "TEXT DEFAULT ''", 'id');
+        ensureDbTableColumn($pdo, 'placements', 'logo_url', "VARCHAR(500) DEFAULT NULL", "TEXT DEFAULT NULL", 'company_name');
+        ensureDbTableColumn($pdo, 'placements', 'package_offered', "VARCHAR(50) DEFAULT NULL", "TEXT DEFAULT NULL", 'logo_url');
+        ensureDbTableColumn($pdo, 'placements', 'sort_order', "INT DEFAULT 0", "INTEGER DEFAULT 0", 'package_offered');
+        ensureDbTableColumn($pdo, 'placements', 'status', "TINYINT(1) DEFAULT 1", "INTEGER DEFAULT 1", 'sort_order');
     } catch (Exception $e) {}
 }
 
