@@ -1261,6 +1261,15 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
             }
         };
 
+        // SQLite-safe SQL statement executor
+        // MySQL uses backslash escapes (\') but SQLite uses doubled single quotes ('')
+        $executeSqlStatement = function($stmt) use ($pdo, $driver) {
+            if ($driver === 'sqlite') {
+                $stmt = str_replace(["\\'", '\\"'], ["''", '""'], $stmt);
+            }
+            $pdo->exec($stmt);
+        };
+
         // 1. Ensure all schemas and columns are fully created & aligned
         if ($driver === 'sqlite') {
             autoInitializeTables($pdo);
@@ -1570,7 +1579,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
                 if ($masterSql && preg_match_all('/INSERT INTO `faculty`[^\;]+;/s', $masterSql, $matches)) {
                     $cleanTable('faculty');
                     foreach ($matches[0] as $stmt) {
-                        $pdo->exec($stmt);
+                        $executeSqlStatement($stmt);
                     }
                     $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `faculty`")->fetchColumn();
                     $report['counts']['faculty'] = $newCount;
@@ -1587,7 +1596,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
             if ($currDeptCount < 20 || $force) {
                 if ($masterSql && preg_match('/INSERT INTO `departments`[^\;]+;/s', $masterSql, $m)) {
                     $cleanTable('departments');
-                    $pdo->exec($m[0]);
+                    $executeSqlStatement($m[0]);
                     $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `departments`")->fetchColumn();
                     $report['counts']['departments'] = $newCount;
                     $report['messages'][] = "Constituent Units & Departments synchronized ($newCount colleges).";
@@ -1627,7 +1636,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
                 if ($masterSql && preg_match_all('/INSERT INTO `courses`[^\;]+;/s', $masterSql, $m2)) {
                     $cleanTable('courses');
                     foreach ($m2[0] as $stmt) {
-                        $pdo->exec($stmt);
+                        $executeSqlStatement($stmt);
                     }
                     $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `courses`")->fetchColumn();
                     $report['counts']['courses'] = $newCount;
@@ -2237,7 +2246,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
  */
 function exportLiveDatabaseSqlFile() {
     $baseDir = dirname(__DIR__);
-    $targetFile = $baseDir . '/srku_db.sql';
+    $targetFile = $baseDir . '/srku_db_new.sql';
 
     try {
         $pdo = getDBConnection();
@@ -2334,11 +2343,9 @@ function exportLiveDatabaseSqlFile() {
 
         file_put_contents($targetFile, $out);
 
-        // Also update srku_db_new.sql if it exists
-        $newSqlFile = $baseDir . '/srku_db_new.sql';
-        if (file_exists($newSqlFile)) {
-            file_put_contents($newSqlFile, $out);
-        }
+        // Also keep srku_db.sql in sync for backward compatibility
+        $oldSqlFile = $baseDir . '/srku_db.sql';
+        file_put_contents($oldSqlFile, $out);
 
         return [
             'success' => true,

@@ -19,7 +19,7 @@ if (isset($_REQUEST['ajax_sync'])) {
 }
 
 if (isset($_GET['download_sql']) && $_GET['download_sql'] == '1') {
-    $sqlPath = __DIR__ . '/../srku_db.sql';
+    $sqlPath = __DIR__ . '/../srku_db_new.sql';
     if (file_exists($sqlPath)) {
         header('Content-Type: application/sql');
         header('Content-Disposition: attachment; filename="srku_db_' . date('Y-m-d_His') . '.sql"');
@@ -311,7 +311,9 @@ $syncModules = [
 </div>
 
 <?php
-$sqlFileCheck = __DIR__ . '/../srku_db.sql';
+$sqlFileCheck = __DIR__ . '/../srku_db_new.sql';
+// Fallback to old name if new file not yet generated
+if (!file_exists($sqlFileCheck)) { $sqlFileCheck = __DIR__ . '/../srku_db.sql'; }
 $sqlFileSizeKb = file_exists($sqlFileCheck) ? round(filesize($sqlFileCheck) / 1024) : 0;
 $sqlFileTime = file_exists($sqlFileCheck) ? date('d M Y, h:i A', filemtime($sqlFileCheck)) : 'Not yet generated';
 ?>
@@ -323,7 +325,7 @@ $sqlFileTime = file_exists($sqlFileCheck) ? date('d M Y, h:i A', filemtime($sqlF
                 <i class="fas fa-file-invoice text-primary fa-lg"></i>
             </div>
             <div>
-                <h6 class="fw-bold text-navy mb-1">Live Database Production Dump: <code>srku_db.sql</code></h6>
+                <h6 class="fw-bold text-navy mb-1">Live Database Production Dump: <code>srku_db_new.sql</code></h6>
                 <div class="small text-muted">
                     <span class="me-3"><i class="fas fa-hdd me-1"></i> File Size: <strong><?php echo $sqlFileSizeKb; ?> KB</strong></span>
                     <span><i class="fas fa-clock me-1"></i> Last Synced: <strong><?php echo $sqlFileTime; ?></strong></span>
@@ -332,7 +334,7 @@ $sqlFileTime = file_exists($sqlFileCheck) ? date('d M Y, h:i A', filemtime($sqlF
         </div>
         <div class="d-flex gap-2">
             <a href="manage_dbsync.php?download_sql=1" class="btn btn-outline-primary fw-bold px-3 py-2 rounded-pill small">
-                <i class="fas fa-download me-1"></i> Download <code>srku_db.sql</code>
+                <i class="fas fa-download me-1"></i> Download <code>srku_db_new.sql</code>
             </a>
         </div>
     </div>
