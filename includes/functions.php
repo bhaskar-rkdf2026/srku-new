@@ -2174,7 +2174,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
                 $boardMembersMaster = [
                     ['Dr. Sunil Kapoor', 'Chairman & Chief Patron', 'leadership', 'Member', 'Founder & Visionary, RKDF Education Society', 'Guiding the RKDF group and SRK University since 1995 with an inspiring mission of affordable, benchmarked multidisciplinary higher education.', 'fa-crown', 'assets/uploads/2026/08/dr-sunil-kapoor.jpeg', 1],
                     ['Mrs. Janak Kapoor', 'Chancellor', 'leadership', 'Member', 'Chancellor, Sarvepalli Radhakrishnan University', 'Leading policy governance, university growth, philanthropic outreach, and community engagement.', 'fa-user-tie', 'assets/uploads/2026/08/mrs-janak-kapoor.jpeg', 2],
-                    ['Prof. (Dr.) Brijendra Singh', 'Vice Chancellor', 'leadership', 'Member', 'Vice Chancellor & Senior Academician', 'Eminent professor leading academic reforms, research partnerships, and university administration.', 'fa-user-graduate', 'assets/uploads/2026/08/dr-brijendra-singh.jpeg', 3],
+                    ['Dr. Priyanka Jaiswal', 'Vice Chancellor', 'leadership', 'Member', 'Vice Chancellor & Senior Academician', 'Eminent academic leader spearheading multidisciplinary innovation, research partnerships, and academic excellence at SRKU.', 'fa-user-graduate', 'assets/uploads/2026/07/ruchichaubey.webp', 3],
                     ['Director', 'Registrar', 'administration', 'Member Secretary', 'Registrar & Head of Administrative Affairs', 'Overseeing regulatory compliance, university records, state council liaisons, and human resources.', 'fa-clipboard-check', NULL, 4],
                     ['Dr. P. K. Singhal', 'Dean & Eminent Educationist', 'academics', 'Member', 'Nominee, Sponsoring Body', 'Pioneering technical engineering research and higher education accreditation frameworks.', 'fa-award', 'assets/uploads/2026/08/dr-pk-singhal.jpeg', 5],
                     ['Prof. (Dr.) S. K. Jain', 'Director & Senior Scientist', 'academics', 'Member', 'Prominent Academic Leader', 'Leading pharmacy research, industrial collaborations, and clinical development initiatives.', 'fa-flask', 'assets/uploads/2026/08/dr-sk-jain.jpeg', 6],
@@ -2191,6 +2191,10 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
                 $report['counts']['board_members'] = $newCount;
                 $report['messages'][] = "Board of Management synchronized ($newCount members).";
             } else {
+                // Ensure existing VC in board_members is always Dr. Priyanka Jaiswal
+                try {
+                    $pdo->prepare("UPDATE `board_members` SET `name` = 'Dr. Priyanka Jaiswal', `photo` = 'assets/uploads/2026/07/ruchichaubey.webp', `representation` = 'Vice Chancellor & Senior Academician' WHERE `designation` LIKE '%Vice Chancellor%' OR `representation` LIKE '%Vice Chancellor%'")->execute();
+                } catch (Exception $e) {}
                 $report['counts']['board_members'] = $currBoardCount;
             }
         }

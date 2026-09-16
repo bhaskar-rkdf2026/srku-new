@@ -165,6 +165,11 @@ function runUniversalDatabaseMigrations($pdo) {
         ensureDbTableColumn($pdo, 'board_members', 'photo', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'icon');
         ensureDbTableColumn($pdo, 'board_members', 'sort_order', "INT DEFAULT 0", "INTEGER DEFAULT 0", 'photo');
 
+        // Always ensure Vice Chancellor in board_members is Dr. Priyanka Jaiswal
+        try {
+            $pdo->prepare("UPDATE `board_members` SET `name` = 'Dr. Priyanka Jaiswal', `photo` = 'assets/uploads/2026/07/ruchichaubey.webp' WHERE `designation` LIKE '%Vice Chancellor%' OR `representation` LIKE '%Vice Chancellor%'")->execute();
+        } catch (Exception $e) {}
+
         // 8. Exam timetables columns
         ensureDbTableColumn($pdo, 'exam_timetables', 'category', "VARCHAR(100) NOT NULL DEFAULT 'General'", "TEXT DEFAULT 'General'", 'id');
         ensureDbTableColumn($pdo, 'exam_timetables', 'course_title', "VARCHAR(255) NOT NULL DEFAULT ''", "TEXT DEFAULT ''", 'category');

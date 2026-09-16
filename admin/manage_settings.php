@@ -84,7 +84,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_settings
         'chancellor_name' => sanitize($_POST['chancellor_name'] ?? 'Mrs. Janak Kapoor'),
         'chancellor_title' => sanitize($_POST['chancellor_title'] ?? 'Chancellor'),
         'chancellor_msg' => $_POST['chancellor_msg'] ?? '',
-        'vc_name' => sanitize($_POST['vc_name'] ?? 'Prof. (Dr.) Brijendra Singh'),
+        'vc_name' => sanitize($_POST['vc_name'] ?? 'Dr. Priyanka Jaiswal'),
         'vc_title' => sanitize($_POST['vc_title'] ?? 'Vice Chancellor'),
         'vc_msg' => $_POST['vc_msg'] ?? '',
 
@@ -199,7 +199,7 @@ $heroFallbackImg = getSetting('hero_fallback_image', 'assets/uploads/2026/08/srk
 $chancellorName = getSetting('chancellor_name', 'Mrs. Janak Kapoor');
 $chancellorTitle = getSetting('chancellor_title', 'Founder Chairman & Chancellor');
 $chancellorMsg = getSetting('chancellor_msg', 'At Sarvepalli Radhakrishnan University, our mission is to foster an academic environment that cultivates critical thinking, research innovation, and professional integrity. We empower our students to become technology leaders, healthcare pioneers, and responsible global citizens.');
-$vcName = getSetting('vc_name', 'Prof. (Dr.) Brijendra Singh');
+$vcName = getSetting('vc_name', 'Dr. Priyanka Jaiswal');
 $vcTitle = getSetting('vc_title', 'Vice Chancellor');
 $vcMsg = getSetting('vc_msg', 'At SRK University, we foster innovation, high-impact research, and multi-disciplinary excellence. Our state-of-the-art infrastructure and faculty mentorship ensure every graduate is prepared for global careers.');
 

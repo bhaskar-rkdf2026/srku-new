@@ -391,7 +391,7 @@ $aboutMilestoneStats = [
                         </div>
                     </div>
                     <div class="card-body p-4 text-center d-flex flex-column">
-                        <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize(getSetting('vc_name', 'Prof. (Dr.) Brijendra Singh')); ?></h4>
+                        <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize(getSetting('vc_name', 'Dr. Priyanka Jaiswal')); ?></h4>
                         <span class="text-danger small fw-bold mb-2 d-block"><?php echo sanitize(getSetting('vc_title', 'Vice Chancellor')); ?></span>
                         <p class="text-muted small mb-3 flex-grow-1" style="line-height:1.65;">
                             Leading academic affairs, curriculum innovation under NEP 2020, national accreditations, and interdisciplinary research excellence.
