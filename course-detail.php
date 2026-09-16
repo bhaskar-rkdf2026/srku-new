@@ -444,15 +444,15 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
                         <input type="hidden" name="department" value="<?php echo sanitize($course['department']); ?>">
                         <div class="mb-2">
                             <label class="form-label text-white small fw-semibold">Full Name *</label>
-                            <input type="text" name="name" class="form-control form-control-sm" placeholder="Your Full Name" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['name'] ?? ''); ?>" required>
+                            <input type="text" name="name" class="form-control form-control-sm" placeholder="Your Full Name" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['name'] ?? ''); ?>" minlength="2" maxlength="80" pattern="^[A-Za-z\s\.\']{2,80}$" title="Name must contain only alphabets and spaces." autocomplete="name" required>
                         </div>
                         <div class="mb-2">
                             <label class="form-label text-white small fw-semibold">Email Address *</label>
-                            <input type="email" name="email" class="form-control form-control-sm" placeholder="yourname@gmail.com" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['email'] ?? ''); ?>" required>
+                            <input type="email" name="email" class="form-control form-control-sm" placeholder="yourname@gmail.com" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['email'] ?? ''); ?>" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address (e.g. name@domain.com)." required>
                         </div>
                         <div class="mb-2">
                             <label class="form-label text-white small fw-semibold">Mobile Number *</label>
-                            <input type="tel" name="phone" class="form-control form-control-sm" placeholder="10-Digit Mobile Number" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['phone'] ?? ''); ?>" required>
+                            <input type="tel" name="phone" class="form-control form-control-sm" placeholder="10-Digit Mobile Number" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['phone'] ?? ''); ?>" pattern="[6-9][0-9]{9}" minlength="10" maxlength="10" inputmode="numeric" title="Please enter a valid 10-digit mobile number starting with 6, 7, 8 or 9." required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label text-white small fw-semibold">Your Message / Percentage</label>

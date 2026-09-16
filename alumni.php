@@ -6,23 +6,22 @@ $activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
 
 $regSuccess = false;
+$regErr = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_alumni'])) {
-    $pdo = getDBConnection();
-    $name = sanitize($_POST['name'] ?? '');
-    $email = sanitize($_POST['email'] ?? '');
-    $phone = sanitize($_POST['phone'] ?? '');
+    $name = $_POST['name'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $phone = $_POST['phone'] ?? '';
     $passYear = sanitize($_POST['pass_year'] ?? '');
     $dept = sanitize($_POST['department'] ?? '');
     $company = sanitize($_POST['company'] ?? '');
     $designation = sanitize($_POST['designation'] ?? '');
     
-    if ($name && $email && $phone) {
-        try {
-            $msg = "Alumni Registration: Pass Year: $passYear, Dept: $dept, Company: $company, Designation: $designation";
-            $stmt = $pdo->prepare("INSERT INTO enquiries (name, email, phone, course, message, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
-            $stmt->execute([$name, $email, $phone, 'Alumni Network', $msg]);
-            $regSuccess = true;
-        } catch (Exception $e) {}
+    $msg = "Alumni Registration: Pass Year: $passYear, Dept: $dept, Company: $company, Designation: $designation";
+    $res = saveEnquiryLead($name, $email, $phone, 'Alumni Network', $msg, 'Alumni Network Portal');
+    if ($res['success']) {
+        $regSuccess = true;
+    } else {
+        $regErr = $res['error'];
     }
 }
 ?>
@@ -64,27 +63,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_alumni'])) {
 
                     <?php if ($regSuccess): ?>
                         <div class="alert alert-success"><i class="fas fa-check-circle me-1"></i> Thank you! Your alumni registration has been submitted successfully.</div>
+                    <?php elseif ($regErr): ?>
+                        <div class="alert alert-danger"><i class="fas fa-exclamation-circle me-1"></i> <?php echo sanitize($regErr); ?></div>
                     <?php endif; ?>
 
                     <form action="<?php echo BASE_URL; ?>alumni.php" method="POST">
                         <div class="mb-3">
                             <label class="form-label text-dark small fw-bold mb-1">Full Name *</label>
-                            <input type="text" name="name" class="form-control py-2" placeholder="Your Full Name" required>
+                            <input type="text" name="name" class="form-control py-2" placeholder="Your Full Name" minlength="2" maxlength="80" pattern="[a-zA-Z\s\.\'-]{2,80}" title="Please enter a valid full name (alphabets only, min 2 characters)" required>
                         </div>
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="form-label text-dark small fw-bold mb-1">Email Address *</label>
-                                <input type="email" name="email" class="form-control py-2" placeholder="yourname@gmail.com" required>
+                                <input type="email" name="email" class="form-control py-2" placeholder="yourname@gmail.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label text-dark small fw-bold mb-1">Mobile Number *</label>
-                                <input type="tel" name="phone" class="form-control py-2" placeholder="10-digit mobile" required>
+                                <input type="tel" name="phone" class="form-control py-2" placeholder="10-Digit Mobile Number" inputmode="numeric" pattern="[6-9][0-9]{9}" minlength="10" maxlength="10" title="Please enter a valid 10-digit Indian mobile number (starting with 6, 7, 8, or 9)" required>
                             </div>
                         </div>
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="form-label text-dark small fw-bold mb-1">Passing Out Year</label>
-                                <input type="text" name="pass_year" class="form-control py-2" placeholder="e.g. 2022">
+                                <input type="text" name="pass_year" class="form-control py-2" placeholder="e.g. 2022" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" title="Please enter a valid 4-digit passing year">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label text-dark small fw-bold mb-1">Department / Degree</label>

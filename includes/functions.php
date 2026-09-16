@@ -677,16 +677,48 @@ function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $so
     $state = trim((string)$state);
     $college = trim((string)$college);
 
-    // Validation
+    // Strict Validation
+    // 1. Name validation: Alphabets, spaces, dots and apostrophes only (no numbers)
     if (strlen($name) < 2) {
         return ['success' => false, 'error' => 'Please enter a valid full name (minimum 2 characters).'];
     }
-    if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (!preg_match("/^[a-zA-Z\s\.\'-]{2,80}$/", $name)) {
+        return ['success' => false, 'error' => 'Full Name must contain only alphabets and spaces (no numbers or special characters allowed).'];
+    }
+
+    // 2. Father\'s name validation (if provided)
+    if (!empty($fatherName) && !preg_match("/^[a-zA-Z\s\.\'-]{2,80}$/", $fatherName)) {
+        return ['success' => false, 'error' => "Father's Name must contain only alphabets and spaces (no numbers allowed)."];
+    }
+
+    // 3. Email validation
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return ['success' => false, 'error' => 'Please enter a valid email address (e.g. name@domain.com).'];
     }
-    $cleanPhone = preg_replace('/[^0-9+]/', '', $phone);
-    if (strlen($cleanPhone) < 7 || strlen($cleanPhone) > 16) {
-        return ['success' => false, 'error' => 'Please enter a valid mobile / contact number.'];
+
+    // 4. Mobile Number validation: Exactly 10 digits, starts with 6, 7, 8, or 9
+    $cleanPhone = preg_replace('/\D/', '', $phone);
+    // Strip leading country code 91 if 12 digits, or leading 0 if 11 digits
+    if (strlen($cleanPhone) === 12 && substr($cleanPhone, 0, 2) === '91') {
+        $cleanPhone = substr($cleanPhone, 2);
+    } elseif (strlen($cleanPhone) === 11 && substr($cleanPhone, 0, 1) === '0') {
+        $cleanPhone = substr($cleanPhone, 1);
+    }
+
+    if (strlen($cleanPhone) !== 10) {
+        return ['success' => false, 'error' => 'Mobile number must be exactly 10 digits (digits only).'];
+    }
+    if (!preg_match('/^[6-9]\d{9}$/', $cleanPhone)) {
+        return ['success' => false, 'error' => 'Please enter a valid 10-digit mobile number starting with 6, 7, 8 or 9.'];
+    }
+    $phone = $cleanPhone;
+
+    // 5. City & State validation (if provided)
+    if (!empty($city) && !preg_match("/^[a-zA-Z\s\.\'-]{2,60}$/", $city)) {
+        return ['success' => false, 'error' => 'City name must contain only alphabets and spaces (no numbers allowed).'];
+    }
+    if (!empty($state) && !preg_match("/^[a-zA-Z\s\.\'-]{2,60}$/", $state)) {
+        return ['success' => false, 'error' => 'State name must contain only alphabets and spaces (no numbers allowed).'];
     }
 
     $fullMsg = $message;
@@ -748,16 +780,41 @@ function saveComplaint($name, $fatherName, $enrollmentNumber, $email, $phone, $i
     $complaintType = trim((string)$complaintType);
     $complaintDetails = trim((string)$complaintDetails);
 
+    // 1. Name validation
     if (strlen($name) < 2) {
         return ['success' => false, 'error' => 'Please enter a valid full name (minimum 2 characters).'];
     }
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (!preg_match("/^[a-zA-Z\s\.\'-]{2,80}$/", $name)) {
+        return ['success' => false, 'error' => 'Name must contain only alphabets and spaces (no numbers or symbols allowed).'];
+    }
+
+    // 2. Father\'s name validation (if provided)
+    if (!empty($fatherName) && !preg_match("/^[a-zA-Z\s\.\'-]{2,80}$/", $fatherName)) {
+        return ['success' => false, 'error' => "Father's Name must contain only alphabets and spaces (no numbers allowed)."];
+    }
+
+    // 3. Email validation
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return ['success' => false, 'error' => 'Please enter a valid email address (e.g. name@domain.com).'];
     }
-    $cleanPhone = preg_replace('/[^0-9+]/', '', $phone);
-    if (strlen($cleanPhone) < 10 || strlen($cleanPhone) > 15) {
-        return ['success' => false, 'error' => 'Please enter a valid 10-digit mobile number.'];
+
+    // 4. Mobile validation: Exactly 10 digits starting with 6-9
+    $cleanPhone = preg_replace('/\D/', '', $phone);
+    if (strlen($cleanPhone) === 12 && substr($cleanPhone, 0, 2) === '91') {
+        $cleanPhone = substr($cleanPhone, 2);
+    } elseif (strlen($cleanPhone) === 11 && substr($cleanPhone, 0, 1) === '0') {
+        $cleanPhone = substr($cleanPhone, 1);
     }
+
+    if (strlen($cleanPhone) !== 10) {
+        return ['success' => false, 'error' => 'Mobile number must be exactly 10 digits (digits only).'];
+    }
+    if (!preg_match('/^[6-9]\d{9}$/', $cleanPhone)) {
+        return ['success' => false, 'error' => 'Please enter a valid 10-digit mobile number starting with 6, 7, 8 or 9.'];
+    }
+    $phone = $cleanPhone;
+
+    // 5. Complaint details
     if (strlen($complaintDetails) < 10) {
         return ['success' => false, 'error' => 'Please describe your complaint in at least 10 characters.'];
     }

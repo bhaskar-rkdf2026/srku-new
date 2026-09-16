@@ -204,22 +204,22 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <label class="form-label fw-bold text-dark small mb-1">Full Name *</label>
-                            <input type="text" name="name" class="form-control py-2" placeholder="Candidate's full name" required minlength="2">
+                            <input type="text" name="name" class="form-control py-2" placeholder="Candidate's full name" required minlength="2" maxlength="80" pattern="^[A-Za-z\s\.\']{2,80}$" title="Name must contain only alphabets and spaces." autocomplete="name">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold text-dark small mb-1">Father's Name</label>
-                            <input type="text" name="father_name" class="form-control py-2" placeholder="Father's / Guardian's name">
+                            <input type="text" name="father_name" class="form-control py-2" placeholder="Father's / Guardian's name" maxlength="80" pattern="^[A-Za-z\s\.\']{2,80}$" title="Father's Name must contain only alphabets and spaces." autocomplete="off">
                         </div>
                     </div>
 
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <label class="form-label fw-bold text-dark small mb-1">WhatsApp Mobile *</label>
-                            <input type="tel" name="phone" class="form-control py-2" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" required>
+                            <input type="tel" name="phone" class="form-control py-2" placeholder="10-digit mobile number" pattern="[6-9][0-9]{9}" minlength="10" maxlength="10" inputmode="numeric" title="Please enter a valid 10-digit mobile number starting with 6, 7, 8 or 9." required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold text-dark small mb-1">Email Address *</label>
-                            <input type="email" name="email" class="form-control py-2" placeholder="yourname@gmail.com" required>
+                            <input type="email" name="email" class="form-control py-2" placeholder="yourname@gmail.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address (e.g. name@domain.com)." required>
                         </div>
                     </div>
 
@@ -260,11 +260,11 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <label class="form-label fw-bold text-dark small mb-1">City</label>
-                            <input type="text" name="city" class="form-control py-2" placeholder="e.g. Bhopal, Indore">
+                            <input type="text" name="city" class="form-control py-2" placeholder="e.g. Bhopal, Indore" maxlength="60" pattern="^[A-Za-z\s\.\-]{2,60}$" title="City name must contain only alphabets and spaces.">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold text-dark small mb-1">State</label>
-                            <input type="text" name="state" class="form-control py-2" placeholder="e.g. Madhya Pradesh">
+                            <input type="text" name="state" class="form-control py-2" placeholder="e.g. Madhya Pradesh" maxlength="60" pattern="^[A-Za-z\s\.\-]{2,60}$" title="State name must contain only alphabets and spaces.">
                         </div>
                     </div>
 
@@ -314,33 +314,33 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <label class="form-label fw-bold text-dark small mb-1">Your Full Name *</label>
-                            <input type="text" name="name" class="form-control py-2" placeholder="Enter student full name" required minlength="2">
+                            <input type="text" name="name" class="form-control py-2" placeholder="Enter student full name" required minlength="2" maxlength="80" pattern="^[A-Za-z\s\.\']{2,80}$" title="Name must contain only alphabets and spaces." autocomplete="name">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold text-dark small mb-1">Father's Name</label>
-                            <input type="text" name="father_name" class="form-control py-2" placeholder="Father's name">
+                            <input type="text" name="father_name" class="form-control py-2" placeholder="Father's name" maxlength="80" pattern="^[A-Za-z\s\.\']{2,80}$" title="Father's Name must contain only alphabets and spaces." autocomplete="off">
                         </div>
                     </div>
 
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <label class="form-label fw-bold text-dark small mb-1">Enrollment Number</label>
-                            <input type="text" name="enrollment_number" class="form-control py-2" placeholder="e.g. SRKU2024CS101">
+                            <input type="text" name="enrollment_number" class="form-control py-2" placeholder="e.g. SRKU2024CS101" maxlength="40">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold text-dark small mb-1">Mobile Number *</label>
-                            <input type="tel" name="phone" class="form-control py-2" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" required>
+                            <input type="tel" name="phone" class="form-control py-2" placeholder="10-digit mobile number" pattern="[6-9][0-9]{9}" minlength="10" maxlength="10" inputmode="numeric" title="Please enter a valid 10-digit mobile number starting with 6, 7, 8 or 9." required>
                         </div>
                     </div>
 
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <label class="form-label fw-bold text-dark small mb-1">Email ID *</label>
-                            <input type="email" name="email" class="form-control py-2" placeholder="yourname@gmail.com" required>
+                            <input type="email" name="email" class="form-control py-2" placeholder="yourname@gmail.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address." required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold text-dark small mb-1">Institute / College Name</label>
-                            <input type="text" name="institute_name" class="form-control py-2" placeholder="e.g. RKDF IST / College of Pharmacy">
+                            <input type="text" name="institute_name" class="form-control py-2" placeholder="e.g. RKDF IST / College of Pharmacy" maxlength="100">
                         </div>
                     </div>
 

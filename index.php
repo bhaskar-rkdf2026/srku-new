@@ -807,44 +807,76 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
      ADMISSION FORM SECTION (Redesigned with Dependent College & Course Dropdowns)
 ═══════════════════════════════════════════════════════ -->
 <?php
-$homeDepts = getDepartments(true);
+$rawColleges = getDepartments(true);
 $homeCourses = getCourses();
 
-// Group departments by academic category for organized optgroups
-$deptsByCategory = [];
-foreach ($homeDepts as $d) {
-    $cat = $d['category'] ?: 'Constituent Institutes';
-    if (!isset($deptsByCategory[$cat])) {
-        $deptsByCategory[$cat] = [];
-    }
-    $deptsByCategory[$cat][] = $d;
+// Build map of college slug -> courses for instant JS filtering
+$deptCoursesMap = [];
+foreach ($rawColleges as $col) {
+    $deptCoursesMap[$col['slug']] = [];
 }
 
-// Build map of dept slug -> courses for instant JS filtering
-$deptCoursesMap = [];
-foreach ($homeDepts as $d) {
-    $deptCoursesMap[$d['slug']] = [];
-}
-foreach ($homeCourses as $c) {
-    $s = $c['dept_slug'] ?? '';
-    if (isset($deptCoursesMap[$s])) {
-        $deptCoursesMap[$s][] = [
-            'name' => $c['course_name'],
-            'level' => $c['level'] ?? '',
-            'duration' => $c['duration'] ?? '',
+foreach ($homeCourses as $course) {
+    $slug = $course['dept_slug'] ?? '';
+    if (isset($deptCoursesMap[$slug])) {
+        $deptCoursesMap[$slug][] = [
+            'name'     => $course['course_name'],
+            'level'    => $course['level'] ?? '',
+            'duration' => $course['duration'] ?? '',
         ];
     } else {
-        foreach ($homeDepts as $d) {
-            if ($d['name'] === ($c['department'] ?? '')) {
-                $deptCoursesMap[$d['slug']][] = [
-                    'name' => $c['course_name'],
-                    'level' => $c['level'] ?? '',
-                    'duration' => $c['duration'] ?? '',
+        foreach ($rawColleges as $col) {
+            if ($col['name'] === ($course['department'] ?? '')) {
+                $deptCoursesMap[$col['slug']][] = [
+                    'name'     => $course['course_name'],
+                    'level'    => $course['level'] ?? '',
+                    'duration' => $course['duration'] ?? '',
                 ];
                 break;
             }
         }
     }
+}
+
+// Build clean list of constituent colleges (omitting items with 0 courses)
+$collegeList = [];
+foreach ($rawColleges as $col) {
+    $slug = $col['slug'];
+    $coursesCount = count($deptCoursesMap[$slug] ?? []);
+    if ($coursesCount === 0) continue;
+
+    $nameLower = strtolower($col['name']);
+    $catLower  = strtolower($col['category'] ?? '');
+
+    $icon = 'fas fa-university';
+    if (strpos($nameLower, 'pharmacy') !== false || strpos($catLower, 'pharmacy') !== false) {
+        $icon = 'fas fa-pills';
+    } elseif (strpos($nameLower, 'nursing') !== false || strpos($catLower, 'nursing') !== false) {
+        $icon = 'fas fa-user-nurse';
+    } elseif (strpos($nameLower, 'dental') !== false) {
+        $icon = 'fas fa-tooth';
+    } elseif (strpos($nameLower, 'medical') !== false || strpos($catLower, 'medical') !== false) {
+        $icon = 'fas fa-stethoscope';
+    } elseif (strpos($nameLower, 'ayurveda') !== false || strpos($nameLower, 'homoeopathic') !== false || strpos($catLower, 'ayush') !== false) {
+        $icon = 'fas fa-leaf';
+    } elseif (strpos($nameLower, 'law') !== false || strpos($catLower, 'law') !== false) {
+        $icon = 'fas fa-scale-balanced';
+    } elseif (strpos($nameLower, 'management') !== false || strpos($nameLower, 'business') !== false || strpos($catLower, 'management') !== false) {
+        $icon = 'fas fa-chart-line';
+    } elseif (strpos($nameLower, 'technology') !== false || strpos($nameLower, 'engineering') !== false || strpos($catLower, 'engineering') !== false) {
+        $icon = 'fas fa-cogs';
+    } elseif (strpos($nameLower, 'computer') !== false || strpos($nameLower, 'mca') !== false || strpos($catLower, 'computer') !== false) {
+        $icon = 'fas fa-laptop-code';
+    } elseif (strpos($nameLower, 'agriculture') !== false || strpos($catLower, 'agriculture') !== false) {
+        $icon = 'fas fa-seedling';
+    } elseif (strpos($nameLower, 'paramedical') !== false || strpos($catLower, 'paramedical') !== false) {
+        $icon = 'fas fa-heartbeat';
+    }
+
+    $col['icon'] = $icon;
+    $collegeList[] = $col;
+    // Also alias by college name so lookups work regardless of key
+    $deptCoursesMap[$col['name']] = $deptCoursesMap[$slug];
 }
 
 $postedCollege = sanitize($_POST['college'] ?? '');
@@ -946,7 +978,7 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                 </label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-user srku-field-icon"></i>
-                                    <input type="text" id="homeEnquiryName" name="name" class="srku-input" placeholder="Enter your full name" minlength="2" maxlength="80" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['name'] ?? ''); ?>" required>
+                                    <input type="text" id="homeEnquiryName" name="name" class="srku-input" placeholder="Enter your full name" minlength="2" maxlength="80" pattern="^[A-Za-z\s\.\']{2,80}$" title="Name must contain only alphabets and spaces (no numbers or symbols)." autocomplete="name" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['name'] ?? ''); ?>" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -955,7 +987,7 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                 </label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-user-tie srku-field-icon"></i>
-                                    <input type="text" id="homeEnquiryFatherName" name="father_name" class="srku-input" placeholder="Enter father's name" maxlength="80" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['father_name'] ?? ''); ?>">
+                                    <input type="text" id="homeEnquiryFatherName" name="father_name" class="srku-input" placeholder="Enter father's name" maxlength="80" pattern="^[A-Za-z\s\.\']{2,80}$" title="Father's Name must contain only alphabets and spaces (no numbers)." autocomplete="off" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['father_name'] ?? ''); ?>">
                                 </div>
                             </div>
                         </div>
@@ -964,47 +996,44 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="srku-label" for="homeEnquiryCollege">
-                                    Constituent College / Department <span class="req-star">*</span>
+                                    Select College <span class="req-star">*</span>
                                 </label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-university srku-field-icon"></i>
                                     <!-- Custom Searchable Dropdown: College -->
                                     <div class="srku-dd-wrap" id="homeCollegeDDWrap">
                                         <button type="button" class="srku-dd-trigger" id="homeCollegeTrigger" aria-haspopup="listbox" aria-expanded="false">
-                                            <span class="srku-dd-label srku-dd-placeholder">Select College / Department</span>
+                                            <span class="srku-dd-label srku-dd-placeholder">Select College</span>
                                             <svg class="srku-dd-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                                         </button>
                                         <div class="srku-dd-panel" id="homeCollegePanel">
                                             <div class="srku-dd-search-wrap">
                                                 <i class="fas fa-search srku-dd-search-icon"></i>
-                                                <input type="text" class="srku-dd-search" id="homeCollegeSearch" placeholder="Search college or department..." autocomplete="off">
+                                                <input type="text" class="srku-dd-search" id="homeCollegeSearch" placeholder="Search college..." autocomplete="off">
                                             </div>
                                             <div class="srku-dd-list" id="homeCollegeList">
-                                                <?php foreach ($deptsByCategory as $catName => $catDepts): ?>
-                                                    <div class="srku-dd-group"><?php echo sanitize($catName); ?></div>
-                                                    <?php foreach ($catDepts as $dept): ?>
-                                                        <div class="srku-dd-option"
-                                                             data-value="<?php echo sanitize($dept['name']); ?>"
-                                                             data-slug="<?php echo sanitize($dept['slug']); ?>"
-                                                             <?php echo (($postedCollege === $dept['name'] || $postedCollege === $dept['slug']) ? 'data-preselected="1"' : ''); ?>>
-                                                            <?php echo sanitize($dept['name']); ?>
-                                                        </div>
-                                                    <?php endforeach; ?>
+                                                <?php foreach ($collegeList as $col): 
+                                                    $cCount = count($deptCoursesMap[$col['slug']] ?? []);
+                                                ?>
+                                                    <div class="srku-dd-option"
+                                                         data-value="<?php echo sanitize($col['name']); ?>"
+                                                         data-slug="<?php echo sanitize($col['slug']); ?>"
+                                                         <?php echo (($postedCollege === $col['name'] || $postedCollege === $col['slug']) ? 'data-preselected="1"' : ''); ?>>
+                                                        <span class="srku-dd-opt-text"><?php echo sanitize($col['name']); ?></span>
+                                                    </div>
                                                 <?php endforeach; ?>
-                                                <div class="srku-dd-empty">No results found</div>
+                                                <div class="srku-dd-empty">No colleges found</div>
                                             </div>
                                         </div>
                                         <!-- Hidden native select for form submission -->
                                         <select name="college" id="homeEnquiryCollege" class="srku-dd-native" required>
-                                            <option value="">-- Choose College / Department --</option>
-                                            <?php foreach ($deptsByCategory as $catName => $catDepts): ?>
-                                                <?php foreach ($catDepts as $dept): ?>
-                                                    <option value="<?php echo sanitize($dept['name']); ?>"
-                                                            data-slug="<?php echo sanitize($dept['slug']); ?>"
-                                                            <?php echo (($postedCollege === $dept['name'] || $postedCollege === $dept['slug']) ? 'selected' : ''); ?>>
-                                                        <?php echo sanitize($dept['name']); ?>
-                                                    </option>
-                                                <?php endforeach; ?>
+                                            <option value="">-- Choose College --</option>
+                                            <?php foreach ($collegeList as $col): ?>
+                                                <option value="<?php echo sanitize($col['name']); ?>"
+                                                        data-slug="<?php echo sanitize($col['slug']); ?>"
+                                                        <?php echo (($postedCollege === $col['name'] || $postedCollege === $col['slug']) ? 'selected' : ''); ?>>
+                                                    <?php echo sanitize($col['name']); ?>
+                                                </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -1012,20 +1041,20 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                             </div>
                             <div class="col-md-6">
                                 <label class="srku-label" for="homeEnquiryCourse">
-                                    Course / Programme <span class="req-star">*</span>
+                                    Course <span class="req-star">*</span>
                                 </label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-graduation-cap srku-field-icon"></i>
                                     <!-- Custom Searchable Dropdown: Course -->
                                     <div class="srku-dd-wrap" id="homeCourseDDWrap">
                                         <button type="button" class="srku-dd-trigger" id="homeCourseTrigger" aria-haspopup="listbox" aria-expanded="false">
-                                            <span class="srku-dd-label srku-dd-placeholder">Select Course / Programme</span>
+                                            <span class="srku-dd-label srku-dd-placeholder">Select Course</span>
                                             <svg class="srku-dd-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                                         </button>
                                         <div class="srku-dd-panel" id="homeCoursePanel">
                                             <div class="srku-dd-search-wrap">
                                                 <i class="fas fa-search srku-dd-search-icon"></i>
-                                                <input type="text" class="srku-dd-search" id="homeCourseSearch" placeholder="Search course or programme..." autocomplete="off">
+                                                <input type="text" class="srku-dd-search" id="homeCourseSearch" placeholder="Search course..." autocomplete="off">
                                             </div>
                                             <div class="srku-dd-list" id="homeCourseList">
                                                 <div class="srku-dd-empty visible">Please select a college first to see available courses</div>
@@ -1048,7 +1077,7 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                 </label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-envelope srku-field-icon"></i>
-                                    <input type="email" id="homeEnquiryEmail" name="email" class="srku-input" placeholder="e.g. yourname@gmail.com" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['email'] ?? ''); ?>" required>
+                                    <input type="email" id="homeEnquiryEmail" name="email" class="srku-input" placeholder="e.g. yourname@gmail.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address (e.g. name@domain.com)." value="<?php echo $enquirySuccess ? '' : sanitize($_POST['email'] ?? ''); ?>" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -1057,7 +1086,7 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                 </label>
                                 <div class="srku-input-wrap">
                                     <span class="srku-phone-prefix">+91</span>
-                                    <input type="tel" id="homeEnquiryPhone" name="phone" class="srku-input srku-phone-input" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" title="Please enter a valid 10-digit mobile number" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['phone'] ?? ''); ?>" required>
+                                    <input type="tel" id="homeEnquiryPhone" name="phone" class="srku-input srku-phone-input" placeholder="10-digit mobile number" pattern="[6-9][0-9]{9}" minlength="10" maxlength="10" inputmode="numeric" title="Please enter a valid 10-digit mobile number starting with 6, 7, 8 or 9." value="<?php echo $enquirySuccess ? '' : sanitize($_POST['phone'] ?? ''); ?>" required>
                                 </div>
                             </div>
                         </div>
@@ -1070,7 +1099,7 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                 </label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-map-marker-alt srku-field-icon"></i>
-                                    <input type="text" id="homeEnquiryCity" name="city" class="srku-input" placeholder="Enter your city (e.g. Bhopal)" maxlength="100" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['city'] ?? ''); ?>">
+                                    <input type="text" id="homeEnquiryCity" name="city" class="srku-input" placeholder="Enter your city (e.g. Bhopal)" maxlength="60" pattern="^[A-Za-z\s\.\-]{2,60}$" title="City name must contain only alphabets and spaces." value="<?php echo $enquirySuccess ? '' : sanitize($_POST['city'] ?? ''); ?>">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -1079,7 +1108,7 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                 </label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-globe-asia srku-field-icon"></i>
-                                    <input type="text" id="homeEnquiryState" name="state" class="srku-input" placeholder="Enter your state (e.g. MP)" maxlength="100" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['state'] ?? ''); ?>">
+                                    <input type="text" id="homeEnquiryState" name="state" class="srku-input" placeholder="Enter your state (e.g. Madhya Pradesh)" maxlength="60" pattern="^[A-Za-z\s\.\-]{2,60}$" title="State name must contain only alphabets and spaces." value="<?php echo $enquirySuccess ? '' : sanitize($_POST['state'] ?? ''); ?>">
                                 </div>
                             </div>
                         </div>
@@ -1165,7 +1194,8 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
 
                                 // Show/hide options
                                 options.forEach(function(opt) {
-                                    const text = opt.textContent.toLowerCase();
+                                    const textEl = opt.querySelector('.srku-dd-opt-text');
+                                    const text = (textEl ? textEl.textContent : (opt.dataset.value || opt.textContent)).toLowerCase();
                                     const match = !q || text.includes(q);
                                     opt.classList.toggle('hidden', !match);
                                     if (match) anyVisible = true;
@@ -1190,9 +1220,12 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                             list.addEventListener('click', function(e) {
                                 const opt = e.target.closest('.srku-dd-option');
                                 if (!opt) return;
-                                selectOption(opt.dataset.value, opt.dataset.slug || '', opt.textContent.trim());
+                                const val = opt.dataset.value || '';
+                                const textEl = opt.querySelector('.srku-dd-opt-text');
+                                const label = textEl ? textEl.textContent.trim() : (val || opt.textContent.trim());
+                                selectOption(val, opt.dataset.slug || '', label);
                                 close();
-                                if (cfg.onChange) cfg.onChange(opt.dataset.value, opt.dataset.slug || '');
+                                if (cfg.onChange) cfg.onChange(val, opt.dataset.slug || '');
                             });
 
                             function selectOption(value, slug, label) {
@@ -1226,7 +1259,15 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                     if (g.label) {
                                         const grpEl = document.createElement('div');
                                         grpEl.className = 'srku-dd-group';
-                                        grpEl.textContent = g.label;
+
+                                        let iconClass = 'fas fa-graduation-cap';
+                                        const lblLower = g.label.toLowerCase();
+                                        if (lblLower.includes('undergraduate') || lblLower.includes('ug')) iconClass = 'fas fa-user-graduate';
+                                        else if (lblLower.includes('postgraduate') || lblLower.includes('pg')) iconClass = 'fas fa-award';
+                                        else if (lblLower.includes('diploma')) iconClass = 'fas fa-certificate';
+                                        else if (lblLower.includes('ph.d') || lblLower.includes('doctorate')) iconClass = 'fas fa-microscope';
+
+                                        grpEl.innerHTML = '<span class="srku-dd-group-title">' + g.label + '</span>';
                                         list.appendChild(grpEl);
                                     }
                                     g.options.forEach(function(o) {
@@ -1234,7 +1275,7 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                         optEl.className = 'srku-dd-option';
                                         optEl.dataset.value = o.value;
                                         if (o.slug) optEl.dataset.slug = o.slug;
-                                        optEl.textContent = o.text;
+                                        optEl.innerHTML = '<span class="srku-dd-opt-text">' + o.text + '</span>';
                                         list.appendChild(optEl);
                                         hasOptions = true;
                                     });
@@ -1253,7 +1294,9 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                                         return el.dataset.value.toLowerCase() === restoreValue.toLowerCase();
                                                     });
                                     if (matchEl) {
-                                        selectOption(matchEl.dataset.value, matchEl.dataset.slug || '', matchEl.textContent.trim());
+                                        const textEl = matchEl.querySelector('.srku-dd-opt-text');
+                                        const label = textEl ? textEl.textContent.trim() : matchEl.dataset.value;
+                                        selectOption(matchEl.dataset.value, matchEl.dataset.slug || '', label);
                                     }
                                 } else {
                                     // Reset trigger
@@ -1286,7 +1329,7 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                             searchId  : 'homeCollegeSearch',
                             listId    : 'homeCollegeList',
                             nativeId  : 'homeEnquiryCollege',
-                            placeholder: '-- Choose College / Department --',
+                            placeholder: '-- Choose College --',
                             onChange  : function(value, slug) { populateCourses(slug, ''); }
                         });
 
@@ -1309,7 +1352,7 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                 if (courseCfg && courseCfg._rebuildList) {
                                     courseCfg._rebuildList([{ label: '', options: [] }], '');
                                     if (courseLabelEl) {
-                                        courseLabelEl.textContent = 'Select Course / Programme';
+                                        courseLabelEl.textContent = 'Select Course';
                                         courseLabelEl.classList.add('srku-dd-placeholder');
                                     }
                                 }
@@ -1319,7 +1362,7 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                             const courses = deptCoursesMap[slug];
                             if (!courses || courses.length === 0) {
                                 if (courseCfg && courseCfg._rebuildList) {
-                                    courseCfg._rebuildList([{ label: '', options: [{ value: 'General Admission Enquiry', text: 'General Admission Enquiry / Other Degree' }] }], restoreCourse);
+                                    courseCfg._rebuildList([{ label: '', options: [{ value: 'General Admission Enquiry', text: 'General Admission Enquiry' }] }], restoreCourse);
                                 }
                                 return;
                             }
@@ -1336,23 +1379,21 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                 ...Object.keys(grouped).filter(function(l) { return !levelsOrder.includes(l); })
                             ];
 
-                            const groups = sortedLevels.map(function(lvl) {
-                                return {
-                                    label: levelLabels[lvl] || lvl,
-                                    options: grouped[lvl].map(function(c) {
-                                        return {
-                                            value: c.name,
-                                            text : c.name + (c.duration ? ' (' + c.duration + ')' : '')
-                                        };
-                                    })
-                                };
+                            const flatOptions = [];
+                            sortedLevels.forEach(function(lvl) {
+                                grouped[lvl].forEach(function(c) {
+                                    flatOptions.push({
+                                        value: c.name,
+                                        text : c.name + (c.duration ? ' (' + c.duration + ')' : '')
+                                    });
+                                });
                             });
 
                             if (courseCfg && courseCfg._rebuildList) {
-                                courseCfg._rebuildList(groups, restoreCourse);
+                                courseCfg._rebuildList([{ label: '', options: flatOptions }], restoreCourse);
                                 if (courseLabelEl && !restoreCourse) {
-                                    courseLabelEl.textContent = 'Choose Course (' + courses.length + ' Available)';
-                                    courseLabelEl.classList.remove('srku-dd-placeholder');
+                                    courseLabelEl.textContent = 'Select Course';
+                                    courseLabelEl.classList.add('srku-dd-placeholder');
                                 }
                             }
                         }
@@ -1365,8 +1406,10 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
 
                             const preselectedOpt = collegeList.querySelector('.srku-dd-option[data-preselected="1"]');
                             if (preselectedOpt) {
+                                const textEl = preselectedOpt.querySelector('.srku-dd-opt-text');
+                                const label = textEl ? textEl.textContent.trim() : preselectedOpt.dataset.value;
                                 const labelEl = collegeTrigger.querySelector('.srku-dd-label');
-                                if (labelEl) labelEl.textContent = preselectedOpt.textContent.trim();
+                                if (labelEl) labelEl.textContent = label;
                                 collegeTrigger.classList.add('has-value');
                                 preselectedOpt.classList.add('selected');
                                 const nativeCollege = document.getElementById('homeEnquiryCollege');

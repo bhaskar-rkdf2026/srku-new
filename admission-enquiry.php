@@ -37,41 +37,73 @@ $allDepartments = getDepartments(true);
 $selectedCourseParam = sanitize($_GET['course'] ?? ($_POST['course'] ?? ''));
 $postedCollege = sanitize($_POST['college'] ?? '');
 
-// Group departments by academic category
-$deptsByCategory = [];
-foreach ($allDepartments as $d) {
-    $cat = $d['category'] ?: 'Constituent Institutes';
-    if (!isset($deptsByCategory[$cat])) {
-        $deptsByCategory[$cat] = [];
-    }
-    $deptsByCategory[$cat][] = $d;
+// Build map of college slug -> courses for instant JS filtering
+$deptCoursesMap = [];
+foreach ($allDepartments as $col) {
+    $deptCoursesMap[$col['slug']] = [];
 }
 
-// Build map of dept slug -> courses
-$deptCoursesMap = [];
-foreach ($allDepartments as $d) {
-    $deptCoursesMap[$d['slug']] = [];
-}
-foreach ($allCourses as $c) {
-    $s = $c['dept_slug'] ?? '';
-    if (isset($deptCoursesMap[$s])) {
-        $deptCoursesMap[$s][] = [
-            'name' => $c['course_name'],
-            'level' => $c['level'] ?? '',
-            'duration' => $c['duration'] ?? '',
+foreach ($allCourses as $course) {
+    $slug = $course['dept_slug'] ?? '';
+    if (isset($deptCoursesMap[$slug])) {
+        $deptCoursesMap[$slug][] = [
+            'name'     => $course['course_name'],
+            'level'    => $course['level'] ?? '',
+            'duration' => $course['duration'] ?? '',
         ];
     } else {
-        foreach ($allDepartments as $d) {
-            if ($d['name'] === ($c['department'] ?? '')) {
-                $deptCoursesMap[$d['slug']][] = [
-                    'name' => $c['course_name'],
-                    'level' => $c['level'] ?? '',
-                    'duration' => $c['duration'] ?? '',
+        foreach ($allDepartments as $col) {
+            if ($col['name'] === ($course['department'] ?? '')) {
+                $deptCoursesMap[$col['slug']][] = [
+                    'name'     => $course['course_name'],
+                    'level'    => $course['level'] ?? '',
+                    'duration' => $course['duration'] ?? '',
                 ];
                 break;
             }
         }
     }
+}
+
+// Build clean list of constituent colleges (omitting items with 0 courses)
+$collegeList = [];
+foreach ($allDepartments as $col) {
+    $slug = $col['slug'];
+    $coursesCount = count($deptCoursesMap[$slug] ?? []);
+    if ($coursesCount === 0) continue;
+
+    $nameLower = strtolower($col['name']);
+    $catLower  = strtolower($col['category'] ?? '');
+
+    $icon = 'fas fa-university';
+    if (strpos($nameLower, 'pharmacy') !== false || strpos($catLower, 'pharmacy') !== false) {
+        $icon = 'fas fa-pills';
+    } elseif (strpos($nameLower, 'nursing') !== false || strpos($catLower, 'nursing') !== false) {
+        $icon = 'fas fa-user-nurse';
+    } elseif (strpos($nameLower, 'dental') !== false) {
+        $icon = 'fas fa-tooth';
+    } elseif (strpos($nameLower, 'medical') !== false || strpos($catLower, 'medical') !== false) {
+        $icon = 'fas fa-stethoscope';
+    } elseif (strpos($nameLower, 'ayurveda') !== false || strpos($nameLower, 'homoeopathic') !== false || strpos($catLower, 'ayush') !== false) {
+        $icon = 'fas fa-leaf';
+    } elseif (strpos($nameLower, 'law') !== false || strpos($catLower, 'law') !== false) {
+        $icon = 'fas fa-scale-balanced';
+    } elseif (strpos($nameLower, 'management') !== false || strpos($nameLower, 'business') !== false || strpos($catLower, 'management') !== false) {
+        $icon = 'fas fa-chart-line';
+    } elseif (strpos($nameLower, 'technology') !== false || strpos($nameLower, 'engineering') !== false || strpos($catLower, 'engineering') !== false) {
+        $icon = 'fas fa-cogs';
+    } elseif (strpos($nameLower, 'computer') !== false || strpos($nameLower, 'mca') !== false || strpos($catLower, 'computer') !== false) {
+        $icon = 'fas fa-laptop-code';
+    } elseif (strpos($nameLower, 'agriculture') !== false || strpos($catLower, 'agriculture') !== false) {
+        $icon = 'fas fa-seedling';
+    } elseif (strpos($nameLower, 'paramedical') !== false || strpos($catLower, 'paramedical') !== false) {
+        $icon = 'fas fa-heartbeat';
+    }
+
+    $col['icon'] = $icon;
+    $collegeList[] = $col;
+    // Also alias by college name so lookups work regardless of key
+    $deptCoursesMap[$col['name']] = $deptCoursesMap[$slug];
 }
 
 $address = getSetting('address', 'NH-12 Hoshangabad Road, Misrod, Bhopal, MP - 462026');
@@ -128,14 +160,14 @@ require_once __DIR__ . '/includes/header.php';
                                 <label class="srku-label" for="admissionName">Candidate Full Name <span class="req-star">*</span></label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-user srku-field-icon"></i>
-                                    <input type="text" id="admissionName" name="name" class="srku-input" placeholder="Enter candidate's full name" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['name'] ?? ''); ?>" minlength="2" maxlength="80" required>
+                                    <input type="text" id="admissionName" name="name" class="srku-input" placeholder="Enter candidate's full name" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['name'] ?? ''); ?>" minlength="2" maxlength="80" pattern="^[A-Za-z\s\.\']{2,80}$" title="Name must contain only alphabets and spaces (no numbers or symbols)." autocomplete="name" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="srku-label" for="admissionFatherName">Father's / Guardian's Name</label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-user-tie srku-field-icon"></i>
-                                    <input type="text" id="admissionFatherName" name="father_name" class="srku-input" placeholder="Enter father's / guardian's name" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['father_name'] ?? ''); ?>" maxlength="80">
+                                    <input type="text" id="admissionFatherName" name="father_name" class="srku-input" placeholder="Enter father's / guardian's name" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['father_name'] ?? ''); ?>" maxlength="80" pattern="^[A-Za-z\s\.\']{2,80}$" title="Father's Name must contain only alphabets and spaces (no numbers)." autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -145,76 +177,73 @@ require_once __DIR__ . '/includes/header.php';
                                 <label class="srku-label" for="admissionPhone">Mobile Number (WhatsApp) <span class="req-star">*</span></label>
                                 <div class="srku-input-wrap">
                                     <span class="srku-phone-prefix">+91</span>
-                                    <input type="tel" id="admissionPhone" name="phone" class="srku-input srku-phone-input" placeholder="10-digit mobile number" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['phone'] ?? ''); ?>" pattern="[0-9]{10}" maxlength="10" title="Please enter a valid 10-digit mobile number" required>
+                                    <input type="tel" id="admissionPhone" name="phone" class="srku-input srku-phone-input" placeholder="10-digit mobile number" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['phone'] ?? ''); ?>" pattern="[6-9][0-9]{9}" minlength="10" maxlength="10" inputmode="numeric" title="Please enter a valid 10-digit mobile number starting with 6, 7, 8 or 9." required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="srku-label" for="admissionEmail">Email Address <span class="req-star">*</span></label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-envelope srku-field-icon"></i>
-                                    <input type="email" id="admissionEmail" name="email" class="srku-input" placeholder="yourname@gmail.com" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['email'] ?? ''); ?>" required>
+                                    <input type="email" id="admissionEmail" name="email" class="srku-input" placeholder="yourname@gmail.com" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['email'] ?? ''); ?>" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address (e.g. name@domain.com)." required>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label class="srku-label" for="admissionCollege">Select College / Department <span class="req-star">*</span></label>
+                                <label class="srku-label" for="admissionCollege">Select College <span class="req-star">*</span></label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-university srku-field-icon"></i>
                                     <div class="srku-dd-wrap" id="admCollegeDDWrap">
                                         <button type="button" class="srku-dd-trigger" id="admCollegeTrigger" aria-haspopup="listbox" aria-expanded="false">
-                                            <span class="srku-dd-label srku-dd-placeholder">Select College / Department</span>
+                                            <span class="srku-dd-label srku-dd-placeholder">Select College</span>
                                             <svg class="srku-dd-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                                         </button>
                                         <div class="srku-dd-panel" id="admCollegePanel">
                                             <div class="srku-dd-search-wrap">
                                                 <i class="fas fa-search srku-dd-search-icon"></i>
-                                                <input type="text" class="srku-dd-search" id="admCollegeSearch" placeholder="Search college or department..." autocomplete="off">
+                                                <input type="text" class="srku-dd-search" id="admCollegeSearch" placeholder="Search college..." autocomplete="off">
                                             </div>
                                             <div class="srku-dd-list" id="admCollegeList">
-                                                <?php foreach ($deptsByCategory as $catName => $catDepts): ?>
-                                                    <div class="srku-dd-group"><?php echo sanitize($catName); ?></div>
-                                                    <?php foreach ($catDepts as $dept): ?>
-                                                        <div class="srku-dd-option"
-                                                             data-value="<?php echo sanitize($dept['name']); ?>"
-                                                             data-slug="<?php echo sanitize($dept['slug']); ?>"
-                                                             <?php echo (($postedCollege === $dept['name'] || $postedCollege === $dept['slug']) ? 'data-preselected="1"' : ''); ?>>
-                                                            <?php echo sanitize($dept['name']); ?>
-                                                        </div>
-                                                    <?php endforeach; ?>
+                                                <?php foreach ($collegeList as $col): 
+                                                    $cCount = count($deptCoursesMap[$col['slug']] ?? []);
+                                                ?>
+                                                    <div class="srku-dd-option"
+                                                         data-value="<?php echo sanitize($col['name']); ?>"
+                                                         data-slug="<?php echo sanitize($col['slug']); ?>"
+                                                         <?php echo (($postedCollege === $col['name'] || $postedCollege === $col['slug']) ? 'data-preselected="1"' : ''); ?>>
+                                                        <span class="srku-dd-opt-text"><?php echo sanitize($col['name']); ?></span>
+                                                    </div>
                                                 <?php endforeach; ?>
-                                                <div class="srku-dd-empty">No results found</div>
+                                                <div class="srku-dd-empty">No colleges found</div>
                                             </div>
                                         </div>
                                         <select name="college" id="admissionCollege" class="srku-dd-native" required>
-                                            <option value="">-- Choose College / Constituent Unit --</option>
-                                            <?php foreach ($deptsByCategory as $catName => $catDepts): ?>
-                                                <?php foreach ($catDepts as $dept): ?>
-                                                    <option value="<?php echo sanitize($dept['name']); ?>"
-                                                            data-slug="<?php echo sanitize($dept['slug']); ?>"
-                                                            <?php echo (($postedCollege === $dept['name'] || $postedCollege === $dept['slug']) ? 'selected' : ''); ?>>
-                                                        <?php echo sanitize($dept['name']); ?>
-                                                    </option>
-                                                <?php endforeach; ?>
+                                            <option value="">-- Choose College --</option>
+                                            <?php foreach ($collegeList as $col): ?>
+                                                <option value="<?php echo sanitize($col['name']); ?>"
+                                                        data-slug="<?php echo sanitize($col['slug']); ?>"
+                                                        <?php echo (($postedCollege === $col['name'] || $postedCollege === $col['slug']) ? 'selected' : ''); ?>>
+                                                    <?php echo sanitize($col['name']); ?>
+                                                </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="srku-label" for="admissionCourse">Select Program / Course of Interest <span class="req-star">*</span></label>
+                                <label class="srku-label" for="admissionCourse">Select Course <span class="req-star">*</span></label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-graduation-cap srku-field-icon"></i>
                                     <div class="srku-dd-wrap" id="admCourseDDWrap">
                                         <button type="button" class="srku-dd-trigger" id="admCourseTrigger" aria-haspopup="listbox" aria-expanded="false">
-                                            <span class="srku-dd-label srku-dd-placeholder">Select Course / Programme</span>
+                                            <span class="srku-dd-label srku-dd-placeholder">Select Course</span>
                                             <svg class="srku-dd-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                                         </button>
                                         <div class="srku-dd-panel" id="admCoursePanel">
                                             <div class="srku-dd-search-wrap">
                                                 <i class="fas fa-search srku-dd-search-icon"></i>
-                                                <input type="text" class="srku-dd-search" id="admCourseSearch" placeholder="Search course or programme..." autocomplete="off">
+                                                <input type="text" class="srku-dd-search" id="admCourseSearch" placeholder="Search course..." autocomplete="off">
                                             </div>
                                             <div class="srku-dd-list" id="admCourseList">
                                                 <div class="srku-dd-empty visible">Please select a college first to see available courses</div>
@@ -233,14 +262,14 @@ require_once __DIR__ . '/includes/header.php';
                                 <label class="srku-label" for="admissionCity">City / District</label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-map-marker-alt srku-field-icon"></i>
-                                    <input type="text" id="admissionCity" name="city" class="srku-input" placeholder="e.g. Bhopal, Indore, Patna, etc." value="<?php echo $enquirySuccess ? '' : sanitize($_POST['city'] ?? ''); ?>" maxlength="100">
+                                    <input type="text" id="admissionCity" name="city" class="srku-input" placeholder="e.g. Bhopal, Indore, Patna, etc." value="<?php echo $enquirySuccess ? '' : sanitize($_POST['city'] ?? ''); ?>" maxlength="60" pattern="^[A-Za-z\s\.\-]{2,60}$" title="City name must contain only alphabets and spaces.">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="srku-label" for="admissionState">State</label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-globe-asia srku-field-icon"></i>
-                                    <input type="text" id="admissionState" name="state" class="srku-input" placeholder="e.g. Madhya Pradesh, Bihar, UP" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['state'] ?? ''); ?>" maxlength="100">
+                                    <input type="text" id="admissionState" name="state" class="srku-input" placeholder="e.g. Madhya Pradesh, Bihar, UP" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['state'] ?? ''); ?>" maxlength="60" pattern="^[A-Za-z\s\.\-]{2,60}$" title="State name must contain only alphabets and spaces.">
                                 </div>
                             </div>
                         </div>
@@ -310,7 +339,9 @@ require_once __DIR__ . '/includes/header.php';
                                 const grps = list.querySelectorAll('.srku-dd-group');
                                 let anyVisible = false;
                                 opts.forEach(function(opt) {
-                                    const match = !q || opt.textContent.toLowerCase().includes(q);
+                                    const textEl = opt.querySelector('.srku-dd-opt-text');
+                                    const text = (textEl ? textEl.textContent : (opt.dataset.value || opt.textContent)).toLowerCase();
+                                    const match = !q || text.includes(q);
                                     opt.classList.toggle('hidden', !match);
                                     if (match) anyVisible = true;
                                 });
@@ -327,9 +358,12 @@ require_once __DIR__ . '/includes/header.php';
 
                             list.addEventListener('click', function(e) {
                                 const opt = e.target.closest('.srku-dd-option'); if (!opt) return;
-                                selectOption(opt.dataset.value, opt.dataset.slug || '', opt.textContent.trim());
+                                const val = opt.dataset.value || '';
+                                const textEl = opt.querySelector('.srku-dd-opt-text');
+                                const label = textEl ? textEl.textContent.trim() : (val || opt.textContent.trim());
+                                selectOption(val, opt.dataset.slug || '', label);
                                 close();
-                                if (cfg.onChange) cfg.onChange(opt.dataset.value, opt.dataset.slug || '');
+                                if (cfg.onChange) cfg.onChange(val, opt.dataset.slug || '');
                             });
 
                             function selectOption(value, slug, label) {
@@ -348,11 +382,28 @@ require_once __DIR__ . '/includes/header.php';
                                 list.innerHTML = '';
                                 let hasOptions = false;
                                 groups.forEach(function(g) {
-                                    if (g.label) { const el = document.createElement('div'); el.className = 'srku-dd-group'; el.textContent = g.label; list.appendChild(el); }
+                                    if (g.label) {
+                                        const el = document.createElement('div');
+                                        el.className = 'srku-dd-group';
+
+                                        let iconClass = 'fas fa-graduation-cap';
+                                        const lblLower = g.label.toLowerCase();
+                                        if (lblLower.includes('undergraduate') || lblLower.includes('ug')) iconClass = 'fas fa-user-graduate';
+                                        else if (lblLower.includes('postgraduate') || lblLower.includes('pg')) iconClass = 'fas fa-award';
+                                        else if (lblLower.includes('diploma')) iconClass = 'fas fa-certificate';
+                                        else if (lblLower.includes('ph.d') || lblLower.includes('doctorate')) iconClass = 'fas fa-microscope';
+
+                                        el.innerHTML = '<span class="srku-dd-group-title">' + g.label + '</span>';
+                                        list.appendChild(el);
+                                    }
                                     g.options.forEach(function(o) {
-                                        const el = document.createElement('div'); el.className = 'srku-dd-option';
-                                        el.dataset.value = o.value; if (o.slug) el.dataset.slug = o.slug;
-                                        el.textContent = o.text; list.appendChild(el); hasOptions = true;
+                                        const el = document.createElement('div');
+                                        el.className = 'srku-dd-option';
+                                        el.dataset.value = o.value;
+                                        if (o.slug) el.dataset.slug = o.slug;
+                                        el.innerHTML = '<span class="srku-dd-opt-text">' + o.text + '</span>';
+                                        list.appendChild(el);
+                                        hasOptions = true;
                                     });
                                 });
                                 const emEl = document.createElement('div'); emEl.className = 'srku-dd-empty';
@@ -360,7 +411,11 @@ require_once __DIR__ . '/includes/header.php';
 
                                 if (restoreValue) {
                                     const matchEl = Array.from(list.querySelectorAll('.srku-dd-option')).find(function(el) { return el.dataset.value.toLowerCase() === restoreValue.toLowerCase(); });
-                                    if (matchEl) selectOption(matchEl.dataset.value, matchEl.dataset.slug || '', matchEl.textContent.trim());
+                                    if (matchEl) {
+                                        const textEl = matchEl.querySelector('.srku-dd-opt-text');
+                                        const label = textEl ? textEl.textContent.trim() : matchEl.dataset.value;
+                                        selectOption(matchEl.dataset.value, matchEl.dataset.slug || '', label);
+                                    }
                                 } else {
                                     getLabelEl().textContent = cfg.placeholder || '-- Select --';
                                     getLabelEl().classList.add('srku-dd-placeholder');
@@ -377,7 +432,7 @@ require_once __DIR__ . '/includes/header.php';
                             triggerId: 'admCollegeTrigger', panelId: 'admCollegePanel',
                             searchId: 'admCollegeSearch', listId: 'admCollegeList',
                             nativeId: 'admissionCollege',
-                            placeholder: '-- Choose College / Constituent Unit --',
+                            placeholder: '-- Choose College --',
                             onChange: function(value, slug) { populateCourses(slug, ''); }
                         });
 
@@ -395,7 +450,7 @@ require_once __DIR__ . '/includes/header.php';
                                     const opts = (!slug || !deptCoursesMap[slug]) ? [] : [{ value: 'General Admission Enquiry', text: 'General Admission Enquiry' }];
                                     courseCfg._rebuildList([{ label: '', options: opts }], restoreCourse);
                                     if (lbl && !opts.length) {
-                                        lbl.textContent = 'Select Course / Programme';
+                                        lbl.textContent = 'Select Course';
                                         lbl.classList.add('srku-dd-placeholder');
                                     }
                                 }
@@ -405,14 +460,20 @@ require_once __DIR__ . '/includes/header.php';
                             const grouped = {};
                             courses.forEach(function(c) { const l = c.level || 'Other'; if (!grouped[l]) grouped[l] = []; grouped[l].push(c); });
                             const sortedLevels = [...levelsOrder.filter(function(l) { return grouped[l]; }), ...Object.keys(grouped).filter(function(l) { return !levelsOrder.includes(l); })];
-                            const groups = sortedLevels.map(function(lvl) {
-                                return { label: levelLabels[lvl] || lvl, options: grouped[lvl].map(function(c) { return { value: c.name, text: c.name + (c.duration ? ' (' + c.duration + ')' : '') }; }) };
+                            const flatOptions = [];
+                            sortedLevels.forEach(function(lvl) {
+                                grouped[lvl].forEach(function(c) {
+                                    flatOptions.push({
+                                        value: c.name,
+                                        text : c.name + (c.duration ? ' (' + c.duration + ')' : '')
+                                    });
+                                });
                             });
                             if (courseCfg && courseCfg._rebuildList) {
-                                courseCfg._rebuildList(groups, restoreCourse);
+                                courseCfg._rebuildList([{ label: '', options: flatOptions }], restoreCourse);
                                 if (lbl && !restoreCourse) {
-                                    lbl.textContent = 'Choose Course (' + courses.length + ' Available)';
-                                    lbl.classList.remove('srku-dd-placeholder');
+                                    lbl.textContent = 'Select Course';
+                                    lbl.classList.add('srku-dd-placeholder');
                                 }
                             }
                         }
@@ -424,8 +485,10 @@ require_once __DIR__ . '/includes/header.php';
                             if (!list || !trig) return;
                             const pre = list.querySelector('.srku-dd-option[data-preselected="1"]');
                             if (pre) {
+                                const textEl = pre.querySelector('.srku-dd-opt-text');
+                                const label = textEl ? textEl.textContent.trim() : pre.dataset.value;
                                 const lbl = trig.querySelector('.srku-dd-label');
-                                if (lbl) lbl.textContent = pre.textContent.trim();
+                                if (lbl) lbl.textContent = label;
                                 trig.classList.add('has-value');
                                 pre.classList.add('selected');
                                 const nat = document.getElementById('admissionCollege');

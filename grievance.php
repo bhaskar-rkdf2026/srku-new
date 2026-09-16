@@ -49,11 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_complaint'])) 
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark small mb-1">Your Name *</label>
-                                <input type="text" name="name" class="form-control py-2" placeholder="Enter your full name" minlength="2" maxlength="80" required>
+                                <input type="text" name="name" class="form-control py-2" placeholder="Enter your full name" minlength="2" maxlength="80" pattern="[a-zA-Z\s\.\'-]{2,80}" title="Please enter a valid full name (alphabets only, min 2 characters)" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark small mb-1">Father's Name</label>
-                                <input type="text" name="father_name" class="form-control py-2" placeholder="Enter father's name" maxlength="80">
+                                <input type="text" name="father_name" class="form-control py-2" placeholder="Enter father's name" maxlength="80" pattern="[a-zA-Z\s\.\'-]{2,80}" title="Please enter a valid father's name (alphabets only)">
                             </div>
                         </div>
                         <div class="row g-3 mb-3">
@@ -63,13 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_complaint'])) 
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark small mb-1">E-mail ID *</label>
-                                <input type="email" name="email" class="form-control py-2" placeholder="yourname@gmail.com" required>
+                                <input type="email" name="email" class="form-control py-2" placeholder="yourname@gmail.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" required>
                             </div>
                         </div>
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark small mb-1">Mobile Number *</label>
-                                <input type="tel" name="phone" class="form-control py-2" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" title="Please enter a valid 10-digit mobile number" required>
+                                <input type="tel" name="phone" class="form-control py-2" placeholder="10-Digit Mobile Number" inputmode="numeric" pattern="[6-9][0-9]{9}" minlength="10" maxlength="10" title="Please enter a valid 10-digit Indian mobile number (starting with 6, 7, 8, or 9)" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark small mb-1">Institute Name</label>

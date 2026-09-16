@@ -1191,15 +1191,15 @@ if (!function_exists('istPdf')) {
                         <input type="hidden" name="department" value="<?php echo sanitize($dept['name']); ?>">
                         <div class="mb-2">
                             <label class="form-label text-white small fw-semibold">Full Name *</label>
-                            <input type="text" name="name" class="form-control form-control-sm" placeholder="Enter Full Name" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['name'] ?? ''); ?>" required>
+                            <input type="text" name="name" class="form-control form-control-sm" placeholder="Enter Full Name" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['name'] ?? ''); ?>" required minlength="2" maxlength="80" pattern="[a-zA-Z\s\.\'-]{2,80}" title="Please enter a valid full name (alphabets only, min 2 characters)">
                         </div>
                         <div class="mb-2">
                             <label class="form-label text-white small fw-semibold">Email Address *</label>
-                            <input type="email" name="email" class="form-control form-control-sm" placeholder="yourname@gmail.com" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['email'] ?? ''); ?>" required>
+                            <input type="email" name="email" class="form-control form-control-sm" placeholder="yourname@gmail.com" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['email'] ?? ''); ?>" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
                         </div>
                         <div class="mb-2">
                             <label class="form-label text-white small fw-semibold">Mobile Number *</label>
-                            <input type="tel" name="phone" class="form-control form-control-sm" placeholder="10-Digit Mobile Number" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['phone'] ?? ''); ?>" required>
+                            <input type="tel" name="phone" class="form-control form-control-sm" placeholder="10-Digit Mobile Number" value="<?php echo $enquirySuccess ? '' : sanitize($_POST['phone'] ?? ''); ?>" required inputmode="numeric" pattern="[6-9][0-9]{9}" minlength="10" maxlength="10" title="Please enter a valid 10-digit Indian mobile number (starting with 6, 7, 8, or 9)">
                         </div>
                         <div class="mb-3">
                             <label class="form-label text-white small fw-semibold">Select Course of Interest</label>
