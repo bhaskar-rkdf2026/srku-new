@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_homepage_section
         'chancellor_full_page_msg' => $_POST['chancellor_full_page_msg'] ?? '',
 
         // Section 6: Vice Chancellor
-        'vc_name' => sanitize($_POST['vc_name'] ?? 'Ms. Priyanka Jaiswal'),
+        'vc_name' => sanitize($_POST['vc_name'] ?? 'Dr. Priyanka Jaiswal'),
         'vc_title' => sanitize($_POST['vc_title'] ?? 'Vice Chancellor'),
         'vc_photo' => $vcPhoto,
         'vc_email' => sanitize($_POST['vc_email'] ?? 'vc@srku.edu.in'),
@@ -167,7 +167,7 @@ $chancellorMsg2 = getSetting('chancellor_msg2', "In order to maintain quality in
 $chancellorMsgHindi = getSetting('chancellor_msg_hindi', 'यह अत्यंत हर्ष का विषय है कि सर्वपल्ली राधाकृष्णन विश्वविद्यालय भोपाल की स्थापना की अधिसूचना राज्य शासन द्वारा जारी की गई है। प्रदेश में उच्च शिक्षा के क्षेत्र में गुणवत्ता बनाये रखने हेतु शासकीय विश्वविद्यालय के साथ-साथ निजी विश्वविद्यालय की भी अहम जिम्मेदारी है कि रिसर्च और अन्वेषण में परिवर्तन लावें। आशा है कि सर्वपल्ली राधाकृष्णन विश्वविद्यालय भविष्य में गुणवत्ता के पैमाने पर अभूतपूर्व प्रदर्शन कर, राज्य के सर्वश्रेष्ठ शिक्षा संस्थान के रूप में अपना स्थान बना सकेगा।');
 $chancellorFullPage = getSetting('chancellor_full_page_msg', '');
 
-$vcName = getSetting('vc_name', 'Ms. Priyanka Jaiswal');
+$vcName = getSetting('vc_name', 'Dr. Priyanka Jaiswal');
 $vcTitle = getSetting('vc_title', 'Vice Chancellor');
 $vcPhoto = getSetting('vc_photo', '');
 if (strpos($vcPhoto, 'ruchichaubey') !== false) { $vcPhoto = ''; }

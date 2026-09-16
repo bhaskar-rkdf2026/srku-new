@@ -35,7 +35,7 @@ $chancellorHeading = getSetting('chancellor_heading', 'A Legacy of Excellence, A
 $chancellorMsg = getSetting('chancellor_msg', 'It is a matter of great joy that the notification for the establishment of Sarvepalli Radhakrishnan University, Bhopal, has been issued by the State Government.');
 $chancellorMsg2 = getSetting('chancellor_msg2', "In order to maintain quality in the field of higher education in the state, it is an important responsibility of private universities, alongside government universities, to bring about change in research and exploration. It is hoped that Sarvepalli Radhakrishnan University will, in the future, deliver unprecedented performance on quality standards and establish itself as the state's foremost institution of education.");
 
-$vcName = getSetting('vc_name', 'Ms. Priyanka Jaiswal');
+$vcName = getSetting('vc_name', 'Dr. Priyanka Jaiswal');
 $vcTitle = getSetting('vc_title', 'Vice Chancellor');
 $vcPhoto = getSetting('vc_photo', 'assets/uploads/2026/07/ruchichaubey.webp');
 $vcPhotoSrc = resolveMediaUrl($vcPhoto, 'assets/uploads/2026/07/ruchichaubey.webp');

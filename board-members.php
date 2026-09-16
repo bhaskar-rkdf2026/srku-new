@@ -26,7 +26,7 @@ $canonicalBoardMembers = [
         'photo' => 'assets/uploads/2026/08/chancellor.jpeg'
     ],
     [
-        'name' => 'Ms. Priyanka Jaiswal',
+        'name' => 'Dr. Priyanka Jaiswal',
         'designation' => 'Vice Chancellor',
         'category' => 'leadership',
         'representation' => 'Principal Academic & Executive Officer',

@@ -202,7 +202,7 @@ require_once __DIR__ . '/includes/header.php';
                 ['name' => 'Dr. Varsha Namdeo', 'role' => 'Member'],
                 ['name' => 'Dr. Chinmay Bhatt', 'role' => 'Member'],
                 ['name' => 'Dr. Sanjeev Shrivastava', 'role' => 'Member'],
-                ['name' => 'Dr. Nilesh Diwakar', 'role' => 'Member'],
+                ['name' => 'Director', 'role' => 'Member'],
                 ['name' => 'Dr. E. Vijay', 'role' => 'Member'],
                 ['name' => 'Dr. Jyoti Yadav', 'role' => 'Member'],
                 ['name' => 'Dr. Amitabh Shrivastava', 'role' => 'Member'],

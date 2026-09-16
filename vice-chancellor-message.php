@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-$vcName = getSetting('vc_name', 'Ms. Priyanka Jaiswal');
+$vcName = getSetting('vc_name', 'Dr. Priyanka Jaiswal');
 $vcTitle = getSetting('vc_title', 'Vice Chancellor');
 $vcPhoto = getSetting('vc_photo', '');
 if (strpos($vcPhoto, 'ruchichaubey') !== false) { $vcPhoto = ''; }

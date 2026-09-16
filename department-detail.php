@@ -440,17 +440,24 @@ if (!function_exists('istPdf')) {
                 </div>
 
                 <?php
-                // RKDF IST: Hardcode Director details as fallback when DB row is empty
+                // RKDF IST: Hardcode Director details as fallback when DB row is empty or has old name
                 if ($dept['slug'] === 'rkdf-institute-of-science-and-technology') {
-                    if (empty(trim($dept['dean_name'] ?? ''))) {
-                        $dept['dean_name']        = 'Dr. Nilesh Diwakar';
+                    if (empty(trim($dept['dean_name'] ?? '')) || stripos($dept['dean_name'], 'Nilesh') !== false) {
+                        $dept['dean_name']        = 'Director';
                         $dept['dean_designation'] = 'Director';
-                        $dept['dean_photo']       = 'assets/images/rkdf-ist/diwarkar-sir.jpg';
+                        $dept['dean_photo']       = '';
                         $dept['dean_message']     = "SRK University RKDF Institute of Science & Technology is a premier institute for professional studies. This institute has achieved ladder of engineering excellence since it's inception in 1995 & is recognized as one of the leading professional institutes in Madhya Pradesh, where students acquire technical & professional skills with cutting edge technology, knowledge & high moral standards. The growth achieved by this institution is significant. The institute is committed to offer quality technical education by adopting principle of mutual trust, fairness & positive orientation. The management, faculty members & supporting staff is committed to fulfill the expectations of all the stake holders i.e. students, parent, corporate community & society. The students are benefited with excellent infrastructure, dedicated faculty members & excellent track record of placement in corporate world. The vision of our faculties and their dedication to the cause of technical education combined with their dynamic approach to leadership has made a telling difference to the growth of the college. Our graduate students are selected in top notch organization, working in the field of software, energy, infrastructure, robotics & automation in fortune 500 companies of western world as well as MNCs of India. In the years to come RKDF Institute of Science & Technology shall play a significant role in the technology sector for developing trained & skilled human resources to serve the nation for better economic performance & growth.";
                     }
                 }
                 $dName = trim((string)($dept['dean_name'] ?? ''));
                 $dMsg = trim((string)($dept['dean_message'] ?? ''));
+                if (stripos($dName, 'Nilesh') !== false) {
+                    $dName = 'Director';
+                    $dept['dean_photo'] = '';
+                }
+                if ($dName === 'Director') {
+                    $dept['dean_photo'] = '';
+                }
                 if (!empty($dName) && !empty($dMsg)): 
                     $dDesig = trim((string)($dept['dean_designation'] ?? 'Dean & Principal')) ?: 'Dean & Principal';
                     $dPhoto = trim((string)($dept['dean_photo'] ?? ''));
@@ -469,17 +476,17 @@ if (!function_exists('istPdf')) {
 
                         <!-- Top Centered Profile & Photo -->
                         <div class="text-center mb-4">
-                            <div class="rounded-circle overflow-hidden shadow border border-4 border-white mx-auto mb-3 bg-light" style="width: 130px; height: 130px; outline: 2px solid #e2e8f0;">
-                                <?php if (!empty($dPhoto)): ?>
+                            <?php if (!empty($dPhoto)): ?>
+                                <div class="rounded-circle overflow-hidden shadow border border-4 border-white mx-auto mb-3 bg-light" style="width: 130px; height: 130px; outline: 2px solid #e2e8f0;">
                                     <img src="<?php echo (strpos($dPhoto, 'http') === 0) ? $dPhoto : BASE_URL . $dPhoto; ?>" 
                                          alt="<?php echo sanitize($dName); ?>" 
                                          class="w-100 h-100 object-fit-cover">
-                                <?php else: ?>
-                                    <div class="w-100 h-100 bg-light d-flex flex-column align-items-center justify-content-center text-danger">
-                                        <i class="fas fa-user-graduate fs-1"></i>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
+                                </div>
+                            <?php else: ?>
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-danger-subtle text-danger mb-3 shadow-xs" style="width: 72px; height: 72px; font-size: 1.8rem; border: 2px solid rgba(122, 11, 13, 0.15);">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                            <?php endif; ?>
                             <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize($dName); ?></h4>
                             <div class="d-flex justify-content-center flex-wrap gap-2 mt-2">
                                 <?php 
