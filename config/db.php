@@ -157,6 +157,11 @@ function runUniversalDatabaseMigrations($pdo) {
         ensureDbTableColumn($pdo, 'enquiries', 'state', "VARCHAR(100) DEFAULT NULL", "TEXT DEFAULT NULL", 'city');
         ensureDbTableColumn($pdo, 'enquiries', 'source', "VARCHAR(150) DEFAULT NULL", "TEXT DEFAULT NULL", 'state');
         ensureDbTableColumn($pdo, 'enquiries', 'status', "VARCHAR(50) DEFAULT 'New'", "TEXT DEFAULT 'New'", 'message');
+
+        // 7. Board members table columns (add missing columns for existing tables)
+        ensureDbTableColumn($pdo, 'board_members', 'category', "VARCHAR(50) DEFAULT 'Executive Leadership'", "TEXT DEFAULT 'Executive Leadership'", 'designation');
+        ensureDbTableColumn($pdo, 'board_members', 'representation', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'category');
+        ensureDbTableColumn($pdo, 'board_members', 'icon', "VARCHAR(100) DEFAULT 'fa-user-tie'", "TEXT DEFAULT 'fa-user-tie'", 'representation');
     } catch (Exception $e) {}
 }
 
@@ -321,8 +326,11 @@ function autoInitializeTables($pdo) {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 designation TEXT NOT NULL,
+                category TEXT DEFAULT 'Executive Leadership',
                 role TEXT DEFAULT 'Member',
+                representation TEXT,
                 bio TEXT,
+                icon TEXT DEFAULT 'fa-user-tie',
                 photo TEXT,
                 sort_order INTEGER DEFAULT 0,
                 status TEXT DEFAULT 'active',
@@ -473,8 +481,11 @@ function autoInitializeTables($pdo) {
                 `id` INT AUTO_INCREMENT PRIMARY KEY,
                 `name` VARCHAR(255) NOT NULL,
                 `designation` VARCHAR(255) NOT NULL,
+                `category` VARCHAR(50) DEFAULT 'Executive Leadership',
                 `role` VARCHAR(100) DEFAULT 'Member',
+                `representation` VARCHAR(255) DEFAULT NULL,
                 `bio` TEXT,
+                `icon` VARCHAR(100) DEFAULT 'fa-user-tie',
                 `photo` VARCHAR(255),
                 `sort_order` INT DEFAULT 0,
                 `status` ENUM('active','inactive') DEFAULT 'active',
