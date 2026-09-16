@@ -35,15 +35,38 @@ require_once __DIR__ . '/includes/header.php';
 
 <?php
 $stats = getUniversityStats();
-$defaultReasons = [
-    ['num' => '01', 'title' => 'Multidisciplinary Education', 'desc' => 'We offer over 50 diverse programmes spanning Medical, Dental, Nursing, Engineering, Management, Law, Commerce, Agriculture, Science, and Humanities. Students choose courses aligned with their aspirations and the National Education Policy 2020.'],
-    ['num' => '02', 'title' => 'State-of-the-Art Infrastructure', 'desc' => 'Our lush green campus spans a cosmopolitan setting with modern laboratories, interactive learning spaces, high-tech medical facilities, and libraries equipped with the latest technology and resources.'],
-    ['num' => '03', 'title' => 'NAAC-Graded Excellence', 'desc' => 'SRK University is NAAC-accredited, ensuring quality education meets international standards. Our commitment to continuous improvement and academic rigor sets us apart from other private universities in Bhopal.'],
-    ['num' => '04', 'title' => 'Industry & Research Partnerships', 'desc' => 'We foster strong collaborations with leading industries for internships, placements, and research initiatives, ensuring students gain hands-on experience and are job-ready upon graduation.'],
-    ['num' => '05', 'title' => 'Diverse Student Community', 'desc' => 'Our campus welcomes students from all corners of India, creating a multicultural environment that enriches learning and promotes cross-cultural understanding.'],
-    ['num' => '06', 'title' => 'Holistic Student Development', 'desc' => 'At SRK University, students grow beyond academics through sports, cultural activities, leadership programmes, innovation, and community engagement, building confidence, teamwork, and essential life skills for future success.']
+$reasons = [
+    [
+        'num' => '01',
+        'title' => getSetting('why_srku_reason_1_title', 'Multidisciplinary Education'),
+        'desc' => getSetting('why_srku_reason_1_desc', 'We offer over 50 diverse programmes spanning Medical, Dental, Nursing, Engineering, Management, Law, Commerce, Agriculture, Science, and Humanities. Students choose courses aligned with their aspirations and the National Education Policy 2020.')
+    ],
+    [
+        'num' => '02',
+        'title' => getSetting('why_srku_reason_2_title', 'State-of-the-Art Infrastructure'),
+        'desc' => getSetting('why_srku_reason_2_desc', 'Our lush green campus spans a cosmopolitan setting with modern laboratories, interactive learning spaces, high-tech medical facilities, and libraries equipped with the latest technology and resources.')
+    ],
+    [
+        'num' => '03',
+        'title' => getSetting('why_srku_reason_3_title', 'NAAC-Graded Excellence'),
+        'desc' => getSetting('why_srku_reason_3_desc', 'SRK University is NAAC-accredited, ensuring quality education meets international standards. Our commitment to continuous improvement and academic rigor sets us apart from other private universities in Bhopal.')
+    ],
+    [
+        'num' => '04',
+        'title' => getSetting('why_srku_reason_4_title', 'Industry & Research Partnerships'),
+        'desc' => getSetting('why_srku_reason_4_desc', 'We foster strong collaborations with leading industries for internships, placements, and research initiatives, ensuring students gain hands-on experience and are job-ready upon graduation.')
+    ],
+    [
+        'num' => '05',
+        'title' => getSetting('why_srku_reason_5_title', 'Diverse Student Community'),
+        'desc' => getSetting('why_srku_reason_5_desc', 'Our campus welcomes students from all corners of India, creating a multicultural environment that enriches learning and promotes cross-cultural understanding.')
+    ],
+    [
+        'num' => '06',
+        'title' => getSetting('why_srku_reason_6_title', 'Holistic Student Development'),
+        'desc' => getSetting('why_srku_reason_6_desc', 'At SRK University, students grow beyond academics through sports, cultural activities, leadership programmes, innovation, and community engagement, building confidence, teamwork, and essential life skills for future success.')
+    ]
 ];
-$reasons = getJsonSetting('why_srku_reasons', $defaultReasons);
 ?>
 
 <!-- STATS STRIP -->
@@ -79,9 +102,9 @@ $reasons = getJsonSetting('why_srku_reasons', $defaultReasons);
     <div class="container-xl py-3">
         <div class="row align-items-center g-4 g-lg-5">
             <div class="col-12 col-lg-6 reveal">
-                <h2 class="section-title mb-3">Empowering <span style="font-style:italic;">Minds. Inspiring</span> Innovation. Building Future Leaders.</h2>
+                <h2 class="section-title mb-3"><?php echo htmlspecialchars(getSetting('why_srku_empower_title', 'Empowering Minds. Inspiring Innovation. Building Future Leaders.')); ?></h2>
                 <p class="text-dark mb-3" style="line-height:1.8; font-size:0.96rem;">
-                    <strong>At SRK University, education is more than earning a degree&mdash;it's about developing the knowledge, skills, and confidence to succeed in a rapidly changing world.</strong> Our multidisciplinary learning environment combines academic excellence, practical exposure, innovation, and industry engagement to prepare students for meaningful careers and lifelong success.
+                    <?php echo nl2br(htmlspecialchars(getSetting('why_srku_empower_desc', "At SRK University, education is more than earning a degree—it's about developing the knowledge, skills, and confidence to succeed in a rapidly changing world. Our multidisciplinary learning environment combines academic excellence, practical exposure, innovation, and industry engagement to prepare students for meaningful careers and lifelong success."))); ?>
                 </p>
                 <p class="text-muted mb-4" style="line-height:1.8; font-size:0.95rem;">
                     With experienced faculty, modern infrastructure, advanced research facilities, and a vibrant campus culture, SRK University nurtures talent across diverse disciplines. Every student is encouraged to explore, innovate, collaborate, and lead while building a strong foundation for personal and professional growth.

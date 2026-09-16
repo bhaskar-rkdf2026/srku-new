@@ -46,6 +46,110 @@ function getBoardMembers($status = 'active') {
     }
 }
 
+// Fetch Exam Timetables
+function getExamTimetables($category = '', $search = '', $status = 'active') {
+    try {
+        $pdo = getDBConnection();
+        $sql = "SELECT * FROM exam_timetables WHERE 1=1";
+        $params = [];
+        if (!empty($status)) {
+            $sql .= " AND status = :st";
+            $params[':st'] = $status;
+        }
+        if (!empty($category)) {
+            $sql .= " AND category = :cat";
+            $params[':cat'] = $category;
+        }
+        if (!empty($search)) {
+            $sql .= " AND (course_title LIKE :s OR details LIKE :s)";
+            $params[':s'] = '%' . $search . '%';
+        }
+        $sql .= " ORDER BY id DESC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+// Fetch Campus Facilities
+function getCampusFacilities($status = 'active') {
+    try {
+        $pdo = getDBConnection();
+        $sql = "SELECT * FROM facilities";
+        $params = [];
+        if (!empty($status)) {
+            $sql .= " WHERE status = :st";
+            $params[':st'] = $status;
+        }
+        $sql .= " ORDER BY sort_order ASC, id ASC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+// Fetch Accreditations & Approvals
+function getAccreditations($status = 'active') {
+    try {
+        $pdo = getDBConnection();
+        $sql = "SELECT * FROM accreditations";
+        $params = [];
+        if (!empty($status)) {
+            $sql .= " WHERE status = :st";
+            $params[':st'] = $status;
+        }
+        $sql .= " ORDER BY sort_order ASC, id ASC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+// Fetch Incubation Center Advisory / Team Members
+function getIncubationMembers($status = 'active') {
+    try {
+        $pdo = getDBConnection();
+        $sql = "SELECT * FROM incubation_members";
+        $params = [];
+        if (!empty($status)) {
+            $sql .= " WHERE status = :st";
+            $params[':st'] = $status;
+        }
+        $sql .= " ORDER BY sort_order ASC, id ASC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+// Fetch Corporate Placement Partners
+function getPlacementCompanies($status = 1) {
+    try {
+        $pdo = getDBConnection();
+        $sql = "SELECT * FROM placements";
+        $params = [];
+        if ($status !== null && $status !== '') {
+            $sql .= " WHERE status = :st";
+            $params[':st'] = $status;
+        }
+        $sql .= " ORDER BY sort_order ASC, id ASC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+
 // Standardized University Statistics
 function getUniversityStats() {
     return [
@@ -1345,12 +1449,69 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
                     `id` INT AUTO_INCREMENT PRIMARY KEY,
                     `name` VARCHAR(255) NOT NULL,
                     `designation` VARCHAR(255) NOT NULL,
+                    `category` VARCHAR(50) DEFAULT 'Executive Leadership',
                     `role` VARCHAR(100) DEFAULT 'Member',
+                    `representation` VARCHAR(255) DEFAULT NULL,
                     `bio` TEXT,
+                    `icon` VARCHAR(100) DEFAULT 'fa-user-tie',
                     `photo` VARCHAR(255),
                     `sort_order` INT DEFAULT 0,
                     `status` ENUM('active','inactive') DEFAULT 'active',
                     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                CREATE TABLE IF NOT EXISTS `exam_timetables` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `category` VARCHAR(100) NOT NULL DEFAULT 'General',
+                    `course_title` VARCHAR(255) NOT NULL,
+                    `details` TEXT,
+                    `file_url` VARCHAR(255) NOT NULL,
+                    `filename` VARCHAR(255),
+                    `sort_order` INT DEFAULT 0,
+                    `status` ENUM('active','inactive') DEFAULT 'active',
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                CREATE TABLE IF NOT EXISTS `facilities` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `title` VARCHAR(255) NOT NULL,
+                    `icon` VARCHAR(100) DEFAULT 'fa-building',
+                    `image` VARCHAR(255) NOT NULL,
+                    `description` TEXT,
+                    `sort_order` INT DEFAULT 0,
+                    `status` ENUM('active','inactive') DEFAULT 'active',
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                CREATE TABLE IF NOT EXISTS `accreditations` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `code` VARCHAR(50) NOT NULL,
+                    `name` VARCHAR(255) NOT NULL,
+                    `domain` VARCHAR(150) DEFAULT NULL,
+                    `description` TEXT,
+                    `sort_order` INT DEFAULT 0,
+                    `status` ENUM('active','inactive') DEFAULT 'active',
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                CREATE TABLE IF NOT EXISTS `incubation_members` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `name` VARCHAR(150) NOT NULL,
+                    `role` VARCHAR(150) NOT NULL,
+                    `highlight` TINYINT(1) DEFAULT 0,
+                    `sort_order` INT DEFAULT 0,
+                    `status` ENUM('active','inactive') DEFAULT 'active',
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+                CREATE TABLE IF NOT EXISTS `placements` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `company_name` VARCHAR(100) NOT NULL,
+                    `logo_url` VARCHAR(255),
+                    `package_offered` VARCHAR(50) DEFAULT NULL,
+                    `sort_order` INT DEFAULT 0,
+                    `status` TINYINT(1) DEFAULT 1,
+                    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
             ");
         }
@@ -1867,6 +2028,196 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
             $report['counts']['users'] = (int)$pdo->query("SELECT COUNT(*) FROM `users`")->fetchColumn();
         }
 
+        // 13. BOARD OF MANAGEMENT
+        if ($target === 'all' || $target === 'board_members') {
+            $currBoardCount = (int)$pdo->query("SELECT COUNT(*) FROM `board_members`")->fetchColumn();
+            if ($currBoardCount == 0 || $force) {
+                $cleanTable('board_members');
+                $boardMembersMaster = [
+                    ['Dr. Sunil Kapoor', 'Chairman & Chief Patron', 'leadership', 'Member', 'Founder & Visionary, RKDF Education Society', 'Guiding the RKDF group and SRK University since 1995 with an inspiring mission of affordable, benchmarked multidisciplinary higher education.', 'fa-crown', 'assets/uploads/2026/08/dr-sunil-kapoor.jpeg', 1],
+                    ['Mrs. Janak Kapoor', 'Chancellor', 'leadership', 'Member', 'Chancellor, Sarvepalli Radhakrishnan University', 'Leading policy governance, university growth, philanthropic outreach, and community engagement.', 'fa-user-tie', 'assets/uploads/2026/08/mrs-janak-kapoor.jpeg', 2],
+                    ['Prof. (Dr.) Brijendra Singh', 'Vice Chancellor', 'leadership', 'Member', 'Vice Chancellor & Senior Academician', 'Eminent professor leading academic reforms, research partnerships, and university administration.', 'fa-user-graduate', 'assets/uploads/2026/08/dr-brijendra-singh.jpeg', 3],
+                    ['Director', 'Registrar', 'administration', 'Member Secretary', 'Registrar & Head of Administrative Affairs', 'Overseeing regulatory compliance, university records, state council liaisons, and human resources.', 'fa-clipboard-check', NULL, 4],
+                    ['Dr. P. K. Singhal', 'Dean & Eminent Educationist', 'academics', 'Member', 'Nominee, Sponsoring Body', 'Pioneering technical engineering research and higher education accreditation frameworks.', 'fa-award', 'assets/uploads/2026/08/dr-pk-singhal.jpeg', 5],
+                    ['Prof. (Dr.) S. K. Jain', 'Director & Senior Scientist', 'academics', 'Member', 'Prominent Academic Leader', 'Leading pharmacy research, industrial collaborations, and clinical development initiatives.', 'fa-flask', 'assets/uploads/2026/08/dr-sk-jain.jpeg', 6],
+                    ['Dr. Archana Kapoor', 'Director', 'governance', 'Member', 'RKDF Trust Nominee', 'Promoting community health, paramedical education, and women empowerment initiatives.', 'fa-heart', 'assets/uploads/2026/08/dr-archana-kapoor.jpeg', 7],
+                    ['Prof. R. C. Gupta', 'Eminent Technologist', 'industry', 'Member', 'Industry Representative', 'Veteran technocrat connecting university curricula with global industry standards and innovations.', 'fa-laptop-code', 'assets/uploads/2026/08/prof-rc-gupta.jpeg', 8],
+                    ['Prof. (Dr.) Vandana Sharma', 'Professor & Head', 'academics', 'Member', 'University Faculty Nominee', 'Leading postgraduate medical sciences, nursing programs, and hospital clinical training.', 'fa-stethoscope', 'assets/uploads/2026/08/dr-vandana-sharma.jpeg', 9],
+                    ['Er. Alok Verma', 'Chief Financial Officer', 'administration', 'Special Invitee', 'Finance Officer, SRKU', 'Directing financial governance, institutional planning, budget compliance, and auditing.', 'fa-coins', 'assets/uploads/2026/08/er-alok-verma.jpeg', 10]
+                ];
+                $insBoard = $pdo->prepare("INSERT INTO `board_members` (`name`, `designation`, `category`, `role`, `representation`, `bio`, `icon`, `photo`, `sort_order`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')");
+                foreach ($boardMembersMaster as $bm) {
+                    $insBoard->execute($bm);
+                }
+                $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `board_members`")->fetchColumn();
+                $report['counts']['board_members'] = $newCount;
+                $report['messages'][] = "Board of Management synchronized ($newCount members).";
+            } else {
+                $report['counts']['board_members'] = $currBoardCount;
+            }
+        }
+
+        // 14. EXAM TIME TABLES
+        if ($target === 'all' || $target === 'exam_timetables') {
+            $currTimeCount = (int)$pdo->query("SELECT COUNT(*) FROM `exam_timetables`")->fetchColumn();
+            if ($currTimeCount == 0 || $force) {
+                $cleanTable('exam_timetables');
+                $timetablesMaster = [
+                    ['Engineering & Polytechnic', 'B.Tech / B.E. (All Branches)', 'Regular & Ex Semester Examinations | EE, EEE, CE, EC, EI, CS, IT, ME', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/Btech-II-24-25.pdf', 'Btech-II-24-25.pdf', 1],
+                    ['Engineering & Polytechnic', 'Polytechnic Diploma in Engineering', 'All Branches | Civil, Mechanical, Electrical, Computer Science', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/Diploma-24-25.pdf', 'Diploma-24-25.pdf', 2],
+                    ['Engineering & Polytechnic', 'M.Tech / ME (All Specializations)', 'VLSI, CSE, Power Systems, Thermal & Structural Engineering', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/Mtech-24-25.pdf', 'Mtech-24-25.pdf', 3],
+                    ['Pharmacy & Medical', 'B.Pharm (Bachelor of Pharmacy)', 'PCI Approved 4-Year Degree | All Semester Examinations', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/B-Pharm-24-25.pdf', 'B-Pharm-24-25.pdf', 4],
+                    ['Pharmacy & Medical', 'D.Pharm (Diploma in Pharmacy)', 'First & Second Year Annual Examination Schedule', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/D-Pharm-24-25.pdf', 'D-Pharm-24-25.pdf', 5],
+                    ['Pharmacy & Medical', 'M.Pharm (Pharmaceutics / Pharmacology)', 'Master of Pharmacy Final & Pre-Final Semester Schedules', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/M-Pharm-24-25.pdf', 'M-Pharm-24-25.pdf', 6],
+                    ['Pharmacy & Medical', 'MBBS / BDS Professional Examinations', 'Clinical & Pre-Clinical Theory and Practical Rosters', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/MBBS-24-25.pdf', 'MBBS-24-25.pdf', 7],
+                    ['Nursing & Paramedical', 'B.Sc. Nursing & Post Basic B.Sc. Nursing', 'INC Approved Degree Examination Schedules', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/BSc-Nursing-24-25.pdf', 'BSc-Nursing-24-25.pdf', 8],
+                    ['Nursing & Paramedical', 'GNM (General Nursing & Midwifery)', 'State Nursing Council Annual Examinations', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/GNM-24-25.pdf', 'GNM-24-25.pdf', 9],
+                    ['Nursing & Paramedical', 'BPT & MPT (Physiotherapy)', 'Bachelor & Master of Physiotherapy Clinical Schedules', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/BPT-24-25.pdf', 'BPT-24-25.pdf', 10],
+                    ['Management & Commerce', 'MBA (Master of Business Administration)', 'Dual Specialization: Finance, Marketing, HR, Business Analytics', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/MBA-24-25.pdf', 'MBA-24-25.pdf', 11],
+                    ['Management & Commerce', 'BBA & B.Com (Honours)', 'Undergraduate Management & Commerce Semester Schedule', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/BBA-BCom-24-25.pdf', 'BBA-BCom-24-25.pdf', 12],
+                    ['Law & Legal Studies', 'LL.B. (3 Years)', 'BCI Approved Professional Law Degree Examination', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/LLB-24-25.pdf', 'LLB-24-25.pdf', 13],
+                    ['Law & Legal Studies', 'B.A. LL.B. (5 Years Integrated)', 'Integrated Honours Law Program Date Sheets', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/BALLB-24-25.pdf', 'BALLB-24-25.pdf', 14],
+                    ['Agriculture & Sciences', 'B.Sc. (Hons) Agriculture', 'ICAR Aligned 4-Year Degree Semester Schedule', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/Agriculture-24-25.pdf', 'Agriculture-24-25.pdf', 15],
+                    ['Agriculture & Sciences', 'M.Sc. (All Disciplines)', 'Agronomy, Horticulture, Chemistry, Physics, Mathematics', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/MSc-24-25.pdf', 'MSc-24-25.pdf', 16],
+                    ['Computer Applications', 'BCA & MCA', 'Cloud Computing, AI, Full Stack Web Development', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/BCA-MCA-24-25.pdf', 'BCA-MCA-24-25.pdf', 17],
+                    ['Ayurveda & Homoeopathy', 'BAMS & BHMS', 'NCISM / NCH Professional Annual Examinations', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/AYUSH-24-25.pdf', 'AYUSH-24-25.pdf', 18],
+                    ['Doctoral Studies', 'Ph.D. Coursework Examinations', 'Research Methodology & Subject Specific Examinations', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/PhD-24-25.pdf', 'PhD-24-25.pdf', 19],
+                    ['Special Notifications', 'Special ATKT / Remedial Examinations', 'Supplementary Exams for UG and PG Programmes', 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/ATKT-24-25.pdf', 'ATKT-24-25.pdf', 20]
+                ];
+                $insTime = $pdo->prepare("INSERT INTO `exam_timetables` (`category`, `course_title`, `details`, `file_url`, `filename`, `sort_order`, `status`) VALUES (?, ?, ?, ?, ?, ?, 'active')");
+                foreach ($timetablesMaster as $tm) {
+                    $insTime->execute($tm);
+                }
+                $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `exam_timetables`")->fetchColumn();
+                $report['counts']['exam_timetables'] = $newCount;
+                $report['messages'][] = "Exam Timetables & Schedules synchronized ($newCount schedules).";
+            } else {
+                $report['counts']['exam_timetables'] = $currTimeCount;
+            }
+        }
+
+        // 15. CAMPUS FACILITIES
+        if ($target === 'all' || $target === 'facilities') {
+            $currFacCount = (int)$pdo->query("SELECT COUNT(*) FROM `facilities`")->fetchColumn();
+            if ($currFacCount == 0 || $force) {
+                $cleanTable('facilities');
+                $facilitiesMaster = [
+                    ['42+ Research Laboratories', 'fa-microscope', 'assets/uploads/2026/07/lab-and-research.webp', 'Equipped with high-performance computing clusters, robotics simulation kits, automated HPLC drug testing systems, and agronomy research suites.', 1],
+                    ['RKDF Medical Hospital (750+ Beds)', 'fa-hospital', 'assets/uploads/2026/07/001.webp', 'On-campus teaching super-specialty hospital featuring ICUs, trauma care, pathology labs, and emergency medicine for direct clinical training.', 2],
+                    ['Central Library & Digital Knowledge Hub', 'fa-book-reader', 'assets/uploads/2026/07/Library-pic.webp', 'Over 1,00,000 physical volumes, subscriptions to IEEE/Springer digital journals, high-speed Wi-Fi, and air-conditioned reading halls.', 3],
+                    ['Air-Conditioned Auditoriums & Convention Center', 'fa-theater-masks', 'assets/uploads/2026/07/Auditorium-01.webp', 'Multiple acoustically tuned seminar halls and a grand 1,500-seater main auditorium for national fests, conferences, and convocation ceremonies.', 4],
+                    ['Sports Complex & Gymnasium', 'fa-dumbbell', 'assets/uploads/2026/07/gymnasium.webp', 'Olympic-size running tracks, cricket grounds, indoor badminton stadium, basketball courts, and fully equipped modern fitness gymnasium.', 5],
+                    ['Safe Campus Transport Fleet', 'fa-bus', 'assets/uploads/2026/07/Transportation.webp', 'A modern fleet of 60+ university buses connecting all corners of Bhopal, Mandideep, Sehore, Hoshangabad, and Raisen with GPS tracking.', 6]
+                ];
+                $insFac = $pdo->prepare("INSERT INTO `facilities` (`title`, `icon`, `image`, `description`, `sort_order`, `status`) VALUES (?, ?, ?, ?, ?, 'active')");
+                foreach ($facilitiesMaster as $fm) {
+                    $insFac->execute($fm);
+                }
+                $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `facilities`")->fetchColumn();
+                $report['counts']['facilities'] = $newCount;
+                $report['messages'][] = "Campus Facilities synchronized ($newCount facilities).";
+            } else {
+                $report['counts']['facilities'] = $currFacCount;
+            }
+        }
+
+        // 16. ACCREDITATIONS & STATUTORY APPROVALS
+        if ($target === 'all' || $target === 'accreditations') {
+            $currAccCount = (int)$pdo->query("SELECT COUNT(*) FROM `accreditations`")->fetchColumn();
+            if ($currAccCount == 0 || $force) {
+                $cleanTable('accreditations');
+                $accredMaster = [
+                    ['UGC', 'University Grants Commission', 'Govt. of India', 'Statutory recognition under Section 2(f) of the UGC Act 1956, Government of India, empowering degree-granting authority.', 1],
+                    ['AICTE', 'All India Council for Technical Education', 'Technical & Engineering', 'Statutory regulatory approval for Bachelor of Technology, Master of Technology, MCA, and Management programs.', 2],
+                    ['PCI', 'Pharmacy Council of India', 'Pharmacy Education', 'Apex accreditation for B.Pharm, D.Pharm, and M.Pharm professional pharmaceutical education.', 3],
+                    ['INC', 'Indian Nursing Council', 'Healthcare & Nursing', 'National regulatory approval for B.Sc. Nursing, Post Basic B.Sc. Nursing, and GNM programs.', 4],
+                    ['BCI', 'Bar Council of India', 'Legal Studies', 'Statutory recognition for LL.B. (3 Years) and B.A. LL.B. (5 Years Integrated) professional law education.', 5],
+                    ['NMC', 'National Medical Commission', 'Medical Sciences', 'Apex regulatory recognition for MBBS and postgraduate clinical rotations at RKDF Medical College Hospital.', 6],
+                    ['DCI', 'Dental Council of India', 'Dental Surgery', 'Statutory approval for BDS (Bachelor of Dental Surgery) and specialized oral healthcare training.', 7],
+                    ['NCISM', 'National Commission for Indian System of Medicine', 'Ayurvedic Medicine', 'Apex regulatory approval for BAMS and traditional Indian medicine healthcare programs.', 8],
+                    ['NCH', 'National Commission for Homoeopathy', 'Homoeopathic Medicine', 'National council recognition for BHMS professional homoeopathic medical education.', 9],
+                    ['MPPURC', 'M.P. Private University Regulatory Commission', 'State Regulatory Body', 'Constitutional oversight, fee regulation, and academic quality assurance under MP Act No. 17 of 2007.', 10],
+                    ['AIU & ISO', 'Association of Indian Universities & ISO 9001:2015', 'Quality Benchmarking', 'Equivalent recognition across all Indian and overseas universities for higher education and government service.', 11]
+                ];
+                $insAcc = $pdo->prepare("INSERT INTO `accreditations` (`code`, `name`, `domain`, `description`, `sort_order`, `status`) VALUES (?, ?, ?, ?, ?, 'active')");
+                foreach ($accredMaster as $am) {
+                    $insAcc->execute($am);
+                }
+                $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `accreditations`")->fetchColumn();
+                $report['counts']['accreditations'] = $newCount;
+                $report['messages'][] = "Statutory Accreditations synchronized ($newCount recognitions).";
+            } else {
+                $report['counts']['accreditations'] = $currAccCount;
+            }
+        }
+
+        // 17. INCUBATION CENTRE COMMITTEE
+        if ($target === 'all' || $target === 'incubation_members') {
+            $currIncCount = (int)$pdo->query("SELECT COUNT(*) FROM `incubation_members`")->fetchColumn();
+            if ($currIncCount == 0 || $force) {
+                $cleanTable('incubation_members');
+                $incMaster = [
+                    ['Dr. Sushil Singh', 'Centre Co-ordinator', 1, 1],
+                    ['Director', 'Member', 0, 2],
+                    ['Dr. K. S. Thakur', 'Advisory Member', 0, 3],
+                    ['Dr. P. K. Singhal', 'Advisory Member', 0, 4],
+                    ['Dr. Archana Kapoor', 'Advisory Member', 0, 5],
+                    ['Dr. Manoj Mishra', 'Technical Expert', 0, 6],
+                    ['Dr. Rakesh Patel', 'Patent & IPR Mentor', 0, 7],
+                    ['Prof. Alok Sharma', 'Startup Mentor', 0, 8],
+                    ['Dr. Vandana Sharma', 'Healthcare Innovation Mentor', 0, 9],
+                    ['Prof. Vikas Gupta', 'Agri-Tech Advisor', 0, 10],
+                    ['Er. Rohit Jain', 'Industry Liaison Officer', 0, 11],
+                    ['Dr. Neha Saxena', 'Bio-Tech Mentor', 0, 12],
+                    ['Prof. Amit Verma', 'Fintech & IT Advisor', 0, 13],
+                    ['Er. Sanjay Mehra', 'Student Incubation Mentor', 0, 14]
+                ];
+                $insInc = $pdo->prepare("INSERT INTO `incubation_members` (`name`, `role`, `highlight`, `sort_order`, `status`) VALUES (?, ?, ?, ?, 'active')");
+                foreach ($incMaster as $im) {
+                    $insInc->execute($im);
+                }
+                $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `incubation_members`")->fetchColumn();
+                $report['counts']['incubation_members'] = $newCount;
+                $report['messages'][] = "Incubation Committee synchronized ($newCount members).";
+            } else {
+                $report['counts']['incubation_members'] = $currIncCount;
+            }
+        }
+
+        // 18. CORPORATE PLACEMENT PARTNERS
+        if ($target === 'all' || $target === 'placements') {
+            $currPlcCount = (int)$pdo->query("SELECT COUNT(*) FROM `placements`")->fetchColumn();
+            if ($currPlcCount == 0 || $force) {
+                $cleanTable('placements');
+                $plcMaster = [
+                    ['TCS - Tata Consultancy Services', 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Tata_Consultancy_Services_Logo.svg', '7.5 LPA', 1],
+                    ['Infosys', 'https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg', '6.8 LPA', 2],
+                    ['Wipro Technologies', 'https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg', '6.5 LPA', 3],
+                    ['Cipla Pharmaceuticals', 'https://upload.wikimedia.org/wikipedia/commons/e/ea/Cipla_logo.svg', '8.0 LPA', 4],
+                    ['Sun Pharmaceutical Industries', 'https://upload.wikimedia.org/wikipedia/commons/1/18/Sun_Pharma_Logo.svg', '8.2 LPA', 5],
+                    ['HCL Technologies', 'https://upload.wikimedia.org/wikipedia/commons/9/95/HCL_Technologies_logo.svg', '7.0 LPA', 6]
+                ];
+                $insPlc = $pdo->prepare("INSERT INTO `placements` (`company_name`, `logo_url`, `package_offered`, `sort_order`, `status`) VALUES (?, ?, ?, ?, 1)");
+                foreach ($plcMaster as $pm) {
+                    $insPlc->execute($pm);
+                }
+                $newCount = (int)$pdo->query("SELECT COUNT(*) FROM `placements`")->fetchColumn();
+                $report['counts']['placements'] = $newCount;
+                $report['messages'][] = "Placement Partners synchronized ($newCount companies).";
+            } else {
+                $report['counts']['placements'] = $currPlcCount;
+            }
+        }
+
+        // 19. AUTOMATIC PRODUCTION SQL EXPORT (srku_db.sql)
+        if ($driver !== 'sqlite') {
+            $sqlExport = exportLiveDatabaseSqlFile();
+            if (!empty($sqlExport['success'])) {
+                $sizeKb = round(($sqlExport['size'] ?? 0) / 1024);
+                $report['messages'][] = "Live database backup exported to '{$sqlExport['filename']}' ({$sizeKb} KB, {$sqlExport['total_rows']} rows across {$sqlExport['tables']} tables).";
+            }
+        }
+
         return $report;
     } catch (Exception $e) {
         return [
@@ -1875,6 +2226,133 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
             'counts' => [],
             'error' => $e->getMessage(),
             'timestamp' => date('Y-m-d H:i:s')
+        ];
+    }
+}
+
+/**
+ * Exports all active production tables and master data cleanly into srku_db.sql (and srku_db_new.sql)
+ *
+ * @return array Report with status, file path, size and table counts
+ */
+function exportLiveDatabaseSqlFile() {
+    $baseDir = dirname(__DIR__);
+    $targetFile = $baseDir . '/srku_db.sql';
+
+    try {
+        $pdo = getDBConnection();
+        $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+
+        if ($driver === 'sqlite') {
+            return ['success' => false, 'error' => 'Live SQL export is only applicable for MySQL/MariaDB database.'];
+        }
+
+        // Tables to export in proper foreign-key friendly order
+        $tablesToExport = [
+            'users',
+            'settings',
+            'pages',
+            'departments',
+            'courses',
+            'faculty',
+            'syllabi',
+            'gallery',
+            'blogs',
+            'news',
+            'banners',
+            'board_members',
+            'exam_timetables',
+            'facilities',
+            'accreditations',
+            'incubation_members',
+            'placements',
+            'enquiries',
+            'complaints'
+        ];
+
+        $out = "-- ========================================================\n";
+        $out .= "-- Sarvepalli Radhakrishnan University (SRKU) Database Dump\n";
+        $out .= "-- Automated Live Synchronization & Production Export\n";
+        $out .= "-- Generated: " . date('Y-m-d H:i:s') . "\n";
+        $out .= "-- Host: " . (defined('DB_HOST') ? DB_HOST : 'localhost') . "\n";
+        $out .= "-- Database: " . (defined('DB_NAME') ? DB_NAME : 'srku_db_new') . "\n";
+        $out .= "-- ========================================================\n\n";
+        $out .= "SET FOREIGN_KEY_CHECKS = 0;\n";
+        $out .= "SET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";\n";
+        $out .= "SET time_zone = \"+05:30\";\n";
+        $out .= "SET NAMES utf8mb4;\n\n";
+
+        $exportedTables = 0;
+        $totalRowsExported = 0;
+
+        foreach ($tablesToExport as $table) {
+            // Check if table exists
+            $exists = $pdo->query("SHOW TABLES LIKE " . $pdo->quote($table))->fetchColumn();
+            if (!$exists) {
+                continue;
+            }
+
+            $out .= "-- --------------------------------------------------------\n";
+            $out .= "-- Table structure for `$table`\n";
+            $out .= "-- --------------------------------------------------------\n";
+            $out .= "DROP TABLE IF EXISTS `$table`;\n";
+
+            $createRow = $pdo->query("SHOW CREATE TABLE `$table`")->fetch(PDO::FETCH_ASSOC);
+            if (!empty($createRow['Create Table'])) {
+                $out .= $createRow['Create Table'] . ";\n\n";
+            }
+
+            // Export rows
+            $rows = $pdo->query("SELECT * FROM `$table`")->fetchAll(PDO::FETCH_ASSOC);
+            $rowCount = count($rows);
+            if ($rowCount > 0) {
+                $out .= "-- Dumping data for table `$table` ($rowCount rows)\n";
+                $cols = array_keys($rows[0]);
+                $colList = implode('`, `', $cols);
+
+                // Chunk rows to prevent huge single queries
+                $chunks = array_chunk($rows, 100);
+                foreach ($chunks as $chunk) {
+                    $out .= "INSERT INTO `$table` (`$colList`) VALUES\n";
+                    $valsArray = [];
+                    foreach ($chunk as $r) {
+                        $vFormatted = array_map(function($val) use ($pdo) {
+                            if ($val === null) return 'NULL';
+                            return $pdo->quote($val);
+                        }, array_values($r));
+                        $valsArray[] = '(' . implode(', ', $vFormatted) . ')';
+                    }
+                    $out .= implode(",\n", $valsArray) . ";\n";
+                }
+                $out .= "\n";
+                $totalRowsExported += $rowCount;
+            }
+            $exportedTables++;
+        }
+
+        $out .= "SET FOREIGN_KEY_CHECKS = 1;\n";
+
+        file_put_contents($targetFile, $out);
+
+        // Also update srku_db_new.sql if it exists
+        $newSqlFile = $baseDir . '/srku_db_new.sql';
+        if (file_exists($newSqlFile)) {
+            file_put_contents($newSqlFile, $out);
+        }
+
+        return [
+            'success' => true,
+            'file' => $targetFile,
+            'filename' => basename($targetFile),
+            'size' => filesize($targetFile),
+            'tables' => $exportedTables,
+            'total_rows' => $totalRowsExported,
+            'timestamp' => date('Y-m-d H:i:s')
+        ];
+    } catch (Exception $e) {
+        return [
+            'success' => false,
+            'error' => $e->getMessage()
         ];
     }
 }

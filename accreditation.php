@@ -35,20 +35,18 @@ require_once __DIR__ . '/includes/header.php';
 
 <?php
 $stats = getUniversityStats();
-$defaultApprovals = [
-    ['code' => 'UGC', 'name' => 'University Grants Commission', 'domain' => 'Govt. of India', 'desc' => 'Statutory recognition under Section 2(f) of the UGC Act 1956, Government of India, empowering degree-granting authority.'],
-    ['code' => 'NMC', 'name' => 'National Medical Commission', 'domain' => 'Medical Education', 'desc' => 'Approved for MBBS, MD/MS, and Postgraduate Medical clinical specialties matching national clinical standards.'],
-    ['code' => 'NCISM', 'name' => 'National Commission for Indian System of Medicine', 'domain' => 'Ayurvedic Medicine', 'desc' => 'Approved for BAMS (Bachelor of Ayurvedic Medicine & Surgery) and Ayurvedic clinical hospital practice.'],
-    ['code' => 'NCH', 'name' => 'National Commission for Homoeopathy', 'domain' => 'Homoeopathic Medicine', 'desc' => 'Approved for BHMS and MD (Homoeopathy) programmes ensuring high healthcare education standards.'],
-    ['code' => 'NDC', 'name' => 'National Dental Commission', 'domain' => 'Dental Surgery', 'desc' => 'Approved for BDS and MDS dental surgery programmes across 8 specialized clinical departments.'],
-    ['code' => 'PCI', 'name' => 'Pharmacy Council of India', 'domain' => 'Pharmaceutical Sciences', 'desc' => 'Approved for D.Pharm, B.Pharm, and M.Pharm degrees across all constituent pharmacy colleges.'],
-    ['code' => 'INC', 'name' => 'Indian Nursing Council', 'domain' => 'Nursing Sciences', 'desc' => 'Approved for GNM, B.Sc. Nursing, P.B.B.Sc., M.Sc. Nursing, and NPCC clinical training.'],
-    ['code' => 'MPPMC', 'name' => 'M.P. Paramedical Council', 'domain' => 'Paramedical Health', 'desc' => 'Recognized for DMLT, BMLT, MMLT, BPT, MPT, Radiography, Dialysis, and Paramedical Diplomas.'],
-    ['code' => 'AICTE', 'name' => 'All India Council for Technical Education', 'domain' => 'Engineering & Management', 'desc' => 'Approved for Engineering Diploma, B.Tech., M.Tech., MCA, and MBA professional programmes.'],
-    ['code' => 'BCI', 'name' => 'Bar Council of India', 'domain' => 'Legal Education', 'desc' => 'Approved for B.A. LL.B. (Hons.), LL.B. (3 Years), and LL.M. professional legal education.'],
-    ['code' => 'MPPURC', 'name' => 'M.P. Private University Regulatory Commission', 'domain' => 'State Regulatory Council', 'desc' => 'Established under Madhya Pradesh Niji Vishwavidyalaya Adhiniyam 2007 (Act No. 17 of 2007).']
-];
-$approvals = getJsonSetting('accreditation_list', $defaultApprovals);
+$dbAccreditations = getAccreditations('active');
+$approvals = [];
+foreach ($dbAccreditations as $ap) {
+    $approvals[] = [
+        'code'   => $ap['code'] ?? $ap['council_code'] ?? '',
+        'name'   => $ap['name'] ?? $ap['council_name'] ?? '',
+        'domain' => $ap['domain'] ?? $ap['scope'] ?? '',
+        'desc'   => $ap['description'] ?? '',
+        'letter' => $ap['approval_letter_url'] ?? '',
+        'portal' => $ap['official_portal'] ?? ''
+    ];
+}
 ?>
 
 <!-- STATS STRIP -->

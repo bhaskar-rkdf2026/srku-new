@@ -134,12 +134,22 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 $syllabusCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM syllabi")->fetchColumn();
                 $boardCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM board_members")->fetchColumn();
                 $facultyCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM faculty")->fetchColumn();
+                $timetablesCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM exam_timetables")->fetchColumn();
+                $facilitiesCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM facilities")->fetchColumn();
+                $accreditationsCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM accreditations")->fetchColumn();
+                $placementsCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM placements")->fetchColumn();
+                $incubationCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM incubation_members")->fetchColumn();
             } catch(Exception $e) { 
                 $deptsCountBadge = 26; 
                 $galleryCountBadge = 71;
                 $syllabusCountBadge = 267;
-                $boardCountBadge = 7;
+                $boardCountBadge = 10;
                 $facultyCountBadge = 1074;
+                $timetablesCountBadge = 20;
+                $facilitiesCountBadge = 6;
+                $accreditationsCountBadge = 11;
+                $placementsCountBadge = 6;
+                $incubationCountBadge = 14;
             }
             ?>
             <a href="manage_departments.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_departments.php' ? 'active' : ''; ?>">
@@ -147,6 +157,9 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
             </a>
             <a href="manage_courses.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_courses.php' ? 'active' : ''; ?>">
                 <i class="fas fa-graduation-cap"></i> Courses &amp; Programs
+            </a>
+            <a href="manage_timetables.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_timetables.php' ? 'active' : ''; ?>">
+                <i class="fas fa-calendar-alt text-danger"></i> Exam Time Tables (<?php echo $timetablesCountBadge; ?>)
             </a>
             <a href="manage_syllabus.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_syllabus.php' ? 'active' : ''; ?>">
                 <i class="fas fa-file-pdf text-danger"></i> Syllabus &amp; Schemes (<?php echo $syllabusCountBadge; ?>)
@@ -156,6 +169,18 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
             </a>
             <a href="manage_board.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_board.php' ? 'active' : ''; ?>">
                 <i class="fas fa-users-cog text-warning"></i> Board of Management (<?php echo $boardCountBadge; ?>)
+            </a>
+            <a href="manage_facilities.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_facilities.php' ? 'active' : ''; ?>">
+                <i class="fas fa-building text-info"></i> Campus Facilities (<?php echo $facilitiesCountBadge; ?>)
+            </a>
+            <a href="manage_accreditations.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_accreditations.php' ? 'active' : ''; ?>">
+                <i class="fas fa-certificate text-danger"></i> Accreditations &amp; Approvals (<?php echo $accreditationsCountBadge; ?>)
+            </a>
+            <a href="manage_placements.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_placements.php' ? 'active' : ''; ?>">
+                <i class="fas fa-handshake text-success"></i> Placement Partners (<?php echo $placementsCountBadge; ?>)
+            </a>
+            <a href="manage_incubation.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_incubation.php' ? 'active' : ''; ?>">
+                <i class="fas fa-lightbulb text-warning"></i> Incubation Centre (<?php echo $incubationCountBadge; ?>)
             </a>
             <a href="manage_blogs.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_blogs.php' ? 'active' : ''; ?>">
                 <i class="fas fa-newspaper"></i> Blogs &amp; Articles

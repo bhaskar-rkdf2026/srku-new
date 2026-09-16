@@ -32,27 +32,26 @@ require_once __DIR__ . '/includes/header.php';
 
         <!-- Student Life Highlights -->
         <?php
-        $defaultHighlights = [
+        $studentHighlights = [
             [
-                'icon' => 'fas fa-guitar',
+                'icon' => getSetting('student_fest_icon', 'fas fa-guitar'),
                 'badge_class' => 'bg-danger-subtle text-danger',
-                'title' => 'Tarang — Annual Cultural Fest',
-                'desc' => 'Three days of star-studded musical concerts, fashion shows, dance competitions, and theatrical performances with 10,000+ attendees.'
+                'title' => getSetting('student_fest_title', 'Tarang — Annual Cultural Fest'),
+                'desc' => getSetting('student_fest_desc', 'Three days of star-studded musical concerts, fashion shows, dance competitions, and theatrical performances with 10,000+ attendees.')
             ],
             [
-                'icon' => 'fas fa-trophy',
+                'icon' => getSetting('student_sports_icon', 'fas fa-trophy'),
                 'badge_class' => 'bg-warning-subtle text-warning',
-                'title' => 'Inter-University Sports Meet',
-                'desc' => 'Annual tournaments across Cricket, Football, Basketball, Volleyball, Badminton, Table Tennis, and Track & Field athletics.'
+                'title' => getSetting('student_sports_title', 'Inter-University Sports Meet'),
+                'desc' => getSetting('student_sports_desc', 'Annual tournaments across Cricket, Football, Basketball, Volleyball, Badminton, Table Tennis, and Track & Field athletics.')
             ],
             [
-                'icon' => 'fas fa-hands-helping',
+                'icon' => getSetting('student_nss_icon', 'fas fa-hands-helping'),
                 'badge_class' => 'bg-success-subtle text-success',
-                'title' => 'NSS & Community Service',
-                'desc' => 'Active National Service Scheme units organizing blood donation camps, free health checkups, tree plantation, and rural literacy drives.'
+                'title' => getSetting('student_nss_title', 'NSS & Community Service'),
+                'desc' => getSetting('student_nss_desc', 'Active National Service Scheme units organizing blood donation camps, free health checkups, tree plantation, and rural literacy drives.')
             ]
         ];
-        $studentHighlights = getJsonSetting('student_life_highlights', $defaultHighlights);
         ?>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <?php foreach ($studentHighlights as $item): ?>

@@ -10,45 +10,21 @@ require_once __DIR__ . '/includes/header.php';
 <?php renderPageBanner('facilities', 'Campus Facilities', 'Infrastructure and amenities available across the SRK University campus in Bhopal'); ?>
 
 <?php
-$defaultFacilities = [
-    [
-        'title' => getSetting('total_labs', '42+') . ' Research Laboratories',
-        'icon' => 'fa-microscope',
-        'image' => 'assets/uploads/2026/07/lab-and-research.webp',
-        'desc' => 'Equipped with high-performance computing clusters, robotics simulation kits, automated HPLC drug testing systems, and agronomy research suites.'
-    ],
-    [
-        'title' => 'Central Digital Library',
-        'icon' => 'fa-book-reader',
-        'image' => 'assets/uploads/2026/07/library.webp',
-        'desc' => 'Over 50,000+ volumes, IEEE, Scopus, Springer e-journal subscriptions, DELNET network access, and quiet digital reading rooms.'
-    ],
-    [
-        'title' => 'Smart AC Auditoriums',
-        'icon' => 'fa-chalkboard-teacher',
-        'image' => 'assets/uploads/2026/07/Operation-Theatre.webp',
-        'desc' => 'Fully air-conditioned multi-tiered amphitheaters with Dolby surround sound, interactive smartboards, and live video conferencing.'
-    ],
-    [
-        'title' => 'Sports Complex & Gym',
-        'icon' => 'fa-running',
-        'image' => 'assets/uploads/2026/07/sports.webp',
-        'desc' => 'Full-size cricket turf ground, floodlit basketball courts, volleyball, indoor badminton arena, and modern fitness gymnasium.'
-    ],
-    [
-        'title' => 'On-Campus Hostels',
-        'icon' => 'fa-bed',
-        'image' => 'assets/uploads/2026/07/hostel.webp',
-        'desc' => 'Separate boys and girls residential blocks with Wi-Fi, 24x7 security surveillance, water purifiers, and hygienic multi-cuisine mess.'
-    ],
-    [
-        'title' => getSetting('stat_hospital_beds', '750+') . ' Bed Teaching Hospital',
-        'icon' => 'fa-hospital-alt',
-        'image' => 'assets/uploads/2026/07/INFRA-STRUCTURE-SRKU-05.webp',
-        'desc' => 'Full-fledged super-specialty hospital with 24x7 ICU, emergency casualty, operation theaters, and clinical diagnostic pathology.'
-    ]
-];
-$facilitiesList = getJsonSetting('facilities_list', $defaultFacilities);
+$facilitiesFromDb = getCampusFacilities('active');
+$facilitiesList = [];
+foreach ($facilitiesFromDb as $fac) {
+    $img = $fac['image_url'];
+    if (!empty($img) && strpos($img, 'http') !== 0) {
+        $img = BASE_URL . ltrim($img, '/');
+    }
+    $facilitiesList[] = [
+        'id'    => $fac['id'],
+        'title' => $fac['title'],
+        'icon'  => !empty($fac['icon']) ? $fac['icon'] : 'fa-building',
+        'image' => $img,
+        'desc'  => $fac['description']
+    ];
+}
 ?>
 
 <section class="py-5">
@@ -63,7 +39,7 @@ $facilitiesList = getJsonSetting('facilities_list', $defaultFacilities);
             <?php foreach ($facilitiesList as $fac): ?>
                 <div class="col">
                     <div class="card reveal h-100 border-0 shadow-sm rounded-4 overflow-hidden">
-                        <img src="<?php echo BASE_URL . sanitize($fac['image']); ?>"
+                        <img src="<?php echo htmlspecialchars($fac['image']); ?>"
                              onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                              class="card-img-top" style="height:220px; object-fit:cover;" alt="<?php echo sanitize($fac['title']); ?>">
                         <div class="card-body p-4">

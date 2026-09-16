@@ -5,64 +5,30 @@ $pageKeywords = "SRKU Exam Time Table, SRK University Date Sheet 2024, Bhopal Un
 $activeNav = "academics";
 require_once __DIR__ . '/includes/header.php';
 
-// Load or include clean examination timetables
-$timetablesDataFile = __DIR__ . '/scratch/clean_exam_timetables.json';
-if (!file_exists($timetablesDataFile)) {
-    $timetablesDataFile = dirname(__DIR__) . '/scratch/clean_exam_timetables.json';
-}
-
+// Fetch dynamic examination timetables from database
+$dbTimetables = getExamTimetables('', '', 'active');
 $rawCategories = [];
-if (file_exists($timetablesDataFile)) {
-    $rawCategories = json_decode(file_get_contents($timetablesDataFile), true);
-}
-
-// Fallback category mapping if file path differs
-if (empty($rawCategories)) {
-    $rawCategories = [
-        'Engineering & Polytechnic' => [
-            ['course' => 'B.Tech / B.E. (All Branches)', 'details' => 'Regular & Ex Semester Examinations | EE, EEE, CE, EC, EI, CS, IT, ME', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/Btech-II-24-25.pdf', 'filename' => 'Btech-II-24-25.pdf'],
-            ['course' => 'M.Tech III Semester', 'details' => 'Regular & Ex Semester Examinations 2024-25', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2024/time-table/M.tech-III-semester(regular).pdf', 'filename' => 'M.tech-III-semester.pdf'],
-            ['course' => 'Diploma in Engineering', 'details' => 'I, II, III & IV Semester (Regular & Lateral Entry Batch)', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/diploma-IISem-24-25.pdf', 'filename' => 'diploma-IISem-24-25.pdf']
-        ],
-        'Pharmacy' => [
-            ['course' => 'B.Pharmacy (All Semesters)', 'details' => 'I, II, III & IV Semester (Regular, Ex & Lateral Entry)', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/Bpharma-Isem-24-25.pdf', 'filename' => 'Bpharma-Isem-24-25.pdf'],
-            ['course' => 'M.Pharma I Semester', 'details' => 'Pharmaceutics, Pharmacology, Quality Assurance (MQA), Pharmacognosy', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/M-pharma-I.pdf', 'filename' => 'M-pharma-I.pdf'],
-            ['course' => 'D.Pharmacy (Year I & II)', 'details' => 'Annual & Supplementary Board Examinations', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/dpharma.pdf', 'filename' => 'dpharma.pdf']
-        ],
-        'Medical, Dental & Ayush' => [
-            ['course' => 'MBBS Second Professional', 'details' => 'CBME Batch Professional Examinations', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/07/MBBS-IIYear.pdf', 'filename' => 'MBBS-IIYear.pdf'],
-            ['course' => 'BDS (Year I, II, III)', 'details' => 'Dental Surgery Annual Professional Examinations', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/10/bds.pdf', 'filename' => 'bds.pdf'],
-            ['course' => 'BAMS & BHMS Professional', 'details' => 'Ayurveda & Homeopathic Annual Board Schedule', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/07/BMHS-I-YEAR-REGULAR.pdf', 'filename' => 'BMHS-I-YEAR-REGULAR.pdf']
-        ],
-        'Nursing & Paramedical' => [
-            ['course' => 'B.Sc. Nursing', 'details' => 'Semester I, III, V & VII Examinations (Regular & Ex)', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/bsc-Nursing/Bsc-nursing.pdf', 'filename' => 'Bsc-nursing.pdf'],
-            ['course' => 'BPT / MPT / BMLT / MMLT', 'details' => 'Physiotherapy & Medical Lab Technology Examinations', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/07/MPT.pdf', 'filename' => 'MPT.pdf'],
-            ['course' => 'Paramedical Diplomas (DMLT, D-Opto, D-XRay)', 'details' => 'Diploma in Dialysis, Ophthalmic & Naturopathy', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/07/human-nutrition.pdf', 'filename' => 'human-nutrition.pdf']
-        ],
-        'Management & Computer Application' => [
-            ['course' => 'MBA (Full Time & Part Time)', 'details' => 'II & III Semester Regular / Ex Examinations', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/MBA-II-ex.pdf', 'filename' => 'MBA-II-ex.pdf'],
-            ['course' => 'MCA (Semester I, II & III)', 'details' => 'Master of Computer Application Regular & Ex Examinations', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/MCA-I-semEx-24-25.pdf', 'filename' => 'MCA-I-semEx-24-25.pdf'],
-            ['course' => 'PGDCA & DCA', 'details' => 'Diploma in Computer Application Semester Examinations', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/pgdca.pdf', 'filename' => 'pgdca.pdf']
-        ],
-        'Law' => [
-            ['course' => 'LLB (3 Year Programme)', 'details' => 'Semester I, II, III & IV Regular / Ex Examinations', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/LLB-IISem-Regular24-25.pdf', 'filename' => 'LLB-IISem-Regular24-25.pdf'],
-            ['course' => 'BA-LLB (5 Year Integrated)', 'details' => 'Semester I, II & IX Examinations', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/LLB-IISem-Regular24-25.pdf', 'filename' => 'BA-LLB-Examinations.pdf'],
-            ['course' => 'LLM (Post Graduation)', 'details' => 'Semester II, III & IV Regular / Ex Schedule', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/LLM_II_sem-Regular24-25.pdf', 'filename' => 'LLM_II_sem-Regular24-25.pdf']
-        ],
-        'Agriculture & Allied Sciences' => [
-            ['course' => 'B.Sc. (Hons) Agriculture', 'details' => 'Semester II, IV & VIII Regular & Ex Examinations', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/Bsc-Agri-II.pdf', 'filename' => 'Bsc-Agri-II.pdf'],
-            ['course' => 'Diploma in Agriculture', 'details' => 'Semester I, II & VI Regular / Batch Examinations', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/diploma-agri-IISem-24-25.pdf', 'filename' => 'diploma-agri-IISem-24-25.pdf'],
-            ['course' => 'Allied PG & UG Sciences (M.Sc / B.Sc)', 'details' => 'Maths, Physics, Chemistry, Botany, Zoology, Biotechnology, Microbiology', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/ALLIED-PG-I-SEM-MCOM.pdf', 'filename' => 'ALLIED-PG-I-SEM-MCOM.pdf'],
-            ['course' => 'BJMC & Mass Communication', 'details' => 'Bachelor of Journalism & Mass Communication Semester Schedule', 'url' => 'https://www.srku.edu.in/wp-content/uploads/2025/Time-Table/05/BJMC-II-Semester-Regular24-25.pdf', 'filename' => 'BJMC-II-Semester-Regular24-25.pdf']
-        ]
+foreach ($dbTimetables as $t) {
+    $cat = !empty($t['category']) ? $t['category'] : 'General';
+    if (!isset($rawCategories[$cat])) {
+        $rawCategories[$cat] = [];
+    }
+    $pdfUrl = $t['file_url'] ?? '';
+    if (!empty($pdfUrl) && strpos($pdfUrl, 'http') !== 0) {
+        $pdfUrl = BASE_URL . ltrim($pdfUrl, '/');
+    }
+    $rawCategories[$cat][] = [
+        'id' => $t['id'],
+        'course' => $t['course_title'],
+        'details' => $t['details'] ?? 'Official Semester Examination Schedule',
+        'url' => $pdfUrl,
+        'filename' => $t['filename'] ?: basename($pdfUrl ?: 'exam-time-table.pdf'),
+        'publish_date' => $t['created_at'] ?? ''
     ];
 }
 
 // Calculate total count
-$totalTimetables = 0;
-foreach ($rawCategories as $items) {
-    $totalTimetables += count($items);
-}
+$totalTimetables = count($dbTimetables);
 ?>
 
 <!-- ═══════════════════════════════════════════════════════

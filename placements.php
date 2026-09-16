@@ -74,23 +74,33 @@ $recruitingPartners = getSetting('recruiting_partners', '120+');
         </div>
     </div>
     <?php
-    $placementRecruiterLogos = [
-        ['file' => '1.webp', 'alt' => 'TATA'],
-        ['file' => '2.webp', 'alt' => 'Infosys'],
-        ['file' => '6.webp', 'alt' => 'Amazon'],
-        ['file' => '4.webp', 'alt' => 'Wipro'],
-        ['file' => '3.webp', 'alt' => 'Cognizant'],
-        ['file' => '2.webp', 'alt' => 'Infosys'],
-    ];
+    $dbPlacements = getPlacementCompanies(1);
+    $placementRecruiterLogos = [];
+    foreach ($dbPlacements as $dp) {
+        $logoUrl = $dp['logo_url'];
+        if (!empty($logoUrl) && strpos($logoUrl, 'http') !== 0) {
+            $logoUrl = BASE_URL . ltrim($logoUrl, '/');
+        }
+        $placementRecruiterLogos[] = [
+            'name' => $dp['company_name'],
+            'logo' => $logoUrl,
+            'package' => $dp['package_offered']
+        ];
+    }
+    $repeatCount = max(2, (int)ceil(16 / max(1, count($placementRecruiterLogos))));
     ?>
     <div class="recruiter-marquee" style="margin-top:0;">
         <div class="recruiter-marquee__viewport">
             <div class="recruiter-marquee__track">
-                <?php for ($r = 0; $r < 4; $r++): ?>
+                <?php for ($r = 0; $r < $repeatCount; $r++): ?>
                     <?php foreach ($placementRecruiterLogos as $logo): ?>
                         <div class="recruiter-marquee__item">
-                            <img src="<?php echo BASE_URL . 'assets/uploads/2026/07/' . rawurlencode($logo['file']); ?>"
-                                 alt="<?php echo sanitize($logo['alt']); ?>" loading="eager" decoding="async">
+                            <?php if (!empty($logo['logo'])): ?>
+                                <img src="<?php echo htmlspecialchars($logo['logo']); ?>"
+                                     alt="<?php echo sanitize($logo['name']); ?>" loading="eager" decoding="async" style="max-height: 48px; width: auto; object-fit: contain;">
+                            <?php else: ?>
+                                <span class="fw-bold text-navy px-3 py-1 bg-white rounded border shadow-sm"><?php echo sanitize($logo['name']); ?></span>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
                 <?php endfor; ?>

@@ -387,7 +387,7 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
 
 <!-- Bootstrap 5.3 Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="<?php echo BASE_URL; ?>assets/js/main.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/main.js?v=<?php echo @filemtime(__DIR__ . '/../assets/js/main.js') ?: time(); ?>"></script>
 
 <!-- AJAX Form Handlers for Instant Sticky Popups -->
 <script>

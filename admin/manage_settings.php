@@ -146,6 +146,30 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_settings
         'hostel_contact_phone' => sanitize($_POST['hostel_contact_phone'] ?? '0755 - 4911204'),
         'hostel_contact_email' => sanitize($_POST['hostel_contact_email'] ?? 'hostel@srku.edu.in'),
         'facilities_desc' => $_POST['facilities_desc'] ?? '',
+
+        // Section 10: Why Choose SRKU 6 Pillars & Empowering Minds
+        'why_srku_empower_title' => sanitize($_POST['why_srku_empower_title'] ?? ''),
+        'why_srku_empower_desc' => $_POST['why_srku_empower_desc'] ?? '',
+        'why_srku_reason_1_title' => sanitize($_POST['why_srku_reason_1_title'] ?? ''),
+        'why_srku_reason_1_desc' => $_POST['why_srku_reason_1_desc'] ?? '',
+        'why_srku_reason_2_title' => sanitize($_POST['why_srku_reason_2_title'] ?? ''),
+        'why_srku_reason_2_desc' => $_POST['why_srku_reason_2_desc'] ?? '',
+        'why_srku_reason_3_title' => sanitize($_POST['why_srku_reason_3_title'] ?? ''),
+        'why_srku_reason_3_desc' => $_POST['why_srku_reason_3_desc'] ?? '',
+        'why_srku_reason_4_title' => sanitize($_POST['why_srku_reason_4_title'] ?? ''),
+        'why_srku_reason_4_desc' => $_POST['why_srku_reason_4_desc'] ?? '',
+        'why_srku_reason_5_title' => sanitize($_POST['why_srku_reason_5_title'] ?? ''),
+        'why_srku_reason_5_desc' => $_POST['why_srku_reason_5_desc'] ?? '',
+        'why_srku_reason_6_title' => sanitize($_POST['why_srku_reason_6_title'] ?? ''),
+        'why_srku_reason_6_desc' => $_POST['why_srku_reason_6_desc'] ?? '',
+
+        // Section 11: Student Life Highlights
+        'student_fest_title' => sanitize($_POST['student_fest_title'] ?? ''),
+        'student_fest_desc' => $_POST['student_fest_desc'] ?? '',
+        'student_sports_title' => sanitize($_POST['student_sports_title'] ?? ''),
+        'student_sports_desc' => $_POST['student_sports_desc'] ?? '',
+        'student_nss_title' => sanitize($_POST['student_nss_title'] ?? ''),
+        'student_nss_desc' => $_POST['student_nss_desc'] ?? '',
     ];
 
     $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
@@ -237,6 +261,30 @@ $hostelGirlsFee = getSetting('hostel_girls_fee', '₹70,000');
 $hostelContactPhone = getSetting('hostel_contact_phone', '0755 - 4911204');
 $hostelContactEmail = getSetting('hostel_contact_email', 'hostel@srku.edu.in');
 $facilitiesDesc = getSetting('facilities_desc', 'Sarvepalli Radhakrishnan University (SRKU) provides world-class infrastructure and holistic amenities designed to enrich student learning, research innovation, physical fitness, and community living.');
+
+// Section 10: Why Choose SRKU
+$whyEmpowerTitle = getSetting('why_srku_empower_title', 'Empowering Minds. Inspiring Innovation. Building Future Leaders.');
+$whyEmpowerDesc = getSetting('why_srku_empower_desc', "At SRK University, education is more than earning a degree—it's about developing the knowledge, skills, and confidence to succeed in a rapidly changing world. Our multidisciplinary learning environment combines academic excellence, practical exposure, innovation, and industry engagement to prepare students for meaningful careers and lifelong success.");
+$whyR1Title = getSetting('why_srku_reason_1_title', 'Multidisciplinary Education');
+$whyR1Desc = getSetting('why_srku_reason_1_desc', 'We offer over 50 diverse programmes spanning Medical, Dental, Nursing, Engineering, Management, Law, Commerce, Agriculture, Science, and Humanities. Students choose courses aligned with their aspirations and the National Education Policy 2020.');
+$whyR2Title = getSetting('why_srku_reason_2_title', 'State-of-the-Art Infrastructure');
+$whyR2Desc = getSetting('why_srku_reason_2_desc', 'Our lush green campus spans a cosmopolitan setting with modern laboratories, interactive learning spaces, high-tech medical facilities, and libraries equipped with the latest technology and resources.');
+$whyR3Title = getSetting('why_srku_reason_3_title', 'NAAC-Graded Excellence');
+$whyR3Desc = getSetting('why_srku_reason_3_desc', 'SRK University is NAAC-accredited, ensuring quality education meets international standards. Our commitment to continuous improvement and academic rigor sets us apart from other private universities in Bhopal.');
+$whyR4Title = getSetting('why_srku_reason_4_title', 'Industry & Research Partnerships');
+$whyR4Desc = getSetting('why_srku_reason_4_desc', 'We foster strong collaborations with leading industries for internships, placements, and research initiatives, ensuring students gain hands-on experience and are job-ready upon graduation.');
+$whyR5Title = getSetting('why_srku_reason_5_title', 'Diverse Student Community');
+$whyR5Desc = getSetting('why_srku_reason_5_desc', 'Our campus welcomes students from all corners of India, creating a multicultural environment that enriches learning and promotes cross-cultural understanding.');
+$whyR6Title = getSetting('why_srku_reason_6_title', 'Holistic Student Development');
+$whyR6Desc = getSetting('why_srku_reason_6_desc', 'At SRK University, students grow beyond academics through sports, cultural activities, leadership programmes, innovation, and community engagement, building confidence, teamwork, and essential life skills for future success.');
+
+// Section 11: Student Life Highlights
+$studentFestTitle = getSetting('student_fest_title', 'Tarang — Annual Cultural Fest');
+$studentFestDesc = getSetting('student_fest_desc', 'Three days of star-studded musical concerts, fashion shows, dance competitions, and theatrical performances with 10,000+ attendees.');
+$studentSportsTitle = getSetting('student_sports_title', 'Inter-University Sports Meet');
+$studentSportsDesc = getSetting('student_sports_desc', 'Annual tournaments across Cricket, Football, Basketball, Volleyball, Badminton, Table Tennis, and Track & Field athletics.');
+$studentNssTitle = getSetting('student_nss_title', 'NSS & Community Service');
+$studentNssDesc = getSetting('student_nss_desc', 'Active National Service Scheme units organizing blood donation camps, free health checkups, tree plantation, and rural literacy drives.');
 ?>
 
 <div class="mb-4">
@@ -602,6 +650,122 @@ $facilitiesDesc = getSetting('facilities_desc', 'Sarvepalli Radhakrishnan Univer
                 <div class="col-12">
                     <label class="form-label fw-bold text-dark small">Facilities Overview Lead Description</label>
                     <textarea name="facilities_desc" class="form-control" rows="3"><?php echo htmlspecialchars($facilitiesDesc); ?></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 10: Why Choose SRKU - 6 Core Pillars & Empowering Minds -->
+        <div class="admin-form-section">
+            <div class="admin-form-section-title">
+                <i class="fas fa-star text-warning"></i> Section 10: Why Choose SRKU - 6 Core Pillars &amp; Empowering Minds
+            </div>
+            <div class="row g-3 mb-4">
+                <div class="col-12">
+                    <label class="form-label fw-bold text-navy small">Empowering Minds Section Title</label>
+                    <input type="text" name="why_srku_empower_title" class="form-control" value="<?php echo sanitize($whyEmpowerTitle); ?>">
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-bold text-navy small">Empowering Minds Lead Paragraph</label>
+                    <textarea name="why_srku_empower_desc" class="form-control" rows="3"><?php echo htmlspecialchars($whyEmpowerDesc); ?></textarea>
+                </div>
+            </div>
+
+            <div class="p-3 bg-light rounded-4 border mb-3">
+                <h6 class="fw-bold text-navy mb-3"><i class="fas fa-list-ol text-danger me-1"></i> Six Institutional Distinction Pillars</h6>
+                <div class="row g-3">
+                    <!-- Reason 1 -->
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white rounded-3 border h-100">
+                            <span class="badge bg-danger-subtle text-danger mb-2">Pillar 01</span>
+                            <label class="form-label fw-bold text-dark small d-block">Title</label>
+                            <input type="text" name="why_srku_reason_1_title" class="form-control form-control-sm mb-2" value="<?php echo sanitize($whyR1Title); ?>">
+                            <label class="form-label fw-bold text-dark small d-block">Description</label>
+                            <textarea name="why_srku_reason_1_desc" class="form-control form-control-sm" rows="3"><?php echo htmlspecialchars($whyR1Desc); ?></textarea>
+                        </div>
+                    </div>
+                    <!-- Reason 2 -->
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white rounded-3 border h-100">
+                            <span class="badge bg-danger-subtle text-danger mb-2">Pillar 02</span>
+                            <label class="form-label fw-bold text-dark small d-block">Title</label>
+                            <input type="text" name="why_srku_reason_2_title" class="form-control form-control-sm mb-2" value="<?php echo sanitize($whyR2Title); ?>">
+                            <label class="form-label fw-bold text-dark small d-block">Description</label>
+                            <textarea name="why_srku_reason_2_desc" class="form-control form-control-sm" rows="3"><?php echo htmlspecialchars($whyR2Desc); ?></textarea>
+                        </div>
+                    </div>
+                    <!-- Reason 3 -->
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white rounded-3 border h-100">
+                            <span class="badge bg-danger-subtle text-danger mb-2">Pillar 03</span>
+                            <label class="form-label fw-bold text-dark small d-block">Title</label>
+                            <input type="text" name="why_srku_reason_3_title" class="form-control form-control-sm mb-2" value="<?php echo sanitize($whyR3Title); ?>">
+                            <label class="form-label fw-bold text-dark small d-block">Description</label>
+                            <textarea name="why_srku_reason_3_desc" class="form-control form-control-sm" rows="3"><?php echo htmlspecialchars($whyR3Desc); ?></textarea>
+                        </div>
+                    </div>
+                    <!-- Reason 4 -->
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white rounded-3 border h-100">
+                            <span class="badge bg-danger-subtle text-danger mb-2">Pillar 04</span>
+                            <label class="form-label fw-bold text-dark small d-block">Title</label>
+                            <input type="text" name="why_srku_reason_4_title" class="form-control form-control-sm mb-2" value="<?php echo sanitize($whyR4Title); ?>">
+                            <label class="form-label fw-bold text-dark small d-block">Description</label>
+                            <textarea name="why_srku_reason_4_desc" class="form-control form-control-sm" rows="3"><?php echo htmlspecialchars($whyR4Desc); ?></textarea>
+                        </div>
+                    </div>
+                    <!-- Reason 5 -->
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white rounded-3 border h-100">
+                            <span class="badge bg-danger-subtle text-danger mb-2">Pillar 05</span>
+                            <label class="form-label fw-bold text-dark small d-block">Title</label>
+                            <input type="text" name="why_srku_reason_5_title" class="form-control form-control-sm mb-2" value="<?php echo sanitize($whyR5Title); ?>">
+                            <label class="form-label fw-bold text-dark small d-block">Description</label>
+                            <textarea name="why_srku_reason_5_desc" class="form-control form-control-sm" rows="3"><?php echo htmlspecialchars($whyR5Desc); ?></textarea>
+                        </div>
+                    </div>
+                    <!-- Reason 6 -->
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white rounded-3 border h-100">
+                            <span class="badge bg-danger-subtle text-danger mb-2">Pillar 06</span>
+                            <label class="form-label fw-bold text-dark small d-block">Title</label>
+                            <input type="text" name="why_srku_reason_6_title" class="form-control form-control-sm mb-2" value="<?php echo sanitize($whyR6Title); ?>">
+                            <label class="form-label fw-bold text-dark small d-block">Description</label>
+                            <textarea name="why_srku_reason_6_desc" class="form-control form-control-sm" rows="3"><?php echo htmlspecialchars($whyR6Desc); ?></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 11: Student Life Highlights -->
+        <div class="admin-form-section">
+            <div class="admin-form-section-title">
+                <i class="fas fa-guitar text-danger"></i> Section 11: Student Life Highlights (Fests, Sports &amp; NSS)
+            </div>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="p-3 bg-light rounded-3 border h-100">
+                        <label class="form-label fw-bold text-dark small">Annual Fest Title</label>
+                        <input type="text" name="student_fest_title" class="form-control form-control-sm mb-2" value="<?php echo sanitize($studentFestTitle); ?>">
+                        <label class="form-label fw-bold text-dark small">Annual Fest Description</label>
+                        <textarea name="student_fest_desc" class="form-control form-control-sm" rows="3"><?php echo htmlspecialchars($studentFestDesc); ?></textarea>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 bg-light rounded-3 border h-100">
+                        <label class="form-label fw-bold text-dark small">Sports Meet Title</label>
+                        <input type="text" name="student_sports_title" class="form-control form-control-sm mb-2" value="<?php echo sanitize($studentSportsTitle); ?>">
+                        <label class="form-label fw-bold text-dark small">Sports Meet Description</label>
+                        <textarea name="student_sports_desc" class="form-control form-control-sm" rows="3"><?php echo htmlspecialchars($studentSportsDesc); ?></textarea>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 bg-light rounded-3 border h-100">
+                        <label class="form-label fw-bold text-dark small">NSS / Community Title</label>
+                        <input type="text" name="student_nss_title" class="form-control form-control-sm mb-2" value="<?php echo sanitize($studentNssTitle); ?>">
+                        <label class="form-label fw-bold text-dark small">NSS / Community Description</label>
+                        <textarea name="student_nss_desc" class="form-control form-control-sm" rows="3"><?php echo htmlspecialchars($studentNssDesc); ?></textarea>
+                    </div>
                 </div>
             </div>
         </div>

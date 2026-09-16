@@ -191,22 +191,16 @@ require_once __DIR__ . '/includes/header.php';
             </div>
 
             <?php
-            $teamMembers = [
-                ['name' => 'Dr. Sushil Singh', 'role' => 'Centre Co-ordinator', 'highlight' => true],
-                ['name' => 'Dr. Hemant Gadekar', 'role' => 'Member'],
-                ['name' => 'Dr. Rakesh Pandey', 'role' => 'Member'],
-                ['name' => 'Dr. Devendra Kumar Dhote', 'role' => 'Member'],
-                ['name' => 'Dr. M.C. Prashant', 'role' => 'Member'],
-                ['name' => 'Dr. Archana Selvan', 'role' => 'Member'],
-                ['name' => 'Dr. Brijendra Singh', 'role' => 'Member'],
-                ['name' => 'Dr. Varsha Namdeo', 'role' => 'Member'],
-                ['name' => 'Dr. Chinmay Bhatt', 'role' => 'Member'],
-                ['name' => 'Dr. Sanjeev Shrivastava', 'role' => 'Member'],
-                ['name' => 'Director', 'role' => 'Member'],
-                ['name' => 'Dr. E. Vijay', 'role' => 'Member'],
-                ['name' => 'Dr. Jyoti Yadav', 'role' => 'Member'],
-                ['name' => 'Dr. Amitabh Shrivastava', 'role' => 'Member'],
-            ];
+            $dbIncubation = getIncubationMembers('active');
+            $teamMembers = [];
+            foreach ($dbIncubation as $m) {
+                $isHighlight = (stripos($m['designation'], 'co-ordinator') !== false || $m['sort_order'] == 1);
+                $teamMembers[] = [
+                    'name' => $m['name'],
+                    'role' => $m['designation'],
+                    'highlight' => $isHighlight
+                ];
+            }
             ?>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">

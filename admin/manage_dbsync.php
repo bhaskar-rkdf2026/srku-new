@@ -18,8 +18,19 @@ if (isset($_REQUEST['ajax_sync'])) {
     exit;
 }
 
+if (isset($_GET['download_sql']) && $_GET['download_sql'] == '1') {
+    $sqlPath = __DIR__ . '/../srku_db.sql';
+    if (file_exists($sqlPath)) {
+        header('Content-Type: application/sql');
+        header('Content-Disposition: attachment; filename="srku_db_' . date('Y-m-d_His') . '.sql"');
+        header('Content-Length: ' . filesize($sqlPath));
+        readfile($sqlPath);
+        exit;
+    }
+}
+
 // Handle Form POST Sync Request BEFORE header.php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     $action = $_POST['action'] ?? '';
     $target = sanitize($_POST['target'] ?? 'all');
     $force = isset($_POST['force']) && $_POST['force'] == '1';
@@ -36,6 +47,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setFlashMsg('success', $msg);
         } else {
             setFlashMsg('danger', 'Sync Failed: ' . ($res['error'] ?? 'Unknown database error occurred.'));
+        }
+        header("Location: manage_dbsync.php");
+        exit;
+    }
+
+    if ($action === 'export_sql') {
+        $res = exportLiveDatabaseSqlFile();
+        if ($res['success']) {
+            $sizeKb = round(($res['size'] ?? 0) / 1024);
+            $msg = "<strong>Live SQL Database Dump Exported!</strong><br>File: <code>{$res['filename']}</code> ({$sizeKb} KB) with {$res['total_rows']} rows across {$res['tables']} tables is ready for live production import.";
+            setFlashMsg('success', $msg);
+        } else {
+            setFlashMsg('danger', 'SQL Export Failed: ' . ($res['error'] ?? 'Unknown error occurred.'));
         }
         header("Location: manage_dbsync.php");
         exit;
@@ -81,6 +105,54 @@ $syncModules = [
         'desc' => '95 Degree, Diploma, and Doctorate Programs with Specializations',
         'expected' => 95,
         'manage_url' => 'manage_courses.php'
+    ],
+    'exam_timetables' => [
+        'name' => 'Exam Time Tables & Schedules',
+        'table' => 'exam_timetables',
+        'icon' => 'fas fa-calendar-check text-danger',
+        'desc' => '20 Official Semester Date Sheets & Downloadable PDF Schedules',
+        'expected' => 20,
+        'manage_url' => 'manage_timetables.php'
+    ],
+    'facilities' => [
+        'name' => 'Campus Facilities & Amenities',
+        'table' => 'facilities',
+        'icon' => 'fas fa-building text-info',
+        'desc' => '6 Campus Facilities: Labs, Hospital, Library, Audi, Sports & Buses',
+        'expected' => 6,
+        'manage_url' => 'manage_facilities.php'
+    ],
+    'accreditations' => [
+        'name' => 'Accreditations & Statutory Councils',
+        'table' => 'accreditations',
+        'icon' => 'fas fa-award text-warning',
+        'desc' => '11 Apex Regulatory Council Recognitions (UGC, AICTE, NMC, etc.)',
+        'expected' => 11,
+        'manage_url' => 'manage_accreditations.php'
+    ],
+    'incubation_members' => [
+        'name' => 'Incubation Centre Committee',
+        'table' => 'incubation_members',
+        'icon' => 'fas fa-rocket text-danger',
+        'desc' => '14 Startup Mentors, Coordinators, Patent Advisors & Experts',
+        'expected' => 14,
+        'manage_url' => 'manage_incubation.php'
+    ],
+    'board_members' => [
+        'name' => 'Board of Management',
+        'table' => 'board_members',
+        'icon' => 'fas fa-users-cog text-primary',
+        'desc' => '10 Eminent Patrons, Deans, Scientists & Governance Leaders',
+        'expected' => 10,
+        'manage_url' => 'manage_board.php'
+    ],
+    'placements' => [
+        'name' => 'Corporate Placement Partners',
+        'table' => 'placements',
+        'icon' => 'fas fa-handshake text-success',
+        'desc' => 'Leading corporate hiring partners, logo marks & packages',
+        'expected' => 6,
+        'manage_url' => 'manage_placements.php'
     ],
     'gallery' => [
         'name' => 'Photo Gallery & Assets',
@@ -171,10 +243,16 @@ $syncModules = [
                 Instantly synchronize all database tables, verify schemas, seed 1,000+ faculty, 267 syllabus schemes, 26 constituent colleges, 95 degree courses, 71 gallery photos, and settings so your Admin CMS view and Live Website are 100% in sync with zero missing data.
             </p>
         </div>
-        <div class="col-12 col-lg-4 text-lg-end mt-3 mt-lg-0">
+        <div class="col-12 col-lg-4 text-lg-end mt-3 mt-lg-0 d-flex flex-wrap justify-content-lg-end gap-2">
             <button type="button" class="btn btn-warning btn-lg fw-bold px-4 py-3 text-dark shadow rounded-pill" id="masterSyncBtn" onclick="triggerMasterSync('all', true)">
-                <i class="fas fa-sync-alt fa-spin-hover me-2 text-danger"></i> ⚡ 1-Click DB Sync Now
+                <i class="fas fa-sync-alt fa-spin-hover me-2 text-danger"></i> ⚡ 1-Click DB Sync
             </button>
+            <form method="POST" class="d-inline">
+                <input type="hidden" name="action" value="export_sql">
+                <button type="submit" class="btn btn-danger btn-lg fw-bold px-4 py-3 shadow rounded-pill" title="Regenerate live srku_db.sql dump">
+                    <i class="fas fa-file-export me-1"></i> Export SQL
+                </button>
+            </form>
         </div>
     </div>
 </div>
@@ -228,6 +306,34 @@ $syncModules = [
             </div>
             <div class="h5 fw-bold text-navy mb-0" id="totalRowsBadge"><?php echo number_format($dbStatus['total_rows']); ?> Rows</div>
             <small class="text-muted" style="font-size: 0.75rem;">Live Dynamic Data</small>
+        </div>
+    </div>
+</div>
+
+<?php
+$sqlFileCheck = __DIR__ . '/../srku_db.sql';
+$sqlFileSizeKb = file_exists($sqlFileCheck) ? round(filesize($sqlFileCheck) / 1024) : 0;
+$sqlFileTime = file_exists($sqlFileCheck) ? date('d M Y, h:i A', filemtime($sqlFileCheck)) : 'Not yet generated';
+?>
+<!-- Live SQL Backup & Export Banner -->
+<div class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4 bg-white" style="border-left: 5px solid #1e245a !important;">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+        <div class="d-flex align-items-center gap-3">
+            <div class="p-3 bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                <i class="fas fa-file-invoice text-primary fa-lg"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold text-navy mb-1">Live Database Production Dump: <code>srku_db.sql</code></h6>
+                <div class="small text-muted">
+                    <span class="me-3"><i class="fas fa-hdd me-1"></i> File Size: <strong><?php echo $sqlFileSizeKb; ?> KB</strong></span>
+                    <span><i class="fas fa-clock me-1"></i> Last Synced: <strong><?php echo $sqlFileTime; ?></strong></span>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="manage_dbsync.php?download_sql=1" class="btn btn-outline-primary fw-bold px-3 py-2 rounded-pill small">
+                <i class="fas fa-download me-1"></i> Download <code>srku_db.sql</code>
+            </a>
         </div>
     </div>
 </div>
