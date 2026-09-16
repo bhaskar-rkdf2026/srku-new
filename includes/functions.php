@@ -1996,20 +1996,43 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
         // 11. SETTINGS & SITE CONFIGURATIONS
         if ($target === 'all' || $target === 'settings') {
             $defaultSettings = [
-                'site_title' => 'Sarvepalli Radhakrishnan University (SRKU), Bhopal',
-                'helpline' => '0755 - 4911204',
-                'email' => 'exam@srku.edu.in',
-                'admissions_phone' => '+91 755 4911204 / 94250 12345',
-                'address' => 'NH-12 Hoshangabad Road, Misrod, Bhopal, MP - 462026',
-                'ticker_text' => 'Admissions Open 2026-27 | UGC Recognized Premier University in MP | Apply Now for UG, PG & PhD Programs in Engineering, Pharmacy, Management & Medicine | 94% Placement Record',
-                'highest_package' => '12 LPA',
-                'placement_record' => '94%',
-                'recruiting_partners' => '120+',
-                'total_labs' => '42+',
-                'facebook_url' => 'https://facebook.com/srku.bhopal',
-                'instagram_url' => 'https://instagram.com/srku.bhopal',
-                'youtube_url' => 'https://youtube.com/@srkuniversity',
-                'linkedin_url' => 'https://linkedin.com/school/srk-university'
+                'site_title'           => 'Sarvepalli Radhakrishnan University (SRKU), Bhopal',
+                'helpline'             => '0755 - 4911204',
+                'email'                => 'exam@srku.edu.in',
+                'admissions_phone'     => '+91 755 4911204 / 94250 12345',
+                'address'              => 'NH-12 Hoshangabad Road, Misrod, Bhopal, MP - 462026',
+                'ticker_text'          => 'Admissions Open 2026-27 | UGC Recognized Premier University in MP | Apply Now for UG, PG & PhD Programs in Engineering, Pharmacy, Management & Medicine | 94% Placement Record',
+                'highest_package'      => '12 LPA',
+                'placement_record'     => '94%',
+                'recruiting_partners'  => '120+',
+                'total_labs'           => '42+',
+                'facebook_url'         => 'https://facebook.com/srku.bhopal',
+                'instagram_url'        => 'https://instagram.com/srku.bhopal',
+                'youtube_url'          => 'https://youtube.com/@srkuniversity',
+                'linkedin_url'         => 'https://linkedin.com/school/srk-university',
+
+                // Why SRKU Page - Empower Section
+                'why_srku_empower_title' => 'Empowering Minds. Inspiring Innovation. Building Future Leaders.',
+                'why_srku_empower_desc'  => 'At SRK University, education is more than earning a degree—it\'s about developing the knowledge, skills, and confidence to succeed in a rapidly changing world. Our multidisciplinary learning environment combines academic excellence, practical exposure, innovation, and industry engagement to prepare students for meaningful careers and lifelong success.',
+
+                // Why SRKU Page - 6 Reasons
+                'why_srku_reason_1_title' => 'Multidisciplinary Education',
+                'why_srku_reason_1_desc'  => 'We offer over 50 diverse programmes spanning Medical, Dental, Nursing, Engineering, Management, Law, Commerce, Agriculture, Science, and Humanities. Students choose courses aligned with their aspirations and the National Education Policy 2020.',
+
+                'why_srku_reason_2_title' => 'State-of-the-Art Infrastructure',
+                'why_srku_reason_2_desc'  => 'Our lush green campus spans a cosmopolitan setting with modern laboratories, interactive learning spaces, high-tech medical facilities, and libraries equipped with the latest technology and resources.',
+
+                'why_srku_reason_3_title' => 'NAAC-Graded Excellence',
+                'why_srku_reason_3_desc'  => 'SRK University is NAAC-accredited, ensuring quality education meets international standards. Our commitment to continuous improvement and academic rigor sets us apart from other private universities in Bhopal.',
+
+                'why_srku_reason_4_title' => 'Industry & Research Partnerships',
+                'why_srku_reason_4_desc'  => 'We foster strong collaborations with leading industries for internships, placements, and research initiatives, ensuring students gain hands-on experience and are job-ready upon graduation.',
+
+                'why_srku_reason_5_title' => 'Diverse Student Community',
+                'why_srku_reason_5_desc'  => 'Our campus welcomes students from all corners of India, creating a multicultural environment that enriches learning and promotes cross-cultural understanding.',
+
+                'why_srku_reason_6_title' => 'Holistic Student Development',
+                'why_srku_reason_6_desc'  => 'At SRK University, students grow beyond academics through sports, cultural activities, leadership programmes, innovation, and community engagement, building confidence, teamwork, and essential life skills for future success.',
             ];
             if ($driver === 'sqlite') {
                 $insSetting = $pdo->prepare("INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES (:k, :v) ON CONFLICT(`setting_key`) DO UPDATE SET `setting_value` = excluded.`setting_value`");
