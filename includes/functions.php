@@ -2138,8 +2138,20 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
                 $insSetting->execute([':k' => $sk, ':v' => $sv]);
                 $sCount++;
             }
+
+            // Force-correct specific settings that may have wrong values from old syncs.
+            // These use UPDATE (not INSERT IGNORE) so they always apply the right value.
+            $correctSettings = [
+                'vc_name'  => 'Dr. Priyanka Jaiswal',
+                'vc_title' => 'Vice Chancellor',
+                'vc_email' => 'vc@srku.edu.in',
+            ];
+            foreach ($correctSettings as $ck => $cv) {
+                $pdo->prepare("UPDATE `settings` SET `setting_value` = ? WHERE `setting_key` = ?")->execute([$cv, $ck]);
+            }
+
             $report['counts']['settings'] = (int)$pdo->query("SELECT COUNT(*) FROM `settings`")->fetchColumn();
-            $report['messages'][] = "Global University Settings synchronized ($sCount settings verified).";
+            $report['messages'][] = "Global University Settings synchronized ($sCount settings verified). VC name corrected.";
         }
 
         // 12. ADMIN USERS
