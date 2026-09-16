@@ -329,57 +329,7 @@ $aboutMilestoneStats = [
         </div>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-            <!-- 1. Chancellor -->
-            <div class="col">
-                <div class="card h-100 border-0 shadow-sm rounded-4 leadership-card-v2 reveal">
-                    <div class="leadership-card-v2__badge">Statutory Head</div>
-                    <div class="leadership-card-v2__photo-wrap">
-                        <div class="leadership-card-v2__avatar leadership-card-v2__avatar--chancellor">
-                            <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/chancellor.jpeg"
-                                 onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                                 alt="<?php echo sanitize(getSetting('chancellor_name', 'Mrs. Janak Kapoor')); ?>">
-                        </div>
-                    </div>
-                    <div class="card-body p-4 text-center d-flex flex-column">
-                        <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize(getSetting('chancellor_name', 'Mrs. Janak Kapoor')); ?></h4>
-                        <span class="text-danger small fw-bold mb-2 d-block"><?php echo sanitize(getSetting('chancellor_title', 'Hon\'ble Chancellor')); ?></span>
-                        <p class="text-muted small mb-3 flex-grow-1" style="line-height:1.65;">
-                            Apex presiding authority, guiding university convocations, and upholding the noble legacy of Dr. Sarvepalli Radhakrishnan.
-                        </p>
-                        <div class="mt-auto pt-2 border-top">
-                            <a href="<?php echo BASE_URL; ?>chancellor-message.php" class="btn btn-sm btn-outline-danger w-100 rounded-pill">
-                                <i class="fas fa-crown me-1"></i> Chancellor's Desk
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2. Vice Chancellor -->
-            <div class="col">
-                <div class="card h-100 border-0 shadow-sm rounded-4 leadership-card-v2 reveal">
-                    <div class="leadership-card-v2__badge bg-maroon">Academic Executive</div>
-                    <div class="leadership-card-v2__photo-wrap">
-                        <div class="leadership-card-v2__avatar bg-maroon-soft text-maroon">
-                            <i class="fas fa-user-graduate"></i>
-                        </div>
-                    </div>
-                    <div class="card-body p-4 text-center d-flex flex-column">
-                        <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize(getSetting('vc_name', 'Ms. Priyanka Jaiswal')); ?></h4>
-                        <span class="text-danger small fw-bold mb-2 d-block"><?php echo sanitize(getSetting('vc_title', 'Vice Chancellor')); ?></span>
-                        <p class="text-muted small mb-3 flex-grow-1" style="line-height:1.65;">
-                            Leading academic affairs, curriculum innovation under NEP 2020, national accreditations, and interdisciplinary research excellence.
-                        </p>
-                        <div class="mt-auto pt-2 border-top">
-                            <a href="<?php echo BASE_URL; ?>vice-chancellor-message.php" class="btn btn-sm btn-outline-danger w-100 rounded-pill">
-                                <i class="fas fa-comment-dots me-1"></i> VC's Message
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. Chairman & Founder -->
+            <!-- 1. Chairman & Founder -->
             <div class="col">
                 <div class="card h-100 border-0 shadow-sm rounded-4 leadership-card-v2 reveal">
                     <div class="leadership-card-v2__badge bg-gold text-navy">Founder &amp; Patron</div>
@@ -397,8 +347,58 @@ $aboutMilestoneStats = [
                             Visionary educationist &amp; healthcare leader bridging medicine, finance, and technology; founder of RKDF Group &amp; SRKU since 1995.
                         </p>
                         <div class="mt-auto pt-2 border-top">
-                            <a href="<?php echo BASE_URL; ?>founder-story.php" class="btn btn-sm btn-outline-navy w-100 rounded-pill">
+                            <a href="<?php echo BASE_URL; ?>founder-story.php" class="btn btn-sm btn-navy w-100 rounded-pill">
                                 <i class="fas fa-feather-alt me-1"></i> Founder's Story
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Chancellor -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm rounded-4 leadership-card-v2 reveal">
+                    <div class="leadership-card-v2__badge">Statutory Head</div>
+                    <div class="leadership-card-v2__photo-wrap">
+                        <div class="leadership-card-v2__avatar leadership-card-v2__avatar--chancellor">
+                            <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/chancellor.jpeg"
+                                 onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                                 alt="<?php echo sanitize(getSetting('chancellor_name', 'Mrs. Janak Kapoor')); ?>">
+                        </div>
+                    </div>
+                    <div class="card-body p-4 text-center d-flex flex-column">
+                        <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize(getSetting('chancellor_name', 'Mrs. Janak Kapoor')); ?></h4>
+                        <span class="text-danger small fw-bold mb-2 d-block"><?php echo sanitize(getSetting('chancellor_title', 'Chancellor')); ?></span>
+                        <p class="text-muted small mb-3 flex-grow-1" style="line-height:1.65;">
+                            Apex presiding authority, guiding university convocations, and upholding the noble legacy of Dr. Sarvepalli Radhakrishnan.
+                        </p>
+                        <div class="mt-auto pt-2 border-top">
+                            <a href="<?php echo BASE_URL; ?>chancellor-message.php" class="btn btn-sm btn-outline-danger w-100 rounded-pill">
+                                <i class="fas fa-crown me-1"></i> Chancellor's Desk
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Vice Chancellor -->
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm rounded-4 leadership-card-v2 reveal">
+                    <div class="leadership-card-v2__badge bg-maroon">Academic Executive</div>
+                    <div class="leadership-card-v2__photo-wrap">
+                        <div class="leadership-card-v2__avatar bg-maroon-soft text-maroon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                    </div>
+                    <div class="card-body p-4 text-center d-flex flex-column">
+                        <h4 class="h5 fw-bold text-navy mb-1"><?php echo sanitize(getSetting('vc_name', 'Prof. (Dr.) Brijendra Singh')); ?></h4>
+                        <span class="text-danger small fw-bold mb-2 d-block"><?php echo sanitize(getSetting('vc_title', 'Vice Chancellor')); ?></span>
+                        <p class="text-muted small mb-3 flex-grow-1" style="line-height:1.65;">
+                            Leading academic affairs, curriculum innovation under NEP 2020, national accreditations, and interdisciplinary research excellence.
+                        </p>
+                        <div class="mt-auto pt-2 border-top">
+                            <a href="<?php echo BASE_URL; ?>vice-chancellor-message.php" class="btn btn-sm btn-outline-danger w-100 rounded-pill">
+                                <i class="fas fa-comment-dots me-1"></i> VC's Message
                             </a>
                         </div>
                     </div>

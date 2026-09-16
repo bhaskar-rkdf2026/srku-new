@@ -4,7 +4,7 @@ require_once __DIR__ . '/../config/db.php';
 // Sanitize user inputs
 function sanitize($data) {
     if ($data === null) return '';
-    return htmlspecialchars(trim((string)$data), ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars(trim((string)$data), ENT_QUOTES, 'UTF-8', false);
 }
 
 // Generate clean URL slug from title
