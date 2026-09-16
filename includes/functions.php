@@ -1996,48 +1996,142 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
         // 11. SETTINGS & SITE CONFIGURATIONS
         if ($target === 'all' || $target === 'settings') {
             $defaultSettings = [
+                // ── CORE SITE ──────────────────────────────────────────────
                 'site_title'           => 'Sarvepalli Radhakrishnan University (SRKU), Bhopal',
                 'helpline'             => '0755 - 4911204',
                 'email'                => 'exam@srku.edu.in',
                 'admissions_phone'     => '+91 755 4911204 / 94250 12345',
                 'address'              => 'NH-12 Hoshangabad Road, Misrod, Bhopal, MP - 462026',
-                'ticker_text'          => 'Admissions Open 2026-27 | UGC Recognized Premier University in MP | Apply Now for UG, PG & PhD Programs in Engineering, Pharmacy, Management & Medicine | 94% Placement Record',
-                'highest_package'      => '12 LPA',
-                'placement_record'     => '94%',
-                'recruiting_partners'  => '120+',
-                'total_labs'           => '42+',
                 'facebook_url'         => 'https://facebook.com/srku.bhopal',
                 'instagram_url'        => 'https://instagram.com/srku.bhopal',
                 'youtube_url'          => 'https://youtube.com/@srkuniversity',
                 'linkedin_url'         => 'https://linkedin.com/school/srk-university',
 
-                // Why SRKU Page - Empower Section
-                'why_srku_empower_title' => 'Empowering Minds. Inspiring Innovation. Building Future Leaders.',
-                'why_srku_empower_desc'  => 'At SRK University, education is more than earning a degree—it\'s about developing the knowledge, skills, and confidence to succeed in a rapidly changing world. Our multidisciplinary learning environment combines academic excellence, practical exposure, innovation, and industry engagement to prepare students for meaningful careers and lifelong success.',
+                // ── HEADER ─────────────────────────────────────────────────
+                'header_logo_url'            => 'assets/uploads/2026/07/SRK-logo.webp',
+                'header_topbar_phone'        => '0755 - 4911204',
+                'header_topbar_email'        => 'exam@srku.edu.in',
+                'header_topbar_erp_link'     => 'https://erp.srku.edu.in/',
+                'header_topbar_aicte_link'   => 'https://sarswati.aicte.gov.in/',
+                'header_topbar_webmail_link' => 'http://email.godaddy.com/',
+                'header_cta_text'            => 'Contact Us',
+                'header_cta_link'            => 'contact.php',
+                'header_custom_head_code'    => '',
 
-                // Why SRKU Page - 6 Reasons
+                // ── FOOTER ─────────────────────────────────────────────────
+                'footer_address'         => 'NH-12 Hoshangabad Road, Misrod, Bhopal, MP - 462026',
+                'footer_phone'           => '0755 - 4911204',
+                'footer_email'           => 'exam@srku.edu.in',
+                'footer_about_heading'   => 'Sarvepalli Radhakrishnan University',
+                'footer_about_text'      => 'SRK University Bhopal is a premier educational institution recognized by UGC, AICTE, NMC, PCI, INC, BCI, DCI & NCISM offering 95+ programmes in Engineering, Medicine, Pharmacy, Management & Law.',
+                'footer_ugc_text'        => 'Recognized under Section 2(f) of UGC Act 1956',
+                'footer_copyright_text'  => '© ' . date('Y') . ' Sarvepalli Radhakrishnan University, Bhopal. All Rights Reserved.',
+                'footer_custom_scripts'  => '',
+                'enable_whatsapp_float'  => '1',
+                'whatsapp_float_number'  => '917554911204',
+                'whatsapp_float_msg'     => 'Hello SRKU, I am interested in Admission Details for 2026-27.',
+                'enable_enquiry_tab'     => '1',
+                'enquiry_tab_text'       => 'Admissions 2026-27',
+                'enquiry_tab_link'       => '#apply',
+                'enable_back_to_top'     => '1',
+
+                // ── TICKER ─────────────────────────────────────────────────
+                'ticker_text' => 'Admissions Open 2026-27 | UGC Recognized Premier University in MP | Apply Now for UG, PG & PhD Programs in Engineering, Pharmacy, Management & Medicine | 94% Placement Record',
+
+                // ── STATS ──────────────────────────────────────────────────
+                'highest_package'      => '12 LPA',
+                'placement_record'     => '94%',
+                'recruiting_partners'  => '120+',
+                'total_labs'           => '42+',
+                'total_alumni'         => '15,000+',
+                'stat_students'        => '20,000+',
+                'stat_faculty'         => '600+',
+                'stat_alumni'          => '1,10,000+',
+                'stat_programs'        => '120+',
+                'stat_papers'          => '1,400+',
+                'stat_partners'        => '42+',
+                'stat_placements'      => '35,000+',
+                'stat_years'           => '31st Year',
+                'stat_units'           => '14',
+                'stat_campus_acres'    => '100+ Acres',
+                'stat_hospital_beds'   => '750+',
+                'stat_patents'         => '160+',
+                'stat_highest_pkg'     => '12 LPA',
+                'stat_placement_pct'   => '94%',
+                'stat_recruiters'      => '120+',
+                'stat_teaching_days'   => '180+',
+                'stat_days_semester'   => '90',
+                'stat_min_attendance'  => '75%',
+
+                // ── HOMEPAGE - HERO ────────────────────────────────────────
+                'hero_title'         => 'SRK University, Bhopal',
+                'hero_subtitle'      => 'UGC-Recognized University in MP',
+                'hero_desc'          => 'Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership. If you are looking for the best placement university in MP, our rigorous research, multi-disciplinary collaboration, and industry-aligned pedagogy deliver unmatched career growth.',
+                'hero_video_url'     => 'assets/images/concept2-hero.mp4',
+                'hero_fallback_image'=> 'assets/uploads/2026/08/srku-rkdf-building.jpeg',
+
+                // ── HOMEPAGE - WELCOME SECTION ─────────────────────────────
+                'welcome_subtitle' => 'WELCOME TO SRK UNIVERSITY',
+                'welcome_title'    => 'Committed Towards Your Better Future Through Academic Excellence',
+                'welcome_body_1'   => 'The SRK University is a multidisciplinary university known for its high standards in teaching and research, and attracts eminent scholars to its faculty across the academic spectrum.',
+                'welcome_body_2'   => 'The group was established in 1995 under the flagship of the RKDF Group. Ever since its inception, a strong commitment to excellence in teaching and research has made the group a role-model and path-setter for other institutions. Its rich academic tradition has always attracted the most talented students, who later go on to make important contributions to society.',
+                'welcome_photo'    => 'assets/uploads/2026/08/welcome-srku-campus.jpeg',
+
+                // ── HOMEPAGE - CHANCELLOR SECTION ──────────────────────────
+                'chancellor_name'    => 'Mrs. Janak Kapoor',
+                'chancellor_title'   => 'Chancellor',
+                'chancellor_photo'   => 'assets/uploads/2026/08/chancellor.jpeg',
+                'chancellor_heading' => 'A Legacy of Excellence, A Vision for Tomorrow',
+                'chancellor_msg'     => 'It is a matter of great joy that the notification for the establishment of Sarvepalli Radhakrishnan University, Bhopal, has been issued by the State Government.',
+                'chancellor_msg2'    => 'In order to maintain quality in the field of higher education in the state, it is an important responsibility of private universities, alongside government universities, to bring about change in research and exploration. It is hoped that Sarvepalli Radhakrishnan University will, in the future, deliver unprecedented performance on quality standards and establish itself as the state\'s foremost institution of education.',
+
+                // ── HOMEPAGE / VC MESSAGE PAGE - VICE CHANCELLOR ───────────
+                'vc_name'          => 'Dr. Priyanka Jaiswal',
+                'vc_title'         => 'Vice Chancellor',
+                'vc_photo'         => 'assets/uploads/2026/07/ruchichaubey.webp',
+                'vc_email'         => 'vc@srku.edu.in',
+                'vc_heading'       => 'Empowering Minds for a Knowledge Economy',
+                'vc_salutation'    => 'Dear Students, Scholars, Faculty Colleagues, and Visitors,',
+                'vc_msg'           => 'It is my distinct honor and privilege to welcome you to Sarvepalli Radhakrishnan University (SRKU), Bhopal. As Vice Chancellor, my primary commitment is to create an inspiring, inclusive, and forward-looking academic ecosystem where intellectual rigor meets societal responsibility.',
+                'vc_msg2'          => 'Higher education today is experiencing unprecedented transformation. The rapid advancements in Artificial Intelligence, medical biotechnology, renewable energy, smart manufacturing, and digital jurisprudence require universities to reinvent their pedagogical frameworks. At SRKU, our curriculum is strictly benchmarked with National Education Policy (NEP) guidelines and continuously updated in consultation with apex academic bodies and Fortune 500 industry leaders.',
+                'vc_msg3'          => 'Our 1,000+ distinguished faculty members—including experienced professors, medical surgeons, scientists, and legal scholars—serve not just as teachers, but as dedicated mentors who nurture the unique talents of each individual student. Through continuous faculty development and active research initiatives, we maintain the highest standards of academic delivery.',
+                'vc_msg4'          => 'To all our learners: SRKU is your canvas. Strive for excellence, question conventional thinking, embrace multidisciplinary perspectives, and lead with empathy. Together, let us contribute meaningfully to the advancement of knowledge, human welfare, and the nation.',
+                'vc_goals'         => "Choice Based Credit System (CBCS)\nIndustry-Integrated Curriculum & Internships\nInterdisciplinary Research Publications\nGlobal Academic Partnerships & MOUs",
+                'vc_full_page_msg' => '',
+
+                // ── WHY SRKU PAGE ──────────────────────────────────────────
+                'why_srku_empower_title'  => 'Empowering Minds. Inspiring Innovation. Building Future Leaders.',
+                'why_srku_empower_desc'   => 'At SRK University, education is more than earning a degree—it\'s about developing the knowledge, skills, and confidence to succeed in a rapidly changing world. Our multidisciplinary learning environment combines academic excellence, practical exposure, innovation, and industry engagement to prepare students for meaningful careers and lifelong success.',
                 'why_srku_reason_1_title' => 'Multidisciplinary Education',
                 'why_srku_reason_1_desc'  => 'We offer over 50 diverse programmes spanning Medical, Dental, Nursing, Engineering, Management, Law, Commerce, Agriculture, Science, and Humanities. Students choose courses aligned with their aspirations and the National Education Policy 2020.',
-
                 'why_srku_reason_2_title' => 'State-of-the-Art Infrastructure',
                 'why_srku_reason_2_desc'  => 'Our lush green campus spans a cosmopolitan setting with modern laboratories, interactive learning spaces, high-tech medical facilities, and libraries equipped with the latest technology and resources.',
-
                 'why_srku_reason_3_title' => 'NAAC-Graded Excellence',
                 'why_srku_reason_3_desc'  => 'SRK University is NAAC-accredited, ensuring quality education meets international standards. Our commitment to continuous improvement and academic rigor sets us apart from other private universities in Bhopal.',
-
                 'why_srku_reason_4_title' => 'Industry & Research Partnerships',
                 'why_srku_reason_4_desc'  => 'We foster strong collaborations with leading industries for internships, placements, and research initiatives, ensuring students gain hands-on experience and are job-ready upon graduation.',
-
                 'why_srku_reason_5_title' => 'Diverse Student Community',
                 'why_srku_reason_5_desc'  => 'Our campus welcomes students from all corners of India, creating a multicultural environment that enriches learning and promotes cross-cultural understanding.',
-
                 'why_srku_reason_6_title' => 'Holistic Student Development',
                 'why_srku_reason_6_desc'  => 'At SRK University, students grow beyond academics through sports, cultural activities, leadership programmes, innovation, and community engagement, building confidence, teamwork, and essential life skills for future success.',
+
+                // ── STUDENT LIFE PAGE ──────────────────────────────────────
+                'student_fest_icon'    => 'fas fa-guitar',
+                'student_fest_title'   => 'Tarang — Annual Cultural Fest',
+                'student_fest_desc'    => 'Three days of star-studded musical concerts, fashion shows, dance competitions, and theatrical performances with 10,000+ attendees.',
+                'student_sports_icon'  => 'fas fa-trophy',
+                'student_sports_title' => 'Inter-University Sports Meet',
+                'student_sports_desc'  => 'Annual tournaments across Cricket, Football, Basketball, Volleyball, Badminton, Table Tennis, and Track & Field athletics.',
+                'student_nss_icon'     => 'fas fa-hands-helping',
+                'student_nss_title'    => 'NSS & Community Service',
+                'student_nss_desc'     => 'Active National Service Scheme units organizing blood donation camps, free health checkups, tree plantation, and rural literacy drives.',
             ];
+            // INSERT IGNORE = only seed if key doesn't exist yet.
+            // Admin-edited values in DB are NEVER overwritten by sync.
             if ($driver === 'sqlite') {
-                $insSetting = $pdo->prepare("INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES (:k, :v) ON CONFLICT(`setting_key`) DO UPDATE SET `setting_value` = excluded.`setting_value`");
+                $insSetting = $pdo->prepare("INSERT OR IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES (:k, :v)");
             } else {
-                $insSetting = $pdo->prepare("INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES (:k, :v) ON DUPLICATE KEY UPDATE `setting_value` = VALUES(`setting_value`)");
+                $insSetting = $pdo->prepare("INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES (:k, :v)");
             }
             $sCount = 0;
             foreach ($defaultSettings as $sk => $sv) {

@@ -310,35 +310,7 @@ $syncModules = [
     </div>
 </div>
 
-<?php
-$sqlFileCheck = __DIR__ . '/../srku_db_new.sql';
-// Fallback to old name if new file not yet generated
-if (!file_exists($sqlFileCheck)) { $sqlFileCheck = __DIR__ . '/../srku_db.sql'; }
-$sqlFileSizeKb = file_exists($sqlFileCheck) ? round(filesize($sqlFileCheck) / 1024) : 0;
-$sqlFileTime = file_exists($sqlFileCheck) ? date('d M Y, h:i A', filemtime($sqlFileCheck)) : 'Not yet generated';
-?>
-<!-- Live SQL Backup & Export Banner -->
-<div class="card border-0 shadow-sm rounded-4 p-3 p-md-4 mb-4 bg-white" style="border-left: 5px solid #1e245a !important;">
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-        <div class="d-flex align-items-center gap-3">
-            <div class="p-3 bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
-                <i class="fas fa-file-invoice text-primary fa-lg"></i>
-            </div>
-            <div>
-                <h6 class="fw-bold text-navy mb-1">Live Database Production Dump: <code>srku_db_new.sql</code></h6>
-                <div class="small text-muted">
-                    <span class="me-3"><i class="fas fa-hdd me-1"></i> File Size: <strong><?php echo $sqlFileSizeKb; ?> KB</strong></span>
-                    <span><i class="fas fa-clock me-1"></i> Last Synced: <strong><?php echo $sqlFileTime; ?></strong></span>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex gap-2">
-            <a href="manage_dbsync.php?download_sql=1" class="btn btn-outline-primary fw-bold px-3 py-2 rounded-pill small">
-                <i class="fas fa-download me-1"></i> Download <code>srku_db_new.sql</code>
-            </a>
-        </div>
-    </div>
-</div>
+
 
 <?php if (strtolower($dbStatus['driver'] ?? '') === 'sqlite'): ?>
 <!-- Advisory when running on SQLite Fallback -->
