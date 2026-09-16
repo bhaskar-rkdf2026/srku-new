@@ -391,12 +391,9 @@ function autoInitializeTables($pdo) {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 company_name TEXT NOT NULL,
                 logo_url TEXT,
-                package_lpa TEXT,
-                students_placed INTEGER DEFAULT 0,
-                year INTEGER DEFAULT 2024,
-                highlight INTEGER DEFAULT 0,
+                package_offered TEXT,
                 sort_order INTEGER DEFAULT 0,
-                status TEXT DEFAULT 'active',
+                status INTEGER DEFAULT 1,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );
         ");
