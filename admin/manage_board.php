@@ -257,14 +257,15 @@ try {
                                     </td>
                                     <td>
                                         <div class="rounded-circle overflow-hidden bg-light border d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
-                                            <?php if (!empty($m['photo'])): ?>
-                                                <img src="<?php echo BASE_URL . $m['photo']; ?>"
-                                                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/images/user-placeholder.png';"
-                                                     alt="<?php echo htmlspecialchars($m['name']); ?>"
-                                                     style="width: 100%; height: 100%; object-fit: cover;">
-                                            <?php else: ?>
-                                                <i class="fas fa-user text-muted"></i>
-                                            <?php endif; ?>
+                                            <?php 
+                                            $mPhoto = trim($m['photo'] ?? '');
+                                            $adminAvatar = BASE_URL . 'assets/images/default-avatar.svg';
+                                            $mSrc = (!empty($mPhoto) && file_exists(__DIR__ . '/../' . ltrim($mPhoto, '/\\'))) ? (BASE_URL . ltrim($mPhoto, '/\\')) : $adminAvatar;
+                                            ?>
+                                            <img src="<?php echo $mSrc; ?>"
+                                                 onerror="this.onerror=null; this.src='<?php echo $adminAvatar; ?>';"
+                                                 alt="<?php echo htmlspecialchars($m['name']); ?>"
+                                                 style="width: 100%; height: 100%; object-fit: cover;">
                                         </div>
                                     </td>
                                     <td>

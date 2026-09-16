@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fdf2f2"/>
+      <stop offset="100%" stop-color="#f5dede"/>
+    </linearGradient>
+    <linearGradient id="avatarHead" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7a1113"/>
+      <stop offset="100%" stop-color="#4a080a"/>
+    </linearGradient>
+    <linearGradient id="avatarBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8a181b"/>
+      <stop offset="100%" stop-color="#550c0e"/>
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#7a1113" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background Circle with subtle border -->
+  <circle cx="100" cy="100" r="100" fill="url(#bgGrad)"/>
+  <circle cx="100" cy="100" r="97" fill="none" stroke="#e8bcbc" stroke-width="2" opacity="0.6"/>
+
+  <!-- Avatar Group -->
+  <g filter="url(#softShadow)">
+    <!-- Head -->
+    <circle cx="100" cy="72" r="32" fill="url(#avatarHead)"/>
+
+    <!-- Shoulders & Torso -->
+    <path d="M40 168 C40 126, 68 116, 100 116 C132 116, 160 126, 160 168 C160 188, 144 198, 100 198 C56 198, 40 188, 40 168 Z" fill="url(#avatarBody)"/>
+
+    <!-- Suit Collar / Lapels -->
+    <path d="M78 132 L100 162 L122 132 L112 120 L100 134 L88 120 Z" fill="#ffffff" opacity="0.95"/>
+
+    <!-- Gold Academic / Leadership Tie -->
+    <path d="M96 136 L104 136 L106 142 L100 166 L94 142 Z" fill="#d4af37"/>
+  </g>
+</svg>

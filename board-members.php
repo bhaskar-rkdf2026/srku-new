@@ -101,20 +101,36 @@ $stats = getUniversityStats();
 
         <!-- Members Grid -->
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4" id="boardMembersGrid">
-            <?php foreach ($boardMembers as $m): 
+            <?php 
+            $defaultAvatar = BASE_URL . 'assets/images/default-avatar.svg';
+            foreach ($boardMembers as $m): 
                 $cat = $m['category'] ?? 'academic';
-                $icon = $m['icon'] ?? 'fa-user-tie';
+                $rawPhoto = trim($m['photo'] ?? '');
+                
+                // Resolve member photo with automatic local file check & fallback
+                if (!empty($rawPhoto)) {
+                    $cleanPhoto = ltrim($rawPhoto, '/\\');
+                    if (file_exists(__DIR__ . '/' . $cleanPhoto)) {
+                        $memberPhotoUrl = BASE_URL . $cleanPhoto;
+                    } elseif (strpos($rawPhoto, 'http://') === 0 || strpos($rawPhoto, 'https://') === 0) {
+                        $memberPhotoUrl = $rawPhoto;
+                    } else {
+                        $memberPhotoUrl = $defaultAvatar;
+                    }
+                } else {
+                    $memberPhotoUrl = $defaultAvatar;
+                }
             ?>
                 <div class="col board-member-card-wrapper" data-category="<?php echo sanitize($cat); ?>">
                     <div class="card h-100 p-4 border-0 shadow-sm rounded-4 text-center d-flex flex-column transition-all" style="background:#ffffff; border-top: 4px solid var(--srku-maroon) !important;">
                         
                         <!-- Avatar / Photo -->
-                        <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 shadow-sm" style="width:90px; height:90px; background: #fdf2f2; color: var(--srku-maroon); font-size:2.2rem; overflow:hidden;">
-                            <?php if (!empty($m['photo'])): ?>
-                                <img src="<?php echo BASE_URL . sanitize($m['photo']); ?>" alt="<?php echo sanitize($m['name']); ?>" style="width:100%; height:100%; object-fit:cover;">
-                            <?php else: ?>
-                                <i class="fas <?php echo sanitize($icon); ?>"></i>
-                            <?php endif; ?>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 shadow-sm border border-2 border-danger-subtle position-relative overflow-hidden" style="width:95px; height:95px; background: #fdf2f2;">
+                            <img src="<?php echo $memberPhotoUrl; ?>" 
+                                 alt="<?php echo sanitize($m['name']); ?>" 
+                                 class="w-100 h-100 object-fit-cover"
+                                 loading="lazy"
+                                 onerror="this.onerror=null; this.src='<?php echo $defaultAvatar; ?>';">
                         </div>
 
                         <!-- Name & Designation -->
