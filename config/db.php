@@ -347,6 +347,58 @@ function autoInitializeTables($pdo) {
                 status TEXT DEFAULT 'active',
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );
+            CREATE TABLE IF NOT EXISTS exam_timetables (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                category TEXT NOT NULL DEFAULT 'General',
+                course_title TEXT NOT NULL,
+                details TEXT,
+                file_url TEXT,
+                filename TEXT,
+                sort_order INTEGER DEFAULT 0,
+                status TEXT DEFAULT 'active',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+            CREATE TABLE IF NOT EXISTS facilities (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                icon TEXT DEFAULT 'fa-building',
+                image TEXT NOT NULL,
+                description TEXT,
+                sort_order INTEGER DEFAULT 0,
+                status TEXT DEFAULT 'active',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+            CREATE TABLE IF NOT EXISTS accreditations (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                code TEXT NOT NULL,
+                name TEXT NOT NULL,
+                domain TEXT,
+                description TEXT,
+                sort_order INTEGER DEFAULT 0,
+                status TEXT DEFAULT 'active',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+            CREATE TABLE IF NOT EXISTS incubation_members (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                role TEXT NOT NULL,
+                highlight INTEGER DEFAULT 0,
+                sort_order INTEGER DEFAULT 0,
+                status TEXT DEFAULT 'active',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+            CREATE TABLE IF NOT EXISTS placements (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                company_name TEXT NOT NULL,
+                logo_url TEXT,
+                package_lpa TEXT,
+                students_placed INTEGER DEFAULT 0,
+                year INTEGER DEFAULT 2024,
+                highlight INTEGER DEFAULT 0,
+                sort_order INTEGER DEFAULT 0,
+                status TEXT DEFAULT 'active',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
         ");
     } else {
         $pdo->exec("
