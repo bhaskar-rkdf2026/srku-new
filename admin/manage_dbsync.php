@@ -110,8 +110,8 @@ $syncModules = [
         'name' => 'Exam Time Tables & Schedules',
         'table' => 'exam_timetables',
         'icon' => 'fas fa-calendar-check text-danger',
-        'desc' => '20 Official Semester Date Sheets & Downloadable PDF Schedules',
-        'expected' => 20,
+        'desc' => '126 Official Semester Date Sheets & Downloadable PDF Schedules across 7 Faculties',
+        'expected' => 126,
         'manage_url' => 'manage_timetables.php'
     ],
     'facilities' => [

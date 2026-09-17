@@ -107,18 +107,22 @@ $stats = getUniversityStats();
                 $cat = $m['category'] ?? 'academic';
                 $rawPhoto = trim($m['photo'] ?? '');
                 
-                // Resolve member photo with automatic local file check & fallback
+                // Never show incorrect photo for Dr. Priyanka Jaiswal
+                if (strpos($rawPhoto, 'ruchichaubey') !== false) {
+                    $rawPhoto = '';
+                }
+
+                $hasPhoto = false;
+                $memberPhotoUrl = '';
                 if (!empty($rawPhoto)) {
                     $cleanPhoto = ltrim($rawPhoto, '/\\');
                     if (file_exists(__DIR__ . '/' . $cleanPhoto)) {
                         $memberPhotoUrl = BASE_URL . $cleanPhoto;
+                        $hasPhoto = true;
                     } elseif (strpos($rawPhoto, 'http://') === 0 || strpos($rawPhoto, 'https://') === 0) {
                         $memberPhotoUrl = $rawPhoto;
-                    } else {
-                        $memberPhotoUrl = $defaultAvatar;
+                        $hasPhoto = true;
                     }
-                } else {
-                    $memberPhotoUrl = $defaultAvatar;
                 }
             ?>
                 <div class="col board-member-card-wrapper" data-category="<?php echo sanitize($cat); ?>">
@@ -126,11 +130,17 @@ $stats = getUniversityStats();
                         
                         <!-- Avatar / Photo -->
                         <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 shadow-sm border border-2 border-danger-subtle position-relative overflow-hidden" style="width:95px; height:95px; background: #fdf2f2;">
-                            <img src="<?php echo $memberPhotoUrl; ?>" 
-                                 alt="<?php echo sanitize($m['name']); ?>" 
-                                 class="w-100 h-100 object-fit-cover"
-                                 loading="lazy"
-                                 onerror="this.onerror=null; this.src='<?php echo $defaultAvatar; ?>';">
+                            <?php if ($hasPhoto): ?>
+                                <img src="<?php echo $memberPhotoUrl; ?>" 
+                                     alt="<?php echo sanitize($m['name']); ?>" 
+                                     class="w-100 h-100 object-fit-cover"
+                                     loading="lazy"
+                                     onerror="this.onerror=null; this.src='<?php echo $defaultAvatar; ?>';">
+                            <?php else: ?>
+                                <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #7a1113 0%, #3e0708 100%); color: #d4af37; font-size: 2.4rem;">
+                                    <i class="fas <?php echo sanitize(!empty($m['icon']) ? $m['icon'] : 'fa-user-graduate'); ?>"></i>
+                                </div>
+                            <?php endif; ?>
                         </div>
 
                         <!-- Name & Designation -->

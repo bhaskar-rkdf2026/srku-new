@@ -37,6 +37,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_board_me
     $name = trim($_POST['name'] ?? '');
     $designation = trim($_POST['designation'] ?? '');
     $role = trim($_POST['role'] ?? 'Member');
+    $category = in_array($_POST['category'] ?? '', ['leadership', 'sponsoring', 'academic', 'administration']) ? $_POST['category'] : 'academic';
+    $representation = trim($_POST['representation'] ?? '');
     $sortOrder = (int)($_POST['sort_order'] ?? 0);
     $status = in_array($_POST['status'] ?? '', ['active', 'inactive']) ? $_POST['status'] : 'active';
     $bio = trim($_POST['bio'] ?? '');
@@ -63,11 +65,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_board_me
     } else {
         try {
             if ($id > 0) {
-                $stmt = $pdo->prepare("UPDATE board_members SET name = :n, designation = :des, role = :r, photo = :p, bio = :b, sort_order = :s, status = :st WHERE id = :id");
+                $stmt = $pdo->prepare("UPDATE board_members SET name = :n, designation = :des, role = :r, representation = :rep, category = :cat, photo = :p, bio = :b, sort_order = :s, status = :st WHERE id = :id");
                 $stmt->execute([
                     ':n' => $name,
                     ':des' => $designation,
                     ':r' => $role,
+                    ':rep' => $representation,
+                    ':cat' => $category,
                     ':p' => $photo,
                     ':b' => $bio,
                     ':s' => $sortOrder,
@@ -76,11 +80,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_board_me
                 ]);
                 setFlashMsg('success', 'Board member updated successfully.');
             } else {
-                $stmt = $pdo->prepare("INSERT INTO board_members (name, designation, role, photo, bio, sort_order, status) VALUES (:n, :des, :r, :p, :b, :s, :st)");
+                $stmt = $pdo->prepare("INSERT INTO board_members (name, designation, role, representation, category, photo, bio, sort_order, status) VALUES (:n, :des, :r, :rep, :cat, :p, :b, :s, :st)");
                 $stmt->execute([
                     ':n' => $name,
                     ':des' => $designation,
                     ':r' => $role,
+                    ':rep' => $representation,
+                    ':cat' => $category,
                     ':p' => $photo,
                     ':b' => $bio,
                     ':s' => $sortOrder,
@@ -167,6 +173,24 @@ try {
                     <input type="text" name="designation" class="form-control form-control-sm" required
                            value="<?php echo htmlspecialchars($editMember['designation'] ?? ''); ?>"
                            placeholder="e.g. Vice Chancellor, Sarvepalli Radhakrishnan University">
+                </div>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-dark">Directory Category <span class="text-danger">*</span></label>
+                        <select name="category" class="form-select form-select-sm" required>
+                            <option value="leadership" <?php echo (($editMember['category'] ?? '') === 'leadership') ? 'selected' : ''; ?>>University Leadership</option>
+                            <option value="sponsoring" <?php echo (($editMember['category'] ?? '') === 'sponsoring') ? 'selected' : ''; ?>>Sponsoring Body</option>
+                            <option value="academic" <?php echo (($editMember['category'] ?? 'academic') === 'academic') ? 'selected' : ''; ?>>Academic Leaders</option>
+                            <option value="administration" <?php echo (($editMember['category'] ?? '') === 'administration') ? 'selected' : ''; ?>>Administration</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-dark">Representation / Board Role</label>
+                        <input type="text" name="representation" class="form-control form-control-sm"
+                               value="<?php echo htmlspecialchars($editMember['representation'] ?? ''); ?>"
+                               placeholder="e.g. Sponsoring Body / Academician">
+                    </div>
                 </div>
 
                 <div class="row g-2 mb-3">
@@ -275,6 +299,16 @@ try {
                                         <small class="text-muted d-block" style="font-size: 0.82rem;">
                                             <?php echo htmlspecialchars($m['designation']); ?>
                                         </small>
+                                        <div class="d-flex flex-wrap gap-1 mt-1">
+                                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-2 py-0 small fw-semibold">
+                                                <i class="fas fa-tag me-1"></i><?php echo htmlspecialchars(ucfirst($m['category'] ?? 'academic')); ?>
+                                            </span>
+                                            <?php if (!empty($m['representation'])): ?>
+                                                <span class="badge bg-light text-dark border rounded-pill px-2 py-0 small">
+                                                    <?php echo htmlspecialchars($m['representation']); ?>
+                                                </span>
+                                            <?php endif; ?>
+                                        </div>
                                         <?php if (!empty($m['bio'])): ?>
                                             <p class="text-secondary small mb-0 mt-1 text-truncate" style="max-width: 260px; font-size: 0.78rem;">
                                                 <?php echo htmlspecialchars($m['bio']); ?>

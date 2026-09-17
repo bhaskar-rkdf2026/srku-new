@@ -13,16 +13,45 @@ foreach ($dbTimetables as $t) {
     if (!isset($rawCategories[$cat])) {
         $rawCategories[$cat] = [];
     }
-    $pdfUrl = $t['file_url'] ?? '';
-    if (!empty($pdfUrl) && strpos($pdfUrl, 'http') !== 0) {
-        $pdfUrl = BASE_URL . ltrim($pdfUrl, '/');
+    
+    $rawPdf = trim($t['file_url'] ?? '');
+    $pdfUrl = '';
+    $localFound = false;
+
+    // Check if path is relative local file
+    if (!empty($rawPdf) && strpos($rawPdf, 'http') !== 0) {
+        $cleanRel = ltrim($rawPdf, '/\\');
+        if (file_exists(__DIR__ . '/' . $cleanRel)) {
+            $pdfUrl = BASE_URL . $cleanRel;
+            $localFound = true;
+        }
     }
+
+    // Check if filename or URL matches any local time-table PDF
+    if (!$localFound && !empty($rawPdf)) {
+        $pathOnly = parse_url($rawPdf, PHP_URL_PATH);
+        $bn = basename(urldecode($pathOnly ?: $rawPdf));
+        $safeName = preg_replace('/[\\/\\\\:*?"<>|]/', '_', $bn);
+        if (!preg_match('/\.pdf$/i', $safeName)) {
+            $safeName .= '.pdf';
+        }
+        
+        $candidatePath = 'assets/uploads/time-table/' . $safeName;
+        if (file_exists(__DIR__ . '/' . $candidatePath)) {
+            $pdfUrl = BASE_URL . $candidatePath;
+            $localFound = true;
+        } else {
+            $pdfUrl = $rawPdf;
+        }
+    }
+
     $rawCategories[$cat][] = [
         'id' => $t['id'],
         'course' => $t['course_title'],
         'details' => $t['details'] ?? 'Official Semester Examination Schedule',
         'url' => $pdfUrl,
         'filename' => $t['filename'] ?: basename($pdfUrl ?: 'exam-time-table.pdf'),
+        'is_local' => $localFound,
         'publish_date' => $t['created_at'] ?? ''
     ];
 }

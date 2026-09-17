@@ -47,14 +47,14 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_timetabl
         $allowed = ['pdf'];
         $ext = strtolower(pathinfo($_FILES['pdf_file']['name'], PATHINFO_EXTENSION));
         if (in_array($ext, $allowed)) {
-            $uploadDir = __DIR__ . '/../assets/uploads/timetables/';
+            $uploadDir = __DIR__ . '/../assets/uploads/time-table/';
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
             $cleanName = preg_replace('/[^a-zA-Z0-9_-]/', '_', pathinfo($_FILES['pdf_file']['name'], PATHINFO_FILENAME));
             $fn = $cleanName . '_' . time() . '.' . $ext;
             if (move_uploaded_file($_FILES['pdf_file']['tmp_name'], $uploadDir . $fn)) {
-                $fileUrl = 'assets/uploads/timetables/' . $fn;
+                $fileUrl = 'assets/uploads/time-table/' . $fn;
                 $filename = $fn;
             }
         }
@@ -138,15 +138,23 @@ try {
 
 $categoriesList = [
     'Engineering & Polytechnic',
-    'Pharmacy',
-    'Medical, Dental & Ayush',
+    'Agriculture & Allied Sciences',
+    'Management & Computer Application',
     'Nursing & Paramedical',
-    'Management & Commerce',
-    'Computer Applications & Science',
-    'Law & Legal Studies',
-    'Agriculture & Science',
-    'Ph.D. & Research'
+    'Medical, Dental & Ayush',
+    'Law',
+    'Pharmacy'
 ];
+
+// Merge any other categories currently in database
+try {
+    $dbCats = $pdo->query("SELECT DISTINCT category FROM exam_timetables WHERE category IS NOT NULL AND category != ''")->fetchAll(PDO::FETCH_COLUMN);
+    foreach ($dbCats as $dc) {
+        if (!in_array($dc, $categoriesList)) {
+            $categoriesList[] = $dc;
+        }
+    }
+} catch (Exception $e) {}
 ?>
 
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">

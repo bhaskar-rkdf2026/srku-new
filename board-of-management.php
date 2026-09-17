@@ -115,14 +115,23 @@ $stats = getUniversityStats();
             <h2 class="section-title">Board of <span>Management</span></h2>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
-            <?php foreach ($boardMembers as $m): ?>
+            <?php 
+            foreach ($boardMembers as $m): 
+                $mPhoto = trim($m['photo'] ?? '');
+                if (strpos($mPhoto, 'ruchichaubey') !== false) {
+                    $mPhoto = '';
+                }
+                $hasMPhoto = !empty($mPhoto) && file_exists(__DIR__ . '/' . ltrim($mPhoto, '/\\'));
+            ?>
                 <div class="col">
                     <div class="card h-100 p-4 text-center border-0 shadow-sm rounded-4 reveal" style="background: var(--srku-cream);">
-                        <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width:90px; height:90px; font-size:2.2rem; color:#adb5bd; overflow:hidden;">
-                            <?php if (!empty($m['photo'])): ?>
-                                <img src="<?php echo BASE_URL . sanitize($m['photo']); ?>" alt="<?php echo sanitize($m['name']); ?>" style="width:100%; height:100%; object-fit:cover;">
+                        <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 shadow-sm border border-2 border-danger-subtle position-relative overflow-hidden" style="width:95px; height:95px; font-size:2.2rem; color:#adb5bd;">
+                            <?php if ($hasMPhoto): ?>
+                                <img src="<?php echo BASE_URL . sanitize($mPhoto); ?>" alt="<?php echo sanitize($m['name']); ?>" style="width:100%; height:100%; object-fit:cover;">
                             <?php else: ?>
-                                <i class="fas fa-user-tie"></i>
+                                <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #7a1113 0%, #3e0708 100%); color: #d4af37; font-size: 2.2rem;">
+                                    <i class="fas <?php echo sanitize(!empty($m['icon']) ? $m['icon'] : 'fa-user-tie'); ?>"></i>
+                                </div>
                             <?php endif; ?>
                         </div>
                         <h4 class="h6 fw-bold text-navy mb-1"><?php echo sanitize($m['name']); ?></h4>

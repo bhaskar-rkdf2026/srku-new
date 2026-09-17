@@ -165,9 +165,9 @@ function runUniversalDatabaseMigrations($pdo) {
         ensureDbTableColumn($pdo, 'board_members', 'photo', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'icon');
         ensureDbTableColumn($pdo, 'board_members', 'sort_order', "INT DEFAULT 0", "INTEGER DEFAULT 0", 'photo');
 
-        // Always ensure Vice Chancellor and Chancellor in board_members have valid photos
+        // Always ensure Vice Chancellor and Chancellor in board_members have valid details & no incorrect photos
         try {
-            $pdo->prepare("UPDATE `board_members` SET `name` = 'Dr. Priyanka Jaiswal', `photo` = 'assets/uploads/2026/07/ruchichaubey.webp' WHERE `designation` LIKE '%Vice Chancellor%' OR `representation` LIKE '%Vice Chancellor%'")->execute();
+            $pdo->prepare("UPDATE `board_members` SET `name` = 'Dr. Priyanka Jaiswal', `photo` = NULL WHERE (`designation` LIKE '%Vice Chancellor%' OR `representation` LIKE '%Vice Chancellor%') AND `photo` LIKE '%ruchichaubey%'")->execute();
             $pdo->prepare("UPDATE `board_members` SET `photo` = 'assets/uploads/2026/08/chancellor.jpeg' WHERE (`name` LIKE '%Janak%' OR `designation` = 'Chancellor') AND (`photo` IS NULL OR `photo` = '' OR `photo` LIKE '%mrs-janak%')")->execute();
         } catch (Exception $e) {}
 
