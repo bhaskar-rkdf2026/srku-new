@@ -212,23 +212,44 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                             </ul>
                         </li>
 
-                        <!-- All Committee (With Level-3 Submenu) -->
+                        <!-- All Committee (With Level-3 Submenu - Consolidated All Statutory & University Committees) -->
                         <li class="static-dropdown-item">
-                            <a href="#" class="static-dropdown-link fw-semibold">
+                            <a href="#" class="static-dropdown-link fw-semibold text-danger">
                                 <i class="fas fa-users-cog text-warning me-1"></i> All Committee <span class="static-dropdown-arrow static-sub-arrow"></span>
                             </a>
                             <ul class="static-dropdown-panel static-sub-dropdown">
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>board-members.php" class="static-dropdown-link fw-bold text-danger"><i class="fas fa-id-badge me-1 text-danger"></i> Board of Members</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>board-of-management.php" class="static-dropdown-link fw-bold text-navy"><i class="fas fa-landmark me-1 text-navy"></i> Board of Management</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>grievance.php" class="static-dropdown-link fw-bold text-danger"><i class="fas fa-balance-scale me-1 text-danger"></i> Student Grievance Portal</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/student-grievance-committee" class="static-dropdown-link"><i class="fas fa-user-shield text-primary me-1"></i> Student Grievance Committee</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/internal-complaint-committee" class="static-dropdown-link"><i class="fas fa-shield-alt text-danger me-1"></i> Internal Complaint Committee (ICC)</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/anti-ragging" class="static-dropdown-link"><i class="fas fa-ban text-danger me-1"></i> Anti Ragging Committee</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/obc-minority" class="static-dropdown-link"><i class="fas fa-users text-info me-1"></i> OBC &amp; Minority Committee</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/women-grievance-committee" class="static-dropdown-link"><i class="fas fa-female text-danger me-1"></i> Women Grievance Committee</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/sc-st-grievance-committee" class="static-dropdown-link"><i class="fas fa-hands-helping text-warning me-1"></i> SC &amp; ST Committee</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/equal-opportunity-cell" class="static-dropdown-link"><i class="fas fa-universal-access text-success me-1"></i> Equal Opportunity Cell</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/sedg-cell" class="static-dropdown-link"><i class="fas fa-hand-holding-heart text-info me-1"></i> SEDG Cell</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/ombudsman" class="static-dropdown-link"><i class="fas fa-gavel text-warning me-1"></i> Ombudsman</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/alumni-committee" class="static-dropdown-link"><i class="fas fa-user-friends text-primary me-1"></i> Alumni Committee</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/constitution-of-research-advisory-committee" class="static-dropdown-link"><i class="fas fa-microscope text-success me-1"></i> Research Advisory Committee</a></li>
                             </ul>
                         </li>
+
+                        <!-- Authority Of University (With Level-3 Submenu) -->
+                        <li class="static-dropdown-item">
+                            <a href="#" class="static-dropdown-link">
+                                <i class="fas fa-landmark text-danger me-1"></i> Authority Of University <span class="static-dropdown-arrow static-sub-arrow"></span>
+                            </a>
+                            <ul class="static-dropdown-panel static-sub-dropdown">
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/governing-body" class="static-dropdown-link"><i class="fas fa-crown text-warning me-1"></i> Governing Body</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/board-of-management" class="static-dropdown-link"><i class="fas fa-briefcase text-primary me-1"></i> Board of Management</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/finance-committee" class="static-dropdown-link"><i class="fas fa-coins text-success me-1"></i> Finance Committee</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/academic-councils" class="static-dropdown-link"><i class="fas fa-graduation-cap text-danger me-1"></i> Academic Councils</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/board-of-studies" class="static-dropdown-link"><i class="fas fa-book-reader text-info me-1"></i> Board Of Studies</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/officers-of-university" class="static-dropdown-link"><i class="fas fa-users-cog text-primary me-1"></i> Officers of University</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/academic-leadership" class="static-dropdown-link"><i class="fas fa-user-tie text-navy me-1"></i> Academic Leadership</a></li>
 
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/council-of-technical-education" class="static-dropdown-link"><i class="fas fa-cogs text-primary me-1"></i> Council Of technical education</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>about/srk-university-vision-and-mission" class="static-dropdown-link"><i class="fas fa-bullseye text-danger me-1"></i> Vision &amp; Mission</a></li>
@@ -250,34 +271,6 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>chancellor-message.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-crown text-warning me-1"></i> Chancellor's Message</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>vice-chancellor-message.php" class="static-dropdown-link fw-semibold text-navy"><i class="fas fa-user-tie text-primary me-1"></i> Vice Chancellor's Message</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>gallery.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-camera-retro text-danger me-1"></i> Picture Gallery</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/nirf-2026" class="static-dropdown-link fw-bold text-primary"><i class="fas fa-award text-warning me-1"></i> NIRF 2026</a></li>
-                    </ul>
-                </li>
-
-                <!-- 3. Administration -->
-                <li class="static-menu-item <?php echo (isset($activeNav) && $activeNav == 'administration') ? 'active' : ''; ?>">
-                    <a href="#" class="static-menu-link">
-                        Administration <span class="static-dropdown-arrow"></span>
-                    </a>
-                    <ul class="static-dropdown-panel">
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/officers-of-university" class="static-dropdown-link"><i class="fas fa-users-cog text-primary me-1"></i> Officers of University</a></li>
-                        
-                        <!-- Authority Of University -->
-                        <li class="static-dropdown-item">
-                            <a href="#" class="static-dropdown-link">
-                                <i class="fas fa-landmark text-danger me-1"></i> Authority Of University <span class="static-dropdown-arrow static-sub-arrow"></span>
-                            </a>
-                            <ul class="static-dropdown-panel static-sub-dropdown">
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/governing-body" class="static-dropdown-link"><i class="fas fa-crown text-warning me-1"></i> Governing Body</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/board-of-management" class="static-dropdown-link"><i class="fas fa-briefcase text-primary me-1"></i> Board of Management</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/finance-committee" class="static-dropdown-link"><i class="fas fa-coins text-success me-1"></i> Finance Committee</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/academic-councils" class="static-dropdown-link"><i class="fas fa-graduation-cap text-danger me-1"></i> Academic Councils</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/board-of-studies" class="static-dropdown-link"><i class="fas fa-book-reader text-info me-1"></i> Board Of Studies</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/internal-complaint-committee" class="static-dropdown-link"><i class="fas fa-shield-alt text-danger me-1"></i> Internal Complaint Committee</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/academic-leadership" class="static-dropdown-link"><i class="fas fa-user-tie text-navy me-1"></i> Academic Leadership</a></li>
                     </ul>
                 </li>
 
@@ -332,7 +325,6 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                     </a>
                     <ul class="static-dropdown-panel">
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>academic-calendar.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-calendar-alt text-warning me-1"></i> Academic Calendar 2026-27</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>exam-time-table.php" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-calendar-check text-danger me-1"></i> Exam Time Table</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>exam-rules.php" class="static-dropdown-link fw-semibold text-navy"><i class="fas fa-clipboard-check text-primary me-1"></i> Examination Rules &amp; Ordinances</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/details-of-academic-programmes" class="static-dropdown-link"><i class="fas fa-th-list text-danger me-1"></i> Details of Academic Programmes</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/statutes-ordinances-academics-examination" class="static-dropdown-link"><i class="fas fa-scroll text-secondary me-1"></i> Statutes Ordinances</a></li>
@@ -340,8 +332,6 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/department-wise-faculty-details" class="static-dropdown-link"><i class="fas fa-chalkboard-teacher text-info me-1"></i> Faculty/ Staff Details</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/iqac" class="static-dropdown-link"><i class="fas fa-check-double text-warning me-1"></i> Internal Quality Assurance Cell</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/university-library" class="static-dropdown-link"><i class="fas fa-book-reader text-danger me-1"></i> Library</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>hostel.php" class="static-dropdown-link"><i class="fas fa-bed text-warning me-1"></i> Hostel Accommodation</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>facilities" class="static-dropdown-link"><i class="fas fa-building text-primary me-1"></i> Facilities</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>placements" class="static-dropdown-link"><i class="fas fa-briefcase text-success me-1"></i> Placements</a></li>
                     </ul>
                 </li>
@@ -369,17 +359,13 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                         Research <span class="static-dropdown-arrow"></span>
                     </a>
                     <ul class="static-dropdown-panel">
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>phd-admission.php" class="static-dropdown-link fw-bold text-danger"><i class="fas fa-microscope text-danger me-1"></i> Ph.D. Admissions &amp; Guidelines</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>phd-application-form.php" class="static-dropdown-link"><i class="fas fa-file-signature text-primary me-1"></i> Ph.D. Application Form</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>phd-entrance-form.php" class="static-dropdown-link"><i class="fas fa-file-alt text-success me-1"></i> Ph.D. Entrance Exam Form</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/phd-admission-policy" class="static-dropdown-link"><i class="fas fa-stamp text-danger me-1"></i> Admission Policy for Ph.D. Programme</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/phd-admission-policy" class="static-dropdown-link fw-bold text-danger"><i class="fas fa-stamp text-danger me-1"></i> Admission Policy &amp; Guidelines for Ph.D.</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>incubation-center" class="static-dropdown-link"><i class="fas fa-lightbulb text-warning me-1"></i> Incubation Centre</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/research-development-cell" class="static-dropdown-link"><i class="fas fa-flask text-primary me-1"></i> Research &amp; Development Cell</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/university-research-policy" class="static-dropdown-link"><i class="fas fa-file-contract text-info me-1"></i> Research Policy</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/central-facilities-research" class="static-dropdown-link"><i class="fas fa-atom text-success me-1"></i> Central Facilities for Research and Development</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/central-facilities-research" class="static-dropdown-link"><i class="fas fa-atom text-success me-1"></i> Central Facilities for R&amp;D</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/ethics-board" class="static-dropdown-link"><i class="fas fa-balance-scale text-warning me-1"></i> Ethics Board to Maintain Research Integrity</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/consultancy-projects" class="static-dropdown-link"><i class="fas fa-project-diagram text-primary me-1"></i> Consultancy Projects</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/constitution-of-research-advisory-committee" class="static-dropdown-link"><i class="fas fa-users-cog text-danger me-1"></i> Constitution of Research Advisory Committee</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/phd-scholars-pursuing" class="static-dropdown-link"><i class="fas fa-user-graduate text-info me-1"></i> Ph.D. Scholars Currently Enrolled</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/phd-scholars-completed" class="static-dropdown-link"><i class="fas fa-award text-success me-1"></i> Ph.D. Awarded Scholars List</a></li>
                     </ul>
@@ -541,15 +527,9 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                     <ul class="static-dropdown-panel">
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/sports-facilities" class="static-dropdown-link"><i class="fas fa-dumbbell text-primary me-1"></i> Sports Facilities</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/ncc-nss" class="static-dropdown-link"><i class="fas fa-medal text-warning me-1"></i> NCC &amp; NSS</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/hostel-details" class="static-dropdown-link"><i class="fas fa-bed text-warning me-1"></i> Hostel Details</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>hostel.php" class="static-dropdown-link"><i class="fas fa-bed text-warning me-1"></i> Hostel Accommodation</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/placement-cell" class="static-dropdown-link"><i class="fas fa-briefcase text-success me-1"></i> Placement Cell</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/student-grievance-committee" class="static-dropdown-link"><i class="fas fa-user-shield text-danger me-1"></i> Student Grievance Committee</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/ombudsman" class="static-dropdown-link"><i class="fas fa-gavel text-warning me-1"></i> Ombudsman</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/health-facility" class="static-dropdown-link"><i class="fas fa-heartbeat text-danger me-1"></i> Health Facility</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/internal-complaint-committee" class="static-dropdown-link"><i class="fas fa-shield-alt text-primary me-1"></i> Internal Complaint Committee</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/anti-ragging" class="static-dropdown-link"><i class="fas fa-ban text-danger me-1"></i> Anti Ragging Committee</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/equal-opportunity-cell" class="static-dropdown-link"><i class="fas fa-universal-access text-success me-1"></i> Equal Opportunity Cell</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/sedg-cell" class="static-dropdown-link"><i class="fas fa-hand-holding-heart text-info me-1"></i> Socio Economically Disadvantaged Groups Cell (SEDG)</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/differently-abled-facilities" class="static-dropdown-link"><i class="fas fa-wheelchair text-primary me-1"></i> Facilities For Differently Abled Students</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>blogs" class="static-dropdown-link"><i class="fas fa-newspaper text-info me-1"></i> News, Events &amp; Blogs</a></li>
                     </ul>
@@ -563,7 +543,6 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                     <ul class="static-dropdown-panel">
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/alumni-registration-certificate" class="static-dropdown-link"><i class="fas fa-certificate text-primary me-1"></i> Alumni Registration Certificate</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/alumni-bylaws" class="static-dropdown-link"><i class="fas fa-book text-warning me-1"></i> Alumni Bylaws</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/alumni-committee" class="static-dropdown-link"><i class="fas fa-users text-success me-1"></i> Alumni Committee</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>alumni" class="static-dropdown-link fw-semibold text-danger"><i class="fas fa-user-graduate me-1"></i> Alumni Portal</a></li>
                     </ul>
                 </li>
@@ -574,22 +553,8 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                         Info Corner <span class="static-dropdown-arrow"></span>
                     </a>
                     <ul class="static-dropdown-panel">
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/rti" class="static-dropdown-link"><i class="fas fa-balance-scale text-primary me-1"></i> RTI</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/nirf-2026" class="static-dropdown-link"><i class="fas fa-award text-warning me-1"></i> NIRF 2026</a></li>
+                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/rti" class="static-dropdown-link"><i class="fas fa-balance-scale text-primary me-1"></i> Right to Information (RTI)</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/vacancy" class="static-dropdown-link"><i class="fas fa-briefcase text-success me-1"></i> Job Openings / Vacancy</a></li>
-                        <!-- Ph.D Details Submenu -->
-                        <li class="static-dropdown-item">
-                            <a href="#" class="static-dropdown-link">
-                                <i class="fas fa-user-graduate text-danger me-1"></i> Ph.D Details <span class="static-dropdown-arrow static-sub-arrow"></span>
-                            </a>
-                            <ul class="static-dropdown-panel static-sub-dropdown">
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/phd-pursuing" class="static-dropdown-link"><i class="fas fa-user-clock text-warning me-1"></i> Ph. D. Pursuing</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/phd-completed" class="static-dropdown-link"><i class="fas fa-graduation-cap text-success me-1"></i> Ph. D. Completed</a></li>
-                            </ul>
-                        </li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>placements" class="static-dropdown-link"><i class="fas fa-chart-line text-info me-1"></i> Placement Record</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>gallery.php" class="static-dropdown-link"><i class="fas fa-camera text-danger me-1"></i> Picture Gallery</a></li>
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>blogs" class="static-dropdown-link"><i class="fas fa-bullhorn text-secondary me-1"></i> Circulars &amp; Notices</a></li>
                     </ul>
                 </li>
                 
