@@ -771,7 +771,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_enquiry'])) {
         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-2">
             <?php foreach (array_slice($homeGridGallery, 0, 10) as $i => $gimg): ?>
             <div class="col">
-                <img src="<?php echo resolveMediaUrl($gimg['image_path']); ?>" 
+                <img src="<?php echo resolveMediaUrl($gimg['image_url']); ?>" 
                      class="gallery-img" 
                      alt="SRK University Campus <?php echo $i + 1; ?>"
                      loading="lazy"
@@ -1035,7 +1035,7 @@ $homeTestimonials = [
         <div class="auto-gallery__track auto-gallery__track--3up" id="eventsGalleryTrack">
             <?php foreach ($homeCarouselGallery as $gimg): ?>
                 <div class="auto-gallery__item auto-gallery__item--3up">
-                    <img src="<?php echo resolveMediaUrl($gimg['image_path']); ?>"
+                    <img src="<?php echo resolveMediaUrl($gimg['image_url']); ?>"
                          loading="lazy"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                          alt="SRK University Campus">
