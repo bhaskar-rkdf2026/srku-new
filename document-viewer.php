@@ -1318,6 +1318,10 @@ $aliases = array (
   'aicte-rkdfist-mca' => 'aicte-approval-rkdfist-mca',
   'aicte-rkdfim' => 'aicte-approval-rkdfim',
   'aicte-rkdfibm' => 'aicte-approval-rkdfibm',
+  'rkdfibm' => 'aicte-approval-rkdfibm',
+  'rkdfim' => 'aicte-approval-rkdfim',
+  'rkdfist' => 'aicte-approval-rkdfist',
+  'rkdfist-mca' => 'aicte-approval-rkdfist-mca',
 );
 
 // ═══════════════════════════════════════════════════════

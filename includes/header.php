@@ -268,7 +268,18 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/officers-of-university" class="static-dropdown-link"><i class="fas fa-users-cog text-primary me-1"></i> Officers of University</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/academic-leadership" class="static-dropdown-link"><i class="fas fa-user-tie text-navy me-1"></i> Academic Leadership</a></li>
 
-                        <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/council-of-technical-education" class="static-dropdown-link"><i class="fas fa-cogs text-primary me-1"></i> AICTE Approvals 2026-27</a></li>
+                        <!-- AICTE Approvals 2026-27 (With Level-3 Submenu) -->
+                        <li class="static-dropdown-item">
+                            <a href="<?php echo BASE_URL; ?>document/council-of-technical-education" class="static-dropdown-link">
+                                <i class="fas fa-cogs text-primary me-1"></i> AICTE Approvals 2026-27 <span class="static-dropdown-arrow static-sub-arrow"></span>
+                            </a>
+                            <ul class="static-dropdown-panel static-sub-dropdown">
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/AICTE-Approval-2026-27/RKDFIBM.pdf" target="_blank" class="static-dropdown-link"><i class="fas fa-file-pdf text-danger me-1"></i> RKDFIBM</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/AICTE-Approval-2026-27/RKDFIM.pdf" target="_blank" class="static-dropdown-link"><i class="fas fa-file-pdf text-danger me-1"></i> RKDFIM</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/AICTE-Approval-2026-27/RKDFIST.pdf" target="_blank" class="static-dropdown-link"><i class="fas fa-file-pdf text-danger me-1"></i> RKDFIST</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/AICTE-Approval-2026-27/RKDFIST(MCA).pdf" target="_blank" class="static-dropdown-link"><i class="fas fa-file-pdf text-danger me-1"></i> RKDFIST(MCA)</a></li>
+                            </ul>
+                        </li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>about/srk-university-vision-and-mission" class="static-dropdown-link"><i class="fas fa-bullseye text-danger me-1"></i> Vision &amp; Mission</a></li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>facilities" class="static-dropdown-link"><i class="fas fa-building text-info me-1"></i> FACILITIES</a></li>
 
