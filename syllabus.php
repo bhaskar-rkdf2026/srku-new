@@ -18,11 +18,12 @@ foreach ($syllabusCategories as $cat) {
     $grandTotalPdfs += $cat['total_pdfs'];
 }
 
-// Check if a specific course is requested via query param
+// Check if a specific course or branch is requested via query param
 $selectedCourse = isset($_GET['course']) ? trim($_GET['course']) : 'all';
 if (!empty($selectedCourse) && !isset($syllabusCategories[$selectedCourse])) {
     $selectedCourse = 'all';
 }
+$selectedBranch = isset($_GET['branch']) ? trim($_GET['branch']) : 'all';
 
 require_once __DIR__ . '/includes/header.php';
 ?>
@@ -57,13 +58,13 @@ require_once __DIR__ . '/includes/header.php';
             <div class="row g-3 align-items-end">
                 
                 <!-- Search Input -->
-                <div class="col-12 col-md-5 col-lg-5">
+                <div class="col-12 col-md-4 col-lg-4">
                     <label for="syllabusSearch" class="form-label small fw-bold text-navy mb-1">
                         <i class="fas fa-search text-danger me-1"></i> Search Curriculum Documents
                     </label>
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0"><i class="fas fa-search text-muted"></i></span>
-                        <input type="text" id="syllabusSearch" class="form-control border-start-0 ps-0" placeholder="Search by course, subject, branch, semester, NEP..." oninput="filterSyllabus()">
+                        <input type="text" id="syllabusSearch" class="form-control border-start-0 ps-0" placeholder="Search by course, branch, semester..." oninput="filterSyllabus()">
                         <button class="btn btn-light border border-start-0 text-muted" type="button" id="clearSearchBtn" onclick="clearSearch()" style="display:none;" title="Clear search">
                             <i class="fas fa-times"></i>
                         </button>
@@ -71,7 +72,7 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
 
                 <!-- Discipline / Course Filter -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                <div class="col-12 col-sm-6 col-md-3 col-lg-3">
                     <label for="courseFilterSelect" class="form-label small fw-bold text-navy mb-1">
                         <i class="fas fa-filter text-primary me-1"></i> Academic Discipline
                     </label>
@@ -85,22 +86,32 @@ require_once __DIR__ . '/includes/header.php';
                     </select>
                 </div>
 
-                <!-- Document Type Filter -->
-                <div class="col-6 col-sm-3 col-md-3 col-lg-2">
-                    <label for="docTypeFilter" class="form-label small fw-bold text-navy mb-1">
-                        <i class="fas fa-file-alt text-warning me-1"></i> Document Type
+                <!-- Branch / Specialization Filter -->
+                <div class="col-12 col-sm-6 col-md-3 col-lg-3">
+                    <label for="branchFilterSelect" class="form-label small fw-bold text-navy mb-1">
+                        <i class="fas fa-code-branch text-danger me-1"></i> Branch / Specialization
                     </label>
-                    <select id="docTypeFilter" class="form-select" onchange="filterSyllabus()">
-                        <option value="all">All Types</option>
-                        <option value="scheme">Scheme Only</option>
-                        <option value="syllabus">Syllabus Only</option>
+                    <select id="branchFilterSelect" class="form-select" onchange="onBranchSelectChange(this.value)">
+                        <option value="all">All Branches / Specializations</option>
+                    </select>
+                </div>
+
+                <!-- Document Type Filter -->
+                <div class="col-6 col-sm-3 col-md-1 col-lg-1">
+                    <label for="docTypeFilter" class="form-label small fw-bold text-navy mb-1 text-nowrap">
+                        <i class="fas fa-file-alt text-warning me-1"></i> Type
+                    </label>
+                    <select id="docTypeFilter" class="form-select px-2" onchange="filterSyllabus()">
+                        <option value="all">All</option>
+                        <option value="scheme">Scheme</option>
+                        <option value="syllabus">Syllabus</option>
                     </select>
                 </div>
 
                 <!-- Reset Button -->
-                <div class="col-6 col-sm-3 col-md-12 col-lg-1">
+                <div class="col-6 col-sm-3 col-md-1 col-lg-1">
                     <button type="button" class="btn btn-outline-danger w-100 rounded-3 py-2 fw-semibold" onclick="resetSyllabusFilters()" title="Reset all filters">
-                        <i class="fas fa-redo-alt"></i> <span class="d-none d-sm-inline d-lg-none">Reset</span>
+                        <i class="fas fa-redo-alt"></i> <span class="d-none d-sm-inline d-md-none">Reset</span>
                     </button>
                 </div>
 
@@ -110,8 +121,9 @@ require_once __DIR__ . '/includes/header.php';
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 pt-3 mt-3 border-top small text-muted">
                 <div>
                     <span id="activeFiltersSummary" class="fw-semibold text-navy">
-                        <i class="fas fa-check-circle text-success me-1"></i> Showing all <span id="visibleDocCount"><?php echo $grandTotalPdfs; ?></span> curriculum documents
+                        <i class="fas fa-check-circle text-success me-1"></i> Showing <span id="visibleDocCount"><?php echo $grandTotalPdfs; ?></span> curriculum documents
                     </span>
+                    <span id="activeBranchBadge" class="badge bg-danger text-white rounded-pill ms-2 d-none"></span>
                 </div>
                 <div class="d-none d-md-flex align-items-center gap-2">
                     <span class="text-muted small">Quick Jump:</span>
@@ -147,6 +159,7 @@ require_once __DIR__ . '/includes/header.php';
                 $items = $cat['items'];
                 if (empty($items)) continue;
                 $isCategorySelected = ($selectedCourse === 'all' || $selectedCourse === $slug);
+                $branches = $cat['branches'] ?? [];
             ?>
                 <div class="category-block mb-5 <?php echo $isCategorySelected ? '' : 'd-none'; ?>" id="cat-block-<?php echo $slug; ?>" data-cat-slug="<?php echo $slug; ?>">
                     
@@ -167,6 +180,11 @@ require_once __DIR__ . '/includes/header.php';
                                         <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-2.5 py-1 small fw-bold">
                                             <i class="fas fa-file-pdf me-1"></i> <?php echo count($items); ?> PDF Documents
                                         </span>
+                                        <?php if (!empty($branches) && count($branches) > 1): ?>
+                                            <span class="badge bg-info-subtle text-info border border-info-subtle rounded-pill px-2.5 py-1 small fw-bold">
+                                                <i class="fas fa-code-branch me-1"></i> <?php echo count($branches); ?> Branches / Specializations
+                                            </span>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="d-flex align-items-center gap-2 small text-muted">
                                         <span class="dept-badge text-secondary fw-medium">
@@ -183,6 +201,26 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                     </div>
 
+                    <!-- Interactive Branch / Specialization Quick-Filter Pills Ribbon -->
+                    <?php if (!empty($branches) && count($branches) > 1): ?>
+                        <div class="branch-filter-strip mb-4 p-2.5 bg-white rounded-4 border shadow-xs d-flex flex-wrap align-items-center gap-2">
+                            <span class="small fw-bold text-navy px-2 text-nowrap">
+                                <i class="fas fa-code-branch text-danger me-1"></i> Filter by Branch:
+                            </span>
+                            <div class="d-flex flex-wrap gap-1.5 align-items-center" id="branchPillsWrap-<?php echo $slug; ?>">
+                                <button type="button" class="btn btn-sm btn-dark rounded-pill branch-pill-btn active" data-cat="<?php echo $slug; ?>" data-branch="all" onclick="selectBranchPill('<?php echo $slug; ?>', 'all')">
+                                    All Branches (<?php echo $cat['total_pdfs']; ?>)
+                                </button>
+                                <?php foreach ($branches as $bSlug => $bInfo): ?>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill branch-pill-btn" data-cat="<?php echo $slug; ?>" data-branch="<?php echo $bSlug; ?>" onclick="selectBranchPill('<?php echo $slug; ?>', '<?php echo $bSlug; ?>')">
+                                        <?php echo htmlspecialchars($bInfo['short'] ?? $bInfo['name']); ?>
+                                        <span class="badge bg-secondary-subtle text-dark rounded-pill ms-1"><?php echo $bInfo['count']; ?></span>
+                                    </button>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
                     <!-- Cards Grid (Matching Old Web PDF Cards + Modern Polish) -->
                     <div class="row g-3 g-md-4">
                         <?php foreach ($items as $item): 
@@ -193,20 +231,31 @@ require_once __DIR__ . '/includes/header.php';
                             } elseif (stripos($item['type'], '&') !== false) {
                                 $typeBadgeClass = 'bg-success-subtle text-success';
                             }
+                            $branchSlug = $item['branch_slug'] ?? 'general';
+                            $branchName = $item['branch_name'] ?? '';
+                            $branchShort = $item['branch_short'] ?? '';
                         ?>
                             <div class="col-12 col-md-6 col-lg-4 syllabus-item-col" 
                                  data-category="<?php echo $slug; ?>"
+                                 data-branch="<?php echo $branchSlug; ?>"
                                  data-doctype="<?php echo strtolower($item['type']); ?>"
-                                 data-title="<?php echo htmlspecialchars(strtolower($item['title'] . ' ' . $cat['title'] . ' ' . $item['type'])); ?>">
+                                 data-title="<?php echo htmlspecialchars(strtolower($item['title'] . ' ' . $cat['title'] . ' ' . $item['type'] . ' ' . $branchName . ' ' . $branchShort)); ?>">
                                 
                                 <div class="card h-100 border-0 rounded-4 syllabus-card-pro bg-white">
                                     <div class="card-body p-3 p-md-4 d-flex flex-column">
-                                        <!-- Top Header Bar: Document Type Badge & PDF Indicator -->
-                                        <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <span class="badge <?php echo $typeBadgeClass; ?> rounded-pill px-3 py-1-5 fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: .4px;">
-                                                <i class="<?php echo (strtolower($item['type']) === 'scheme' ? 'fas fa-clipboard-list' : 'fas fa-book'); ?> me-1"></i>
-                                                <?php echo htmlspecialchars($item['type']); ?>
-                                            </span>
+                                        <!-- Top Header Bar: Document Type Badge & Branch Tag -->
+                                        <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-1">
+                                            <div class="d-flex align-items-center gap-1.5 flex-wrap">
+                                                <span class="badge <?php echo $typeBadgeClass; ?> rounded-pill px-3 py-1-5 fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: .4px;">
+                                                    <i class="<?php echo (strtolower($item['type']) === 'scheme' ? 'fas fa-clipboard-list' : 'fas fa-book'); ?> me-1"></i>
+                                                    <?php echo htmlspecialchars($item['type']); ?>
+                                                </span>
+                                                <?php if (!empty($branchShort) && $branchSlug !== 'general'): ?>
+                                                    <span class="badge bg-dark-subtle text-dark border rounded-pill px-2.5 py-1 small fw-semibold" title="<?php echo htmlspecialchars($branchName); ?>">
+                                                        <i class="fas fa-code-branch text-danger me-1"></i><?php echo htmlspecialchars($branchShort); ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </div>
                                             <div class="pdf-icon-indicator" title="Official PDF Document">
                                                 <i class="fas fa-file-pdf"></i>
                                             </div>
@@ -218,9 +267,16 @@ require_once __DIR__ . '/includes/header.php';
                                         </h4>
 
                                         <!-- Course Discipline Subtitle -->
-                                        <div class="syllabus-card-sub text-muted small mb-3 mt-auto">
-                                            <i class="fas fa-graduation-cap text-danger me-1"></i> 
-                                            <span><?php echo htmlspecialchars($cat['title']); ?></span>
+                                        <div class="syllabus-card-sub text-muted small mb-3 mt-auto d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <i class="fas fa-graduation-cap text-danger me-1"></i> 
+                                                <span><?php echo htmlspecialchars($cat['title']); ?></span>
+                                            </div>
+                                            <?php if (!empty($branchName) && $branchSlug !== 'general'): ?>
+                                                <span class="text-muted small" style="font-size: 0.76rem;">
+                                                    <?php echo htmlspecialchars($branchName); ?>
+                                                </span>
+                                            <?php endif; ?>
                                         </div>
 
                                         <!-- Action Buttons: View PDF & Download -->
@@ -249,7 +305,7 @@ require_once __DIR__ . '/includes/header.php';
                 <i class="fas fa-search fa-3x text-muted opacity-50 mb-3"></i>
                 <h4 class="fw-bold text-navy mb-2">No matching curriculum documents found</h4>
                 <p class="text-muted mb-3" style="max-width:550px; margin:auto;">
-                    We couldn't find any scheme or syllabus matching your search query. Please verify the keywords or reset the discipline filter.
+                    We couldn't find any scheme or syllabus matching your branch or search query. Please choose "All Branches" or reset the filters.
                 </p>
                 <div>
                     <button type="button" class="btn btn-danger px-4 py-2 rounded-pill fw-semibold" onclick="resetSyllabusFilters()">
@@ -293,11 +349,104 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </section>
 
-<!-- Live Interactive Filtering & Deep-Linking Script -->
+<!-- Live Interactive Filtering & Deep-Linking Script with Branch Filter -->
 <script>
-let currentCategory = '<?php echo $selectedCourse; ?>';
+const categoryBranchesMap = <?php 
+    $catBranchData = [];
+    foreach ($syllabusCategories as $slug => $cat) {
+        $catBranchData[$slug] = $cat['branches'] ?? [];
+    }
+    echo json_encode($catBranchData);
+?>;
 
-function switchCategory(catSlug) {
+let currentCategory = '<?php echo $selectedCourse; ?>';
+let currentBranch = '<?php echo $selectedBranch; ?>';
+
+function updateBranchDropdown(catSlug, preserveBranch = false) {
+    const branchSelect = document.getElementById('branchFilterSelect');
+    if (!branchSelect) return;
+
+    const prevVal = preserveBranch ? currentBranch : 'all';
+    branchSelect.innerHTML = '<option value="all">All Branches / Specializations</option>';
+
+    if (catSlug === 'all') {
+        // Show all unique branches across all categories
+        const allBranches = {};
+        for (const c in categoryBranchesMap) {
+            for (const b in categoryBranchesMap[c]) {
+                if (!allBranches[b]) {
+                    allBranches[b] = { name: categoryBranchesMap[c][b].name, count: 0 };
+                }
+                allBranches[b].count += categoryBranchesMap[c][b].count;
+            }
+        }
+        for (const b in allBranches) {
+            const opt = document.createElement('option');
+            opt.value = b;
+            opt.textContent = allBranches[b].name + ' (' + allBranches[b].count + ')';
+            branchSelect.appendChild(opt);
+        }
+    } else if (categoryBranchesMap[catSlug]) {
+        const branches = categoryBranchesMap[catSlug];
+        for (const b in branches) {
+            const opt = document.createElement('option');
+            opt.value = b;
+            opt.textContent = (branches[b].name || b) + ' (' + branches[b].count + ')';
+            branchSelect.appendChild(opt);
+        }
+    }
+
+    if (preserveBranch && prevVal && prevVal !== 'all') {
+        branchSelect.value = prevVal;
+    } else {
+        branchSelect.value = 'all';
+        currentBranch = 'all';
+    }
+}
+
+function onBranchSelectChange(branchSlug) {
+    currentBranch = branchSlug;
+    updateBranchPillsUI(currentCategory, branchSlug);
+    updateUrlParams();
+    filterSyllabus();
+}
+
+function selectBranchPill(catSlug, branchSlug) {
+    currentBranch = branchSlug;
+    const branchSelect = document.getElementById('branchFilterSelect');
+    if (branchSelect) branchSelect.value = branchSlug;
+
+    updateBranchPillsUI(catSlug, branchSlug);
+    updateUrlParams();
+    filterSyllabus();
+}
+
+function updateBranchPillsUI(catSlug, branchSlug) {
+    const pills = document.querySelectorAll('.branch-pill-btn');
+    pills.forEach(pill => {
+        const pillCat = pill.dataset.cat;
+        const pillBranch = pill.dataset.branch;
+        if ((catSlug === 'all' || pillCat === catSlug) && pillBranch === branchSlug) {
+            pill.classList.remove('btn-outline-secondary');
+            pill.classList.add('btn-dark', 'active');
+        } else if (pillCat === catSlug || catSlug === 'all') {
+            pill.classList.remove('btn-dark', 'active');
+            pill.classList.add('btn-outline-secondary');
+        }
+    });
+
+    const activeBadge = document.getElementById('activeBranchBadge');
+    if (activeBadge) {
+        if (branchSlug && branchSlug !== 'all') {
+            activeBadge.textContent = 'Branch: ' + branchSlug.toUpperCase();
+            activeBadge.classList.remove('d-none');
+        } else {
+            activeBadge.classList.add('d-none');
+        }
+    }
+}
+
+function switchCategory(catSlug, branchToSet = 'all') {
     currentCategory = catSlug;
     
     // Update select dropdown
@@ -309,25 +458,22 @@ function switchCategory(catSlug) {
     pills.forEach(pill => {
         if (pill.dataset.cat === catSlug) {
             pill.classList.add('active');
-            // scroll pill into view in container
             pill.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
         } else {
             pill.classList.remove('active');
         }
     });
 
-    // Update browser URL query param without reload
-    const url = new URL(window.location);
-    if (catSlug === 'all') {
-        url.searchParams.delete('course');
-    } else {
-        url.searchParams.set('course', catSlug);
+    // Populate branch select
+    updateBranchDropdown(catSlug, branchToSet !== 'all');
+    if (branchToSet !== 'all') {
+        currentBranch = branchToSet;
     }
-    window.history.replaceState({}, '', url);
-
+    updateBranchPillsUI(catSlug, currentBranch);
+    updateUrlParams();
     filterSyllabus();
 
-    // If a specific category was clicked, scroll to its section
+    // Scroll if focused
     if (catSlug !== 'all') {
         const section = document.getElementById('cat-block-' + catSlug);
         if (section) {
@@ -336,10 +482,28 @@ function switchCategory(catSlug) {
     }
 }
 
+function updateUrlParams() {
+    const url = new URL(window.location);
+    if (currentCategory === 'all') {
+        url.searchParams.delete('course');
+    } else {
+        url.searchParams.set('course', currentCategory);
+    }
+
+    if (currentBranch === 'all') {
+        url.searchParams.delete('branch');
+    } else {
+        url.searchParams.set('branch', currentBranch);
+    }
+    window.history.replaceState({}, '', url);
+}
+
 function filterSyllabus() {
     const searchInput = document.getElementById('syllabusSearch');
     const query = (searchInput.value || '').toLowerCase().trim();
     const docType = (document.getElementById('docTypeFilter').value || 'all').toLowerCase();
+    const branchSelect = document.getElementById('branchFilterSelect');
+    const selectedBranchVal = branchSelect ? branchSelect.value : currentBranch;
     const clearBtn = document.getElementById('clearSearchBtn');
 
     if (clearBtn) {
@@ -364,6 +528,7 @@ function filterSyllabus() {
         items.forEach(col => {
             const titleData = col.dataset.title || '';
             const typeData = col.dataset.doctype || '';
+            const itemBranch = col.dataset.branch || 'general';
 
             // Check doc type match
             let matchesDocType = true;
@@ -373,10 +538,16 @@ function filterSyllabus() {
                 matchesDocType = (typeData.indexOf('syllabus') !== -1);
             }
 
+            // Check branch match
+            let matchesBranch = true;
+            if (selectedBranchVal && selectedBranchVal !== 'all') {
+                matchesBranch = (itemBranch === selectedBranchVal);
+            }
+
             // Check text query match
             const matchesQuery = (query === '' || titleData.indexOf(query) !== -1);
 
-            if (matchesDocType && matchesQuery) {
+            if (matchesDocType && matchesBranch && matchesQuery) {
                 col.classList.remove('d-none');
                 visibleInCat++;
                 totalVisible++;
@@ -424,19 +595,27 @@ function resetSyllabusFilters() {
     const docType = document.getElementById('docTypeFilter');
     if (docType) docType.value = 'all';
 
+    currentBranch = 'all';
     switchCategory('all');
 }
 
-// On page load, handle any query params (?course=b-pharmacy) or hash anchors (#allied-courses)
+// On page load, handle any query params (?course=be-btech&branch=cse)
 window.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const courseParam = urlParams.get('course');
+    const branchParam = urlParams.get('branch') || 'all';
     const hash = window.location.hash.replace('#', '').trim();
-    const target = (courseParam && courseParam !== 'all') ? courseParam : hash;
+    const targetCat = (courseParam && courseParam !== 'all') ? courseParam : (hash || 'all');
 
-    if (target && document.getElementById('cat-block-' + target)) {
-        switchCategory(target);
+    updateBranchDropdown(targetCat, branchParam !== 'all');
+    if (targetCat !== 'all' && document.getElementById('cat-block-' + targetCat)) {
+        switchCategory(targetCat, branchParam);
     } else {
+        if (branchParam !== 'all') {
+            currentBranch = branchParam;
+            const bSelect = document.getElementById('branchFilterSelect');
+            if (bSelect) bSelect.value = branchParam;
+        }
         filterSyllabus();
     }
 });

@@ -241,7 +241,7 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
 
             <?php
             $availableVideos = getAvailableVideos();
-            $resolvedHeroVideo = resolveMediaUrl($heroVideo, 'assets/images/concept2-hero.mp4');
+            $heroVideoParsed = parseVideoUrl($heroVideo);
             $resolvedHeroPoster = resolveMediaUrl($heroFallback, 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
             ?>
             <div class="row g-4 align-items-start">
@@ -250,19 +250,27 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
                     <div class="p-3 rounded-4 bg-dark text-white shadow-sm">
                         <div class="d-flex justify-content-between align-items-center mb-2 px-1">
                             <span class="small fw-bold text-warning"><i class="fas fa-play-circle me-1"></i> Live Video Preview</span>
-                            <span class="badge bg-success text-white small" id="videoStatusBadge">Ready &amp; Active</span>
+                            <span class="badge bg-danger text-white small" id="videoStatusBadge">
+                                <i class="fas fa-video me-1"></i> <?php echo sanitize($heroVideoParsed['provider']); ?>
+                            </span>
                         </div>
                         
-                        <div class="position-relative rounded-3 overflow-hidden" style="min-height: 220px; background: #000;">
-                            <video id="adminHeroPreview" class="w-100 h-100 object-fit-cover" controls autoplay muted loop playsinline 
-                                   poster="<?php echo $resolvedHeroPoster; ?>">
-                                <source id="adminHeroPreviewSrc" src="<?php echo $resolvedHeroVideo; ?>" type="video/mp4">
-                            </video>
+                        <!-- Dynamic Preview Container -->
+                        <div class="position-relative rounded-3 overflow-hidden" id="adminPreviewContainer" style="min-height: 220px; background: #000;">
+                            <?php if ($heroVideoParsed['type'] === 'vimeo'): ?>
+                                <iframe id="adminHeroIframe" src="<?php echo $heroVideoParsed['preview_url']; ?>" class="w-100" style="height: 220px; border: 0;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                            <?php elseif ($heroVideoParsed['type'] === 'youtube'): ?>
+                                <iframe id="adminHeroIframe" src="<?php echo $heroVideoParsed['preview_url']; ?>" class="w-100" style="height: 220px; border: 0;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope" allowfullscreen></iframe>
+                            <?php else: ?>
+                                <video id="adminHeroPreview" class="w-100 h-100 object-fit-cover" controls autoplay muted loop playsinline poster="<?php echo $resolvedHeroPoster; ?>">
+                                    <source id="adminHeroPreviewSrc" src="<?php echo $heroVideoParsed['src']; ?>" type="video/mp4">
+                                </video>
+                            <?php endif; ?>
                         </div>
 
                         <div class="mt-3 pt-2 border-top border-secondary small text-white-50">
-                            <div class="text-truncate mb-1"><i class="fas fa-film text-info me-1"></i> <strong>Current Video:</strong> <span id="currentVideoLabel" class="text-white"><?php echo sanitize($heroVideo); ?></span></div>
-                            <div class="text-truncate"><i class="fas fa-image text-success me-1"></i> <strong>Resolved URL:</strong> <span class="text-warning small"><?php echo $resolvedHeroVideo; ?></span></div>
+                            <div class="text-truncate mb-1"><i class="fas fa-film text-info me-1"></i> <strong>Current Input:</strong> <span id="currentVideoLabel" class="text-white"><?php echo sanitize($heroVideo); ?></span></div>
+                            <div class="text-truncate"><i class="fas fa-tag text-success me-1"></i> <strong>Detected Type:</strong> <span id="detectedTypeLabel" class="text-warning small"><?php echo sanitize($heroVideoParsed['provider']); ?></span></div>
                         </div>
                     </div>
 
@@ -280,7 +288,14 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
                 <div class="col-12 col-lg-7">
                     <!-- Video URL/Upload -->
                     <div class="mb-4 p-3 rounded-3 bg-light border">
-                        <h6 class="fw-bold text-navy mb-2"><i class="fas fa-film text-danger me-1"></i> 1. Hero Background Video</h6>
+                        <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-1">
+                            <h6 class="fw-bold text-navy mb-0"><i class="fas fa-film text-danger me-1"></i> 1. Hero Background Video URL</h6>
+                            <div class="d-flex gap-1">
+                                <span class="badge bg-info text-dark small"><i class="fab fa-vimeo-v me-1"></i> Vimeo</span>
+                                <span class="badge bg-danger text-white small"><i class="fab fa-youtube me-1"></i> YouTube</span>
+                                <span class="badge bg-secondary text-white small"><i class="fas fa-file-video me-1"></i> MP4 / WebM</span>
+                            </div>
+                        </div>
                         
                         <!-- Quick Pick Existing Video -->
                         <?php if (!empty($availableVideos)): ?>
@@ -298,13 +313,20 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
                         <?php endif; ?>
 
                         <div class="row g-2">
-                            <div class="col-12 col-md-7">
-                                <label class="form-label small text-muted mb-1">Video Relative Path or URL</label>
-                                <input type="text" id="heroVideoInput" name="hero_video_url" class="form-control form-control-sm" value="<?php echo sanitize($heroVideo); ?>" placeholder="assets/images/concept2-hero.mp4" oninput="onVideoInputManual(this.value)">
-                                <div class="form-text text-muted" style="font-size: 0.75rem;">Example: <code>assets/images/concept2-hero.mp4</code> or just filename <code>concept2-hero.mp4</code> (auto-resolved).</div>
+                            <div class="col-12">
+                                <label class="form-label small text-muted mb-1">Vimeo Link, YouTube Link, or Video Path</label>
+                                <input type="text" id="heroVideoInput" name="hero_video_url" class="form-control form-control-sm" value="<?php echo sanitize($heroVideo); ?>" placeholder="https://vimeo.com/1231542657 or https://youtube.com/watch?v=... or assets/images/hero.mp4" oninput="onVideoInputManual(this.value)">
+                                <div class="form-text text-muted" style="font-size: 0.78rem;">
+                                    <strong>Supported Formats:</strong>
+                                    <ul class="mb-0 ps-3 mt-1 text-secondary">
+                                        <li><strong>Vimeo:</strong> <code>https://vimeo.com/1231542657?share=copy</code> or <code>https://vimeo.com/1231542657</code></li>
+                                        <li><strong>YouTube:</strong> <code>https://www.youtube.com/watch?v=...</code> or <code>https://youtu.be/...</code></li>
+                                        <li><strong>Local MP4:</strong> <code>assets/images/concept2-hero.mp4</code> or upload an MP4 below.</li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="col-12 col-md-5">
-                                <label class="form-label small text-muted mb-1">OR Upload MP4 Video</label>
+                            <div class="col-12 mt-2">
+                                <label class="form-label small text-muted mb-1">OR Upload New MP4 Video File</label>
                                 <input type="file" name="video_file" class="form-control form-control-sm" accept="video/mp4,video/webm">
                             </div>
                         </div>
@@ -364,6 +386,40 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
 
             function updateVideoPreview(val) {
                 if (!val) return;
+                var container = document.getElementById('adminPreviewContainer');
+                var statusBadge = document.getElementById('videoStatusBadge');
+                var currentLabel = document.getElementById('currentVideoLabel');
+                var detectedLabel = document.getElementById('detectedTypeLabel');
+
+                if (currentLabel) currentLabel.textContent = val;
+
+                // Test Vimeo
+                var vimeoMatch = val.match(/(?:vimeo\.com\/(?:video\/|channels\/(?:\w+\/)?|groups\/[^\/]+\/videos\/|album\/\d+\/video\/|))(\d+)/i);
+                if (vimeoMatch && vimeoMatch[1]) {
+                    var vId = vimeoMatch[1];
+                    if (statusBadge) statusBadge.innerHTML = '<i class="fab fa-vimeo-v me-1"></i> Vimeo Video';
+                    if (detectedLabel) detectedLabel.textContent = 'Vimeo (ID: ' + vId + ')';
+                    if (container) {
+                        container.innerHTML = '<iframe src="https://player.vimeo.com/video/' + vId + '?autoplay=1&muted=1&loop=1&autopause=0" class="w-100" style="height: 220px; border: 0;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+                    }
+                    return;
+                }
+
+                // Test YouTube
+                var ytMatch = val.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/shorts\/)([^"&?\/ ]{11})/i);
+                if (ytMatch && ytMatch[1]) {
+                    var ytId = ytMatch[1];
+                    if (statusBadge) statusBadge.innerHTML = '<i class="fab fa-youtube me-1"></i> YouTube Video';
+                    if (detectedLabel) detectedLabel.textContent = 'YouTube (ID: ' + ytId + ')';
+                    if (container) {
+                        container.innerHTML = '<iframe src="https://www.youtube.com/embed/' + ytId + '?autoplay=1&mute=1&loop=1&controls=1" class="w-100" style="height: 220px; border: 0;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope" allowfullscreen></iframe>';
+                    }
+                    return;
+                }
+
+                // Local MP4
+                if (statusBadge) statusBadge.innerHTML = '<i class="fas fa-file-video me-1"></i> Local Video File';
+                if (detectedLabel) detectedLabel.textContent = 'Local MP4 File';
                 var baseUrl = '<?php echo BASE_URL; ?>';
                 var finalUrl = val;
                 if (!val.startsWith('http://') && !val.startsWith('https://')) {
@@ -373,15 +429,10 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
                     }
                     finalUrl = baseUrl + clean;
                 }
-                var vid = document.getElementById('adminHeroPreview');
-                var src = document.getElementById('adminHeroPreviewSrc');
-                if (vid && src) {
-                    src.src = finalUrl;
-                    vid.load();
-                    vid.play().catch(function(){});
+                var poster = document.getElementById('adminPosterPreview') ? document.getElementById('adminPosterPreview').src : '';
+                if (container) {
+                    container.innerHTML = '<video class="w-100 h-100 object-fit-cover" controls autoplay muted loop playsinline poster="' + poster + '"><source src="' + finalUrl + '" type="video/mp4"></video>';
                 }
-                var lbl = document.getElementById('currentVideoLabel');
-                if (lbl) lbl.textContent = val;
             }
 
             function onPosterInputManual(val) {
@@ -390,8 +441,6 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
                 var finalUrl = (val.startsWith('http://') || val.startsWith('https://')) ? val : baseUrl + val.replace(/^\/+/, '');
                 var img = document.getElementById('adminPosterPreview');
                 if (img) img.src = finalUrl;
-                var vid = document.getElementById('adminHeroPreview');
-                if (vid) vid.poster = finalUrl;
             }
             </script>
         </div>

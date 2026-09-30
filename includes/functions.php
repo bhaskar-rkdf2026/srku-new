@@ -188,14 +188,28 @@ function normalizeMediaPath($path, $default = '') {
     }
     $baseDir = dirname(__DIR__);
 
-    // If it's a full URL containing localhost, staging, or server domain, extract the asset path
+    // If it's a full URL
     if (preg_match('/^https?:\/\//i', $path) || strpos($path, '//') === 0) {
+        $host = strtolower(parse_url($path, PHP_URL_HOST) ?? '');
+        // Preserve Vimeo, YouTube, and external media platforms directly
+        if (
+            strpos($host, 'vimeo.com') !== false || 
+            strpos($host, 'youtube.com') !== false || 
+            strpos($host, 'youtu.be') !== false || 
+            strpos($host, 'dailymotion.com') !== false
+        ) {
+            return $path;
+        }
+
         $parsedPath = parse_url($path, PHP_URL_PATH);
         if ($parsedPath) {
             $trimmed = ltrim($parsedPath, '/');
             $trimmed = preg_replace('/^(new-staging|srku-new|srku)\//i', '', $trimmed);
             if (is_file($baseDir . '/' . $trimmed)) {
                 return $trimmed;
+            }
+            if (!empty($host) && !in_array($host, ['localhost', '127.0.0.1'])) {
+                return $path;
             }
             $cleanPath = basename($trimmed);
         } else {
@@ -279,6 +293,64 @@ function resolveMediaUrl($path, $default = '') {
         return $normalized;
     }
     return BASE_URL . $normalized;
+}
+
+/**
+ * Parses any video string into structured provider data (Vimeo, YouTube, Direct MP4).
+ */
+function parseVideoUrl($url) {
+    $url = trim((string)$url);
+    if (empty($url)) {
+        return [
+            'type'        => 'none',
+            'id'          => '',
+            'src'         => '',
+            'embed_url'   => '',
+            'preview_url' => '',
+            'provider'    => 'None',
+            'is_external' => false
+        ];
+    }
+
+    // Vimeo Match
+    if (preg_match('/(?:vimeo\.com\/(?:video\/|channels\/(?:\w+\/)?|groups\/[^\/]+\/videos\/|album\/\d+\/video\/|))(\d+)/i', $url, $m)) {
+        $id = $m[1];
+        return [
+            'type'        => 'vimeo',
+            'id'          => $id,
+            'src'         => $url,
+            'embed_url'   => "https://player.vimeo.com/video/{$id}?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1&autopause=0&controls=0&dnt=1",
+            'preview_url' => "https://player.vimeo.com/video/{$id}?autoplay=1&muted=1&loop=1&autopause=0",
+            'provider'    => 'Vimeo',
+            'is_external' => true
+        ];
+    }
+
+    // YouTube Match
+    if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/shorts\/)([^"&?\/ ]{11})/i', $url, $m)) {
+        $id = $m[1];
+        return [
+            'type'        => 'youtube',
+            'id'          => $id,
+            'src'         => $url,
+            'embed_url'   => "https://www.youtube.com/embed/{$id}?autoplay=1&mute=1&loop=1&playlist={$id}&controls=0&showinfo=0&rel=0&modestbranding=1&enablejsapi=1&iv_load_policy=3",
+            'preview_url' => "https://www.youtube.com/embed/{$id}?autoplay=1&mute=1&loop=1&controls=1",
+            'provider'    => 'YouTube',
+            'is_external' => true
+        ];
+    }
+
+    // Direct / Local Video
+    $resolved = resolveMediaUrl($url, 'assets/images/concept2-hero.mp4');
+    return [
+        'type'        => 'local',
+        'id'          => '',
+        'src'         => $resolved,
+        'embed_url'   => $resolved,
+        'preview_url' => $resolved,
+        'provider'    => 'Local Video File',
+        'is_external' => false
+    ];
 }
 
 /**
@@ -1084,6 +1156,109 @@ function getSyllabusCategoryMeta($slug) {
 /**
  * Fetch dynamic syllabus data organized by categories for frontend and admin
  */
+/**
+ * Detects engineering branch or discipline specialization from curriculum document title.
+ */
+function detectBranchFromTitle($title, $categorySlug = '') {
+    $t = strtolower($title);
+
+    if ($categorySlug === 'be-btech' || $categorySlug === 'polytechnic-engineering') {
+        if (preg_match('/\b(all\s*branch|all\s*branches|all\s*braches|1st\s*year|ist\s*year|ist\s*years|i\s*&\s*ii\s*nd|ii\s*&\s*ii|i-st|bos\s*2025)\b/i', $t)) {
+            return ['slug' => '1st-year', 'name' => '1st Year (All Branches)', 'short' => '1st Year'];
+        }
+        if (preg_match('/\b(cse|cs|computer\s*science)\b/i', $t)) {
+            return ['slug' => 'cse', 'name' => 'Computer Science (CS/CSE)', 'short' => 'CS / CSE'];
+        }
+        if (preg_match('/\b(it|information\s*technology)\b/i', $t)) {
+            return ['slug' => 'it', 'name' => 'Information Technology (IT)', 'short' => 'IT'];
+        }
+        if (preg_match('/\b(ce|civil)\b/i', $t)) {
+            return ['slug' => 'civil', 'name' => 'Civil Engineering (CE)', 'short' => 'Civil'];
+        }
+        if (preg_match('/\b(me|mech|mechanical)\b/i', $t)) {
+            return ['slug' => 'mech', 'name' => 'Mechanical Engineering (ME)', 'short' => 'Mechanical'];
+        }
+        if (preg_match('/\b(eee)\b/i', $t)) {
+            return ['slug' => 'eee', 'name' => 'Electrical & Electronics (EEE)', 'short' => 'EEE'];
+        }
+        if (preg_match('/\b(ee|electrical)\b/i', $t)) {
+            return ['slug' => 'ee', 'name' => 'Electrical Engineering (EE)', 'short' => 'EE'];
+        }
+        if (preg_match('/\b(ei|electronics\s*&\s*instrumentation)\b/i', $t)) {
+            return ['slug' => 'ei', 'name' => 'Electronics & Instrumentation (EI)', 'short' => 'EI'];
+        }
+        if (preg_match('/\b(ec|ece|electronics\s*&\s*communication|electronics)\b/i', $t)) {
+            return ['slug' => 'ec', 'name' => 'Electronics & Comm. (EC/ECE)', 'short' => 'EC / ECE'];
+        }
+        if (preg_match('/\b(ie)\b/i', $t)) {
+            return ['slug' => 'ie', 'name' => 'Industrial Engineering (IE)', 'short' => 'IE'];
+        }
+        return ['slug' => 'general', 'name' => 'General / Core', 'short' => 'General'];
+    }
+
+    if ($categorySlug === 'm-tech') {
+        if (preg_match('/\b(cse|cs|software|information)\b/i', $t)) {
+            return ['slug' => 'cse', 'name' => 'Computer Science / Software Engg', 'short' => 'CSE / SE'];
+        }
+        if (preg_match('/\b(vlsi|embedded|dc|digital\s*comm)\b/i', $t)) {
+            return ['slug' => 'vlsi-ec', 'name' => 'VLSI / Digital Comm (EC)', 'short' => 'VLSI / DC'];
+        }
+        if (preg_match('/\b(power|ps|ee|eee)\b/i', $t)) {
+            return ['slug' => 'power-ee', 'name' => 'Power Systems / Electrical (EE)', 'short' => 'Power Systems'];
+        }
+        if (preg_match('/\b(thermal|prod|production|me|mech)\b/i', $t)) {
+            return ['slug' => 'thermal-me', 'name' => 'Thermal / Production (ME)', 'short' => 'Thermal / ME'];
+        }
+        if (preg_match('/\b(struct|structure|ce|civil)\b/i', $t)) {
+            return ['slug' => 'struct-ce', 'name' => 'Structural Engg (Civil)', 'short' => 'Structural'];
+        }
+        return ['slug' => 'general', 'name' => 'General M.Tech', 'short' => 'General'];
+    }
+
+    if ($categorySlug === 'mba') {
+        if (preg_match('/\b(part\s*time|pt)\b/i', $t)) {
+            return ['slug' => 'part-time', 'name' => 'MBA (Part Time)', 'short' => 'Part Time'];
+        }
+        if (preg_match('/\b(full\s*time|ft)\b/i', $t)) {
+            return ['slug' => 'full-time', 'name' => 'MBA (Full Time)', 'short' => 'Full Time'];
+        }
+        if (preg_match('/\b(finance|banking|financial)\b/i', $t)) {
+            return ['slug' => 'finance', 'name' => 'Finance & Banking', 'short' => 'Finance'];
+        }
+        if (preg_match('/\b(hr|human\s*resource)\b/i', $t)) {
+            return ['slug' => 'hr', 'name' => 'Human Resource (HR)', 'short' => 'HR'];
+        }
+        if (preg_match('/\b(marketing)\b/i', $t)) {
+            return ['slug' => 'marketing', 'name' => 'Marketing Management', 'short' => 'Marketing'];
+        }
+        if (preg_match('/\b(hospital|health)\b/i', $t)) {
+            return ['slug' => 'hospital', 'name' => 'Hospital Administration', 'short' => 'Hospital Admin'];
+        }
+        return ['slug' => 'general', 'name' => 'Regular / Dual Specialization', 'short' => 'Regular'];
+    }
+
+    if ($categorySlug === 'paramedical') {
+        if (preg_match('/\b(bpt|mpt|physio|physiotherapy)\b/i', $t)) {
+            return ['slug' => 'physiotherapy', 'name' => 'Physiotherapy (BPT / MPT)', 'short' => 'Physiotherapy'];
+        }
+        if (preg_match('/\b(dmlt|bmlt|mlt|lab|laboratory)\b/i', $t)) {
+            return ['slug' => 'mlt', 'name' => 'Medical Lab Tech (DMLT / BMLT)', 'short' => 'MLT / DMLT'];
+        }
+        if (preg_match('/\b(x-ray|radiology|imaging|ct)\b/i', $t)) {
+            return ['slug' => 'radiology', 'name' => 'Radiology & X-Ray', 'short' => 'Radiology'];
+        }
+        if (preg_match('/\b(optometry|eye|ophthalmic)\b/i', $t)) {
+            return ['slug' => 'optometry', 'name' => 'Optometry', 'short' => 'Optometry'];
+        }
+        if (preg_match('/\b(dialysis)\b/i', $t)) {
+            return ['slug' => 'dialysis', 'name' => 'Dialysis Tech', 'short' => 'Dialysis'];
+        }
+        return ['slug' => 'general', 'name' => 'Paramedical Core', 'short' => 'General'];
+    }
+
+    return ['slug' => 'all', 'name' => 'General', 'short' => 'General'];
+}
+
 function getDynamicSyllabusData($onlyActive = true) {
     try {
         $pdo = getDBConnection();
@@ -1112,14 +1287,29 @@ function getDynamicSyllabusData($onlyActive = true) {
                     'icon' => $meta['icon'],
                     'color' => $meta['color'],
                     'total_pdfs' => 0,
+                    'branches' => [],
                     'items' => []
                 ];
             }
+
+            $branchInfo = detectBranchFromTitle($row['title'], $slug);
+            if (!isset($categories[$slug]['branches'][$branchInfo['slug']])) {
+                $categories[$slug]['branches'][$branchInfo['slug']] = [
+                    'slug' => $branchInfo['slug'],
+                    'name' => $branchInfo['name'],
+                    'short' => $branchInfo['short'],
+                    'count' => 0
+                ];
+            }
+            $categories[$slug]['branches'][$branchInfo['slug']]['count']++;
 
             $categories[$slug]['items'][] = [
                 'id' => (int)$row['id'],
                 'title' => $row['title'],
                 'type' => $row['type'],
+                'branch_slug' => $branchInfo['slug'],
+                'branch_name' => $branchInfo['name'],
+                'branch_short' => $branchInfo['short'],
                 'filename' => $row['filename'] ?: basename($row['file_path']),
                 'local_url' => $row['file_path'],
                 'original_url' => $row['original_url'],

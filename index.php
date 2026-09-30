@@ -15,9 +15,9 @@ $totalAlumni = getSetting('total_alumni', '15,000+');
 $heroTitle = getSetting('hero_title', 'SRK University, Bhopal');
 $heroSubtitle = getSetting('hero_subtitle', 'UGC-Recognized University in MP');
 $heroDesc = getSetting('hero_desc', 'Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership. If you are looking for the best placement university in MP, our rigorous research, multi-disciplinary collaboration, and industry-aligned pedagogy deliver unmatched career growth.');
-$heroVideo = getSetting('hero_video_url', 'assets/images/concept2-hero.mp4');
+$heroVideo = getSetting('hero_video_url', 'https://vimeo.com/1231542657?share=copy&fl=sv&fe=ci');
 $heroFallbackImg = getSetting('hero_fallback_image', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
-$heroVideoSrc = resolveMediaUrl($heroVideo, 'assets/images/concept2-hero.mp4');
+$heroVideoParsed = parseVideoUrl($heroVideo);
 $heroFallbackPoster = resolveMediaUrl($heroFallbackImg, 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
 
 $welcomeSubtitle = getSetting('welcome_subtitle', 'WELCOME TO SRK UNIVERSITY');
@@ -70,48 +70,69 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
 ?>
 
 <!-- ═══════════════════════════════════════════════════════
-     HERO SECTION — 100% FULLSCREEN HTML5 VIDEO & FALLBACK POSTER
+     HERO SECTION — DYNAMIC BACKGROUND (VIMEO, YOUTUBE & HTML5 VIDEO)
 ═══════════════════════════════════════════════════════ -->
 <section class="hero-section position-relative" style="background: #0b1120 url('<?php echo $heroFallbackPoster; ?>') center/cover no-repeat;">
 
-    <video class="hero-bg-video" id="heroBgVideo" autoplay muted loop playsinline preload="auto" poster="<?php echo $heroFallbackPoster; ?>">
-        <source src="<?php echo $heroVideoSrc; ?>" type="video/mp4">
-        <!-- Direct Fallback Image if Video Cannot Play -->
-        <img src="<?php echo $heroFallbackPoster; ?>" alt="<?php echo sanitize($heroTitle); ?>" class="hero-bg-video object-fit-cover">
-    </video>
+    <?php if ($heroVideoParsed['type'] === 'vimeo'): ?>
+        <div class="hero-video-container">
+            <iframe class="hero-bg-iframe" 
+                    src="<?php echo $heroVideoParsed['embed_url']; ?>" 
+                    frameborder="0" 
+                    allow="autoplay; fullscreen; picture-in-picture" 
+                    allowfullscreen 
+                    title="<?php echo sanitize($heroTitle); ?>"></iframe>
+        </div>
+    <?php elseif ($heroVideoParsed['type'] === 'youtube'): ?>
+        <div class="hero-video-container">
+            <iframe class="hero-bg-iframe" 
+                    src="<?php echo $heroVideoParsed['embed_url']; ?>" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen 
+                    title="<?php echo sanitize($heroTitle); ?>"></iframe>
+        </div>
+    <?php else: ?>
+        <video class="hero-bg-video" id="heroBgVideo" autoplay muted loop playsinline preload="auto" poster="<?php echo $heroFallbackPoster; ?>">
+            <source src="<?php echo $heroVideoParsed['src']; ?>" type="video/mp4">
+            <!-- Direct Fallback Image if Video Cannot Play -->
+            <img src="<?php echo $heroFallbackPoster; ?>" alt="<?php echo sanitize($heroTitle); ?>" class="hero-bg-video object-fit-cover">
+        </video>
 
-    <div class="hero-overlay"></div>
-
-    <script>
-    (function() {
-        function initHeroVideo() {
-            var v = document.getElementById('heroBgVideo');
-            if (!v) return;
-            v.muted = true;
-            v.defaultMuted = true;
-            v.playsInline = true;
-            var playPromise = v.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(function(err) {
-                    var startPlayback = function() {
-                        v.play().catch(function(){});
+        <script>
+        (function() {
+            function initHeroVideo() {
+                var v = document.getElementById('heroBgVideo');
+                if (!v) return;
+                v.muted = true;
+                v.defaultMuted = true;
+                v.playsInline = true;
+                var playPromise = v.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(function(err) {
+                        var startPlayback = function() {
+                            v.play().catch(function(){});
+                            ['click', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(function(e) {
+                                window.removeEventListener(e, startPlayback);
+                            });
+                        };
                         ['click', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(function(e) {
-                            window.removeEventListener(e, startPlayback);
+                            window.addEventListener(e, startPlayback, { passive: true, once: true });
                         });
-                    };
-                    ['click', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(function(e) {
-                        window.addEventListener(e, startPlayback, { passive: true, once: true });
                     });
-                });
+                }
             }
-        }
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initHeroVideo);
-        } else {
-            initHeroVideo();
-        }
-    })();
-    </script>
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initHeroVideo);
+            } else {
+                initHeroVideo();
+            }
+        })();
+        </script>
+    <?php endif; ?>
+
+    <!-- Contrast & Tint Overlay for Clear Text Readability -->
+    <div class="hero-overlay"></div>
 
     <div class="container-fluid px-4 px-lg-5 position-relative z-3">
         <div class="hero-content px-0">

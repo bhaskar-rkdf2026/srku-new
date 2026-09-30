@@ -406,7 +406,7 @@ body {
     box-sizing: border-box;
 }
 
-/* Native HTML5 Video — covers 100% width & height without overflow */
+/* Native HTML5 Video & Embed Containers — covers 100% width & height without overflow */
 .hero-bg-video {
     position: absolute;
     top: 0;
@@ -420,15 +420,37 @@ body {
     pointer-events: none;
 }
 
+.hero-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-bg-iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 56.25vw;
+    min-height: 100vh;
+    min-width: 177.77vh;
+    transform: translate(-50%, -50%);
+    border: 0;
+    pointer-events: none;
+}
+
 /* Dark gradient overlay for clear contrast */
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(105deg,
-            rgba(8, 8, 8, 0.72) 0%,
-            rgba(8, 8, 8, 0.50) 50%,
-            rgba(8, 8, 8, 0.20) 100%);
+    background: linear-gradient(105deg, rgb(8 8 8 / 48%) 0%, rgb(8 8 8 / 37%) 50%, rgba(8, 8, 8, 0.20) 100%);
     z-index: 2;
+    pointer-events: none;
 }
 
 /* Text content — left side */
@@ -2508,6 +2530,7 @@ body {
         opacity: 0;
         transform: translateY(-4px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
