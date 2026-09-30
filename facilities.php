@@ -13,16 +13,16 @@ require_once __DIR__ . '/includes/header.php';
 $facilitiesFromDb = getCampusFacilities('active');
 $facilitiesList = [];
 foreach ($facilitiesFromDb as $fac) {
-    $img = $fac['image_url'];
+    $img = $fac['image'] ?? $fac['image_url'] ?? '';
     if (!empty($img) && strpos($img, 'http') !== 0) {
         $img = BASE_URL . ltrim($img, '/');
     }
     $facilitiesList[] = [
         'id'    => $fac['id'],
-        'title' => $fac['title'],
+        'title' => $fac['title'] ?? '',
         'icon'  => !empty($fac['icon']) ? $fac['icon'] : 'fa-building',
         'image' => $img,
-        'desc'  => $fac['description']
+        'desc'  => $fac['description'] ?? ''
     ];
 }
 ?>
@@ -83,6 +83,93 @@ foreach ($facilitiesFromDb as $fac) {
                         Complete CCTV surveillance across academic blocks, biometric attendance systems, ragging-free campus monitoring, and high-speed optical fiber internet connectivity.
                     </p>
                 </div>
+            </div>
+<!-- Campus Policies & Environmental Standards -->
+<section class="py-5">
+    <div class="container-xl py-3">
+        <div class="text-center mb-5" style="max-width:750px; margin:auto;">
+            <span class="section-subtitle">COMPLIANCE &amp; STANDARDS</span>
+            <h2 class="fw-bold text-navy">Campus Infrastructure &amp; Environmental Policies</h2>
+            <p class="text-muted">Official institutional policies ensuring sustainable, inclusive, barrier-free, and high-standard campus operations.</p>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div class="col">
+                <a href="<?php echo BASE_URL; ?>document/clean-green-campus-policy" class="text-decoration-none text-dark d-block h-100">
+                    <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow" style="transition:all 0.2s ease;">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="bg-success-subtle text-success rounded-3 p-3"><i class="fas fa-leaf fa-lg"></i></div>
+                            <h4 class="h5 fw-bold text-navy mb-0">Clean &amp; Green Campus Policy</h4>
+                        </div>
+                        <p class="text-muted small mb-3">Ecological stewardship, 100% green coverage, biodiversity protection, and solar energy norms.</p>
+                        <span class="small fw-bold text-success d-flex align-items-center gap-1">View Policy Document &rarr;</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="<?php echo BASE_URL; ?>document/plastic-ban-policy" class="text-decoration-none text-dark d-block h-100">
+                    <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow" style="transition:all 0.2s ease;">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="bg-danger-subtle text-danger rounded-3 p-3"><i class="fas fa-ban fa-lg"></i></div>
+                            <h4 class="h5 fw-bold text-navy mb-0">Plastic Ban Policy</h4>
+                        </div>
+                        <p class="text-muted small mb-3">Single-use plastic prohibition, zero plastic zones, waste segregation, and green ambassadors.</p>
+                        <span class="small fw-bold text-danger d-flex align-items-center gap-1">View Policy Document &rarr;</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="<?php echo BASE_URL; ?>document/differently-abled-facilities" class="text-decoration-none text-dark d-block h-100">
+                    <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow" style="transition:all 0.2s ease;">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="bg-primary-subtle text-primary rounded-3 p-3"><i class="fas fa-wheelchair fa-lg"></i></div>
+                            <h4 class="h5 fw-bold text-navy mb-0">Disabled-Friendly &amp; Barrier Free</h4>
+                        </div>
+                        <p class="text-muted small mb-3">Wheelchair accessibility ramps, tactile flooring, accessible elevators, and Braille support.</p>
+                        <span class="small fw-bold text-primary d-flex align-items-center gap-1">View Policy Document &rarr;</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="<?php echo BASE_URL; ?>document/it-policy" class="text-decoration-none text-dark d-block h-100">
+                    <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow" style="transition:all 0.2s ease;">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="bg-info-subtle text-info rounded-3 p-3"><i class="fas fa-laptop-code fa-lg"></i></div>
+                            <h4 class="h5 fw-bold text-navy mb-0">IT &amp; Network Policy</h4>
+                        </div>
+                        <p class="text-muted small mb-3">Campus optical fiber network, cybersecurity, enterprise ERP portal access, and IT assets.</p>
+                        <span class="small fw-bold text-info d-flex align-items-center gap-1">View Policy Document &rarr;</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="<?php echo BASE_URL; ?>document/maintenance-policy" class="text-decoration-none text-dark d-block h-100">
+                    <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow" style="transition:all 0.2s ease;">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="bg-warning-subtle text-warning rounded-3 p-3"><i class="fas fa-tools fa-lg"></i></div>
+                            <h4 class="h5 fw-bold text-navy mb-0">Campus Maintenance Policy</h4>
+                        </div>
+                        <p class="text-muted small mb-3">Laboratory equipment calibration, annual maintenance contracts (AMC), and building safety SOPs.</p>
+                        <span class="small fw-bold text-warning d-flex align-items-center gap-1">View Policy Document &rarr;</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="<?php echo BASE_URL; ?>document/sports-facilities" class="text-decoration-none text-dark d-block h-100">
+                    <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow" style="transition:all 0.2s ease;">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="bg-danger-subtle text-danger rounded-3 p-3"><i class="fas fa-running fa-lg"></i></div>
+                            <h4 class="h5 fw-bold text-navy mb-0">Sports &amp; Cultural Policy</h4>
+                        </div>
+                        <p class="text-muted small mb-3">Sports quota, athletic complex facilities, gymnasium norms, and inter-university competitions.</p>
+                        <span class="small fw-bold text-danger d-flex align-items-center gap-1">View Policy Document &rarr;</span>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

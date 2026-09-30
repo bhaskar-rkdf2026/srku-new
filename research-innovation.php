@@ -122,6 +122,93 @@ require_once __DIR__ . '/includes/header.php';
                     </p>
                 </div>
             </div>
+        <!-- Research Policies & Statutory Guidelines Grid -->
+        <div class="mt-5 pt-4 border-top">
+            <div class="text-center mb-4">
+                <span class="section-subtitle">STATUTORY FRAMEWORK &amp; FUNDING</span>
+                <h3 class="h3 fw-bold text-navy">Research Policies &amp; Institutional Guidelines</h3>
+                <p class="text-muted small">Official policies governing scientific integrity, ethical clearances, seed grants, consultancy, and patent disclosures at SRKU.</p>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="col">
+                    <a href="<?php echo BASE_URL; ?>document/university-research-policy" class="text-decoration-none text-dark d-block h-100">
+                        <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow bg-light" style="transition:all 0.2s ease;">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="bg-danger-subtle text-danger rounded-3 p-3"><i class="fas fa-file-contract fa-lg"></i></div>
+                                <h5 class="fw-bold text-navy mb-0">University Research Policy</h5>
+                            </div>
+                            <p class="text-muted small mb-3">Institutional code of research ethics, publication incentives, patent disclosures, and IPR management.</p>
+                            <span class="small fw-bold text-danger d-flex align-items-center gap-1">Download Research Policy &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="<?php echo BASE_URL; ?>document/seed-money-research-policy" class="text-decoration-none text-dark d-block h-100">
+                        <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow bg-light" style="transition:all 0.2s ease;">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="bg-success-subtle text-success rounded-3 p-3"><i class="fas fa-seedling fa-lg"></i></div>
+                                <h5 class="fw-bold text-navy mb-0">Seed Money Research Policy</h5>
+                            </div>
+                            <p class="text-muted small mb-3">Institutional seed funding grants to faculty and researchers for high-impact preliminary scientific investigations.</p>
+                            <span class="small fw-bold text-success d-flex align-items-center gap-1">Download Seed Money Policy &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="<?php echo BASE_URL; ?>document/consultancy-projects" class="text-decoration-none text-dark d-block h-100">
+                        <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow bg-light" style="transition:all 0.2s ease;">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="bg-primary-subtle text-primary rounded-3 p-3"><i class="fas fa-project-diagram fa-lg"></i></div>
+                                <h5 class="fw-bold text-navy mb-0">Policy for Consultancy</h5>
+                            </div>
+                            <p class="text-muted small mb-3">Industrial testing, corporate training, technical solutions, and university-industry revenue sharing.</p>
+                            <span class="small fw-bold text-primary d-flex align-items-center gap-1">Download Consultancy Policy &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="<?php echo BASE_URL; ?>document/constitution-of-research-advisory-committee" class="text-decoration-none text-dark d-block h-100">
+                        <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow bg-light" style="transition:all 0.2s ease;">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="bg-warning-subtle text-warning rounded-3 p-3"><i class="fas fa-microscope fa-lg"></i></div>
+                                <h5 class="fw-bold text-navy mb-0">Research Advisory Committee (RAC)</h5>
+                            </div>
+                            <p class="text-muted small mb-3">Constitution and mandate of doctoral research review panels, guide allocations, and progress monitoring.</p>
+                            <span class="small fw-bold text-warning d-flex align-items-center gap-1">View RAC Guidelines &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="<?php echo BASE_URL; ?>document/ethics-board" class="text-decoration-none text-dark d-block h-100">
+                        <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow bg-light" style="transition:all 0.2s ease;">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="bg-info-subtle text-info rounded-3 p-3"><i class="fas fa-balance-scale fa-lg"></i></div>
+                                <h5 class="fw-bold text-navy mb-0">Institutional Ethics Board</h5>
+                            </div>
+                            <p class="text-muted small mb-3">Ethics clearances for human and animal trials, anti-plagiarism verification, and bioethics protocols.</p>
+                            <span class="small fw-bold text-info d-flex align-items-center gap-1">View Ethics Board Norms &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="<?php echo BASE_URL; ?>document/central-facilities-research" class="text-decoration-none text-dark d-block h-100">
+                        <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow bg-light" style="transition:all 0.2s ease;">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="bg-danger-subtle text-danger rounded-3 p-3"><i class="fas fa-atom fa-lg"></i></div>
+                                <h5 class="fw-bold text-navy mb-0">Central Research Facilities</h5>
+                            </div>
+                            <p class="text-muted small mb-3">High-end analytical instrumentation, central computing cluster, animal house, and advanced labs.</p>
+                            <span class="small fw-bold text-danger d-flex align-items-center gap-1">View Central Labs &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
 
     </div>

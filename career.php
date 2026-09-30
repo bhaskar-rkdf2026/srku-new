@@ -135,6 +135,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_career'])) {
                 </div>
             </div>
 
+        <!-- HR & Faculty Welfare Policies -->
+        <div class="mt-5 pt-4 border-top">
+            <div class="text-center mb-4">
+                <span class="section-subtitle">HR COMPLIANCE &amp; BENEFITS</span>
+                <h3 class="h3 fw-bold text-navy">University HR &amp; Staff Welfare Policies</h3>
+                <p class="text-muted small">Standard operating procedures, appraisal systems, and faculty welfare policies governing employment at SRKU.</p>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <a href="<?php echo BASE_URL; ?>document/hr-policy" class="text-decoration-none text-dark d-block h-100">
+                        <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow bg-light" style="transition:all 0.2s ease;">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="bg-danger-subtle text-danger rounded-3 p-3"><i class="fas fa-user-tie fa-lg"></i></div>
+                                <h5 class="fw-bold text-navy mb-0">Human Resource (HR) Policy</h5>
+                            </div>
+                            <p class="text-muted small mb-3">Recruitment norms, leave regulations, code of professional conduct, and cadre progression rules.</p>
+                            <span class="small fw-bold text-danger d-flex align-items-center gap-1">Download HR Policy &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="<?php echo BASE_URL; ?>document/performance-appraisal-policy" class="text-decoration-none text-dark d-block h-100">
+                        <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow bg-light" style="transition:all 0.2s ease;">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="bg-success-subtle text-success rounded-3 p-3"><i class="fas fa-chart-line fa-lg"></i></div>
+                                <h5 class="fw-bold text-navy mb-0">Performance Appraisal Policy</h5>
+                            </div>
+                            <p class="text-muted small mb-3">UGC benchmarked API scores, annual PBAS evaluation, teaching outcome metrics, and rewards.</p>
+                            <span class="small fw-bold text-success d-flex align-items-center gap-1">Download Appraisal Policy &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="<?php echo BASE_URL; ?>document/welfare-policy" class="text-decoration-none text-dark d-block h-100">
+                        <div class="card p-4 border rounded-4 shadow-sm h-100 hover-shadow bg-light" style="transition:all 0.2s ease;">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="bg-primary-subtle text-primary rounded-3 p-3"><i class="fas fa-heartbeat fa-lg"></i></div>
+                                <h5 class="fw-bold text-navy mb-0">Staff &amp; Student Welfare Policy</h5>
+                            </div>
+                            <p class="text-muted small mb-3">Teaching hospital healthcare access, group medical coverage, staff quarters, and emergency aid.</p>
+                            <span class="small fw-bold text-primary d-flex align-items-center gap-1">Download Welfare Policy &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
 
     </div>

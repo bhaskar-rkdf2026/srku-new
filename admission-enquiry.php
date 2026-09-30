@@ -564,13 +564,28 @@ require_once __DIR__ . '/includes/header.php';
                     </ul>
                 </div>
 
-                <!-- Download Brochure & Prospectus -->
+                <!-- Download Official Admission Documents -->
                 <div class="card p-4 border-0 shadow-sm rounded-4 bg-light border">
-                    <h5 class="h6 fw-bold text-navy mb-2"><i class="fas fa-file-pdf text-danger me-2"></i> Official Prospectus</h5>
-                    <p class="text-muted small mb-3">Download the comprehensive university academic brochure and admission guidelines.</p>
-                    <a href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Prospectus.pdf" target="_blank" class="btn btn-sm btn-outline-danger fw-semibold d-flex align-items-center justify-content-center gap-1">
-                        <i class="fas fa-download"></i> <span>Download Prospectus (PDF)</span>
-                    </a>
+                    <h5 class="h6 fw-bold text-navy mb-2"><i class="fas fa-file-pdf text-danger me-2"></i> Admission &amp; Fee Documents</h5>
+                    <p class="text-muted small mb-3">Download approved university fee schedules, scholarship criteria, and official prospectus:</p>
+                    <div class="d-flex flex-column gap-2">
+                        <a href="<?php echo BASE_URL; ?>document/fees-2026-27" class="btn btn-sm btn-success fw-semibold d-flex align-items-center justify-content-between p-2 px-3">
+                            <span><i class="fas fa-file-invoice-dollar me-2"></i> Fee Structure 2026-27</span>
+                            <i class="fas fa-external-link-alt small"></i>
+                        </a>
+                        <a href="<?php echo BASE_URL; ?>document/meritorious-scheme-policy" class="btn btn-sm btn-outline-warning text-dark fw-semibold d-flex align-items-center justify-content-between p-2 px-3 bg-white">
+                            <span><i class="fas fa-award text-warning me-2"></i> Meritorious Scholarship Policy</span>
+                            <i class="fas fa-external-link-alt small"></i>
+                        </a>
+                        <a href="<?php echo BASE_URL; ?>document/inhouse-scheme-policy" class="btn btn-sm btn-outline-primary fw-semibold d-flex align-items-center justify-content-between p-2 px-3 bg-white">
+                            <span><i class="fas fa-hand-holding-usd text-primary me-2"></i> In-House Scheme Policy</span>
+                            <i class="fas fa-external-link-alt small"></i>
+                        </a>
+                        <a href="<?php echo BASE_URL; ?>document/prospectus" class="btn btn-sm btn-outline-danger fw-semibold d-flex align-items-center justify-content-between p-2 px-3 bg-white">
+                            <span><i class="fas fa-book-open text-danger me-2"></i> University Prospectus</span>
+                            <i class="fas fa-external-link-alt small"></i>
+                        </a>
+                    </div>
                 </div>
 
             </div>

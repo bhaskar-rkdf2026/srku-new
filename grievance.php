@@ -134,24 +134,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_complaint'])) 
                 <div class="card p-4 border-0 shadow-sm rounded-4 bg-white mb-4">
                     <h5 class="fw-bold text-navy mb-3"><i class="fas fa-shield-alt text-danger me-2"></i> Statutory Cells &amp; Committees</h5>
                     <div class="d-flex flex-column gap-2">
-                        <a href="<?php echo BASE_URL; ?>document-viewer.php?slug=anti-ragging" class="p-2 px-3 rounded-3 text-decoration-none text-dark bg-light hover-danger small d-flex justify-content-between align-items-center">
-                            <span class="fw-semibold">Anti-Ragging Regulations</span>
+                        <a href="<?php echo BASE_URL; ?>document/student-grievance-committee" class="p-2 px-3 rounded-3 text-decoration-none text-dark bg-light hover-danger small d-flex justify-content-between align-items-center">
+                            <span class="fw-semibold"><i class="fas fa-balance-scale text-danger me-2"></i> Grievance Redressal Policy</span>
                             <i class="fas fa-external-link-alt text-muted small"></i>
                         </a>
-                        <a href="<?php echo BASE_URL; ?>document-viewer.php?slug=student-grievance-committee" class="p-2 px-3 rounded-3 text-decoration-none text-dark bg-light hover-danger small d-flex justify-content-between align-items-center">
-                            <span class="fw-semibold">Student Grievance Committee</span>
+                        <a href="<?php echo BASE_URL; ?>document/anti-ragging" class="p-2 px-3 rounded-3 text-decoration-none text-dark bg-light hover-danger small d-flex justify-content-between align-items-center">
+                            <span class="fw-semibold"><i class="fas fa-ban text-danger me-2"></i> Anti-Ragging Committee &amp; Squad</span>
                             <i class="fas fa-external-link-alt text-muted small"></i>
                         </a>
-                        <a href="<?php echo BASE_URL; ?>document-viewer.php?slug=women-grievance-committee" class="p-2 px-3 rounded-3 text-decoration-none text-dark bg-light hover-danger small d-flex justify-content-between align-items-center">
-                            <span class="fw-semibold">Women Grievance Cell (ICC)</span>
+                        <a href="<?php echo BASE_URL; ?>document/women-grievance-committee" class="p-2 px-3 rounded-3 text-decoration-none text-dark bg-light hover-danger small d-flex justify-content-between align-items-center">
+                            <span class="fw-semibold"><i class="fas fa-female text-danger me-2"></i> Women Grievance Committee (ICC)</span>
                             <i class="fas fa-external-link-alt text-muted small"></i>
                         </a>
-                        <a href="<?php echo BASE_URL; ?>document-viewer.php?slug=equal-opportunity-cell" class="p-2 px-3 rounded-3 text-decoration-none text-dark bg-light hover-danger small d-flex justify-content-between align-items-center">
-                            <span class="fw-semibold">Equal Opportunity Cell</span>
+                        <a href="<?php echo BASE_URL; ?>document/sc-st-grievance-committee" class="p-2 px-3 rounded-3 text-decoration-none text-dark bg-light hover-danger small d-flex justify-content-between align-items-center">
+                            <span class="fw-semibold"><i class="fas fa-hands-helping text-warning me-2"></i> SC / ST Grievance Committee</span>
                             <i class="fas fa-external-link-alt text-muted small"></i>
                         </a>
-                        <a href="<?php echo BASE_URL; ?>document-viewer.php?slug=sc-st-grievance-committee" class="p-2 px-3 rounded-3 text-decoration-none text-dark bg-light hover-danger small d-flex justify-content-between align-items-center">
-                            <span class="fw-semibold">SC / ST Grievance Committee</span>
+                        <a href="<?php echo BASE_URL; ?>document/obc-minority" class="p-2 px-3 rounded-3 text-decoration-none text-dark bg-light hover-danger small d-flex justify-content-between align-items-center">
+                            <span class="fw-semibold"><i class="fas fa-users text-info me-2"></i> OBC &amp; Minority Grievance Cell</span>
+                            <i class="fas fa-external-link-alt text-muted small"></i>
+                        </a>
+                        <a href="<?php echo BASE_URL; ?>document/equal-opportunity-cell" class="p-2 px-3 rounded-3 text-decoration-none text-dark bg-light hover-danger small d-flex justify-content-between align-items-center">
+                            <span class="fw-semibold"><i class="fas fa-universal-access text-success me-2"></i> Equal Opportunity Cell</span>
                             <i class="fas fa-external-link-alt text-muted small"></i>
                         </a>
                     </div>
@@ -162,6 +166,169 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_complaint'])) 
                     <p class="small text-white-50 mb-0" style="line-height: 1.6;">
                         All submissions are encrypted and forwarded exclusively to the University Grievance Redressal Committee under UGC (Redress of Grievances of Students) Regulations, 2019.
                     </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     STATUTORY COMMITTEES & GRIEVANCE POLICIES SECTION
+═══════════════════════════════════════════════════════ -->
+<section class="py-5 bg-white border-top" id="statutory-policies">
+    <div class="container-xl py-3">
+        <div class="text-center mb-5" style="max-width: 800px; margin: auto;">
+            <span class="badge bg-danger-subtle text-danger fw-bold px-3 py-1 rounded-pill small text-uppercase mb-2">
+                <i class="fas fa-shield-alt me-1"></i> UGC &amp; Statutory Regulatory Compliance
+            </span>
+            <h2 class="section-title mt-2">Official Statutory <span>Committees &amp; Policies</span></h2>
+            <p class="text-muted small">
+                In strict adherence to UGC, AICTE, and Apex Regulatory Council guidelines, Sarvepalli Radhakrishnan University has constituted dedicated cells and committees to ensure a safe, inclusive, zero-tolerance campus environment.
+            </p>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <!-- 1. Grievance Redressal Policy -->
+            <div class="col">
+                <div class="card h-100 border rounded-4 p-4 shadow-sm hover-lift d-flex flex-column justify-content-between" style="border-top: 4px solid var(--srku-maroon) !important;">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="bg-danger-subtle text-danger p-3 rounded-3">
+                                <i class="fas fa-balance-scale fa-lg"></i>
+                            </div>
+                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1 rounded-pill small">Active 2026</span>
+                        </div>
+                        <h5 class="fw-bold text-navy mb-2">Policy for Grievance Redressal</h5>
+                        <p class="text-muted small mb-3">Comprehensive framework, tier-wise redressal timelines, and student ombudsman mechanisms as per UGC Regulations.</p>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2 pt-3 border-top">
+                        <a href="<?php echo BASE_URL; ?>document/policy-for-grievance-redressal" class="btn btn-sm btn-outline-danger rounded-pill fw-semibold flex-grow-1">
+                            <i class="fas fa-file-alt me-1"></i> View Document
+                        </a>
+                        <a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/Policy-for-grievance-redressal.pdf" target="_blank" class="btn btn-sm btn-danger rounded-pill px-3" title="Download PDF">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Anti-Ragging Committee & Squad -->
+            <div class="col">
+                <div class="card h-100 border rounded-4 p-4 shadow-sm hover-lift d-flex flex-column justify-content-between" style="border-top: 4px solid #dc3545 !important;">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="bg-danger-subtle text-danger p-3 rounded-3">
+                                <i class="fas fa-ban fa-lg"></i>
+                            </div>
+                            <span class="badge bg-danger text-white px-2 py-1 rounded-pill small">Zero Tolerance</span>
+                        </div>
+                        <h5 class="fw-bold text-navy mb-2">Anti-Ragging Committee &amp; Squad</h5>
+                        <p class="text-muted small mb-3">Official constitution order, squad members, flying squad monitoring, and UGC 24x7 anti-ragging toll-free directives.</p>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2 pt-3 border-top">
+                        <a href="<?php echo BASE_URL; ?>document/anti-ragging" class="btn btn-sm btn-outline-danger rounded-pill fw-semibold flex-grow-1">
+                            <i class="fas fa-file-alt me-1"></i> View Document
+                        </a>
+                        <a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/Anti-Ragging-and-Squad.pdf" target="_blank" class="btn btn-sm btn-danger rounded-pill px-3" title="Download PDF">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Internal Complaint Committee (ICC / Women) -->
+            <div class="col">
+                <div class="card h-100 border rounded-4 p-4 shadow-sm hover-lift d-flex flex-column justify-content-between" style="border-top: 4px solid #e83e8c !important;">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="p-3 rounded-3" style="background: rgba(232, 62, 140, 0.1); color: #e83e8c;">
+                                <i class="fas fa-female fa-lg"></i>
+                            </div>
+                            <span class="badge bg-purple-subtle text-purple px-2 py-1 rounded-pill small">POSH Act 2013</span>
+                        </div>
+                        <h5 class="fw-bold text-navy mb-2">Internal Complaint Committee (ICC)</h5>
+                        <p class="text-muted small mb-3">Prevention, prohibition and redressal of sexual harassment of women employees and students across university units.</p>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2 pt-3 border-top">
+                        <a href="<?php echo BASE_URL; ?>document/internal-complaint-committee" class="btn btn-sm btn-outline-danger rounded-pill fw-semibold flex-grow-1">
+                            <i class="fas fa-file-alt me-1"></i> View Document
+                        </a>
+                        <a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/Internal-Complaint-Committee.pdf" target="_blank" class="btn btn-sm btn-danger rounded-pill px-3" title="Download PDF">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. SC / ST Grievance Committee -->
+            <div class="col">
+                <div class="card h-100 border rounded-4 p-4 shadow-sm hover-lift d-flex flex-column justify-content-between" style="border-top: 4px solid #fd7e14 !important;">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="p-3 rounded-3" style="background: rgba(253, 126, 20, 0.1); color: #fd7e14;">
+                                <i class="fas fa-hands-helping fa-lg"></i>
+                            </div>
+                            <span class="badge bg-warning-subtle text-dark border px-2 py-1 rounded-pill small">Social Welfare</span>
+                        </div>
+                        <h5 class="fw-bold text-navy mb-2">SC &amp; ST Grievance Committee</h5>
+                        <p class="text-muted small mb-3">Safeguarding constitutional rights, addressing complaints of discrimination, and facilitating welfare scholarships for SC/ST students.</p>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2 pt-3 border-top">
+                        <a href="<?php echo BASE_URL; ?>document/sc-st-grievance-committee" class="btn btn-sm btn-outline-danger rounded-pill fw-semibold flex-grow-1">
+                            <i class="fas fa-file-alt me-1"></i> View Document
+                        </a>
+                        <a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/SCandST-Grievance-Committee.pdf" target="_blank" class="btn btn-sm btn-danger rounded-pill px-3" title="Download PDF">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. OBC & Minority Grievance Cell -->
+            <div class="col">
+                <div class="card h-100 border rounded-4 p-4 shadow-sm hover-lift d-flex flex-column justify-content-between" style="border-top: 4px solid #0d6efd !important;">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="bg-primary-subtle text-primary p-3 rounded-3">
+                                <i class="fas fa-users fa-lg"></i>
+                            </div>
+                            <span class="badge bg-primary-subtle text-primary border px-2 py-1 rounded-pill small">Minority Support</span>
+                        </div>
+                        <h5 class="fw-bold text-navy mb-2">OBC &amp; Minority Grievance Cell</h5>
+                        <p class="text-muted small mb-3">Redressal of grievances, scholarship counseling, and academic empowerment for Other Backward Classes and minority community students.</p>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2 pt-3 border-top">
+                        <a href="<?php echo BASE_URL; ?>document/obc-minority" class="btn btn-sm btn-outline-danger rounded-pill fw-semibold flex-grow-1">
+                            <i class="fas fa-file-alt me-1"></i> View Document
+                        </a>
+                        <a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/OBC-and-Minority-Grievance.pdf" target="_blank" class="btn btn-sm btn-danger rounded-pill px-3" title="Download PDF">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Equal Opportunity Cell -->
+            <div class="col">
+                <div class="card h-100 border rounded-4 p-4 shadow-sm hover-lift d-flex flex-column justify-content-between" style="border-top: 4px solid #198754 !important;">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="bg-success-subtle text-success p-3 rounded-3">
+                                <i class="fas fa-universal-access fa-lg"></i>
+                            </div>
+                            <span class="badge bg-success-subtle text-success border px-2 py-1 rounded-pill small">Inclusive Campus</span>
+                        </div>
+                        <h5 class="fw-bold text-navy mb-2">Equal Opportunity Cell</h5>
+                        <p class="text-muted small mb-3">Promoting diversity, equity, accessibility for differently-abled students, and non-discriminatory participation in campus life.</p>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2 pt-3 border-top">
+                        <a href="<?php echo BASE_URL; ?>document/equal-opportunity-cell" class="btn btn-sm btn-outline-danger rounded-pill fw-semibold flex-grow-1">
+                            <i class="fas fa-file-alt me-1"></i> View Document
+                        </a>
+                        <a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/Equal-Opportunity-Cell.pdf" target="_blank" class="btn btn-sm btn-danger rounded-pill px-3" title="Download PDF">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

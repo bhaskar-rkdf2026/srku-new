@@ -115,7 +115,7 @@ $documentsRegistry = array (
     'title' => 'Details of Sponsoring Body',
     'category' => 'About H.E.I.',
     'subtitle' => 'RKDF Education Society - Founding Trust, Objectives & Governance',
-    'pdf_path' => 'assets/uploads/2025/10/new-update/Details_of_Sponsoring_Body.pdf',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Sponsoring-Body-Details.pdf',
     'description' => 'Official registration documentation, charter, objectives, and governing body details of the RKDF Education Society, the sponsoring body of Sarvepalli Radhakrishnan University Bhopal.',
     'highlights' => 
     array (
@@ -127,14 +127,14 @@ $documentsRegistry = array (
   ),
   'council-of-technical-education' => 
   array (
-    'title' => 'Council of Technical Education (EOA Report)',
+    'title' => 'Council of Technical Education (AICTE Approval 2026-27)',
     'category' => 'About H.E.I.',
-    'subtitle' => 'AICTE Extension of Approval (EOA) Compliance & Sanctioned Intakes',
-    'pdf_path' => 'assets/uploads/2023/09/EOA_Report_2020-21-1.pdf',
-    'description' => 'Official AICTE Extension of Approval (EOA) letters specifying approved technical, engineering, pharmacy, and management courses, along with sanctioned intakes and institutional norms.',
+    'subtitle' => 'AICTE Extension of Approval (EOA) 2026-27 Compliance & Sanctioned Intakes',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/AICTE-Approval-2026-27/RKDFIST.pdf',
+    'description' => 'Official AICTE Extension of Approval (EOA) 2026-27 letters specifying approved technical, engineering, pharmacy, and management courses, along with sanctioned intakes and institutional norms.',
     'highlights' => 
     array (
-      0 => 'AICTE extension of approval for B.Tech, M.Tech, MBA, and MCA programmes.',
+      0 => 'AICTE extension of approval for B.Tech, M.Tech, MBA, and MCA programmes for 2026-27.',
       1 => 'Sanctioned student intake capacity per academic discipline.',
       2 => 'Faculty cadre compliance and lab infrastructure audit records.',
       3 => 'Adherence to AICTE approval process handbook guidelines.',
@@ -187,11 +187,11 @@ $documentsRegistry = array (
   ),
   'student-grievance-committee' => 
   array (
-    'title' => 'Student Grievance Redressal Committee',
+    'title' => 'Policy for Grievance Redressal & Student Grievance Committee',
     'category' => 'All Committee',
-    'subtitle' => 'Institutional Grievance Redressal Committee (SGRC) & Regulations',
-    'pdf_path' => 'assets/uploads/2025/allCommittee/Student_Grievance_Committee.pdf',
-    'description' => 'Official notification delineating the constitution, membership, powers, and procedure of the Student Grievance Redressal Committee (SGRC) constituted in compliance with UGC Regulations.',
+    'subtitle' => 'Institutional Grievance Redressal Policy (SGRC) & UGC Regulations',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Policy-for-grievance-redressal.pdf',
+    'description' => 'Official policy and notification delineating the constitution, membership, powers, and procedure of the Student Grievance Redressal Committee (SGRC) constituted in compliance with UGC Regulations.',
     'highlights' => 
     array (
       0 => 'Independent committee headed by senior faculty to resolve student complaints.',
@@ -205,7 +205,7 @@ $documentsRegistry = array (
     'title' => 'Anti-Ragging Committee & Squad',
     'category' => 'All Committee',
     'subtitle' => 'Zero Tolerance Policy, Anti-Ragging Squad & Student Welfare Mandate',
-    'pdf_path' => 'assets/uploads/2025/allCommittee/AntiRagging.pdf',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Anti-Ragging-and-Squad.pdf',
     'description' => 'University notification on Anti-Ragging Committee and Squads constituted as per Supreme Court directives and UGC Anti-Ragging regulations, maintaining a 100% ragging-free campus.',
     'highlights' => 
     array (
@@ -220,7 +220,7 @@ $documentsRegistry = array (
     'title' => 'OBC & Minority Grievance Committee',
     'category' => 'All Committee',
     'subtitle' => 'Welfare, Equal Opportunity & Support for OBC & Minority Students',
-    'pdf_path' => 'assets/uploads/pdf/OBC-Minority.pdf',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/OBC-and-Minority-Grievance.pdf',
     'description' => 'Institutional cell constituted to oversee welfare, redress grievances, and provide academic support to Other Backward Classes (OBC) and Religious/Linguistic Minority students.',
     'highlights' => 
     array (
@@ -235,7 +235,7 @@ $documentsRegistry = array (
     'title' => 'Women Grievance Committee',
     'category' => 'All Committee',
     'subtitle' => 'Women Empowerment, Safety & Internal Complaint Redressal',
-    'pdf_path' => 'assets/uploads/2024/07/women-grievance-committee.pdf',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Womens-Grievance-Committee.pdf',
     'description' => 'Statutory committee dedicated to ensuring the safety, dignity, and empowerment of female students, faculty, and administrative staff across university campuses.',
     'highlights' => 
     array (
@@ -250,7 +250,7 @@ $documentsRegistry = array (
     'title' => 'SC & ST Grievance Committee',
     'category' => 'All Committee',
     'subtitle' => 'Prevention of Caste Discrimination & SC/ST Cell Oversight',
-    'pdf_path' => 'assets/uploads/2025/allCommittee/SC_ST_Grievance_committee.pdf',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/SCandST-Grievance-Committee.pdf',
     'description' => 'Statutory committee established to prevent discrimination, ensure social justice, and promote the academic and professional development of Scheduled Caste (SC) and Scheduled Tribe (ST) students.',
     'highlights' => 
     array (
@@ -265,7 +265,7 @@ $documentsRegistry = array (
     'title' => 'Equal Opportunity Cell',
     'category' => 'All Committee',
     'subtitle' => 'Inclusive Campus Environment, Accessibility & Student Support',
-    'pdf_path' => 'assets/uploads/pdf/EqualOppurtunityCell.pdf',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Equal-Opportunity-Cell.pdf',
     'description' => 'Official notification and operational charter of the Equal Opportunity Cell fostering an inclusive, equitable, and barrier-free educational environment for students of all backgrounds.',
     'highlights' => 
     array (
@@ -295,7 +295,7 @@ $documentsRegistry = array (
     'title' => 'Governing Body',
     'category' => 'Administration',
     'subtitle' => 'Constitution, Apex Governance & Members of University Governing Body',
-    'pdf_path' => 'assets/uploads/pdf/Governing-Body.pdf',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Governing-Body-and-Board-of-Management.pdf',
     'description' => 'Official constitution and list of distinguished members constituting the Governing Body of Sarvepalli Radhakrishnan University, responsible for strategic policy formulation and institutional stewardship.',
     'highlights' => 
     array (
@@ -310,7 +310,7 @@ $documentsRegistry = array (
     'title' => 'Board of Management',
     'category' => 'Administration',
     'subtitle' => 'Executive Governance, Appointments & Administrative Affairs',
-    'pdf_path' => 'assets/uploads/pdf/Board-of-Management.pdf',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Governing-Body-and-Board-of-Management.pdf',
     'description' => 'Official documentation outlining the composition and executive powers of the Board of Management, overseeing overall administration, faculty recruitment, infrastructure creation, and operational governance.',
     'highlights' => 
     array (
@@ -325,7 +325,7 @@ $documentsRegistry = array (
     'title' => 'Finance Committee',
     'category' => 'Administration',
     'subtitle' => 'Financial Oversight, Annual Budgeting & Audit Control',
-    'pdf_path' => 'assets/uploads/pdf/Finance-Committee.pdf',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Finance-Committee.pdf',
     'description' => 'Constitution and membership of the University Finance Committee, entrusted with annual financial planning, budget allocations, expenditure monitoring, and internal financial audits.',
     'highlights' => 
     array (
@@ -340,7 +340,7 @@ $documentsRegistry = array (
     'title' => 'Academic Council',
     'category' => 'Administration',
     'subtitle' => 'Apex Academic Authority, Curriculum Standards & Examination Framework',
-    'pdf_path' => 'assets/uploads/pdf/ACADEMIC-COUNCIL-20.pdf.pdf',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Academic-Council.pdf',
     'description' => 'Official listing of members constituting the Academic Council of SRKU, responsible for maintaining high academic standards, curriculum revisions, pedagogical innovations, and examination regulations.',
     'highlights' => 
     array (
@@ -370,7 +370,7 @@ $documentsRegistry = array (
     'title' => 'Internal Complaint Committee (ICC)',
     'category' => 'Administration',
     'subtitle' => 'Grievance Redressal, Gender Sensitization & Women Safety at Workplace',
-    'pdf_path' => 'assets/uploads/pdf/Internal-Complaint-Committee.pdf',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Internal-Complaint-Committee.pdf',
     'description' => 'Official constitution, mandate, and contact details of the Internal Complaint Committee established in compliance with POSH Act regulations to ensure a secure, respectful, and gender-inclusive campus environment.',
     'highlights' => 
     array (
@@ -562,11 +562,11 @@ $documentsRegistry = array (
   ),
   'research-development-cell' => 
   array (
-    'title' => 'Research & Development Cell (RDC)',
+    'title' => 'Research & Development Cell & Seed Money Policy',
     'category' => 'Research',
-    'subtitle' => 'Research Promotion, Project Grants, Publications & Innovations',
-    'pdf_path' => 'assets/uploads/2025/10/new-update/research&developmentcell.pdf',
-    'description' => 'Documentation outlining the objectives, organizational hierarchy, and operational framework of the University Research & Development Cell fostering high-impact research, external grants, and technology innovation.',
+    'subtitle' => 'Research Promotion, Seed Grants, Publications & Innovations',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/policy-for-seed-money-research-projects.pdf',
+    'description' => 'Documentation outlining the objectives, organizational hierarchy, and operational framework of the University Research & Development Cell fostering high-impact research, seed grants, and technology innovation.',
     'highlights' => 
     array (
       0 => 'Coordination of sponsored research projects with DST, SERB, ICMR, and AICTE.',
@@ -595,7 +595,7 @@ $documentsRegistry = array (
     'title' => 'University Research Policy',
     'category' => 'Research',
     'subtitle' => 'Institutional Guidelines for Ethics, Publications, IPR & Seed Funding',
-    'pdf_path' => 'assets/uploads/pdf/university_research_policy.pdf',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/university_research_policy.pdf',
     'description' => 'Comprehensive policy governing research standards, ethical clearances, intellectual property management, patent filings, research incentives, and collaborative research initiatives at SRKU.',
     'highlights' => 
     array (
@@ -637,10 +637,10 @@ $documentsRegistry = array (
   ),
   'consultancy-projects' => 
   array (
-    'title' => 'Consultancy Projects & Guidelines',
+    'title' => 'Policy for Consultancy & Projects',
     'category' => 'Research',
-    'subtitle' => 'Industry Consultancy, Technical Solutions & Technology Transfer',
-    'pdf_path' => 'assets/uploads/pdf/consultancy-projects.pdf',
+    'subtitle' => 'Industry Consultancy, Technical Solutions & Technology Transfer Guidelines',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Policy_for_Consultancy.pdf',
     'description' => 'Framework for faculty and departments offering specialized industrial consultancy, testing services, corporate training, and technical advisory to government and private sector organizations.',
     'highlights' => 
     array (
@@ -670,7 +670,7 @@ $documentsRegistry = array (
     'title' => 'Constitution of Research Advisory Committee (RAC)',
     'category' => 'Research',
     'subtitle' => 'Doctoral Monitoring Panels, Guide Allocation & Half-Yearly Research Reviews',
-    'pdf_path' => 'assets/uploads/pdf/constitution-of-research-advisory-committee.pdf',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Research-Advisory-Committee.pdf',
     'description' => 'Mandate, composition, and functions of candidate-specific Research Advisory Committees (RAC) overseeing doctoral research milestones from topic approval to thesis defense.',
     'highlights' => 
     array (
@@ -697,11 +697,11 @@ $documentsRegistry = array (
   ),
   'sports-facilities' => 
   array (
-    'title' => 'Sports Facilities',
+    'title' => 'Sports Facilities & Sports Policy',
     'category' => 'Student Life',
-    'subtitle' => 'Sports Infrastructure, Athletic Complexes & University Gymnasium',
-    'pdf_path' => 'assets/uploads/2025/10/new-update/sports-Facilities.pdf',
-    'description' => 'Overview of world-class outdoor and indoor sports facilities, athletic tracks, cricket ground, football arena, basketball courts, and fitness centers at SRK University.',
+    'subtitle' => 'Sports Infrastructure, Athletic Complexes & Cultural Policy',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/SPORTS-AND-CULTURAL-POLICY.pdf',
+    'description' => 'Overview of world-class outdoor and indoor sports facilities, athletic tracks, cricket ground, football arena, basketball courts, fitness centers, and institutional sports policy at SRK University.',
     'highlights' => 
     array (
       0 => 'Olympic-standard athletic track and multipurpose sports grounds.',
@@ -802,11 +802,11 @@ $documentsRegistry = array (
   ),
   'differently-abled-facilities' => 
   array (
-    'title' => 'Facilities For Differently Abled Students',
+    'title' => 'Policy for Disabled Friendly & Barrier Free Environment',
     'category' => 'Student Life',
-    'subtitle' => 'Barrier-Free Built Environment, Assistive Infrastructure & Ramps',
-    'pdf_path' => 'assets/uploads/pdf/FACILITIES-FORDIFFERENTLYABLED-STUDENTS.pdf',
-    'description' => 'Documentation of barrier-free campus infrastructure including wheelchair ramps, accessible elevators, tactile pathways, designated washrooms, and assistive software tools for differently-abled students.',
+    'subtitle' => 'Barrier-Free Built Environment, Assistive Infrastructure & Accessibility Policy',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Policy-for-Disabled-Friendly-Barrier-Free-Environment.pdf',
+    'description' => 'Documentation and policy on barrier-free campus infrastructure including wheelchair ramps, accessible elevators, tactile pathways, designated washrooms, and assistive software tools for differently-abled students.',
     'highlights' => 
     array (
       0 => 'Barrier-free architectural design with wheelchair ramps and handrails across all blocks.',
@@ -935,6 +935,231 @@ $documentsRegistry = array (
       3 => 'Equal opportunity employer offering attractive research incentives and academic growth.',
     ),
   ),
+  'clean-green-campus-policy' => 
+  array (
+    'title' => 'Clean & Green Campus Policy',
+    'category' => 'Institutional Policies',
+    'subtitle' => 'Environmental Sustainability, Tree Plantation & Eco-Friendly Campus Norms',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Clean-Green-Campus-Policy.pdf',
+    'description' => 'Official university policy on green campus initiatives, ecological stewardship, water conservation, renewable solar energy, and sustainable waste recycling protocols at SRKU Bhopal.',
+    'highlights' => 
+    array (
+      0 => 'Commitment to 100% green coverage, biodiversity conservation and botanical gardens.',
+      1 => 'Rainwater harvesting, waste-water recycling and solar energy utilization systems.',
+      2 => 'Zero carbon footprint initiatives, ban on single-use plastic, and periodic green audits.',
+      3 => 'Student-led eco clubs, environmental awareness rallies, and tree plantation drives.',
+    ),
+  ),
+  'hr-policy' => 
+  array (
+    'title' => 'Human Resource (HR) Policy',
+    'category' => 'Institutional Policies',
+    'subtitle' => 'Recruitment Norms, Code of Professional Conduct, Leave Rules & Staff Welfare',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/HR-Policy.pdf',
+    'description' => 'Comprehensive HR guidelines governing merit-based faculty recruitment, non-teaching cadre regulations, professional code of conduct, leave entitlements, service benefits, and career progression.',
+    'highlights' => 
+    array (
+      0 => 'Transparent merit-based faculty and staff recruitment guidelines compliant with UGC/AICTE norms.',
+      1 => 'Standardized leave regulations, maternity/paternity support, and sabbatical research leave.',
+      2 => 'Professional ethics, workplace dignity, equal opportunity, and POSH zero-tolerance directives.',
+      3 => 'Staff professional development schemes, conference travel grants, and welfare benefits.',
+    ),
+  ),
+  'it-policy' => 
+  array (
+    'title' => 'Information Technology (IT) Policy',
+    'category' => 'Institutional Policies',
+    'subtitle' => 'Campus Network Infrastructure, Cyber Security, ERP Systems & Digital Assets',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/IT-Policy.pdf',
+    'description' => 'Statutory guidelines and regulations for university-wide digital networking, high-speed Wi-Fi, ERP student/staff access, information security, data confidentiality, and asset management.',
+    'highlights' => 
+    array (
+      0 => 'High-speed optical fiber backbone, secure campus-wide Wi-Fi, and firewall regulations.',
+      1 => 'Enterprise Resource Planning (ERP) student portal and examination automation protocols.',
+      2 => 'Data privacy, cyber hygiene standards, disaster recovery, and software license compliance.',
+      3 => 'Central computing labs, cloud compute servers, and smart e-learning digital infrastructure.',
+    ),
+  ),
+  'inhouse-scheme-policy' => 
+  array (
+    'title' => 'In-House Institutional Scheme Policy',
+    'category' => 'Institutional Policies',
+    'subtitle' => 'Internal Academic Scholarships, Institutional Grants & Student Financial Aid',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Inhouse-scheme-policy.pdf',
+    'description' => 'Institutional assistance policy providing financial aid, in-house endowments, fee waivers, and research incentive schemes established directly under the RKDF Education Society banner.',
+    'highlights' => 
+    array (
+      0 => 'Special fee concessions and financial aid for socio-economically marginalized scholars.',
+      1 => 'Institutional sports quotas, defense ward concessions, and merit excellence awards.',
+      2 => 'Incentives for research paper publications, patent applications, and project innovations.',
+      3 => 'Emergency medical and student distress relief funding mechanisms.',
+    ),
+  ),
+  'maintenance-policy' => 
+  array (
+    'title' => 'Campus Infrastructure & Maintenance Policy',
+    'category' => 'Institutional Policies',
+    'subtitle' => 'Physical Infrastructure, Laboratory Equipment, IT & Biomedical Facility Maintenance',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Maintenance-policy.pdf',
+    'description' => 'Structured policy outlining standard operating procedures for maintenance and upkeep of university academic buildings, hospital wings, high-tech engineering/medical labs, and utilities.',
+    'highlights' => 
+    array (
+      0 => 'Standard Operating Procedures (SOPs) for civil, electrical, and laboratory maintenance.',
+      1 => 'Annual Maintenance Contracts (AMC) for high-end analytical equipment and hospital machinery.',
+      2 => 'Periodic safety audits, fire safety drills, building stability, and hygiene inspections.',
+      3 => 'Centralized ticketing portal for rapid breakdown maintenance and campus repair works.',
+    ),
+  ),
+  'performance-appraisal-policy' => 
+  array (
+    'title' => 'Performance Appraisal Policy',
+    'category' => 'Institutional Policies',
+    'subtitle' => 'Annual Academic Performance Indicators (API), Faculty PBAS & Staff Evaluation',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/PERFORMANCE-APPRAISAL-POLICY.pdf',
+    'description' => 'Institutional appraisal framework for evaluating faculty teaching outcomes, research citations, funded grant acquisitions, student feedback, and administrative contributions.',
+    'highlights' => 
+    array (
+      0 => 'UGC benchmarked Performance Based Appraisal System (PBAS) for faculty promotions.',
+      1 => 'Multi-dimensional evaluation covering teaching outcomes, research output, and student feedback.',
+      2 => 'Incentives and recognition awards for exemplary teaching, grants, and innovation.',
+      3 => 'Structured career progression pathways, cadre review, and continuous professional development.',
+    ),
+  ),
+  'plastic-ban-policy' => 
+  array (
+    'title' => 'Plastic Ban Policy',
+    'category' => 'Institutional Policies',
+    'subtitle' => 'Zero Single-Use Plastic Mandate, Eco-Friendly Alternatives & Waste Segregation',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/PLASTIC-BAN-POLICY.pdf',
+    'description' => 'Institutional environmental directive prohibiting single-use plastics across university canteens, hostels, academic blocks, and campus facilities to foster a sustainable green campus.',
+    'highlights' => 
+    array (
+      0 => 'Total ban on single-use plastic bottles, cups, bags, and cutlery across all university campuses.',
+      1 => 'Deployment of biodegradable alternatives, stainless steel dispensers, and cotton/jute bags.',
+      2 => 'Stringent waste segregation at source (dry, wet, plastic, and biomedical waste).',
+      3 => 'Campus-wide green ambassadors and student monitoring squads for plastic-free campus zones.',
+    ),
+  ),
+  'welfare-policy' => 
+  array (
+    'title' => 'Staff & Student Welfare Policy',
+    'category' => 'Institutional Policies',
+    'subtitle' => 'Health Insurance, Medical Hospital Care, Emergency Aid & Welfare Endowments',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Welfare_Policy.pdf',
+    'description' => 'Comprehensive welfare policy providing healthcare benefits, medical emergency coverage, faculty accommodation, creche facilities, and student benevolence funds across SRKU.',
+    'highlights' => 
+    array (
+      0 => 'Direct healthcare access at SRKU 750+ Bed Super-Specialty Teaching Hospital.',
+      1 => 'Group medical insurance, subsidized treatments, and emergency relief endowments for staff.',
+      2 => 'Student benevolent fund providing financial aid during family crises or accidents.',
+      3 => 'Creche facilities, gymnasium access, staff quarters, and recreational facilities.',
+    ),
+  ),
+  'fees-2026-27' => 
+  array (
+    'title' => 'Fee Structure 2026-27',
+    'category' => 'Admission & Fee',
+    'subtitle' => 'Approved Tuition Fee Schedule & Payment Guidelines for Academic Session 2026-27',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/fees-2026-27.pdf',
+    'description' => 'Official fee schedule notified by the University Governing Body detailing course-wise tuition fees, examination fees, library charges, and hostel fees for the Academic Session 2026-27.',
+    'highlights' => 
+    array (
+      0 => 'Complete transparent fee schedule across all 90+ UG, PG, Diploma, and Doctoral courses.',
+      1 => 'Installment payment schedules, digital banking channels, and official online payment gateway.',
+      2 => 'Detailed breakdown of tuition fee, laboratory charges, library, and examination fees.',
+      3 => 'Hostel accommodation, mess charges, and bus transportation route fare charts.',
+    ),
+  ),
+  'meritorious-scheme-policy' => 
+  array (
+    'title' => 'Meritorious Scheme & Scholarship Policy',
+    'category' => 'Admission & Fee',
+    'subtitle' => 'Merit-Based Scholarships, Fee Waivers & Academic Excellence Awards',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/meritorious-scheme-policy.pdf',
+    'description' => 'Institutional scholarship regulations rewarding academic toppers, national competitive exam high-rankers, sports champions, and meritorious students across all programmes.',
+    'highlights' => 
+    array (
+      0 => 'Merit scholarship slabs (up to 100% tuition waiver) based on qualifying board/entrance scores.',
+      1 => 'Special scholarships for state/national rank holders and national sports medalists.',
+      2 => 'Continuation criteria based on consistent SGPA/CGPA maintenance in semester examinations.',
+      3 => 'Seamless integration with National Scholarship Portal (NSP) and State Freeship schemes.',
+    ),
+  ),
+  'seed-money-research-policy' => 
+  array (
+    'title' => 'Policy for Seed Money Research Projects',
+    'category' => 'Research',
+    'subtitle' => 'Institutional Research Grant Funding for Faculty & Early Career Researchers',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/policy-for-seed-money-research-projects.pdf',
+    'description' => 'Institutional grant funding regulations providing seed money financial assistance to university professors, scholars, and interdisciplinary research teams for preliminary studies.',
+    'highlights' => 
+    array (
+      0 => 'Direct financial seed grants to initiate high-impact preliminary scientific investigations.',
+      1 => 'Transparent project proposal review and allocation by University Research Advisory Board.',
+      2 => 'Funding for prototype development, lab chemicals, consumables, and computational tools.',
+      3 => 'Mandate to convert seed projects into external sponsored proposals (DST, SERB, ICMR, AICTE).',
+    ),
+  ),
+  'aicte-approval-rkdfist' => 
+  array (
+    'title' => 'AICTE Approval 2026-27 - RKDF Institute of Science & Technology',
+    'category' => 'Approval & Accreditation',
+    'subtitle' => 'Extension of Approval (EOA) for B.Tech, M.Tech & Polytechnic Programmes',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/AICTE-Approval-2026-27/RKDFIST.pdf',
+    'description' => 'Official AICTE Extension of Approval letter authorising undergraduate engineering, postgraduate M.Tech, and diploma programmes at RKDF Institute of Science and Technology.',
+    'highlights' => 
+    array (
+      0 => 'Approved by All India Council for Technical Education (AICTE), New Delhi for 2026-27.',
+      1 => 'Sanctioned intakes for Computer Science, Mechanical, Civil, Electrical & Electronics disciplines.',
+      2 => 'Cadre ratio compliance, faculty credentials, and state-of-the-art laboratory certification.',
+      3 => 'Curriculum alignment with NEP-2020 and Outcome Based Education (OBE) model.',
+    ),
+  ),
+  'aicte-approval-rkdfist-mca' => 
+  array (
+    'title' => 'AICTE Approval 2026-27 - RKDF IST (MCA)',
+    'category' => 'Approval & Accreditation',
+    'subtitle' => 'Extension of Approval (EOA) for Master of Computer Applications (MCA)',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/AICTE-Approval-2026-27/RKDFIST(MCA).pdf',
+    'description' => 'Official AICTE approval notification sanctioning postgraduate Master of Computer Applications (MCA) programme at RKDF Institute of Science and Technology (MCA).',
+    'highlights' => 
+    array (
+      0 => 'AICTE approval for 2-year Master of Computer Applications (MCA) postgraduate degree.',
+      1 => 'Modern computing infrastructure, AI/ML research labs, and cloud development centers.',
+      2 => 'Industry-sponsored projects, internships, and corporate placement pipelines.',
+      3 => 'Full compliance with AICTE Approval Process Handbook standards.',
+    ),
+  ),
+  'aicte-approval-rkdfim' => 
+  array (
+    'title' => 'AICTE Approval 2026-27 - RKDF Institute of Management',
+    'category' => 'Approval & Accreditation',
+    'subtitle' => 'Extension of Approval (EOA) for Master of Business Administration (MBA)',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/AICTE-Approval-2026-27/RKDFIM.pdf',
+    'description' => 'Official AICTE Extension of Approval for 2026-27 conferring statutory approval for Master of Business Administration (MBA) courses at RKDF Institute of Management.',
+    'highlights' => 
+    array (
+      0 => 'AICTE approval for MBA degree programs with specialized dual concentrations.',
+      1 => 'Sanctioned intake capacity across Marketing, Finance, HR, and Supply Chain Management.',
+      2 => 'Executive guest lectures, live corporate consulting projects, and global case studies.',
+      3 => 'Benchmark placement record in BFSI, FMCG, Tech, and Logistics sectors.',
+    ),
+  ),
+  'aicte-approval-rkdfibm' => 
+  array (
+    'title' => 'AICTE Approval 2026-27 - RKDF Institute of Business Management',
+    'category' => 'Approval & Accreditation',
+    'subtitle' => 'Extension of Approval (EOA) for MBA & Post-Graduate Business Studies',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/AICTE-Approval-2026-27/RKDFIBM.pdf',
+    'description' => 'Official AICTE Extension of Approval letter for Master of Business Administration (MBA) programmes at RKDF Institute of Business Management for academic year 2026-27.',
+    'highlights' => 
+    array (
+      0 => 'AICTE extension of approval for MBA and PG business management programs for 2026-27.',
+      1 => 'State-of-the-art management campus, digital library, and corporate incubation hub.',
+      2 => 'Entrepreneurship development cell, startup mentorship, and live business analytics.',
+      3 => 'Approved faculty cadre ratio and academic infrastructure compliance.',
+    ),
+  ),
 );
 
 $aliases = array (
@@ -1033,6 +1258,40 @@ $aliases = array (
   'nirf' => 'nirf-2026',
   'careers' => 'vacancy',
   'requirement-paper' => 'vacancy',
+  'fees' => 'fees-2026-27',
+  'fee-structure' => 'fees-2026-27',
+  'fee-structure-2026-27' => 'fees-2026-27',
+  'fees-structure' => 'fees-2026-27',
+  'fees-2026' => 'fees-2026-27',
+  'clean-green-campus' => 'clean-green-campus-policy',
+  'clean-green-policy' => 'clean-green-campus-policy',
+  'green-campus-policy' => 'clean-green-campus-policy',
+  'hr-policy-pdf' => 'hr-policy',
+  'it-policy-pdf' => 'it-policy',
+  'inhouse-scheme' => 'inhouse-scheme-policy',
+  'inhouse-policy' => 'inhouse-scheme-policy',
+  'maintenance' => 'maintenance-policy',
+  'appraisal-policy' => 'performance-appraisal-policy',
+  'performance-appraisal' => 'performance-appraisal-policy',
+  'plastic-ban' => 'plastic-ban-policy',
+  'plastic-policy' => 'plastic-ban-policy',
+  'disabled-friendly-policy' => 'differently-abled-facilities',
+  'barrier-free-environment' => 'differently-abled-facilities',
+  'grievance-redressal-policy' => 'student-grievance-committee',
+  'grievance-policy' => 'student-grievance-committee',
+  'consultancy-policy' => 'consultancy-projects',
+  'welfare' => 'welfare-policy',
+  'welfare-policy-pdf' => 'welfare-policy',
+  'meritorious-scheme' => 'meritorious-scheme-policy',
+  'merit-scholarship-policy' => 'meritorious-scheme-policy',
+  'scholarship-policy' => 'meritorious-scheme-policy',
+  'seed-money-policy' => 'seed-money-research-policy',
+  'seed-money' => 'seed-money-research-policy',
+  'aicte-approval-2026-27' => 'council-of-technical-education',
+  'aicte-rkdfist' => 'aicte-approval-rkdfist',
+  'aicte-rkdfist-mca' => 'aicte-approval-rkdfist-mca',
+  'aicte-rkdfim' => 'aicte-approval-rkdfim',
+  'aicte-rkdfibm' => 'aicte-approval-rkdfibm',
 );
 
 // ═══════════════════════════════════════════════════════
