@@ -7814,6 +7814,7 @@ body {
     flex-direction: column;
     gap: 8px;
     align-items: flex-end;
+    pointer-events: none;
 }
 
 .side-action-tab {
@@ -7825,18 +7826,19 @@ body {
     cursor: pointer;
     padding: 0;
     background: transparent;
-    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
-    transform: translateX(calc(100% - 48px));
     height: 48px;
+    max-width: 48px;
     border-radius: 16px 0 0 16px;
     color: #ffffff !important;
     box-shadow: -4px 6px 18px rgba(0, 0, 0, 0.18);
     overflow: hidden;
     position: relative;
+    pointer-events: auto;
+    transition: max-width 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
 }
 
 .side-action-tab:hover {
-    transform: translateX(0);
+    max-width: 260px;
     box-shadow: -6px 8px 24px rgba(0, 0, 0, 0.28);
 }
 
@@ -7858,19 +7860,23 @@ body {
 }
 
 .side-action-tab .tab-label {
-    padding: 0 18px 0 12px;
+    max-width: 0;
+    padding: 0;
     font-size: 0.88rem;
     font-weight: 700;
     letter-spacing: 0.3px;
     white-space: nowrap;
     opacity: 0;
-    transition: opacity 0.22s ease 0.06s;
+    overflow: hidden;
+    transition: max-width 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, padding 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     user-select: none;
     color: #ffffff;
 }
 
 .side-action-tab:hover .tab-label {
+    max-width: 200px;
     opacity: 1;
+    padding: 0 18px 0 10px;
 }
 
 /* 1. Admission (Vibrant Crimson & Maroon) */
@@ -7946,12 +7952,14 @@ body {
         top: 50%;
         transform: translateY(-50%);
         gap: 6px;
+        pointer-events: none;
     }
 
     .side-action-tab {
         height: 42px;
-        transform: translateX(0);
+        max-width: 42px;
         border-radius: 12px 0 0 12px;
+        pointer-events: auto;
     }
 
     .side-action-tab .tab-icon {
