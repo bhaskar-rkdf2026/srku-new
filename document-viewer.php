@@ -185,6 +185,21 @@ $documentsRegistry = array (
       3 => 'Financial stability certificates and endowment fund disclosures.',
     ),
   ),
+  'policy-for-grievance-redressal' => 
+  array (
+    'title' => 'Policy for Grievance Redressal',
+    'category' => 'All Committee',
+    'subtitle' => 'Institutional Grievance Redressal Policy (SGRC) & UGC Regulations',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Policy-for-grievance-redressal.pdf',
+    'description' => 'Official policy and notification delineating the constitution, membership, powers, and procedure of the Student Grievance Redressal Committee (SGRC) constituted in compliance with UGC Regulations.',
+    'highlights' => 
+    array (
+      0 => 'Independent committee headed by senior faculty to resolve student complaints.',
+      1 => 'Time-bound 15-day grievance investigation and redressal mechanism.',
+      2 => 'Special provisions for online registration of academic and hostel concerns.',
+      3 => 'Direct appellate pathway to University Ombudsman.',
+    ),
+  ),
   'student-grievance-committee' => 
   array (
     'title' => 'Policy for Grievance Redressal & Student Grievance Committee',
@@ -1277,8 +1292,12 @@ $aliases = array (
   'plastic-policy' => 'plastic-ban-policy',
   'disabled-friendly-policy' => 'differently-abled-facilities',
   'barrier-free-environment' => 'differently-abled-facilities',
-  'grievance-redressal-policy' => 'student-grievance-committee',
-  'grievance-policy' => 'student-grievance-committee',
+  'grievance-redressal-policy' => 'policy-for-grievance-redressal',
+  'policy-for-grievance-redressal' => 'policy-for-grievance-redressal',
+  'policy-grievance-redressal' => 'policy-for-grievance-redressal',
+  'grievance-policy' => 'policy-for-grievance-redressal',
+  'student-grievance-committee' => 'student-grievance-committee',
+  'student-grievance' => 'student-grievance-committee',
   'consultancy-policy' => 'consultancy-projects',
   'welfare' => 'welfare-policy',
   'welfare-policy-pdf' => 'welfare-policy',
@@ -1389,6 +1408,8 @@ if (!$doc && !empty($fileParam)) {
 // 6. Dynamic Disk Search across assets/uploads/
 if (!$doc && !empty($normKey)) {
     $searchDirs = [
+        __DIR__ . '/assets/uploads/2026/updated-docs/',
+        __DIR__ . '/updated-docs-Website/',
         __DIR__ . '/assets/uploads/2025/10/new-update/',
         __DIR__ . '/assets/uploads/2025/allCommittee/',
         __DIR__ . '/assets/uploads/2026/07/',
