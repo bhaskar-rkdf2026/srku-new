@@ -757,7 +757,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
 <!-- ═══════════════════════════════════════════════════════
      GALLERY SECTION (Bootstrap 5-col Grid) — DB Connected
 ═══════════════════════════════════════════════════════ -->
-<?php $homeGridGallery = getGalleryImages('Campus', 10); ?>
+<?php $homeGridGallery = getHomeGalleryImages(10); ?>
 <section class="py-5 bg-cream">
     <div class="container-xl py-2">
         <div class="d-flex justify-content-between align-items-center mb-4">

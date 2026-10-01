@@ -738,6 +738,38 @@ function getGalleryImages($category = null, $limit = null) {
     }
 }
 
+// Fetch Gallery Images for Homepage (Campus Life Section)
+// Returns admin-selected featured photos (up to 10), or falls back to latest 10 photos
+function getHomeGalleryImages($limit = 10) {
+    try {
+        $pdo = getDBConnection();
+        if ($pdo) {
+            // 1. Check if admin explicitly selected photos (is_featured = 1)
+            $stmt = $pdo->prepare("SELECT * FROM gallery WHERE is_featured = 1 ORDER BY id DESC LIMIT :lim");
+            $stmt->bindValue(':lim', (int)$limit, PDO::PARAM_INT);
+            $stmt->execute();
+            $featured = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (!empty($featured) && count($featured) > 0) {
+                return $featured;
+            }
+
+            // 2. If no photos are selected, fallback to latest 10 photos from gallery
+            $stmt = $pdo->prepare("SELECT * FROM gallery ORDER BY id DESC LIMIT :lim");
+            $stmt->bindValue(':lim', (int)$limit, PDO::PARAM_INT);
+            $stmt->execute();
+            $latest = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (!empty($latest) && count($latest) > 0) {
+                return $latest;
+            }
+        }
+    } catch (Exception $e) {}
+
+    // 3. Fallback to directory scan if DB is empty
+    return getGalleryImages('Campus', $limit);
+}
+
 // Admin session security check
 function checkAdminLogin() {
     if (session_status() == PHP_SESSION_NONE) {

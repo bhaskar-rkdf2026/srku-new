@@ -112,8 +112,13 @@ if ($searchTerm) {
         <h3 class="h4 fw-bold text-navy mb-1"><i class="fas fa-photo-video text-danger me-2"></i> Media Library &amp; Image Uploader</h3>
         <p class="text-muted small mb-0">Upload images, banners, and documents. Instantly copy their public URLs to use in pages, banners, or headers.</p>
     </div>
-    <div class="badge bg-navy px-3 py-2 fs-6">
-        Total Files: <?php echo count($allFiles); ?>
+    <div class="d-flex align-items-center gap-2">
+        <button type="button" class="btn btn-danger btn-sm rounded-pill px-3 py-2 fw-bold shadow-sm" onclick="window.openMediaPicker()">
+            <i class="fas fa-th-large me-1"></i> Open Global Media Picker
+        </button>
+        <div class="badge bg-navy px-3 py-2 fs-6">
+            Total Files: <?php echo count($allFiles); ?>
+        </div>
     </div>
 </div>
 

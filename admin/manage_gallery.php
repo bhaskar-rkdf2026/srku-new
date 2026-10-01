@@ -9,7 +9,7 @@ if (!is_dir($uploadDir)) {
     @mkdir($uploadDir, 0777, true);
 }
 
-// Ensure gallery table exists in database
+// Ensure gallery table and is_featured column exist in database
 if ($pdo) {
     try {
         $pdo->exec("CREATE TABLE IF NOT EXISTS `gallery` (
@@ -17,9 +17,15 @@ if ($pdo) {
             `title` varchar(255) NOT NULL,
             `category` varchar(100) DEFAULT 'Campus',
             `image_url` varchar(255) NOT NULL,
+            `is_featured` tinyint(1) NOT NULL DEFAULT 0,
             `created_at` datetime DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
-    } catch (Exception $e) {}
+        $pdo->exec("ALTER TABLE `gallery` ADD COLUMN IF NOT EXISTS `is_featured` tinyint(1) NOT NULL DEFAULT 0");
+    } catch (Exception $e) {
+        try {
+            $pdo->exec("ALTER TABLE `gallery` ADD `is_featured` tinyint(1) NOT NULL DEFAULT 0");
+        } catch (Exception $e2) {}
+    }
 }
 
 $tab = sanitize($_GET['tab'] ?? 'all');
@@ -36,7 +42,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     
     try {
-        // 1. Quick Category Move
+        // 1. Toggle Homepage Featured Status
+        if ($action === 'toggle_featured' && $pdo) {
+            $photoId = (int)($_POST['id'] ?? 0);
+            if ($photoId > 0) {
+                $stmt = $pdo->prepare("UPDATE gallery SET is_featured = CASE WHEN is_featured = 1 THEN 0 ELSE 1 END WHERE id = :id");
+                $stmt->execute([':id' => $photoId]);
+                
+                $chk = $pdo->prepare("SELECT is_featured FROM gallery WHERE id = :id");
+                $chk->execute([':id' => $photoId]);
+                $newState = (int)$chk->fetchColumn();
+                
+                if ($newState === 1) {
+                    setFlashMsg('success', 'Photo pinned to Homepage (Campus Life Section).');
+                } else {
+                    setFlashMsg('info', 'Photo removed from Homepage selection.');
+                }
+            }
+            header("Location: manage_gallery.php?tab=" . urlencode($tab));
+            exit;
+        }
+
+        // 2. Bulk Select Latest 10 Photos as Featured
+        if ($action === 'bulk_featured_select_10' && $pdo) {
+            $pdo->exec("UPDATE gallery SET is_featured = 0");
+            $pdo->exec("UPDATE gallery SET is_featured = 1 ORDER BY id DESC LIMIT 10");
+            setFlashMsg('success', 'Selected the latest 10 gallery photos for Homepage display.');
+            header("Location: manage_gallery.php?tab=featured");
+            exit;
+        }
+
+        // 3. Bulk Clear All Homepage Selections
+        if ($action === 'bulk_featured_clear' && $pdo) {
+            $pdo->exec("UPDATE gallery SET is_featured = 0");
+            setFlashMsg('info', 'All homepage selections cleared. Homepage will automatically display the latest 10 gallery photos.');
+            header("Location: manage_gallery.php?tab=" . urlencode($tab));
+            exit;
+        }
+
+        // 4. Quick Category Move
         if ($action === 'change_category' && $pdo) {
             $photoId = (int)($_POST['id'] ?? 0);
             $newCat = sanitize($_POST['category'] ?? 'Campus');
@@ -49,13 +93,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // 2. Bulk Import from WebP Uploads Directory
+        // 5. Bulk Import from WebP Uploads Directory
         if ($action === 'sync_webp' && $pdo) {
             $files = is_dir($uploadDir) ? glob($uploadDir . '*.webp') : [];
             $added = 0;
             if (!empty($files)) {
                 $checkStmt = $pdo->prepare("SELECT id FROM gallery WHERE image_url LIKE :url LIMIT 1");
-                $insertStmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url) VALUES (:title, :cat, :url)");
+                $insertStmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url, is_featured) VALUES (:title, :cat, :url, 0)");
                 foreach ($files as $f) {
                     $bn = basename($f);
                     $relUrl = 'assets/uploads/gallery/webp/' . $bn;
@@ -83,13 +127,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // 3. Add or Edit Photo
+        // 6. Add or Edit Photo
         if (($action === 'add' || $action === 'edit') && $pdo) {
             $id = (int)($_POST['id'] ?? 0);
-            $title = trim(sanitize($_POST['title'] ?? ''));
+            $title = trim(sanitize($_POST['title'] ?? 'SRKU Campus Photo'));
             $category = trim(sanitize($_POST['category'] ?? $tab));
-            if ($category === 'all') $category = 'Campus';
+            if ($category === 'all' || $category === 'featured') $category = 'Campus';
             $imageUrl = trim($_POST['image_url'] ?? '');
+            $isFeatured = isset($_POST['is_featured']) ? 1 : 0;
 
             // Handle Image File Upload with WebP conversion
             if (isset($_FILES['gallery_file']) && $_FILES['gallery_file']['error'] === UPLOAD_ERR_OK) {
@@ -147,15 +192,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 setFlashMsg('danger', 'Please select or upload an image.');
             } else {
                 if ($action === 'add') {
-                    $stmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url) VALUES (:title, :cat, :url)");
-                    $stmt->execute([':title' => $title, ':cat' => $category, ':url' => $imageUrl]);
+                    $stmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url, is_featured) VALUES (:title, :cat, :url, :feat)");
+                    $stmt->execute([':title' => $title, ':cat' => $category, ':url' => $imageUrl, ':feat' => $isFeatured]);
                     setFlashMsg('success', "New photo added to '{$category}' successfully.");
                 } elseif ($action === 'edit' && $id > 0) {
-                    $stmt = $pdo->prepare("UPDATE gallery SET title = :title, category = :cat, image_url = :url WHERE id = :id");
-                    $stmt->execute([':title' => $title, ':cat' => $category, ':url' => $imageUrl, ':id' => $id]);
+                    $stmt = $pdo->prepare("UPDATE gallery SET title = :title, category = :cat, image_url = :url, is_featured = :feat WHERE id = :id");
+                    $stmt->execute([':title' => $title, ':cat' => $category, ':url' => $imageUrl, ':feat' => $isFeatured, ':id' => $id]);
                     setFlashMsg('success', 'Gallery photo updated successfully.');
                 }
-                header("Location: manage_gallery.php?tab=" . urlencode($category));
+                header("Location: manage_gallery.php?tab=" . urlencode($tab));
                 exit;
             }
         }
@@ -189,7 +234,7 @@ try {
         $files = is_dir($uploadDir) ? glob($uploadDir . '*.webp') : [];
         if (!empty($files)) {
             $checkStmt = $pdo->prepare("SELECT id FROM gallery WHERE image_url LIKE :url LIMIT 1");
-            $insertStmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url) VALUES (:title, :cat, :url)");
+            $insertStmt = $pdo->prepare("INSERT INTO gallery (title, category, image_url, is_featured) VALUES (:title, :cat, :url, 0)");
             foreach ($files as $f) {
                 $bn = basename($f);
                 $relUrl = 'assets/uploads/gallery/webp/' . $bn;
@@ -227,11 +272,13 @@ try {
     }
 } catch (Exception $e) {}
 
-// Fetch Category Counts
+// Fetch Category Counts & Featured Count
 $counts = [];
 $totalCount = 0;
+$featuredCount = 0;
 try {
     $totalCount = (int)($pdo ? $pdo->query("SELECT COUNT(*) FROM gallery")->fetchColumn() : 0);
+    $featuredCount = (int)($pdo ? $pdo->query("SELECT COUNT(*) FROM gallery WHERE is_featured = 1")->fetchColumn() : 0);
     foreach ($categories as $k => $c) {
         $stmt = $pdo ? $pdo->prepare("SELECT COUNT(*) FROM gallery WHERE LOWER(category) = LOWER(:cat)") : null;
         if ($stmt) {
@@ -243,6 +290,7 @@ try {
     }
 } catch (Exception $e) {
     $totalCount = 0;
+    $featuredCount = 0;
 }
 $counts['all'] = $totalCount;
 
@@ -255,7 +303,9 @@ try {
         $sql = "SELECT * FROM gallery WHERE 1=1";
         $params = [];
 
-        if ($tab !== 'all' && isset($categories[$tab])) {
+        if ($tab === 'featured') {
+            $sql .= " AND is_featured = 1";
+        } elseif ($tab !== 'all' && isset($categories[$tab])) {
             $sql .= " AND LOWER(category) = LOWER(:cat)";
             $params[':cat'] = $tab;
         }
@@ -263,7 +313,7 @@ try {
             $sql .= " AND (image_url LIKE :q OR title LIKE :q OR category LIKE :q)";
             $params[':q'] = "%{$searchQuery}%";
         }
-        $sql .= " ORDER BY id DESC";
+        $sql .= " ORDER BY is_featured DESC, id DESC";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);
@@ -280,18 +330,66 @@ require_once __DIR__ . '/header.php';
 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
     <div>
         <h3 class="h4 fw-bold text-navy mb-1"><i class="fas fa-images text-danger me-2"></i> Category-Wise Gallery Management</h3>
-        <p class="text-muted small mb-0">Organize and manage university facility images across Campus, Gym, Sports Arena, and Hospitals.</p>
+        <p class="text-muted small mb-0">Manage university facility photos and select which 10 images are featured on the <strong>Homepage Campus Life</strong> section.</p>
     </div>
-    <div class="d-flex gap-2">
-        <form action="manage_gallery.php" method="POST" class="d-inline" onsubmit="return confirm('Scan and sync all WebP photos from server uploads folder into database?');">
+    <div class="d-flex gap-2 flex-wrap">
+        <form action="manage_gallery.php?tab=<?php echo urlencode($tab); ?>" method="POST" class="d-inline" onsubmit="return confirm('Scan and sync all WebP photos from server uploads folder into database?');">
             <input type="hidden" name="action" value="sync_webp">
             <button type="submit" class="btn btn-sm btn-outline-success px-3 rounded-pill shadow-sm">
-                <i class="fas fa-sync-alt me-1"></i> Sync Photos from Server
+                <i class="fas fa-sync-alt me-1"></i> Sync Server Photos
             </button>
         </form>
-        <a href="<?php echo BASE_URL; ?>gallery.php<?php echo ($tab !== 'all') ? '?category=' . urlencode($tab) : ''; ?>" target="_blank" class="btn btn-sm btn-outline-danger px-3 rounded-pill shadow-sm">
+        <a href="<?php echo BASE_URL; ?>#campus-life" target="_blank" class="btn btn-sm btn-outline-primary px-3 rounded-pill shadow-sm">
+            <i class="fas fa-home me-1"></i> View Homepage Section
+        </a>
+        <a href="<?php echo BASE_URL; ?>gallery.php<?php echo ($tab !== 'all' && $tab !== 'featured') ? '?category=' . urlencode($tab) : ''; ?>" target="_blank" class="btn btn-sm btn-outline-danger px-3 rounded-pill shadow-sm">
             <i class="fas fa-external-link-alt me-1"></i> View Live Gallery
         </a>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     HOMEPAGE "CAMPUS LIFE" GALLERY SELECTION STATUS CALLOUT
+     ══════════════════════════════════════════════════════════ -->
+<div class="card border-0 shadow-sm rounded-4 p-3 mb-4 text-white" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-left: 5px solid #eab308 !important;">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+        <div class="d-flex align-items-center gap-3">
+            <div class="bg-warning text-dark rounded-circle p-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px;">
+                <i class="fas fa-star fs-5"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold text-white mb-1">
+                    Homepage "Campus Life" Gallery (10 Images Grid)
+                </h6>
+                <p class="small text-white-50 mb-0">
+                    <?php if ($featuredCount > 0): ?>
+                        Currently showing <strong class="text-warning"><?php echo min($featuredCount, 10); ?> custom selected photo(s)</strong> on the Homepage.
+                        <?php if ($featuredCount > 10): ?>
+                            <span class="badge bg-warning text-dark ms-1">Note: Latest 10 of <?php echo $featuredCount; ?> selected will show.</span>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        No photos explicitly pinned. Homepage is automatically displaying the <strong class="text-info">Latest 10 Gallery Photos</strong>.
+                    <?php endif; ?>
+                </p>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2 flex-wrap">
+            <form action="manage_gallery.php?tab=<?php echo urlencode($tab); ?>" method="POST" onsubmit="return confirm('Pin the latest 10 gallery photos to the homepage?');">
+                <input type="hidden" name="action" value="bulk_featured_select_10">
+                <button type="submit" class="btn btn-sm btn-warning text-dark fw-bold px-3 rounded-pill">
+                    <i class="fas fa-check-double me-1"></i> Select Latest 10 for Home
+                </button>
+            </form>
+            <?php if ($featuredCount > 0): ?>
+                <form action="manage_gallery.php?tab=<?php echo urlencode($tab); ?>" method="POST" onsubmit="return confirm('Clear all homepage photo selections and return to auto latest 10?');">
+                    <input type="hidden" name="action" value="bulk_featured_clear">
+                    <button type="submit" class="btn btn-sm btn-outline-light px-3 rounded-pill">
+                        <i class="fas fa-undo me-1"></i> Reset to Auto
+                    </button>
+                </form>
+            <?php endif; ?>
+        </div>
     </div>
 </div>
 
@@ -302,6 +400,13 @@ require_once __DIR__ . '/header.php';
             <i class="fas fa-th-large"></i> All Photos
             <span class="badge <?php echo $tab === 'all' ? 'bg-white text-danger' : 'bg-secondary-subtle text-dark'; ?> rounded-pill ms-1"><?php echo $counts['all']; ?></span>
         </a>
+        
+        <!-- Homepage Featured Filter Tab -->
+        <a href="manage_gallery.php?tab=featured" class="srku-filter-btn <?php echo $tab === 'featured' ? 'active' : ''; ?>" style="<?php echo $tab === 'featured' ? 'background: #ca8a04; color: #fff;' : ''; ?>">
+            <i class="fas fa-star text-warning"></i> ⭐ Homepage Selected (<?php echo min($featuredCount, 10); ?>/10)
+            <span class="badge <?php echo $tab === 'featured' ? 'bg-white text-dark' : 'bg-warning text-dark'; ?> rounded-pill ms-1"><?php echo $featuredCount; ?></span>
+        </a>
+
         <?php foreach ($categories as $catKey => $catInfo): ?>
             <a href="manage_gallery.php?tab=<?php echo $catKey; ?>" class="srku-filter-btn <?php echo $tab === $catKey ? 'active' : ''; ?>">
                 <i class="fas <?php echo $catInfo['icon']; ?>"></i> <?php echo $catInfo['label']; ?>
@@ -317,9 +422,9 @@ require_once __DIR__ . '/header.php';
         <div class="card border-0 shadow-sm rounded-4 p-4 bg-white sticky-top" style="top: 80px;">
             <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
                 <h5 class="fw-bold text-navy mb-0">
-                    <i class="fas fa-plus-circle text-danger me-2"></i> Upload Photo
+                    <i class="fas fa-plus-circle text-danger me-2"></i> Upload / Add Photo
                 </h5>
-                <?php if ($tab !== 'all' && isset($categories[$tab])): ?>
+                <?php if ($tab !== 'all' && $tab !== 'featured' && isset($categories[$tab])): ?>
                     <span class="badge bg-danger-subtle text-danger small"><?php echo $categories[$tab]['label']; ?></span>
                 <?php endif; ?>
             </div>
@@ -345,14 +450,23 @@ require_once __DIR__ . '/header.php';
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label small fw-bold text-dark mb-1">OR Server Image Path</label>
-                    <input type="text" name="image_url" class="form-control form-control-sm" 
+                    <label class="form-label small fw-bold text-dark mb-1">OR Choose from Site Media Gallery</label>
+                    <input type="text" name="image_url" class="form-control form-control-sm media-picker-input" 
                            placeholder="assets/uploads/gallery/webp/dsc06520.webp">
+                </div>
+
+                <!-- Featured on Homepage Toggle -->
+                <div class="form-check form-switch p-3 bg-light rounded-3 border mb-3">
+                    <input class="form-check-input ms-0 me-2" type="checkbox" name="is_featured" value="1" id="isFeaturedCheck" <?php echo ($tab === 'featured') ? 'checked' : ''; ?>>
+                    <label class="form-check-label small fw-bold text-navy" for="isFeaturedCheck">
+                        <i class="fas fa-star text-warning me-1"></i> Feature on Homepage (Campus Life)
+                    </label>
+                    <small class="d-block text-muted" style="font-size: 0.72rem;">Show this photo in the 10-image Campus Life grid on the home page.</small>
                 </div>
 
                 <div class="pt-2">
                     <button type="submit" class="btn btn-danger px-4 py-2 rounded-pill fw-bold shadow-sm w-100">
-                        <i class="fas fa-upload me-1"></i> Add Photo to Category
+                        <i class="fas fa-upload me-1"></i> Add Photo to Gallery
                     </button>
                 </div>
             </form>
@@ -367,8 +481,16 @@ require_once __DIR__ . '/header.php';
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                 <div>
                     <h5 class="fw-bold text-navy mb-0">
-                        <i class="fas <?php echo ($tab !== 'all' && isset($categories[$tab])) ? $categories[$tab]['icon'] : 'fa-th-large'; ?> text-danger me-2"></i>
-                        <?php echo ($tab !== 'all' && isset($categories[$tab])) ? $categories[$tab]['label'] : 'All Photos in Gallery'; ?>
+                        <i class="fas <?php echo ($tab === 'featured') ? 'fa-star text-warning' : (($tab !== 'all' && isset($categories[$tab])) ? $categories[$tab]['icon'] : 'fa-th-large text-danger'); ?> me-2"></i>
+                        <?php 
+                        if ($tab === 'featured') {
+                            echo 'Photos Selected for Homepage (Campus Life)';
+                        } elseif ($tab !== 'all' && isset($categories[$tab])) {
+                            echo $categories[$tab]['label'];
+                        } else {
+                            echo 'All Photos in Gallery';
+                        }
+                        ?>
                         <span class="badge bg-danger-subtle text-danger fs-6 rounded-pill ms-2"><?php echo count($photos); ?> Photos</span>
                     </h5>
                 </div>
@@ -390,8 +512,16 @@ require_once __DIR__ . '/header.php';
             <?php if (empty($photos)): ?>
                 <div class="text-center py-5 text-muted bg-light rounded-4 my-3">
                     <i class="fas fa-images fa-3x mb-3 text-secondary"></i>
-                    <h6 class="fw-bold text-navy">No photos found in this category.</h6>
-                    <p class="small mb-0">Upload a new photo using the form on the left or click "Sync Photos from Server".</p>
+                    <h6 class="fw-bold text-navy">
+                        <?php echo ($tab === 'featured') ? 'No photos currently pinned to homepage.' : 'No photos found in this category.'; ?>
+                    </h6>
+                    <p class="small mb-0">
+                        <?php if ($tab === 'featured'): ?>
+                            Click <strong>"Pin to Homepage"</strong> on any photo below, or click <strong>"Select Latest 10 for Home"</strong>.
+                        <?php else: ?>
+                            Upload a new photo using the form on the left or click "Sync Server Photos".
+                        <?php endif; ?>
+                    </p>
                 </div>
             <?php else: ?>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3 g-3">
@@ -400,19 +530,46 @@ require_once __DIR__ . '/header.php';
                         $resolved = resolveMediaUrl($imgSrc, 'assets/uploads/2026/07/001.webp');
                         $currentCat = trim($row['category'] ?? 'Campus') ?: 'Campus';
                         $catMeta = $categories[$currentCat] ?? ['label' => ucfirst($currentCat), 'badge' => 'bg-secondary text-white'];
+                        $isFeat = (int)($row['is_featured'] ?? 0);
                     ?>
                         <div class="col">
-                            <div class="card h-100 border rounded-4 shadow-sm overflow-hidden bg-white">
+                            <div class="card h-100 border rounded-4 shadow-sm overflow-hidden bg-white <?php echo $isFeat ? 'border-warning shadow' : ''; ?>" style="<?php echo $isFeat ? 'border-width: 2px !important;' : ''; ?>">
+                                
                                 <div class="position-relative" style="height: 180px; background: #0f172a;">
                                     <img src="<?php echo $resolved; ?>" alt="Gallery Image" class="w-100 h-100 object-fit-cover" loading="lazy" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/campus-1.webp';">
+                                    
+                                    <!-- Category Badge -->
                                     <span class="position-absolute top-0 start-0 m-2 badge <?php echo $catMeta['badge']; ?> small shadow-sm">
                                         <?php echo $catMeta['label']; ?>
                                     </span>
+
+                                    <!-- Featured on Homepage Gold Star Badge -->
+                                    <?php if ($isFeat): ?>
+                                        <span class="position-absolute top-0 end-0 m-2 badge bg-warning text-dark shadow-sm fw-bold">
+                                            <i class="fas fa-star text-danger me-1"></i> On Homepage
+                                        </span>
+                                    <?php endif; ?>
                                 </div>
                                 
-                                <div class="p-3 bg-white">
+                                <div class="p-3 bg-white d-flex flex-column gap-2">
+                                    
+                                    <!-- 1-Click Toggle for Homepage Feature -->
+                                    <form action="manage_gallery.php?tab=<?php echo urlencode($tab); ?>" method="POST">
+                                        <input type="hidden" name="action" value="toggle_featured">
+                                        <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                        <?php if ($isFeat): ?>
+                                            <button type="submit" class="btn btn-sm btn-warning text-dark fw-bold w-100 py-1 shadow-xs" title="Click to remove from Homepage">
+                                                <i class="fas fa-check-circle text-success me-1"></i> Featured on Home <small class="fw-normal text-muted">(Click to remove)</small>
+                                            </button>
+                                        <?php else: ?>
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary w-100 py-1" title="Click to display this photo in Homepage Campus Life">
+                                                <i class="far fa-star text-warning me-1"></i> Pin to Homepage
+                                            </button>
+                                        <?php endif; ?>
+                                    </form>
+
                                     <!-- Quick Change Category Dropdown -->
-                                    <form action="manage_gallery.php?tab=<?php echo urlencode($tab); ?>" method="POST" class="mb-2">
+                                    <form action="manage_gallery.php?tab=<?php echo urlencode($tab); ?>" method="POST" class="mb-0">
                                         <input type="hidden" name="action" value="change_category">
                                         <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                         <select name="category" class="form-select form-select-sm" style="font-size: 0.78rem;" onchange="this.form.submit()" title="Move to another category tab">
@@ -424,7 +581,7 @@ require_once __DIR__ . '/header.php';
                                         </select>
                                     </form>
 
-                                    <div class="d-flex justify-content-between align-items-center pt-1 border-top">
+                                    <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-auto">
                                         <a href="<?php echo $resolved; ?>" target="_blank" class="btn btn-xs btn-outline-secondary px-2 py-1" style="font-size: 0.75rem;" title="View Fullsize">
                                             <i class="fas fa-expand-alt me-1"></i> Preview
                                         </a>

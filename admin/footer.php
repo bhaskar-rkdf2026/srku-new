@@ -55,5 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
+
+<!-- Global Site Media Gallery & Asset Picker Modal -->
+<?php require_once __DIR__ . '/media_modal.php'; ?>
+
+<!-- Global Media Picker Engine JS -->
+<script src="<?php echo BASE_URL; ?>assets/js/admin_media_picker.js?v=<?php echo @filemtime(__DIR__ . '/../assets/js/admin_media_picker.js') ?: time(); ?>"></script>
+
 </body>
 </html>

@@ -127,11 +127,9 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
     </script>
 
     <!-- Favicon & Brand Icons -->
-    <link rel="shortcut icon" type="image/x-icon" href="<?php echo BASE_URL; ?>favicon.ico?v=<?php echo @filemtime(__DIR__ . '/../favicon.ico') ?: time(); ?>">
-    <link rel="icon" type="image/x-icon" href="<?php echo BASE_URL; ?>favicon.ico?v=<?php echo @filemtime(__DIR__ . '/../favicon.ico') ?: time(); ?>">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo BASE_URL; ?>assets/images/favicon-1.png?v=<?php echo @filemtime(__DIR__ . '/../assets/images/favicon-1.png') ?: time(); ?>">
-    <link rel="icon" type="image/png" sizes="192x192" href="<?php echo BASE_URL; ?>assets/images/favicon.png?v=<?php echo @filemtime(__DIR__ . '/../assets/images/favicon.png') ?: time(); ?>">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo BASE_URL; ?>assets/images/favicon.png?v=<?php echo @filemtime(__DIR__ . '/../assets/images/favicon.png') ?: time(); ?>">
+    <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/favicon.png?v=<?php echo @filemtime(__DIR__ . '/../assets/images/favicon.png') ?: time(); ?>">
+    <link rel="shortcut icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/favicon.png?v=<?php echo @filemtime(__DIR__ . '/../assets/images/favicon.png') ?: time(); ?>">
+    <link rel="apple-touch-icon" href="<?php echo BASE_URL; ?>assets/images/favicon.png?v=<?php echo @filemtime(__DIR__ . '/../assets/images/favicon.png') ?: time(); ?>">
 
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -276,10 +274,10 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                                 <i class="fas fa-cogs text-primary me-1"></i> AICTE Approvals 2026-27 <span class="static-dropdown-arrow static-sub-arrow"></span>
                             </a>
                             <ul class="static-dropdown-panel static-sub-dropdown">
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/AICTE-Approval-2026-27/RKDFIBM.pdf" target="_blank" class="static-dropdown-link"><i class="fas fa-file-pdf text-danger me-1"></i> RKDFIBM</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/AICTE-Approval-2026-27/RKDFIM.pdf" target="_blank" class="static-dropdown-link"><i class="fas fa-file-pdf text-danger me-1"></i> RKDFIM</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/AICTE-Approval-2026-27/RKDFIST.pdf" target="_blank" class="static-dropdown-link"><i class="fas fa-file-pdf text-danger me-1"></i> RKDFIST</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/AICTE-Approval-2026-27/RKDFIST(MCA).pdf" target="_blank" class="static-dropdown-link"><i class="fas fa-file-pdf text-danger me-1"></i> RKDFIST(MCA)</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/aicte-approval-rkdfibm" class="static-dropdown-link"><i class="fas fa-file-pdf text-danger me-1"></i> RKDFIBM</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/aicte-approval-rkdfim" class="static-dropdown-link"><i class="fas fa-file-pdf text-danger me-1"></i> RKDFIM</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/aicte-approval-rkdfist" class="static-dropdown-link"><i class="fas fa-file-pdf text-danger me-1"></i> RKDFIST</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/aicte-approval-rkdfist-mca" class="static-dropdown-link"><i class="fas fa-file-pdf text-danger me-1"></i> RKDFIST(MCA)</a></li>
                             </ul>
                         </li>
                         <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>about/srk-university-vision-and-mission" class="static-dropdown-link"><i class="fas fa-bullseye text-danger me-1"></i> Vision &amp; Mission</a></li>

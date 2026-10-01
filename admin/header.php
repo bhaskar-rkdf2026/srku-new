@@ -12,10 +12,7 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin CMS Dashboard - <?php echo SITE_NAME; ?></title>
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="<?php echo BASE_URL; ?>favicon.ico?v=<?php echo @filemtime(__DIR__ . '/../favicon.ico') ?: time(); ?>">
-    <link rel="icon" type="image/x-icon" href="<?php echo BASE_URL; ?>favicon.ico?v=<?php echo @filemtime(__DIR__ . '/../favicon.ico') ?: time(); ?>">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo BASE_URL; ?>assets/images/favicon-1.png?v=<?php echo @filemtime(__DIR__ . '/../assets/images/favicon-1.png') ?: time(); ?>">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo BASE_URL; ?>assets/images/favicon.png?v=<?php echo @filemtime(__DIR__ . '/../assets/images/favicon.png') ?: time(); ?>">
+    <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/favicon.png?v=<?php echo @filemtime(__DIR__ . '/../assets/images/favicon.png') ?: time(); ?>">
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -26,6 +23,9 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
     <!-- CKEditor 5 Classic CDN -->
     <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+    <script>
+        window.BASE_URL = "<?php echo BASE_URL; ?>";
+    </script>
     <style>
         .action-btn-group {
             display: inline-flex !important;
