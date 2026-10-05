@@ -608,7 +608,22 @@ $documentsRegistry = array (
   'research-policy' => 
   array (
     'title' => 'University Research Policy',
-    'category' => 'Research',
+    'category' => 'Institutional Policies',
+    'subtitle' => 'Institutional Guidelines for Ethics, Publications, IPR & Seed Funding',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/university_research_policy.pdf',
+    'description' => 'Comprehensive policy governing research standards, ethical clearances, intellectual property management, patent filings, research incentives, and collaborative research initiatives at SRKU.',
+    'highlights' => 
+    array (
+      0 => 'Code of ethics in scientific research and academic publishing.',
+      1 => 'Intellectual Property Rights (IPR) filing support and patent commercialization.',
+      2 => 'Financial incentives for high-impact research publications and books.',
+      3 => 'Guidelines for collaborative research with national and international bodies.',
+    ),
+  ),
+  'university-research-policy' => 
+  array (
+    'title' => 'University Research Policy',
+    'category' => 'Institutional Policies',
     'subtitle' => 'Institutional Guidelines for Ethics, Publications, IPR & Seed Funding',
     'pdf_path' => 'assets/uploads/2026/updated-docs/university_research_policy.pdf',
     'description' => 'Comprehensive policy governing research standards, ethical clearances, intellectual property management, patent filings, research incentives, and collaborative research initiatives at SRKU.',
@@ -653,7 +668,22 @@ $documentsRegistry = array (
   'consultancy-projects' => 
   array (
     'title' => 'Policy for Consultancy & Projects',
-    'category' => 'Research',
+    'category' => 'Institutional Policies',
+    'subtitle' => 'Industry Consultancy, Technical Solutions & Technology Transfer Guidelines',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/Policy_for_Consultancy.pdf',
+    'description' => 'Framework for faculty and departments offering specialized industrial consultancy, testing services, corporate training, and technical advisory to government and private sector organizations.',
+    'highlights' => 
+    array (
+      0 => 'Revenue sharing, institutional overheads, and project administration norms.',
+      1 => 'Material testing, drug formulation analysis, and software development services.',
+      2 => 'Corporate customized training and skill development programs.',
+      3 => 'MoUs with leading industrial firms and technology corporations.',
+    ),
+  ),
+  'policy-for-consultancy' => 
+  array (
+    'title' => 'Policy for Consultancy',
+    'category' => 'Institutional Policies',
     'subtitle' => 'Industry Consultancy, Technical Solutions & Technology Transfer Guidelines',
     'pdf_path' => 'assets/uploads/2026/updated-docs/Policy_for_Consultancy.pdf',
     'description' => 'Framework for faculty and departments offering specialized industrial consultancy, testing services, corporate training, and technical advisory to government and private sector organizations.',
@@ -723,6 +753,21 @@ $documentsRegistry = array (
       1 => 'Dedicated indoor complex for Badminton, Table Tennis, Chess, and Carrom.',
       2 => 'Modern fitness center and gymnasium with certified trainers.',
       3 => 'Annual sports meet, inter-university tournaments, and athletic scholarships.',
+    ),
+  ),
+  'sports-and-cultural-policy' => 
+  array (
+    'title' => 'Sports & Cultural Policy',
+    'category' => 'Institutional Policies',
+    'subtitle' => 'Institutional Guidelines for Sports, Athletics & Cultural Activities',
+    'pdf_path' => 'assets/uploads/2026/updated-docs/SPORTS-AND-CULTURAL-POLICY.pdf',
+    'description' => 'Comprehensive policy governing athletic competitions, sports facilities, cultural festivals, student talent promotion, and sports scholarships at SRKU Bhopal.',
+    'highlights' => 
+    array (
+      0 => 'Encouragement and support for national and state-level sports competitions.',
+      1 => 'World-class athletic infrastructure, gymnasium, and indoor sports facilities.',
+      2 => 'Cultural development programs, youth festivals, and artistic initiatives.',
+      3 => 'Sports quotas, fee concessions, and special achievement awards for athletes.',
     ),
   ),
   'ncc-nss' => 

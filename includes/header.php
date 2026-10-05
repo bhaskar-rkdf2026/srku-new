@@ -254,13 +254,18 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
                                 <i class="fas fa-file-contract text-danger me-1"></i> Institutional Policies <span class="static-dropdown-arrow static-sub-arrow"></span>
                             </a>
                             <ul class="static-dropdown-panel static-sub-dropdown">
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/welfare-policy" class="static-dropdown-link"><i class="fas fa-heart text-danger me-1"></i> Welfare Policy</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/university-research-policy" class="static-dropdown-link"><i class="fas fa-microscope text-primary me-1"></i> University Research Policy</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/sports-and-cultural-policy" class="static-dropdown-link"><i class="fas fa-running text-success me-1"></i> Sports &amp; Cultural Policy</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/policy-for-consultancy" class="static-dropdown-link"><i class="fas fa-handshake text-warning me-1"></i> Policy for Consultancy</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/meritorious-scheme-policy" class="static-dropdown-link"><i class="fas fa-award text-warning me-1"></i> Meritorious Scheme Policy</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/inhouse-scheme-policy" class="static-dropdown-link"><i class="fas fa-hand-holding-usd text-info me-1"></i> Inhouse Scheme Policy</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/clean-green-campus-policy" class="static-dropdown-link"><i class="fas fa-leaf text-success me-1"></i> Clean &amp; Green Campus Policy</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/plastic-ban-policy" class="static-dropdown-link"><i class="fas fa-ban text-danger me-1"></i> Plastic Ban Policy</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/differently-abled-facilities" class="static-dropdown-link"><i class="fas fa-wheelchair text-primary me-1"></i> Barrier Free &amp; Disabled Friendly</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/it-policy" class="static-dropdown-link"><i class="fas fa-laptop-code text-info me-1"></i> IT &amp; Cyber Security Policy</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/hr-policy" class="static-dropdown-link"><i class="fas fa-user-tie text-warning me-1"></i> Human Resource (HR) Policy</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/maintenance-policy" class="static-dropdown-link"><i class="fas fa-tools text-secondary me-1"></i> Campus Maintenance Policy</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/welfare-policy" class="static-dropdown-link"><i class="fas fa-heart text-danger me-1"></i> Staff &amp; Student Welfare Policy</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/performance-appraisal-policy" class="static-dropdown-link"><i class="fas fa-chart-line text-success me-1"></i> Performance Appraisal Policy</a></li>
                             </ul>
                         </li>
