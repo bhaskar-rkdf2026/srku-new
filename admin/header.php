@@ -209,6 +209,12 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                     <span class="badge bg-warning text-dark fw-bold rounded-pill" style="font-size: 0.7rem;"><?php echo $newLeadsBadge; ?></span>
                 <?php endif; ?>
             </a>
+            <a href="manage_pages.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_pages.php' ? 'active' : ''; ?>">
+                <i class="fas fa-file-alt text-info"></i> All Website Pages
+            </a>
+            <a href="manage_seo.php" class="sidebar-nav-link <?php echo ($currentAdminPage == 'manage_seo.php' || $currentAdminPage == 'seo.php') ? 'active' : ''; ?>">
+                <i class="fas fa-search-dollar text-warning"></i> SEO &amp; Meta Manager
+            </a>
             <a href="manage_header_footer.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_header_footer.php' ? 'active' : ''; ?>">
                 <i class="fas fa-heading"></i> Header &amp; Footer
             </a>

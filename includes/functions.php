@@ -2680,7 +2680,15 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
             }
         }
 
-        // 19. AUTOMATIC PRODUCTION SQL EXPORT (srku_db.sql)
+        // 19. DYNAMIC GLOBAL SEO & META INVENTORY
+        if ($target === 'all' || $target === 'seo_metadata') {
+            $seoSyncRes = syncSeoPagesInventory($pdo, $force);
+            $newSeoCount = (int)$pdo->query("SELECT COUNT(*) FROM `seo_metadata`")->fetchColumn();
+            $report['counts']['seo_metadata'] = $newSeoCount;
+            $report['messages'][] = "Dynamic SEO & Meta Inventory synchronized ({$newSeoCount} active site routes indexed).";
+        }
+
+        // 20. AUTOMATIC PRODUCTION SQL EXPORT (srku_db.sql)
         if ($driver !== 'sqlite') {
             $sqlExport = exportLiveDatabaseSqlFile();
             if (!empty($sqlExport['success'])) {
@@ -2825,3 +2833,796 @@ function exportLiveDatabaseSqlFile() {
         ];
     }
 }
+
+/**
+ * ══════════════════════════════════════════════════════════════════════════════
+ * DYNAMIC GLOBAL SEO & META MANAGER ENGINE
+ * ══════════════════════════════════════════════════════════════════════════════
+ */
+
+/**
+ * Automatically inventories all website portal routes, CMS pages, dynamic course & department pages,
+ * syllabi categories, and static modules into the seo_metadata table without overwriting customized values.
+ */
+function syncSeoPagesInventory($pdo = null, $force = false) {
+    if (!$pdo) {
+        $pdo = getDBConnection();
+    }
+
+    $existingStmt = $pdo->prepare("SELECT id, meta_title, meta_description, focus_keywords, canonical_url, robots_tag, og_title, og_description, og_image, twitter_card, schema_json FROM seo_metadata WHERE page_identifier = :pi LIMIT 1");
+    $insertStmt = $pdo->prepare("INSERT INTO seo_metadata (page_identifier, page_name, page_category, meta_title, meta_description, focus_keywords, canonical_url, robots_tag, og_title, og_description, og_image, twitter_card, schema_json) VALUES (:pi, :pn, :pc, :mt, :md, :fk, :cu, :rt, :ot, :od, :oi, :tc, :sj)");
+    $updateStmt = $pdo->prepare("UPDATE seo_metadata SET page_name = :pn, page_category = :pc WHERE page_identifier = :pi");
+
+    $siteName = defined('SITE_NAME') ? SITE_NAME : 'Sarvepalli Radhakrishnan University (SRKU)';
+    $baseUrl = defined('BASE_URL') ? BASE_URL : 'https://srku.edu.in/';
+
+    $pagesCatalog = [
+        // 1. PORTAL PAGES
+        [
+            'identifier' => 'index.php',
+            'name' => 'Home Page',
+            'category' => 'Portal Pages',
+            'title' => 'Sarvepalli Radhakrishnan University (SRKU), Bhopal | Official Portal',
+            'desc' => 'Sarvepalli Radhakrishnan University (SRKU) Bhopal is a premier multidisciplinary private university in Madhya Pradesh offering UGC, AICTE, NMC, PCI, BCI approved programmes.',
+            'keywords' => 'SRK University, Sarvepalli Radhakrishnan University, SRKU Bhopal, Admissions 2026-27, UGC Approved University MP, AICTE Approved Engineering College, NMC Approved Medical College Bhopal',
+            'canonical' => $baseUrl
+        ],
+        [
+            'identifier' => 'about.php',
+            'name' => 'About SRK University',
+            'category' => 'Portal Pages',
+            'title' => 'About Us | Sarvepalli Radhakrishnan University (SRKU), Bhopal',
+            'desc' => 'Discover Sarvepalli Radhakrishnan University (SRKU) Bhopal - our legacy, accreditations, educational leadership, sprawling 100+ acre campus, and academic excellence.',
+            'keywords' => 'About SRKU Bhopal, Sarvepalli Radhakrishnan University history, RKDF Group university, UGC approved university MP, private university Bhopal',
+            'canonical' => $baseUrl . 'about.php'
+        ],
+        [
+            'identifier' => 'founder-story.php',
+            'name' => "Founder's Vision & Story",
+            'category' => 'Portal Pages',
+            'title' => 'Founder Patron Story - Dr. Sunil Kapoor | SRKU Bhopal',
+            'desc' => 'Learn about the visionary journey of Founder Patron Dr. Sunil Kapoor and his lifelong dedication to affordable healthcare, quality education, and nation-building.',
+            'keywords' => 'Dr Sunil Kapoor SRKU, RKDF founder, Sunil Kapoor visionary educationist Bhopal, SRKU leadership',
+            'canonical' => $baseUrl . 'founder-story.php'
+        ],
+        [
+            'identifier' => 'chancellor-message.php',
+            'name' => "Chancellor's Message",
+            'category' => 'Portal Pages',
+            'title' => 'Chancellor Desk - Mrs. Janak Kapoor | SRK University Bhopal',
+            'desc' => 'Official message and welcome from Mrs. Janak Kapoor, Honorable Chancellor of Sarvepalli Radhakrishnan University (SRKU) Bhopal.',
+            'keywords' => 'Chancellor SRKU, Janak Kapoor Chancellor SRKU, Chancellor message SRK University Bhopal',
+            'canonical' => $baseUrl . 'chancellor-message.php'
+        ],
+        [
+            'identifier' => 'vice-chancellor-message.php',
+            'name' => "Vice Chancellor's Message",
+            'category' => 'Portal Pages',
+            'title' => 'Vice Chancellor Desk - Dr. Priyanka Jaiswal | SRKU Bhopal',
+            'desc' => 'Official message from Dr. Priyanka Jaiswal, Vice Chancellor of Sarvepalli Radhakrishnan University (SRKU) Bhopal.',
+            'keywords' => 'Vice Chancellor SRKU, Dr Priyanka Jaiswal VC SRKU, Vice chancellor address SRKU Bhopal',
+            'canonical' => $baseUrl . 'vice-chancellor-message.php'
+        ],
+        [
+            'identifier' => 'vision-mission.php',
+            'name' => 'Vision, Mission & Core Values',
+            'category' => 'Portal Pages',
+            'title' => 'Vision, Mission & Core Values | Sarvepalli Radhakrishnan University',
+            'desc' => 'Our vision is to emerge as a world-class university providing students transformative learning in science, technology, medicine, and management.',
+            'keywords' => 'SRKU vision mission, SRKU core values, educational motto Learn about Education that helps Society',
+            'canonical' => $baseUrl . 'vision-mission.php'
+        ],
+        [
+            'identifier' => 'why-srk.php',
+            'name' => 'Why Choose SRK University',
+            'category' => 'Portal Pages',
+            'title' => 'Why Choose SRKU? | Top Private University in Bhopal, MP',
+            'desc' => 'Explore why over 20,000 students choose SRKU Bhopal for top placements, 600+ faculty, 42+ labs, 750-bed hospital, and global corporate tie-ups.',
+            'keywords' => 'Why SRKU, Best private university Bhopal, SRKU placement statistics, top campus Bhopal MP',
+            'canonical' => $baseUrl . 'why-srk.php'
+        ],
+        [
+            'identifier' => 'board-members.php',
+            'name' => 'Board of Governance',
+            'category' => 'Portal Pages',
+            'title' => 'Board of Governance & Leadership | SRKU Bhopal',
+            'desc' => 'Meet the executive governing body and visionary leaders directing Sarvepalli Radhakrishnan University Bhopal.',
+            'keywords' => 'SRKU board members, governance Sarvepalli Radhakrishnan University, leadership team Bhopal',
+            'canonical' => $baseUrl . 'board-members.php'
+        ],
+        [
+            'identifier' => 'board-of-management.php',
+            'name' => 'Board of Management',
+            'category' => 'Portal Pages',
+            'title' => 'Board of Management | Sarvepalli Radhakrishnan University',
+            'desc' => 'Official Board of Management members of SRKU Bhopal responsible for academic governance and strategic direction.',
+            'keywords' => 'SRKU Board of Management, academic council Bhopal, SRKU administrators',
+            'canonical' => $baseUrl . 'board-of-management.php'
+        ],
+        [
+            'identifier' => 'admission-enquiry.php',
+            'name' => 'Admissions & Online Enquiry 2026-27',
+            'category' => 'Portal Pages',
+            'title' => 'Admissions Open 2026-27 | Apply Online | SRKU Bhopal',
+            'desc' => 'Apply online for Undergraduate, Postgraduate, Diploma, and PhD programs at Sarvepalli Radhakrishnan University Bhopal for the academic session 2026-27.',
+            'keywords' => 'SRKU admission 2026, admission form SRKU Bhopal, apply online SRK University, engineering admission Bhopal, pharmacy admission MP, medical admission Bhopal',
+            'canonical' => $baseUrl . 'admission-enquiry.php'
+        ],
+        [
+            'identifier' => 'contact.php',
+            'name' => 'Contact Us & Campus Location',
+            'category' => 'Portal Pages',
+            'title' => 'Contact Us | Sarvepalli Radhakrishnan University Bhopal',
+            'desc' => 'Get in touch with SRKU Bhopal. Helpline numbers, admission enquiry desk, registrar email, and NH-12 Misrod campus address.',
+            'keywords' => 'SRKU contact number, SRKU Bhopal address, SRKU helpline, exam department email Bhopal',
+            'canonical' => $baseUrl . 'contact.php'
+        ],
+        [
+            'identifier' => 'placements.php',
+            'name' => 'Training & Placements',
+            'category' => 'Portal Pages',
+            'title' => 'Placement Record & Recruiting Partners | SRKU Bhopal',
+            'desc' => 'SRKU Bhopal placement highlights: 94% placement record, 12 LPA highest package, and top recruiters like TCS, Infosys, Wipro, and Cipla.',
+            'keywords' => 'SRKU placements, highest package SRKU Bhopal, recruiting companies RKDF, campus placement 2026',
+            'canonical' => $baseUrl . 'placements.php'
+        ],
+        [
+            'identifier' => 'facilities.php',
+            'name' => 'Campus Facilities & Infrastructure',
+            'category' => 'Portal Pages',
+            'title' => 'Campus Infrastructure & Facilities | SRKU Bhopal',
+            'desc' => 'Explore world-class facilities at SRKU Bhopal including modern digital classrooms, 750-bed teaching hospital, sports complex, high-speed Wi-Fi, and transport.',
+            'keywords' => 'SRKU campus facilities, university hospital Bhopal, smart classrooms, sports ground SRKU',
+            'canonical' => $baseUrl . 'facilities.php'
+        ],
+        [
+            'identifier' => 'accreditation.php',
+            'name' => 'Accreditations & Approvals',
+            'category' => 'Portal Pages',
+            'title' => 'Accreditations & Statutory Recognitions | UGC, AICTE, NMC | SRKU',
+            'desc' => 'SRKU Bhopal is recognized under UGC 2(f) and approved by apex councils including AICTE, NMC, PCI, BCI, INC, DCI, NCISM, NCH, and AIU.',
+            'keywords' => 'UGC approved university MP, AICTE approval SRKU, NMC recognized medical college Bhopal, PCI approval pharmacy',
+            'canonical' => $baseUrl . 'accreditation.php'
+        ],
+        [
+            'identifier' => 'gallery.php',
+            'name' => 'Photo & Video Gallery',
+            'category' => 'Portal Pages',
+            'title' => 'Campus Photo & Video Gallery | SRKU Bhopal',
+            'desc' => 'Visual glimpse into campus life, student events, convocation ceremonies, state-of-the-art laboratories, and sports meets at SRKU Bhopal.',
+            'keywords' => 'SRKU campus photos, SRKU videos, convocation ceremony photos, annual fest photos Bhopal',
+            'canonical' => $baseUrl . 'gallery.php'
+        ],
+        [
+            'identifier' => 'news.php',
+            'name' => 'News, Notices & Circulars',
+            'category' => 'Portal Pages',
+            'title' => 'Latest News, Circulars & Announcements | SRKU Bhopal',
+            'desc' => 'Stay updated with recent university announcements, exam notices, academic schedules, events, and workshops at SRKU Bhopal.',
+            'keywords' => 'SRKU notices, exam circulars, university news Bhopal, latest events Sarvepalli Radhakrishnan University',
+            'canonical' => $baseUrl . 'news.php'
+        ],
+        [
+            'identifier' => 'blogs.php',
+            'name' => 'Blogs & Knowledge Hub',
+            'category' => 'Portal Pages',
+            'title' => 'Articles & Knowledge Hub | SRKU Bhopal',
+            'desc' => 'Insights, career guidance, student stories, and academic research articles published by faculty and students at SRKU Bhopal.',
+            'keywords' => 'SRKU blog, career guidance articles, student campus stories, academic insights Bhopal',
+            'canonical' => $baseUrl . 'blogs.php'
+        ],
+        [
+            'identifier' => 'research-innovation.php',
+            'name' => 'Research & Innovation',
+            'category' => 'Portal Pages',
+            'title' => 'Research, Publications & Patents | SRKU Bhopal',
+            'desc' => 'Advancing knowledge with 1,400+ research papers, 160+ published patents, and active R&D collaborations across science, healthcare, and engineering.',
+            'keywords' => 'SRKU research, published patents university Bhopal, journal publications, R&D centre MP',
+            'canonical' => $baseUrl . 'research-innovation.php'
+        ],
+        [
+            'identifier' => 'incubation-center.php',
+            'name' => 'Incubation & Startup Centre',
+            'category' => 'Portal Pages',
+            'title' => 'SRKU Innovation & Incubation Centre | Startup Hub Bhopal',
+            'desc' => 'SRKU Incubation Centre nurtures student entrepreneurship, patent filing, prototype development, and seed funding support for tech and healthcare startups.',
+            'keywords' => 'SRKU incubation centre, startup cell Bhopal, student entrepreneurship, patent support MP',
+            'canonical' => $baseUrl . 'incubation-center.php'
+        ],
+        [
+            'identifier' => 'alumni.php',
+            'name' => 'Alumni Association',
+            'category' => 'Portal Pages',
+            'title' => 'Global Alumni Network & Association | SRKU Bhopal',
+            'desc' => 'Join our thriving network of 1,10,000+ SRKU alumni working in top multinational corporations, healthcare institutions, and public service across the globe.',
+            'keywords' => 'SRKU alumni association, alumni network Bhopal, notable alumni RKDF group',
+            'canonical' => $baseUrl . 'alumni.php'
+        ],
+        [
+            'identifier' => 'career.php',
+            'name' => 'Careers & Faculty Recruitment',
+            'category' => 'Portal Pages',
+            'title' => 'Careers & Faculty Recruitment 2026 | SRKU Bhopal',
+            'desc' => 'Join the academic team at SRKU Bhopal. Explore open faculty, research associate, and administrative positions across various faculties.',
+            'keywords' => 'SRKU jobs, faculty recruitment Bhopal, professor vacancy MP, university careers',
+            'canonical' => $baseUrl . 'career.php'
+        ],
+        [
+            'identifier' => 'grievance.php',
+            'name' => 'Online Grievance Redressal',
+            'category' => 'Portal Pages',
+            'title' => 'Online Grievance Redressal Portal | SRKU Bhopal',
+            'desc' => 'Submit academic, administrative, or student grievances directly to the internal university grievance redressal cell for prompt resolution.',
+            'keywords' => 'SRKU grievance cell, student complaint redressal, online grievance form Bhopal',
+            'canonical' => $baseUrl . 'grievance.php'
+        ],
+        [
+            'identifier' => 'student-life.php',
+            'name' => 'Student Life & Clubs',
+            'category' => 'Portal Pages',
+            'title' => 'Student Life, Clubs & Cultural Activities | SRKU Bhopal',
+            'desc' => 'Discover vibrant student life at SRKU with cultural fests, tech symposiums, sports leagues, social clubs, and hobby societies.',
+            'keywords' => 'Student life SRKU, cultural fest Bhopal, college clubs, youth festival',
+            'canonical' => $baseUrl . 'student-life.php'
+        ],
+        [
+            'identifier' => 'hostel.php',
+            'name' => 'Hostel & Accommodation',
+            'category' => 'Portal Pages',
+            'title' => 'Hostel Facilities & Student Accommodation | SRKU Bhopal',
+            'desc' => 'Comfortable, secure on-campus residential hostels for boys and girls with 24/7 security, nutritious dining, Wi-Fi, and recreation rooms.',
+            'keywords' => 'SRKU hostel fees, boys hostel Bhopal, girls hostel SRKU, university accommodation',
+            'canonical' => $baseUrl . 'hostel.php'
+        ],
+        [
+            'identifier' => 'sitemap.php',
+            'name' => 'HTML Website Sitemap',
+            'category' => 'Portal Pages',
+            'title' => 'Complete Website Sitemap | SRKU Bhopal',
+            'desc' => 'Complete hierarchical sitemap of Sarvepalli Radhakrishnan University Bhopal pages, courses, departments, exams, and student services.',
+            'keywords' => 'SRKU sitemap, all website links, navigation map',
+            'canonical' => $baseUrl . 'sitemap.php'
+        ],
+        [
+            'identifier' => 'phd-admission.php',
+            'name' => 'PhD Admissions & Research',
+            'category' => 'Portal Pages',
+            'title' => 'PhD Admissions 2026-27 | Doctoral Research Programs | SRKU',
+            'desc' => 'Admissions open for PhD programs in Engineering, Pharmacy, Management, Science, Computer Applications, and Healthcare at SRKU Bhopal.',
+            'keywords' => 'PhD admission Bhopal, PhD in Engineering MP, PhD in Pharmacy, doctoral entrance test SRKU',
+            'canonical' => $baseUrl . 'phd-admission.php'
+        ],
+        [
+            'identifier' => 'phd-entrance-form.php',
+            'name' => 'PhD Entrance Registration Form',
+            'category' => 'Portal Pages',
+            'title' => 'PhD Entrance Exam Registration Form | SRKU Bhopal',
+            'desc' => 'Online application form for SRKU PhD Entrance Examination and fellowship registration.',
+            'keywords' => 'PhD entrance form, doctoral registration, research entrance exam Bhopal',
+            'canonical' => $baseUrl . 'phd-entrance-form.php'
+        ],
+        [
+            'identifier' => 'phd-application-form.php',
+            'name' => 'PhD Application Form',
+            'category' => 'Portal Pages',
+            'title' => 'Doctoral Application Form | PhD Programs | SRKU Bhopal',
+            'desc' => 'Official doctoral candidate registration and synopsis submission application form for SRKU Bhopal.',
+            'keywords' => 'PhD application form, synopsis format SRKU, doctoral candidate form',
+            'canonical' => $baseUrl . 'phd-application-form.php'
+        ],
+
+        // 2. CORE & DATABASE PAGES
+        [
+            'identifier' => 'courses.php',
+            'name' => 'All Courses & Degree Programs Catalog',
+            'category' => 'Core & Database',
+            'title' => 'All Academic Courses & Degree Programs | SRKU Bhopal',
+            'desc' => 'Browse 120+ UG, PG, Diploma, and Doctoral courses in Engineering, Pharmacy, Management, Medicine, Nursing, Law, and Agriculture at SRKU Bhopal.',
+            'keywords' => 'SRKU courses, degree programs Bhopal, engineering branches, pharmacy courses, MBA admission Bhopal',
+            'canonical' => $baseUrl . 'courses.php'
+        ],
+        [
+            'identifier' => 'departments.php',
+            'name' => 'Constituent Units & Colleges',
+            'category' => 'Core & Database',
+            'title' => 'Constituent Institutes & Colleges | SRKU Bhopal',
+            'desc' => 'Explore constituent colleges of SRKU including RKDF Institute of Science & Technology, Faculty of Pharmacy, Medical College, and Law Institute.',
+            'keywords' => 'SRKU constituent colleges, RKDF institutes, engineering college Bhopal, pharmacy institute',
+            'canonical' => $baseUrl . 'departments.php'
+        ],
+        [
+            'identifier' => 'faculties.php',
+            'name' => 'Faculty Directory',
+            'category' => 'Core & Database',
+            'title' => 'Faculty Directory & Academic Staff | SRKU Bhopal',
+            'desc' => 'Directory of 600+ distinguished professors, deans, and researchers guiding students at Sarvepalli Radhakrishnan University Bhopal.',
+            'keywords' => 'SRKU faculty list, professors Bhopal, faculty directory Sarvepalli Radhakrishnan University',
+            'canonical' => $baseUrl . 'faculties.php'
+        ],
+        [
+            'identifier' => 'document-viewer.php',
+            'name' => 'Official Document & PDF Viewer',
+            'category' => 'Core & Database',
+            'title' => 'Official University Document & PDF Viewer | SRKU Bhopal',
+            'desc' => 'Read verified statutory approvals, ordinances, and academic circulars in the official SRKU document viewer.',
+            'keywords' => 'SRKU documents, university approval letter, syllabus pdf viewer',
+            'canonical' => $baseUrl . 'document-viewer.php'
+        ],
+
+        // 3. ACADEMIC & EXAM PAGES
+        [
+            'identifier' => 'exam-time-table.php',
+            'name' => 'Exam Time Tables & Schedules',
+            'category' => 'Academic & Exam',
+            'title' => 'Examination Time Tables & Schedules | SRKU Bhopal',
+            'desc' => 'Download official examination time tables, semester schedules, and date sheets for all courses at SRKU Bhopal.',
+            'keywords' => 'SRKU exam time table, date sheet 2026, semester exam schedule Bhopal, exam notifications',
+            'canonical' => $baseUrl . 'exam-time-table.php'
+        ],
+        [
+            'identifier' => 'exam-rules.php',
+            'name' => 'Exam Rules, Ordinances & Forms',
+            'category' => 'Academic & Exam',
+            'title' => 'Exam Rules, Ordinances & Revaluation Forms | SRKU Bhopal',
+            'desc' => 'Academic examination statutes, ordinances, degree application forms, and revaluation guidelines of SRKU Bhopal.',
+            'keywords' => 'SRKU exam rules, degree application form, revaluation rules Bhopal, examination statutes',
+            'canonical' => $baseUrl . 'exam-rules.php'
+        ],
+        [
+            'identifier' => 'academic-calendar.php',
+            'name' => 'University Academic Calendar',
+            'category' => 'Academic & Exam',
+            'title' => 'University Academic Calendar 2026-27 | SRKU Bhopal',
+            'desc' => 'Download official odd and even semester academic calendars, teaching days, and vacation schedules of SRKU Bhopal.',
+            'keywords' => 'SRKU academic calendar 2026, odd semester calendar, even semester dates, teaching days schedule',
+            'canonical' => $baseUrl . 'academic-calendar.php'
+        ],
+        [
+            'identifier' => 'syllabus.php',
+            'name' => 'Syllabus & Schemes Repository',
+            'category' => 'Academic & Exam',
+            'title' => 'Download Course Syllabus & Schemes | SRKU Bhopal',
+            'desc' => 'Download official semester-wise curriculum syllabus and evaluation schemes for Engineering, Pharmacy, Management, and Science programs.',
+            'keywords' => 'SRKU syllabus, scheme of examination, course curriculum pdf, semester scheme Bhopal',
+            'canonical' => $baseUrl . 'syllabus.php'
+        ],
+
+        // 4. STATIC SHOWCASE PAGES
+        [
+            'identifier' => 'rkdf-ist-student-feedback.php',
+            'name' => 'RKDF-IST Student Feedback Portal',
+            'category' => 'Static Showcase',
+            'title' => 'Student Academic Feedback | RKDF-IST | SRKU',
+            'desc' => 'Submit course feedback and faculty evaluations for RKDF Institute of Science & Technology.',
+            'keywords' => 'RKDF-IST student feedback, academic evaluation form',
+            'canonical' => $baseUrl . 'rkdf-ist-student-feedback.php'
+        ],
+        [
+            'identifier' => 'rkdf-ist-parent-feedback.php',
+            'name' => 'RKDF-IST Parent Feedback Portal',
+            'category' => 'Static Showcase',
+            'title' => 'Parent Feedback & Suggestions | RKDF-IST | SRKU',
+            'desc' => 'Parent feedback portal for institutional development and student progress tracking at RKDF-IST.',
+            'keywords' => 'RKDF-IST parent feedback, parents portal Bhopal',
+            'canonical' => $baseUrl . 'rkdf-ist-parent-feedback.php'
+        ],
+        [
+            'identifier' => 'rkdf-ist-teacher-feedback.php',
+            'name' => 'RKDF-IST Teacher Feedback Portal',
+            'category' => 'Static Showcase',
+            'title' => 'Faculty Curriculum Feedback | RKDF-IST | SRKU',
+            'desc' => 'Internal teacher and academician curriculum feedback portal for continuous quality enhancement.',
+            'keywords' => 'Teacher feedback form, faculty curriculum feedback RKDF-IST',
+            'canonical' => $baseUrl . 'rkdf-ist-teacher-feedback.php'
+        ],
+        [
+            'identifier' => 'rkdf-ist-grievance.php',
+            'name' => 'RKDF-IST Grievance Portal',
+            'category' => 'Static Showcase',
+            'title' => 'Student & Staff Grievance Portal | RKDF-IST | SRKU',
+            'desc' => 'Dedicated grievance submission and tracking system for RKDF Institute of Science & Technology.',
+            'keywords' => 'RKDF IST grievance, student redressal cell',
+            'canonical' => $baseUrl . 'rkdf-ist-grievance.php'
+        ]
+    ];
+
+    // Auto-discover Dynamic Constituent Units / Departments
+    try {
+        $depts = $pdo->query("SELECT id, name, slug, description FROM departments WHERE status = 'active' ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($depts as $dept) {
+            $deptSlug = !empty($dept['slug']) ? $dept['slug'] : generateSlug($dept['name']);
+            $deptName = $dept['name'];
+            $deptDesc = !empty($dept['description']) ? mb_substr(strip_tags($dept['description']), 0, 160) : "Learn more about {$deptName} at Sarvepalli Radhakrishnan University (SRKU), Bhopal.";
+            
+            // Standard department route
+            $pagesCatalog[] = [
+                'identifier' => 'department-detail.php?slug=' . $deptSlug,
+                'name' => 'Constituent Unit: ' . $deptName,
+                'category' => 'Core & Database',
+                'title' => "{$deptName} | Sarvepalli Radhakrishnan University Bhopal",
+                'desc' => $deptDesc,
+                'keywords' => "{$deptName}, SRKU constituent college, {$deptName} admission, Bhopal MP",
+                'canonical' => $baseUrl . 'department-detail.php?slug=' . $deptSlug
+            ];
+
+            // Constituent-unit route alias
+            $pagesCatalog[] = [
+                'identifier' => 'constituent-unit.php?slug=' . $deptSlug,
+                'name' => 'Unit Profile: ' . $deptName,
+                'category' => 'Core & Database',
+                'title' => "{$deptName} Profile | SRKU Bhopal",
+                'desc' => $deptDesc,
+                'keywords' => "{$deptName}, SRKU constituent college, {$deptName} admission, Bhopal MP",
+                'canonical' => $baseUrl . 'constituent-unit.php?slug=' . $deptSlug
+            ];
+        }
+    } catch (Exception $e) {}
+
+    // Auto-discover Dynamic CMS Generic Pages
+    try {
+        $cmsPages = $pdo->query("SELECT id, title, slug, meta_description, content FROM pages WHERE status = 'published' ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($cmsPages as $cp) {
+            $pageIdentifier = 'page.php?id=' . $cp['id'];
+            $pTitle = $cp['title'];
+            $pDesc = !empty($cp['meta_description']) ? $cp['meta_description'] : (!empty($cp['content']) ? mb_substr(strip_tags($cp['content']), 0, 160) : "{$pTitle} - Official page of Sarvepalli Radhakrishnan University (SRKU) Bhopal.");
+            
+            $pagesCatalog[] = [
+                'identifier' => $pageIdentifier,
+                'name' => 'CMS: ' . $pTitle,
+                'category' => 'CMS Generic',
+                'title' => "{$pTitle} | Sarvepalli Radhakrishnan University",
+                'desc' => $pDesc,
+                'keywords' => "{$pTitle}, SRKU Bhopal, Sarvepalli Radhakrishnan University",
+                'canonical' => $baseUrl . $pageIdentifier
+            ];
+        }
+    } catch (Exception $e) {}
+
+    // Auto-discover Syllabus Categories
+    try {
+        $syllabusCats = $pdo->query("SELECT DISTINCT category_slug, category_title FROM syllabi WHERE status = 'active' ORDER BY category_title ASC")->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($syllabusCats as $sc) {
+            if (empty($sc['category_slug'])) continue;
+            $sylIdentifier = 'syllabus.php?category=' . $sc['category_slug'];
+            $catTitle = !empty($sc['category_title']) ? $sc['category_title'] : ucfirst($sc['category_slug']);
+            
+            $pagesCatalog[] = [
+                'identifier' => $sylIdentifier,
+                'name' => 'Syllabus: ' . $catTitle,
+                'category' => 'Academic & Exam',
+                'title' => "{$catTitle} Syllabus & Schemes | SRKU Bhopal",
+                'desc' => "Download latest official syllabus, course scheme, and examination regulations for {$catTitle} programs at SRKU Bhopal.",
+                'keywords' => "{$catTitle} syllabus, {$catTitle} course scheme, SRKU syllabus download",
+                'canonical' => $baseUrl . $sylIdentifier
+            ];
+        }
+    } catch (Exception $e) {}
+
+    // Auto-discover All Active Courses (100% full catalog coverage)
+    try {
+        $courses = $pdo->query("SELECT id, course_name, slug, department, description FROM courses WHERE status = 'active' ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($courses as $c) {
+            $cIdentifier = !empty($c['slug']) ? ('course-detail.php?slug=' . $c['slug']) : ('course-detail.php?id=' . $c['id']);
+            $cName = $c['course_name'];
+            $cDept = $c['department'] ?? 'SRKU';
+            $cDesc = !empty($c['description']) ? mb_substr(strip_tags($c['description']), 0, 160) : "Apply for {$cName} under {$cDept} at Sarvepalli Radhakrishnan University Bhopal.";
+            
+            $pagesCatalog[] = [
+                'identifier' => $cIdentifier,
+                'name' => 'Course: ' . $cName,
+                'category' => 'Core & Database',
+                'title' => "{$cName} Admission, Fees & Eligibility | SRKU Bhopal",
+                'desc' => $cDesc,
+                'keywords' => "{$cName}, {$cName} admission Bhopal, {$cName} eligibility fees, SRKU courses",
+                'canonical' => $baseUrl . $cIdentifier
+            ];
+        }
+    } catch (Exception $e) {}
+
+    // Auto-discover Published Blogs & Articles
+    try {
+        $blogs = $pdo->query("SELECT id, title, slug, short_description FROM blogs WHERE status = 'published' ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($blogs as $b) {
+            $bSlug = !empty($b['slug']) ? $b['slug'] : generateSlug($b['title']);
+            $bIdentifier = 'blog-detail.php?slug=' . $bSlug;
+            $bTitle = $b['title'];
+            $bDesc = !empty($b['short_description']) ? mb_substr(strip_tags($b['short_description']), 0, 160) : "Read '{$bTitle}' on Sarvepalli Radhakrishnan University (SRKU) official blog.";
+            
+            $pagesCatalog[] = [
+                'identifier' => $bIdentifier,
+                'name' => 'Blog: ' . $bTitle,
+                'category' => 'Portal Pages',
+                'title' => "{$bTitle} | SRKU Blog",
+                'desc' => $bDesc,
+                'keywords' => "{$bTitle}, SRKU blog, educational articles Bhopal",
+                'canonical' => $baseUrl . $bIdentifier
+            ];
+        }
+    } catch (Exception $e) {}
+
+    // Auto-discover Published News & Notices
+    try {
+        $newsItems = $pdo->query("SELECT id, title, slug, content FROM news ORDER BY id ASC LIMIT 50")->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($newsItems as $n) {
+            $nSlug = !empty($n['slug']) ? $n['slug'] : ('news-detail.php?id=' . $n['id']);
+            $nIdentifier = !empty($n['slug']) ? ('news-detail.php?slug=' . $n['slug']) : ('news-detail.php?id=' . $n['id']);
+            $nTitle = $n['title'];
+            $nDesc = !empty($n['content']) ? mb_substr(strip_tags($n['content']), 0, 160) : "Notice: {$nTitle} - Sarvepalli Radhakrishnan University Bhopal.";
+            
+            $pagesCatalog[] = [
+                'identifier' => $nIdentifier,
+                'name' => 'News: ' . $nTitle,
+                'category' => 'Portal Pages',
+                'title' => "{$nTitle} | SRKU Circulars",
+                'desc' => $nDesc,
+                'keywords' => "{$nTitle}, SRKU notice, university announcement",
+                'canonical' => $baseUrl . $nIdentifier
+            ];
+        }
+    } catch (Exception $e) {}
+
+    // Process & Synchronize into Database
+    $added = 0;
+    $existing = 0;
+
+    foreach ($pagesCatalog as $page) {
+        $pi = $page['identifier'];
+        $existingStmt->execute([':pi' => $pi]);
+        $row = $existingStmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row) {
+            // New entry - insert default metadata
+            $insertStmt->execute([
+                ':pi' => $pi,
+                ':pn' => $page['name'],
+                ':pc' => $page['category'],
+                ':mt' => $page['title'],
+                ':md' => $page['desc'],
+                ':fk' => $page['keywords'],
+                ':cu' => $page['canonical'],
+                ':rt' => 'inherit',
+                ':ot' => $page['title'],
+                ':od' => $page['desc'],
+                ':oi' => 'assets/uploads/2026/07/SRK-logo.webp',
+                ':tc' => 'summary_large_image',
+                ':sj' => null
+            ]);
+            $added++;
+        } else {
+            // Update page name / category classification without touching custom meta
+            $updateStmt->execute([
+                ':pn' => $page['name'],
+                ':pc' => $page['category'],
+                ':pi' => $pi
+            ]);
+            $existing++;
+        }
+    }
+
+    $totalCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata")->fetchColumn();
+
+    return [
+        'success' => true,
+        'added' => $added,
+        'existing' => $existing,
+        'total' => $totalCount
+    ];
+}
+
+/**
+ * Resolves SEO metadata for any requested page or route,
+ * taking into account global indexing directives, page-specific overrides, and fallbacks.
+ */
+function getSeoMetadata($pageIdentifier = null, $fallbackTitle = '', $fallbackDesc = '', $fallbackKeywords = '', $fallbackImage = '') {
+    $currentScriptName = basename($_SERVER['PHP_SELF'] ?? 'index.php');
+    $currentQueryString = $_SERVER['QUERY_STRING'] ?? '';
+
+    if (empty($pageIdentifier)) {
+        if (!empty($currentQueryString)) {
+            $pageIdentifier = $currentScriptName . '?' . $currentQueryString;
+        } else {
+            $pageIdentifier = $currentScriptName;
+        }
+    }
+
+    $globalRobots = getSetting('global_robots_indexing', 'index, follow');
+    $globalMode = getSetting('global_seo_mode', 'live');
+
+    $seoRow = null;
+    try {
+        $pdo = getDBConnection();
+        $stmt = $pdo->prepare("SELECT * FROM seo_metadata WHERE page_identifier = :pi LIMIT 1");
+        $stmt->execute([':pi' => $pageIdentifier]);
+        $seoRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // If not found with exact query string, try base script
+        if (!$seoRow && strpos($pageIdentifier, '?') !== false) {
+            $baseScript = strtok($pageIdentifier, '?');
+            $stmt = $pdo->prepare("SELECT * FROM seo_metadata WHERE page_identifier = :pi LIMIT 1");
+            $stmt->execute([':pi' => $baseScript]);
+            $seoRow = $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+    } catch (Exception $e) {}
+
+    // Title Resolution
+    $title = !empty($seoRow['meta_title']) ? $seoRow['meta_title'] : $fallbackTitle;
+    if (empty($title)) {
+        $title = "Sarvepalli Radhakrishnan University (SRKU), Bhopal | Official Portal";
+    }
+
+    // Description Resolution
+    $desc = !empty($seoRow['meta_description']) ? $seoRow['meta_description'] : $fallbackDesc;
+    if (empty($desc)) {
+        $desc = 'Sarvepalli Radhakrishnan University (SRKU) Bhopal is a premier multidisciplinary private university in Madhya Pradesh recognized under Section 2(f) of UGC Act 1956, offering UGC, AICTE, NMC, PCI, BCI approved programmes.';
+    }
+
+    // Keywords Resolution
+    $keywords = !empty($seoRow['focus_keywords']) ? $seoRow['focus_keywords'] : $fallbackKeywords;
+    if (empty($keywords)) {
+        $keywords = "SRK University, Sarvepalli Radhakrishnan University, SRKU Bhopal, Admissions 2026-27, UGC Approved University MP, AICTE Approved Engineering College, NMC Approved Medical College Bhopal";
+    }
+
+    // Canonical URL Resolution
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)) ? "https" : "http";
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $reqUri = $_SERVER['REQUEST_URI'] ?? '/';
+    $currentFullUrl = "$protocol://$host$reqUri";
+    $canonical = !empty($seoRow['canonical_url']) ? $seoRow['canonical_url'] : $currentFullUrl;
+
+    // Robots Tag Resolution (Inherit Global vs Custom Override)
+    $pageRobots = $seoRow['robots_tag'] ?? 'inherit';
+    if ($pageRobots === 'inherit' || empty($pageRobots)) {
+        $effectiveRobots = $globalRobots;
+    } else {
+        $effectiveRobots = $pageRobots;
+    }
+
+    if ($effectiveRobots === 'index, follow') {
+        $effectiveRobots = 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1';
+    }
+
+    // OpenGraph & Social Cards
+    $ogTitle = !empty($seoRow['og_title']) ? $seoRow['og_title'] : $title;
+    $ogDesc = !empty($seoRow['og_description']) ? $seoRow['og_description'] : $desc;
+    $ogImage = !empty($seoRow['og_image']) ? $seoRow['og_image'] : $fallbackImage;
+    if (empty($ogImage)) {
+        $ogImage = 'assets/uploads/2026/07/SRK-logo.webp';
+    }
+    $twitterCard = !empty($seoRow['twitter_card']) ? $seoRow['twitter_card'] : 'summary_large_image';
+    $schemaJson = !empty($seoRow['schema_json']) ? trim($seoRow['schema_json']) : '';
+
+    return [
+        'title' => $title,
+        'description' => $desc,
+        'keywords' => $keywords,
+        'canonical' => $canonical,
+        'robots' => $effectiveRobots,
+        'page_robots' => $pageRobots,
+        'global_robots' => $globalRobots,
+        'global_mode' => $globalMode,
+        'og_title' => $ogTitle,
+        'og_description' => $ogDesc,
+        'og_image' => $ogImage,
+        'twitter_card' => $twitterCard,
+        'schema_json' => $schemaJson,
+        'has_custom_record' => !empty($seoRow)
+    ];
+}
+
+/**
+ * Returns summary counts for the SEO Manager dashboard tabs and cards
+ */
+function getSeoSummaryStats($pdo = null) {
+    if (!$pdo) {
+        $pdo = getDBConnection();
+    }
+
+    // Ensure inventory is populated
+    $total = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata")->fetchColumn();
+    if ($total == 0) {
+        syncSeoPagesInventory($pdo);
+        $total = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata")->fetchColumn();
+    }
+
+    $portalCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'Portal Pages'")->fetchColumn();
+    $coreCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'Core & Database'")->fetchColumn();
+    $cmsCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'CMS Generic'")->fetchColumn();
+    $examCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'Academic & Exam'")->fetchColumn();
+    $staticCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'Static Showcase'")->fetchColumn();
+
+    $globalRobots = getSetting('global_robots_indexing', 'noindex, nofollow');
+    $isLive = (strpos($globalRobots, 'index, follow') !== false || strpos($globalRobots, 'index') !== false) && strpos($globalRobots, 'noindex') === false;
+
+    return [
+        'total' => $total,
+        'portal' => $portalCount,
+        'core' => $coreCount,
+        'cms' => $cmsCount,
+        'exam' => $examCount,
+        'static' => $staticCount,
+        'global_robots' => $globalRobots,
+        'is_live' => $isLive
+    ];
+}
+
+/**
+ * Saves or updates SEO metadata for a specific route
+ */
+function savePageSeoMetadata($data, $pdo = null) {
+    if (!$pdo) {
+        $pdo = getDBConnection();
+    }
+
+    $id = isset($data['id']) ? (int)$data['id'] : 0;
+    $identifier = trim($data['page_identifier'] ?? '');
+    $name = trim($data['page_name'] ?? '');
+    $category = trim($data['page_category'] ?? 'Portal Pages');
+    $title = trim($data['meta_title'] ?? '');
+    $desc = trim($data['meta_description'] ?? '');
+    $keywords = trim($data['focus_keywords'] ?? '');
+    $canonical = trim($data['canonical_url'] ?? '');
+    $robots = trim($data['robots_tag'] ?? 'inherit');
+    $ogTitle = trim($data['og_title'] ?? '');
+    $ogDesc = trim($data['og_description'] ?? '');
+    $ogImage = trim($data['og_image'] ?? '');
+    $twitterCard = trim($data['twitter_card'] ?? 'summary_large_image');
+    $schemaJson = trim($data['schema_json'] ?? '');
+
+    if (empty($identifier)) {
+        return ['success' => false, 'error' => 'Page route/identifier is required.'];
+    }
+
+    if ($id > 0) {
+        $stmt = $pdo->prepare("UPDATE seo_metadata SET 
+            page_name = :pn,
+            page_category = :pc,
+            meta_title = :mt,
+            meta_description = :md,
+            focus_keywords = :fk,
+            canonical_url = :cu,
+            robots_tag = :rt,
+            og_title = :ot,
+            og_description = :od,
+            og_image = :oi,
+            twitter_card = :tc,
+            schema_json = :sj
+            WHERE id = :id");
+        $stmt->execute([
+            ':pn' => $name,
+            ':pc' => $category,
+            ':mt' => $title,
+            ':md' => $desc,
+            ':fk' => $keywords,
+            ':cu' => $canonical,
+            ':rt' => $robots,
+            ':ot' => $ogTitle,
+            ':od' => $ogDesc,
+            ':oi' => $ogImage,
+            ':tc' => $twitterCard,
+            ':sj' => $schemaJson,
+            ':id' => $id
+        ]);
+    } else {
+        $stmt = $pdo->prepare("INSERT INTO seo_metadata (page_identifier, page_name, page_category, meta_title, meta_description, focus_keywords, canonical_url, robots_tag, og_title, og_description, og_image, twitter_card, schema_json) 
+            VALUES (:pi, :pn, :pc, :mt, :md, :fk, :cu, :rt, :ot, :od, :oi, :tc, :sj)");
+        $stmt->execute([
+            ':pi' => $identifier,
+            ':pn' => $name,
+            ':pc' => $category,
+            ':mt' => $title,
+            ':md' => $desc,
+            ':fk' => $keywords,
+            ':cu' => $canonical,
+            ':rt' => $robots,
+            ':ot' => $ogTitle,
+            ':od' => $ogDesc,
+            ':oi' => $ogImage,
+            ':tc' => $twitterCard,
+            ':sj' => $schemaJson
+        ]);
+        $id = (int)$pdo->lastInsertId();
+    }
+
+    return ['success' => true, 'id' => $id];
+}
+

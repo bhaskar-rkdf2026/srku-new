@@ -9,17 +9,36 @@ $ctaText = getSetting('header_cta_text', 'Contact Us');
 $ctaLink = getSetting('header_cta_link', 'contact.php');
 $webmailLink = getSetting('header_topbar_webmail_link', 'http://email.godaddy.com/');
 $customHeadCode = getSetting('header_custom_head_code', '');
-// SEO & AEO Canonical & Meta Defaults
+
+// Dynamic SEO & Meta Manager Resolution
 $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
 $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
 $reqUri = $_SERVER['REQUEST_URI'] ?? '/';
 $currentFullUrl = "$protocol://$host$reqUri";
-$canonicalUrl = isset($pageCanonical) ? $pageCanonical : $currentFullUrl;
 
-$seoTitle = isset($pageTitle) ? sanitize($pageTitle) : "Sarvepalli Radhakrishnan University (SRKU), Bhopal | Official Portal";
-$seoDesc = isset($pageDesc) ? sanitize($pageDesc) : (isset($metaDesc) ? sanitize($metaDesc) : 'Sarvepalli Radhakrishnan University (SRKU) Bhopal is a premier multidisciplinary private university in Madhya Pradesh recognized under Section 2(f) of UGC Act 1956, offering UGC, AICTE, NMC, PCI, BCI approved programmes across Engineering, Medicine, Pharmacy, Law, Nursing, Agriculture and Management.');
-$seoKeywords = isset($pageKeywords) ? sanitize($pageKeywords) : "SRK University, Sarvepalli Radhakrishnan University, SRKU Bhopal, Admissions 2026-27, UGC Approved University MP, AICTE Approved Engineering College, NMC Approved Medical College Bhopal, RKDF Group, MP Private University";
-$seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $logoUrl : BASE_URL . $logoUrl);
+$currentScriptName = basename($_SERVER['PHP_SELF'] ?? 'index.php');
+$currentQueryString = $_SERVER['QUERY_STRING'] ?? '';
+$pageIdCandidate = !empty($pageIdentifier) ? $pageIdentifier : (!empty($currentQueryString) ? ($currentScriptName . '?' . $currentQueryString) : $currentScriptName);
+
+$seoResolved = getSeoMetadata(
+    $pageIdCandidate,
+    isset($pageTitle) ? $pageTitle : '',
+    isset($pageDesc) ? $pageDesc : (isset($metaDesc) ? $metaDesc : ''),
+    isset($pageKeywords) ? $pageKeywords : '',
+    isset($pageImage) ? $pageImage : ''
+);
+
+$seoTitle = sanitize($seoResolved['title']);
+$seoDesc = sanitize($seoResolved['description']);
+$seoKeywords = sanitize($seoResolved['keywords']);
+$seoRobots = $seoResolved['robots'];
+$canonicalUrl = !empty($pageCanonical) ? $pageCanonical : (!empty($seoResolved['canonical']) ? $seoResolved['canonical'] : $currentFullUrl);
+$ogTitle = sanitize($seoResolved['og_title']);
+$ogDesc = sanitize($seoResolved['og_description']);
+$rawOgImage = !empty($seoResolved['og_image']) ? $seoResolved['og_image'] : $logoUrl;
+$seoImage = (strpos($rawOgImage, 'http') === 0) ? $rawOgImage : (BASE_URL . ltrim($rawOgImage, '/'));
+$twitterCard = $seoResolved['twitter_card'] ?? 'summary_large_image';
+$customSchemaJson = $seoResolved['schema_json'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="en" itemscope itemtype="https://schema.org/CollegeOrUniversity">
@@ -31,7 +50,7 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
     <!-- Core SEO & Search Engine Directives -->
     <meta name="description" content="<?php echo $seoDesc; ?>">
     <meta name="keywords" content="<?php echo $seoKeywords; ?>">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="robots" content="<?php echo htmlspecialchars($seoRobots); ?>">
     <meta name="author" content="Sarvepalli Radhakrishnan University, Bhopal">
     <link rel="canonical" href="<?php echo htmlspecialchars($canonicalUrl); ?>">
 
@@ -41,20 +60,20 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
     <meta name="geo.position" content="23.1685;77.4682">
     <meta name="ICBM" content="23.1685, 77.4682">
 
-    <!-- Open Graph Protocol (Facebook, LinkedIn, AI Search Engines) -->
+    <!-- Open Graph Protocol (Facebook, LinkedIn, WhatsApp & AI Engines) -->
     <meta property="og:locale" content="en_IN">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="<?php echo $seoTitle; ?>">
-    <meta property="og:description" content="<?php echo $seoDesc; ?>">
+    <meta property="og:title" content="<?php echo $ogTitle; ?>">
+    <meta property="og:description" content="<?php echo $ogDesc; ?>">
     <meta property="og:url" content="<?php echo htmlspecialchars($canonicalUrl); ?>">
     <meta property="og:site_name" content="Sarvepalli Radhakrishnan University (SRKU)">
     <meta property="og:image" content="<?php echo htmlspecialchars($seoImage); ?>">
     <meta property="og:image:alt" content="Sarvepalli Radhakrishnan University Campus">
 
     <!-- Twitter Cards (Social & Conversational Search) -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="<?php echo $seoTitle; ?>">
-    <meta name="twitter:description" content="<?php echo $seoDesc; ?>">
+    <meta name="twitter:card" content="<?php echo htmlspecialchars($twitterCard); ?>">
+    <meta name="twitter:title" content="<?php echo $ogTitle; ?>">
+    <meta name="twitter:description" content="<?php echo $ogDesc; ?>">
     <meta name="twitter:image" content="<?php echo htmlspecialchars($seoImage); ?>">
 
     <!-- Schema.org Comprehensive Structured Data (AEO: Google SGE, Perplexity, Gemini, ChatGPT, Bing Copilot) -->
@@ -125,6 +144,12 @@ $seoImage = isset($pageImage) ? $pageImage : (strpos($logoUrl, 'http') === 0 ? $
       ]
     }
     </script>
+    <?php if (!empty($customSchemaJson)): ?>
+    <!-- Custom Page JSON-LD Structured Data Override (Configured via Dynamic SEO Manager) -->
+    <script type="application/ld+json">
+    <?php echo $customSchemaJson; ?>
+    </script>
+    <?php endif; ?>
 
     <!-- Favicon & Brand Icons -->
     <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/favicon.png?v=<?php echo @filemtime(__DIR__ . '/../assets/images/favicon.png') ?: time(); ?>">
