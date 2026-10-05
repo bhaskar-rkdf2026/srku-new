@@ -2330,4 +2330,31 @@ INSERT INTO `complaints` (`id`, `name`, `father_name`, `enrollment_number`, `ema
 ('1', 'Megha RKDF', 'test', '123343456576788', 'megha.rkdf2026@gmail.com', '5345435656', 'test', 'fghfgjh', 'hjkj', 'Ragging / Harassment', 'ghkfyjgyuikhjkhjkjhkjhkjkhj', 'New', '2026-08-24 15:06:17'),
 ('3', 'Megha RKDF', 'test', '123343456576788', 'megha.rkdf2026@gmail.com', '5345435656', 'test', 'fghfgjh', 'hjkj', 'Ragging / Harassment', 'ghkfyjgyuikhjkhjkjhkjhkjkhj', 'New', '2026-08-24 15:07:57');
 
+-- --------------------------------------------------------
+-- Table structure for `seo_metadata`
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `seo_metadata` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `page_identifier` varchar(191) NOT NULL,
+  `page_name` varchar(255) NOT NULL,
+  `page_category` varchar(100) DEFAULT 'Portal Pages',
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `focus_keywords` text DEFAULT NULL,
+  `canonical_url` varchar(500) DEFAULT NULL,
+  `robots_tag` varchar(100) DEFAULT 'inherit',
+  `og_title` varchar(255) DEFAULT NULL,
+  `og_description` text DEFAULT NULL,
+  `og_image` varchar(500) DEFAULT NULL,
+  `twitter_card` varchar(50) DEFAULT 'summary_large_image',
+  `schema_json` longtext DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `page_identifier` (`page_identifier`),
+  KEY `idx_seo_cat` (`page_category`),
+  KEY `idx_seo_robots` (`robots_tag`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 SET FOREIGN_KEY_CHECKS = 1;
+
