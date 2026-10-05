@@ -3,6 +3,7 @@ require_once __DIR__ . '/../includes/functions.php';
 checkAdminLogin();
 
 $pdo = getDBConnection();
+ensureSeoMetadataTableExists($pdo);
 
 // Ensure inventory is initialized
 $stats = getSeoSummaryStats($pdo);
@@ -15,125 +16,133 @@ if (isset($_REQUEST['ajax_action'])) {
     header('Content-Type: application/json; charset=utf-8');
     $action = $_REQUEST['ajax_action'];
 
-    // 1. Get Single Page SEO Record
-    if ($action === 'get_seo') {
-        $id = (int)($_REQUEST['id'] ?? 0);
-        $stmt = $pdo->prepare("SELECT * FROM seo_metadata WHERE id = :id LIMIT 1");
-        $stmt->execute([':id' => $id]);
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($data) {
-            echo json_encode(['success' => true, 'data' => $data]);
-        } else {
-            echo json_encode(['success' => false, 'error' => 'Page record not found.']);
-        }
-        exit;
-    }
-
-    // 2. Save Page SEO Changes
-    if ($action === 'save_seo') {
-        $res = savePageSeoMetadata($_POST, $pdo);
-        if ($res['success']) {
+    try {
+        // 1. Get Single Page SEO Record
+        if ($action === 'get_seo') {
+            $id = (int)($_REQUEST['id'] ?? 0);
             $stmt = $pdo->prepare("SELECT * FROM seo_metadata WHERE id = :id LIMIT 1");
-            $stmt->execute([':id' => $res['id']]);
-            $updatedRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt->execute([':id' => $id]);
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($data) {
+                echo json_encode(['success' => true, 'data' => $data]);
+            } else {
+                echo json_encode(['success' => false, 'error' => 'Page record not found.']);
+            }
+            exit;
+        }
+
+        // 2. Save Page SEO Changes
+        if ($action === 'save_seo') {
+            $res = savePageSeoMetadata($_POST, $pdo);
+            if ($res['success']) {
+                $stmt = $pdo->prepare("SELECT * FROM seo_metadata WHERE id = :id LIMIT 1");
+                $stmt->execute([':id' => $res['id']]);
+                $updatedRow = $stmt->fetch(PDO::FETCH_ASSOC);
+                $newStats = getSeoSummaryStats($pdo);
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'SEO metadata saved successfully!',
+                    'data' => $updatedRow,
+                    'stats' => $newStats
+                ]);
+            } else {
+                echo json_encode(['success' => false, 'error' => $res['error'] ?? 'Failed to save SEO metadata.']);
+            }
+            exit;
+        }
+
+        // 3. Toggle Global Indexing (Development vs Live Mode)
+        if ($action === 'toggle_global_indexing') {
+            $curr = getSetting('global_robots_indexing', 'noindex, nofollow');
+            $isLiveNow = (strpos($curr, 'index, follow') !== false || strpos($curr, 'index') !== false) && strpos($curr, 'noindex') === false;
+
+            if ($isLiveNow) {
+                $newSetting = 'noindex, nofollow';
+                $newMode = 'development';
+                $msg = 'Switched to Development Mode (noindex, nofollow). Search bots are blocked.';
+            } else {
+                $newSetting = 'index, follow';
+                $newMode = 'live';
+                $msg = 'Switched to Live Production Mode (index, follow). Website is discoverable by search engines.';
+            }
+
+            // Update settings in database
+            $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES ('global_robots_indexing', :v1) ON DUPLICATE KEY UPDATE setting_value = :v2")
+                ->execute([':v1' => $newSetting, ':v2' => $newSetting]);
+            $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES ('global_seo_mode', :m1) ON DUPLICATE KEY UPDATE setting_value = :m2")
+                ->execute([':m1' => $newMode, ':m2' => $newMode]);
+
             $newStats = getSeoSummaryStats($pdo);
             echo json_encode([
                 'success' => true,
-                'message' => 'SEO metadata saved successfully!',
-                'data' => $updatedRow,
+                'message' => $msg,
+                'global_robots' => $newSetting,
+                'is_live' => !$isLiveNow,
                 'stats' => $newStats
             ]);
-        } else {
-            echo json_encode(['success' => false, 'error' => $res['error'] ?? 'Failed to save SEO metadata.']);
-        }
-        exit;
-    }
-
-    // 3. Toggle Global Indexing (Development vs Live Mode)
-    if ($action === 'toggle_global_indexing') {
-        $curr = getSetting('global_robots_indexing', 'noindex, nofollow');
-        $isLiveNow = (strpos($curr, 'index, follow') !== false || strpos($curr, 'index') !== false) && strpos($curr, 'noindex') === false;
-
-        if ($isLiveNow) {
-            $newSetting = 'noindex, nofollow';
-            $newMode = 'development';
-            $msg = 'Switched to Development Mode (noindex, nofollow). Search bots are blocked.';
-        } else {
-            $newSetting = 'index, follow';
-            $newMode = 'live';
-            $msg = 'Switched to Live Production Mode (index, follow). Website is discoverable by search engines.';
+            exit;
         }
 
-        // Update settings in database
-        $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES ('global_robots_indexing', :v1) ON DUPLICATE KEY UPDATE setting_value = :v2")
-            ->execute([':v1' => $newSetting, ':v2' => $newSetting]);
-        $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES ('global_seo_mode', :m1) ON DUPLICATE KEY UPDATE setting_value = :m2")
-            ->execute([':m1' => $newMode, ':m2' => $newMode]);
+        // 4. Re-scan and Sync Pages Inventory
+        if ($action === 'resync_inventory') {
+            $syncRes = syncSeoPagesInventory($pdo, true);
+            $newStats = getSeoSummaryStats($pdo);
+            echo json_encode([
+                'success' => true,
+                'message' => "SEO Pages Inventory synchronized! Total {$syncRes['total']} routes verified ({$syncRes['added']} newly indexed).",
+                'stats' => $newStats
+            ]);
+            exit;
+        }
 
-        $newStats = getSeoSummaryStats($pdo);
-        echo json_encode([
-            'success' => true,
-            'message' => $msg,
-            'global_robots' => $newSetting,
-            'is_live' => !$isLiveNow,
-            'stats' => $newStats
-        ]);
-        exit;
+        // 5. Add Custom Route
+        if ($action === 'add_custom_route') {
+            $res = savePageSeoMetadata($_POST, $pdo);
+            $newStats = getSeoSummaryStats($pdo);
+            echo json_encode([
+                'success' => $res['success'],
+                'message' => $res['success'] ? 'New route added to SEO inventory!' : ($res['error'] ?? 'Failed to add route.'),
+                'stats' => $newStats
+            ]);
+            exit;
+        }
+
+        // 6. Delete Route
+        if ($action === 'delete_route') {
+            $id = (int)($_POST['id'] ?? 0);
+            $stmt = $pdo->prepare("DELETE FROM seo_metadata WHERE id = :id");
+            $stmt->execute([':id' => $id]);
+            $newStats = getSeoSummaryStats($pdo);
+            echo json_encode([
+                'success' => true,
+                'message' => 'Route removed from SEO inventory.',
+                'stats' => $newStats
+            ]);
+            exit;
+        }
+
+        echo json_encode(['success' => false, 'error' => 'Invalid action.']);
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     }
-
-    // 4. Re-scan and Sync Pages Inventory
-    if ($action === 'resync_inventory') {
-        $syncRes = syncSeoPagesInventory($pdo, true);
-        $newStats = getSeoSummaryStats($pdo);
-        echo json_encode([
-            'success' => true,
-            'message' => "SEO Pages Inventory synchronized! Total {$syncRes['total']} routes verified ({$syncRes['added']} newly indexed).",
-            'stats' => $newStats
-        ]);
-        exit;
-    }
-
-    // 5. Add Custom Route
-    if ($action === 'add_custom_route') {
-        $res = savePageSeoMetadata($_POST, $pdo);
-        $newStats = getSeoSummaryStats($pdo);
-        echo json_encode([
-            'success' => $res['success'],
-            'message' => $res['success'] ? 'New route added to SEO inventory!' : ($res['error'] ?? 'Failed to add route.'),
-            'stats' => $newStats
-        ]);
-        exit;
-    }
-
-    // 6. Delete Route
-    if ($action === 'delete_route') {
-        $id = (int)($_POST['id'] ?? 0);
-        $stmt = $pdo->prepare("DELETE FROM seo_metadata WHERE id = :id");
-        $stmt->execute([':id' => $id]);
-        $newStats = getSeoSummaryStats($pdo);
-        echo json_encode([
-            'success' => true,
-            'message' => 'Route removed from SEO inventory.',
-            'stats' => $newStats
-        ]);
-        exit;
-    }
-
-    echo json_encode(['success' => false, 'error' => 'Invalid action.']);
     exit;
 }
 
 // Fetch all SEO records
-$allPages = $pdo->query("SELECT * FROM seo_metadata ORDER BY 
-    CASE 
-        WHEN page_category = 'Portal Pages' THEN 1
-        WHEN page_category = 'Core & Database' THEN 2
-        WHEN page_category = 'CMS Generic' THEN 3
-        WHEN page_category = 'Academic & Exam' THEN 4
-        WHEN page_category = 'Static Showcase' THEN 5
-        ELSE 6
-    END ASC, id ASC")->fetchAll(PDO::FETCH_ASSOC);
+try {
+    $allPages = $pdo->query("SELECT * FROM seo_metadata ORDER BY 
+        CASE 
+            WHEN page_category = 'Portal Pages' THEN 1
+            WHEN page_category = 'Core & Database' THEN 2
+            WHEN page_category = 'CMS Generic' THEN 3
+            WHEN page_category = 'Academic & Exam' THEN 4
+            WHEN page_category = 'Static Showcase' THEN 5
+            ELSE 6
+        END ASC, id ASC")->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    $allPages = [];
+}
 
 require_once __DIR__ . '/header.php';
 ?>

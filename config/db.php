@@ -62,6 +62,8 @@ function getDBConnection() {
 
     // Auto setup schema & seed data
     autoInitializeTables($pdo);
+    runUniversalDatabaseMigrations($pdo);
+    ensureSeoMetadataTableExists($pdo);
 
     return $pdo;
 }
@@ -266,6 +268,63 @@ function runUniversalDatabaseMigrations($pdo) {
         ensureDbTableColumn($pdo, 'seo_metadata', 'og_image', "VARCHAR(500) DEFAULT NULL", "TEXT DEFAULT NULL", 'og_description');
         ensureDbTableColumn($pdo, 'seo_metadata', 'twitter_card', "VARCHAR(50) DEFAULT 'summary_large_image'", "TEXT DEFAULT 'summary_large_image'", 'og_image');
         ensureDbTableColumn($pdo, 'seo_metadata', 'schema_json', "LONGTEXT DEFAULT NULL", "TEXT DEFAULT NULL", 'twitter_card');
+    } catch (Exception $e) {}
+}
+
+/**
+ * Ensures the seo_metadata table exists across all MySQL/MariaDB & SQLite instances
+ */
+function ensureSeoMetadataTableExists($pdo = null) {
+    if (!$pdo) {
+        $pdo = getDBConnection();
+    }
+    try {
+        $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+        if ($driver === 'sqlite') {
+            $pdo->exec("
+                CREATE TABLE IF NOT EXISTS seo_metadata (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    page_identifier TEXT UNIQUE NOT NULL,
+                    page_name TEXT NOT NULL,
+                    page_category TEXT DEFAULT 'Portal Pages',
+                    meta_title TEXT DEFAULT NULL,
+                    meta_description TEXT DEFAULT NULL,
+                    focus_keywords TEXT DEFAULT NULL,
+                    canonical_url TEXT DEFAULT NULL,
+                    robots_tag TEXT DEFAULT 'inherit',
+                    og_title TEXT DEFAULT NULL,
+                    og_description TEXT DEFAULT NULL,
+                    og_image TEXT DEFAULT NULL,
+                    twitter_card TEXT DEFAULT 'summary_large_image',
+                    schema_json TEXT DEFAULT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
+            ");
+        } else {
+            $pdo->exec("
+                CREATE TABLE IF NOT EXISTS `seo_metadata` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `page_identifier` VARCHAR(191) NOT NULL UNIQUE,
+                    `page_name` VARCHAR(255) NOT NULL,
+                    `page_category` VARCHAR(100) DEFAULT 'Portal Pages',
+                    `meta_title` VARCHAR(255) DEFAULT NULL,
+                    `meta_description` TEXT DEFAULT NULL,
+                    `focus_keywords` TEXT DEFAULT NULL,
+                    `canonical_url` VARCHAR(500) DEFAULT NULL,
+                    `robots_tag` VARCHAR(100) DEFAULT 'inherit',
+                    `og_title` VARCHAR(255) DEFAULT NULL,
+                    `og_description` TEXT DEFAULT NULL,
+                    `og_image` VARCHAR(500) DEFAULT NULL,
+                    `twitter_card` VARCHAR(50) DEFAULT 'summary_large_image',
+                    `schema_json` LONGTEXT DEFAULT NULL,
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    INDEX `idx_seo_cat` (`page_category`),
+                    INDEX `idx_seo_robots` (`robots_tag`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            ");
+        }
     } catch (Exception $e) {}
 }
 

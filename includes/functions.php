@@ -2848,10 +2848,15 @@ function syncSeoPagesInventory($pdo = null, $force = false) {
     if (!$pdo) {
         $pdo = getDBConnection();
     }
+    ensureSeoMetadataTableExists($pdo);
 
-    $existingStmt = $pdo->prepare("SELECT id, meta_title, meta_description, focus_keywords, canonical_url, robots_tag, og_title, og_description, og_image, twitter_card, schema_json FROM seo_metadata WHERE page_identifier = :pi LIMIT 1");
-    $insertStmt = $pdo->prepare("INSERT INTO seo_metadata (page_identifier, page_name, page_category, meta_title, meta_description, focus_keywords, canonical_url, robots_tag, og_title, og_description, og_image, twitter_card, schema_json) VALUES (:pi, :pn, :pc, :mt, :md, :fk, :cu, :rt, :ot, :od, :oi, :tc, :sj)");
-    $updateStmt = $pdo->prepare("UPDATE seo_metadata SET page_name = :pn, page_category = :pc WHERE page_identifier = :pi");
+    try {
+        $existingStmt = $pdo->prepare("SELECT id, meta_title, meta_description, focus_keywords, canonical_url, robots_tag, og_title, og_description, og_image, twitter_card, schema_json FROM seo_metadata WHERE page_identifier = :pi LIMIT 1");
+        $insertStmt = $pdo->prepare("INSERT INTO seo_metadata (page_identifier, page_name, page_category, meta_title, meta_description, focus_keywords, canonical_url, robots_tag, og_title, og_description, og_image, twitter_card, schema_json) VALUES (:pi, :pn, :pc, :mt, :md, :fk, :cu, :rt, :ot, :od, :oi, :tc, :sj)");
+        $updateStmt = $pdo->prepare("UPDATE seo_metadata SET page_name = :pn, page_category = :pc WHERE page_identifier = :pi");
+    } catch (Exception $e) {
+        return ['success' => false, 'error' => $e->getMessage(), 'added' => 0, 'existing' => 0, 'total' => 0];
+    }
 
     $siteName = defined('SITE_NAME') ? SITE_NAME : 'Sarvepalli Radhakrishnan University (SRKU)';
     $baseUrl = defined('BASE_URL') ? BASE_URL : 'https://srku.edu.in/';
@@ -3516,19 +3521,29 @@ function getSeoSummaryStats($pdo = null) {
     if (!$pdo) {
         $pdo = getDBConnection();
     }
+    ensureSeoMetadataTableExists($pdo);
 
-    // Ensure inventory is populated
-    $total = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata")->fetchColumn();
-    if ($total == 0) {
-        syncSeoPagesInventory($pdo);
+    $total = 0;
+    $portalCount = 0;
+    $coreCount = 0;
+    $cmsCount = 0;
+    $examCount = 0;
+    $staticCount = 0;
+
+    try {
+        // Ensure inventory is populated
         $total = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata")->fetchColumn();
-    }
+        if ($total == 0) {
+            syncSeoPagesInventory($pdo);
+            $total = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata")->fetchColumn();
+        }
 
-    $portalCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'Portal Pages'")->fetchColumn();
-    $coreCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'Core & Database'")->fetchColumn();
-    $cmsCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'CMS Generic'")->fetchColumn();
-    $examCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'Academic & Exam'")->fetchColumn();
-    $staticCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'Static Showcase'")->fetchColumn();
+        $portalCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'Portal Pages'")->fetchColumn();
+        $coreCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'Core & Database'")->fetchColumn();
+        $cmsCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'CMS Generic'")->fetchColumn();
+        $examCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'Academic & Exam'")->fetchColumn();
+        $staticCount = (int)$pdo->query("SELECT COUNT(*) FROM seo_metadata WHERE page_category = 'Static Showcase'")->fetchColumn();
+    } catch (Exception $e) {}
 
     $globalRobots = getSetting('global_robots_indexing', 'noindex, nofollow');
     $isLive = (strpos($globalRobots, 'index, follow') !== false || strpos($globalRobots, 'index') !== false) && strpos($globalRobots, 'noindex') === false;
@@ -3552,6 +3567,7 @@ function savePageSeoMetadata($data, $pdo = null) {
     if (!$pdo) {
         $pdo = getDBConnection();
     }
+    ensureSeoMetadataTableExists($pdo);
 
     $id = isset($data['id']) ? (int)$data['id'] : 0;
     $identifier = trim($data['page_identifier'] ?? '');
@@ -3572,57 +3588,61 @@ function savePageSeoMetadata($data, $pdo = null) {
         return ['success' => false, 'error' => 'Page route/identifier is required.'];
     }
 
-    if ($id > 0) {
-        $stmt = $pdo->prepare("UPDATE seo_metadata SET 
-            page_name = :pn,
-            page_category = :pc,
-            meta_title = :mt,
-            meta_description = :md,
-            focus_keywords = :fk,
-            canonical_url = :cu,
-            robots_tag = :rt,
-            og_title = :ot,
-            og_description = :od,
-            og_image = :oi,
-            twitter_card = :tc,
-            schema_json = :sj
-            WHERE id = :id");
-        $stmt->execute([
-            ':pn' => $name,
-            ':pc' => $category,
-            ':mt' => $title,
-            ':md' => $desc,
-            ':fk' => $keywords,
-            ':cu' => $canonical,
-            ':rt' => $robots,
-            ':ot' => $ogTitle,
-            ':od' => $ogDesc,
-            ':oi' => $ogImage,
-            ':tc' => $twitterCard,
-            ':sj' => $schemaJson,
-            ':id' => $id
-        ]);
-    } else {
-        $stmt = $pdo->prepare("INSERT INTO seo_metadata (page_identifier, page_name, page_category, meta_title, meta_description, focus_keywords, canonical_url, robots_tag, og_title, og_description, og_image, twitter_card, schema_json) 
-            VALUES (:pi, :pn, :pc, :mt, :md, :fk, :cu, :rt, :ot, :od, :oi, :tc, :sj)");
-        $stmt->execute([
-            ':pi' => $identifier,
-            ':pn' => $name,
-            ':pc' => $category,
-            ':mt' => $title,
-            ':md' => $desc,
-            ':fk' => $keywords,
-            ':cu' => $canonical,
-            ':rt' => $robots,
-            ':ot' => $ogTitle,
-            ':od' => $ogDesc,
-            ':oi' => $ogImage,
-            ':tc' => $twitterCard,
-            ':sj' => $schemaJson
-        ]);
-        $id = (int)$pdo->lastInsertId();
-    }
+    try {
+        if ($id > 0) {
+            $stmt = $pdo->prepare("UPDATE seo_metadata SET 
+                page_name = :pn,
+                page_category = :pc,
+                meta_title = :mt,
+                meta_description = :md,
+                focus_keywords = :fk,
+                canonical_url = :cu,
+                robots_tag = :rt,
+                og_title = :ot,
+                og_description = :od,
+                og_image = :oi,
+                twitter_card = :tc,
+                schema_json = :sj
+                WHERE id = :id");
+            $stmt->execute([
+                ':pn' => $name,
+                ':pc' => $category,
+                ':mt' => $title,
+                ':md' => $desc,
+                ':fk' => $keywords,
+                ':cu' => $canonical,
+                ':rt' => $robots,
+                ':ot' => $ogTitle,
+                ':od' => $ogDesc,
+                ':oi' => $ogImage,
+                ':tc' => $twitterCard,
+                ':sj' => $schemaJson,
+                ':id' => $id
+            ]);
+        } else {
+            $stmt = $pdo->prepare("INSERT INTO seo_metadata (page_identifier, page_name, page_category, meta_title, meta_description, focus_keywords, canonical_url, robots_tag, og_title, og_description, og_image, twitter_card, schema_json) 
+                VALUES (:pi, :pn, :pc, :mt, :md, :fk, :cu, :rt, :ot, :od, :oi, :tc, :sj)");
+            $stmt->execute([
+                ':pi' => $identifier,
+                ':pn' => $name,
+                ':pc' => $category,
+                ':mt' => $title,
+                ':md' => $desc,
+                ':fk' => $keywords,
+                ':cu' => $canonical,
+                ':rt' => $robots,
+                ':ot' => $ogTitle,
+                ':od' => $ogDesc,
+                ':oi' => $ogImage,
+                ':tc' => $twitterCard,
+                ':sj' => $schemaJson
+            ]);
+            $id = (int)$pdo->lastInsertId();
+        }
 
-    return ['success' => true, 'id' => $id];
+        return ['success' => true, 'id' => $id];
+    } catch (Exception $e) {
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
 }
 
