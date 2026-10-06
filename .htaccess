@@ -6,9 +6,11 @@ Options -Indexes
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Security: Block access to internal files
+    # Security: Block access to internal files and sensitive extensions
     RewriteRule "(^|/)\." - [F]
-    RewriteRule \.(sql|sqlite|db|log|md|json)$ - [F,NC]
+    RewriteRule \.(sql|sqlite|db|log|md|json|env|bak|backup|yml|yaml|ini|conf|map)$ - [F,NC]
+    RewriteRule ^.*jquery\.min\.map$ - [F,NC]
+    RewriteRule ^scratch(/|$) - [F,NC]
 
     # Legacy wp-content and uploads mapping to assets/uploads
     RewriteRule ^wp-content/uploads/(.*)$ assets/uploads/$1 [L,NC]
@@ -170,6 +172,8 @@ AddType application/xml .xsl .xml
     Header set X-Content-Type-Options "nosniff"
     Header set X-Frame-Options "SAMEORIGIN"
     Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 </IfModule>
 
 # Browser Caching for Maximum Performance & Instant Speed

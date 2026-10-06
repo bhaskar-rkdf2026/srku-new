@@ -31,7 +31,12 @@ if (!defined('DB_USER')) define('DB_USER', getenv('DB_USER') ?: 'root');
 if (!defined('DB_PASS')) define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
 if (!defined('DB_NAME')) define('DB_NAME', getenv('DB_NAME') ?: 'srku_db_new');
 
-// Session Initialization
-if (session_status() == PHP_SESSION_NONE) {
+// Secure Session Initialization
+if (session_status() === PHP_SESSION_NONE) {
+    @ini_set('session.cookie_httponly', '1');
+    @ini_set('session.use_only_cookies', '1');
+    if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+        @ini_set('session.cookie_secure', '1');
+    }
     session_start();
 }

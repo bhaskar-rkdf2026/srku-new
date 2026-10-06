@@ -770,12 +770,17 @@ function getHomeGalleryImages($limit = 10) {
     return getGalleryImages('Campus', $limit);
 }
 
-// Admin session security check
-function checkAdminLogin() {
-    if (session_status() == PHP_SESSION_NONE) {
+// Admin session status check
+function isAdminLoggedIn() {
+    if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
-    if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    return isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true;
+}
+
+// Admin session security check
+function checkAdminLogin() {
+    if (!isAdminLoggedIn()) {
         header("Location: " . BASE_URL . "admin/login.php");
         exit;
     }
