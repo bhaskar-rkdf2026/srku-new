@@ -34,6 +34,208 @@ function getJsonSetting($key, $default = []) {
     return is_array($decoded) ? $decoded : $default;
 }
 
+/**
+ * Authoritative default main navigation menu structure
+ */
+function getDefaultMainMenu() {
+    return [
+        [
+            'id' => 'menu_home',
+            'label' => 'Home',
+            'url' => '',
+            'target' => '_self',
+            'type' => 'link',
+            'preset' => 'home',
+            'badge' => '',
+            'items' => []
+        ],
+        [
+            'id' => 'menu_about',
+            'label' => 'About H.E.I.',
+            'url' => 'about.php',
+            'target' => '_self',
+            'type' => 'megamenu',
+            'preset' => 'about',
+            'badge' => '',
+            'items' => []
+        ],
+        [
+            'id' => 'menu_syllabus',
+            'label' => 'Syllabus & Courses',
+            'url' => 'courses',
+            'target' => '_self',
+            'type' => 'megamenu',
+            'preset' => 'syllabus',
+            'badge' => '',
+            'items' => []
+        ],
+        [
+            'id' => 'menu_academics',
+            'label' => 'Academics',
+            'url' => 'academic-calendar.php',
+            'target' => '_self',
+            'type' => 'dropdown',
+            'preset' => 'academics',
+            'badge' => '',
+            'items' => []
+        ],
+        [
+            'id' => 'menu_admission',
+            'label' => 'Admission & Fee',
+            'url' => 'admission-enquiry.php',
+            'target' => '_self',
+            'type' => 'dropdown',
+            'preset' => 'admission',
+            'badge' => '',
+            'items' => []
+        ],
+        [
+            'id' => 'menu_research',
+            'label' => 'Research',
+            'url' => 'research-innovation',
+            'target' => '_self',
+            'type' => 'dropdown',
+            'preset' => 'research',
+            'badge' => '',
+            'items' => []
+        ],
+        [
+            'id' => 'menu_departments',
+            'label' => 'Departments',
+            'url' => 'departments.php',
+            'target' => '_self',
+            'type' => 'megamenu',
+            'preset' => 'departments',
+            'badge' => '',
+            'items' => []
+        ],
+        [
+            'id' => 'menu_student_life',
+            'label' => 'Student Life',
+            'url' => 'student-life',
+            'target' => '_self',
+            'type' => 'dropdown',
+            'preset' => 'student-life',
+            'badge' => '',
+            'items' => []
+        ],
+        [
+            'id' => 'menu_alumni',
+            'label' => 'Alumni',
+            'url' => 'alumni',
+            'target' => '_self',
+            'type' => 'dropdown',
+            'preset' => 'alumni',
+            'badge' => '',
+            'items' => []
+        ],
+        [
+            'id' => 'menu_info_corner',
+            'label' => 'Info Corner',
+            'url' => '#',
+            'target' => '_self',
+            'type' => 'dropdown',
+            'preset' => 'info-corner',
+            'badge' => '',
+            'items' => []
+        ]
+    ];
+}
+
+/**
+ * Authoritative default topbar links
+ */
+function getDefaultTopbarLinks() {
+    return [
+        ['id' => 'top_1', 'label' => 'Student Portal', 'url' => 'https://erp.srku.edu.in/', 'target' => '_blank', 'icon' => 'fas fa-user-graduate text-warning'],
+        ['id' => 'top_2', 'label' => 'Faculties', 'url' => 'faculties.php', 'target' => '_self', 'icon' => 'fas fa-chalkboard-teacher text-warning'],
+        ['id' => 'top_3', 'label' => 'Alumni', 'url' => 'alumni.php', 'target' => '_self', 'icon' => 'fas fa-users text-warning'],
+        ['id' => 'top_4', 'label' => 'Careers', 'url' => 'career.php', 'target' => '_self', 'icon' => 'fas fa-briefcase text-warning'],
+        ['id' => 'top_5', 'label' => 'Grievance Cell', 'url' => 'grievance.php', 'target' => '_self', 'icon' => 'fas fa-balance-scale text-warning'],
+        ['id' => 'top_6', 'label' => 'AICTE Scholarship', 'url' => 'https://sarswati.aicte.gov.in/', 'target' => '_blank', 'icon' => 'fas fa-award text-warning'],
+        ['id' => 'top_7', 'label' => 'Exam Time Table', 'url' => 'exam-time-table.php', 'target' => '_self', 'icon' => 'fas fa-calendar-alt text-warning'],
+        ['id' => 'top_8', 'label' => 'NIRF 2026', 'url' => 'document/nirf-2026', 'target' => '_self', 'icon' => 'fas fa-file-contract text-warning']
+    ];
+}
+
+/**
+ * Authoritative default ERP logins
+ */
+function getDefaultErpLinks() {
+    return [
+        ['id' => 'erp_1', 'label' => 'Student ERP Portal', 'url' => 'https://erp.srku.edu.in/', 'target' => '_blank', 'icon' => 'fas fa-user-graduate'],
+        ['id' => 'erp_2', 'label' => 'Faculty ERP Portal', 'url' => 'https://erp.srku.edu.in/faculty', 'target' => '_blank', 'icon' => 'fas fa-chalkboard-teacher'],
+        ['id' => 'erp_3', 'label' => 'Staff / Admin Portal', 'url' => 'https://erp.srku.edu.in/admin', 'target' => '_blank', 'icon' => 'fas fa-user-shield'],
+        ['id' => 'erp_4', 'label' => 'Online Fee Payment', 'url' => 'https://erp.srku.edu.in/fees', 'target' => '_blank', 'icon' => 'fas fa-credit-card']
+    ];
+}
+
+/**
+ * Authoritative default footer quick links (Column 2)
+ */
+function getDefaultFooterLinks() {
+    return [
+        ['id' => 'fql_1', 'label' => "Founder's Story", 'url' => 'founder-story.php', 'target' => '_self'],
+        ['id' => 'fql_2', 'label' => "Chancellor's Message", 'url' => 'chancellor-message.php', 'target' => '_self'],
+        ['id' => 'fql_3', 'label' => "VC's Message", 'url' => 'vice-chancellor-message.php', 'target' => '_self'],
+        ['id' => 'fql_4', 'label' => "Academic Calendar", 'url' => 'academic-calendar.php', 'target' => '_self'],
+        ['id' => 'fql_5', 'label' => "Examination Rules", 'url' => 'exam-rules.php', 'target' => '_self'],
+        ['id' => 'fql_6', 'label' => "Hostel Facility", 'url' => 'hostel.php', 'target' => '_self'],
+        ['id' => 'fql_7', 'label' => "About SRKU", 'url' => 'about.php', 'target' => '_self'],
+        ['id' => 'fql_8', 'label' => "Why Choose SRKU", 'url' => 'why-srk.php', 'target' => '_self'],
+        ['id' => 'fql_9', 'label' => "Academic Programmes", 'url' => 'courses.php', 'target' => '_self'],
+        ['id' => 'fql_10', 'label' => "Placement Records", 'url' => 'placements.php', 'target' => '_self'],
+        ['id' => 'fql_11', 'label' => "Photo Gallery", 'url' => 'gallery.php', 'target' => '_self'],
+        ['id' => 'fql_12', 'label' => "Admission Enquiry", 'url' => 'admission-enquiry.php', 'target' => '_self'],
+        ['id' => 'fql_13', 'label' => "Grievance Cell", 'url' => 'grievance.php', 'target' => '_self']
+    ];
+}
+
+/**
+ * Authoritative default footer constituent units (Column 3)
+ */
+function getDefaultFooterUnits() {
+    return [
+        ['id' => 'fcu_1', 'label' => 'RKDF IST (Engg.)', 'url' => 'department-detail.php?slug=rkdf-institute-of-science-technology', 'target' => '_self'],
+        ['id' => 'fcu_2', 'label' => 'RKDF Medical College', 'url' => 'https://rkdfmedicalcollege.org/', 'target' => '_blank'],
+        ['id' => 'fcu_3', 'label' => 'SRK Ayurveda College', 'url' => 'http://www.srkcahrc.in/', 'target' => '_blank'],
+        ['id' => 'fcu_4', 'label' => 'RKDF Homoeopathy', 'url' => 'http://www.rkdfhmc.in/', 'target' => '_blank'],
+        ['id' => 'fcu_5', 'label' => 'RKDF Dental College', 'url' => 'http://rkdfdentalcollege.in/', 'target' => '_blank'],
+        ['id' => 'fcu_6', 'label' => 'RKDF Pharmacy College', 'url' => 'department-detail.php?slug=rkdf-college-of-pharmacy', 'target' => '_self'],
+        ['id' => 'fcu_7', 'label' => 'Sri Sai Pharmacy', 'url' => 'department-detail.php?slug=sri-sai-college-of-pharmacy', 'target' => '_self'],
+        ['id' => 'fcu_8', 'label' => 'RKDF Nursing College', 'url' => 'department-detail.php?slug=rkdf-college-of-nursing', 'target' => '_self'],
+        ['id' => 'fcu_9', 'label' => 'RKDF Mgmt. Institute', 'url' => 'department-detail.php?slug=rkdf-institute-of-management', 'target' => '_self'],
+        ['id' => 'fcu_10', 'label' => 'SRK College of Law', 'url' => 'department-detail.php?slug=sarvepalli-radhakrishnan-college-of-law', 'target' => '_self'],
+        ['id' => 'fcu_11', 'label' => 'View All Units →', 'url' => 'constituent-unit.php', 'target' => '_self', 'highlight' => true]
+    ];
+}
+
+function getMainNavigationMenu() {
+    $menu = getJsonSetting('header_main_menu', []);
+    return (!empty($menu) && is_array($menu)) ? $menu : getDefaultMainMenu();
+}
+
+function getTopbarLinks() {
+    $links = getJsonSetting('header_topbar_links', []);
+    return (!empty($links) && is_array($links)) ? $links : getDefaultTopbarLinks();
+}
+
+function getErpLinks() {
+    $links = getJsonSetting('header_erp_links', []);
+    return (!empty($links) && is_array($links)) ? $links : getDefaultErpLinks();
+}
+
+function getFooterQuickLinks() {
+    $links = getJsonSetting('footer_quick_links', []);
+    return (!empty($links) && is_array($links)) ? $links : getDefaultFooterLinks();
+}
+
+function getFooterUnitsLinks() {
+    $links = getJsonSetting('footer_units_links', []);
+    return (!empty($links) && is_array($links)) ? $links : getDefaultFooterUnits();
+}
+
+
 // Fetch Board of Management members
 function getBoardMembers($status = 'active') {
     try {

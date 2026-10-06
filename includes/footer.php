@@ -55,19 +55,17 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
             <div class="col-12 col-sm-6 col-lg-2 footer-col">
                 <h5 class="fw-bold text-white mb-3">Quick Links</h5>
                 <ul class="list-unstyled mb-0 d-flex flex-column">
-                    <li><a href="<?php echo BASE_URL; ?>founder-story.php"><i class="fas fa-angle-right me-1 text-warning"></i> Founder's Story</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>chancellor-message.php"><i class="fas fa-angle-right me-1 text-warning"></i> Chancellor's Message</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>vice-chancellor-message.php"><i class="fas fa-angle-right me-1 text-warning"></i> VC's Message</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>academic-calendar.php"><i class="fas fa-angle-right me-1 text-warning"></i> Academic Calendar</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>exam-rules.php"><i class="fas fa-angle-right me-1 text-warning"></i> Examination Rules</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>hostel.php"><i class="fas fa-angle-right me-1 text-warning"></i> Hostel Facility</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>about.php"><i class="fas fa-angle-right me-1 text-warning"></i> About SRKU</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>why-srk.php"><i class="fas fa-angle-right me-1 text-warning"></i> Why Choose SRKU</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>courses.php"><i class="fas fa-angle-right me-1 text-warning"></i> Academic Programmes</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>placements.php"><i class="fas fa-angle-right me-1 text-warning"></i> Placement Records</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>gallery.php"><i class="fas fa-camera-retro me-1 text-warning"></i> Photo Gallery</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>admission-enquiry.php"><i class="fas fa-angle-right me-1 text-warning"></i> Admission Enquiry</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>grievance.php"><i class="fas fa-angle-right me-1 text-warning"></i> Grievance Cell</a></li>
+                    <?php
+                    $fQuickLinks = getFooterQuickLinks();
+                    foreach ($fQuickLinks as $fql):
+                        $fqlUrl = $fql['url'] ?? '';
+                        if ($fqlUrl !== '' && strpos($fqlUrl, 'http') !== 0 && strpos($fqlUrl, 'mailto:') !== 0 && strpos($fqlUrl, 'tel:') !== 0 && strpos($fqlUrl, '#') !== 0) {
+                            $fqlUrl = BASE_URL . ltrim($fqlUrl, '/');
+                        }
+                        $fqlTarget = !empty($fql['target']) ? $fql['target'] : '_self';
+                    ?>
+                    <li><a href="<?php echo sanitize($fqlUrl); ?>" target="<?php echo sanitize($fqlTarget); ?>"><i class="fas fa-angle-right me-1 text-warning"></i> <?php echo sanitize($fql['label'] ?? ''); ?></a></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
 
@@ -75,17 +73,22 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
             <div class="col-12 col-sm-6 col-lg-2 footer-col">
                 <h5 class="fw-bold text-white mb-3">Constituent Units</h5>
                 <ul class="list-unstyled mb-0 d-flex flex-column">
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-technology"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF IST (Engg.)</a></li>
-                    <li><a href="https://rkdfmedicalcollege.org/" target="_blank"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Medical College</a></li>
-                    <li><a href="http://www.srkcahrc.in/" target="_blank"><i class="fas fa-angle-right me-1 text-warning"></i> SRK Ayurveda College</a></li>
-                    <li><a href="http://www.rkdfhmc.in/" target="_blank"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Homoeopathy</a></li>
-                    <li><a href="http://rkdfdentalcollege.in/" target="_blank"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Dental College</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-pharmacy"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Pharmacy College</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=sri-sai-college-of-pharmacy"><i class="fas fa-angle-right me-1 text-warning"></i> Sri Sai Pharmacy</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-college-of-nursing"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Nursing College</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-management"><i class="fas fa-angle-right me-1 text-warning"></i> RKDF Mgmt. Institute</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>department-detail.php?slug=sarvepalli-radhakrishnan-college-of-law"><i class="fas fa-angle-right me-1 text-warning"></i> SRK College of Law</a></li>
-                    <li class="pt-1"><a href="<?php echo BASE_URL; ?>constituent-unit.php" class="text-warning fw-bold"><i class="fas fa-arrow-circle-right me-1"></i> View All Units &rarr;</a></li>
+                    <?php
+                    $fUnitsLinks = getFooterUnitsLinks();
+                    foreach ($fUnitsLinks as $ful):
+                        $fulUrl = $ful['url'] ?? '';
+                        if ($fulUrl !== '' && strpos($fulUrl, 'http') !== 0 && strpos($fulUrl, 'mailto:') !== 0 && strpos($fulUrl, 'tel:') !== 0 && strpos($fulUrl, '#') !== 0) {
+                            $fulUrl = BASE_URL . ltrim($fulUrl, '/');
+                        }
+                        $fulTarget = !empty($ful['target']) ? $ful['target'] : ((strpos($fulUrl, 'http') === 0) ? '_blank' : '_self');
+                        $isHighlight = !empty($ful['highlight']) || (strpos($ful['label'] ?? '', 'View All') !== false);
+                    ?>
+                    <li <?php echo $isHighlight ? 'class="pt-1"' : ''; ?>>
+                        <a href="<?php echo sanitize($fulUrl); ?>" target="<?php echo sanitize($fulTarget); ?>" <?php echo $isHighlight ? 'class="text-warning fw-bold"' : ''; ?>>
+                            <i class="<?php echo $isHighlight ? 'fas fa-arrow-circle-right' : 'fas fa-angle-right'; ?> me-1 text-warning"></i> <?php echo sanitize($ful['label'] ?? ''); ?>
+                        </a>
+                    </li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
 
