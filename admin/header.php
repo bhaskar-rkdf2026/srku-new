@@ -142,6 +142,7 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 $accreditationsCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM accreditations")->fetchColumn();
                 $placementsCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM placements")->fetchColumn();
                 $incubationCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM incubation_members")->fetchColumn();
+                $documentsCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM documents")->fetchColumn();
             } catch(Exception $e) { 
                 $deptsCountBadge = 26; 
                 $galleryCountBadge = 71;
@@ -153,6 +154,7 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 $accreditationsCountBadge = 11;
                 $placementsCountBadge = 6;
                 $incubationCountBadge = 14;
+                $documentsCountBadge = 81;
             }
             ?>
             <a href="manage_departments.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_departments.php' ? 'active' : ''; ?>">
@@ -165,7 +167,10 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 <i class="fas fa-calendar-alt text-danger"></i> Exam Time Tables (<?php echo $timetablesCountBadge; ?>)
             </a>
             <a href="manage_syllabus.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_syllabus.php' ? 'active' : ''; ?>">
-                <i class="fas fa-file-pdf text-danger"></i> Syllabus &amp; Schemes (<?php echo $syllabusCountBadge; ?>)
+                <i class="fas fa-book-reader text-warning"></i> Syllabus &amp; Schemes (<?php echo $syllabusCountBadge; ?>)
+            </a>
+            <a href="manage_documents.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_documents.php' ? 'active' : ''; ?>">
+                <i class="fas fa-file-pdf text-danger"></i> Statutory Documents (<?php echo $documentsCountBadge; ?>)
             </a>
             <a href="manage_faculty.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_faculty.php' ? 'active' : ''; ?>">
                 <i class="fas fa-chalkboard-teacher"></i> Faculty Directory (<?php echo number_format($facultyCountBadge ?: 1074); ?>)
@@ -221,6 +226,17 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
             <a href="manage_settings.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_settings.php' ? 'active' : ''; ?>">
                 <i class="fas fa-cog"></i> Global Settings
             </a>
+            <div class="sidebar-submenu">
+                <a href="manage_settings.php#alumni-section" class="sidebar-sub-link">
+                    <i class="fas fa-user-graduate text-success"></i> Alumni Portal
+                </a>
+                <a href="manage_settings.php#career-section" class="sidebar-sub-link">
+                    <i class="fas fa-briefcase text-primary"></i> Careers &amp; Openings
+                </a>
+                <a href="manage_settings.php#rkdf-feedback-section" class="sidebar-sub-link">
+                    <i class="fas fa-poll text-warning"></i> Feedback Forms
+                </a>
+            </div>
             <a href="manage_dbsync.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_dbsync.php' ? 'active' : ''; ?>">
                 <i class="fas fa-database text-warning"></i> DB Sync &amp; Health
             </a>

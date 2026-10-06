@@ -7,7 +7,9 @@ $pageKeywords = "Student Feedback Form RKDF IST, SRKU Feedback PDF, Engineering 
 $activeNav = "departments";
 require_once __DIR__ . '/includes/header.php';
 
-$pdfUrl = BASE_URL . 'assets/pdf/rkdf-ist/feedback/student-feedback.pdf';
+$pdfUrl = BASE_URL . getSetting('rkdf_student_feedback_pdf', 'assets/pdf/rkdf-ist/feedback/student-feedback.pdf');
+$rkdfEmail = getSetting('rkdf_contact_email', 'deanengg@srku.edu.in');
+$rkdfPhone = getSetting('rkdf_contact_phone', '0755 – 4911204');
 ?>
 
 <!-- Banner Header -->
@@ -145,11 +147,11 @@ $pdfUrl = BASE_URL . 'assets/pdf/rkdf-ist/feedback/student-feedback.pdf';
                     <p class="text-muted small mb-3">For any academic assistance or guidance regarding feedback submission:</p>
                     <div class="p-3 bg-white rounded-3 border mb-2 small">
                         <div class="fw-bold text-navy mb-1"><i class="fas fa-envelope text-danger me-2"></i> Email Contact:</div>
-                        <a href="mailto:deanengg@srku.edu.in" class="text-decoration-none text-muted">deanengg@srku.edu.in</a>
+                        <a href="mailto:<?php echo sanitize($rkdfEmail); ?>" class="text-decoration-none text-muted"><?php echo sanitize($rkdfEmail); ?></a>
                     </div>
                     <div class="p-3 bg-white rounded-3 border small">
                         <div class="fw-bold text-navy mb-1"><i class="fas fa-phone text-danger me-2"></i> Helpline:</div>
-                        <span class="text-muted">0755 &ndash; 4911204</span>
+                        <span class="text-muted"><?php echo sanitize($rkdfPhone); ?></span>
                     </div>
                 </div>
 

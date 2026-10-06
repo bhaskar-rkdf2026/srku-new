@@ -64,6 +64,7 @@ function getDBConnection() {
     autoInitializeTables($pdo);
     runUniversalDatabaseMigrations($pdo);
     ensureSeoMetadataTableExists($pdo);
+    ensureDocumentsTableExists($pdo);
 
     return $pdo;
 }
@@ -325,6 +326,61 @@ function ensureSeoMetadataTableExists($pdo = null) {
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
             ");
         }
+    } catch (Exception $e) {}
+}
+
+/**
+ * Ensures the statutory documents table exists across MySQL & SQLite
+ */
+function ensureDocumentsTableExists($pdo = null) {
+    if (!$pdo) {
+        $pdo = getDBConnection();
+    }
+    try {
+        $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+        if ($driver === 'sqlite') {
+            $pdo->exec("
+                CREATE TABLE IF NOT EXISTS documents (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    slug TEXT NOT NULL UNIQUE,
+                    title TEXT NOT NULL,
+                    category TEXT NOT NULL DEFAULT 'General',
+                    subtitle TEXT DEFAULT '',
+                    pdf_path TEXT NOT NULL,
+                    description TEXT,
+                    highlights TEXT,
+                    status TEXT DEFAULT 'published',
+                    display_order INTEGER DEFAULT 0,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
+            ");
+        } else {
+            $pdo->exec("
+                CREATE TABLE IF NOT EXISTS `documents` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `slug` VARCHAR(191) NOT NULL UNIQUE,
+                    `title` VARCHAR(255) NOT NULL,
+                    `category` VARCHAR(100) NOT NULL DEFAULT 'General',
+                    `subtitle` VARCHAR(255) DEFAULT '',
+                    `pdf_path` VARCHAR(255) NOT NULL,
+                    `description` TEXT,
+                    `highlights` TEXT,
+                    `status` VARCHAR(20) DEFAULT 'published',
+                    `display_order` INT DEFAULT 0,
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    INDEX `idx_doc_cat` (`category`),
+                    INDEX `idx_doc_status` (`status`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            ");
+        }
+
+        ensureDbTableColumn($pdo, 'documents', 'subtitle', "VARCHAR(255) DEFAULT ''", "TEXT DEFAULT ''", 'category');
+        ensureDbTableColumn($pdo, 'documents', 'description', "TEXT DEFAULT NULL", "TEXT DEFAULT NULL", 'pdf_path');
+        ensureDbTableColumn($pdo, 'documents', 'highlights', "TEXT DEFAULT NULL", "TEXT DEFAULT NULL", 'description');
+        ensureDbTableColumn($pdo, 'documents', 'status', "VARCHAR(20) DEFAULT 'published'", "TEXT DEFAULT 'published'", 'highlights');
+        ensureDbTableColumn($pdo, 'documents', 'display_order', "INT DEFAULT 0", "INTEGER DEFAULT 0", 'status');
     } catch (Exception $e) {}
 }
 

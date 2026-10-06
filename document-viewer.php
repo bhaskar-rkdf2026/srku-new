@@ -1378,10 +1378,49 @@ $cleanSlug = strtolower(trim($slug));
 $normKey = preg_replace('/[^a-z0-9]+/', '-', $cleanSlug);
 $normKey = trim($normKey, '-');
 
+// 0. Primary DB Lookup from `documents` table (Dynamic Admin Managed)
+if (!empty($slug) || !empty($normKey)) {
+    try {
+        $pdo = getDBConnection();
+        $aliasTarget = $aliases[$normKey] ?? ($aliases[$slug] ?? null);
+        if ($aliasTarget) {
+            $docStmt = $pdo->prepare("SELECT * FROM documents WHERE (slug = :s OR slug = :alias OR slug = :norm) LIMIT 1");
+            $docStmt->execute([':s' => $slug, ':alias' => $aliasTarget, ':norm' => $normKey]);
+        } else {
+            $docStmt = $pdo->prepare("SELECT * FROM documents WHERE (slug = :s OR slug = :norm) LIMIT 1");
+            $docStmt->execute([':s' => $slug, ':norm' => $normKey]);
+        }
+        $row = $docStmt->fetch();
+        if ($row && ($row['status'] === 'published' || isset($_SESSION['admin_user']))) {
+            $hl = [];
+            if (!empty($row['highlights'])) {
+                $decoded = json_decode($row['highlights'], true);
+                if (is_array($decoded)) {
+                    $hl = $decoded;
+                } else {
+                    $lines = explode("\n", str_replace("\r", "", $row['highlights']));
+                    $hl = array_values(array_filter(array_map('trim', $lines)));
+                }
+            }
+            $doc = [
+                'id' => $row['id'],
+                'title' => $row['title'],
+                'category' => $row['category'],
+                'subtitle' => $row['subtitle'] ?? '',
+                'pdf_path' => $row['pdf_path'],
+                'description' => $row['description'] ?? '',
+                'highlights' => $hl,
+                'status' => $row['status'] ?? 'published'
+            ];
+            $slug = $row['slug'];
+        }
+    } catch (Exception $e) {}
+}
+
 // 1. Check direct registry match
-if (!empty($slug) && isset($documentsRegistry[$slug])) {
+if (!$doc && !empty($slug) && isset($documentsRegistry[$slug])) {
     $doc = $documentsRegistry[$slug];
-} elseif (!empty($normKey) && isset($documentsRegistry[$normKey])) {
+} elseif (!$doc && !empty($normKey) && isset($documentsRegistry[$normKey])) {
     $doc = $documentsRegistry[$normKey];
     $slug = $normKey;
 }
@@ -1649,8 +1688,24 @@ require_once __DIR__ . '/includes/header.php';
                     <h5 class="fw-bold text-navy mb-3"><i class="fas fa-folder-open text-warning me-2"></i> Related Documents</h5>
                     <ul class="list-unstyled d-flex flex-column gap-2 mb-0 small">
                         <?php 
+                        $allDocsList = $documentsRegistry;
+                        try {
+                            $allStmt = $pdo->query("SELECT slug, title, category, pdf_path FROM documents WHERE status = 'published' ORDER BY display_order ASC, id ASC");
+                            $dbDocs = $allStmt->fetchAll();
+                            if (!empty($dbDocs)) {
+                                $allDocsList = [];
+                                foreach ($dbDocs as $dRow) {
+                                    $allDocsList[$dRow['slug']] = [
+                                        'title' => $dRow['title'],
+                                        'category' => $dRow['category'],
+                                        'pdf_path' => $dRow['pdf_path']
+                                    ];
+                                }
+                            }
+                        } catch (Exception $e) {}
+
                         $count = 0;
-                        foreach ($documentsRegistry as $k => $item): 
+                        foreach ($allDocsList as $k => $item): 
                             if ($k === $slug) continue;
                             if ($item['category'] === $doc['category'] || $count < 4):
                                 $count++;

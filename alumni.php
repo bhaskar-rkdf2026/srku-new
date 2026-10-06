@@ -24,10 +24,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_alumni'])) {
         $regErr = $res['error'];
     }
 }
+
+// Dynamic Settings for Alumni Page
+$alumniBannerTitle = getSetting('alumni_banner_title', 'SRKU Global Alumni Network');
+$alumniBannerSubtitle = getSetting('alumni_banner_subtitle', '15,000+ Alumni Leading Innovations Across Top Global MNCs & Research Centers');
+$alumniSubtitle = getSetting('alumni_subtitle', 'ALUMNI COMMUNITY');
+$alumniTitle = getSetting('alumni_title', 'Stay Connected with <span>Your Alma Mater</span>');
+$alumniDesc1 = getSetting('alumni_desc_1', 'The Sarvepalli Radhakrishnan University Alumni Association brings together thousands of graduates working across diverse sectors globally — from Fortune 500 tech leaders and pharmaceutical scientists to civil servants, doctors, and successful entrepreneurs.');
+$alumniDesc2 = getSetting('alumni_desc_2', 'As an esteemed alumnus, you can mentor current students, participate in annual alumni reunions, deliver guest lectures, and connect with fellow alumni across the world.');
+$alumniBenefitsRaw = getSetting('alumni_benefits', "Access to university digital library & research databases\nInvitations to Annual Alumni Meet & National Convocations\nNetworking with corporate recruiters and startup founders\nMentorship opportunities for graduating batches");
+$alumniBenefits = array_values(array_filter(array_map('trim', explode("\n", str_replace("\r", "", $alumniBenefitsRaw)))));
 ?>
 
 <!-- Dynamic Banner Header -->
-<?php renderPageBanner('alumni', 'SRKU Global Alumni Network', '15,000+ Alumni Leading Innovations Across Top Global MNCs & Research Centers'); ?>
+<?php renderPageBanner('alumni', $alumniBannerTitle, $alumniBannerSubtitle); ?>
 
 <section class="py-5">
     <div class="container-xl py-3">
@@ -35,22 +45,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_alumni'])) {
             
             <!-- Left Info Column -->
             <div class="col-12 col-lg-6">
-                <span class="section-subtitle">ALUMNI COMMUNITY</span>
-                <h2 class="section-title mb-3">Stay Connected with <span>Your Alma Mater</span></h2>
+                <span class="section-subtitle"><?php echo sanitize($alumniSubtitle); ?></span>
+                <h2 class="section-title mb-3"><?php echo $alumniTitle; ?></h2>
                 <p class="text-dark mb-3" style="line-height:1.8; font-size:0.95rem;">
-                    The Sarvepalli Radhakrishnan University Alumni Association brings together thousands of graduates working across diverse sectors globally — from Fortune 500 tech leaders and pharmaceutical scientists to civil servants, doctors, and successful entrepreneurs.
+                    <?php echo nl2br(sanitize($alumniDesc1)); ?>
                 </p>
+                <?php if (!empty($alumniDesc2)): ?>
                 <p class="text-muted mb-4" style="line-height:1.8; font-size:0.93rem;">
-                    As an esteemed alumnus, you can mentor current students, participate in annual alumni reunions, deliver guest lectures, and connect with fellow alumni across the world.
+                    <?php echo nl2br(sanitize($alumniDesc2)); ?>
                 </p>
+                <?php endif; ?>
                 
                 <div class="bg-light p-4 rounded-4 border">
                     <h4 class="h6 fw-bold text-navy mb-3"><i class="fas fa-handshake text-danger me-2"></i> Alumni Engagement Benefits</h4>
                     <ul class="list-unstyled d-flex flex-column gap-2 mb-0 small text-muted">
-                        <li><i class="fas fa-check text-danger me-2"></i> Access to university digital library &amp; research databases</li>
-                        <li><i class="fas fa-check text-danger me-2"></i> Invitations to Annual Alumni Meet &amp; National Convocations</li>
-                        <li><i class="fas fa-check text-danger me-2"></i> Networking with corporate recruiters and startup founders</li>
-                        <li><i class="fas fa-check text-danger me-2"></i> Mentorship opportunities for graduating batches</li>
+                        <?php foreach ($alumniBenefits as $benefit): ?>
+                            <li><i class="fas fa-check text-danger me-2"></i> <?php echo sanitize($benefit); ?></li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
             </div>

@@ -52,6 +52,9 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_settings
         'phd_application_pdf_file' => 'phd_application_pdf',
         'phd_entrance_pdf_file' => 'phd_entrance_pdf',
         'phd_synopsis_pdf_file' => 'phd_synopsis_pdf',
+        'rkdf_student_feedback_pdf_file' => 'rkdf_student_feedback_pdf',
+        'rkdf_teacher_feedback_pdf_file' => 'rkdf_teacher_feedback_pdf',
+        'rkdf_parent_feedback_pdf_file' => 'rkdf_parent_feedback_pdf',
     ];
 
     $uploadedPdfs = [];
@@ -170,6 +173,30 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_settings
         'student_sports_desc' => $_POST['student_sports_desc'] ?? '',
         'student_nss_title' => sanitize($_POST['student_nss_title'] ?? ''),
         'student_nss_desc' => $_POST['student_nss_desc'] ?? '',
+
+        // Section 12: Global Alumni Portal
+        'alumni_banner_title' => sanitize($_POST['alumni_banner_title'] ?? 'SRKU Global Alumni Network'),
+        'alumni_banner_subtitle' => sanitize($_POST['alumni_banner_subtitle'] ?? '15,000+ Alumni Leading Innovations Across Top Global MNCs & Research Centers'),
+        'alumni_subtitle' => sanitize($_POST['alumni_subtitle'] ?? 'ALUMNI COMMUNITY'),
+        'alumni_title' => $_POST['alumni_title'] ?? 'Stay Connected with <span>Your Alma Mater</span>',
+        'alumni_desc_1' => $_POST['alumni_desc_1'] ?? '',
+        'alumni_desc_2' => $_POST['alumni_desc_2'] ?? '',
+        'alumni_benefits' => $_POST['alumni_benefits'] ?? '',
+
+        // Section 13: Careers & Faculty Openings
+        'career_banner_title' => sanitize($_POST['career_banner_title'] ?? 'Faculty & Staff Recruitment'),
+        'career_banner_subtitle' => sanitize($_POST['career_banner_subtitle'] ?? "Join Central India's Premier Academic Ecosystem as an Educator, Researcher or Leader"),
+        'career_subtitle' => sanitize($_POST['career_subtitle'] ?? 'CURRENT OPENINGS'),
+        'career_title' => $_POST['career_title'] ?? 'Build an Inspiring <span>Academic Career</span>',
+        'career_desc' => $_POST['career_desc'] ?? '',
+        'career_openings_json' => $_POST['career_openings_json'] ?? '',
+
+        // Section 14: RKDF-IST Feedback Forms & Welfare
+        'rkdf_student_feedback_pdf' => $uploadedPdfs['rkdf_student_feedback_pdf'] ?? sanitize($_POST['rkdf_student_feedback_pdf'] ?? 'assets/pdf/rkdf-ist/feedback/student-feedback.pdf'),
+        'rkdf_teacher_feedback_pdf' => $uploadedPdfs['rkdf_teacher_feedback_pdf'] ?? sanitize($_POST['rkdf_teacher_feedback_pdf'] ?? 'assets/pdf/rkdf-ist/feedback/teacher-curriculum-feedback.pdf'),
+        'rkdf_parent_feedback_pdf' => $uploadedPdfs['rkdf_parent_feedback_pdf'] ?? sanitize($_POST['rkdf_parent_feedback_pdf'] ?? 'assets/pdf/rkdf-ist/feedback/parent-feedback.pdf'),
+        'rkdf_contact_email' => sanitize($_POST['rkdf_contact_email'] ?? 'deanengg@srku.edu.in'),
+        'rkdf_contact_phone' => sanitize($_POST['rkdf_contact_phone'] ?? '0755 – 4911204'),
     ];
 
     $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
@@ -285,11 +312,47 @@ $studentSportsTitle = getSetting('student_sports_title', 'Inter-University Sport
 $studentSportsDesc = getSetting('student_sports_desc', 'Annual tournaments across Cricket, Football, Basketball, Volleyball, Badminton, Table Tennis, and Track & Field athletics.');
 $studentNssTitle = getSetting('student_nss_title', 'NSS & Community Service');
 $studentNssDesc = getSetting('student_nss_desc', 'Active National Service Scheme units organizing blood donation camps, free health checkups, tree plantation, and rural literacy drives.');
+
+// Section 12: Global Alumni Portal
+$alumniBannerTitle = getSetting('alumni_banner_title', 'SRKU Global Alumni Network');
+$alumniBannerSubtitle = getSetting('alumni_banner_subtitle', '15,000+ Alumni Leading Innovations Across Top Global MNCs & Research Centers');
+$alumniSubtitle = getSetting('alumni_subtitle', 'ALUMNI COMMUNITY');
+$alumniTitle = getSetting('alumni_title', 'Stay Connected with <span>Your Alma Mater</span>');
+$alumniDesc1 = getSetting('alumni_desc_1', 'The Sarvepalli Radhakrishnan University Alumni Association brings together thousands of graduates working across diverse sectors globally — from Fortune 500 tech leaders and pharmaceutical scientists to civil servants, doctors, and successful entrepreneurs.');
+$alumniDesc2 = getSetting('alumni_desc_2', 'As an esteemed alumnus, you can mentor current students, participate in annual alumni reunions, deliver guest lectures, and connect with fellow alumni across the world.');
+$alumniBenefits = getSetting('alumni_benefits', "Access to university digital library & research databases\nInvitations to Annual Alumni Meet & National Convocations\nNetworking with corporate recruiters and startup founders\nMentorship opportunities for graduating batches");
+
+// Section 13: Careers & Faculty Openings
+$careerBannerTitle = getSetting('career_banner_title', 'Faculty & Staff Recruitment');
+$careerBannerSubtitle = getSetting('career_banner_subtitle', "Join Central India's Premier Academic Ecosystem as an Educator, Researcher or Leader");
+$careerSubtitle = getSetting('career_subtitle', 'CURRENT OPENINGS');
+$careerTitle = getSetting('career_title', 'Build an Inspiring <span>Academic Career</span>');
+$careerDesc = getSetting('career_desc', 'Sarvepalli Radhakrishnan University invites applications from dynamic, scholarly, and research-oriented academicians for faculty and leadership positions across all departments.');
+$careerOpeningsJson = getSetting('career_openings_json', '');
+
+// Section 14: RKDF-IST Feedback Forms
+$rkdfStudentPdf = getSetting('rkdf_student_feedback_pdf', 'assets/pdf/rkdf-ist/feedback/student-feedback.pdf');
+$rkdfTeacherPdf = getSetting('rkdf_teacher_feedback_pdf', 'assets/pdf/rkdf-ist/feedback/teacher-curriculum-feedback.pdf');
+$rkdfParentPdf = getSetting('rkdf_parent_feedback_pdf', 'assets/pdf/rkdf-ist/feedback/parent-feedback.pdf');
+$rkdfContactEmail = getSetting('rkdf_contact_email', 'deanengg@srku.edu.in');
+$rkdfContactPhone = getSetting('rkdf_contact_phone', '0755 – 4911204');
 ?>
 
 <div class="mb-4">
     <h3 class="h4 fw-bold text-navy mb-1">Global Website &amp; University Settings</h3>
     <p class="text-muted small mb-0">Configure site identity, leadership quotes, standardized institutional metrics, PDF downloads, and hostel/facility information.</p>
+</div>
+
+<!-- Quick Navigation Anchor Bar -->
+<div class="d-flex flex-wrap gap-2 mb-4 p-3 bg-white rounded-3 shadow-sm border align-items-center" style="max-width: 980px;">
+    <span class="small fw-bold text-navy me-2"><i class="fas fa-compass text-danger me-1"></i> Quick Jump:</span>
+    <a href="#hero-section" class="btn btn-sm btn-outline-secondary rounded-pill">1. Hero Video</a>
+    <a href="#leadership-section" class="btn btn-sm btn-outline-secondary rounded-pill">2. Leadership</a>
+    <a href="#contact-section" class="btn btn-sm btn-outline-secondary rounded-pill">3. Contact</a>
+    <a href="#downloads-section" class="btn btn-sm btn-outline-secondary rounded-pill">8. PDF Downloads</a>
+    <a href="#alumni-section" class="btn btn-sm btn-outline-success fw-bold rounded-pill"><i class="fas fa-user-graduate me-1"></i> 12. Alumni Portal</a>
+    <a href="#career-section" class="btn btn-sm btn-outline-primary fw-bold rounded-pill"><i class="fas fa-briefcase me-1"></i> 13. Careers &amp; Openings</a>
+    <a href="#rkdf-feedback-section" class="btn btn-sm btn-outline-warning text-dark fw-bold rounded-pill"><i class="fas fa-poll me-1"></i> 14. RKDF Feedback Forms</a>
 </div>
 
 <div style="max-width: 980px;">
@@ -766,6 +829,126 @@ $studentNssDesc = getSetting('student_nss_desc', 'Active National Service Scheme
                         <label class="form-label fw-bold text-dark small">NSS / Community Description</label>
                         <textarea name="student_nss_desc" class="form-control form-control-sm" rows="3"><?php echo htmlspecialchars($studentNssDesc); ?></textarea>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 12: Global Alumni Portal Settings -->
+        <div class="admin-form-section" id="alumni-section">
+            <div class="admin-form-section-title">
+                <i class="fas fa-user-graduate text-success"></i> Section 12: Global Alumni Portal (alumni.php)
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label fw-bold text-dark small">Alumni Banner Title</label>
+                    <input type="text" name="alumni_banner_title" class="form-control form-control-sm" value="<?php echo sanitize($alumniBannerTitle); ?>">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold text-dark small">Alumni Banner Subtitle</label>
+                    <input type="text" name="alumni_banner_subtitle" class="form-control form-control-sm" value="<?php echo sanitize($alumniBannerSubtitle); ?>">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold text-dark small">Section Tagline / Subtitle</label>
+                    <input type="text" name="alumni_subtitle" class="form-control form-control-sm" value="<?php echo sanitize($alumniSubtitle); ?>">
+                </div>
+                <div class="col-md-8">
+                    <label class="form-label fw-bold text-dark small">Section Heading Title</label>
+                    <input type="text" name="alumni_title" class="form-control form-control-sm" value="<?php echo htmlspecialchars($alumniTitle); ?>">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold text-dark small">Description Paragraph 1</label>
+                    <textarea name="alumni_desc_1" class="form-control form-control-sm" rows="3"><?php echo htmlspecialchars($alumniDesc1); ?></textarea>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold text-dark small">Description Paragraph 2</label>
+                    <textarea name="alumni_desc_2" class="form-control form-control-sm" rows="3"><?php echo htmlspecialchars($alumniDesc2); ?></textarea>
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-bold text-dark small"><i class="fas fa-list-ul text-danger me-1"></i> Alumni Engagement Benefits (One per line)</label>
+                    <textarea name="alumni_benefits" class="form-control form-control-sm" rows="4"><?php echo htmlspecialchars($alumniBenefits); ?></textarea>
+                    <div class="form-text small">Each line will be rendered with a checkmark bullet in the Alumni Benefits card.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 13: Careers & Recruitment Openings -->
+        <div class="admin-form-section" id="career-section">
+            <div class="admin-form-section-title">
+                <i class="fas fa-briefcase text-primary"></i> Section 13: Careers &amp; Recruitment Openings (career.php)
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label fw-bold text-dark small">Career Banner Title</label>
+                    <input type="text" name="career_banner_title" class="form-control form-control-sm" value="<?php echo sanitize($careerBannerTitle); ?>">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold text-dark small">Career Banner Subtitle</label>
+                    <input type="text" name="career_banner_subtitle" class="form-control form-control-sm" value="<?php echo sanitize($careerBannerSubtitle); ?>">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold text-dark small">Openings Tagline / Subtitle</label>
+                    <input type="text" name="career_subtitle" class="form-control form-control-sm" value="<?php echo sanitize($careerSubtitle); ?>">
+                </div>
+                <div class="col-md-8">
+                    <label class="form-label fw-bold text-dark small">Openings Heading Title</label>
+                    <input type="text" name="career_title" class="form-control form-control-sm" value="<?php echo htmlspecialchars($careerTitle); ?>">
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-bold text-dark small">Recruitment Intro Description</label>
+                    <textarea name="career_desc" class="form-control form-control-sm" rows="2"><?php echo htmlspecialchars($careerDesc); ?></textarea>
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-bold text-dark small"><i class="fas fa-code text-warning me-1"></i> Current Openings JSON (Customizable)</label>
+                    <textarea name="career_openings_json" class="form-control form-control-sm font-monospace" rows="5" placeholder='[{"title":"Professors","badge":"Multiple Positions","disciplines":"CSE, Pharmacy","eligibility":"Ph.D."}]'><?php echo htmlspecialchars($careerOpeningsJson); ?></textarea>
+                    <div class="form-text small">Optional custom JSON array of openings. Leave empty to use default university faculties.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 14: RKDF-IST Feedback Forms & Desk -->
+        <div class="admin-form-section" id="rkdf-feedback-section">
+            <div class="admin-form-section-title">
+                <i class="fas fa-poll text-warning"></i> Section 14: RKDF-IST Feedback Forms &amp; Helpdesk
+            </div>
+            <div class="row g-3">
+                <!-- Student Feedback Form -->
+                <div class="col-md-4">
+                    <div class="p-3 bg-light rounded-3 border h-100">
+                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-file-pdf text-danger me-1"></i> Student Feedback PDF</label>
+                        <input type="text" name="rkdf_student_feedback_pdf" class="form-control form-control-sm mb-2" value="<?php echo sanitize($rkdfStudentPdf); ?>">
+                        <label class="form-label small text-muted mb-1">OR Upload New PDF:</label>
+                        <input type="file" name="rkdf_student_feedback_pdf_file" class="form-control form-control-sm" accept="application/pdf">
+                    </div>
+                </div>
+
+                <!-- Teacher Feedback Form -->
+                <div class="col-md-4">
+                    <div class="p-3 bg-light rounded-3 border h-100">
+                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-file-pdf text-danger me-1"></i> Teacher Feedback PDF</label>
+                        <input type="text" name="rkdf_teacher_feedback_pdf" class="form-control form-control-sm mb-2" value="<?php echo sanitize($rkdfTeacherPdf); ?>">
+                        <label class="form-label small text-muted mb-1">OR Upload New PDF:</label>
+                        <input type="file" name="rkdf_teacher_feedback_pdf_file" class="form-control form-control-sm" accept="application/pdf">
+                    </div>
+                </div>
+
+                <!-- Parent Feedback Form -->
+                <div class="col-md-4">
+                    <div class="p-3 bg-light rounded-3 border h-100">
+                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-file-pdf text-danger me-1"></i> Parent Feedback PDF</label>
+                        <input type="text" name="rkdf_parent_feedback_pdf" class="form-control form-control-sm mb-2" value="<?php echo sanitize($rkdfParentPdf); ?>">
+                        <label class="form-label small text-muted mb-1">OR Upload New PDF:</label>
+                        <input type="file" name="rkdf_parent_feedback_pdf_file" class="form-control form-control-sm" accept="application/pdf">
+                    </div>
+                </div>
+
+                <!-- Helpdesk Email & Phone -->
+                <div class="col-md-6">
+                    <label class="form-label fw-bold text-dark small">Helpdesk Email Address</label>
+                    <input type="email" name="rkdf_contact_email" class="form-control form-control-sm" value="<?php echo sanitize($rkdfContactEmail); ?>">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold text-dark small">Helpdesk Contact Phone</label>
+                    <input type="text" name="rkdf_contact_phone" class="form-control form-control-sm" value="<?php echo sanitize($rkdfContactPhone); ?>">
                 </div>
             </div>
         </div>

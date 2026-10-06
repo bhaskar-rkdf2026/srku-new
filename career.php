@@ -26,10 +26,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_career'])) {
         $applyErr = $res['error'];
     }
 }
+
+// Dynamic Settings for Careers Page
+$careerBannerTitle = getSetting('career_banner_title', 'Faculty & Staff Recruitment');
+$careerBannerSubtitle = getSetting('career_banner_subtitle', "Join Central India's Premier Academic Ecosystem as an Educator, Researcher or Leader");
+$careerSubtitle = getSetting('career_subtitle', 'CURRENT OPENINGS');
+$careerTitle = getSetting('career_title', 'Build an Inspiring <span>Academic Career</span>');
+$careerDesc = getSetting('career_desc', 'Sarvepalli Radhakrishnan University invites applications from dynamic, scholarly, and research-oriented academicians for faculty and leadership positions across all departments.');
+
+$defaultOpenings = [
+    [
+        'title' => 'Professors / Associate Professors',
+        'badge' => 'Multiple Positions',
+        'badge_class' => 'bg-danger',
+        'disciplines' => 'CSE (AI/ML/Data Science), Pharmacy (Pharmaceutics/Pharmacology), Management (Finance/Marketing), Nursing, Law & Agriculture.',
+        'eligibility' => 'Ph.D. with minimum 8-10 years of teaching/research experience as per UGC/AICTE/PCI norms.'
+    ],
+    [
+        'title' => 'Assistant Professors',
+        'badge' => 'Multiple Positions',
+        'badge_class' => 'bg-danger',
+        'disciplines' => 'Computer Applications, Mechanical Engineering, Physiotherapy, Nursing & Basic Sciences.',
+        'eligibility' => "Master's Degree with NET/GATE/Ph.D. in relevant discipline with strong pedagogical skills."
+    ],
+    [
+        'title' => 'Technical Lab Assistants & Admin Staff',
+        'badge' => 'Open',
+        'badge_class' => 'bg-primary',
+        'disciplines' => 'Computer Lab Administrators, Pharmacy Lab Technicians, Admission Counselors & Office Executives.',
+        'eligibility' => 'Relevant Diploma / Degree with 2+ years of university lab/administrative experience.'
+    ]
+];
+$careerOpeningsJson = getSetting('career_openings_json', '');
+$careerOpenings = !empty($careerOpeningsJson) ? (json_decode($careerOpeningsJson, true) ?: $defaultOpenings) : $defaultOpenings;
 ?>
 
 <!-- Dynamic Banner Header -->
-<?php renderPageBanner('career', 'Faculty & Staff Recruitment', 'Join Central India\'s Premier Academic Ecosystem as an Educator, Researcher or Leader'); ?>
+<?php renderPageBanner('career', $careerBannerTitle, $careerBannerSubtitle); ?>
 
 <section class="py-5">
     <div class="container-xl py-3">
@@ -38,40 +71,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_career'])) {
             
             <!-- Left Info Column -->
             <div class="col-12 col-lg-7">
-                <span class="section-subtitle">CURRENT OPENINGS</span>
-                <h2 class="section-title mb-3">Build an Inspiring <span>Academic Career</span></h2>
+                <span class="section-subtitle"><?php echo sanitize($careerSubtitle); ?></span>
+                <h2 class="section-title mb-3"><?php echo $careerTitle; ?></h2>
                 <p class="text-dark mb-4" style="line-height:1.8; font-size:0.95rem;">
-                    Sarvepalli Radhakrishnan University invites applications from dynamic, scholarly, and research-oriented academicians for faculty and leadership positions across all departments.
+                    <?php echo nl2br(sanitize($careerDesc)); ?>
                 </p>
 
                 <!-- Vacancies List -->
                 <div class="d-flex flex-column gap-3 mb-4">
+                    <?php foreach ($careerOpenings as $op): ?>
                     <div class="p-4 border rounded-4 bg-light">
                         <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h4 class="h5 fw-bold text-navy mb-0">Professors / Associate Professors</h4>
-                            <span class="badge bg-danger">Multiple Positions</span>
+                            <h4 class="h5 fw-bold text-navy mb-0"><?php echo sanitize($op['title'] ?? 'Opening'); ?></h4>
+                            <span class="badge <?php echo sanitize($op['badge_class'] ?? 'bg-danger'); ?>"><?php echo sanitize($op['badge'] ?? 'Active'); ?></span>
                         </div>
-                        <p class="text-muted small mb-2"><strong>Disciplines:</strong> CSE (AI/ML/Data Science), Pharmacy (Pharmaceutics/Pharmacology), Management (Finance/Marketing), Nursing, Law &amp; Agriculture.</p>
-                        <small class="text-dark"><strong>Eligibility:</strong> Ph.D. with minimum 8-10 years of teaching/research experience as per UGC/AICTE/PCI norms.</small>
+                        <p class="text-muted small mb-2"><strong>Disciplines:</strong> <?php echo sanitize($op['disciplines'] ?? ''); ?></p>
+                        <small class="text-dark"><strong>Eligibility:</strong> <?php echo sanitize($op['eligibility'] ?? ''); ?></small>
                     </div>
-
-                    <div class="p-4 border rounded-4 bg-light">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h4 class="h5 fw-bold text-navy mb-0">Assistant Professors</h4>
-                            <span class="badge bg-danger">Multiple Positions</span>
-                        </div>
-                        <p class="text-muted small mb-2"><strong>Disciplines:</strong> Computer Applications, Mechanical Engineering, Physiotherapy, Nursing &amp; Basic Sciences.</p>
-                        <small class="text-dark"><strong>Eligibility:</strong> Master's Degree with NET/GATE/Ph.D. in relevant discipline with strong pedagogical skills.</small>
-                    </div>
-
-                    <div class="p-4 border rounded-4 bg-light">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h4 class="h5 fw-bold text-navy mb-0">Technical Lab Assistants &amp; Admin Staff</h4>
-                            <span class="badge bg-primary">Open</span>
-                        </div>
-                        <p class="text-muted small mb-2"><strong>Roles:</strong> Computer Lab Administrators, Pharmacy Lab Technicians, Admission Counselors &amp; Office Executives.</p>
-                        <small class="text-dark"><strong>Eligibility:</strong> Relevant Diploma / Degree with 2+ years of university lab/administrative experience.</small>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
 
