@@ -170,9 +170,6 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
             <a href="manage_faculty.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_faculty.php' ? 'active' : ''; ?>">
                 <i class="fas fa-chalkboard-teacher"></i> Faculty Directory (<?php echo number_format($facultyCountBadge ?: 1074); ?>)
             </a>
-            <a href="manage_board.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_board.php' ? 'active' : ''; ?>">
-                <i class="fas fa-users-cog text-warning"></i> Board of Management (<?php echo $boardCountBadge; ?>)
-            </a>
             <a href="manage_facilities.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_facilities.php' ? 'active' : ''; ?>">
                 <i class="fas fa-building text-info"></i> Campus Facilities (<?php echo $facilitiesCountBadge; ?>)
             </a>

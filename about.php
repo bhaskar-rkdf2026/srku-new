@@ -47,15 +47,12 @@ require_once __DIR__ . '/includes/header.php';
                         <span class="num"><?php echo getSetting('stat_students', '20,000+'); ?></span>
                         <span class="lbl">Students</span>
                     </div>
-                    <div class="about-hero-v2__card about-hero-v2__card--float3">
-                        <i class="fas fa-layer-group"></i>
-                        <span class="num"><?php echo getSetting('stat_units', '14'); ?></span>
-                        <span class="lbl">Constituent Units</span>
-                    </div>
-                    <div class="about-hero-v2__card about-hero-v2__card--float4">
+                    <div class="about-hero-v2__card about-hero-v2__card--wide about-hero-v2__card--float3">
                         <i class="fas fa-briefcase"></i>
-                        <span class="num"><?php echo getSetting('stat_placements', '35,000+'); ?></span>
-                        <span class="lbl">Placements</span>
+                        <div>
+                            <div class="num"><?php echo getSetting('stat_placements', '35,000+'); ?></div>
+                            <div class="lbl">Career Placements</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -421,7 +418,7 @@ $aboutMilestoneStats = [
                             Custodian of university seal and records, overseeing administrative operations, statutory councils, and regulatory compliances.
                         </p>
                         <div class="mt-auto pt-2 border-top">
-                            <a href="<?php echo BASE_URL; ?>board-members.php" class="btn btn-sm btn-outline-secondary w-100 rounded-pill">
+                            <a href="<?php echo BASE_URL; ?>document/board-of-management" class="btn btn-sm btn-outline-secondary w-100 rounded-pill">
                                 <i class="fas fa-users-cog me-1"></i> View Secretariat
                             </a>
                         </div>
@@ -523,10 +520,7 @@ $aboutMilestoneStats = [
                 </div>
                 <div class="col-12 col-lg-5 text-lg-end">
                     <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
-                        <a href="<?php echo BASE_URL; ?>board-members.php" class="btn btn-maroon px-4 py-2 rounded-pill shadow-sm">
-                            <i class="fas fa-id-badge me-1"></i> View Board Members
-                        </a>
-                        <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn btn-navy px-4 py-2 rounded-pill shadow-sm">
+                        <a href="<?php echo BASE_URL; ?>document/board-of-management" class="btn btn-navy px-4 py-2 rounded-pill shadow-sm">
                             <i class="fas fa-landmark me-1"></i> Board of Management
                         </a>
                     </div>

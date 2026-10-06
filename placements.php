@@ -13,29 +13,6 @@ $recruitingPartners = getSetting('recruiting_partners', '120+');
 <!-- Dynamic Banner Header -->
 <?php renderPageBanner('placements', 'Training & Corporate Placements', '94% Placement Record • 12 LPA Highest Package • 120+ Corporate Recruiters'); ?>
 
-<!-- Stats Strip -->
-<div class="stats-strip py-3">
-    <div class="container-xl">
-        <div class="row row-cols-2 row-cols-md-4 g-0 text-center">
-            <div class="col stat-box">
-                <div class="stat-val"><?php echo sanitize($placementRecord); ?></div>
-                <div class="stat-txt">Overall Placement Rate</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val"><?php echo sanitize($highestPackage); ?></div>
-                <div class="stat-txt">Highest Salary Package</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">4.5 LPA</div>
-                <div class="stat-txt">Average Package</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val"><?php echo sanitize($recruitingPartners); ?></div>
-                <div class="stat-txt">Corporate Hiring Partners</div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- Overview Section -->
 <section class="py-5">

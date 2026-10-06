@@ -6863,6 +6863,20 @@ body {
     transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
 }
 
+.about-hero-v2__card--wide {
+    grid-column: span 2;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    min-height: 90px;
+}
+
+.about-hero-v2__card--wide i {
+    font-size: 1.6rem !important;
+    margin-bottom: 0 !important;
+}
+
 .about-hero-v2__card i {
     color: var(--srku-gold);
     font-size: 1.1rem;

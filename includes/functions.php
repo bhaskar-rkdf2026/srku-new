@@ -2933,7 +2933,7 @@ function syncSeoPagesInventory($pdo = null, $force = false) {
             'title' => 'Board of Governance & Leadership | SRKU Bhopal',
             'desc' => 'Meet the executive governing body and visionary leaders directing Sarvepalli Radhakrishnan University Bhopal.',
             'keywords' => 'SRKU board members, governance Sarvepalli Radhakrishnan University, leadership team Bhopal',
-            'canonical' => $baseUrl . 'board-members.php'
+            'canonical' => $baseUrl . 'document/board-of-management'
         ],
         [
             'identifier' => 'board-of-management.php',
@@ -2942,7 +2942,7 @@ function syncSeoPagesInventory($pdo = null, $force = false) {
             'title' => 'Board of Management | Sarvepalli Radhakrishnan University',
             'desc' => 'Official Board of Management members of SRKU Bhopal responsible for academic governance and strategic direction.',
             'keywords' => 'SRKU Board of Management, academic council Bhopal, SRKU administrators',
-            'canonical' => $baseUrl . 'board-of-management.php'
+            'canonical' => $baseUrl . 'document/board-of-management'
         ],
         [
             'identifier' => 'admission-enquiry.php',

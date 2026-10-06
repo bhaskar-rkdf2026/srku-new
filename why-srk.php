@@ -69,33 +69,6 @@ $reasons = [
 ];
 ?>
 
-<!-- STATS STRIP -->
-<div class="stats-strip py-2">
-    <div class="container-xl">
-        <div class="row row-cols-2 row-cols-md-5 g-0 text-center">
-            <div class="col stat-box">
-                <div class="stat-val"><?php echo $stats['students']; ?></div>
-                <div class="stat-txt">Students</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val"><?php echo $stats['faculty']; ?></div>
-                <div class="stat-txt">Faculty</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val"><?php echo $stats['programs']; ?></div>
-                <div class="stat-txt">Programs</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val"><?php echo $stats['papers']; ?></div>
-                <div class="stat-txt">Research Papers</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val"><?php echo $stats['partners']; ?></div>
-                <div class="stat-txt">Global Partners</div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- EMPOWERING MINDS -->
 <section class="py-5">

@@ -33,33 +33,6 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </section>
 
-<!-- STATS STRIP -->
-<div class="stats-strip py-2">
-    <div class="container-xl">
-        <div class="row row-cols-2 row-cols-md-5 g-0 text-center">
-            <div class="col stat-box">
-                <div class="stat-val">18,000+</div>
-                <div class="stat-txt">Students</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">600+</div>
-                <div class="stat-txt">Faculty</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">120+</div>
-                <div class="stat-txt">Programs</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">1,400+</div>
-                <div class="stat-txt">Research Papers</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">42+</div>
-                <div class="stat-txt">Global Partners</div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- OUR VISION -->
 <section class="py-5" id="vision">

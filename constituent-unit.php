@@ -167,35 +167,7 @@ foreach ($units as $u) {
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════
-     KEY INFRASTRUCTURE STATS STRIP
-═══════════════════════════════════════════════════════ -->
-<div class="stats-strip py-3" style="background: #0f172a; border-bottom: 1px solid rgba(255,255,255,0.08);">
-    <div class="container-xl">
-        <div class="row row-cols-2 row-cols-md-5 g-3 text-center">
-            <div class="col stat-box">
-                <div class="stat-val text-warning">20+</div>
-                <div class="stat-txt text-white-50">Constituent Colleges</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val text-white">750+</div>
-                <div class="stat-txt text-white-50">Hospital Beds (Teaching)</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val text-warning">250+</div>
-                <div class="stat-txt text-white-50">Dental Treatment Chairs</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val text-white">18,000+</div>
-                <div class="stat-txt text-white-50">Students Enrolled</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val text-warning">90+</div>
-                <div class="stat-txt text-white-50">Degree Programmes</div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!-- ═══════════════════════════════════════════════════════
      CONSTITUENT UNITS CATALOG WITH INTERACTIVE FILTERS

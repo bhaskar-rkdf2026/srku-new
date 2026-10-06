@@ -243,8 +243,7 @@ $customSchemaJson = $seoResolved['schema_json'] ?? '';
                                 <i class="fas fa-users-cog text-warning me-1"></i> All Committee <span class="static-dropdown-arrow static-sub-arrow"></span>
                             </a>
                             <ul class="static-dropdown-panel static-sub-dropdown">
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>board-members.php" class="static-dropdown-link fw-bold text-danger"><i class="fas fa-id-badge me-1 text-danger"></i> Board of Members</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>board-of-management.php" class="static-dropdown-link fw-bold text-navy"><i class="fas fa-landmark me-1 text-navy"></i> Board of Management</a></li>
+                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/board-of-management" class="static-dropdown-link fw-semibold text-navy"><i class="fas fa-landmark text-primary me-1"></i> Board of Management</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/student-grievance-committee" class="static-dropdown-link"><i class="fas fa-user-shield text-primary me-1"></i> Student Grievance Committee</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/internal-complaint-committee" class="static-dropdown-link"><i class="fas fa-shield-alt text-danger me-1"></i> Internal Complaint Committee (ICC)</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/anti-ragging" class="static-dropdown-link"><i class="fas fa-ban text-danger me-1"></i> Anti Ragging Committee &amp; Squad</a></li>
@@ -266,7 +265,6 @@ $customSchemaJson = $seoResolved['schema_json'] ?? '';
                             </a>
                             <ul class="static-dropdown-panel static-sub-dropdown">
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/governing-body" class="static-dropdown-link"><i class="fas fa-crown text-warning me-1"></i> Governing Body</a></li>
-                                <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/board-of-management" class="static-dropdown-link"><i class="fas fa-briefcase text-primary me-1"></i> Board of Management</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/finance-committee" class="static-dropdown-link"><i class="fas fa-coins text-success me-1"></i> Finance Committee</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/academic-councils" class="static-dropdown-link"><i class="fas fa-graduation-cap text-danger me-1"></i> Academic Councils</a></li>
                                 <li class="static-dropdown-item"><a href="<?php echo BASE_URL; ?>document/board-of-studies" class="static-dropdown-link"><i class="fas fa-book-reader text-info me-1"></i> Board Of Studies</a></li>

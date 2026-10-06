@@ -127,7 +127,7 @@ try {
         <p class="text-muted small mb-0">Manage university trustees, governing council officers, academic leaders and member roles.</p>
     </div>
     <div class="d-flex gap-2">
-        <a href="<?php echo BASE_URL; ?>board-of-management.php" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill fw-semibold px-3">
+        <a href="<?php echo BASE_URL; ?>document/board-of-management" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill fw-semibold px-3">
             <i class="fas fa-external-link-alt me-1"></i> View Live Board Page
         </a>
         <a href="manage_board.php#member-form" class="btn btn-danger btn-sm rounded-pill fw-semibold px-3">

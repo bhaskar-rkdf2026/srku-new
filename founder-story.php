@@ -161,7 +161,7 @@ require_once __DIR__ . '/includes/header.php';
                                 <i class="fas fa-comment-dots text-primary"></i>
                                 <span>Vice Chancellor's Message</span>
                             </a>
-                            <a href="<?php echo BASE_URL; ?>board-of-management.php" class="btn btn-sm btn-outline-secondary w-100 rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                            <a href="<?php echo BASE_URL; ?>document/board-of-management" class="btn btn-sm btn-outline-secondary w-100 rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-2">
                                 <i class="fas fa-landmark text-secondary"></i>
                                 <span>Board of Management</span>
                             </a>

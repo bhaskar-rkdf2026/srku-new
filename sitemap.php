@@ -19,7 +19,7 @@ $staticPages = [
     ['title' => 'Why Choose SRKU', 'url' => $baseUrl . 'why-srk.php', 'priority' => '0.8', 'freq' => 'monthly'],
     ['title' => 'Vision & Mission', 'url' => $baseUrl . 'vision-mission.php', 'priority' => '0.8', 'freq' => 'monthly'],
     ['title' => 'Accreditations & Approvals', 'url' => $baseUrl . 'accreditation.php', 'priority' => '0.85', 'freq' => 'monthly'],
-    ['title' => 'Board of Management', 'url' => $baseUrl . 'board-of-management.php', 'priority' => '0.75', 'freq' => 'monthly'],
+    ['title' => 'Board of Management', 'url' => $baseUrl . 'document/board-of-management', 'priority' => '0.75', 'freq' => 'monthly'],
     ['title' => 'Constituent Units & Colleges', 'url' => $baseUrl . 'constituent-unit.php', 'priority' => '0.85', 'freq' => 'weekly'],
     ['title' => 'Departments Directory', 'url' => $baseUrl . 'departments.php', 'priority' => '0.95', 'freq' => 'weekly'],
     ['title' => 'Academic Courses Catalog', 'url' => $baseUrl . 'courses.php', 'priority' => '0.95', 'freq' => 'daily'],
