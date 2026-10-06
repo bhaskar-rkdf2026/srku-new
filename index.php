@@ -10,8 +10,12 @@ $tickerText = getSetting('ticker_text', 'Admissions Open 2026-27 | UGC Recognize
 $totalLabs = getSetting('total_labs', '42+');
 $placementRecord = getSetting('placement_record', '94%');
 $highestPackage = getSetting('highest_package', '12 LPA');
-$recruitingPartners = getSetting('recruiting_partners', '120+');
-$totalAlumni = getSetting('total_alumni', '15,000+');
+$statYears = getSetting('stat_years', '31st');
+$statPlacements = getSetting('stat_placements', '35,000+');
+$statAlumni = getSetting('stat_alumni', '1,10,000+');
+$statFaculty = getSetting('stat_faculty', '1,000+');
+$recruitingPartners = getSetting('recruiting_partners', '300+');
+$totalAlumni = getSetting('total_alumni', '1,10,000+');
 $heroTitle = getSetting('hero_title', 'SRK University, Bhopal');
 $heroSubtitle = getSetting('hero_subtitle', 'UGC-Recognized University in MP');
 $heroDesc = getSetting('hero_desc', 'Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership. If you are looking for the best placement university in MP, our rigorous research, multi-disciplinary collaboration, and industry-aligned pedagogy deliver unmatched career growth.');
@@ -208,24 +212,24 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
     <div class="container-xl">
         <div class="row row-cols-2 row-cols-md-5 g-0 text-center">
             <div class="col stat-box">
-                <div class="stat-val"><?php echo sanitize($totalLabs); ?></div>
-                <div class="stat-txt">High-Tech Labs</div>
+                <div class="stat-val"><?php echo sanitize($statYears); ?></div>
+                <div class="stat-txt">Years of Excellence</div>
             </div>
             <div class="col stat-box">
-                <div class="stat-val"><?php echo sanitize($placementRecord); ?></div>
-                <div class="stat-txt">Placement Record</div>
+                <div class="stat-val"><?php echo sanitize($statPlacements); ?></div>
+                <div class="stat-txt">Placements</div>
+            </div>
+            <div class="col stat-box">
+                <div class="stat-val"><?php echo sanitize($statAlumni); ?></div>
+                <div class="stat-txt">Alumni</div>
+            </div>
+            <div class="col stat-box">
+                <div class="stat-val"><?php echo sanitize($statFaculty); ?></div>
+                <div class="stat-txt">Faculty</div>
             </div>
             <div class="col stat-box">
                 <div class="stat-val"><?php echo sanitize($recruitingPartners); ?></div>
                 <div class="stat-txt">Corporate Recruiters</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">15,000+</div>
-                <div class="stat-txt">Global Alumni</div>
-            </div>
-            <div class="col stat-box">
-                <div class="stat-val">25+</div>
-                <div class="stat-txt">Years of Excellence</div>
             </div>
         </div>
     </div>

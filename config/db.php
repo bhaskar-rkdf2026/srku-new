@@ -615,6 +615,20 @@ function autoInitializeTables($pdo) {
                 status INTEGER DEFAULT 1,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );
+            CREATE TABLE IF NOT EXISTS documents (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                slug TEXT NOT NULL UNIQUE,
+                title TEXT NOT NULL,
+                category TEXT NOT NULL DEFAULT 'General',
+                subtitle TEXT DEFAULT '',
+                pdf_path TEXT NOT NULL,
+                description TEXT,
+                highlights TEXT,
+                status TEXT DEFAULT 'published',
+                display_order INTEGER DEFAULT 0,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
         ");
     } else {
         $pdo->exec("
@@ -773,6 +787,21 @@ function autoInitializeTables($pdo) {
                 INDEX `idx_faculty_dept` (`dept_slug`),
                 INDEX `idx_faculty_status` (`status`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `documents` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `slug` VARCHAR(191) NOT NULL UNIQUE,
+                `title` VARCHAR(255) NOT NULL,
+                `category` VARCHAR(100) NOT NULL DEFAULT 'General',
+                `subtitle` VARCHAR(255) DEFAULT '',
+                `pdf_path` VARCHAR(255) NOT NULL,
+                `description` TEXT,
+                `highlights` TEXT,
+                `status` VARCHAR(20) DEFAULT 'published',
+                `display_order` INT DEFAULT 0,
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
         ");
 
         // Run universal schema migrations for both MySQL & SQLite

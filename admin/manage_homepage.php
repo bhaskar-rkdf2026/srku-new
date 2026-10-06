@@ -85,11 +85,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_homepage_section
         'hero_video_url' => $heroVideo,
         'hero_fallback_image' => $heroFallback,
 
-        // Section 2: Stats Strip
+        // Section 2: Stats Strip & Hero Badges
+        'stat_years' => sanitize($_POST['stat_years'] ?? '31st'),
+        'stat_placements' => sanitize($_POST['stat_placements'] ?? '35,000+'),
+        'stat_alumni' => sanitize($_POST['stat_alumni'] ?? '1,10,000+'),
+        'stat_faculty' => sanitize($_POST['stat_faculty'] ?? '1,000+'),
+        'recruiting_partners' => sanitize($_POST['recruiting_partners'] ?? '300+'),
         'total_labs' => sanitize($_POST['total_labs'] ?? '42+'),
         'placement_record' => sanitize($_POST['placement_record'] ?? '94%'),
-        'recruiting_partners' => sanitize($_POST['recruiting_partners'] ?? '120+'),
-        'total_alumni' => sanitize($_POST['total_alumni'] ?? '15,000+'),
+        'total_alumni' => sanitize($_POST['stat_alumni'] ?? '1,10,000+'),
 
         // Section 3: Live Ticker
         'ticker_text' => sanitize($_POST['ticker_text'] ?? ''),
@@ -144,10 +148,14 @@ $heroDesc = getSetting('hero_desc', 'Welcome to SRK University, a premier techni
 $heroVideo = getSetting('hero_video_url', 'assets/images/SRK-Hero-Section.mp4');
 $heroFallback = getSetting('hero_fallback_image', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
 
+$statYears = getSetting('stat_years', '31st');
+$statPlacements = getSetting('stat_placements', '35,000+');
+$statAlumni = getSetting('stat_alumni', '1,10,000+');
+$statFaculty = getSetting('stat_faculty', '1,000+');
+$recruitingPartners = getSetting('recruiting_partners', '300+');
 $totalLabs = getSetting('total_labs', '42+');
 $placementRecord = getSetting('placement_record', '94%');
-$recruitingPartners = getSetting('recruiting_partners', '120+');
-$totalAlumni = getSetting('total_alumni', '15,000+');
+$totalAlumni = getSetting('total_alumni', '1,10,000+');
 
 $tickerText = getSetting('ticker_text', 'Admissions Open 2026-27 | UGC Recognized Premier University in MP | Apply Now for Engineering, Pharmacy, Nursing, Management & Medicine | 94% Placement Record');
 $highestPackage = getSetting('highest_package', '12 LPA');
@@ -516,36 +524,63 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
                 </div>
             </div>
 
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="p-3 bg-light rounded-4 border text-center">
+                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-award text-warning me-1"></i> Point 1: Years of Excellence</label>
+                        <input type="text" name="stat_years" class="form-control text-center fw-bold fs-5 text-warning" value="<?php echo sanitize($statYears); ?>" placeholder="31st">
+                        <small class="text-muted">e.g. 31st or 31+</small>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="p-3 bg-light rounded-4 border text-center">
+                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-briefcase text-success me-1"></i> Point 2: Placements</label>
+                        <input type="text" name="stat_placements" class="form-control text-center fw-bold fs-5 text-success" value="<?php echo sanitize($statPlacements); ?>" placeholder="35,000+">
+                        <small class="text-muted">Total Placements achieved</small>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="p-3 bg-light rounded-4 border text-center">
+                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-user-graduate text-info me-1"></i> Point 3: Alumni</label>
+                        <input type="text" name="stat_alumni" class="form-control text-center fw-bold fs-5 text-info" value="<?php echo sanitize($statAlumni); ?>" placeholder="1,10,000+">
+                        <small class="text-muted">Global Alumni network</small>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="p-3 bg-light rounded-4 border text-center">
+                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-chalkboard-teacher text-danger me-1"></i> Point 4: Faculty</label>
+                        <input type="text" name="stat_faculty" class="form-control text-center fw-bold fs-5 text-danger" value="<?php echo sanitize($statFaculty); ?>" placeholder="1,000+">
+                        <small class="text-muted">Expert Faculty members</small>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="p-3 bg-light rounded-4 border text-center">
+                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-handshake text-primary me-1"></i> Point 5: Corporate Recruiters</label>
+                        <input type="text" name="recruiting_partners" class="form-control text-center fw-bold fs-5 text-primary" value="<?php echo sanitize($recruitingPartners); ?>" placeholder="300+">
+                        <small class="text-muted">Hiring Corporate Partners</small>
+                    </div>
+                </div>
+            </div>
+
+            <h5 class="fw-bold text-navy mb-3"><i class="fas fa-layer-group text-danger me-1"></i> Hero Floating Badges</h5>
             <div class="row g-4">
-                <div class="col-12 col-md-6 col-lg-3">
+                <div class="col-12 col-md-6">
                     <div class="p-3 bg-light rounded-4 border text-center">
-                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-microscope text-danger me-1"></i> High-Tech Labs</label>
+                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-microscope text-danger me-1"></i> High-Tech Labs (Hero Card)</label>
                         <input type="text" name="total_labs" class="form-control text-center fw-bold fs-5 text-danger" value="<?php echo sanitize($totalLabs); ?>">
-                        <small class="text-muted">Displayed under Hero</small>
+                        <small class="text-muted">Floating White Card on Hero</small>
                     </div>
                 </div>
 
-                <div class="col-12 col-md-6 col-lg-3">
+                <div class="col-12 col-md-6">
                     <div class="p-3 bg-light rounded-4 border text-center">
-                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-chart-line text-success me-1"></i> Placement Record</label>
+                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-chart-line text-success me-1"></i> Placement Record (Hero Card)</label>
                         <input type="text" name="placement_record" class="form-control text-center fw-bold fs-5 text-success" value="<?php echo sanitize($placementRecord); ?>">
-                        <small class="text-muted">Placement % Rate</small>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-3">
-                    <div class="p-3 bg-light rounded-4 border text-center">
-                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-handshake text-primary me-1"></i> Corporate Recruiters</label>
-                        <input type="text" name="recruiting_partners" class="form-control text-center fw-bold fs-5 text-primary" value="<?php echo sanitize($recruitingPartners); ?>">
-                        <small class="text-muted">Hiring Partners</small>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-3">
-                    <div class="p-3 bg-light rounded-4 border text-center">
-                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-user-graduate text-info me-1"></i> Global Alumni</label>
-                        <input type="text" name="total_alumni" class="form-control text-center fw-bold fs-5 text-info" value="<?php echo sanitize($totalAlumni); ?>">
-                        <small class="text-muted">Alumni Base</small>
+                        <small class="text-muted">Floating Red Card on Hero</small>
                     </div>
                 </div>
             </div>

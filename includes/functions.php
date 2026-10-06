@@ -1446,9 +1446,91 @@ function getDatabaseStatusInfo() {
 }
 
 /**
+ * Synchronizes and seeds the 81 Statutory & Policy Documents into `documents` table
+ */
+function syncDocumentsMasterData($pdo = null, $force = false) {
+    if (!$pdo) {
+        $pdo = getDBConnection();
+    }
+    $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+    
+    // Ensure table exists for both SQLite and MySQL
+    if ($driver === 'sqlite') {
+        $pdo->exec("CREATE TABLE IF NOT EXISTS `documents` (
+            `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+            `slug` TEXT NOT NULL UNIQUE,
+            `title` TEXT NOT NULL,
+            `category` TEXT NOT NULL DEFAULT 'General',
+            `subtitle` TEXT DEFAULT '',
+            `pdf_path` TEXT NOT NULL,
+            `description` TEXT,
+            `highlights` TEXT,
+            `status` TEXT DEFAULT 'published',
+            `display_order` INTEGER DEFAULT 0,
+            `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+            `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+        )");
+    } else {
+        $pdo->exec("CREATE TABLE IF NOT EXISTS `documents` (
+            `id` INT AUTO_INCREMENT PRIMARY KEY,
+            `slug` VARCHAR(191) NOT NULL UNIQUE,
+            `title` VARCHAR(255) NOT NULL,
+            `category` VARCHAR(100) NOT NULL DEFAULT 'General',
+            `subtitle` VARCHAR(255) DEFAULT '',
+            `pdf_path` VARCHAR(255) NOT NULL,
+            `description` TEXT,
+            `highlights` TEXT,
+            `status` VARCHAR(20) DEFAULT 'published',
+            `display_order` INT DEFAULT 0,
+            `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    }
+
+    $currCount = (int)$pdo->query("SELECT COUNT(*) FROM `documents`")->fetchColumn();
+    if ($currCount === 0 || $force) {
+        $viewerFile = file_get_contents(dirname(__DIR__) . '/document-viewer.php');
+        if (preg_match('/\$documentsRegistry\s*=\s*(array\s*\(.+?\n\);)/s', $viewerFile, $m)) {
+            $registry = [];
+            eval('$registry = ' . $m[1]);
+            if (!empty($registry)) {
+                if ($force) {
+                    if ($driver === 'sqlite') {
+                        $pdo->exec("DELETE FROM `documents`");
+                    } else {
+                        $pdo->exec("TRUNCATE TABLE `documents`");
+                    }
+                }
+                $ins = $pdo->prepare("INSERT " . ($driver === 'sqlite' ? 'OR REPLACE' : '') . " INTO `documents` 
+                    (`slug`, `title`, `category`, `subtitle`, `pdf_path`, `description`, `highlights`, `status`, `display_order`) 
+                    VALUES (:slug, :title, :category, :subtitle, :pdf_path, :description, :highlights, 'published', :ord)"
+                    . ($driver !== 'sqlite' ? " ON DUPLICATE KEY UPDATE `title` = VALUES(`title`), `category` = VALUES(`category`), `subtitle` = VALUES(`subtitle`), `pdf_path` = VALUES(`pdf_path`), `description` = VALUES(`description`), `highlights` = VALUES(`highlights`)" : "")
+                );
+                $ord = 1;
+                foreach ($registry as $slug => $data) {
+                    $hlJson = !empty($data['highlights']) ? json_encode($data['highlights'], JSON_UNESCAPED_UNICODE) : null;
+                    $ins->execute([
+                        ':slug' => $slug,
+                        ':title' => $data['title'] ?? ucwords(str_replace('-', ' ', $slug)),
+                        ':category' => $data['category'] ?? 'General',
+                        ':subtitle' => $data['subtitle'] ?? '',
+                        ':pdf_path' => $data['pdf_path'] ?? '',
+                        ':description' => $data['description'] ?? '',
+                        ':highlights' => $hlJson,
+                        ':ord' => $ord++
+                    ]);
+                }
+            }
+        }
+        $currCount = (int)$pdo->query("SELECT COUNT(*) FROM `documents`")->fetchColumn();
+    }
+    return $currCount;
+}
+
+/**
  * 1-Click Master Database Synchronizer: Migrates schema and populates master DB data
  *
- * @param string $target 'all', 'departments', 'courses', 'faculty', 'syllabi', 'gallery', 'blogs', 'news', 'banners', 'pages', 'settings'
+ * @param string $target 'all', 'departments', 'courses', 'faculty', 'syllabi', 'gallery', 'blogs', 'news', 'banners', 'pages', 'settings', 'documents'
  * @param bool $force If true, truncates/refreshes the table with master data
  * @return array Result report with status and row counts
  */
@@ -2693,6 +2775,13 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
             $report['messages'][] = "Dynamic SEO & Meta Inventory synchronized ({$newSeoCount} active site routes indexed).";
         }
 
+        // 20. STATUTORY & POLICY DOCUMENTS
+        if ($target === 'all' || $target === 'documents') {
+            $newDocCount = syncDocumentsMasterData($pdo, $force);
+            $report['counts']['documents'] = $newDocCount;
+            $report['messages'][] = "Statutory & Policy Documents synchronized ($newDocCount documents).";
+        }
+
         // 20. AUTOMATIC PRODUCTION SQL EXPORT (srku_db.sql)
         if ($driver !== 'sqlite') {
             $sqlExport = exportLiveDatabaseSqlFile();
@@ -2736,6 +2825,7 @@ function exportLiveDatabaseSqlFile() {
             'users',
             'settings',
             'pages',
+            'documents',
             'departments',
             'courses',
             'faculty',

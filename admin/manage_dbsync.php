@@ -90,6 +90,14 @@ $syncModules = [
         'expected' => 267,
         'manage_url' => 'manage_syllabus.php'
     ],
+    'documents' => [
+        'name' => 'Statutory & Policy Documents',
+        'table' => 'documents',
+        'icon' => 'fas fa-file-pdf text-danger',
+        'desc' => '81 Official Statutory, Committee, RTI, AICTE, NIRF & Governance PDF Documents',
+        'expected' => 81,
+        'manage_url' => 'manage_documents.php'
+    ],
     'departments' => [
         'name' => 'Constituent Units & Colleges',
         'table' => 'departments',

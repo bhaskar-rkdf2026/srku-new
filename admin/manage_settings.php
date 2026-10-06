@@ -113,13 +113,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_settings
 
         // Section 6: Standardized Core Metrics
         'stat_students' => sanitize($_POST['stat_students'] ?? '20,000+'),
-        'stat_faculty' => sanitize($_POST['stat_faculty'] ?? '1,200+'),
+        'stat_faculty' => sanitize($_POST['stat_faculty'] ?? '1,000+'),
         'stat_alumni' => sanitize($_POST['stat_alumni'] ?? '1,10,000+'),
         'stat_programs' => sanitize($_POST['stat_programs'] ?? '100+'),
         'stat_papers' => sanitize($_POST['stat_papers'] ?? '5,000+'),
         'stat_partners' => sanitize($_POST['stat_partners'] ?? '150+'),
-        'stat_placements' => sanitize($_POST['stat_placements'] ?? '94%'),
-        'stat_years' => sanitize($_POST['stat_years'] ?? '28+'),
+        'stat_placements' => sanitize($_POST['stat_placements'] ?? '35,000+'),
+        'stat_years' => sanitize($_POST['stat_years'] ?? '31st'),
         'stat_campus_acres' => sanitize($_POST['stat_campus_acres'] ?? '100+'),
         'stat_hospital_beds' => sanitize($_POST['stat_hospital_beds'] ?? '350+'),
         'stat_patents' => sanitize($_POST['stat_patents'] ?? '50+'),
@@ -240,9 +240,9 @@ $address = getSetting('address', 'NH-12, Hoshangabad Road, Misrod, Bhopal, Madhy
 $ticker = getSetting('ticker_text', 'Admissions Open 2026-27 | UGC Recognized Premier University in MP | Apply Now for Engineering, Pharmacy, Nursing, Management & Medicine | 94% Placement Record');
 $highestPackage = getSetting('highest_package', '12 LPA');
 $placementRecord = getSetting('placement_record', '94%');
-$recruitingPartners = getSetting('recruiting_partners', '120+');
+$recruitingPartners = getSetting('recruiting_partners', '300+');
 $totalLabs = getSetting('total_labs', '42+');
-$totalAlumni = getSetting('total_alumni', '15,000+');
+$totalAlumni = getSetting('total_alumni', '1,10,000+');
 
 // Section 5: Social Media
 $facebookUrl = getSetting('facebook_url', 'https://facebook.com');
@@ -252,13 +252,13 @@ $linkedinUrl = getSetting('linkedin_url', 'https://linkedin.com');
 
 // Section 6: Standardized Core Metrics
 $statStudents = getSetting('stat_students', '20,000+');
-$statFaculty = getSetting('stat_faculty', '1,200+');
+$statFaculty = getSetting('stat_faculty', '1,000+');
 $statAlumni = getSetting('stat_alumni', '1,10,000+');
 $statPrograms = getSetting('stat_programs', '100+');
 $statPapers = getSetting('stat_papers', '5,000+');
 $statPartners = getSetting('stat_partners', '150+');
-$statPlacements = getSetting('stat_placements', '94%');
-$statYears = getSetting('stat_years', '28+');
+$statPlacements = getSetting('stat_placements', '35,000+');
+$statYears = getSetting('stat_years', '31st');
 $statCampusAcres = getSetting('stat_campus_acres', '100+');
 $statHospitalBeds = getSetting('stat_hospital_beds', '350+');
 $statPatents = getSetting('stat_patents', '50+');

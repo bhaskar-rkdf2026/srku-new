@@ -143,6 +143,9 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 $placementsCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM placements")->fetchColumn();
                 $incubationCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM incubation_members")->fetchColumn();
                 $documentsCountBadge = (int)$dbConn->query("SELECT COUNT(*) FROM documents")->fetchColumn();
+                if ($documentsCountBadge === 0 && function_exists('syncDocumentsMasterData')) {
+                    $documentsCountBadge = syncDocumentsMasterData($dbConn);
+                }
             } catch(Exception $e) { 
                 $deptsCountBadge = 26; 
                 $galleryCountBadge = 71;
