@@ -54,10 +54,47 @@ function getDefaultMainMenu() {
             'label' => 'About H.E.I.',
             'url' => 'about.php',
             'target' => '_self',
-            'type' => 'megamenu',
+            'type' => 'dropdown',
             'preset' => 'about',
             'badge' => '',
-            'items' => []
+            'items' => [
+                ['label' => 'University Overview', 'url' => 'about.php', 'target' => '_self', 'icon' => 'fas fa-info-circle text-primary'],
+                ['label' => 'Act & Statutes', 'url' => 'document/act-statutes', 'target' => '_self', 'icon' => 'fas fa-balance-scale text-danger'],
+                ['label' => 'Institutional Development Plan', 'url' => 'document/institutional-development-plan', 'target' => '_self', 'icon' => 'fas fa-chart-line text-success'],
+                ['label' => 'Constituent Units', 'url' => 'document/constituent-units', 'target' => '_self', 'icon' => 'fas fa-sitemap text-primary'],
+                ['label' => 'Accreditation & Ranking', 'url' => 'document/accreditation-ranking', 'target' => '_self', 'icon' => 'fas fa-award text-warning'],
+                ['label' => 'Recognition Approval', 'url' => 'document/recognition-approval', 'target' => '_self', 'icon' => 'fas fa-stamp text-info'],
+                ['label' => 'Annual Report 2024-25', 'url' => 'document/annual-report', 'target' => '_self', 'icon' => 'fas fa-file-invoice text-secondary'],
+                ['label' => 'Details of Sponsoring Body', 'url' => 'document/details-of-sponsoring-body', 'target' => '_self', 'icon' => 'fas fa-hand-holding-heart text-danger'],
+                ['label' => 'Board of Management', 'url' => 'document/board-of-management', 'target' => '_self', 'icon' => 'fas fa-landmark text-primary'],
+                ['label' => 'Student Grievance Committee', 'url' => 'document/student-grievance-committee', 'target' => '_self', 'icon' => 'fas fa-user-shield text-primary'],
+                ['label' => 'Internal Complaint Committee (ICC)', 'url' => 'document/internal-complaint-committee', 'target' => '_self', 'icon' => 'fas fa-shield-alt text-danger'],
+                ['label' => 'Anti Ragging Committee & Squad', 'url' => 'document/anti-ragging', 'target' => '_self', 'icon' => 'fas fa-ban text-danger'],
+                ['label' => 'OBC & Minority Committee', 'url' => 'document/obc-minority', 'target' => '_self', 'icon' => 'fas fa-users text-info'],
+                ['label' => 'Women Grievance Committee', 'url' => 'document/women-grievance-committee', 'target' => '_self', 'icon' => 'fas fa-female text-danger'],
+                ['label' => 'SC & ST Committee', 'url' => 'document/sc-st-grievance-committee', 'target' => '_self', 'icon' => 'fas fa-hands-helping text-warning'],
+                ['label' => 'Equal Opportunity Cell', 'url' => 'document/equal-opportunity-cell', 'target' => '_self', 'icon' => 'fas fa-universal-access text-success'],
+                ['label' => 'SEDG Cell', 'url' => 'document/sedg-cell', 'target' => '_self', 'icon' => 'fas fa-hand-holding-heart text-info'],
+                ['label' => 'Ombudsman', 'url' => 'document/ombudsman', 'target' => '_self', 'icon' => 'fas fa-gavel text-warning'],
+                ['label' => 'Alumni Committee', 'url' => 'document/alumni-committee', 'target' => '_self', 'icon' => 'fas fa-user-friends text-primary'],
+                ['label' => 'Research Advisory Committee', 'url' => 'document/constitution-of-research-advisory-committee', 'target' => '_self', 'icon' => 'fas fa-microscope text-success'],
+                ['label' => 'Governing Body', 'url' => 'document/governing-body', 'target' => '_self', 'icon' => 'fas fa-crown text-warning'],
+                ['label' => 'Finance Committee', 'url' => 'document/finance-committee', 'target' => '_self', 'icon' => 'fas fa-coins text-success'],
+                ['label' => 'Academic Councils', 'url' => 'document/academic-councils', 'target' => '_self', 'icon' => 'fas fa-graduation-cap text-danger'],
+                ['label' => 'Board Of Studies', 'url' => 'document/board-of-studies', 'target' => '_self', 'icon' => 'fas fa-book-reader text-info'],
+                ['label' => 'Institutional Policies', 'url' => 'document/welfare-policy', 'target' => '_self', 'icon' => 'fas fa-file-contract text-danger'],
+                ['label' => 'Officers of University', 'url' => 'document/officers-of-university', 'target' => '_self', 'icon' => 'fas fa-users-cog text-primary'],
+                ['label' => 'Academic Leadership', 'url' => 'document/academic-leadership', 'target' => '_self', 'icon' => 'fas fa-user-tie text-navy'],
+                ['label' => 'AICTE Approvals 2026-27', 'url' => 'document/council-of-technical-education', 'target' => '_self', 'icon' => 'fas fa-cogs text-primary'],
+                ['label' => 'Vision & Mission', 'url' => 'about/srk-university-vision-and-mission', 'target' => '_self', 'icon' => 'fas fa-bullseye text-danger'],
+                ['label' => 'Facilities', 'url' => 'facilities', 'target' => '_self', 'icon' => 'fas fa-building text-info'],
+                ['label' => 'University Ordinance', 'url' => 'document/university-ordinance', 'target' => '_self', 'icon' => 'fas fa-scroll text-warning'],
+                ['label' => 'UGC Information', 'url' => 'document/ugc-information', 'target' => '_self', 'icon' => 'fas fa-certificate text-success'],
+                ['label' => "Founder's Story & Vision", 'url' => 'founder-story.php', 'target' => '_self', 'icon' => 'fas fa-feather-alt text-warning'],
+                ['label' => "Chancellor's Message", 'url' => 'chancellor-message.php', 'target' => '_self', 'icon' => 'fas fa-crown text-warning'],
+                ['label' => "Vice Chancellor's Message", 'url' => 'vice-chancellor-message.php', 'target' => '_self', 'icon' => 'fas fa-user-tie text-primary'],
+                ['label' => 'Picture Gallery', 'url' => 'gallery.php', 'target' => '_self', 'icon' => 'fas fa-camera-retro text-danger']
+            ]
         ],
         [
             'id' => 'menu_syllabus',
@@ -67,7 +104,27 @@ function getDefaultMainMenu() {
             'type' => 'megamenu',
             'preset' => 'syllabus',
             'badge' => '',
-            'items' => []
+            'items' => [
+                ['label' => 'BA LLB (HONS.)', 'url' => 'syllabus?course=ba-llb', 'target' => '_self', 'icon' => 'fas fa-gavel text-danger'],
+                ['label' => 'BJMC Syllabus & Scheme', 'url' => 'syllabus?course=bjmc', 'target' => '_self', 'icon' => 'fas fa-newspaper text-danger'],
+                ['label' => 'LLB.', 'url' => 'syllabus?course=llb', 'target' => '_self', 'icon' => 'fas fa-balance-scale text-danger'],
+                ['label' => 'LLM', 'url' => 'syllabus?course=llm', 'target' => '_self', 'icon' => 'fas fa-graduation-cap text-danger'],
+                ['label' => 'B.pharmacy', 'url' => 'syllabus?course=b-pharmacy', 'target' => '_self', 'icon' => 'fas fa-pills text-danger'],
+                ['label' => 'D.Pharmacy', 'url' => 'syllabus?course=d-pharmacy', 'target' => '_self', 'icon' => 'fas fa-capsules text-danger'],
+                ['label' => 'M.Pharma', 'url' => 'syllabus?course=m-pharma', 'target' => '_self', 'icon' => 'fas fa-prescription text-danger'],
+                ['label' => 'Nursing', 'url' => 'syllabus?course=nursing', 'target' => '_self', 'icon' => 'fas fa-user-nurse text-danger'],
+                ['label' => 'Polytechnic Engineering', 'url' => 'syllabus?course=polytechnic-engineering', 'target' => '_self', 'icon' => 'fas fa-tools text-danger'],
+                ['label' => 'Agriculture Courses', 'url' => 'syllabus?course=agriculture-courses', 'target' => '_self', 'icon' => 'fas fa-seedling text-danger'],
+                ['label' => 'Paramedical', 'url' => 'syllabus?course=paramedical', 'target' => '_self', 'icon' => 'fas fa-stethoscope text-danger'],
+                ['label' => 'B.E. / B.Tech', 'url' => 'syllabus?course=be-btech', 'target' => '_self', 'icon' => 'fas fa-laptop-code text-danger'],
+                ['label' => 'M.Tech', 'url' => 'syllabus?course=m-tech', 'target' => '_self', 'icon' => 'fas fa-microchip text-danger'],
+                ['label' => 'MBA', 'url' => 'syllabus?course=mba', 'target' => '_self', 'icon' => 'fas fa-briefcase text-danger'],
+                ['label' => 'BCA', 'url' => 'syllabus?course=bca', 'target' => '_self', 'icon' => 'fas fa-desktop text-danger'],
+                ['label' => 'MCA', 'url' => 'syllabus?course=mca', 'target' => '_self', 'icon' => 'fas fa-network-wired text-danger'],
+                ['label' => 'Library Course', 'url' => 'syllabus?course=library-course', 'target' => '_self', 'icon' => 'fas fa-book-reader text-danger'],
+                ['label' => 'Computer Science', 'url' => 'syllabus?course=computer-science', 'target' => '_self', 'icon' => 'fas fa-code text-danger'],
+                ['label' => 'Allied Courses', 'url' => 'syllabus?course=allied-courses', 'target' => '_self', 'icon' => 'fas fa-atom text-danger']
+            ]
         ],
         [
             'id' => 'menu_academics',
@@ -77,7 +134,17 @@ function getDefaultMainMenu() {
             'type' => 'dropdown',
             'preset' => 'academics',
             'badge' => '',
-            'items' => []
+            'items' => [
+                ['label' => 'Academic Calendar 2026-27', 'url' => 'academic-calendar.php', 'target' => '_self', 'icon' => 'fas fa-calendar-alt text-warning'],
+                ['label' => 'Examination Rules & Ordinances', 'url' => 'exam-rules.php', 'target' => '_self', 'icon' => 'fas fa-clipboard-check text-primary'],
+                ['label' => 'Details of Academic Programmes', 'url' => 'document/details-of-academic-programmes', 'target' => '_self', 'icon' => 'fas fa-th-list text-danger'],
+                ['label' => 'Statutes Ordinances', 'url' => 'document/statutes-ordinances-academics-examination', 'target' => '_self', 'icon' => 'fas fa-scroll text-secondary'],
+                ['label' => 'School/ Department/ Centres', 'url' => 'document/constituent-units-departments', 'target' => '_self', 'icon' => 'fas fa-sitemap text-success'],
+                ['label' => 'Faculty/ Staff Details', 'url' => 'document/department-wise-faculty-details', 'target' => '_self', 'icon' => 'fas fa-chalkboard-teacher text-info'],
+                ['label' => 'Internal Quality Assurance Cell (IQAC)', 'url' => 'document/iqac', 'target' => '_self', 'icon' => 'fas fa-check-double text-warning'],
+                ['label' => 'Library', 'url' => 'document/university-library', 'target' => '_self', 'icon' => 'fas fa-book-reader text-danger'],
+                ['label' => 'Placements', 'url' => 'placements', 'target' => '_self', 'icon' => 'fas fa-briefcase text-success']
+            ]
         ],
         [
             'id' => 'menu_admission',
@@ -87,7 +154,19 @@ function getDefaultMainMenu() {
             'type' => 'dropdown',
             'preset' => 'admission',
             'badge' => '',
-            'items' => []
+            'items' => [
+                ['label' => 'Online Admission Form 2026-27', 'url' => 'admission-enquiry.php', 'target' => '_self', 'icon' => 'fas fa-edit text-danger'],
+                ['label' => 'Fee Structure 2026-27', 'url' => 'document/fees-2026-27', 'target' => '_self', 'icon' => 'fas fa-file-invoice-dollar text-success'],
+                ['label' => 'Ph.D. Admission 2026', 'url' => 'phd-admission.php', 'target' => '_self', 'icon' => 'fas fa-graduation-cap text-danger'],
+                ['label' => 'Ph.D. Application Form', 'url' => 'phd-application-form.php', 'target' => '_self', 'icon' => 'fas fa-file-signature text-primary'],
+                ['label' => 'Ph.D. Entrance Exam Form', 'url' => 'phd-entrance-form.php', 'target' => '_self', 'icon' => 'fas fa-file-alt text-success'],
+                ['label' => 'Meritorious Scheme & Scholarship', 'url' => 'document/meritorious-scheme-policy', 'target' => '_self', 'icon' => 'fas fa-award text-warning'],
+                ['label' => 'In-House Scheme Policy', 'url' => 'document/inhouse-scheme-policy', 'target' => '_self', 'icon' => 'fas fa-hand-holding-usd text-info'],
+                ['label' => 'Prospectus', 'url' => 'document/prospectus', 'target' => '_self', 'icon' => 'fas fa-book-open text-danger'],
+                ['label' => 'Admission Process Guidelines', 'url' => 'document/admission-process-guidelines', 'target' => '_self', 'icon' => 'fas fa-tasks text-warning'],
+                ['label' => 'Fee Refund Policy', 'url' => 'document/fee-refund-policy', 'target' => '_self', 'icon' => 'fas fa-receipt text-info'],
+                ['label' => 'International Students Admission', 'url' => 'contact.php', 'target' => '_self', 'icon' => 'fas fa-globe-americas text-primary']
+            ]
         ],
         [
             'id' => 'menu_research',
@@ -97,7 +176,18 @@ function getDefaultMainMenu() {
             'type' => 'dropdown',
             'preset' => 'research',
             'badge' => '',
-            'items' => []
+            'items' => [
+                ['label' => 'Admission Policy & Guidelines for Ph.D.', 'url' => 'document/phd-admission-policy', 'target' => '_self', 'icon' => 'fas fa-stamp text-danger'],
+                ['label' => 'Incubation Centre', 'url' => 'incubation-center', 'target' => '_self', 'icon' => 'fas fa-lightbulb text-warning'],
+                ['label' => 'University Research Policy', 'url' => 'document/university-research-policy', 'target' => '_self', 'icon' => 'fas fa-file-contract text-info'],
+                ['label' => 'Seed Money Research Projects Policy', 'url' => 'document/seed-money-research-policy', 'target' => '_self', 'icon' => 'fas fa-seedling text-success'],
+                ['label' => 'Policy for Consultancy & Projects', 'url' => 'document/consultancy-projects', 'target' => '_self', 'icon' => 'fas fa-project-diagram text-primary'],
+                ['label' => 'Central Facilities for R&D', 'url' => 'document/central-facilities-research', 'target' => '_self', 'icon' => 'fas fa-atom text-success'],
+                ['label' => 'Ethics Board to Maintain Research Integrity', 'url' => 'document/ethics-board', 'target' => '_self', 'icon' => 'fas fa-balance-scale text-warning'],
+                ['label' => 'Research & Development Cell', 'url' => 'document/research-development-cell', 'target' => '_self', 'icon' => 'fas fa-flask text-primary'],
+                ['label' => 'Ph.D. Scholars Currently Enrolled', 'url' => 'document/phd-scholars-pursuing', 'target' => '_self', 'icon' => 'fas fa-user-graduate text-info'],
+                ['label' => 'Ph.D. Awarded Scholars List', 'url' => 'document/phd-scholars-completed', 'target' => '_self', 'icon' => 'fas fa-award text-success']
+            ]
         ],
         [
             'id' => 'menu_departments',
@@ -107,7 +197,30 @@ function getDefaultMainMenu() {
             'type' => 'megamenu',
             'preset' => 'departments',
             'badge' => '',
-            'items' => []
+            'items' => [
+                ['label' => 'RKDF Inst. of Science & Technology', 'url' => 'rkdf-institute-of-science-and-technology', 'target' => '_self'],
+                ['label' => 'RKDF IST - MCA', 'url' => 'rkdf-institute-science-technology-mca', 'target' => '_self'],
+                ['label' => 'Faculty of Computer Application', 'url' => 'faculty-of-computer-application', 'target' => '_self'],
+                ['label' => 'RKDF Institute of Management', 'url' => 'rkdf-institute-of-management', 'target' => '_self'],
+                ['label' => 'RKDF Inst. of Business Management', 'url' => 'rkdf-institute-of-business-management', 'target' => '_self'],
+                ['label' => 'Faculty of Management', 'url' => 'faculty-of-management', 'target' => '_self'],
+                ['label' => 'Faculty of Commerce', 'url' => 'faculty-of-commerce', 'target' => '_self'],
+                ['label' => 'RKDF College of Pharmacy', 'url' => 'rkdf-college-of-pharmacy', 'target' => '_self'],
+                ['label' => 'Sri Sai Institute of Pharmacy', 'url' => 'sri-sai-institute-of-pharmacy', 'target' => '_self'],
+                ['label' => 'Faculty of Pharmacy', 'url' => 'faculty-of-pharmacy', 'target' => '_self'],
+                ['label' => 'RKDF College of Nursing', 'url' => 'rkdf-college-of-nursing', 'target' => '_self'],
+                ['label' => 'SRK College of Nursing', 'url' => 'sarvepalli-radhakrishnan-college-of-nursing', 'target' => '_self'],
+                ['label' => 'Faculty of Nursing', 'url' => 'faculty-of-nursing', 'target' => '_self'],
+                ['label' => 'RKDF Medical College & Hospital', 'url' => 'rkdf-medical-college-hospital-and-research-centre', 'target' => '_self'],
+                ['label' => 'RKDF Dental College & Hospital', 'url' => 'rkdf-dental-college-and-research-centre', 'target' => '_self'],
+                ['label' => 'RKDF Homoeopathic Medical College', 'url' => 'rkdf-homoeopathic-medical-college-and-hospital', 'target' => '_self'],
+                ['label' => 'SRK College of Ayurved & Hospital', 'url' => 'sarvepalli-radhakrishnan-college-of-ayurved-and-hospital', 'target' => '_self'],
+                ['label' => 'Faculty of Paramedical', 'url' => 'faculty-of-paramedical', 'target' => '_self'],
+                ['label' => 'Faculty of Education', 'url' => 'faculty-of-education', 'target' => '_self'],
+                ['label' => 'SRK College of Law', 'url' => 'sarvepalli-radhakrishnan-college-of-law', 'target' => '_self'],
+                ['label' => 'Faculty of Agriculture', 'url' => 'faculty-of-agriculture', 'target' => '_self'],
+                ['label' => 'Allied Sciences', 'url' => 'allied-sciences', 'target' => '_self']
+            ]
         ],
         [
             'id' => 'menu_student_life',
@@ -117,7 +230,15 @@ function getDefaultMainMenu() {
             'type' => 'dropdown',
             'preset' => 'student-life',
             'badge' => '',
-            'items' => []
+            'items' => [
+                ['label' => 'Sports Facilities', 'url' => 'document/sports-facilities', 'target' => '_self', 'icon' => 'fas fa-dumbbell text-primary'],
+                ['label' => 'NCC & NSS', 'url' => 'document/ncc-nss', 'target' => '_self', 'icon' => 'fas fa-medal text-warning'],
+                ['label' => 'Hostel Accommodation', 'url' => 'hostel.php', 'target' => '_self', 'icon' => 'fas fa-bed text-warning'],
+                ['label' => 'Placement Cell', 'url' => 'document/placement-cell', 'target' => '_self', 'icon' => 'fas fa-briefcase text-success'],
+                ['label' => 'Health Facility', 'url' => 'document/health-facility', 'target' => '_self', 'icon' => 'fas fa-heartbeat text-danger'],
+                ['label' => 'Facilities For Differently Abled Students', 'url' => 'document/differently-abled-facilities', 'target' => '_self', 'icon' => 'fas fa-wheelchair text-primary'],
+                ['label' => 'News, Events & Blogs', 'url' => 'blogs', 'target' => '_self', 'icon' => 'fas fa-newspaper text-info']
+            ]
         ],
         [
             'id' => 'menu_alumni',
@@ -127,7 +248,11 @@ function getDefaultMainMenu() {
             'type' => 'dropdown',
             'preset' => 'alumni',
             'badge' => '',
-            'items' => []
+            'items' => [
+                ['label' => 'Alumni Registration Certificate', 'url' => 'document/alumni-registration-certificate', 'target' => '_self', 'icon' => 'fas fa-certificate text-primary'],
+                ['label' => 'Alumni Bylaws', 'url' => 'document/alumni-bylaws', 'target' => '_self', 'icon' => 'fas fa-book text-warning'],
+                ['label' => 'Alumni Portal', 'url' => 'alumni', 'target' => '_self', 'icon' => 'fas fa-user-graduate text-danger']
+            ]
         ],
         [
             'id' => 'menu_info_corner',
@@ -137,7 +262,10 @@ function getDefaultMainMenu() {
             'type' => 'dropdown',
             'preset' => 'info-corner',
             'badge' => '',
-            'items' => []
+            'items' => [
+                ['label' => 'Right to Information (RTI)', 'url' => 'document/rti', 'target' => '_self', 'icon' => 'fas fa-balance-scale text-primary'],
+                ['label' => 'Job Openings / Vacancy', 'url' => 'document/vacancy', 'target' => '_self', 'icon' => 'fas fa-briefcase text-success']
+            ]
         ]
     ];
 }

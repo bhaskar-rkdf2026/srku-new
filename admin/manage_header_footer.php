@@ -389,6 +389,21 @@ $liUrl = getSetting('linkedin_url', '#');
 .submenu-item-row:last-child {
     border-bottom: none;
 }
+.sub-item-card {
+    transition: all 0.15s ease;
+    border-color: #e2e8f0 !important;
+}
+.sub-item-card:hover {
+    border-color: #cbd5e1 !important;
+    background-color: #f8fafc !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05) !important;
+}
+.btn-xs {
+    padding: 0.15rem 0.35rem;
+    font-size: 0.72rem;
+    line-height: 1.2;
+    border-radius: 0.2rem;
+}
 </style>
 
 <div class="mb-4">
@@ -1000,8 +1015,18 @@ $liUrl = getSetting('linkedin_url', '#');
 
 <!-- Data injection into JavaScript -->
 <script>
+<?php
+$defaultMainMenuRaw = getDefaultMainMenu();
+$defaultPresetsMapArr = [];
+foreach ($defaultMainMenuRaw as $dm) {
+    if (!empty($dm['preset'])) {
+        $defaultPresetsMapArr[$dm['preset']] = $dm['items'] ?? [];
+    }
+}
+?>
 // Initial Data loaded from PHP
 var mainMenuItems = <?php echo json_encode($currentMainMenu, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?> || [];
+var defaultPresetsMap = <?php echo json_encode($defaultPresetsMapArr, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?> || {};
 var topbarItems = <?php echo json_encode($currentTopbarLinks, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?> || [];
 var erpItems = <?php echo json_encode($currentErpLinks, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?> || [];
 var footerQuickItems = <?php echo json_encode($currentFooterQuickLinks, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?> || [];
@@ -1068,6 +1093,11 @@ function renderMainMenu() {
         card.id = 'menu_card_' + index;
         card.draggable = true;
 
+        // Auto-hydrate preset default items if items array is empty
+        if (item.preset && (!item.items || item.items.length === 0) && defaultPresetsMap[item.preset] && defaultPresetsMap[item.preset].length > 0) {
+            item.items = JSON.parse(JSON.stringify(defaultPresetsMap[item.preset]));
+        }
+
         // Tag label
         let tagText = 'Custom Link';
         let tagBadgeClass = 'bg-secondary-subtle text-secondary';
@@ -1079,39 +1109,96 @@ function renderMainMenu() {
             tagBadgeClass = 'bg-primary-subtle text-primary border border-primary-subtle';
         }
 
-        // Subitems list if standard dropdown
+        // Subitems list manager for all items except direct Home link
         let subitemsHtml = '';
-        if (item.type === 'dropdown' || (!item.preset && item.items && item.items.length > 0)) {
-            const subs = item.items || [];
+        if (item.preset !== 'home') {
+            if (!item.items) item.items = [];
+            const subs = item.items;
             let rowsHtml = '';
             subs.forEach((sub, sIndex) => {
                 rowsHtml += `
-                    <div class="submenu-item-row">
-                        <div>
-                            <strong>${escapeHtml(sub.label)}</strong>
-                            <small class="text-muted ms-2">${escapeHtml(sub.url || '')}</small>
+                    <div class="sub-item-card p-2 mb-2 rounded border bg-white shadow-sm d-flex align-items-center gap-2" id="sub_row_${index}_${sIndex}" data-label="${escapeHtml((sub.label || '').toLowerCase())}" data-url="${escapeHtml((sub.url || '').toLowerCase())}">
+                        <div class="d-flex flex-column gap-1">
+                            <button type="button" class="btn btn-light btn-xs p-1 lh-1 border" title="Move Up" onclick="moveSubItem(${index}, ${sIndex}, -1, event)"><i class="fas fa-chevron-up text-secondary" style="font-size: 10px;"></i></button>
+                            <button type="button" class="btn btn-light btn-xs p-1 lh-1 border" title="Move Down" onclick="moveSubItem(${index}, ${sIndex}, 1, event)"><i class="fas fa-chevron-down text-secondary" style="font-size: 10px;"></i></button>
                         </div>
-                        <div class="d-flex gap-1">
-                            <button type="button" class="btn btn-outline-danger btn-xs py-0 px-1" onclick="deleteSubItem(${index}, ${sIndex})"><i class="fas fa-times"></i></button>
+                        <span class="badge bg-light text-secondary border py-2 px-2 fw-bold font-monospace" style="min-width: 28px; font-size: 11px;">${sIndex + 1}</span>
+                        <div class="flex-grow-1" style="min-width: 140px;">
+                            <label class="form-label p-0 m-0 text-muted" style="font-size: 10px; font-weight: 600;">PAGE LABEL</label>
+                            <input type="text" class="form-control form-control-sm fw-semibold" value="${escapeHtml(sub.label)}" placeholder="e.g. Board of Management" oninput="updateSubItemProp(${index}, ${sIndex}, 'label', this.value)">
+                        </div>
+                        <div class="flex-grow-1" style="min-width: 150px;">
+                            <label class="form-label p-0 m-0 text-muted" style="font-size: 10px; font-weight: 600;">ROUTE / URL</label>
+                            <input type="text" class="form-control form-control-sm text-primary font-monospace" style="font-size: 12px;" value="${escapeHtml(sub.url || '')}" placeholder="e.g. document/board-of-management" oninput="updateSubItemProp(${index}, ${sIndex}, 'url', this.value)">
+                        </div>
+                        <div style="min-width: 95px; width: 100px;">
+                            <label class="form-label p-0 m-0 text-muted" style="font-size: 10px; font-weight: 600;">TARGET</label>
+                            <select class="form-select form-select-sm" style="font-size: 11px;" onchange="updateSubItemProp(${index}, ${sIndex}, 'target', this.value)">
+                                <option value="_self" ${(sub.target === '_self' || !sub.target) ? 'selected' : ''}>_self</option>
+                                <option value="_blank" ${sub.target === '_blank' ? 'selected' : ''}>_blank</option>
+                            </select>
+                        </div>
+                        <div class="pt-3">
+                            <button type="button" class="btn btn-outline-danger btn-sm p-1 px-2" title="Delete sub-page" onclick="deleteSubItem(${index}, ${sIndex}, event)"><i class="fas fa-trash-alt"></i></button>
                         </div>
                     </div>
                 `;
             });
 
+            const resetBtnHtml = (item.preset && defaultPresetsMap[item.preset]) ? `
+                <button type="button" class="btn btn-link text-secondary btn-xs p-0 text-decoration-none small" onclick="restorePresetDefaultSubmenu(${index}, event)">
+                    <i class="fas fa-undo me-1"></i> Reset ${escapeHtml(item.label)} to Default Sub-pages (${defaultPresetsMap[item.preset].length})
+                </button>
+            ` : '';
+
             subitemsHtml = `
                 <div class="mt-3 pt-3 border-top">
-                    <label class="form-label small fw-bold text-dark d-flex justify-content-between">
-                        <span><i class="fas fa-level-down-alt me-1 text-primary"></i> Submenu Links (${subs.length})</span>
-                    </label>
-                    <div class="p-2 bg-white rounded border mb-2">
-                        <div class="row g-1">
-                            <div class="col-5"><input type="text" id="sub_label_${index}" class="form-control form-control-sm" placeholder="Sub link label"></div>
-                            <div class="col-5"><input type="text" id="sub_url_${index}" class="form-control form-control-sm" placeholder="Sub link route / URL"></div>
-                            <div class="col-2"><button type="button" class="btn btn-primary btn-sm w-100" onclick="addSubItem(${index})"><i class="fas fa-plus"></i></button></div>
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold text-dark small"><i class="fas fa-layer-group text-primary me-1"></i> Submenu Pages &amp; Links</span>
+                            <span class="badge bg-primary-subtle text-primary border border-primary-subtle small" id="sub_count_${index}">${subs.length} items</span>
+                        </div>
+                        ${resetBtnHtml}
+                    </div>
+
+                    <!-- Add Sub-page Card -->
+                    <div class="card bg-light border mb-3">
+                        <div class="card-body p-2">
+                            <div class="small fw-bold text-dark mb-1 d-flex align-items-center gap-1">
+                                <i class="fas fa-plus-circle text-success"></i> <span>Add New Sub-page / Document Link:</span>
+                            </div>
+                            <div class="row g-2 align-items-center">
+                                <div class="col-md-5">
+                                    <input type="text" id="sub_label_${index}" class="form-control form-control-sm" placeholder="Sub-page label (e.g. Board of Management)">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" id="sub_url_${index}" class="form-control form-control-sm font-monospace" placeholder="URL/Route (e.g. document/board-of-management)">
+                                </div>
+                                <div class="col-md-2">
+                                    <select id="sub_target_${index}" class="form-select form-select-sm">
+                                        <option value="_self">Same Window</option>
+                                        <option value="_blank">New Tab (_blank)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-success btn-sm w-100 fw-bold" onclick="addSubItem(${index}, event)" title="Add this sub-link">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="submenu-list">
-                        ${rowsHtml || '<div class="text-muted small text-center py-2">No sub-items added yet.</div>'}
+
+                    <!-- Quick Filter Bar if many sub-items -->
+                    ${subs.length > 5 ? `
+                        <div class="mb-2">
+                            <input type="text" class="form-control form-control-sm" placeholder="🔍 Quick search among these ${subs.length} sub-pages..." oninput="filterSubmenuItems(${index}, this.value)">
+                        </div>
+                    ` : ''}
+
+                    <!-- Submenu List Container -->
+                    <div class="submenu-scroll-container" id="sub_list_${index}" style="max-height: 420px; overflow-y: auto; padding-right: 4px;">
+                        ${rowsHtml || '<div class="text-muted small text-center py-3 bg-light rounded border border-dashed">No sub-items added yet. Use the form above to add pages or documents.</div>'}
                     </div>
                 </div>
             `;
@@ -1285,6 +1372,8 @@ function addPresetMenu(presetKey, defaultLabel, defaultUrl) {
         return;
     }
 
+    const defaultSubs = (defaultPresetsMap && defaultPresetsMap[presetKey]) ? JSON.parse(JSON.stringify(defaultPresetsMap[presetKey])) : [];
+
     const newItem = {
         id: 'menu_' + presetKey + '_' + Date.now(),
         label: defaultLabel,
@@ -1293,21 +1382,59 @@ function addPresetMenu(presetKey, defaultLabel, defaultUrl) {
         type: (presetKey === 'home') ? 'link' : ((presetKey === 'departments' || presetKey === 'syllabus' || presetKey === 'about') ? 'megamenu' : 'dropdown'),
         preset: presetKey,
         badge: '',
-        items: []
+        items: defaultSubs
     };
 
     mainMenuItems.push(newItem);
     renderMainMenu();
+
+    setTimeout(() => {
+        const lastIdx = mainMenuItems.length - 1;
+        const card = document.getElementById('menu_card_' + lastIdx);
+        if (card) card.classList.add('expanded');
+    }, 50);
 }
 
-function addSubItem(parentIndex) {
+function updateSubItemProp(parentIndex, subIndex, prop, value) {
+    if (mainMenuItems[parentIndex] && mainMenuItems[parentIndex].items && mainMenuItems[parentIndex].items[subIndex]) {
+        mainMenuItems[parentIndex].items[subIndex][prop] = value;
+    }
+}
+
+function moveSubItem(parentIndex, subIndex, delta, event) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+    const item = mainMenuItems[parentIndex];
+    if (!item || !item.items) return;
+    const newIdx = subIndex + delta;
+    if (newIdx < 0 || newIdx >= item.items.length) return;
+    const moved = item.items.splice(subIndex, 1)[0];
+    item.items.splice(newIdx, 0, moved);
+    renderMainMenu();
+    setTimeout(() => {
+        const card = document.getElementById('menu_card_' + parentIndex);
+        if (card) card.classList.add('expanded');
+    }, 20);
+}
+
+function addSubItem(parentIndex, event) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
     const labelInput = document.getElementById('sub_label_' + parentIndex);
     const urlInput = document.getElementById('sub_url_' + parentIndex);
-    const label = labelInput.value.trim();
-    const url = urlInput.value.trim();
+    const targetSelect = document.getElementById('sub_target_' + parentIndex);
+    
+    const label = labelInput ? labelInput.value.trim() : '';
+    const url = urlInput ? urlInput.value.trim() : '';
+    const target = targetSelect ? targetSelect.value : '_self';
 
     if (!label) {
-        alert('Please enter a sub-link label.');
+        alert('Please enter a sub-page / link label.');
+        if (labelInput) labelInput.focus();
         return;
     }
 
@@ -1318,28 +1445,71 @@ function addSubItem(parentIndex) {
     mainMenuItems[parentIndex].items.push({
         label: label,
         url: url,
-        target: '_self'
+        target: target,
+        icon: 'fas fa-angle-right text-danger'
     });
 
-    labelInput.value = '';
-    urlInput.value = '';
     renderMainMenu();
 
     setTimeout(() => {
         const card = document.getElementById('menu_card_' + parentIndex);
-        if (card) card.classList.add('expanded');
-    }, 50);
+        if (card) {
+            card.classList.add('expanded');
+            const subList = document.getElementById('sub_list_' + parentIndex);
+            if (subList) subList.scrollTop = subList.scrollHeight;
+        }
+    }, 20);
 }
 
-function deleteSubItem(parentIndex, subIndex) {
-    if (mainMenuItems[parentIndex] && mainMenuItems[parentIndex].items) {
-        mainMenuItems[parentIndex].items.splice(subIndex, 1);
+function deleteSubItem(parentIndex, subIndex, event) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+    const item = mainMenuItems[parentIndex];
+    if (!item || !item.items || !item.items[subIndex]) return;
+    const subLabel = item.items[subIndex].label || 'this item';
+    if (confirm('Remove "' + subLabel + '" from submenu?')) {
+        item.items.splice(subIndex, 1);
         renderMainMenu();
         setTimeout(() => {
             const card = document.getElementById('menu_card_' + parentIndex);
             if (card) card.classList.add('expanded');
-        }, 50);
+        }, 20);
     }
+}
+
+function restorePresetDefaultSubmenu(parentIndex, event) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+    const item = mainMenuItems[parentIndex];
+    if (!item || !item.preset || !defaultPresetsMap[item.preset]) return;
+    if (confirm('Reset "' + item.label + '" submenu back to standard ' + defaultPresetsMap[item.preset].length + ' default sub-pages?')) {
+        item.items = JSON.parse(JSON.stringify(defaultPresetsMap[item.preset]));
+        renderMainMenu();
+        setTimeout(() => {
+            const card = document.getElementById('menu_card_' + parentIndex);
+            if (card) card.classList.add('expanded');
+        }, 20);
+    }
+}
+
+function filterSubmenuItems(parentIndex, query) {
+    const list = document.getElementById('sub_list_' + parentIndex);
+    if (!list) return;
+    const q = (query || '').toLowerCase().trim();
+    const rows = list.querySelectorAll('.sub-item-card');
+    rows.forEach(row => {
+        const label = row.getAttribute('data-label') || '';
+        const url = row.getAttribute('data-url') || '';
+        if (!q || label.includes(q) || url.includes(q)) {
+            row.style.setProperty('display', 'flex', 'important');
+        } else {
+            row.style.setProperty('display', 'none', 'important');
+        }
+    });
 }
 
 function saveMainMenuForm() {
