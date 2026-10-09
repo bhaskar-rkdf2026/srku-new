@@ -218,8 +218,34 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 <?php endif; ?>
             </a>
             <a href="manage_pages.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_pages.php' ? 'active' : ''; ?>">
-                <i class="fas fa-file-alt text-info"></i> All Website Pages
+                <i class="fas fa-file-alt text-info"></i> All Custom Pages
             </a>
+            <a href="manage_page_contents.php" class="sidebar-nav-link <?php echo $currentAdminPage == 'manage_page_contents.php' ? 'active' : ''; ?>">
+                <i class="fas fa-edit text-success"></i> Institutional Pages Editor
+            </a>
+            <div class="sidebar-submenu">
+                <a href="manage_page_contents.php?tab=vision-mission" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_page_contents.php' && ($_GET['tab'] ?? 'vision-mission') == 'vision-mission') ? 'active' : ''; ?>">
+                    <i class="fas fa-bullseye text-danger"></i> Vision &amp; Mission
+                </a>
+                <a href="manage_page_contents.php?tab=academic-calendar" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_page_contents.php' && ($_GET['tab'] ?? '') == 'academic-calendar') ? 'active' : ''; ?>">
+                    <i class="fas fa-calendar-alt text-warning"></i> Academic Calendar
+                </a>
+                <a href="manage_page_contents.php?tab=exam-rules" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_page_contents.php' && ($_GET['tab'] ?? '') == 'exam-rules') ? 'active' : ''; ?>">
+                    <i class="fas fa-clipboard-check text-info"></i> Exam Rules
+                </a>
+                <a href="manage_page_contents.php?tab=research-innovation" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_page_contents.php' && ($_GET['tab'] ?? '') == 'research-innovation') ? 'active' : ''; ?>">
+                    <i class="fas fa-flask text-primary"></i> Research &amp; Innovation
+                </a>
+                <a href="manage_page_contents.php?tab=phd-admission" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_page_contents.php' && ($_GET['tab'] ?? '') == 'phd-admission') ? 'active' : ''; ?>">
+                    <i class="fas fa-user-graduate text-success"></i> Ph.D. Admissions
+                </a>
+                <a href="manage_page_contents.php?tab=founder-story" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_page_contents.php' && ($_GET['tab'] ?? '') == 'founder-story') ? 'active' : ''; ?>">
+                    <i class="fas fa-award text-warning"></i> Founder's Story
+                </a>
+                <a href="manage_page_contents.php?tab=hostel" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_page_contents.php' && ($_GET['tab'] ?? '') == 'hostel') ? 'active' : ''; ?>">
+                    <i class="fas fa-bed text-secondary"></i> Hostels Living
+                </a>
+            </div>
             <a href="manage_seo.php" class="sidebar-nav-link <?php echo ($currentAdminPage == 'manage_seo.php' || $currentAdminPage == 'seo.php') ? 'active' : ''; ?>">
                 <i class="fas fa-search-dollar text-warning"></i> SEO &amp; Meta Manager
             </a>

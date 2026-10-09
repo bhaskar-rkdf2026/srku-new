@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sidebar) sidebar.classList.add('show');
         if (overlay) overlay.classList.add('show');
         document.body.style.overflow = 'hidden';
+        setTimeout(syncAdminSidebarPosition, 60);
     }
 
     function closeSidebar() {
@@ -34,6 +35,50 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.innerWidth < 992 && sidebar) {
         sidebar.querySelectorAll('.sidebar-nav-link').forEach(link => {
             link.addEventListener('click', closeSidebar);
+        });
+    }
+
+    // Sticky Auto-Scroll to Active Menu / Tab in Sidebar
+    function syncAdminSidebarPosition() {
+        if (!sidebar) return;
+
+        // Prioritize active submenu tab (e.g. Ph.D Admissions) before parent nav link
+        const activeItem = sidebar.querySelector('.sidebar-sub-link.active') || 
+                           sidebar.querySelector('.sidebar-nav-link.active');
+
+        if (activeItem) {
+            const sidebarRect = sidebar.getBoundingClientRect();
+            const activeRect = activeItem.getBoundingClientRect();
+            
+            // Target position: upper-middle (~35% of sidebar height) so section title and adjacent items are visible
+            const currentScroll = sidebar.scrollTop;
+            const targetScroll = currentScroll + (activeRect.top - sidebarRect.top) - (sidebar.clientHeight * 0.35);
+            sidebar.scrollTop = Math.max(0, Math.round(targetScroll));
+        } else {
+            // Restore last manual scroll position if no specific item is active
+            const savedScroll = sessionStorage.getItem('admin_sidebar_scroll_top');
+            if (savedScroll !== null) {
+                sidebar.scrollTop = parseInt(savedScroll, 10);
+            }
+        }
+    }
+
+    // Trigger on load and layout frames to ensure accurate scroll position
+    syncAdminSidebarPosition();
+    requestAnimationFrame(syncAdminSidebarPosition);
+    setTimeout(syncAdminSidebarPosition, 80);
+    setTimeout(syncAdminSidebarPosition, 250);
+
+    // Preserve scroll position whenever user scrolls sidebar
+    if (sidebar) {
+        sidebar.addEventListener('scroll', () => {
+            sessionStorage.setItem('admin_sidebar_scroll_top', sidebar.scrollTop);
+        }, { passive: true });
+
+        sidebar.querySelectorAll('.sidebar-nav-link, .sidebar-sub-link').forEach(link => {
+            link.addEventListener('click', () => {
+                sessionStorage.setItem('admin_sidebar_scroll_top', sidebar.scrollTop);
+            });
         });
     }
 

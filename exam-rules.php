@@ -22,16 +22,29 @@ require_once __DIR__ . '/includes/header.php';
                     <ol class="breadcrumb mb-0 small">
                         <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning"><i class="fas fa-home me-1"></i> Home</a></li>
                         <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>courses.php" class="text-decoration-none text-white-50">Academics</a></li>
+<?php
+$examHeroTitle = getSetting('exam_hero_title', 'Examination Rules & <span>Evaluation Guidelines</span>');
+$examHeroDesc = getSetting('exam_hero_desc', 'Comprehensive academic ordinances governing internal assessments, final examinations, attendance prerequisites, 10-point CBCS grading system, ATKT rules, and grievance redressal.');
+$examRulesPdf = BASE_URL . getSetting('exam_rules_pdf', 'assets/uploads/2026/07/statutes-ordinances-pertaining-to-academics-examination.pdf');
+$minAttendance = getSetting('stat_min_attendance', '75%');
+$examAttTitle = getSetting('exam_att_title', '75% Mandatory Attendance Rule');
+$examAttDesc = getSetting('exam_att_desc', 'In accordance with UGC regulations and statutory council directives (AICTE, NMC, PCI, BCI, INC), a student must have registered a minimum aggregate attendance of 75% in all lectures, tutorials, and practical laboratory sessions conducted during the semester to be eligible to appear for the End Semester University Examinations.');
+$examAttMedical = getSetting('exam_att_medical', 'Condonation of up to 10% attendance may be granted by the Vice Chancellor on valid medical grounds, provided authentic registered medical certificates are submitted within 7 days of illness.');
+$examAttSports = getSetting('exam_att_sports', 'Attendance concession up to 10% is granted to students officially deputed to represent the university in AIU, state, or national championships and academic conferences.');
+$examCbcsDesc = getSetting('exam_cbcs_desc', 'The university follows the UGC standardized 10-Point Letter Grading System. Performance in each course is evaluated on continuous internal assessments (CIA: 30% / 40%) and end semester examinations (ESE: 70% / 60%).');
+$examRevalDesc = getSetting('exam_reval_desc', 'Students dissatisfied with their evaluated theory answer books may apply for Re-totaling / Revaluation within 15 days of declaration of results by submitting the prescribed fee through the examination portal.');
+$examUfmDesc = getSetting('exam_ufm_desc', 'Carrying mobile phones, smartwatches, chits, or unauthorized materials into examination halls is strictly prohibited. Instances of cheating are referred to the University UFM Disciplinary Committee and attract cancellation of examination or debarment.');
+?>
                         <li class="breadcrumb-item active" aria-current="page" style="color: rgba(255,255,255,0.85);">Examination Rules</li>
                     </ol>
                 </nav>
                 <span class="about-hero-v2__eyebrow"><i class="fas fa-clipboard-check"></i> Academic Ordinances &amp; Regulations</span>
-                <h1 class="about-hero-v2__title">Examination Rules &amp; <span>Evaluation Guidelines</span></h1>
+                <h1 class="about-hero-v2__title"><?php echo $examHeroTitle; ?></h1>
                 <p class="about-hero-v2__desc">
-                    Comprehensive academic ordinances governing internal assessments, final examinations, attendance prerequisites, 10-point CBCS grading system, ATKT rules, and grievance redressal.
+                    <?php echo nl2br(htmlspecialchars($examHeroDesc)); ?>
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="<?php echo BASE_URL . getSetting('exam_rules_pdf', 'assets/uploads/2026/07/statutes-ordinances-pertaining-to-academics-examination.pdf'); ?>" target="_blank" class="btn-hero-yellow">
+                    <a href="<?php echo $examRulesPdf; ?>" target="_blank" class="btn-hero-yellow">
                         <i class="fas fa-file-pdf me-1"></i> Download Examination Statutes (PDF)
                     </a>
                     <a href="<?php echo BASE_URL; ?>academic-calendar.php" class="btn-hero-outline">
@@ -43,7 +56,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="about-hero-v2__cards">
                     <div class="about-hero-v2__card about-hero-v2__card--float1">
                         <i class="fas fa-percentage"></i>
-                        <span class="num"><?php echo getSetting('stat_min_attendance', '75%'); ?></span>
+                        <span class="num"><?php echo htmlspecialchars($minAttendance); ?></span>
                         <span class="lbl">Min. Attendance</span>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float2">
@@ -79,23 +92,23 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
                 <div>
                     <span class="badge bg-danger text-white px-3 py-1 rounded-pill small fw-bold">Statutory Rule #1</span>
-                    <h4 class="fw-bold text-navy mb-0 mt-1">75% Mandatory Attendance Rule</h4>
+                    <h4 class="fw-bold text-navy mb-0 mt-1"><?php echo htmlspecialchars($examAttTitle); ?></h4>
                 </div>
             </div>
             <p class="text-secondary" style="line-height: 1.8;">
-                In accordance with UGC regulations and statutory council directives (AICTE, NMC, PCI, BCI, INC), a student must have registered a <strong>minimum aggregate attendance of 75%</strong> in all lectures, tutorials, and practical laboratory sessions conducted during the semester to be eligible to appear for the End Semester University Examinations.
+                <?php echo nl2br(htmlspecialchars($examAttDesc)); ?>
             </p>
             <div class="row g-3">
                 <div class="col-12 col-md-6">
                     <div class="p-3 rounded-3 bg-light border">
                         <h6 class="fw-bold text-navy mb-1"><i class="fas fa-notes-medical text-danger me-2"></i> Medical Condonation</h6>
-                        <p class="text-muted small mb-0">Condonation of up to 10% attendance may be granted by the Vice Chancellor on valid medical grounds, provided authentic registered medical certificates are submitted within 7 days of illness.</p>
+                        <p class="text-muted small mb-0"><?php echo nl2br(htmlspecialchars($examAttMedical)); ?></p>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
                     <div class="p-3 rounded-3 bg-light border">
                         <h6 class="fw-bold text-navy mb-1"><i class="fas fa-running text-success me-2"></i> Sports &amp; Cultural Deputation</h6>
-                        <p class="text-muted small mb-0">Attendance concession up to 10% is granted to students officially deputed to represent the university in AIU, state, or national championships and academic conferences.</p>
+                        <p class="text-muted small mb-0"><?php echo nl2br(htmlspecialchars($examAttSports)); ?></p>
                     </div>
                 </div>
             </div>
@@ -228,7 +241,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
                     <h5 class="fw-bold text-navy mb-2"><i class="fas fa-redo text-primary me-2"></i> Revaluation &amp; Scrutiny</h5>
                     <p class="text-muted small" style="line-height: 1.7;">
-                        Students dissatisfied with their evaluated theory answer books may apply for <strong>Re-totaling / Revaluation</strong> within 15 days of declaration of results by submitting the prescribed fee through the examination portal.
+                        <?php echo nl2br(htmlspecialchars($examRevalDesc)); ?>
                     </p>
                     <a href="<?php echo BASE_URL; ?>contact.php" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold mt-auto">
                         <i class="fas fa-external-link-alt me-1"></i> Exam Controller Desk
@@ -239,7 +252,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="card border-0 shadow-sm rounded-4 p-4 h-100 text-white" style="background: linear-gradient(135deg, #7A0B0D 0%, #a8171b 100%);">
                     <h5 class="fw-bold text-white mb-2"><i class="fas fa-ban text-warning me-2"></i> Unfair Means (UFM) Zero Tolerance</h5>
                     <p class="text-white-50 small" style="line-height: 1.7;">
-                        Carrying mobile phones, smartwatches, chits, or unauthorized materials into examination halls is strictly prohibited. Instances of cheating are referred to the University UFM Disciplinary Committee and attract cancellation of examination or debarment.
+                        <?php echo nl2br(htmlspecialchars($examUfmDesc)); ?>
                     </p>
                     <span class="badge bg-warning text-dark px-3 py-2 rounded-pill small fw-bold">Strictly Enforced CCTV Surveillance</span>
                 </div>

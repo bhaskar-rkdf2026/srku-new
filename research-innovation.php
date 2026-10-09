@@ -7,19 +7,32 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Dynamic Banner Header -->
-<?php renderPageBanner('research-innovation', 'Research & Innovation Cell', 'Fostering Groundbreaking Discoveries, Patents & Interdisciplinary Science'); ?>
+<?php
+$resBannerTitle = getSetting('research_banner_title', 'Research & Innovation Cell');
+$resBannerSubtitle = getSetting('research_banner_subtitle', 'Fostering Groundbreaking Discoveries, Patents & Interdisciplinary Science');
+$resPioneeringSubtitle = getSetting('research_pioneering_subtitle', 'DISCOVERY & EXCELLENCE');
+$resPioneeringTitle = getSetting('research_pioneering_title', 'Pioneering Solutions for <span>Global Challenges</span>');
+$resPioneeringDesc1 = getSetting('research_pioneering_desc1', 'Research at Sarvepalli Radhakrishnan University is driven by a deep commitment to addressing pressing societal, medical, environmental, and technological challenges through cutting-edge inquiry and translational research.');
+$resPioneeringDesc2 = getSetting('research_pioneering_desc2', 'Our faculty and doctoral scholars actively publish in prestigious high-impact peer-reviewed journals indexed in Scopus, Web of Science, and PubMed, securing national and international patents across nanomedicine, artificial intelligence, renewable energy, and agricultural biotechnology.');
+$resImage = resolveMediaUrl(getSetting('research_image', 'assets/uploads/2026/07/lab-and-research.webp'), 'assets/uploads/2026/07/lab-and-research.webp');
+$resPhdBoxTitle = getSetting('research_phd_box_title', 'Ph.D. Admission 2026 & Official Forms');
+$resPhdBoxDesc = getSetting('research_phd_box_desc', 'Download the official prescribed application and entrance examination forms for Ph.D. admissions across Engineering, Pharmacy, Management, Computer Applications, Medical, and Science.');
+?>
+
+<!-- Dynamic Banner Header -->
+<?php renderPageBanner('research-innovation', $resBannerTitle, $resBannerSubtitle); ?>
 
 <section class="py-5">
     <div class="container-xl py-3">
         <div class="row align-items-center g-4 g-lg-5 mb-5">
             <div class="col-12 col-lg-6">
-                <span class="section-subtitle">DISCOVERY &amp; EXCELLENCE</span>
-                <h2 class="section-title mb-3">Pioneering Solutions for <span>Global Challenges</span></h2>
+                <span class="section-subtitle"><?php echo htmlspecialchars($resPioneeringSubtitle); ?></span>
+                <h2 class="section-title mb-3"><?php echo $resPioneeringTitle; ?></h2>
                 <p class="text-dark mb-3" style="line-height:1.8; font-size:0.95rem;">
-                    Research at Sarvepalli Radhakrishnan University is driven by a deep commitment to addressing pressing societal, medical, environmental, and technological challenges through cutting-edge inquiry and translational research.
+                    <?php echo nl2br(htmlspecialchars($resPioneeringDesc1)); ?>
                 </p>
                 <p class="text-muted mb-4" style="line-height:1.8; font-size:0.93rem;">
-                    Our faculty and doctoral scholars actively publish in prestigious high-impact peer-reviewed journals indexed in Scopus, Web of Science, and PubMed, securing national and international patents across nanomedicine, artificial intelligence, renewable energy, and agricultural biotechnology.
+                    <?php echo nl2br(htmlspecialchars($resPioneeringDesc2)); ?>
                 </p>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="<?php echo BASE_URL; ?>phd-admission.php" class="btn btn-srku shadow-sm"><i class="fas fa-user-graduate me-1"></i> Ph.D. Admissions 2026</a>
@@ -27,7 +40,7 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
             </div>
             <div class="col-12 col-lg-6">
-                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/lab-and-research.webp"
+                <img src="<?php echo $resImage; ?>"
                      onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                      alt="SRKU Research Labs" class="img-fluid rounded-4 border border-4 border-danger shadow">
             </div>
@@ -38,12 +51,12 @@ require_once __DIR__ . '/includes/header.php';
             <div class="row align-items-center g-4">
                 <div class="col-12 col-lg-6">
                     <span class="section-subtitle"><i class="fas fa-graduation-cap text-danger me-1"></i> DOCTORAL PROGRAMMES</span>
-                    <h3 class="h4 fw-bold text-navy mb-2">Ph.D. Admission 2026 &amp; Official Forms</h3>
+                    <h3 class="h4 fw-bold text-navy mb-2"><?php echo htmlspecialchars($resPhdBoxTitle); ?></h3>
                     <p class="text-muted small mb-4" style="line-height: 1.8;">
-                        Download the official prescribed application and entrance examination forms for Ph.D. admissions across Engineering, Pharmacy, Management, Computer Applications, Medical, and Science.
+                        <?php echo nl2br(htmlspecialchars($resPhdBoxDesc)); ?>
                     </p>
                     <div class="d-flex flex-wrap gap-2">
-                        <a href="<?php echo BASE_URL . getSetting('phd_app_pdf', 'assets/uploads/pdf/phd-application-form.pdf'); ?>" class="btn btn-danger btn-sm rounded-pill px-3 fw-bold" download>
+                        <a href="<?php echo BASE_URL . getSetting('phd_application_pdf', 'assets/uploads/pdf/phd-application-form.pdf'); ?>" class="btn btn-danger btn-sm rounded-pill px-3 fw-bold" download>
                             <i class="fas fa-file-alt me-1"></i> Ph.D. Application Form
                         </a>
                         <a href="<?php echo BASE_URL . getSetting('phd_entrance_pdf', 'assets/uploads/pdf/phd-entrance-form.pdf'); ?>" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold" download>

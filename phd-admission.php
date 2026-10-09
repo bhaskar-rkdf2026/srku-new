@@ -32,8 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_phd_lead'])) {
 }
 ?>
 
+<?php
+$phdBannerTitle = getSetting('phd_banner_title', 'Doctor of Philosophy (Ph.D.) Admissions 2026');
+$phdBannerSubtitle = getSetting('phd_banner_subtitle', 'UGC Recognized Doctoral Research Programmes Across Engineering, Pharmacy, Management, Medical, Science & Law');
+$phdFormsBoxTitle = getSetting('phd_forms_box_title', 'Download Official Ph.D. Application & Entrance Forms');
+$phdFormsBoxDesc = getSetting('phd_forms_box_desc', 'Candidates seeking admission to Doctor of Philosophy (Ph.D.) programmes for the academic session 2026-27 can download the prescribed official application forms below.');
+?>
+
 <!-- Dynamic Banner Header -->
-<?php renderPageBanner('phd-admission', 'Doctor of Philosophy (Ph.D.) Admissions 2026', 'UGC Recognized Doctoral Research Programmes Across Engineering, Pharmacy, Management, Medical, Science & Law'); ?>
+<?php renderPageBanner('phd-admission', $phdBannerTitle, $phdBannerSubtitle); ?>
 
 <section class="py-5 bg-light">
     <div class="container-xl py-2">
@@ -57,9 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_phd_lead'])) {
                     <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3">
                         <i class="fas fa-certificate me-1"></i> UGC-Regulated Doctoral Programmes
                     </span>
-                    <h2 class="h2 fw-bold text-white mb-3">Download Official Ph.D. Application &amp; Entrance Forms</h2>
+                    <h2 class="h2 fw-bold text-white mb-3"><?php echo htmlspecialchars($phdFormsBoxTitle); ?></h2>
                     <p class="text-white-50 mb-4" style="line-height: 1.7; font-size: 0.98rem;">
-                        Candidates seeking admission to Doctor of Philosophy (Ph.D.) programmes for the academic session 2026-27 can download the prescribed official application forms below.
+                        <?php echo nl2br(htmlspecialchars($phdFormsBoxDesc)); ?>
                     </p>
                     <div class="d-flex flex-wrap gap-3">
                         <a href="<?php echo BASE_URL; ?>phd-application-form.php" class="btn btn-warning text-dark fw-bold px-4 py-2 rounded-pill shadow-sm">

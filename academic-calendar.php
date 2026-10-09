@@ -22,16 +22,28 @@ require_once __DIR__ . '/includes/header.php';
                     <ol class="breadcrumb mb-0 small">
                         <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning"><i class="fas fa-home me-1"></i> Home</a></li>
                         <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>courses.php" class="text-decoration-none text-white-50">Academics</a></li>
+<?php
+$acadHeroTitle = getSetting('acad_hero_title', 'Academic Calendar <span>2026&ndash;2027</span>');
+$acadHeroDesc = getSetting('acad_hero_desc', 'Comprehensive semester roadmap, teaching schedules, internal assessments, continuous evaluations, university examinations, cultural festivals, and gazetted holiday schedules.');
+$teachingDays = getSetting('stat_teaching_days', '180+');
+$daysSemester = getSetting('stat_days_semester', '90');
+$ciaTests = getSetting('stat_cia_tests', '2');
+$calendarPdf = BASE_URL . getSetting('academic_calendar_pdf', 'assets/uploads/2026/07/Academic-Calendar.pdf');
+$oddTitle = getSetting('acad_odd_title', 'Odd Semester (Sem I, III, V, VII)');
+$oddDates = getSetting('acad_odd_dates', 'July – Dec 2026');
+$evenTitle = getSetting('acad_even_title', 'Even Semester (Sem II, IV, VI, VIII)');
+$evenDates = getSetting('acad_even_dates', 'Jan – June 2027');
+?>
                         <li class="breadcrumb-item active" aria-current="page" style="color: rgba(255,255,255,0.85);">Academic Calendar</li>
                     </ol>
                 </nav>
                 <span class="about-hero-v2__eyebrow"><i class="fas fa-calendar-alt"></i> Official Academic Planning</span>
-                <h1 class="about-hero-v2__title">Academic Calendar <span>2026&ndash;2027</span></h1>
+                <h1 class="about-hero-v2__title"><?php echo $acadHeroTitle; ?></h1>
                 <p class="about-hero-v2__desc">
-                    Comprehensive semester roadmap, teaching schedules, internal assessments, continuous evaluations, university examinations, cultural festivals, and gazetted holiday schedules.
+                    <?php echo nl2br(htmlspecialchars($acadHeroDesc)); ?>
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="<?php echo BASE_URL . getSetting('academic_calendar_pdf', 'assets/uploads/2026/07/Academic-Calendar.pdf'); ?>" target="_blank" class="btn-hero-yellow">
+                    <a href="<?php echo $calendarPdf; ?>" target="_blank" class="btn-hero-yellow">
                         <i class="fas fa-file-pdf me-1"></i> Download Official Calendar (PDF)
                     </a>
                     <a href="<?php echo BASE_URL; ?>exam-rules.php" class="btn-hero-outline">
@@ -43,17 +55,17 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="about-hero-v2__cards">
                     <div class="about-hero-v2__card about-hero-v2__card--float1">
                         <i class="fas fa-calendar-check"></i>
-                        <span class="num"><?php echo getSetting('stat_teaching_days', '180+'); ?></span>
+                        <span class="num"><?php echo htmlspecialchars($teachingDays); ?></span>
                         <span class="lbl">Teaching Days / Year</span>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float2">
                         <i class="fas fa-clock"></i>
-                        <span class="num"><?php echo getSetting('stat_days_semester', '90'); ?></span>
+                        <span class="num"><?php echo htmlspecialchars($daysSemester); ?></span>
                         <span class="lbl">Days / Semester</span>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float3">
                         <i class="fas fa-pen-fancy"></i>
-                        <span class="num">2</span>
+                        <span class="num"><?php echo htmlspecialchars($ciaTests); ?></span>
                         <span class="lbl">Mid-Term CIA Tests</span>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float4">
@@ -78,7 +90,7 @@ require_once __DIR__ . '/includes/header.php';
                 <p class="text-muted small mb-0">Follow all academic events, examinations, and term breaks.</p>
             </div>
             <div>
-                <a href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Academic-Calendar.pdf" target="_blank" class="btn btn-danger btn-sm rounded-pill px-3 py-2 fw-bold shadow-sm">
+                <a href="<?php echo $calendarPdf; ?>" target="_blank" class="btn btn-danger btn-sm rounded-pill px-3 py-2 fw-bold shadow-sm">
                     <i class="fas fa-download me-1"></i> Download PDF
                 </a>
             </div>
@@ -91,8 +103,8 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 bg-white">
                     <div class="p-4 text-white" style="background: linear-gradient(135deg, #7A0B0D 0%, #a8171b 100%);">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="fw-bold mb-0 text-white"><i class="fas fa-sun me-2 text-warning"></i> Odd Semester (Sem I, III, V, VII)</h5>
-                            <span class="badge bg-warning text-dark px-3 py-1 rounded-pill small fw-bold">July &ndash; Dec 2026</span>
+                            <h5 class="fw-bold mb-0 text-white"><i class="fas fa-sun me-2 text-warning"></i> <?php echo htmlspecialchars($oddTitle); ?></h5>
+                            <span class="badge bg-warning text-dark px-3 py-1 rounded-pill small fw-bold"><?php echo htmlspecialchars($oddDates); ?></span>
                         </div>
                     </div>
                     <div class="card-body p-4">
@@ -158,8 +170,8 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 bg-white">
                     <div class="p-4 text-white" style="background: linear-gradient(135deg, #0F1E3B 0%, #1e3a8a 100%);">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="fw-bold mb-0 text-white"><i class="fas fa-snowflake me-2 text-info"></i> Even Semester (Sem II, IV, VI, VIII)</h5>
-                            <span class="badge bg-info text-dark px-3 py-1 rounded-pill small fw-bold">Jan &ndash; June 2027</span>
+                            <h5 class="fw-bold mb-0 text-white"><i class="fas fa-snowflake me-2 text-info"></i> <?php echo htmlspecialchars($evenTitle); ?></h5>
+                            <span class="badge bg-info text-dark px-3 py-1 rounded-pill small fw-bold"><?php echo htmlspecialchars($evenDates); ?></span>
                         </div>
                     </div>
                     <div class="card-body p-4">

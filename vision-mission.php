@@ -17,14 +17,28 @@ require_once __DIR__ . '/includes/header.php';
     <div class="container-xl about-hero-v2__inner">
         <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb mb-0 small">
+<?php
+$vmHeroTitle = getSetting('vm_hero_title', 'Our <span>Vision, Mission &amp; Core Values</span> &ndash; Guiding Principles for Excellence');
+$vmHeroDesc = getSetting('vm_hero_desc', "SRK University's foundation rests on three pillars: an ambitious Vision for the future, a clear Mission in the present, and Core Values that guide every decision we make. These principles ensure that we remain committed to excellence, integrity, and student success.");
+$vmVisionSubtitle = getSetting('vm_vision_subtitle', 'OUR VISION');
+$vmVisionTitle = getSetting('vm_vision_title', "An <span>ecosystem</span> for tomorrow's leaders.");
+$vmVisionMotto = getSetting('vm_vision_motto', 'LEARN ABOUT EDUCATION THAT HELPS SOCIETY');
+$vmVisionDesc = getSetting('vm_vision_desc', "Sarvepalli Radhakrishnan University is an academic fraternity of individuals dedicated to the motto, “Learn about education that helps society.” To emerge as a World – Class University in creating and disseminating knowledge, and in providing students with a unique learning experience in Science, Technology, Medicine, Management, and other areas of life that will best serve the world and the betterment of society. To create a knowledge-based society with scientific temper, team spirit, and dignity of labour to face global competitive challenges.");
+$vmVisionImage = resolveMediaUrl(getSetting('vm_vision_image', 'assets/uploads/2026/08/Pi7_image_tool.jpeg'), 'assets/uploads/2026/08/Pi7_image_tool.jpeg');
+$vmMissionSubtitle = getSetting('vm_mission_subtitle', 'OUR MISSION');
+$vmMissionTitle = getSetting('vm_mission_title', "Empowering <span>minds to shape</span> a better tomorrow.");
+$vmMissionPointsRaw = getSetting('vm_mission_points', "Sarvepalli Radhakrishnan University is a nurturing ground for an individual's holistic growth, making an effective contribution to society in a dynamic environment. To evolve and develop skill-based systems for the effective delivery of knowledge so as to equip young professionals with dedication and commitment to excellence in all spheres of life and society.\nFacilitate intellectual stimulation to generate, maintain, and disseminate knowledge.\nEmpower participants to meet the challenges of a collaborative and competitive globalised environment.\nSynergise excellence amongst aspirants through a world-class ambience.\nInstitute a culture of inclusiveness and provide wide access to higher education opportunities.\nFoster a sustainable environmental attitude.\nInitiate trends which impact global higher education policies and practices.\nWe treasure our ethos and our character.");
+$vmMissionPoints = array_values(array_filter(array_map('trim', explode("\n", str_replace("\r", "", $vmMissionPointsRaw)))));
+$vmMissionImage = resolveMediaUrl(getSetting('vm_mission_image', 'assets/uploads/2026/08/Pi7_image_tool-1.jpeg'), 'assets/uploads/2026/08/Pi7_image_tool-1.jpeg');
+?>
                 <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>" class="text-decoration-none text-warning"><i class="fas fa-home me-1"></i> Home</a></li>
                 <li class="breadcrumb-item active text-white-50" aria-current="page">Vision &amp; Mission</li>
             </ol>
         </nav>
         <span class="about-hero-v2__eyebrow"><i class="fas fa-star"></i> Est. 1995 &middot; RKDF Education Society</span>
-        <h1 class="about-hero-v2__title" style="max-width:800px;">Our <span>Vision, Mission &amp; Core Values</span> &ndash; Guiding Principles for Excellence</h1>
+        <h1 class="about-hero-v2__title" style="max-width:800px;"><?php echo $vmHeroTitle; ?></h1>
         <p class="about-hero-v2__desc" style="max-width:760px;">
-            SRK University's foundation rests on three pillars: an ambitious Vision for the future, a clear Mission in the present, and Core Values that guide every decision we make. These principles ensure that we remain committed to excellence, integrity, and student success.
+            <?php echo nl2br(htmlspecialchars($vmHeroDesc)); ?>
         </p>
         <div class="d-flex flex-wrap gap-3">
             <a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="btn-hero-yellow">Join SRKU</a>
@@ -39,16 +53,16 @@ require_once __DIR__ . '/includes/header.php';
     <div class="container-xl py-3">
         <div class="row align-items-center g-4 g-lg-5">
             <div class="col-12 col-lg-6 reveal">
-                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/Pi7_image_tool.jpeg"
+                <img src="<?php echo $vmVisionImage; ?>"
                      onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                      class="welcome-img" alt="Our Vision">
             </div>
             <div class="col-12 col-lg-6 reveal">
-                <span class="section-subtitle">OUR VISION</span>
-                <h2 class="section-title mb-3">An <span>ecosystem</span> for tomorrow's leaders.</h2>
-                <p class="text-dark fw-bold mb-2">&ldquo;LEARN ABOUT EDUCATION THAT HELPS SOCIETY&rdquo;</p>
+                <span class="section-subtitle"><?php echo htmlspecialchars($vmVisionSubtitle); ?></span>
+                <h2 class="section-title mb-3"><?php echo $vmVisionTitle; ?></h2>
+                <p class="text-dark fw-bold mb-2">&ldquo;<?php echo htmlspecialchars($vmVisionMotto); ?>&rdquo;</p>
                 <p class="text-muted mb-0" style="line-height:1.85; font-size:0.95rem;">
-                    Sarvepalli Radhakrishnan University is an academic fraternity of individuals dedicated to the motto, &ldquo;Learn about education that helps society.&rdquo; To emerge as a World &ndash; Class University in creating and disseminating knowledge, and in providing students with a unique learning experience in Science, Technology, Medicine, Management, and other areas of life that will best serve the world and the betterment of society. To create a knowledge-based society with scientific temper, team spirit, and dignity of labour to face global competitive challenges.
+                    <?php echo nl2br(htmlspecialchars($vmVisionDesc)); ?>
                 </p>
             </div>
         </div>
@@ -60,21 +74,16 @@ require_once __DIR__ . '/includes/header.php';
     <div class="container-xl py-3">
         <div class="row align-items-center g-4 g-lg-5">
             <div class="col-12 col-lg-6 order-2 order-lg-1 reveal">
-                <span class="section-subtitle">OUR MISSION</span>
-                <h2 class="section-title mb-3">Empowering <span>minds to shape</span> a better tomorrow.</h2>
+                <span class="section-subtitle"><?php echo htmlspecialchars($vmMissionSubtitle); ?></span>
+                <h2 class="section-title mb-3"><?php echo $vmMissionTitle; ?></h2>
                 <ul class="vm-panel__list">
-                    <li>Sarvepalli Radhakrishnan University is a nurturing ground for an individual's holistic growth, making an effective contribution to society in a dynamic environment. To evolve and develop skill-based systems for the effective delivery of knowledge so as to equip young professionals with dedication and commitment to excellence in all spheres of life and society.</li>
-                    <li>Facilitate intellectual stimulation to generate, maintain, and disseminate knowledge.</li>
-                    <li>Empower participants to meet the challenges of a collaborative and competitive globalised environment.</li>
-                    <li>Synergise excellence amongst aspirants through a world-class ambience.</li>
-                    <li>Institute a culture of inclusiveness and provide wide access to higher education opportunities.</li>
-                    <li>Foster a sustainable environmental attitude.</li>
-                    <li>Initiate trends which impact global higher education policies and practices.</li>
-                    <li>We treasure our ethos and our character.</li>
+                    <?php foreach ($vmMissionPoints as $pt): ?>
+                        <li><?php echo htmlspecialchars($pt); ?></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
             <div class="col-12 col-lg-6 order-1 order-lg-2 reveal">
-                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/Pi7_image_tool-1.jpeg"
+                <img src="<?php echo $vmMissionImage; ?>"
                      onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                      class="welcome-img" alt="Our Mission">
             </div>
@@ -266,24 +275,24 @@ require_once __DIR__ . '/includes/header.php';
             <div class="accordion-item">
                 <h3 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#vmFaq1" aria-expanded="true" aria-controls="vmFaq1">
-                        What does SRK University stand for?
+                        <?php echo htmlspecialchars(getSetting('vm_faq1_q', 'What does SRK University stand for?')); ?>
                     </button>
                 </h3>
                 <div id="vmFaq1" class="accordion-collapse collapse show" data-bs-parent="#vmFaq">
                     <div class="accordion-body text-start">
-                        SRK University is named after Dr. Sarvepalli Radhakrishnan, India's First Vice President, a renowned philosopher and educator. We embody his ideals of intellectual excellence and humanistic education.
+                        <?php echo nl2br(htmlspecialchars(getSetting('vm_faq1_a', "SRK University is named after Dr. Sarvepalli Radhakrishnan, India's First Vice President, a renowned philosopher and educator. We embody his ideals of intellectual excellence and humanistic education."))); ?>
                     </div>
                 </div>
             </div>
             <div class="accordion-item">
                 <h3 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vmFaq2" aria-expanded="false" aria-controls="vmFaq2">
-                        How does SRK University support diversity and inclusion?
+                        <?php echo htmlspecialchars(getSetting('vm_faq2_q', 'How does SRK University support diversity and inclusion?')); ?>
                     </button>
                 </h3>
                 <div id="vmFaq2" class="accordion-collapse collapse" data-bs-parent="#vmFaq">
                     <div class="accordion-body text-start">
-                        Our core value of tolerance and inclusivity means we actively recruit and support students from diverse backgrounds. We offer scholarships, mentorship, and campus organisations that celebrate cultural diversity.
+                        <?php echo nl2br(htmlspecialchars(getSetting('vm_faq2_a', "Our core value of tolerance and inclusivity means we actively recruit and support students from diverse backgrounds. We offer scholarships, mentorship, and campus organisations that celebrate cultural diversity."))); ?>
                     </div>
                 </div>
             </div>

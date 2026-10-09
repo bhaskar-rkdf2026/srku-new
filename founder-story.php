@@ -35,7 +35,7 @@ require_once __DIR__ . '/includes/header.php';
                 <span class="about-hero-v2__eyebrow"><i class="fas fa-award text-warning"></i> Institutional Founder &amp; Chief Patron</span>
                 <h1 class="about-hero-v2__title">Founder's Story &amp; <span>Vision</span></h1>
                 <p class="about-hero-v2__desc">
-                    "Transforming society through the twin pillars of quality education and accessible healthcare—nurturing ethical innovators, skilled professionals, and future-ready leaders."
+                    &ldquo;<?php echo htmlspecialchars(getSetting('chairman_hero_quote', 'Transforming society through the twin pillars of quality education and accessible healthcare—nurturing ethical innovators, skilled professionals, and future-ready leaders.')); ?>&rdquo;
                 </p>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="<?php echo BASE_URL; ?>courses" class="btn-hero-yellow">
