@@ -48,7 +48,7 @@ function renderHeaderNavigationMenu($activeNav = '') {
 
                 // Categorization keywords for multi-level hierarchical submenus
                 $grpUnivKeys = ['about.php', 'act-statutes', 'institutional-development-plan', 'constituent-units', 'accreditation-ranking', 'recognition-approval', 'annual-report', 'details-of-sponsoring-body'];
-                $grpCommKeys = ['board-of-management', 'student-grievance', 'internal-complaint', 'anti-ragging', 'obc-minority', 'women-grievance', 'sc-st', 'equal-opportunity', 'sedg', 'ombudsman', 'alumni-committee', 'research-advisory'];
+                $grpCommKeys = ['board-of-management', 'student-grievance', 'grievance-redressal', 'internal-complaint', 'anti-ragging', 'obc-minority', 'women-grievance', 'sc-st', 'equal-opportunity', 'sedg', 'ombudsman', 'alumni-committee', 'research-advisory'];
                 $grpAuthKeys = ['governing-body', 'finance-committee', 'academic-councils', 'board-of-studies'];
                 $grpPolKeys  = ['policy', 'differently-abled-facilities'];
                 $grpAicteKeys = ['aicte', 'council-of-technical-education'];
