@@ -40,7 +40,7 @@ foreach ($facilitiesFromDb as $fac) {
                 <div class="col">
                     <div class="card reveal h-100 border-0 shadow-sm rounded-4 overflow-hidden">
                         <img src="<?php echo htmlspecialchars($fac['image']); ?>"
-                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/08/welcome-srku-campus.jpeg';"
                              class="card-img-top" style="height:220px; object-fit:cover;" alt="<?php echo sanitize($fac['title']); ?>">
                         <div class="card-body p-4">
                             <div class="d-flex align-items-center gap-2 mb-2">
