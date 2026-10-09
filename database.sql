@@ -2326,12 +2326,12 @@ CREATE TABLE `placements` (
 
 -- Dumping data for table `placements` (6 rows)
 INSERT INTO `placements` (`id`, `company_name`, `logo_url`, `package_offered`, `sort_order`, `status`, `created_at`) VALUES
-('1', 'TCS - Tata Consultancy Services', 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Tata_Consultancy_Services_Logo.svg', '7.5 LPA', '1', '1', '2026-09-16 12:54:39'),
-('2', 'Infosys', 'https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg', '6.8 LPA', '2', '1', '2026-09-16 12:54:39'),
-('3', 'Wipro Technologies', 'https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg', '6.5 LPA', '3', '1', '2026-09-16 12:54:39'),
-('4', 'Cipla Pharmaceuticals', 'https://upload.wikimedia.org/wikipedia/commons/e/ea/Cipla_logo.svg', '8.0 LPA', '4', '1', '2026-09-16 12:54:39'),
-('5', 'Sun Pharmaceutical Industries', 'https://upload.wikimedia.org/wikipedia/commons/1/18/Sun_Pharma_Logo.svg', '8.2 LPA', '5', '1', '2026-09-16 12:54:39'),
-('6', 'HCL Technologies', 'https://upload.wikimedia.org/wikipedia/commons/9/95/HCL_Technologies_logo.svg', '7.0 LPA', '6', '1', '2026-09-16 12:54:39');
+('1', 'TCS - Tata Consultancy Services', 'assets/images/recruiters/tcs.svg', '7.5 LPA', '1', '1', '2026-09-16 12:54:39'),
+('2', 'Infosys', 'assets/images/recruiters/infosys.webp', '6.8 LPA', '2', '1', '2026-09-16 12:54:39'),
+('3', 'Wipro Technologies', 'assets/images/recruiters/wipro.webp', '6.5 LPA', '3', '1', '2026-09-16 12:54:39'),
+('4', 'Cipla Pharmaceuticals', 'assets/images/recruiters/cipla.svg', '8.0 LPA', '4', '1', '2026-09-16 12:54:39'),
+('5', 'Sun Pharmaceutical Industries', 'assets/images/recruiters/sunpharma.svg', '8.2 LPA', '5', '1', '2026-09-16 12:54:39'),
+('6', 'HCL Technologies', 'assets/images/recruiters/hcl.svg', '7.0 LPA', '6', '1', '2026-09-16 12:54:39');
 
 -- --------------------------------------------------------
 -- Table structure for `enquiries`

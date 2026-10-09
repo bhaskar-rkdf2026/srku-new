@@ -74,7 +74,9 @@ $recruitingPartners = getSetting('recruiting_partners', '120+');
                         <div class="recruiter-marquee__item">
                             <?php if (!empty($logo['logo'])): ?>
                                 <img src="<?php echo htmlspecialchars($logo['logo']); ?>"
-                                     alt="<?php echo sanitize($logo['name']); ?>" loading="eager" decoding="async" style="max-height: 48px; width: auto; object-fit: contain;">
+                                     alt="<?php echo sanitize($logo['name']); ?>" loading="eager" decoding="async" style="max-height: 48px; width: auto; object-fit: contain;"
+                                     onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='inline-block';">
+                                <span class="fw-bold text-navy px-3 py-1 bg-white rounded border shadow-sm" style="display:none;"><?php echo sanitize($logo['name']); ?></span>
                             <?php else: ?>
                                 <span class="fw-bold text-navy px-3 py-1 bg-white rounded border shadow-sm"><?php echo sanitize($logo['name']); ?></span>
                             <?php endif; ?>

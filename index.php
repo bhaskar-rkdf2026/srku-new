@@ -417,27 +417,97 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     PROMINENT INSTITUTES / FACULTIES (Bootstrap Grid)
+     ADMISSIONS PROCESS SECTION (SRKU Brand Theme)
 ═══════════════════════════════════════════════════════ -->
-<section class="py-5">
+<section class="admissions-process-section py-5">
     <div class="container-xl py-3">
-        <div class="text-center mb-4">
-            <span class="section-subtitle">WHY CHOOSE SRKU</span>
-            <h2 class="section-title">Foundations of Academic <span>Excellence</span> in Central India</h2>
-            <p class="text-muted small mb-0">Discover why we are consistently ranked among the top engineering colleges in MP and premier management hubs.</p>
+        <!-- Top Header: Title & Description -->
+        <div class="row align-items-end justify-content-between g-4 mb-4 mb-lg-5">
+            <div class="col-12 col-lg-7">
+                <span class="section-subtitle mb-2">ADMISSIONS 2026-27</span>
+                <h2 class="section-title admissions-main-heading mb-0">
+                    A Simple Path to <span>Joining Us</span>
+                </h2>
+            </div>
+            <div class="col-12 col-lg-5 col-xl-4">
+                <p class="text-muted admissions-intro-text mb-0">
+                    Four transparent steps. A dedicated counsellor at every stage. Applications for the 2026-27 intake are open.
+                </p>
+            </div>
         </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3">
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-science-and-technology" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-cogs"></i></div><div class="faculty-info"><h4>Faculty of Engineering</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-medical-college" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-stethoscope"></i></div><div class="faculty-info"><h4>Faculty of Medicine</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=rkdf-institute-of-management" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-chart-bar"></i></div><div class="faculty-info"><h4>Business &amp; Management</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=department-of-paramedical-sciences" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-user-md"></i></div><div class="faculty-info"><h4>Paramedical Sciences</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=sarvepalli-radhakrishnan-college-of-law" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-balance-scale"></i></div><div class="faculty-info"><h4>Law &amp; Governance</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-science" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-atom"></i></div><div class="faculty-info"><h4>Allied Science &amp; Humanities</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-agriculture" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-seedling"></i></div><div class="faculty-info"><h4>Faculty of Agriculture</h4></div></div></a></div>
-            <div class="col"><a href="<?php echo BASE_URL; ?>department-detail.php?slug=faculty-of-computer-application" class="text-decoration-none"><div class="faculty-card"><div class="faculty-icon"><i class="fas fa-laptop-code"></i></div><div class="faculty-info"><h4>Computer Application</h4></div></div></a></div>
+
+        <!-- 4 Steps with Connected Horizontal Track -->
+        <div class="admissions-steps-container position-relative">
+            <div class="admissions-step-track-line d-none d-lg-block"></div>
+            <div class="row g-4 position-relative" style="z-index: 2;">
+                <!-- Step 01 -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="admissions-step-item">
+                        <div class="admissions-step-box">
+                            <span class="step-num">01</span>
+                        </div>
+                        <h3 class="admissions-step-title">Choose Program</h3>
+                        <p class="admissions-step-desc">
+                            Browse 100+ undergraduate, postgraduate and doctoral offerings.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 02 -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="admissions-step-item">
+                        <div class="admissions-step-box">
+                            <span class="step-num">02</span>
+                        </div>
+                        <h3 class="admissions-step-title">Apply Online</h3>
+                        <p class="admissions-step-desc">
+                            Submit your application and academic records through the portal.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 03 -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="admissions-step-item">
+                        <div class="admissions-step-box">
+                            <span class="step-num">03</span>
+                        </div>
+                        <h3 class="admissions-step-title">Verification</h3>
+                        <p class="admissions-step-desc">
+                            Our admissions team reviews documents and eligibility.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 04 -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="admissions-step-item">
+                        <div class="admissions-step-box is-highlight">
+                            <span class="step-num">04</span>
+                        </div>
+                        <h3 class="admissions-step-title">Confirm &amp; Enroll</h3>
+                        <p class="admissions-step-desc">
+                            Pay your fee, receive your ID and join orientation week.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Action CTA Buttons matching SRKU Theme -->
+        <div class="admissions-cta-group">
+            <a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="btn-adm-cta btn-adm-primary">
+                <i class="fas fa-arrow-up-right-from-square"></i>
+                <span>Start Application</span>
+            </a>
+            <a href="<?php echo BASE_URL; ?>assets/uploads/2026/updated-docs/prospectus.pdf" target="_blank" download class="btn-adm-cta btn-adm-outline">
+                <i class="fas fa-download"></i>
+                <span>Download Prospectus</span>
+            </a>
         </div>
     </div>
 </section>
+
 
 <!-- ═══════════════════════════════════════════════════════
      ADMISSION PATHWAYS (UG / PG / PhD / Diploma)
@@ -454,32 +524,40 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
             <div class="col">
-                <div class="admission-type-card">
-                    <div class="admission-type-icon"><i class="fas fa-user-graduate"></i></div>
-                    <h3>UG</h3>
-                    <p>B.Tech, BCA, BBA, B.Pharm, BA LL.B, MBBS &amp; more foundation degree programmes.</p>
-                </div>
+                <a href="<?php echo BASE_URL; ?>courses.php?level=UG#catalog" class="admission-type-card-link">
+                    <div class="admission-type-card">
+                        <div class="admission-type-icon"><i class="fas fa-user-graduate"></i></div>
+                        <h3>UG</h3>
+                        <p>B.Tech, BCA, BBA, B.Pharm, BA LL.B, MBBS &amp; more foundation degree programmes.</p>
+                    </div>
+                </a>
             </div>
             <div class="col">
-                <div class="admission-type-card">
-                    <div class="admission-type-icon"><i class="fas fa-user-tie"></i></div>
-                    <h3>PG</h3>
-                    <p>M.Tech, MBA, MCA, M.Pharm, LL.M &amp; specialized postgraduate degrees.</p>
-                </div>
+                <a href="<?php echo BASE_URL; ?>courses.php?level=PG#catalog" class="admission-type-card-link">
+                    <div class="admission-type-card">
+                        <div class="admission-type-icon"><i class="fas fa-user-tie"></i></div>
+                        <h3>PG</h3>
+                        <p>M.Tech, MBA, MCA, M.Pharm, LL.M &amp; specialized postgraduate degrees.</p>
+                    </div>
+                </a>
             </div>
             <div class="col">
-                <div class="admission-type-card">
-                    <div class="admission-type-icon"><i class="fas fa-microscope"></i></div>
-                    <h3>PHD</h3>
-                    <p>Doctoral Research across Engineering, Pharmacy, Management &amp; Sciences.</p>
-                </div>
+                <a href="<?php echo BASE_URL; ?>courses.php?level=Doctorate#catalog" class="admission-type-card-link">
+                    <div class="admission-type-card">
+                        <div class="admission-type-icon"><i class="fas fa-microscope"></i></div>
+                        <h3>PHD</h3>
+                        <p>Doctoral Research across Engineering, Pharmacy, Management &amp; Sciences.</p>
+                    </div>
+                </a>
             </div>
             <div class="col">
-                <div class="admission-type-card">
-                    <div class="admission-type-icon"><i class="fas fa-certificate"></i></div>
-                    <h3>Diploma &amp; Certificate</h3>
-                    <p>Professional Development and short-term certification programmes.</p>
-                </div>
+                <a href="<?php echo BASE_URL; ?>courses.php?level=Diploma#catalog" class="admission-type-card-link">
+                    <div class="admission-type-card">
+                        <div class="admission-type-icon"><i class="fas fa-certificate"></i></div>
+                        <h3>Diploma &amp; Certificate</h3>
+                        <p>Professional Development and short-term certification programmes.</p>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

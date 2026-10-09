@@ -12,12 +12,12 @@ function getDBConnection() {
     $dbUser = defined('DB_USER') ? DB_USER : 'root';
     $dbPass = defined('DB_PASS') ? DB_PASS : '';
 
-    // Hosts to attempt: configured host, plus 127.0.0.1 / localhost alternative
-    $hostsToTry = [$dbHost];
-    if ($dbHost === 'localhost' && !in_array('127.0.0.1', $hostsToTry)) {
-        $hostsToTry[] = '127.0.0.1';
-    } elseif ($dbHost === '127.0.0.1' && !in_array('localhost', $hostsToTry)) {
-        $hostsToTry[] = 'localhost';
+    // Hosts to attempt: prioritize 127.0.0.1 on local environments to prevent Windows IPv6 lookup timeout
+    $hostsToTry = [];
+    if ($dbHost === 'localhost' || $dbHost === '127.0.0.1') {
+        $hostsToTry = ['127.0.0.1', 'localhost'];
+    } else {
+        $hostsToTry = [$dbHost];
     }
 
     // 1. Try connecting to MySQL
@@ -60,11 +60,29 @@ function getDBConnection() {
         ]);
     }
 
-    // Auto setup schema & seed data
-    autoInitializeTables($pdo);
-    runUniversalDatabaseMigrations($pdo);
-    ensureSeoMetadataTableExists($pdo);
-    ensureDocumentsTableExists($pdo);
+    // Fast-path: Only run heavy schema initialization and table migrations once
+    $initLockFile = __DIR__ . '/.db_initialized';
+    $needInit = !file_exists($initLockFile) || isset($_GET['reinit_db']);
+
+    if (!$needInit) {
+        try {
+            $pdo->query("SELECT 1 FROM `courses` LIMIT 1");
+        } catch (Exception $e) {
+            $needInit = true;
+        }
+    }
+
+    if ($needInit) {
+        try {
+            autoInitializeTables($pdo);
+            runUniversalDatabaseMigrations($pdo);
+            ensureSeoMetadataTableExists($pdo);
+            ensureDocumentsTableExists($pdo);
+            @file_put_contents($initLockFile, date('Y-m-d H:i:s'));
+        } catch (Exception $e) {
+            // Schema init error logged or handled silently
+        }
+    }
 
     return $pdo;
 }

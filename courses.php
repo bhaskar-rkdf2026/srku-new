@@ -9,6 +9,17 @@ $selectedDept = sanitize($_GET['dept'] ?? '');
 $selectedLevel = sanitize($_GET['level'] ?? '');
 $searchKeyword = sanitize($_GET['search'] ?? ($_GET['q'] ?? ''));
 
+// Normalize level filter aliases so UG, PG, PhD, Doctorate, Diploma all map accurately
+if (in_array(strtolower($selectedLevel), ['phd', 'doctorate', 'doctoral'])) {
+    $selectedLevel = 'Doctorate';
+} elseif (in_array(strtolower($selectedLevel), ['diploma', 'polytechnic', 'certificate'])) {
+    $selectedLevel = 'Diploma';
+} elseif (strtolower($selectedLevel) === 'ug') {
+    $selectedLevel = 'UG';
+} elseif (strtolower($selectedLevel) === 'pg') {
+    $selectedLevel = 'PG';
+}
+
 // Fetch all active courses for client-side instant filtering and deep search
 $courses = getCourses();
 $departments = getDepartments(true);
@@ -17,7 +28,7 @@ $departments = getDepartments(true);
 <!-- Dynamic Banner Header -->
 <?php renderPageBanner('courses', 'Academic Programmes & Degrees Catalog', 'Undergraduate (UG), Postgraduate (PG), Diploma & Doctoral Research Programs Across 26 Constituent Units'); ?>
 
-<section class="py-5 bg-light">
+<section class="py-5 bg-light" id="catalog">
     <div class="container-xl py-2">
         
         <!-- SEARCH & FILTER BAR -->
