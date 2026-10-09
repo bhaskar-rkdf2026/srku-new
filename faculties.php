@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/functions.php';
 
 $pageTitle = "Distinguished Faculty Directory | 1,000+ Professors & Mentors | SRKU";
-$pageDesc = "Meet 1,000+ esteemed professors, medical doctors, researchers, and academic leaders at Sarvepalli Radhakrishnan University (SRKU) Bhopal across 15 constituent colleges.";
+$pageDesc = "Meet 1,000+ esteemed professors, medical doctors, researchers, and academic leaders at Sarvepalli Radhakrishnan University (SRKU) Bhopal across constituent colleges and institutes.";
 $pageKeywords = "SRKU Faculty, Professors Bhopal, Medical Faculty RKDF, Engineering Professors Bhopal, Academic Mentors";
 $activeNav = "faculties";
 
@@ -51,22 +51,19 @@ require_once __DIR__ . '/includes/header.php';
             </div>
             <div class="col-12 col-lg-4">
                 <div class="about-hero-v2__cards">
-                    <div class="about-hero-v2__card about-hero-v2__card--float1">
+                    <div class="about-hero-v2__card about-hero-v2__card--wide about-hero-v2__card--float1">
                         <i class="fas fa-chalkboard-teacher"></i>
-                        <span class="num"><?php echo number_format($stats['total'] ?: 1000); ?>+</span>
-                        <span class="lbl">Faculty Members</span>
+                        <div>
+                            <div class="num"><?php echo number_format($stats['total'] ?: 1000); ?>+</div>
+                            <div class="lbl">Faculty Members</div>
+                        </div>
                     </div>
                     <div class="about-hero-v2__card about-hero-v2__card--float2">
-                        <i class="fas fa-layer-group"></i>
-                        <span class="num"><?php echo $stats['departments'] ?: 15; ?></span>
-                        <span class="lbl">Constituent Units</span>
-                    </div>
-                    <div class="about-hero-v2__card about-hero-v2__card--float3">
                         <i class="fas fa-user-tie"></i>
                         <span class="num"><?php echo number_format($stats['professors'] ?: 180); ?>+</span>
                         <span class="lbl">Professors &amp; Deans</span>
                     </div>
-                    <div class="about-hero-v2__card about-hero-v2__card--float4">
+                    <div class="about-hero-v2__card about-hero-v2__card--float3">
                         <i class="fas fa-award"></i>
                         <span class="num"><?php echo number_format($stats['phd_md_count'] ?: 600); ?>+</span>
                         <span class="lbl">PhD / MD Mentors</span>

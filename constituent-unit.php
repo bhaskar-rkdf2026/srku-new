@@ -251,7 +251,7 @@ foreach ($units as $u) {
                     <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden bg-white unit-box-hover position-relative" style="transition: all 0.3s ease; border: 1px solid #e2e8f0 !important;">
                         
                         <!-- Top Image Wrap -->
-                        <div class="position-relative overflow-hidden" style="height: 220px; background: #0f172a;">
+                        <a href="<?php echo sanitize($u['href']); ?>" class="d-block position-relative overflow-hidden text-decoration-none" style="height: 220px; background: #0f172a;" title="<?php echo sanitize($u['title']); ?>">
                             <img src="<?php echo $u['img_src']; ?>"
                                  onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
                                  class="w-100 h-100 object-fit-cover transition-zoom" 
@@ -284,7 +284,7 @@ foreach ($units as $u) {
                                     </span>
                                 <?php endif; ?>
                             </div>
-                        </div>
+                        </a>
 
                         <!-- Card Body -->
                         <div class="card-body p-4 d-flex flex-column justify-content-between">

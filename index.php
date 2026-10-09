@@ -389,20 +389,25 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
                 if (mb_strlen($uDesc) > 95) {
                     $uDesc = mb_substr($uDesc, 0, 92) . '...';
                 }
+                $uUrl = BASE_URL . 'department-detail.php?slug=' . urlencode($u['slug']);
             ?>
                 <div class="col">
                     <div class="prog-card d-flex flex-column h-100">
-                        <img src="<?php echo $uImgSrc; ?>" class="prog-img" alt="<?php echo sanitize($u['name']); ?>"
-                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
+                        <a href="<?php echo $uUrl; ?>" class="d-block overflow-hidden" title="<?php echo sanitize($u['name']); ?>">
+                            <img src="<?php echo $uImgSrc; ?>" class="prog-img" alt="<?php echo sanitize($u['name']); ?>"
+                                 onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
+                        </a>
                         <div class="prog-body d-flex flex-column flex-grow-1">
                             <h3 class="prog-title mb-2">
-                                <?php echo sanitize($u['name']); ?>
+                                <a href="<?php echo $uUrl; ?>" class="text-decoration-none text-navy hover-danger">
+                                    <?php echo sanitize($u['name']); ?>
+                                </a>
                                 <?php if (!empty($u['established_year'])): ?>
                                     <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;"><?php echo sanitize($u['established_year']); ?></span>
                                 <?php endif; ?>
                             </h3>
                             <p class="prog-desc text-muted small mb-3"><?php echo sanitize($uDesc); ?></p>
-                            <a href="<?php echo BASE_URL; ?>department-detail.php?slug=<?php echo urlencode($u['slug']); ?>" class="btn-card-apply mt-auto">Explore &rarr;</a>
+                            <a href="<?php echo $uUrl; ?>" class="btn-card-apply mt-auto">Explore &rarr;</a>
                         </div>
                     </div>
                 </div>
@@ -574,45 +579,75 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/library.webp" class="prog-img" alt="Library"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
-                    <div class="prog-body"><h3 class="prog-title">Central Digital Library</h3><p class="prog-desc mb-0">50,000+ books, international journals, e-books, and 24/7 digital resource access.</p></div>
+                <div class="prog-card h-100 d-flex flex-column">
+                    <a href="<?php echo BASE_URL; ?>facilities.php" class="d-block overflow-hidden" title="Central Digital Library">
+                        <img src="<?php echo BASE_URL; ?>assets/uploads/constituent-units/faculty-of-library-science.webp" class="prog-img" alt="Central Digital Library"
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/library.webp';">
+                    </a>
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title"><a href="<?php echo BASE_URL; ?>facilities.php" class="text-decoration-none text-navy hover-danger">Central Digital Library</a></h3>
+                        <p class="prog-desc mb-0">50,000+ books, international journals, digital reading zones, and 24/7 e-resource access.</p>
+                    </div>
                 </div>
             </div>
             <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/lab-and-research.webp" class="prog-img" alt="Labs"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
-                    <div class="prog-body"><h3 class="prog-title">42+ Advanced Research Labs</h3><p class="prog-desc mb-0">High-performance computing, Robotics, Pharmaceutics testing, and AI innovation units.</p></div>
+                <div class="prog-card h-100 d-flex flex-column">
+                    <a href="<?php echo BASE_URL; ?>facilities.php" class="d-block overflow-hidden" title="42+ Advanced Research Labs">
+                        <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/lab-and-research.webp" class="prog-img" alt="Advanced Research Labs"
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
+                    </a>
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title"><a href="<?php echo BASE_URL; ?>facilities.php" class="text-decoration-none text-navy hover-danger">42+ Advanced Research Labs</a></h3>
+                        <p class="prog-desc mb-0">High-performance computing, Robotics, Pharmaceutics testing, and AI innovation units.</p>
+                    </div>
                 </div>
             </div>
             <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/Operation-Theatre.webp" class="prog-img" alt="Lecture Halls"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
-                    <div class="prog-body"><h3 class="prog-title">Air-Conditioned Auditoriums</h3><p class="prog-desc mb-0">Smart audio-visual lecture halls hosting national seminars, workshops, and guest lectures.</p></div>
+                <div class="prog-card h-100 d-flex flex-column">
+                    <a href="<?php echo BASE_URL; ?>facilities.php" class="d-block overflow-hidden" title="University Auditorium">
+                        <img src="<?php echo BASE_URL; ?>assets/uploads/gallery/webp/anf01545.webp" class="prog-img" alt="University Auditorium"
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/08/srku-academic-block.jpeg';">
+                    </a>
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title"><a href="<?php echo BASE_URL; ?>facilities.php" class="text-decoration-none text-navy hover-danger">University Auditorium</a></h3>
+                        <p class="prog-desc mb-0">Modern audio-visual auditorium and seminar halls for national conferences, guest lectures, and convocations.</p>
+                    </div>
                 </div>
             </div>
             <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/sports.webp" class="prog-img" alt="Sports"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
-                    <div class="prog-body"><h3 class="prog-title">Sports Complex &amp; Gymnasium</h3><p class="prog-desc mb-0">Cricket ground, basketball courts, indoor badminton arenas, and modern fitness gym.</p></div>
+                <div class="prog-card h-100 d-flex flex-column">
+                    <a href="<?php echo BASE_URL; ?>gallery.php?category=Sports" class="d-block overflow-hidden" title="Sports Complex & Gymnasium">
+                        <img src="<?php echo BASE_URL; ?>assets/uploads/gallery/webp/dsc06576.webp" class="prog-img" alt="Sports Complex & Gymnasium"
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/gallery/webp/dsc06537.webp';">
+                    </a>
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title"><a href="<?php echo BASE_URL; ?>gallery.php?category=Sports" class="text-decoration-none text-navy hover-danger">Sports Complex &amp; Gymnasium</a></h3>
+                        <p class="prog-desc mb-0">Championship sports turf, cricket ground, badminton &amp; tennis courts, and modern fitness gym.</p>
+                    </div>
                 </div>
             </div>
             <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/hostel.webp" class="prog-img" alt="Hostel"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
-                    <div class="prog-body"><h3 class="prog-title">Hostels &amp; Hygienic Dining</h3><p class="prog-desc mb-0">Secured hostels for boys &amp; girls with Wi-Fi, 24/7 security, and nutritious dining.</p></div>
+                <div class="prog-card h-100 d-flex flex-column">
+                    <a href="<?php echo BASE_URL; ?>hostel.php" class="d-block overflow-hidden" title="Hostels & Campus Living">
+                        <img src="<?php echo BASE_URL; ?>assets/uploads/2026/08/srku-campus-block.jpeg" class="prog-img" alt="Hostels & Campus Living"
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/gallery/webp/anf01541.webp';">
+                    </a>
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title"><a href="<?php echo BASE_URL; ?>hostel.php" class="text-decoration-none text-navy hover-danger">Hostels &amp; Campus Living</a></h3>
+                        <p class="prog-desc mb-0">Secured on-campus hostels for boys &amp; girls with Wi-Fi, 24/7 security, and hygienic dining mess.</p>
+                    </div>
                 </div>
             </div>
             <div class="col">
-                <div class="prog-card">
-                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/INFRA-STRUCTURE-SRKU-05.webp" class="prog-img" alt="Healthcare"
-                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
-                    <div class="prog-body"><h3 class="prog-title">Medical &amp; Healthcare Center</h3><p class="prog-desc mb-0">On-campus 750+ bed hospital providing round-the-clock emergency care, pharmacy, and check-ups.</p></div>
+                <div class="prog-card h-100 d-flex flex-column">
+                    <a href="<?php echo BASE_URL; ?>facilities.php" class="d-block overflow-hidden" title="Medical & Healthcare Center">
+                        <img src="<?php echo BASE_URL; ?>assets/uploads/gallery/webp/dsc08529.webp" class="prog-img" alt="Medical & Healthcare Center"
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/gallery/webp/dsc08499.webp';">
+                    </a>
+                    <div class="prog-body d-flex flex-column flex-grow-1">
+                        <h3 class="prog-title"><a href="<?php echo BASE_URL; ?>facilities.php" class="text-decoration-none text-navy hover-danger">Medical &amp; Healthcare Center</a></h3>
+                        <p class="prog-desc mb-0">On-campus 750+ bed multispecialty teaching hospital providing 24/7 emergency care and clinical facilities.</p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -198,25 +198,30 @@ function getDefaultMainMenu() {
             'preset' => 'departments',
             'badge' => '',
             'items' => [
+                // Col 1: Engg, IT & Management
                 ['label' => 'RKDF Inst. of Science & Technology', 'url' => 'rkdf-institute-of-science-and-technology', 'target' => '_self'],
                 ['label' => 'RKDF IST - MCA', 'url' => 'rkdf-institute-science-technology-mca', 'target' => '_self'],
                 ['label' => 'Faculty of Computer Application', 'url' => 'faculty-of-computer-application', 'target' => '_self'],
                 ['label' => 'RKDF Institute of Management', 'url' => 'rkdf-institute-of-management', 'target' => '_self'],
                 ['label' => 'RKDF Inst. of Business Management', 'url' => 'rkdf-institute-of-business-management', 'target' => '_self'],
-                ['label' => 'Faculty of Management', 'url' => 'faculty-of-management', 'target' => '_self'],
+                ['label' => 'Dept. of Management (Logistics)', 'url' => 'department-of-management', 'target' => '_self'],
                 ['label' => 'Faculty of Commerce', 'url' => 'faculty-of-commerce', 'target' => '_self'],
+
+                // Col 2: Pharmacy & Nursing
                 ['label' => 'RKDF College of Pharmacy', 'url' => 'rkdf-college-of-pharmacy', 'target' => '_self'],
-                ['label' => 'Sri Sai Institute of Pharmacy', 'url' => 'sri-sai-institute-of-pharmacy', 'target' => '_self'],
-                ['label' => 'Faculty of Pharmacy', 'url' => 'faculty-of-pharmacy', 'target' => '_self'],
+                ['label' => 'SRK College of Pharmacy', 'url' => 'sarvepalli-radhakrishnan-college-of-pharmacy', 'target' => '_self'],
+                ['label' => 'Dr. APJ Abdul Kalam Pharmacy', 'url' => 'dr-apj-abdul-kalam-college-of-pharmacy', 'target' => '_self'],
+                ['label' => 'Sri Sai College of Pharmacy', 'url' => 'sri-sai-college-of-pharmacy', 'target' => '_self'],
+                ['label' => 'SRK Inst. of Pharmaceutical Sci.', 'url' => 'sarvepalli-radhakrishnan-institute-of-pharmaceutical-science', 'target' => '_self'],
+                ['label' => 'R. N. Kapoor Memorial Pharmacy', 'url' => 'r-n-kapoor-memorial-institute-of-pharmaceutical-science', 'target' => '_self'],
                 ['label' => 'RKDF College of Nursing', 'url' => 'rkdf-college-of-nursing', 'target' => '_self'],
-                ['label' => 'SRK College of Nursing', 'url' => 'sarvepalli-radhakrishnan-college-of-nursing', 'target' => '_self'],
-                ['label' => 'Faculty of Nursing', 'url' => 'faculty-of-nursing', 'target' => '_self'],
-                ['label' => 'RKDF Medical College & Hospital', 'url' => 'rkdf-medical-college-hospital-and-research-centre', 'target' => '_self'],
-                ['label' => 'RKDF Dental College & Hospital', 'url' => 'rkdf-dental-college-and-research-centre', 'target' => '_self'],
-                ['label' => 'RKDF Homoeopathic Medical College', 'url' => 'rkdf-homoeopathic-medical-college-and-hospital', 'target' => '_self'],
-                ['label' => 'SRK College of Ayurved & Hospital', 'url' => 'sarvepalli-radhakrishnan-college-of-ayurved-and-hospital', 'target' => '_self'],
-                ['label' => 'Faculty of Paramedical', 'url' => 'faculty-of-paramedical', 'target' => '_self'],
-                ['label' => 'Faculty of Education', 'url' => 'faculty-of-education', 'target' => '_self'],
+
+                // Col 3: Medical, Law & Allied
+                ['label' => 'RKDF Medical College & Hospital', 'url' => 'rkdf-medical-college', 'target' => '_self'],
+                ['label' => 'SRK College of Ayurveda', 'url' => 'sarvepalli-radhakrishnan-college-of-ayurveda', 'target' => '_self'],
+                ['label' => 'RKDF Homoeopathic Medical Coll.', 'url' => 'rkdf-homoeopathic-medical-college', 'target' => '_self'],
+                ['label' => 'RKDF Dental College & Hospital', 'url' => 'rkdf-dental-college', 'target' => '_self'],
+                ['label' => 'Dept. of Paramedical Sciences', 'url' => 'department-of-paramedical-sciences', 'target' => '_self'],
                 ['label' => 'SRK College of Law', 'url' => 'sarvepalli-radhakrishnan-college-of-law', 'target' => '_self'],
                 ['label' => 'Faculty of Agriculture', 'url' => 'faculty-of-agriculture', 'target' => '_self'],
                 ['label' => 'Allied Sciences', 'url' => 'allied-sciences', 'target' => '_self']

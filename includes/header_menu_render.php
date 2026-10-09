@@ -320,7 +320,7 @@ function renderHeaderNavigationMenu($activeNav = '') {
                     </a>
                     <div class="static-dropdown-panel static-megamenu-panel shadow-lg">
                         <div class="static-megamenu-grid">
-                            <!-- COL 1 -->
+                            <!-- COL 1: Engineering, IT, Management & Commerce -->
                             <div>
                                 <div class="static-megamenu-col-title"><i class="fas fa-microchip"></i> Engg, IT &amp; Management</div>
                                 <a href="<?php echo BASE_URL; ?>rkdf-institute-of-science-and-technology" class="static-megamenu-link"><span class="name">RKDF Inst. of Science &amp; Technology</span><span class="badge-yr">1995</span><i class="fas fa-angle-right"></i></a>
@@ -328,32 +328,28 @@ function renderHeaderNavigationMenu($activeNav = '') {
                                 <a href="<?php echo BASE_URL; ?>faculty-of-computer-application" class="static-megamenu-link"><span class="name">Faculty of Computer Application</span><i class="fas fa-angle-right"></i></a>
                                 <a href="<?php echo BASE_URL; ?>rkdf-institute-of-management" class="static-megamenu-link"><span class="name">RKDF Institute of Management</span><span class="badge-yr">2003</span><i class="fas fa-angle-right"></i></a>
                                 <a href="<?php echo BASE_URL; ?>rkdf-institute-of-business-management" class="static-megamenu-link"><span class="name">RKDF Inst. of Business Management</span><span class="badge-yr">2006</span><i class="fas fa-angle-right"></i></a>
-                                <a href="<?php echo BASE_URL; ?>faculty-of-management" class="static-megamenu-link"><span class="name">Faculty of Management</span><i class="fas fa-angle-right"></i></a>
+                                <a href="<?php echo BASE_URL; ?>department-of-management" class="static-megamenu-link"><span class="name">Dept. of Management (Logistics)</span><i class="fas fa-angle-right"></i></a>
                                 <a href="<?php echo BASE_URL; ?>faculty-of-commerce" class="static-megamenu-link"><span class="name">Faculty of Commerce</span><i class="fas fa-angle-right"></i></a>
                             </div>
-                            <!-- COL 2 -->
+                            <!-- COL 2: Pharmacy Institutes (6 Colleges) & Nursing -->
                             <div>
                                 <div class="static-megamenu-col-title"><i class="fas fa-pills"></i> Pharmacy &amp; Nursing</div>
-                                <a href="<?php echo BASE_URL; ?>rkdf-college-of-pharmacy" class="static-megamenu-link"><span class="name">RKDF College of Pharmacy</span><span class="badge-yr">2003</span><i class="fas fa-angle-right"></i></a>
-                                <a href="<?php echo BASE_URL; ?>sri-sai-institute-of-pharmacy" class="static-megamenu-link"><span class="name">Sri Sai Institute of Pharmacy</span><span class="badge-yr">2007</span><i class="fas fa-angle-right"></i></a>
-                                <a href="<?php echo BASE_URL; ?>faculty-of-pharmacy" class="static-megamenu-link"><span class="name">Faculty of Pharmacy</span><i class="fas fa-angle-right"></i></a>
-                                <a href="<?php echo BASE_URL; ?>rkdf-college-of-nursing" class="static-megamenu-link"><span class="name">RKDF College of Nursing</span><span class="badge-yr">2004</span><i class="fas fa-angle-right"></i></a>
-                                <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-college-of-nursing" class="static-megamenu-link"><span class="name">SRK College of Nursing</span><span class="badge-yr">2018</span><i class="fas fa-angle-right"></i></a>
-                                <a href="<?php echo BASE_URL; ?>faculty-of-nursing" class="static-megamenu-link"><span class="name">Faculty of Nursing</span><i class="fas fa-angle-right"></i></a>
+                                <a href="<?php echo BASE_URL; ?>rkdf-college-of-pharmacy" class="static-megamenu-link"><span class="name">RKDF College of Pharmacy</span><span class="badge-yr">1995</span><i class="fas fa-angle-right"></i></a>
+                                <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-college-of-pharmacy" class="static-megamenu-link"><span class="name">SRK College of Pharmacy</span><span class="badge-yr">2018</span><i class="fas fa-angle-right"></i></a>
+                                <a href="<?php echo BASE_URL; ?>dr-apj-abdul-kalam-college-of-pharmacy" class="static-megamenu-link"><span class="name">Dr. APJ Abdul Kalam Pharmacy</span><span class="badge-yr">2018</span><i class="fas fa-angle-right"></i></a>
+                                <a href="<?php echo BASE_URL; ?>sri-sai-college-of-pharmacy" class="static-megamenu-link"><span class="name">Sri Sai College of Pharmacy</span><span class="badge-yr">2019</span><i class="fas fa-angle-right"></i></a>
+                                <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-institute-of-pharmaceutical-science" class="static-megamenu-link"><span class="name">SRK Inst. of Pharmaceutical Sci.</span><span class="badge-yr">2023</span><i class="fas fa-angle-right"></i></a>
+                                <a href="<?php echo BASE_URL; ?>r-n-kapoor-memorial-institute-of-pharmaceutical-science" class="static-megamenu-link"><span class="name">R. N. Kapoor Memorial Pharmacy</span><span class="badge-yr">2023</span><i class="fas fa-angle-right"></i></a>
+                                <a href="<?php echo BASE_URL; ?>rkdf-college-of-nursing" class="static-megamenu-link"><span class="name">RKDF College of Nursing</span><span class="badge-yr">2003</span><i class="fas fa-angle-right"></i></a>
                             </div>
-                            <!-- COL 3 -->
+                            <!-- COL 3: Medical, Dental, Ayush, Law & Allied Sciences -->
                             <div>
-                                <div class="static-megamenu-col-title"><i class="fas fa-hospital-user"></i> Medical, Dental &amp; AYUSH</div>
-                                <a href="<?php echo BASE_URL; ?>rkdf-medical-college-hospital-and-research-centre" class="static-megamenu-link"><span class="name">RKDF Medical College &amp; Hospital</span><span class="badge-yr">2014</span><i class="fas fa-angle-right"></i></a>
-                                <a href="<?php echo BASE_URL; ?>rkdf-dental-college-and-research-centre" class="static-megamenu-link"><span class="name">RKDF Dental College &amp; Hospital</span><span class="badge-yr">2003</span><i class="fas fa-angle-right"></i></a>
-                                <a href="<?php echo BASE_URL; ?>rkdf-homoeopathic-medical-college-and-hospital" class="static-megamenu-link"><span class="name">RKDF Homoeopathic Medical College</span><span class="badge-yr">2002</span><i class="fas fa-angle-right"></i></a>
-                                <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-college-of-ayurved-and-hospital" class="static-megamenu-link"><span class="name">SRK College of Ayurved &amp; Hospital</span><span class="badge-yr">2018</span><i class="fas fa-angle-right"></i></a>
-                                <a href="<?php echo BASE_URL; ?>faculty-of-paramedical" class="static-megamenu-link"><span class="name">Faculty of Paramedical</span><i class="fas fa-angle-right"></i></a>
-                            </div>
-                            <!-- COL 4 -->
-                            <div>
-                                <div class="static-megamenu-col-title"><i class="fas fa-balance-scale"></i> Law, Education &amp; Sciences</div>
-                                <a href="<?php echo BASE_URL; ?>faculty-of-education" class="static-megamenu-link"><span class="name">Faculty of Education</span><span class="badge-yr">2004</span><i class="fas fa-angle-right"></i></a>
+                                <div class="static-megamenu-col-title"><i class="fas fa-stethoscope"></i> Medical, Law &amp; Allied</div>
+                                <a href="<?php echo BASE_URL; ?>rkdf-medical-college" class="static-megamenu-link"><span class="name">RKDF Medical College &amp; Hospital</span><span class="badge-yr">2014</span><i class="fas fa-angle-right"></i></a>
+                                <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-college-of-ayurveda" class="static-megamenu-link"><span class="name">SRK College of Ayurveda</span><span class="badge-yr">2021</span><i class="fas fa-angle-right"></i></a>
+                                <a href="<?php echo BASE_URL; ?>rkdf-homoeopathic-medical-college" class="static-megamenu-link"><span class="name">RKDF Homoeopathic Medical Coll.</span><span class="badge-yr">2000</span><i class="fas fa-angle-right"></i></a>
+                                <a href="<?php echo BASE_URL; ?>rkdf-dental-college" class="static-megamenu-link"><span class="name">RKDF Dental College &amp; Hospital</span><span class="badge-yr">2003</span><i class="fas fa-angle-right"></i></a>
+                                <a href="<?php echo BASE_URL; ?>department-of-paramedical-sciences" class="static-megamenu-link"><span class="name">Dept. of Paramedical Sciences</span><i class="fas fa-angle-right"></i></a>
                                 <a href="<?php echo BASE_URL; ?>sarvepalli-radhakrishnan-college-of-law" class="static-megamenu-link"><span class="name">SRK College of Law</span><span class="badge-yr">2019</span><i class="fas fa-angle-right"></i></a>
                                 <a href="<?php echo BASE_URL; ?>faculty-of-agriculture" class="static-megamenu-link"><span class="name">Faculty of Agriculture</span><i class="fas fa-angle-right"></i></a>
                                 <a href="<?php echo BASE_URL; ?>allied-sciences" class="static-megamenu-link"><span class="name">Allied Sciences</span><i class="fas fa-angle-right"></i></a>
