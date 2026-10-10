@@ -12,10 +12,11 @@ function getDBConnection() {
     $dbUser = defined('DB_USER') ? DB_USER : 'root';
     $dbPass = defined('DB_PASS') ? DB_PASS : '';
 
-    // Hosts to attempt: prioritize 127.0.0.1 on local environments to prevent Windows IPv6 lookup timeout
+    // Hosts to attempt: prioritize 127.0.0.1 on Windows (prevents IPv6 delay), prioritize localhost on Linux/cPanel (uses UNIX socket)
     $hostsToTry = [];
     if ($dbHost === 'localhost' || $dbHost === '127.0.0.1') {
-        $hostsToTry = ['127.0.0.1', 'localhost'];
+        $isWindows = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+        $hostsToTry = $isWindows ? ['127.0.0.1', 'localhost'] : ['localhost', '127.0.0.1'];
     } else {
         $hostsToTry = [$dbHost];
     }

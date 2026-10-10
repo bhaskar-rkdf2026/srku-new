@@ -25,16 +25,38 @@ if (!defined('BASE_URL')) {
     define('BASE_URL', $protocol . $host . $basePath);
 }
 
-// Optional custom database credentials override (e.g. for Live server or custom local setups)
+// ============================================================================
+// ENVIRONMENT DETECTION & DATABASE CONFIGURATION
+// ============================================================================
+// Optional custom credentials file override (if present)
 if (file_exists(__DIR__ . '/db_local.php')) {
     require_once __DIR__ . '/db_local.php';
 }
 
-// Database Credentials (Auto-resolves with fallback for Localhost & GoDaddy cPanel MySQL)
-if (!defined('DB_HOST')) define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
-if (!defined('DB_USER')) define('DB_USER', getenv('DB_USER') ?: 'root');
-if (!defined('DB_PASS')) define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
-if (!defined('DB_NAME')) define('DB_NAME', getenv('DB_NAME') ?: 'srku_db_new');
+$isLocalhost = (
+    in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', '127.0.0.1']) ||
+    (isset($_SERVER['SERVER_NAME']) && in_array($_SERVER['SERVER_NAME'], ['localhost', '127.0.0.1'])) ||
+    (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' && file_exists('C:\\xampp'))
+);
+
+if ($isLocalhost) {
+    // ----------------------------------------------------
+    // LOCALHOST (XAMPP) SETTINGS
+    // ----------------------------------------------------
+    if (!defined('DB_HOST')) define('DB_HOST', '127.0.0.1');
+    if (!defined('DB_USER')) define('DB_USER', 'root');
+    if (!defined('DB_PASS')) define('DB_PASS', '');
+    if (!defined('DB_NAME')) define('DB_NAME', 'srku_db_new');
+} else {
+    // ----------------------------------------------------
+    // LIVE SERVER (cPanel / GoDaddy / Production) SETTINGS
+    // ----------------------------------------------------
+    // Enter your live cPanel MySQL credentials below:
+    if (!defined('DB_HOST')) define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+    if (!defined('DB_USER')) define('DB_USER', getenv('DB_USER') ?: 'root');
+    if (!defined('DB_PASS')) define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
+    if (!defined('DB_NAME')) define('DB_NAME', getenv('DB_NAME') ?: 'srku_db_new');
+}
 
 // Secure Session Initialization
 if (session_status() === PHP_SESSION_NONE) {
