@@ -34,31 +34,8 @@ $careerSubtitle = getSetting('career_subtitle', 'CURRENT OPENINGS');
 $careerTitle = getSetting('career_title', 'Build an Inspiring <span>Academic Career</span>');
 $careerDesc = getSetting('career_desc', 'Sarvepalli Radhakrishnan University invites applications from dynamic, scholarly, and research-oriented academicians for faculty and leadership positions across all departments.');
 
-$defaultOpenings = [
-    [
-        'title' => 'Professors / Associate Professors',
-        'badge' => 'Multiple Positions',
-        'badge_class' => 'bg-danger',
-        'disciplines' => 'CSE (AI/ML/Data Science), Pharmacy (Pharmaceutics/Pharmacology), Management (Finance/Marketing), Nursing, Law & Agriculture.',
-        'eligibility' => 'Ph.D. with minimum 8-10 years of teaching/research experience as per UGC/AICTE/PCI norms.'
-    ],
-    [
-        'title' => 'Assistant Professors',
-        'badge' => 'Multiple Positions',
-        'badge_class' => 'bg-danger',
-        'disciplines' => 'Computer Applications, Mechanical Engineering, Physiotherapy, Nursing & Basic Sciences.',
-        'eligibility' => "Master's Degree with NET/GATE/Ph.D. in relevant discipline with strong pedagogical skills."
-    ],
-    [
-        'title' => 'Technical Lab Assistants & Admin Staff',
-        'badge' => 'Open',
-        'badge_class' => 'bg-primary',
-        'disciplines' => 'Computer Lab Administrators, Pharmacy Lab Technicians, Admission Counselors & Office Executives.',
-        'eligibility' => 'Relevant Diploma / Degree with 2+ years of university lab/administrative experience.'
-    ]
-];
 $careerOpeningsJson = getSetting('career_openings_json', '');
-$careerOpenings = !empty($careerOpeningsJson) ? (json_decode($careerOpeningsJson, true) ?: $defaultOpenings) : $defaultOpenings;
+$careerOpenings = !empty($careerOpeningsJson) ? (json_decode($careerOpeningsJson, true) ?: []) : [];
 ?>
 
 <!-- Dynamic Banner Header -->

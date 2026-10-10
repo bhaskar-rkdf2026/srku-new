@@ -25,6 +25,11 @@ if (!defined('BASE_URL')) {
     define('BASE_URL', $protocol . $host . $basePath);
 }
 
+// Optional custom database credentials override (e.g. for Live server or custom local setups)
+if (file_exists(__DIR__ . '/db_local.php')) {
+    require_once __DIR__ . '/db_local.php';
+}
+
 // Database Credentials (Auto-resolves with fallback for Localhost & GoDaddy cPanel MySQL)
 if (!defined('DB_HOST')) define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
 if (!defined('DB_USER')) define('DB_USER', getenv('DB_USER') ?: 'root');

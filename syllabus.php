@@ -1,11 +1,8 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-// Dynamic Database Fetch (With file fallback)
+// Dynamic Database Fetch (Strictly from MySQL `syllabi` table)
 $syllabusCategories = getDynamicSyllabusData(true);
-if (empty($syllabusCategories) && file_exists(__DIR__ . '/includes/syllabus_data.php')) {
-    require_once __DIR__ . '/includes/syllabus_data.php';
-}
 
 $pageTitle = "Scheme & Syllabus | Semester Curriculum & PDF Downloads | SRKU";
 $pageDesc = "Download official course schemes, semester-wise syllabus, examination guidelines, and grading patterns for all degree and diploma programs at Sarvepalli Radhakrishnan University (SRKU), Bhopal.";

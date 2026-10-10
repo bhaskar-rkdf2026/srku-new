@@ -1655,11 +1655,6 @@ function getDynamicSyllabusData($onlyActive = true) {
         $rows = $stmt->fetchAll();
 
         if (empty($rows)) {
-            // Fallback to static file if table is empty
-            if (file_exists(__DIR__ . '/syllabus_data.php')) {
-                require __DIR__ . '/syllabus_data.php';
-                if (isset($syllabusCategories)) return $syllabusCategories;
-            }
             return [];
         }
 

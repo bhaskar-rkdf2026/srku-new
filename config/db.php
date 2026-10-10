@@ -21,6 +21,7 @@ function getDBConnection() {
     }
 
     // 1. Try connecting to MySQL
+    $lastException = null;
     foreach ($hostsToTry as $host) {
         try {
             $dsn = "mysql:host={$host};dbname={$dbName};charset=utf8mb4";
@@ -31,36 +32,58 @@ function getDBConnection() {
             ]);
             break;
         } catch (PDOException $e) {
-            // If database does not exist on MySQL, create it automatically
-            if ($e->getCode() == 1049 || stripos($e->getMessage(), 'Unknown database') !== false) {
-                try {
-                    $rootDsn = "mysql:host={$host};charset=utf8mb4";
-                    $rootPdo = new PDO($rootDsn, $dbUser, $dbPass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-                    $rootPdo->exec("CREATE DATABASE IF NOT EXISTS `{$dbName}` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
-                    
-                    $dsn = "mysql:host={$host};dbname={$dbName};charset=utf8mb4";
-                    $pdo = new PDO($dsn, $dbUser, $dbPass, [
-                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                    ]);
-                    break;
-                } catch (PDOException $ex) {
-                    // Try next host
-                }
-            }
+            $lastException = $e;
         }
     }
 
-    // 2. Fallback to SQLite only if all MySQL attempts failed
+    // STRICT: STRICT MYSQL DATABASE CONNECTION REQUIRED
+    // If MySQL is not reachable or database is missing, web MUST NOT load!
     if ($pdo === null) {
-        $sqlitePath = __DIR__ . '/../database.sqlite';
-        $pdo = new PDO("sqlite:" . $sqlitePath, null, null, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        ]);
+        http_response_code(500);
+        $errMsg = htmlspecialchars($lastException ? $lastException->getMessage() : 'Unable to connect to MySQL server');
+        $displayHost = htmlspecialchars($dbHost);
+        $displayDb = htmlspecialchars($dbName);
+        $displayUser = htmlspecialchars($dbUser);
+        die("<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Database Connection Error</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #0b1329; color: #f8fafc; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        .card { background: #131f37; max-width: 620px; width: 100%; padding: 40px; border-radius: 16px; border: 1px solid rgba(220, 38, 38, 0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.5); text-align: center; }
+        .icon { width: 64px; height: 64px; margin: 0 auto 20px; background: rgba(220, 38, 38, 0.15); color: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; }
+        h1 { color: #f87171; font-size: 24px; margin: 0 0 12px; font-weight: 700; }
+        p { color: #94a3b8; font-size: 15px; line-height: 1.6; margin: 0 0 20px; }
+        .details { background: #091024; border: 1px solid #1e293b; border-radius: 8px; padding: 16px; text-align: left; font-family: monospace; font-size: 13px; color: #cbd5e1; word-break: break-all; margin-bottom: 20px; }
+        .details strong { color: #38bdf8; }
+        .help { font-size: 13px; color: #64748b; line-height: 1.5; text-align: left; background: rgba(255,255,255,0.03); padding: 14px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class='card'>
+        <div class='icon'>&#9888;</div>
+        <h1>Database Connection Failed</h1>
+        <p>The application could not connect to the required MySQL database. All content is strictly database-driven, so this website will not load without an active database connection.</p>
+        <div class='details'>
+            <div><strong>Host:</strong> {$displayHost}</div>
+            <div><strong>Database:</strong> {$displayDb}</div>
+            <div><strong>Username:</strong> {$displayUser}</div>
+            <div style='margin-top:8px; color:#f87171;'><strong>Error:</strong> {$errMsg}</div>
+        </div>
+        <div class='help'>
+            <strong>To fix this:</strong><br>
+            1. Ensure your MySQL server is running.<br>
+            2. Verify credentials in <code>config/config.php</code> or environment variables.<br>
+            3. Make sure database <code>{$displayDb}</code> exists and has been imported.
+        </div>
+    </div>
+</body>
+</html>");
     }
 
-    // Fast-path: Only run heavy schema initialization and table migrations once
+    // Fast-path: Only run schema initialization once
     $initLockFile = __DIR__ . '/.db_initialized';
     $needInit = !file_exists($initLockFile) || isset($_GET['reinit_db']);
 
