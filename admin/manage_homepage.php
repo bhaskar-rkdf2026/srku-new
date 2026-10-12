@@ -585,7 +585,7 @@ try {
             <div class="row g-4 mb-4">
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="p-3 bg-light rounded-4 border text-center">
-                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-award text-warning me-1"></i> Point 1: Years of Excellence</label>
+                        <label class="form-label fw-bold text-navy small mb-1"><i class="fas fa-award text-warning me-1"></i> Point 1: Year of Excellence</label>
                         <input type="text" name="stat_years" class="form-control text-center fw-bold fs-5 text-warning" value="<?php echo sanitize($statYears); ?>" placeholder="31st">
                         <small class="text-muted">e.g. 31st or 31+</small>
                     </div>

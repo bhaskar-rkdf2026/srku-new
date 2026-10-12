@@ -214,7 +214,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
         <div class="row row-cols-2 row-cols-md-5 g-0 text-center">
             <div class="col stat-box">
                 <div class="stat-val"><?php echo sanitize($statYears); ?></div>
-                <div class="stat-txt">Years of Excellence</div>
+                <div class="stat-txt">Year of Excellence</div>
             </div>
             <div class="col stat-box">
                 <div class="stat-val"><?php echo sanitize($statPlacements); ?></div>
