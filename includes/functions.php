@@ -1230,11 +1230,12 @@ function renderPageBanner($pageSlug, $defaultTitle, $defaultSubtitle = '', $defa
 }
 
 // Save and validate student enquiry or lead with source tagging
-function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $source = '', $fatherName = '', $city = '', $state = '', $college = '') {
+function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $source = '', $fatherName = '', $city = '', $state = '', $college = '', $branch = '') {
     $name = trim((string)$name);
     $email = trim((string)$email);
     $phone = trim((string)$phone);
     $course = trim((string)$course);
+    $branch = trim((string)$branch);
     $message = trim((string)$message);
     $fatherName = trim((string)$fatherName);
     $city = trim((string)$city);
@@ -1290,6 +1291,7 @@ function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $so
     if ($source) $detailsParts[] = "[$source]";
     if ($college) $detailsParts[] = "College/Institute: $college";
     if ($course) $detailsParts[] = "Course: $course";
+    if ($branch) $detailsParts[] = "Branch/Specialization: $branch";
     if (!empty($detailsParts)) {
         $prefix = implode(" | ", $detailsParts) . "\n";
         $fullMsg = $prefix . ($message ?: 'Seat Inquiry / Direct Admission Application');
@@ -1299,7 +1301,7 @@ function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $so
         $pdo = getDBConnection();
         runUniversalDatabaseMigrations($pdo);
 
-        $stmt = $pdo->prepare("INSERT INTO enquiries (name, father_name, college, email, phone, course, city, state, source, message, status, created_at) VALUES (:n, :fn, :col, :e, :p, :c, :city, :state, :src, :m, 'New', CURRENT_TIMESTAMP)");
+        $stmt = $pdo->prepare("INSERT INTO enquiries (name, father_name, college, email, phone, course, branch, city, state, source, message, status, created_at) VALUES (:n, :fn, :col, :e, :p, :c, :br, :city, :state, :src, :m, 'New', CURRENT_TIMESTAMP)");
         $stmt->execute([
             ':n' => $name,
             ':fn' => $fatherName ?: null,
@@ -1307,6 +1309,7 @@ function saveEnquiryLead($name, $email, $phone, $course = '', $message = '', $so
             ':e' => $email ?: 'not-provided@srku.edu.in',
             ':p' => $phone,
             ':c' => $course ?: ($college ? "Admission Enquiry ($college)" : 'General Admission Enquiry'),
+            ':br' => $branch ?: null,
             ':city' => $city ?: null,
             ':state' => $state ?: null,
             ':src' => $source ?: 'Website',

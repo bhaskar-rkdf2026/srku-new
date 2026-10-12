@@ -15,10 +15,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'export') {
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename=srku_admissions_leads_' . date('Y-m-d') . '.csv');
     $output = fopen('php://output', 'w');
-    fputcsv($output, ['ID', 'Candidate Name', "Father's Name", 'Email', 'Phone', 'Course/Department', 'City', 'State', 'Source / Form', 'Status', 'Details / Message', 'Date Submitted']);
+    fputcsv($output, ['ID', 'Candidate Name', "Father's Name", 'Email', 'Phone', 'Course', 'Branch', 'City', 'State', 'Source / Form', 'Status', 'Details / Message', 'Date Submitted']);
     
-    $exportQuery = "SELECT id, name, father_name, email, phone, course, city, state, source, status, message, created_at FROM enquiries ORDER BY id DESC";
-    $rows = $pdo->query($exportQuery)->fetchAll();
+    $exportQuery = "SELECT id, name, father_name, email, phone, course, branch, city, state, source, status, message, created_at FROM enquiries ORDER BY id DESC";
     foreach ($rows as $r) {
         fputcsv($output, [
             $r['id'],
@@ -27,6 +26,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'export') {
             $r['email'],
             $r['phone'],
             $r['course'],
+            $r['branch'] ?? '',
             $r['city'] ?? '',
             $r['state'] ?? '',
             $r['source'] ?? 'Website Form',
@@ -246,6 +246,9 @@ $enrolledCount = (int)$pdo->query("SELECT COUNT(*) FROM enquiries WHERE status =
                             </td>
                             <td>
                                 <span class="badge bg-light text-dark border px-2 py-1"><?php echo sanitize($eq['course'] ?: 'General Enquiry'); ?></span>
+                                <?php if (!empty($eq['branch'])): ?>
+                                    <small class="text-primary d-block mt-1 fw-semibold"><i class="fas fa-code-branch me-1"></i><?php echo sanitize($eq['branch']); ?></small>
+                                <?php endif; ?>
                             </td>
                             <td>
                                 <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1 small" style="font-size:0.75rem;">
@@ -336,6 +339,9 @@ $enrolledCount = (int)$pdo->query("SELECT COUNT(*) FROM enquiries WHERE status =
                                                     <div class="col-12">
                                                         <small class="text-muted d-block">Course / Program of Interest</small>
                                                         <strong class="text-danger"><?php echo sanitize($eq['course'] ?: 'General Enquiry'); ?></strong>
+                                                        <?php if (!empty($eq['branch'])): ?>
+                                                            <div class="mt-1"><small class="text-muted">Branch / Specialization:</small> <strong class="text-primary"><?php echo sanitize($eq['branch']); ?></strong></div>
+                                                        <?php endif; ?>
                                                     </div>
                                                     <div class="col-12">
                                                         <small class="text-muted d-block">Origin / Source Page</small>

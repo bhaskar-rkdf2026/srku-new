@@ -5,165 +5,174 @@ $pdo = getDBConnection();
 // Active Tab
 $tab = sanitize($_GET['tab'] ?? 'hero');
 
-// Handle Save Homepage Sections
+// Handle Save Homepage Sections (Tab-scoped so saving one tab never overwrites another)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_homepage_sections'])) {
+    $submittedTab = sanitize($_POST['section_tab'] ?? $_GET['tab'] ?? $tab ?? 'hero');
     
-    $heroVideo = normalizeMediaPath($_POST['hero_video_url'] ?? '', 'assets/images/concept2-hero.mp4');
-    $heroFallback = normalizeMediaPath($_POST['hero_fallback_image'] ?? '', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
-    $chancellorPhoto = normalizeMediaPath($_POST['chancellor_photo'] ?? '', 'assets/uploads/2026/08/chancellor.jpeg');
-    $vcPhoto = normalizeMediaPath($_POST['vc_photo'] ?? '', 'assets/uploads/2026/07/ruchichaubey.webp');
-    $welcomePhoto = normalizeMediaPath($_POST['welcome_photo'] ?? '', 'assets/uploads/2026/08/welcome-srku-campus.jpeg');
-
     $uploadDir = __DIR__ . '/../assets/uploads/2026/08/';
     if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
 
-    // Video Upload
-    if (isset($_FILES['video_file']) && $_FILES['video_file']['error'] === UPLOAD_ERR_OK) {
-        $allowed = ['mp4', 'webm', 'ogg', 'mov'];
-        $ext = strtolower(pathinfo($_FILES['video_file']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, $allowed)) {
-            $fn = 'hero_video_' . time() . '.' . $ext;
-            if (move_uploaded_file($_FILES['video_file']['tmp_name'], $uploadDir . $fn)) {
-                $heroVideo = 'assets/uploads/2026/08/' . $fn;
+    $settingsToSave = [];
+
+    if ($submittedTab === 'hero') {
+        $heroVideo = normalizeMediaPath($_POST['hero_video_url'] ?? '', 'https://vimeo.com/1231542657?share=copy&fl=sv&fe=ci');
+        $heroFallback = normalizeMediaPath($_POST['hero_fallback_image'] ?? '', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
+
+        // Video Upload
+        if (isset($_FILES['video_file']) && $_FILES['video_file']['error'] === UPLOAD_ERR_OK) {
+            $allowed = ['mp4', 'webm', 'ogg', 'mov'];
+            $ext = strtolower(pathinfo($_FILES['video_file']['name'], PATHINFO_EXTENSION));
+            if (in_array($ext, $allowed)) {
+                $fn = 'hero_video_' . time() . '.' . $ext;
+                if (move_uploaded_file($_FILES['video_file']['tmp_name'], $uploadDir . $fn)) {
+                    $heroVideo = 'assets/uploads/2026/08/' . $fn;
+                }
             }
+        }
+
+        // Fallback Image Upload
+        if (isset($_FILES['fallback_img_file']) && $_FILES['fallback_img_file']['error'] === UPLOAD_ERR_OK) {
+            $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+            $ext = strtolower(pathinfo($_FILES['fallback_img_file']['name'], PATHINFO_EXTENSION));
+            if (in_array($ext, $allowed)) {
+                $fn = 'hero_fallback_' . time() . '.' . $ext;
+                if (move_uploaded_file($_FILES['fallback_img_file']['tmp_name'], $uploadDir . $fn)) {
+                    $heroFallback = 'assets/uploads/2026/08/' . $fn;
+                }
+            }
+        }
+
+        $settingsToSave = [
+            'hero_title' => sanitize($_POST['hero_title'] ?? 'SRK University, Bhopal'),
+            'hero_subtitle' => sanitize($_POST['hero_subtitle'] ?? 'UGC-Recognized University in MP'),
+            'hero_desc' => $_POST['hero_desc'] ?? '',
+            'hero_video_url' => $heroVideo,
+            'hero_fallback_image' => $heroFallback,
+        ];
+    } elseif ($submittedTab === 'welcome') {
+        $welcomePhoto = normalizeMediaPath($_POST['welcome_photo'] ?? '', 'assets/uploads/2026/08/welcome-srku-campus.jpeg');
+        if (isset($_FILES['welcome_photo_file']) && $_FILES['welcome_photo_file']['error'] === UPLOAD_ERR_OK) {
+            $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+            $ext = strtolower(pathinfo($_FILES['welcome_photo_file']['name'], PATHINFO_EXTENSION));
+            if (in_array($ext, $allowed)) {
+                $fn = 'welcome_' . time() . '.' . $ext;
+                if (move_uploaded_file($_FILES['welcome_photo_file']['tmp_name'], $uploadDir . $fn)) {
+                    $welcomePhoto = 'assets/uploads/2026/08/' . $fn;
+                }
+            }
+        }
+
+        $settingsToSave = [
+            'welcome_subtitle' => sanitize($_POST['welcome_subtitle'] ?? 'WELCOME TO SRK UNIVERSITY'),
+            'welcome_title' => sanitize($_POST['welcome_title'] ?? 'Committed Towards Your Better Future Through Academic Excellence'),
+            'welcome_body_1' => $_POST['welcome_body_1'] ?? '',
+            'welcome_body_2' => $_POST['welcome_body_2'] ?? '',
+            'welcome_photo' => $welcomePhoto,
+        ];
+    } elseif ($submittedTab === 'stats') {
+        $settingsToSave = [
+            'stat_years' => sanitize($_POST['stat_years'] ?? '31st'),
+            'stat_placements' => sanitize($_POST['stat_placements'] ?? '35,000+'),
+            'stat_alumni' => sanitize($_POST['stat_alumni'] ?? '1,10,000+'),
+            'stat_faculty' => sanitize($_POST['stat_faculty'] ?? '1,000+'),
+            'recruiting_partners' => sanitize($_POST['recruiting_partners'] ?? '300+'),
+            'total_labs' => sanitize($_POST['total_labs'] ?? '42+'),
+            'placement_record' => sanitize($_POST['placement_record'] ?? '94%'),
+            'total_alumni' => sanitize($_POST['stat_alumni'] ?? '1,10,000+'),
+        ];
+        if (isset($_POST['ticker_text'])) {
+            $settingsToSave['ticker_text'] = sanitize($_POST['ticker_text']);
+        }
+        if (isset($_POST['highest_package'])) {
+            $settingsToSave['highest_package'] = sanitize($_POST['highest_package']);
+        }
+    } elseif ($submittedTab === 'chancellor') {
+        $chancellorPhoto = normalizeMediaPath($_POST['chancellor_photo'] ?? '', 'assets/uploads/2026/08/chancellor.jpeg');
+        if (isset($_FILES['chancellor_photo_file']) && $_FILES['chancellor_photo_file']['error'] === UPLOAD_ERR_OK) {
+            $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+            $ext = strtolower(pathinfo($_FILES['chancellor_photo_file']['name'], PATHINFO_EXTENSION));
+            if (in_array($ext, $allowed)) {
+                $fn = 'chancellor_' . time() . '.' . $ext;
+                if (move_uploaded_file($_FILES['chancellor_photo_file']['tmp_name'], $uploadDir . $fn)) {
+                    $chancellorPhoto = 'assets/uploads/2026/08/' . $fn;
+                }
+            }
+        }
+
+        $settingsToSave = [
+            'chancellor_name' => sanitize($_POST['chancellor_name'] ?? 'Mrs. Janak Kapoor'),
+            'chancellor_title' => sanitize($_POST['chancellor_title'] ?? 'Chancellor'),
+            'chancellor_photo' => $chancellorPhoto,
+            'chancellor_heading' => sanitize($_POST['chancellor_heading'] ?? 'A Legacy of Excellence, A Vision for Tomorrow'),
+            'chancellor_msg' => $_POST['chancellor_msg'] ?? '',
+            'chancellor_msg2' => $_POST['chancellor_msg2'] ?? '',
+            'chancellor_msg_hindi' => $_POST['chancellor_msg_hindi'] ?? '',
+            'chancellor_full_page_msg' => $_POST['chancellor_full_page_msg'] ?? '',
+        ];
+    } elseif ($submittedTab === 'vc') {
+        $vcPhoto = normalizeMediaPath($_POST['vc_photo'] ?? '', 'assets/uploads/2026/07/ruchichaubey.webp');
+        if (isset($_FILES['vc_photo_file']) && $_FILES['vc_photo_file']['error'] === UPLOAD_ERR_OK) {
+            $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+            $ext = strtolower(pathinfo($_FILES['vc_photo_file']['name'], PATHINFO_EXTENSION));
+            if (in_array($ext, $allowed)) {
+                $fn = 'vc_' . time() . '.' . $ext;
+                if (move_uploaded_file($_FILES['vc_photo_file']['tmp_name'], $uploadDir . $fn)) {
+                    $vcPhoto = 'assets/uploads/2026/08/' . $fn;
+                }
+            }
+        }
+
+        $settingsToSave = [
+            'vc_name' => sanitize($_POST['vc_name'] ?? 'Dr. Priyanka Jaiswal'),
+            'vc_title' => sanitize($_POST['vc_title'] ?? 'Vice Chancellor'),
+            'vc_photo' => $vcPhoto,
+            'vc_email' => sanitize($_POST['vc_email'] ?? 'vc@srku.edu.in'),
+            'vc_goals' => $_POST['vc_goals'] ?? '',
+            'vc_heading' => sanitize($_POST['vc_heading'] ?? 'Empowering Minds for a Knowledge Economy'),
+            'vc_salutation' => sanitize($_POST['vc_salutation'] ?? 'Dear Students, Scholars, Faculty Colleagues, and Visitors,'),
+            'vc_msg' => $_POST['vc_msg'] ?? '',
+            'vc_msg2' => $_POST['vc_msg2'] ?? '',
+            'vc_msg3' => $_POST['vc_msg3'] ?? '',
+            'vc_msg4' => $_POST['vc_msg4'] ?? '',
+            'vc_full_page_msg' => $_POST['vc_full_page_msg'] ?? '',
+        ];
+    } elseif ($submittedTab === 'popup') {
+        $popupImage = normalizeMediaPath($_POST['popup_event_image'] ?? '', 'assets/images/news4.jpg');
+        if (isset($_FILES['popup_image_file']) && $_FILES['popup_image_file']['error'] === UPLOAD_ERR_OK) {
+            $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+            $ext = strtolower(pathinfo($_FILES['popup_image_file']['name'], PATHINFO_EXTENSION));
+            if (in_array($ext, $allowed)) {
+                $fn = 'popup_event_' . time() . '.' . $ext;
+                if (move_uploaded_file($_FILES['popup_image_file']['tmp_name'], $uploadDir . $fn)) {
+                    $popupImage = 'assets/uploads/2026/08/' . $fn;
+                }
+            }
+        }
+
+        $settingsToSave = [
+            'popup_enabled' => (isset($_POST['popup_enabled']) && $_POST['popup_enabled'] === '1') ? '1' : '0',
+            'popup_header_title' => sanitize($_POST['popup_header_title'] ?? 'Campus Bulletin & Alerts'),
+            'popup_header_subtitle' => sanitize($_POST['popup_header_subtitle'] ?? 'Sarvepalli Radhakrishnan University (SRKU)'),
+            'popup_event_title' => sanitize($_POST['popup_event_title'] ?? ''),
+            'popup_event_image' => $popupImage,
+            'popup_event_link' => sanitize($_POST['popup_event_link'] ?? ''),
+            'popup_event_date' => sanitize($_POST['popup_event_date'] ?? date('Y-m-d')),
+            'popup_event_category' => sanitize($_POST['popup_event_category'] ?? 'Campus Life'),
+            'popup_delay_sec' => sanitize($_POST['popup_delay_sec'] ?? '1.2'),
+            'popup_default_tab' => sanitize($_POST['popup_default_tab'] ?? 'events'),
+            'popup_show_once_day' => isset($_POST['popup_show_once_day']) ? '1' : '0'
+        ];
+    }
+
+    if (!empty($settingsToSave)) {
+        foreach ($settingsToSave as $key => $val) {
+            $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (:k, :v) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
+            $stmt->execute([':k' => $key, ':v' => $val]);
         }
     }
 
-    // Fallback Image Upload
-    if (isset($_FILES['fallback_img_file']) && $_FILES['fallback_img_file']['error'] === UPLOAD_ERR_OK) {
-        $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-        $ext = strtolower(pathinfo($_FILES['fallback_img_file']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, $allowed)) {
-            $fn = 'hero_fallback_' . time() . '.' . $ext;
-            if (move_uploaded_file($_FILES['fallback_img_file']['tmp_name'], $uploadDir . $fn)) {
-                $heroFallback = 'assets/uploads/2026/08/' . $fn;
-            }
-        }
-    }
-
-    // Chancellor Photo Upload
-    if (isset($_FILES['chancellor_photo_file']) && $_FILES['chancellor_photo_file']['error'] === UPLOAD_ERR_OK) {
-        $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-        $ext = strtolower(pathinfo($_FILES['chancellor_photo_file']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, $allowed)) {
-            $fn = 'chancellor_' . time() . '.' . $ext;
-            if (move_uploaded_file($_FILES['chancellor_photo_file']['tmp_name'], $uploadDir . $fn)) {
-                $chancellorPhoto = 'assets/uploads/2026/08/' . $fn;
-            }
-        }
-    }
-
-    // VC Photo Upload
-    if (isset($_FILES['vc_photo_file']) && $_FILES['vc_photo_file']['error'] === UPLOAD_ERR_OK) {
-        $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-        $ext = strtolower(pathinfo($_FILES['vc_photo_file']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, $allowed)) {
-            $fn = 'vc_' . time() . '.' . $ext;
-            if (move_uploaded_file($_FILES['vc_photo_file']['tmp_name'], $uploadDir . $fn)) {
-                $vcPhoto = 'assets/uploads/2026/08/' . $fn;
-            }
-        }
-    }
-
-    // Popup Image Upload
-    $popupImage = normalizeMediaPath($_POST['popup_event_image'] ?? '', 'assets/images/news4.jpg');
-    if (isset($_FILES['popup_image_file']) && $_FILES['popup_image_file']['error'] === UPLOAD_ERR_OK) {
-        $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-        $ext = strtolower(pathinfo($_FILES['popup_image_file']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, $allowed)) {
-            $fn = 'popup_event_' . time() . '.' . $ext;
-            if (move_uploaded_file($_FILES['popup_image_file']['tmp_name'], $uploadDir . $fn)) {
-                $popupImage = 'assets/uploads/2026/08/' . $fn;
-            }
-        }
-    }
-
-    // Welcome Photo Upload
-    if (isset($_FILES['welcome_photo_file']) && $_FILES['welcome_photo_file']['error'] === UPLOAD_ERR_OK) {
-        $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-        $ext = strtolower(pathinfo($_FILES['welcome_photo_file']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, $allowed)) {
-            $fn = 'welcome_' . time() . '.' . $ext;
-            if (move_uploaded_file($_FILES['welcome_photo_file']['tmp_name'], $uploadDir . $fn)) {
-                $welcomePhoto = 'assets/uploads/2026/08/' . $fn;
-            }
-        }
-    }
-
-    $settingsToSave = [
-        // Section 1: Hero
-        'hero_title' => sanitize($_POST['hero_title'] ?? 'SRK University, Bhopal'),
-        'hero_subtitle' => sanitize($_POST['hero_subtitle'] ?? 'UGC-Recognized University in MP'),
-        'hero_desc' => $_POST['hero_desc'] ?? '',
-        'hero_video_url' => $heroVideo,
-        'hero_fallback_image' => $heroFallback,
-
-        // Section 2: Stats Strip & Hero Badges
-        'stat_years' => sanitize($_POST['stat_years'] ?? '31st'),
-        'stat_placements' => sanitize($_POST['stat_placements'] ?? '35,000+'),
-        'stat_alumni' => sanitize($_POST['stat_alumni'] ?? '1,10,000+'),
-        'stat_faculty' => sanitize($_POST['stat_faculty'] ?? '1,000+'),
-        'recruiting_partners' => sanitize($_POST['recruiting_partners'] ?? '300+'),
-        'total_labs' => sanitize($_POST['total_labs'] ?? '42+'),
-        'placement_record' => sanitize($_POST['placement_record'] ?? '94%'),
-        'total_alumni' => sanitize($_POST['stat_alumni'] ?? '1,10,000+'),
-
-        // Section 3: Live Ticker
-        'ticker_text' => sanitize($_POST['ticker_text'] ?? ''),
-        'highest_package' => sanitize($_POST['highest_package'] ?? '12 LPA'),
-
-        // Section 4: Welcome Section
-        'welcome_subtitle' => sanitize($_POST['welcome_subtitle'] ?? 'WELCOME TO SRK UNIVERSITY'),
-        'welcome_title' => sanitize($_POST['welcome_title'] ?? 'Committed Towards Your Better Future Through Academic Excellence'),
-        'welcome_body_1' => $_POST['welcome_body_1'] ?? '',
-        'welcome_body_2' => $_POST['welcome_body_2'] ?? '',
-        'welcome_photo' => $welcomePhoto,
-
-        // Section 5: Chancellor
-        'chancellor_name' => sanitize($_POST['chancellor_name'] ?? 'Mrs. Janak Kapoor'),
-        'chancellor_title' => sanitize($_POST['chancellor_title'] ?? 'Chancellor'),
-        'chancellor_photo' => $chancellorPhoto,
-        'chancellor_heading' => sanitize($_POST['chancellor_heading'] ?? 'A Legacy of Excellence, A Vision for Tomorrow'),
-        'chancellor_msg' => $_POST['chancellor_msg'] ?? '',
-        'chancellor_msg2' => $_POST['chancellor_msg2'] ?? '',
-        'chancellor_msg_hindi' => $_POST['chancellor_msg_hindi'] ?? '',
-        'chancellor_full_page_msg' => $_POST['chancellor_full_page_msg'] ?? '',
-
-        // Section 6: Vice Chancellor
-        'vc_name' => sanitize($_POST['vc_name'] ?? 'Dr. Priyanka Jaiswal'),
-        'vc_title' => sanitize($_POST['vc_title'] ?? 'Vice Chancellor'),
-        'vc_photo' => $vcPhoto,
-        'vc_email' => sanitize($_POST['vc_email'] ?? 'vc@srku.edu.in'),
-        'vc_goals' => $_POST['vc_goals'] ?? '',
-        'vc_heading' => sanitize($_POST['vc_heading'] ?? 'Empowering Minds for a Knowledge Economy'),
-        'vc_salutation' => sanitize($_POST['vc_salutation'] ?? 'Dear Students, Scholars, Faculty Colleagues, and Visitors,'),
-        'vc_msg' => $_POST['vc_msg'] ?? '',
-        'vc_msg2' => $_POST['vc_msg2'] ?? '',
-        'vc_msg3' => $_POST['vc_msg3'] ?? '',
-        'vc_msg4' => $_POST['vc_msg4'] ?? '',
-        'vc_full_page_msg' => $_POST['vc_full_page_msg'] ?? '',
-
-        // Section 7: Campus Popup & Alerts
-        'popup_enabled' => (isset($_POST['popup_enabled']) && $_POST['popup_enabled'] === '1') ? '1' : '0',
-        'popup_header_title' => sanitize($_POST['popup_header_title'] ?? 'Campus Bulletin & Alerts'),
-        'popup_header_subtitle' => sanitize($_POST['popup_header_subtitle'] ?? 'Sarvepalli Radhakrishnan University (SRKU)'),
-        'popup_event_title' => sanitize($_POST['popup_event_title'] ?? ''),
-        'popup_event_image' => $popupImage,
-        'popup_event_link' => sanitize($_POST['popup_event_link'] ?? ''),
-        'popup_event_date' => sanitize($_POST['popup_event_date'] ?? date('Y-m-d')),
-        'popup_event_category' => sanitize($_POST['popup_event_category'] ?? 'Campus Life'),
-        'popup_delay_sec' => sanitize($_POST['popup_delay_sec'] ?? '1.2'),
-        'popup_default_tab' => sanitize($_POST['popup_default_tab'] ?? 'events'),
-        'popup_show_once_day' => isset($_POST['popup_show_once_day']) ? '1' : '0'
-    ];
-
-    foreach ($settingsToSave as $key => $val) {
-        $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (:k, :v) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
-        $stmt->execute([':k' => $key, ':v' => $val]);
-    }
-
-    setFlashMsg('success', 'Homepage & Leadership sections updated successfully.');
-    header("Location: manage_homepage.php?tab=" . urlencode($tab));
+    setFlashMsg('success', 'Section settings updated successfully.');
+    header("Location: manage_homepage.php?tab=" . urlencode($submittedTab));
     exit;
 }
 
@@ -171,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_homepage_section
 $heroTitle = getSetting('hero_title', 'SRK University, Bhopal');
 $heroSubtitle = getSetting('hero_subtitle', 'UGC-Recognized University in MP');
 $heroDesc = getSetting('hero_desc', 'Welcome to SRK University, a premier technical and academic ecosystem designed for global industry leadership.');
-$heroVideo = getSetting('hero_video_url', 'assets/images/SRK-Hero-Section.mp4');
+$heroVideo = getSetting('hero_video_url', 'https://vimeo.com/1231542657?share=copy&fl=sv&fe=ci');
 $heroFallback = getSetting('hero_fallback_image', 'assets/uploads/2026/08/srku-rkdf-building.jpeg');
 
 $statYears = getSetting('stat_years', '31st');
@@ -279,6 +288,7 @@ try {
 
 <form action="manage_homepage.php?tab=<?php echo urlencode($tab); ?>" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="save_homepage_sections" value="1">
+    <input type="hidden" name="section_tab" value="<?php echo sanitize($tab); ?>">
 
     <!-- TAB 1: HERO VIDEO & FALLBACK -->
     <?php if ($tab === 'hero'): ?>
@@ -881,6 +891,25 @@ try {
             </div>
         </div>
 
+        <style>
+        .default-tab-card {
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .default-tab-card:hover {
+            background-color: #ffffff !important;
+            border-color: #94a3b8 !important;
+            box-shadow: 0 4px 12px rgba(15, 30, 59, 0.06);
+            transform: translateY(-1px);
+        }
+        .status-pill-btn {
+            transition: all 0.2s ease;
+        }
+        .status-pill-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        </style>
+
         <div class="row g-4 align-items-start">
             <!-- Left Column: Live Visual Preview Card -->
             <div class="col-12 col-lg-5">
@@ -947,8 +976,8 @@ try {
                             </span>
                         </div>
                         <div class="d-flex align-items-center justify-content-between">
-                            <span><i class="fas fa-clock text-warning me-1"></i> <strong>Delay:</strong> <?php echo sanitize($popupDelaySec); ?>s</span>
-                            <span><i class="fas fa-folder-open text-info me-1"></i> <strong>Default Tab:</strong> <?php echo ucfirst(sanitize($popupDefaultTab)); ?></span>
+                            <span><i class="fas fa-clock text-warning me-1"></i> <strong>Delay:</strong> <span id="previewDelayText"><?php echo sanitize($popupDelaySec); ?>s</span></span>
+                            <span><i class="fas fa-folder-open text-info me-1"></i> <strong>Default Tab:</strong> <span id="previewDefaultTabText" class="badge bg-primary text-white"><?php echo ($popupDefaultTab === 'notices') ? 'Notices' : (($popupDefaultTab === 'admissions') ? 'Admissions 2026' : 'Events'); ?></span></span>
                         </div>
                     </div>
                 </div>
@@ -958,28 +987,87 @@ try {
             <div class="col-12 col-lg-7">
                 
                 <!-- 1. Active / Disable Switch -->
-                <div class="p-3.5 mb-3 rounded-4 border <?php echo $popupEnabled === '1' ? 'bg-success-subtle border-success' : 'bg-danger-subtle border-danger'; ?>">
-                    <label class="form-label fw-bold text-navy d-block mb-1">
-                        <i class="fas fa-power-off me-1"></i> Popup Status (Enable / Disable)
-                    </label>
-                    <p class="small text-muted mb-2.5">Control whether the alert popup displays automatically when visitors land on the website.</p>
-                    <div class="d-flex gap-3">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="popup_enabled" id="statusActive" value="1" <?php echo $popupEnabled === '1' ? 'checked' : ''; ?>>
-                            <label class="form-check-label fw-bold text-success" for="statusActive">
-                                <i class="fas fa-check-circle me-1"></i> Active (Show on Website)
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="popup_enabled" id="statusDisabled" value="0" <?php echo $popupEnabled !== '1' ? 'checked' : ''; ?>>
-                            <label class="form-check-label fw-bold text-danger" for="statusDisabled">
-                                <i class="fas fa-times-circle me-1"></i> Disabled (Hide from Website)
-                            </label>
-                        </div>
+                <div class="p-4 mb-4 rounded-4 border <?php echo $popupEnabled === '1' ? 'bg-success-subtle border-success' : 'bg-danger-subtle border-danger'; ?>">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label class="form-label fw-bold text-navy mb-0" style="font-size: 0.98rem;">
+                            <i class="fas fa-power-off me-2 <?php echo $popupEnabled === '1' ? 'text-success' : 'text-danger'; ?>"></i> Popup Status (Enable / Disable)
+                        </label>
+                        <span class="badge <?php echo $popupEnabled === '1' ? 'bg-success' : 'bg-danger'; ?> px-2.5 py-1">
+                            <?php echo $popupEnabled === '1' ? 'Active on Website' : 'Disabled'; ?>
+                        </span>
+                    </div>
+                    <p class="small text-muted mb-3">Control whether the alert popup displays automatically when visitors land on the website.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <label class="px-4 py-2.5 rounded-3 border bg-white cursor-pointer d-flex align-items-center gap-2 shadow-xs" for="statusActive" style="cursor: pointer;">
+                            <input class="form-check-input m-0" type="radio" name="popup_enabled" id="statusActive" value="1" <?php echo $popupEnabled === '1' ? 'checked' : ''; ?>>
+                            <span class="fw-bold text-success small"><i class="fas fa-check-circle me-1"></i> Active (Show on Website)</span>
+                        </label>
+                        <label class="px-4 py-2.5 rounded-3 border bg-white cursor-pointer d-flex align-items-center gap-2 shadow-xs" for="statusDisabled" style="cursor: pointer;">
+                            <input class="form-check-input m-0" type="radio" name="popup_enabled" id="statusDisabled" value="0" <?php echo $popupEnabled !== '1' ? 'checked' : ''; ?>>
+                            <span class="fw-bold text-danger small"><i class="fas fa-times-circle me-1"></i> Disabled (Hide from Website)</span>
+                        </label>
                     </div>
                 </div>
 
-                <!-- 2. Quick Pick from Existing Events -->
+                <!-- 2. Priority Default Open Tab Selector -->
+                <div class="p-4 mb-4 rounded-4 bg-white border shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label class="form-label fw-bold text-navy mb-0" style="font-size: 0.98rem;">
+                            <i class="fas fa-layer-group text-primary me-2"></i> Default Open Tab (Visitor ko pehle kaun sa tab dikhega?)
+                        </label>
+                        <span class="badge bg-primary text-white fw-semibold px-2.5 py-1">Priority View</span>
+                    </div>
+                    <p class="small text-muted mb-3">Choose which content tab opens first by default when visitors open or see the popup modal.</p>
+                    
+                    <div class="d-flex flex-column gap-2.5">
+                        <!-- Option 1: Events Showcase -->
+                        <label class="default-tab-card d-flex align-items-center justify-content-between p-3 px-3.5 rounded-3 border cursor-pointer transition-all <?php echo $popupDefaultTab === 'events' ? 'border-primary bg-primary-subtle shadow-xs' : 'bg-light'; ?>" for="defaultTabEvents" style="cursor: pointer;">
+                            <div class="d-flex align-items-center gap-3">
+                                <input class="form-check-input m-0 flex-shrink-0" type="radio" name="popup_default_tab" id="defaultTabEvents" value="events" <?php echo $popupDefaultTab === 'events' ? 'checked' : ''; ?> onchange="onDefaultTabChanged('events')">
+                                <div class="rounded-circle bg-warning-subtle text-warning d-flex align-items-center justify-content-center flex-shrink-0" style="width: 38px; height: 38px;">
+                                    <i class="fas fa-calendar-star fs-6"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-bold text-navy small">1. Events Showcase</div>
+                                    <small class="text-muted d-block" style="font-size: 0.78rem;">Creative Event Poster &amp; Direct Redirection Button</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-warning text-dark px-2.5 py-1 small fw-semibold d-none d-sm-inline-block">Poster View</span>
+                        </label>
+
+                        <!-- Option 2: Official Notices -->
+                        <label class="default-tab-card d-flex align-items-center justify-content-between p-3 px-3.5 rounded-3 border cursor-pointer transition-all <?php echo $popupDefaultTab === 'notices' ? 'border-primary bg-primary-subtle shadow-xs' : 'bg-light'; ?>" for="defaultTabNotices" style="cursor: pointer;">
+                            <div class="d-flex align-items-center gap-3">
+                                <input class="form-check-input m-0 flex-shrink-0" type="radio" name="popup_default_tab" id="defaultTabNotices" value="notices" <?php echo $popupDefaultTab === 'notices' ? 'checked' : ''; ?> onchange="onDefaultTabChanged('notices')">
+                                <div class="rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center flex-shrink-0" style="width: 38px; height: 38px;">
+                                    <i class="fas fa-bell fs-6"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-bold text-navy small">2. Official Notices</div>
+                                    <small class="text-muted d-block" style="font-size: 0.78rem;">University Circulars, Orders &amp; PDF Downloads List</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-primary text-white px-2.5 py-1 small fw-semibold d-none d-sm-inline-block">Notices List</span>
+                        </label>
+
+                        <!-- Option 3: Admissions 2026 -->
+                        <label class="default-tab-card d-flex align-items-center justify-content-between p-3 px-3.5 rounded-3 border cursor-pointer transition-all <?php echo $popupDefaultTab === 'admissions' ? 'border-primary bg-primary-subtle shadow-xs' : 'bg-light'; ?>" for="defaultTabAdmissions" style="cursor: pointer;">
+                            <div class="d-flex align-items-center gap-3">
+                                <input class="form-check-input m-0 flex-shrink-0" type="radio" name="popup_default_tab" id="defaultTabAdmissions" value="admissions" <?php echo $popupDefaultTab === 'admissions' ? 'checked' : ''; ?> onchange="onDefaultTabChanged('admissions')">
+                                <div class="rounded-circle bg-success-subtle text-success d-flex align-items-center justify-content-center flex-shrink-0" style="width: 38px; height: 38px;">
+                                    <i class="fas fa-graduation-cap fs-6"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-bold text-navy small">3. Admissions 2026</div>
+                                    <small class="text-muted d-block" style="font-size: 0.78rem;">Admissions 2026 Programs, Forms &amp; Prospectus</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-success text-white px-2.5 py-1 small fw-semibold d-none d-sm-inline-block">Admissions View</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 3. Quick Pick from Existing Events -->
                 <?php if (!empty($recentEventsForPicker)): ?>
                 <div class="mb-3 p-3 rounded-3 bg-light border">
                     <label class="form-label small fw-bold text-navy mb-1">
@@ -1006,7 +1094,7 @@ try {
                 </div>
                 <?php endif; ?>
 
-                <!-- 3. Creative Event Poster (Upload or Path) -->
+                <!-- 4. Creative Event Poster (Upload or Path) -->
                 <div class="mb-3 p-3 rounded-3 bg-light border">
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <label class="form-label small fw-bold text-navy mb-0">
@@ -1025,7 +1113,7 @@ try {
                     <small class="text-muted" style="font-size:0.75rem;">You can paste an existing path/URL or upload a brand-new promotional creative poster.</small>
                 </div>
 
-                <!-- 4. Event Title & Redirection Link -->
+                <!-- 5. Event Title & Redirection Link -->
                 <div class="mb-3">
                     <label class="form-label small fw-bold text-navy mb-1">
                         <i class="fas fa-heading text-primary me-1"></i> Event Title / Headline
@@ -1041,7 +1129,7 @@ try {
                     <small class="text-muted" style="font-size:0.75rem;">Visitors will be redirected to this link when clicking the poster image or "View Event Details" button.</small>
                 </div>
 
-                <!-- 5. Event Date & Category -->
+                <!-- 6. Event Date & Category -->
                 <div class="row g-2 mb-3">
                     <div class="col-12 col-md-6">
                         <label class="form-label small fw-bold text-navy mb-1">
@@ -1057,7 +1145,7 @@ try {
                     </div>
                 </div>
 
-                <!-- 6. Modal Settings: Title, Subtitle, Delay -->
+                <!-- 7. Modal Settings: Title, Subtitle, Delay -->
                 <div class="p-3 mb-3 rounded-3 bg-light border">
                     <h6 class="fw-bold text-navy small mb-2"><i class="fas fa-sliders-h text-secondary me-1"></i> Modal Display &amp; Behavior Settings</h6>
                     <div class="row g-2">
@@ -1069,19 +1157,11 @@ try {
                             <label class="form-label small text-muted mb-1">Modal Header Subtitle</label>
                             <input type="text" name="popup_header_subtitle" class="form-control form-control-sm" value="<?php echo sanitize($popupHeaderSubtitle); ?>">
                         </div>
-                        <div class="col-12 col-md-4 mt-2">
+                        <div class="col-12 col-md-6 mt-2">
                             <label class="form-label small text-muted mb-1">Popup Delay (Seconds)</label>
-                            <input type="number" step="0.1" min="0" max="10" name="popup_delay_sec" class="form-control form-control-sm" value="<?php echo sanitize($popupDelaySec); ?>">
+                            <input type="number" step="0.1" min="0" max="10" name="popup_delay_sec" class="form-control form-control-sm" value="<?php echo sanitize($popupDelaySec); ?>" oninput="onPopupDelayChanged(this.value)">
                         </div>
-                        <div class="col-12 col-md-4 mt-2">
-                            <label class="form-label small text-muted mb-1">Default Active Tab</label>
-                            <select name="popup_default_tab" class="form-select form-select-sm">
-                                <option value="events" <?php echo $popupDefaultTab === 'events' ? 'selected' : ''; ?>>1. Events Showcase</option>
-                                <option value="notices" <?php echo $popupDefaultTab === 'notices' ? 'selected' : ''; ?>>2. Official Notices</option>
-                                <option value="admissions" <?php echo $popupDefaultTab === 'admissions' ? 'selected' : ''; ?>>3. Admissions 2026</option>
-                            </select>
-                        </div>
-                        <div class="col-12 col-md-4 mt-2 d-flex align-items-center pt-3">
+                        <div class="col-12 col-md-6 mt-2 d-flex align-items-center pt-3">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="popup_show_once_day" id="showOnceDayCheck" value="1" <?php echo $popupShowOnceDay === '1' ? 'checked' : ''; ?>>
                                 <label class="form-check-label small" for="showOnceDayCheck">
@@ -1184,6 +1264,34 @@ try {
     function onPopupCategoryChanged(val) {
         document.getElementById('previewCategoryBadge').innerText = val || 'Campus Event';
         document.getElementById('previewCategoryTag').innerText = val || 'Campus Event';
+    }
+
+    function onDefaultTabChanged(val) {
+        const textMap = {
+            'events': 'Events',
+            'notices': 'Notices',
+            'admissions': 'Admissions 2026'
+        };
+        const el = document.getElementById('previewDefaultTabText');
+        if (el) el.innerText = textMap[val] || val;
+
+        document.querySelectorAll('.default-tab-card').forEach(card => {
+            card.classList.remove('border-primary', 'bg-primary-subtle', 'shadow-xs');
+            card.classList.add('bg-light');
+        });
+        const selectedRadio = document.querySelector('input[name="popup_default_tab"][value="' + val + '"]');
+        if (selectedRadio) {
+            const parentLabel = selectedRadio.closest('.default-tab-card');
+            if (parentLabel) {
+                parentLabel.classList.remove('bg-light');
+                parentLabel.classList.add('border-primary', 'bg-primary-subtle', 'shadow-xs');
+            }
+        }
+    }
+
+    function onPopupDelayChanged(val) {
+        const el = document.getElementById('previewDelayText');
+        if (el) el.innerText = val ? val + 's' : '1.2s';
     }
     </script>
     <?php endif; ?>

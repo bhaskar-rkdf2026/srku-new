@@ -143,7 +143,6 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
 <div class="srku-side-actions" role="region" aria-label="Quick Actions">
     <!-- 0. Creative Events & Latest Notifications Popup -->
     <button type="button" class="side-action-tab tab-events" data-bs-toggle="modal" data-bs-target="#campusEventsNotificationsModal" title="Campus Events & Latest Notifications" aria-label="Events and Notifications">
-        <span class="tab-badge-pulse" aria-hidden="true"></span>
         <span class="tab-icon"><i class="fas fa-bullhorn"></i></span>
         <span class="tab-label">Events &amp; Alerts</span>
     </button>

@@ -198,7 +198,8 @@ function runUniversalDatabaseMigrations($pdo) {
         // 6. Enquiries table columns
         ensureDbTableColumn($pdo, 'enquiries', 'father_name', "VARCHAR(150) DEFAULT NULL", "TEXT DEFAULT NULL", 'name');
         ensureDbTableColumn($pdo, 'enquiries', 'college', "VARCHAR(255) DEFAULT NULL", "TEXT DEFAULT NULL", 'father_name');
-        ensureDbTableColumn($pdo, 'enquiries', 'city', "VARCHAR(100) DEFAULT NULL", "TEXT DEFAULT NULL", 'course');
+        ensureDbTableColumn($pdo, 'enquiries', 'branch', "VARCHAR(150) DEFAULT NULL", "TEXT DEFAULT NULL", 'course');
+        ensureDbTableColumn($pdo, 'enquiries', 'city', "VARCHAR(100) DEFAULT NULL", "TEXT DEFAULT NULL", 'branch');
         ensureDbTableColumn($pdo, 'enquiries', 'state', "VARCHAR(100) DEFAULT NULL", "TEXT DEFAULT NULL", 'city');
         ensureDbTableColumn($pdo, 'enquiries', 'source', "VARCHAR(150) DEFAULT NULL", "TEXT DEFAULT NULL", 'state');
         ensureDbTableColumn($pdo, 'enquiries', 'status', "VARCHAR(50) DEFAULT 'New'", "TEXT DEFAULT 'New'", 'message');

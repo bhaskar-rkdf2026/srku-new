@@ -62,7 +62,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
         $_POST['father_name'] ?? '',
         $_POST['city'] ?? '',
         $_POST['state'] ?? '',
-        $_POST['college'] ?? ''
+        $_POST['college'] ?? '',
+        $_POST['branch'] ?? ''
     );
     if ($res['success']) {
         $enquirySuccess = true;
@@ -942,83 +943,70 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     ADMISSION FORM SECTION (Redesigned with Dependent College & Course Dropdowns)
+     ADMISSION FORM SECTION (Searchable Course & Branch Selection)
 ═══════════════════════════════════════════════════════ -->
 <?php
-$rawColleges = getDepartments(true);
-$homeCourses = getCourses();
+// ═══════════════════════════════════════════════════════
+// ADMISSION FORM SECTION (Searchable Course & Branch Selection)
+// ═══════════════════════════════════════════════════════
+$coursesQuery = $pdo->query("SELECT course_name, level, specializations, department FROM courses WHERE status = 'active' ORDER BY level, course_name");
+$rawCourses = $coursesQuery->fetchAll(PDO::FETCH_ASSOC);
 
-// Build map of college slug -> courses for instant JS filtering
-$deptCoursesMap = [];
-foreach ($rawColleges as $col) {
-    $deptCoursesMap[$col['slug']] = [];
-}
+$courseBranchesMap = [];
+$groupedCourses = [
+    'UG'        => [],
+    'PG'        => [],
+    'Diploma'   => [],
+    'Doctorate' => []
+];
 
-foreach ($homeCourses as $course) {
-    $slug = $course['dept_slug'] ?? '';
-    if (isset($deptCoursesMap[$slug])) {
-        $deptCoursesMap[$slug][] = [
-            'name'     => $course['course_name'],
-            'level'    => $course['level'] ?? '',
-            'duration' => $course['duration'] ?? '',
-        ];
-    } else {
-        foreach ($rawColleges as $col) {
-            if ($col['name'] === ($course['department'] ?? '')) {
-                $deptCoursesMap[$col['slug']][] = [
-                    'name'     => $course['course_name'],
-                    'level'    => $course['level'] ?? '',
-                    'duration' => $course['duration'] ?? '',
-                ];
-                break;
+$levelOrder = ['UG', 'PG', 'Diploma', 'Doctorate'];
+$levelLabels = [
+    'UG'        => 'Undergraduate Programmes (UG)',
+    'PG'        => 'Postgraduate Programmes (PG)',
+    'Diploma'   => 'Diploma & Certificate Programmes',
+    'Doctorate' => 'Doctoral (Ph.D.) Research'
+];
+$levelIcons = [
+    'UG'        => 'fas fa-user-graduate',
+    'PG'        => 'fas fa-award',
+    'Diploma'   => 'fas fa-certificate',
+    'Doctorate' => 'fas fa-microscope'
+];
+
+$seenCourseNames = [];
+foreach ($rawCourses as $rc) {
+    $cName = trim($rc['course_name'] ?? '');
+    if (!$cName) continue;
+    $lvl = $rc['level'] ?? 'UG';
+    if (!isset($groupedCourses[$lvl])) {
+        $groupedCourses[$lvl] = [];
+    }
+
+    if (!isset($courseBranchesMap[$cName])) {
+        $courseBranchesMap[$cName] = [];
+    }
+    if (!empty($rc['specializations'])) {
+        $branches = array_map('trim', explode(',', $rc['specializations']));
+        foreach ($branches as $b) {
+            if ($b && !in_array($b, $courseBranchesMap[$cName])) {
+                $courseBranchesMap[$cName][] = $b;
             }
         }
     }
-}
 
-// Build clean list of constituent colleges (omitting items with 0 courses)
-$collegeList = [];
-foreach ($rawColleges as $col) {
-    $slug = $col['slug'];
-    $coursesCount = count($deptCoursesMap[$slug] ?? []);
-    if ($coursesCount === 0) continue;
-
-    $nameLower = strtolower($col['name']);
-    $catLower  = strtolower($col['category'] ?? '');
-
-    $icon = 'fas fa-university';
-    if (strpos($nameLower, 'pharmacy') !== false || strpos($catLower, 'pharmacy') !== false) {
-        $icon = 'fas fa-pills';
-    } elseif (strpos($nameLower, 'nursing') !== false || strpos($catLower, 'nursing') !== false) {
-        $icon = 'fas fa-user-nurse';
-    } elseif (strpos($nameLower, 'dental') !== false) {
-        $icon = 'fas fa-tooth';
-    } elseif (strpos($nameLower, 'medical') !== false || strpos($catLower, 'medical') !== false) {
-        $icon = 'fas fa-stethoscope';
-    } elseif (strpos($nameLower, 'ayurveda') !== false || strpos($nameLower, 'homoeopathic') !== false || strpos($catLower, 'ayush') !== false) {
-        $icon = 'fas fa-leaf';
-    } elseif (strpos($nameLower, 'law') !== false || strpos($catLower, 'law') !== false) {
-        $icon = 'fas fa-scale-balanced';
-    } elseif (strpos($nameLower, 'management') !== false || strpos($nameLower, 'business') !== false || strpos($catLower, 'management') !== false) {
-        $icon = 'fas fa-chart-line';
-    } elseif (strpos($nameLower, 'technology') !== false || strpos($nameLower, 'engineering') !== false || strpos($catLower, 'engineering') !== false) {
-        $icon = 'fas fa-cogs';
-    } elseif (strpos($nameLower, 'computer') !== false || strpos($nameLower, 'mca') !== false || strpos($catLower, 'computer') !== false) {
-        $icon = 'fas fa-laptop-code';
-    } elseif (strpos($nameLower, 'agriculture') !== false || strpos($catLower, 'agriculture') !== false) {
-        $icon = 'fas fa-seedling';
-    } elseif (strpos($nameLower, 'paramedical') !== false || strpos($catLower, 'paramedical') !== false) {
-        $icon = 'fas fa-heartbeat';
+    if (!isset($seenCourseNames[$cName])) {
+        $seenCourseNames[$cName] = true;
+        $groupedCourses[$lvl][] = [
+            'name' => $cName,
+            'level' => $lvl,
+            'department' => $rc['department'] ?? ''
+        ];
     }
-
-    $col['icon'] = $icon;
-    $collegeList[] = $col;
-    // Also alias by college name so lookups work regardless of key
-    $deptCoursesMap[$col['name']] = $deptCoursesMap[$slug];
 }
 
-$postedCollege = sanitize($_POST['college'] ?? '');
 $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
+$postedBranch = sanitize($_POST['branch'] ?? ($_GET['branch'] ?? ''));
 ?>
 <section class="enquiry-section py-5 position-relative" id="apply">
     <div class="container-xl py-4">
@@ -1033,7 +1021,7 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                     Apply For <span class="text-warning">Admissions 2026</span>
                 </h2>
                 <p class="text-white-50 mb-4" style="line-height:1.75; font-size:1.02rem;">
-                    Step into an ecosystem of innovation, world-class labs, and 94% placement track record. Select your preferred college to discover all approved degree &amp; diploma programmes.
+                    Step into an ecosystem of innovation, world-class labs, and 94% placement track record. Select your preferred course &amp; branch to discover all approved degree &amp; diploma programmes.
                 </p>
 
                 <div class="d-flex flex-column gap-3 mb-4">
@@ -1130,56 +1118,11 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                             </div>
                         </div>
 
-                        <!-- Row 2: College Dropdown & Dependent Course Dropdown -->
+                        <!-- Row 2: Course & Branch (Replacing College field) -->
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label class="srku-label" for="homeEnquiryCollege">
-                                    Select College <span class="req-star">*</span>
-                                </label>
-                                <div class="srku-input-wrap">
-                                    <i class="fas fa-university srku-field-icon"></i>
-                                    <!-- Custom Searchable Dropdown: College -->
-                                    <div class="srku-dd-wrap" id="homeCollegeDDWrap">
-                                        <button type="button" class="srku-dd-trigger" id="homeCollegeTrigger" aria-haspopup="listbox" aria-expanded="false">
-                                            <span class="srku-dd-label srku-dd-placeholder">Select College</span>
-                                            <svg class="srku-dd-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                                        </button>
-                                        <div class="srku-dd-panel" id="homeCollegePanel">
-                                            <div class="srku-dd-search-wrap">
-                                                <i class="fas fa-search srku-dd-search-icon"></i>
-                                                <input type="text" class="srku-dd-search" id="homeCollegeSearch" placeholder="Search college..." autocomplete="off">
-                                            </div>
-                                            <div class="srku-dd-list" id="homeCollegeList">
-                                                <?php foreach ($collegeList as $col): 
-                                                    $cCount = count($deptCoursesMap[$col['slug']] ?? []);
-                                                ?>
-                                                    <div class="srku-dd-option"
-                                                         data-value="<?php echo sanitize($col['name']); ?>"
-                                                         data-slug="<?php echo sanitize($col['slug']); ?>"
-                                                         <?php echo (($postedCollege === $col['name'] || $postedCollege === $col['slug']) ? 'data-preselected="1"' : ''); ?>>
-                                                        <span class="srku-dd-opt-text"><?php echo sanitize($col['name']); ?></span>
-                                                    </div>
-                                                <?php endforeach; ?>
-                                                <div class="srku-dd-empty">No colleges found</div>
-                                            </div>
-                                        </div>
-                                        <!-- Hidden native select for form submission -->
-                                        <select name="college" id="homeEnquiryCollege" class="srku-dd-native" required>
-                                            <option value="">-- Choose College --</option>
-                                            <?php foreach ($collegeList as $col): ?>
-                                                <option value="<?php echo sanitize($col['name']); ?>"
-                                                        data-slug="<?php echo sanitize($col['slug']); ?>"
-                                                        <?php echo (($postedCollege === $col['name'] || $postedCollege === $col['slug']) ? 'selected' : ''); ?>>
-                                                    <?php echo sanitize($col['name']); ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
                                 <label class="srku-label" for="homeEnquiryCourse">
-                                    Course <span class="req-star">*</span>
+                                    Select Course <span class="req-star">*</span>
                                 </label>
                                 <div class="srku-input-wrap">
                                     <i class="fas fa-graduation-cap srku-field-icon"></i>
@@ -1195,12 +1138,75 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                                 <input type="text" class="srku-dd-search" id="homeCourseSearch" placeholder="Search course..." autocomplete="off">
                                             </div>
                                             <div class="srku-dd-list" id="homeCourseList">
-                                                <div class="srku-dd-empty visible">Please select a college first to see available courses</div>
+                                                <?php foreach ($levelOrder as $lvl): 
+                                                    if (empty($groupedCourses[$lvl])) continue;
+                                                ?>
+                                                    <div class="srku-dd-group">
+                                                        <div class="srku-dd-group-left">
+                                                            <span class="srku-dd-group-icon"><i class="<?php echo $levelIcons[$lvl] ?? 'fas fa-graduation-cap'; ?>"></i></span>
+                                                            <span class="srku-dd-group-title"><?php echo $levelLabels[$lvl] ?? $lvl; ?></span>
+                                                        </div>
+                                                        <span class="srku-dd-group-badge"><?php echo count($groupedCourses[$lvl]); ?></span>
+                                                    </div>
+                                                    <?php foreach ($groupedCourses[$lvl] as $c): 
+                                                        $cName = $c['name'];
+                                                        $cDept = $c['department'] ?? '';
+                                                        $isPreselected = (!empty($postedCourse) && ($postedCourse === $cName || strcasecmp($postedCourse, $cName) === 0));
+                                                    ?>
+                                                        <div class="srku-dd-option<?php echo $isPreselected ? ' selected' : ''; ?>"
+                                                             data-value="<?php echo sanitize($cName); ?>"
+                                                             data-college="<?php echo sanitize($cDept); ?>"
+                                                             <?php echo $isPreselected ? 'data-preselected="1"' : ''; ?>>
+                                                            <span class="srku-dd-opt-text"><?php echo sanitize($cName); ?></span>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                <?php endforeach; ?>
+                                                <div class="srku-dd-empty">No courses found</div>
                                             </div>
                                         </div>
                                         <!-- Hidden native select for form submission -->
                                         <select name="course" id="homeEnquiryCourse" class="srku-dd-native" required>
-                                            <option value="">-- Please Choose a College First --</option>
+                                            <option value="">-- Choose Course --</option>
+                                            <?php foreach ($levelOrder as $lvl): 
+                                                if (empty($groupedCourses[$lvl])) continue;
+                                                foreach ($groupedCourses[$lvl] as $c): 
+                                                    $cName = $c['name'];
+                                                    $cDept = $c['department'] ?? '';
+                                                    $isPreselected = (!empty($postedCourse) && ($postedCourse === $cName || strcasecmp($postedCourse, $cName) === 0));
+                                            ?>
+                                                <option value="<?php echo sanitize($cName); ?>" data-college="<?php echo sanitize($cDept); ?>" <?php echo $isPreselected ? 'selected' : ''; ?>>
+                                                    <?php echo sanitize($cName); ?>
+                                                </option>
+                                            <?php endforeach; endforeach; ?>
+                                        </select>
+                                        <input type="hidden" name="college" id="homeEnquiryCollege" value="<?php echo sanitize($_POST['college'] ?? ''); ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="srku-label" for="homeEnquiryBranch">
+                                    Branch / Specialization
+                                </label>
+                                <div class="srku-input-wrap">
+                                    <i class="fas fa-code-branch srku-field-icon"></i>
+                                    <!-- Custom Searchable Dropdown: Branch -->
+                                    <div class="srku-dd-wrap" id="homeBranchDDWrap">
+                                        <button type="button" class="srku-dd-trigger" id="homeBranchTrigger" aria-haspopup="listbox" aria-expanded="false">
+                                            <span class="srku-dd-label srku-dd-placeholder">Select Branch</span>
+                                            <svg class="srku-dd-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                                        </button>
+                                        <div class="srku-dd-panel" id="homeBranchPanel">
+                                            <div class="srku-dd-search-wrap">
+                                                <i class="fas fa-search srku-dd-search-icon"></i>
+                                                <input type="text" class="srku-dd-search" id="homeBranchSearch" placeholder="Search branch..." autocomplete="off">
+                                            </div>
+                                            <div class="srku-dd-list" id="homeBranchList">
+                                                <div class="srku-dd-empty visible">Please select a course first</div>
+                                            </div>
+                                        </div>
+                                        <!-- Hidden native select for form submission -->
+                                        <select name="branch" id="homeEnquiryBranch" class="srku-dd-native">
+                                            <option value="">-- Select Branch --</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1269,15 +1275,9 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                     (function() {
                         'use strict';
 
-                        const deptCoursesMap = <?php echo json_encode($deptCoursesMap, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+                        const courseBranchesMap = <?php echo json_encode($courseBranchesMap, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
                         const preselectedCourse = <?php echo json_encode($postedCourse ?? ''); ?>;
-                        const levelLabels = {
-                            'UG': 'Undergraduate Programmes (UG)',
-                            'PG': 'Postgraduate Programmes (PG)',
-                            'Diploma': 'Diploma & Certificate Programmes',
-                            'Doctorate': 'Doctoral (Ph.D.) Research'
-                        };
-                        const levelsOrder = ['UG', 'PG', 'Diploma', 'Doctorate'];
+                        const preselectedBranch = <?php echo json_encode($postedBranch ?? ''); ?>;
 
                         /* ── Generic Searchable Dropdown ── */
                         function initDropdown(cfg) {
@@ -1313,12 +1313,10 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                 isOpen ? close() : open();
                             });
 
-                            // Close on outside click
                             document.addEventListener('click', function(e) {
                                 if (!trigger.contains(e.target) && !panel.contains(e.target)) close();
                             });
 
-                            // Search filter
                             if (search) {
                                 search.addEventListener('input', function() { filterOptions(this.value.trim()); });
                                 search.addEventListener('click', function(e) { e.stopPropagation(); });
@@ -1330,7 +1328,6 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                 const groups  = list.querySelectorAll('.srku-dd-group');
                                 let anyVisible = false;
 
-                                // Show/hide options
                                 options.forEach(function(opt) {
                                     const textEl = opt.querySelector('.srku-dd-opt-text');
                                     const text = (textEl ? textEl.textContent : (opt.dataset.value || opt.textContent)).toLowerCase();
@@ -1339,7 +1336,6 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                     if (match) anyVisible = true;
                                 });
 
-                                // Hide groups that have no visible children
                                 groups.forEach(function(grp) {
                                     let sib = grp.nextElementSibling;
                                     let hasVisible = false;
@@ -1354,121 +1350,102 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                                 if (emptyEl) emptyEl.classList.toggle('visible', !anyVisible);
                             }
 
-                            // Option click
                             list.addEventListener('click', function(e) {
                                 const opt = e.target.closest('.srku-dd-option');
                                 if (!opt) return;
                                 const val = opt.dataset.value || '';
+                                const college = opt.dataset.college || '';
                                 const textEl = opt.querySelector('.srku-dd-opt-text');
                                 const label = textEl ? textEl.textContent.trim() : (val || opt.textContent.trim());
-                                selectOption(val, opt.dataset.slug || '', label);
+                                selectOption(val, college, label);
                                 close();
-                                if (cfg.onChange) cfg.onChange(val, opt.dataset.slug || '');
+                                if (cfg.onChange) cfg.onChange(val, college);
                             });
 
-                            function selectOption(value, slug, label) {
-                                // Update trigger label
-                                getLabelEl().textContent = label;
-                                getLabelEl().classList.remove('srku-dd-placeholder');
+                            function selectOption(value, college, label) {
+                                const labelEl = getLabelEl();
+                                if (labelEl) {
+                                    labelEl.textContent = label;
+                                    labelEl.classList.remove('srku-dd-placeholder');
+                                }
                                 trigger.classList.add('has-value');
 
-                                // Mark selected in list
                                 list.querySelectorAll('.srku-dd-option').forEach(function(o) {
                                     o.classList.toggle('selected', o.dataset.value === value);
                                 });
 
-                                // Update hidden native select
                                 native.value = value;
-                                // Trigger change on native select for any other listeners
+                                const hiddenCol = document.getElementById('homeEnquiryCollege');
+                                if (hiddenCol && college) hiddenCol.value = college;
                                 native.dispatchEvent(new Event('change', { bubbles: true }));
                             }
 
-                            // Public API
-                            cfg._selectOption = selectOption;
-                            cfg._open = open;
-                            cfg._close = close;
-                            cfg._rebuildList = rebuildList;
-
-                            function rebuildList(groups, restoreValue) {
-                                // groups: [{label, options: [{value, slug, text, data}]}]
+                            function rebuildList(options, restoreValue) {
                                 list.innerHTML = '';
-                                let hasOptions = false;
-                                groups.forEach(function(g) {
-                                    if (g.label) {
-                                        const grpEl = document.createElement('div');
-                                        grpEl.className = 'srku-dd-group';
-
-                                        let iconClass = 'fas fa-graduation-cap';
-                                        const lblLower = g.label.toLowerCase();
-                                        if (lblLower.includes('undergraduate') || lblLower.includes('ug')) iconClass = 'fas fa-user-graduate';
-                                        else if (lblLower.includes('postgraduate') || lblLower.includes('pg')) iconClass = 'fas fa-award';
-                                        else if (lblLower.includes('diploma')) iconClass = 'fas fa-certificate';
-                                        else if (lblLower.includes('ph.d') || lblLower.includes('doctorate')) iconClass = 'fas fa-microscope';
-
-                                        grpEl.innerHTML = '<span class="srku-dd-group-title">' + g.label + '</span>';
-                                        list.appendChild(grpEl);
-                                    }
-                                    g.options.forEach(function(o) {
-                                        const optEl = document.createElement('div');
-                                        optEl.className = 'srku-dd-option';
-                                        optEl.dataset.value = o.value;
-                                        if (o.slug) optEl.dataset.slug = o.slug;
-                                        optEl.innerHTML = '<span class="srku-dd-opt-text">' + o.text + '</span>';
-                                        list.appendChild(optEl);
-                                        hasOptions = true;
-                                    });
-                                });
-
-                                // Empty message
-                                const emptyEl = document.createElement('div');
-                                emptyEl.className = 'srku-dd-empty';
-                                if (!hasOptions) emptyEl.classList.add('visible');
-                                list.appendChild(emptyEl);
-
-                                // Restore selection
-                                if (restoreValue) {
-                                    const matchEl = list.querySelector('.srku-dd-option[data-value="' + CSS.escape(restoreValue) + '"]') ||
-                                                    Array.from(list.querySelectorAll('.srku-dd-option')).find(function(el) {
-                                                        return el.dataset.value.toLowerCase() === restoreValue.toLowerCase();
-                                                    });
-                                    if (matchEl) {
-                                        const textEl = matchEl.querySelector('.srku-dd-opt-text');
-                                        const label = textEl ? textEl.textContent.trim() : matchEl.dataset.value;
-                                        selectOption(matchEl.dataset.value, matchEl.dataset.slug || '', label);
-                                    }
-                                } else {
-                                    // Reset trigger
-                                    getLabelEl().textContent = cfg.placeholder || '-- Select --';
+                                if (!options || options.length === 0) {
+                                    const empty = document.createElement('div');
+                                    empty.className = 'srku-dd-empty visible';
+                                    empty.textContent = 'Please select a course first';
+                                    list.appendChild(empty);
+                                    while (native.options.length > 1) native.remove(1);
+                                    getLabelEl().textContent = cfg.placeholder || 'Select';
                                     getLabelEl().classList.add('srku-dd-placeholder');
                                     trigger.classList.remove('has-value');
+                                    native.value = '';
+                                    return;
                                 }
 
-                                // Update native select options
                                 while (native.options.length > 1) native.remove(1);
-                                groups.forEach(function(g) {
-                                    g.options.forEach(function(o) {
-                                        const nOpt = document.createElement('option');
-                                        nOpt.value = o.value;
-                                        nOpt.textContent = o.text;
-                                        if (o.slug) nOpt.dataset.slug = o.slug;
-                                        native.appendChild(nOpt);
-                                    });
+
+                                options.forEach(function(opt) {
+                                    const optEl = document.createElement('div');
+                                    optEl.className = 'srku-dd-option';
+                                    optEl.dataset.value = opt.value;
+                                    optEl.innerHTML = '<span class="srku-dd-opt-text">' + opt.text + '</span>';
+                                    list.appendChild(optEl);
+
+                                    const nOpt = document.createElement('option');
+                                    nOpt.value = opt.value;
+                                    nOpt.textContent = opt.text;
+                                    native.appendChild(nOpt);
                                 });
-                                if (restoreValue) native.value = restoreValue;
+
+                                const empty = document.createElement('div');
+                                empty.className = 'srku-dd-empty';
+                                empty.textContent = 'No matching options';
+                                list.appendChild(empty);
+
+                                if (restoreValue) {
+                                    const matchOpt = options.find(function(o) { return o.value.toLowerCase() === restoreValue.toLowerCase(); });
+                                    if (matchOpt) {
+                                        selectOption(matchOpt.value, '', matchOpt.text);
+                                    } else {
+                                        getLabelEl().textContent = cfg.placeholder || 'Select';
+                                        getLabelEl().classList.add('srku-dd-placeholder');
+                                        trigger.classList.remove('has-value');
+                                        native.value = '';
+                                    }
+                                } else {
+                                    getLabelEl().textContent = cfg.placeholder || 'Select';
+                                    getLabelEl().classList.add('srku-dd-placeholder');
+                                    trigger.classList.remove('has-value');
+                                    native.value = '';
+                                }
                             }
 
+                            cfg._selectOption = selectOption;
+                            cfg._rebuildList = rebuildList;
                             return cfg;
                         }
 
-                        /* ── College Dropdown ── */
-                        const collegeCfg = initDropdown({
-                            triggerId : 'homeCollegeTrigger',
-                            panelId   : 'homeCollegePanel',
-                            searchId  : 'homeCollegeSearch',
-                            listId    : 'homeCollegeList',
-                            nativeId  : 'homeEnquiryCollege',
-                            placeholder: '-- Choose College --',
-                            onChange  : function(value, slug) { populateCourses(slug, ''); }
+                        /* ── Branch Dropdown ── */
+                        const branchCfg = initDropdown({
+                            triggerId : 'homeBranchTrigger',
+                            panelId   : 'homeBranchPanel',
+                            searchId  : 'homeBranchSearch',
+                            listId    : 'homeBranchList',
+                            nativeId  : 'homeEnquiryBranch',
+                            placeholder: 'Select Branch'
                         });
 
                         /* ── Course Dropdown ── */
@@ -1478,84 +1455,56 @@ $postedCourse = sanitize($_POST['course'] ?? ($_GET['course'] ?? ''));
                             searchId  : 'homeCourseSearch',
                             listId    : 'homeCourseList',
                             nativeId  : 'homeEnquiryCourse',
-                            placeholder: '-- Please Choose a College First --'
+                            placeholder: 'Select Course',
+                            onChange  : function(courseName) {
+                                populateBranches(courseName, '');
+                            }
                         });
 
-                        /* ── Populate course list based on selected college ── */
-                        function populateCourses(slug, restoreCourse) {
-                            const courseTrigger = document.getElementById('homeCourseTrigger');
-                            const courseLabelEl = courseTrigger ? courseTrigger.querySelector('.srku-dd-label') : null;
-
-                            if (!slug || !deptCoursesMap[slug]) {
-                                if (courseCfg && courseCfg._rebuildList) {
-                                    courseCfg._rebuildList([{ label: '', options: [] }], '');
-                                    if (courseLabelEl) {
-                                        courseLabelEl.textContent = 'Select Course';
-                                        courseLabelEl.classList.add('srku-dd-placeholder');
+                        function populateBranches(courseName, restoreBranch) {
+                            if (!courseName) {
+                                if (branchCfg && branchCfg._rebuildList) {
+                                    branchCfg._rebuildList([], '');
+                                    const labelEl = document.querySelector('#homeBranchTrigger .srku-dd-label');
+                                    if (labelEl) {
+                                        labelEl.textContent = '-- Select Course First --';
+                                        labelEl.classList.add('srku-dd-placeholder');
                                     }
                                 }
                                 return;
                             }
 
-                            const courses = deptCoursesMap[slug];
-                            if (!courses || courses.length === 0) {
-                                if (courseCfg && courseCfg._rebuildList) {
-                                    courseCfg._rebuildList([{ label: '', options: [{ value: 'General Admission Enquiry', text: 'General Admission Enquiry' }] }], restoreCourse);
-                                }
-                                return;
+                            const branches = courseBranchesMap[courseName] || [];
+                            const options = [];
+
+                            if (branches.length > 0) {
+                                options.push({ value: 'All Branches / General', text: 'All Branches / General' });
+                                branches.forEach(function(b) {
+                                    options.push({ value: b, text: b });
+                                });
+                            } else {
+                                options.push({ value: 'General / Regular Branch', text: 'General / Regular Branch' });
                             }
 
-                            const grouped = {};
-                            courses.forEach(function(c) {
-                                const lvl = c.level || 'Other';
-                                if (!grouped[lvl]) grouped[lvl] = [];
-                                grouped[lvl].push(c);
-                            });
-
-                            const sortedLevels = [
-                                ...levelsOrder.filter(function(l) { return grouped[l]; }),
-                                ...Object.keys(grouped).filter(function(l) { return !levelsOrder.includes(l); })
-                            ];
-
-                            const flatOptions = [];
-                            sortedLevels.forEach(function(lvl) {
-                                grouped[lvl].forEach(function(c) {
-                                    flatOptions.push({
-                                        value: c.name,
-                                        text : c.name + (c.duration ? ' (' + c.duration + ')' : '')
-                                    });
-                                });
-                            });
-
-                            if (courseCfg && courseCfg._rebuildList) {
-                                courseCfg._rebuildList([{ label: '', options: flatOptions }], restoreCourse);
-                                if (courseLabelEl && !restoreCourse) {
-                                    courseLabelEl.textContent = 'Select Course';
-                                    courseLabelEl.classList.add('srku-dd-placeholder');
-                                }
+                            if (branchCfg && branchCfg._rebuildList) {
+                                branchCfg._rebuildList(options, restoreBranch);
                             }
                         }
 
-                        /* ── On-load: restore postback selections ── */
-                        (function restorePostback() {
-                            const collegeList   = document.getElementById('homeCollegeList');
-                            const collegeTrigger= document.getElementById('homeCollegeTrigger');
-                            if (!collegeList || !collegeTrigger) return;
-
-                            const preselectedOpt = collegeList.querySelector('.srku-dd-option[data-preselected="1"]');
+                        // Restore preselected values on page load
+                        (function restoreSelections() {
+                            const courseList = document.getElementById('homeCourseList');
+                            if (!courseList) return;
+                            const preselectedOpt = courseList.querySelector('.srku-dd-option[data-preselected="1"]');
                             if (preselectedOpt) {
+                                const val = preselectedOpt.dataset.value || '';
+                                const col = preselectedOpt.dataset.college || '';
                                 const textEl = preselectedOpt.querySelector('.srku-dd-opt-text');
-                                const label = textEl ? textEl.textContent.trim() : preselectedOpt.dataset.value;
-                                const labelEl = collegeTrigger.querySelector('.srku-dd-label');
-                                if (labelEl) labelEl.textContent = label;
-                                collegeTrigger.classList.add('has-value');
-                                preselectedOpt.classList.add('selected');
-                                const nativeCollege = document.getElementById('homeEnquiryCollege');
-                                if (nativeCollege) nativeCollege.value = preselectedOpt.dataset.value;
-
-                                // Then populate courses
-                                const slug = preselectedOpt.dataset.slug || '';
-                                populateCourses(slug, preselectedCourse);
+                                const label = textEl ? textEl.textContent.trim() : val;
+                                if (courseCfg && courseCfg._selectOption) {
+                                    courseCfg._selectOption(val, col, label);
+                                }
+                                populateBranches(val, preselectedBranch);
                             }
                         })();
 

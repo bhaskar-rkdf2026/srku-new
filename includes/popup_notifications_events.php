@@ -442,6 +442,17 @@ document.addEventListener('DOMContentLoaded', function() {
         return false;
     }
 
+    // Ensure the default tab configured in Admin is activated every time the modal is opened
+    modalEl.addEventListener('show.bs.modal', function() {
+        const defTab = '<?php echo $popupDefaultTab; ?>';
+        const targetBtnId = (defTab === 'notices') ? 'pills-notices-btn' : ((defTab === 'admissions') ? 'pills-admission-btn' : 'pills-event-btn');
+        const targetBtn = document.getElementById(targetBtnId);
+        if (targetBtn && typeof bootstrap !== 'undefined' && bootstrap.Tab) {
+            const tabInst = bootstrap.Tab.getOrCreateInstance(targetBtn);
+            tabInst.show();
+        }
+    });
+
     // Auto-launch popup after configured delay if not dismissed
     if (!isPopupDismissed()) {
         setTimeout(function() {

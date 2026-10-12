@@ -7913,11 +7913,21 @@ body {
     padding: 0 18px 0 10px;
 }
 
-/* 0. Events & Alerts (Vibrant Amber / Orange Gradient) */
+/* 0. Events & Alerts (Gold #ffd700 Gradient Theme) */
 .side-action-tab.tab-events {
-    background: linear-gradient(135deg, #d97706 0%, #ea580c 100%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #c69500 0%, #ffd700 100%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-right: none;
+}
+
+.side-action-tab.tab-events .tab-icon {
+    color: #ffffff;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+}
+
+.side-action-tab.tab-events .tab-label {
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
 .tab-badge-pulse {
