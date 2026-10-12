@@ -65,6 +65,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_homepage_section
         }
     }
 
+    // Popup Image Upload
+    $popupImage = normalizeMediaPath($_POST['popup_event_image'] ?? '', 'assets/images/news4.jpg');
+    if (isset($_FILES['popup_image_file']) && $_FILES['popup_image_file']['error'] === UPLOAD_ERR_OK) {
+        $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+        $ext = strtolower(pathinfo($_FILES['popup_image_file']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, $allowed)) {
+            $fn = 'popup_event_' . time() . '.' . $ext;
+            if (move_uploaded_file($_FILES['popup_image_file']['tmp_name'], $uploadDir . $fn)) {
+                $popupImage = 'assets/uploads/2026/08/' . $fn;
+            }
+        }
+    }
+
     // Welcome Photo Upload
     if (isset($_FILES['welcome_photo_file']) && $_FILES['welcome_photo_file']['error'] === UPLOAD_ERR_OK) {
         $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
@@ -128,7 +141,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_homepage_section
         'vc_msg2' => $_POST['vc_msg2'] ?? '',
         'vc_msg3' => $_POST['vc_msg3'] ?? '',
         'vc_msg4' => $_POST['vc_msg4'] ?? '',
-        'vc_full_page_msg' => $_POST['vc_full_page_msg'] ?? ''
+        'vc_full_page_msg' => $_POST['vc_full_page_msg'] ?? '',
+
+        // Section 7: Campus Popup & Alerts
+        'popup_enabled' => (isset($_POST['popup_enabled']) && $_POST['popup_enabled'] === '1') ? '1' : '0',
+        'popup_header_title' => sanitize($_POST['popup_header_title'] ?? 'Campus Bulletin & Alerts'),
+        'popup_header_subtitle' => sanitize($_POST['popup_header_subtitle'] ?? 'Sarvepalli Radhakrishnan University (SRKU)'),
+        'popup_event_title' => sanitize($_POST['popup_event_title'] ?? ''),
+        'popup_event_image' => $popupImage,
+        'popup_event_link' => sanitize($_POST['popup_event_link'] ?? ''),
+        'popup_event_date' => sanitize($_POST['popup_event_date'] ?? date('Y-m-d')),
+        'popup_event_category' => sanitize($_POST['popup_event_category'] ?? 'Campus Life'),
+        'popup_delay_sec' => sanitize($_POST['popup_delay_sec'] ?? '1.2'),
+        'popup_default_tab' => sanitize($_POST['popup_default_tab'] ?? 'events'),
+        'popup_show_once_day' => isset($_POST['popup_show_once_day']) ? '1' : '0'
     ];
 
     foreach ($settingsToSave as $key => $val) {
@@ -188,6 +214,25 @@ $vcMsg2 = getSetting('vc_msg2', 'Higher education today is experiencing unpreced
 $vcMsg3 = getSetting('vc_msg3', 'Our 1,000+ distinguished faculty members—including experienced professors, medical surgeons, scientists, and legal scholars—serve not just as teachers, but as dedicated mentors who nurture the unique talents of each individual student. Through continuous faculty development and active research initiatives, we maintain the highest standards of academic delivery.');
 $vcMsg4 = getSetting('vc_msg4', 'To all our learners: SRKU is your canvas. Strive for excellence, question conventional thinking, embrace multidisciplinary perspectives, and lead with empathy. Together, let us contribute meaningfully to the advancement of knowledge, human welfare, and the nation.');
 $vcFullPage = getSetting('vc_full_page_msg', '');
+
+// Popup Settings Values
+$popupEnabled = getSetting('popup_enabled', '1');
+$popupHeaderTitle = getSetting('popup_header_title', 'Campus Bulletin & Alerts');
+$popupHeaderSubtitle = getSetting('popup_header_subtitle', 'Sarvepalli Radhakrishnan University (SRKU)');
+$popupEventTitle = getSetting('popup_event_title', 'Tarang 2026 - Annual Inter-University Sports & Cultural Fest Announced');
+$popupEventImage = getSetting('popup_event_image', 'assets/images/news4.jpg');
+$popupEventLink = getSetting('popup_event_link', 'news-detail.php?slug=tarang-annual-fest-2026');
+$popupEventDate = getSetting('popup_event_date', '2026-08-15');
+$popupEventCategory = getSetting('popup_event_category', 'Campus Life');
+$popupDelaySec = getSetting('popup_delay_sec', '1.2');
+$popupDefaultTab = getSetting('popup_default_tab', 'events');
+$popupShowOnceDay = getSetting('popup_show_once_day', '1');
+
+$recentEventsForPicker = [];
+try {
+    $stmtPicker = $pdo->query("SELECT id, title, slug, category, publish_date, image_url FROM news ORDER BY publish_date DESC, id DESC LIMIT 25");
+    $recentEventsForPicker = $stmtPicker->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {}
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
@@ -225,6 +270,9 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
         </a>
         <a href="manage_homepage.php?tab=vc" class="srku-filter-btn <?php echo $tab === 'vc' ? 'active' : ''; ?>">
             <i class="fas fa-user-tie text-primary"></i> 5. Vice Chancellor Desk
+        </a>
+        <a href="manage_homepage.php?tab=popup" class="srku-filter-btn <?php echo $tab === 'popup' ? 'active' : ''; ?>">
+            <i class="fas fa-bullhorn text-danger"></i> 6. Campus Popup &amp; Alerts
         </a>
     </div>
 </div>
@@ -805,6 +853,339 @@ $vcFullPage = getSetting('vc_full_page_msg', '');
                 </div>
             </div>
         </div>
+    <?php endif; ?>
+
+    <!-- TAB 6: CAMPUS POPUP & NOTIFICATIONS MODAL -->
+    <?php if ($tab === 'popup'): ?>
+    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4 bg-white">
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-3">
+                <div class="p-3 rounded-circle bg-danger-subtle text-danger" style="font-size: 1.3rem;">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <div>
+                    <span class="badge bg-danger text-white px-3 py-1 rounded-pill small fw-bold">Section 6</span>
+                    <h4 class="fw-bold text-navy mb-0 mt-1">Campus Bulletin &amp; Alerts Popup Manager</h4>
+                </div>
+            </div>
+            <div>
+                <?php if ($popupEnabled === '1'): ?>
+                    <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle px-3 py-2 rounded-pill fs-6">
+                        <i class="fas fa-check-circle me-1"></i> Status: Active on Website
+                    </span>
+                <?php else: ?>
+                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle px-3 py-2 rounded-pill fs-6">
+                        <i class="fas fa-eye-slash me-1"></i> Status: Disabled (Hidden)
+                    </span>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <div class="row g-4 align-items-start">
+            <!-- Left Column: Live Visual Preview Card -->
+            <div class="col-12 col-lg-5">
+                <div class="p-3 rounded-4 bg-light border shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-2 px-1">
+                        <span class="small fw-bold text-navy"><i class="fas fa-eye me-1 text-danger"></i> Live Modal Event Card Preview</span>
+                        <span class="badge bg-secondary rounded-pill small" id="previewCategoryBadge">
+                            <?php echo sanitize($popupEventCategory ?: 'Campus Life'); ?>
+                        </span>
+                    </div>
+
+                    <!-- Event Preview Box (Matches Front-End Popup) -->
+                    <div class="rounded-3 overflow-hidden shadow-sm border bg-white p-2">
+                        <div class="position-relative rounded-3 overflow-hidden mb-2" style="background:#0F1E3B;">
+                            <?php 
+                            $resolvedPopupImg = resolveMediaUrl($popupEventImage, 'assets/images/news4.jpg');
+                            $previewTs = !empty($popupEventDate) ? strtotime($popupEventDate) : time();
+                            ?>
+                            <img id="adminPopupPosterPreview" 
+                                 src="<?php echo $resolvedPopupImg; ?>" 
+                                 alt="Event Poster Preview" 
+                                 class="w-100 object-fit-cover" 
+                                 style="height: 200px; display:block;"
+                                 onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/images/news4.jpg';">
+
+                            <!-- Floating Date Tag -->
+                            <div class="position-absolute top-0 start-0 m-2 text-center rounded-2 overflow-hidden shadow" style="min-width:38px; border:1px solid rgba(255,255,255,0.9);">
+                                <div id="previewMonthTag" class="bg-danger text-white px-2 py-0.5 fw-bold text-uppercase" style="font-size: 0.6rem; letter-spacing: 0.5px;">
+                                    <?php echo strtoupper(date('M', $previewTs)); ?>
+                                </div>
+                                <div id="previewDayTag" class="bg-white text-dark px-2 py-0.5 fw-bold fs-6 lh-1">
+                                    <?php echo date('d', $previewTs); ?>
+                                </div>
+                            </div>
+
+                            <!-- Category Badge -->
+                            <div class="position-absolute top-0 end-0 m-2">
+                                <span class="badge bg-dark bg-opacity-75 text-white backdrop-blur rounded-pill px-2 py-1" style="font-size: 0.68rem;">
+                                    <i class="fas fa-star text-warning me-1"></i><span id="previewCategoryTag"><?php echo sanitize($popupEventCategory ?: 'Campus Life'); ?></span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="px-1 py-1">
+                            <h6 id="previewTitleText" class="fw-bold text-navy mb-2" style="font-size: 0.95rem; line-height: 1.35;">
+                                <?php echo sanitize($popupEventTitle ?: 'Event Title'); ?>
+                            </h6>
+                            <div class="d-flex align-items-center justify-content-between pt-2 border-top">
+                                <span class="small text-muted" style="font-size: 0.72rem;">
+                                    <i class="far fa-calendar-alt text-danger me-1"></i> Date: <span id="previewDateText"><?php echo date('d M, Y', $previewTs); ?></span>
+                                </span>
+                                <span class="btn btn-xs btn-danger rounded-pill px-2.5 py-1 fw-bold shadow-xs disabled" style="font-size: 0.75rem;">
+                                    <span>View Event Details</span> <i class="fas fa-arrow-right ms-1"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 p-2.5 rounded-3 bg-white border small text-muted">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <span><i class="fas fa-link text-primary me-1"></i> <strong>Target Redirection:</strong></span>
+                            <span class="text-truncate text-navy fw-semibold" id="previewLinkText" style="max-width: 170px;">
+                                <?php echo sanitize($popupEventLink); ?>
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span><i class="fas fa-clock text-warning me-1"></i> <strong>Delay:</strong> <?php echo sanitize($popupDelaySec); ?>s</span>
+                            <span><i class="fas fa-folder-open text-info me-1"></i> <strong>Default Tab:</strong> <?php echo ucfirst(sanitize($popupDefaultTab)); ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Settings & Edit Form -->
+            <div class="col-12 col-lg-7">
+                
+                <!-- 1. Active / Disable Switch -->
+                <div class="p-3.5 mb-3 rounded-4 border <?php echo $popupEnabled === '1' ? 'bg-success-subtle border-success' : 'bg-danger-subtle border-danger'; ?>">
+                    <label class="form-label fw-bold text-navy d-block mb-1">
+                        <i class="fas fa-power-off me-1"></i> Popup Status (Enable / Disable)
+                    </label>
+                    <p class="small text-muted mb-2.5">Control whether the alert popup displays automatically when visitors land on the website.</p>
+                    <div class="d-flex gap-3">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="popup_enabled" id="statusActive" value="1" <?php echo $popupEnabled === '1' ? 'checked' : ''; ?>>
+                            <label class="form-check-label fw-bold text-success" for="statusActive">
+                                <i class="fas fa-check-circle me-1"></i> Active (Show on Website)
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="popup_enabled" id="statusDisabled" value="0" <?php echo $popupEnabled !== '1' ? 'checked' : ''; ?>>
+                            <label class="form-check-label fw-bold text-danger" for="statusDisabled">
+                                <i class="fas fa-times-circle me-1"></i> Disabled (Hide from Website)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Quick Pick from Existing Events -->
+                <?php if (!empty($recentEventsForPicker)): ?>
+                <div class="mb-3 p-3 rounded-3 bg-light border">
+                    <label class="form-label small fw-bold text-navy mb-1">
+                        <i class="fas fa-magic text-warning me-1"></i> Quick Select from Existing Events / News
+                    </label>
+                    <select id="quickEventSelect" class="form-select form-select-sm" onchange="onQuickEventPicked(this)">
+                        <option value="">-- Choose an event from database to auto-fill --</option>
+                        <?php foreach ($recentEventsForPicker as $ep): 
+                            $epSlug = !empty($ep['slug']) ? $ep['slug'] : $ep['id'];
+                            $epLink = 'news-detail.php?slug=' . urlencode($epSlug);
+                            $epDate = !empty($ep['publish_date']) ? date('Y-m-d', strtotime($ep['publish_date'])) : date('Y-m-d');
+                        ?>
+                            <option value="<?php echo $ep['id']; ?>"
+                                    data-title="<?php echo htmlspecialchars($ep['title'], ENT_QUOTES); ?>"
+                                    data-image="<?php echo htmlspecialchars($ep['image_url'] ?? '', ENT_QUOTES); ?>"
+                                    data-link="<?php echo htmlspecialchars($epLink, ENT_QUOTES); ?>"
+                                    data-date="<?php echo htmlspecialchars($epDate, ENT_QUOTES); ?>"
+                                    data-category="<?php echo htmlspecialchars($ep['category'] ?? 'Campus Event', ENT_QUOTES); ?>">
+                                <?php echo date('d M Y', strtotime($epDate)); ?> — <?php echo sanitize(mb_substr($ep['title'], 0, 48)) . '...'; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <small class="text-muted" style="font-size:0.75rem;">Selecting an event will auto-fill the title, poster, date, category and redirection link below.</small>
+                </div>
+                <?php endif; ?>
+
+                <!-- 3. Creative Event Poster (Upload or Path) -->
+                <div class="mb-3 p-3 rounded-3 bg-light border">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label class="form-label small fw-bold text-navy mb-0">
+                            <i class="fas fa-image text-danger me-1"></i> Creative Event Poster Image
+                        </label>
+                        <span class="badge bg-secondary small">Landscape / Creative Poster</span>
+                    </div>
+                    <div class="row g-2 mt-1">
+                        <div class="col-12 col-md-7">
+                            <input type="text" id="popupImageInput" name="popup_event_image" class="form-control form-control-sm" value="<?php echo sanitize($popupEventImage); ?>" placeholder="assets/images/news4.jpg or uploads/..." oninput="onPopupPosterChanged(this.value)">
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <input type="file" name="popup_image_file" class="form-control form-control-sm" accept="image/*" onchange="previewUploadedFile(this)">
+                        </div>
+                    </div>
+                    <small class="text-muted" style="font-size:0.75rem;">You can paste an existing path/URL or upload a brand-new promotional creative poster.</small>
+                </div>
+
+                <!-- 4. Event Title & Redirection Link -->
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-navy mb-1">
+                        <i class="fas fa-heading text-primary me-1"></i> Event Title / Headline
+                    </label>
+                    <input type="text" id="popupTitleInput" name="popup_event_title" class="form-control" value="<?php echo sanitize($popupEventTitle); ?>" placeholder="e.g. Tarang 2026 - Annual Sports & Cultural Fest" oninput="onPopupTitleChanged(this.value)" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-navy mb-1">
+                        <i class="fas fa-external-link-alt text-success me-1"></i> Redirection Link (Where clicking image / button goes)
+                    </label>
+                    <input type="text" id="popupLinkInput" name="popup_event_link" class="form-control" value="<?php echo sanitize($popupEventLink); ?>" placeholder="news-detail.php?slug=tarang-annual-fest-2026 or https://..." oninput="onPopupLinkChanged(this.value)" required>
+                    <small class="text-muted" style="font-size:0.75rem;">Visitors will be redirected to this link when clicking the poster image or "View Event Details" button.</small>
+                </div>
+
+                <!-- 5. Event Date & Category -->
+                <div class="row g-2 mb-3">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label small fw-bold text-navy mb-1">
+                            <i class="far fa-calendar-alt text-danger me-1"></i> Event Date
+                        </label>
+                        <input type="date" id="popupDateInput" name="popup_event_date" class="form-control" value="<?php echo sanitize($popupEventDate); ?>" onchange="onPopupDateChanged(this.value)">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label small fw-bold text-navy mb-1">
+                            <i class="fas fa-tag text-info me-1"></i> Category Tag
+                        </label>
+                        <input type="text" id="popupCategoryInput" name="popup_event_category" class="form-control" value="<?php echo sanitize($popupEventCategory); ?>" placeholder="e.g. Campus Life, Admissions, Fest" oninput="onPopupCategoryChanged(this.value)">
+                    </div>
+                </div>
+
+                <!-- 6. Modal Settings: Title, Subtitle, Delay -->
+                <div class="p-3 mb-3 rounded-3 bg-light border">
+                    <h6 class="fw-bold text-navy small mb-2"><i class="fas fa-sliders-h text-secondary me-1"></i> Modal Display &amp; Behavior Settings</h6>
+                    <div class="row g-2">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small text-muted mb-1">Modal Header Title</label>
+                            <input type="text" name="popup_header_title" class="form-control form-control-sm" value="<?php echo sanitize($popupHeaderTitle); ?>">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small text-muted mb-1">Modal Header Subtitle</label>
+                            <input type="text" name="popup_header_subtitle" class="form-control form-control-sm" value="<?php echo sanitize($popupHeaderSubtitle); ?>">
+                        </div>
+                        <div class="col-12 col-md-4 mt-2">
+                            <label class="form-label small text-muted mb-1">Popup Delay (Seconds)</label>
+                            <input type="number" step="0.1" min="0" max="10" name="popup_delay_sec" class="form-control form-control-sm" value="<?php echo sanitize($popupDelaySec); ?>">
+                        </div>
+                        <div class="col-12 col-md-4 mt-2">
+                            <label class="form-label small text-muted mb-1">Default Active Tab</label>
+                            <select name="popup_default_tab" class="form-select form-select-sm">
+                                <option value="events" <?php echo $popupDefaultTab === 'events' ? 'selected' : ''; ?>>1. Events Showcase</option>
+                                <option value="notices" <?php echo $popupDefaultTab === 'notices' ? 'selected' : ''; ?>>2. Official Notices</option>
+                                <option value="admissions" <?php echo $popupDefaultTab === 'admissions' ? 'selected' : ''; ?>>3. Admissions 2026</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-4 mt-2 d-flex align-items-center pt-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="popup_show_once_day" id="showOnceDayCheck" value="1" <?php echo $popupShowOnceDay === '1' ? 'checked' : ''; ?>>
+                                <label class="form-check-label small" for="showOnceDayCheck">
+                                    "Don't show again today" feature
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end pt-3 border-top mt-4">
+                    <button type="submit" class="btn btn-danger px-4 py-2 rounded-pill fw-bold shadow-sm">
+                        <i class="fas fa-save me-1"></i> Save Popup Settings
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Preview Interactive Script -->
+    <script>
+    function onQuickEventPicked(sel) {
+        const opt = sel.options[sel.selectedIndex];
+        if (!opt || !opt.value) return;
+
+        const title = opt.getAttribute('data-title');
+        const img = opt.getAttribute('data-image');
+        const link = opt.getAttribute('data-link');
+        const date = opt.getAttribute('data-date');
+        const cat = opt.getAttribute('data-category');
+
+        if (title) {
+            document.getElementById('popupTitleInput').value = title;
+            onPopupTitleChanged(title);
+        }
+        if (img) {
+            document.getElementById('popupImageInput').value = img;
+            onPopupPosterChanged(img);
+        }
+        if (link) {
+            document.getElementById('popupLinkInput').value = link;
+            onPopupLinkChanged(link);
+        }
+        if (date) {
+            document.getElementById('popupDateInput').value = date;
+            onPopupDateChanged(date);
+        }
+        if (cat) {
+            document.getElementById('popupCategoryInput').value = cat;
+            onPopupCategoryChanged(cat);
+        }
+    }
+
+    function onPopupTitleChanged(val) {
+        document.getElementById('previewTitleText').innerText = val || 'Event Title';
+    }
+
+    function onPopupPosterChanged(val) {
+        if (!val) return;
+        const imgEl = document.getElementById('adminPopupPosterPreview');
+        if (val.startsWith('http://') || val.startsWith('https://')) {
+            imgEl.src = val;
+        } else {
+            imgEl.src = '<?php echo BASE_URL; ?>' + val.replace(/^\/+/, '');
+        }
+    }
+
+    function previewUploadedFile(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('adminPopupPosterPreview').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function onPopupLinkChanged(val) {
+        document.getElementById('previewLinkText').innerText = val || 'news-detail.php?slug=...';
+    }
+
+    function onPopupDateChanged(val) {
+        if (!val) return;
+        const d = new Date(val);
+        if (!isNaN(d.getTime())) {
+            const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+            const fullMonths = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            const day = String(d.getDate()).padStart(2, '0');
+            const monthStr = months[d.getMonth()];
+            const fullMonthStr = fullMonths[d.getMonth()];
+            const year = d.getFullYear();
+
+            document.getElementById('previewMonthTag').innerText = monthStr;
+            document.getElementById('previewDayTag').innerText = day;
+            document.getElementById('previewDateText').innerText = day + ' ' + fullMonthStr + ', ' + year;
+        }
+    }
+
+    function onPopupCategoryChanged(val) {
+        document.getElementById('previewCategoryBadge').innerText = val || 'Campus Event';
+        document.getElementById('previewCategoryTag').innerText = val || 'Campus Event';
+    }
+    </script>
     <?php endif; ?>
 
 </form>

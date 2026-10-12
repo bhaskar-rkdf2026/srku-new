@@ -7913,6 +7913,41 @@ body {
     padding: 0 18px 0 10px;
 }
 
+/* 0. Events & Alerts (Vibrant Amber / Orange Gradient) */
+.side-action-tab.tab-events {
+    background: linear-gradient(135deg, #d97706 0%, #ea580c 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-right: none;
+}
+
+.tab-badge-pulse {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    background-color: #ef4444;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    animation: tabPulseDot 1.8s infinite;
+    z-index: 2;
+}
+
+@keyframes tabPulseDot {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
 /* 1. Admission (Vibrant Crimson & Maroon) */
 .side-action-tab.tab-admission {
     background: linear-gradient(135deg, #7A0B0D 0%, #dc2626 100%);

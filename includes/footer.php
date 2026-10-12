@@ -141,6 +141,13 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
 <!-- ═══════ FLOATING INTERACTIVE WIDGETS ═══════ -->
 <!-- Modern Slide-Out Quick Action Side Bar (Right Edge) -->
 <div class="srku-side-actions" role="region" aria-label="Quick Actions">
+    <!-- 0. Creative Events & Latest Notifications Popup -->
+    <button type="button" class="side-action-tab tab-events" data-bs-toggle="modal" data-bs-target="#campusEventsNotificationsModal" title="Campus Events & Latest Notifications" aria-label="Events and Notifications">
+        <span class="tab-badge-pulse" aria-hidden="true"></span>
+        <span class="tab-icon"><i class="fas fa-bullhorn"></i></span>
+        <span class="tab-label">Events &amp; Alerts</span>
+    </button>
+
     <!-- 1. Admission / Apply Online -->
     <button type="button" class="side-action-tab tab-admission" data-bs-toggle="modal" data-bs-target="#quickAdmissionModal" title="Online Admission Form 2026-27" aria-label="Admissions 2026">
         <span class="tab-icon"><i class="fas fa-file-signature"></i></span>
@@ -387,6 +394,9 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
         </div>
     </div>
 </div>
+
+<!-- MODAL 3: CREATIVE CAMPUS EVENTS & LATEST NOTIFICATIONS POPUP -->
+<?php require_once __DIR__ . '/popup_notifications_events.php'; ?>
 
 <!-- Bootstrap 5.3 Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

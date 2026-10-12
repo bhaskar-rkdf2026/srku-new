@@ -125,6 +125,9 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 <a href="manage_homepage.php?tab=vc" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_homepage.php' && ($_GET['tab'] ?? '') == 'vc') ? 'active' : ''; ?>">
                     <i class="fas fa-user-tie"></i> Vice Chancellor Desk
                 </a>
+                <a href="manage_homepage.php?tab=popup" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_homepage.php' && ($_GET['tab'] ?? '') == 'popup') ? 'active' : ''; ?>">
+                    <i class="fas fa-bullhorn text-danger"></i> Campus Popup &amp; Alerts
+                </a>
             </div>
 
             <!-- ACADEMICS & DEPARTMENTS -->
