@@ -8,9 +8,13 @@ Options -Indexes
 
     # Security: Block access to internal files and sensitive extensions
     RewriteRule "(^|/)\." - [F]
-    RewriteRule \.(sql|sqlite|db|log|md|json|env|bak|backup|yml|yaml|ini|conf|map)$ - [F,NC]
+    RewriteRule \.(sql|sqlite|db|log|md|json|env|bak|backup|yml|yaml|ini|conf|map|sh|bash|bat|py|pl|cgi|ps1)$ - [F,NC]
     RewriteRule ^.*jquery\.min\.map$ - [F,NC]
     RewriteRule ^scratch(/|$) - [F,NC]
+    RewriteRule ^fix_permissions\.(sh|ps1)$ - [F,NC]
+
+    # Block unauthorized Google Search Console / verification probes
+    RewriteRule ^google[a-zA-Z0-9_-]+\.html$ - [F,NC]
 
     # Legacy wp-content and uploads mapping to assets/uploads
     RewriteRule ^wp-content/uploads/(.*)$ assets/uploads/$1 [L,NC]

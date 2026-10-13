@@ -1,3 +1,4 @@
+<?php if (!defined('BASE_URL')) { http_response_code(403); exit('Direct access forbidden.'); } ?>
         </div>
     </main>
 </div>

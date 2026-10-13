@@ -1,3 +1,12 @@
+<?php
+if (!defined('BASE_URL')) {
+    require_once __DIR__ . '/../includes/functions.php';
+    if (!isAdminLoggedIn()) {
+        http_response_code(403);
+        exit('Access Denied: Admin authorization required.');
+    }
+}
+?>
 <!-- ══════════════════════════════════════════════════════════
      GLOBAL MEDIA LIBRARY & ASSET PICKER MODAL (Admin Panel)
      ══════════════════════════════════════════════════════════ -->

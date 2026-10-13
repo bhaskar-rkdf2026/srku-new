@@ -1,0 +1,49 @@
+# ==============================================================
+# SRKU CMS - Admin Panel Security Hardening & Strict IP Whitelist
+# ==============================================================
+# Only authorized IP addresses are allowed access to the Admin Portal.
+# All other IP addresses will immediately receive 403 Forbidden.
+# ==============================================================
+
+# Disable directory browsing
+Options -Indexes -ExecCGI
+
+# Block access to any sensitive file extensions inside admin
+<FilesMatch "\.(sql|sqlite|db|log|md|json|env|bak|backup|yml|yaml|ini|conf|map|sh|bat)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Deny,Allow
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# --------------------------------------------------------------
+# IP ACCESS RESTRICTION
+# --------------------------------------------------------------
+# Apache 2.4+ (Default on Modern Servers & XAMPP)
+<IfModule mod_authz_core.c>
+    <RequireAny>
+        # Localhost (Always permitted for local development & server jobs)
+        Require ip 127.0.0.1
+        Require ip ::1
+
+        # AUTHORIZED ADMIN PUBLIC IP:
+        # Check your public IP at https://whatismyipaddress.com or https://api.ipify.org
+        # Replace the IP below with your actual static/broadband IP:
+        Require ip 103.211.55.10
+    </RequireAny>
+</IfModule>
+
+# Apache 2.2 Fallback (For legacy hosting environments)
+<IfModule !mod_authz_core.c>
+    Order Deny,Allow
+    Deny from all
+    Allow from 127.0.0.1
+    Allow from ::1
+    Allow from 103.211.55.10
+</IfModule>
+
+# Custom Error Page for unauthorized IP attempts
+ErrorDocument 403 "<h1>403 Forbidden</h1><p>Access Denied: Your IP address is not authorized to access this Administrative Console.</p>"
