@@ -660,7 +660,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
             <div class="col">
                 <div class="prog-card h-100 d-flex flex-column">
                     <a href="<?php echo BASE_URL; ?>facilities.php" class="d-block overflow-hidden" title="Central Digital Library">
-                        <img src="<?php echo BASE_URL; ?>assets/uploads/constituent-units/faculty-of-library-science.webp" class="prog-img" alt="Central Digital Library"
+                        <img src="<?php echo BASE_URL; ?>assets/uploads/facilities/srku-central-library-2026.webp?v=<?php echo time(); ?>" class="prog-img" alt="Central Digital Library"
                              onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/library.webp';">
                     </a>
                     <div class="prog-body d-flex flex-column flex-grow-1">
