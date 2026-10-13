@@ -830,42 +830,88 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
 <!-- ═══════════════════════════════════════════════════════
      STUDENT LIFE AT SRK (matches live srku.edu.in design)
 ═══════════════════════════════════════════════════════ -->
+<?php
+$slEyebrow = getSetting('student_life_eyebrow', 'Student Life at SRK');
+$slTitle = getSetting('student_life_title', 'Experience <em>an Unmatched University</em><br>Campus Life in Bhopal');
+$slDesc = getSetting('student_life_desc', 'A campus that thinks, builds, and celebrates together.<br>200 lush acres, 120+ active student clubs, and 18 annual fests create an unforgettable student journey.');
+$slVideoUrl = getSetting('student_life_video_url', 'https://vimeo.com/1235294623?share=copy&fl=sv&fe=ci');
+$slVideoParsed = parseVideoUrl($slVideoUrl);
+$slBadgeTag = getSetting('student_life_badge_tag', 'Featured');
+$slBadgeTitle = getSetting('student_life_badge_title', 'Annual Cultural Fest');
+
+$slStat1Num = getSetting('student_life_stat1_num', '42+');
+$slStat1Label = getSetting('student_life_stat1_label', 'Active Clubs');
+$slStat1Icon = getSetting('student_life_stat1_icon', 'fas fa-star');
+
+$slStat2Num = getSetting('student_life_stat2_num', '120+');
+$slStat2Label = getSetting('student_life_stat2_label', 'Sports');
+$slStat2Icon = getSetting('student_life_stat2_icon', 'fas fa-trophy');
+
+$slStat3Num = getSetting('student_life_stat3_num', '4,500+');
+$slStat3Label = getSetting('student_life_stat3_label', 'Hostel Beds');
+$slStat3Icon = getSetting('student_life_stat3_icon', 'fas fa-bed');
+
+$slStat4Num = getSetting('student_life_stat4_num', '18');
+$slStat4Label = getSetting('student_life_stat4_label', 'Annual Fests');
+$slStat4Icon = getSetting('student_life_stat4_icon', 'fas fa-music');
+?>
 <section class="student-life-v2">
     <div class="student-life-v2__inner">
-        <p class="student-life-v2__eyebrow">Student Life at SRK</p>
-        <h2 class="student-life-v2__title">Experience <em>an Unmatched University</em><br>Campus Life in Bhopal</h2>
-        <p class="student-life-v2__desc">A campus that thinks, builds, and celebrates together.<br>200 lush acres, 120+ active student clubs, and 18 annual fests create an unforgettable student journey.</p>
+        <p class="student-life-v2__eyebrow"><?php echo htmlspecialchars($slEyebrow); ?></p>
+        <h2 class="student-life-v2__title"><?php echo $slTitle; ?></h2>
+        <p class="student-life-v2__desc"><?php echo nl2br($slDesc); ?></p>
 
         <div class="student-life-v2__row">
             <div class="student-life-v2__media">
-                <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/alumni-hero-TzGn9_DY-3.jpg"
-                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
-                     alt="Annual Cultural Fest at SRK University">
+                <?php if ($slVideoParsed['type'] === 'vimeo'): ?>
+                    <iframe class="student-life-v2__video" 
+                            src="https://player.vimeo.com/video/<?php echo htmlspecialchars($slVideoParsed['id']); ?>?autoplay=1&muted=1&loop=1&autopause=0&controls=1&badge=0&title=0&byline=0&portrait=0&dnt=1" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                            allowfullscreen 
+                            title="<?php echo htmlspecialchars($slBadgeTitle); ?>"></iframe>
+                <?php elseif ($slVideoParsed['type'] === 'youtube'): ?>
+                    <iframe class="student-life-v2__video" 
+                            src="https://www.youtube.com/embed/<?php echo htmlspecialchars($slVideoParsed['id']); ?>?autoplay=1&mute=1&loop=1&playlist=<?php echo htmlspecialchars($slVideoParsed['id']); ?>&controls=1&rel=0" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen 
+                            title="<?php echo htmlspecialchars($slBadgeTitle); ?>"></iframe>
+                <?php elseif ($slVideoParsed['type'] === 'local'): ?>
+                    <video class="student-life-v2__video" autoplay muted loop playsinline controls>
+                        <source src="<?php echo htmlspecialchars($slVideoParsed['src']); ?>" type="video/mp4">
+                    </video>
+                <?php else: ?>
+                    <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/alumni-hero-TzGn9_DY-3.jpg"
+                         onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';"
+                         alt="<?php echo htmlspecialchars($slBadgeTitle); ?>">
+                <?php endif; ?>
+
                 <div class="student-life-v2__badge">
-                    <span class="student-life-v2__badge-tag">Featured</span>
-                    <span class="student-life-v2__badge-title">Annual Cultural Fest</span>
+                    <span class="student-life-v2__badge-tag"><i class="fas fa-play-circle me-1"></i> <?php echo htmlspecialchars($slBadgeTag); ?></span>
+                    <span class="student-life-v2__badge-title"><?php echo htmlspecialchars($slBadgeTitle); ?></span>
                 </div>
             </div>
             <div class="student-life-v2__grid">
                 <div class="student-life-v2__box student-life-v2__box--maroon">
-                    <i class="fas fa-star"></i>
-                    <h3>42+</h3>
-                    <p>Active Clubs</p>
+                    <i class="<?php echo htmlspecialchars($slStat1Icon); ?>"></i>
+                    <h3><?php echo htmlspecialchars($slStat1Num); ?></h3>
+                    <p><?php echo htmlspecialchars($slStat1Label); ?></p>
                 </div>
                 <div class="student-life-v2__box student-life-v2__box--gray">
-                    <i class="fas fa-trophy"></i>
-                    <h3>120+</h3>
-                    <p>Sports</p>
+                    <i class="<?php echo htmlspecialchars($slStat2Icon); ?>"></i>
+                    <h3><?php echo htmlspecialchars($slStat2Num); ?></h3>
+                    <p><?php echo htmlspecialchars($slStat2Label); ?></p>
                 </div>
                 <div class="student-life-v2__box student-life-v2__box--cream">
-                    <i class="fas fa-bed"></i>
-                    <h3>4,500+</h3>
-                    <p>Hostel Beds</p>
+                    <i class="<?php echo htmlspecialchars($slStat3Icon); ?>"></i>
+                    <h3><?php echo htmlspecialchars($slStat3Num); ?></h3>
+                    <p><?php echo htmlspecialchars($slStat3Label); ?></p>
                 </div>
                 <div class="student-life-v2__box student-life-v2__box--maroon">
-                    <i class="fas fa-music"></i>
-                    <h3>18</h3>
-                    <p>Annual Fests</p>
+                    <i class="<?php echo htmlspecialchars($slStat4Icon); ?>"></i>
+                    <h3><?php echo htmlspecialchars($slStat4Num); ?></h3>
+                    <p><?php echo htmlspecialchars($slStat4Label); ?></p>
                 </div>
             </div>
         </div>

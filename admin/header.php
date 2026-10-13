@@ -128,6 +128,9 @@ $currentAdminPage = basename($_SERVER['PHP_SELF']);
                 <a href="manage_homepage.php?tab=popup" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_homepage.php' && ($_GET['tab'] ?? '') == 'popup') ? 'active' : ''; ?>">
                     <i class="fas fa-bullhorn text-danger"></i> Campus Popup &amp; Alerts
                 </a>
+                <a href="manage_homepage.php?tab=student_life" class="sidebar-sub-link <?php echo ($currentAdminPage == 'manage_homepage.php' && ($_GET['tab'] ?? '') == 'student_life') ? 'active' : ''; ?>">
+                    <i class="fas fa-graduation-cap text-success"></i> Student Life &amp; Video
+                </a>
             </div>
 
             <!-- ACADEMICS & DEPARTMENTS -->

@@ -162,6 +162,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_homepage_section
             'popup_default_tab' => sanitize($_POST['popup_default_tab'] ?? 'events'),
             'popup_show_once_day' => isset($_POST['popup_show_once_day']) ? '1' : '0'
         ];
+    } elseif ($submittedTab === 'student_life') {
+        $studentLifeVideo = normalizeMediaPath($_POST['student_life_video_url'] ?? '', 'https://vimeo.com/1235294623?share=copy&fl=sv&fe=ci');
+        $settingsToSave = [
+            'student_life_eyebrow' => sanitize($_POST['student_life_eyebrow'] ?? 'Student Life at SRK'),
+            'student_life_title' => $_POST['student_life_title'] ?? 'Experience <em>an Unmatched University</em><br>Campus Life in Bhopal',
+            'student_life_desc' => $_POST['student_life_desc'] ?? 'A campus that thinks, builds, and celebrates together.<br>200 lush acres, 120+ active student clubs, and 18 annual fests create an unforgettable student journey.',
+            'student_life_video_url' => $studentLifeVideo,
+            'student_life_badge_tag' => sanitize($_POST['student_life_badge_tag'] ?? 'Featured'),
+            'student_life_badge_title' => sanitize($_POST['student_life_badge_title'] ?? 'Annual Cultural Fest'),
+            'student_life_stat1_num' => sanitize($_POST['student_life_stat1_num'] ?? '42+'),
+            'student_life_stat1_label' => sanitize($_POST['student_life_stat1_label'] ?? 'Active Clubs'),
+            'student_life_stat1_icon' => sanitize($_POST['student_life_stat1_icon'] ?? 'fas fa-star'),
+            'student_life_stat2_num' => sanitize($_POST['student_life_stat2_num'] ?? '120+'),
+            'student_life_stat2_label' => sanitize($_POST['student_life_stat2_label'] ?? 'Sports'),
+            'student_life_stat2_icon' => sanitize($_POST['student_life_stat2_icon'] ?? 'fas fa-trophy'),
+            'student_life_stat3_num' => sanitize($_POST['student_life_stat3_num'] ?? '4,500+'),
+            'student_life_stat3_label' => sanitize($_POST['student_life_stat3_label'] ?? 'Hostel Beds'),
+            'student_life_stat3_icon' => sanitize($_POST['student_life_stat3_icon'] ?? 'fas fa-bed'),
+            'student_life_stat4_num' => sanitize($_POST['student_life_stat4_num'] ?? '18'),
+            'student_life_stat4_label' => sanitize($_POST['student_life_stat4_label'] ?? 'Annual Fests'),
+            'student_life_stat4_icon' => sanitize($_POST['student_life_stat4_icon'] ?? 'fas fa-music'),
+        ];
     }
 
     if (!empty($settingsToSave)) {
@@ -242,12 +264,35 @@ try {
     $stmtPicker = $pdo->query("SELECT id, title, slug, category, publish_date, image_url FROM news ORDER BY publish_date DESC, id DESC LIMIT 25");
     $recentEventsForPicker = $stmtPicker->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {}
+// Student Life Section Values
+$studentLifeEyebrow = getSetting('student_life_eyebrow', 'Student Life at SRK');
+$studentLifeTitle = getSetting('student_life_title', 'Experience <em>an Unmatched University</em><br>Campus Life in Bhopal');
+$studentLifeDesc = getSetting('student_life_desc', 'A campus that thinks, builds, and celebrates together.<br>200 lush acres, 120+ active student clubs, and 18 annual fests create an unforgettable student journey.');
+$studentLifeVideoUrl = getSetting('student_life_video_url', 'https://vimeo.com/1235294623?share=copy&fl=sv&fe=ci');
+$studentLifeBadgeTag = getSetting('student_life_badge_tag', 'Featured');
+$studentLifeBadgeTitle = getSetting('student_life_badge_title', 'Annual Cultural Fest');
+
+$studentLifeStat1Num = getSetting('student_life_stat1_num', '42+');
+$studentLifeStat1Label = getSetting('student_life_stat1_label', 'Active Clubs');
+$studentLifeStat1Icon = getSetting('student_life_stat1_icon', 'fas fa-star');
+
+$studentLifeStat2Num = getSetting('student_life_stat2_num', '120+');
+$studentLifeStat2Label = getSetting('student_life_stat2_label', 'Sports');
+$studentLifeStat2Icon = getSetting('student_life_stat2_icon', 'fas fa-trophy');
+
+$studentLifeStat3Num = getSetting('student_life_stat3_num', '4,500+');
+$studentLifeStat3Label = getSetting('student_life_stat3_label', 'Hostel Beds');
+$studentLifeStat3Icon = getSetting('student_life_stat3_icon', 'fas fa-bed');
+
+$studentLifeStat4Num = getSetting('student_life_stat4_num', '18');
+$studentLifeStat4Label = getSetting('student_life_stat4_label', 'Annual Fests');
+$studentLifeStat4Icon = getSetting('student_life_stat4_icon', 'fas fa-music');
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
     <div>
         <h3 class="h4 fw-bold text-navy mb-1"><i class="fas fa-home text-danger me-2"></i> Homepage &amp; Leadership Manager</h3>
-        <p class="text-muted small mb-0">Control Homepage Hero Video, Stats Strip, Welcome Section, Chancellor Desk, and VC Messages.</p>
+        <p class="text-muted small mb-0">Control Homepage Hero Video, Stats Strip, Welcome Section, Chancellor Desk, VC Messages, and Student Life.</p>
     </div>
     <div class="d-flex gap-2">
         <a href="<?php echo BASE_URL; ?>" target="_blank" class="btn btn-sm btn-outline-danger px-3 rounded-pill shadow-sm">
@@ -262,9 +307,109 @@ try {
     </div>
 </div>
 
-<!-- Section Navigation Tabs -->
-<div class="card border-0 shadow-sm rounded-4 p-2 mb-4 bg-white">
-    <div class="srku-filter-row">
+<!-- Section Navigation Tabs (Smooth Scrollable with Controls) -->
+<style>
+.srku-tabs-nav-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 8px 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    border: 1px solid #e2e8f0;
+}
+.srku-tab-scroll-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    transition: all 0.2s ease;
+    z-index: 2;
+}
+.srku-tab-scroll-btn:hover {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+    transform: scale(1.05);
+}
+.srku-homepage-tabs-track {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 8px;
+    padding: 4px 2px 8px 2px;
+    width: 100%;
+    scrollbar-width: thin;
+    scrollbar-color: #94a3b8 #f1f5f9;
+    -webkit-overflow-scrolling: touch;
+}
+.srku-homepage-tabs-track::-webkit-scrollbar {
+    height: 6px;
+}
+.srku-homepage-tabs-track::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+.srku-homepage-tabs-track::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+    border: 1px solid #f1f5f9;
+}
+.srku-homepage-tabs-track::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+.srku-homepage-tabs-track .srku-filter-btn {
+    white-space: nowrap !important;
+    flex-shrink: 0;
+    font-size: 0.86rem;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 30px;
+    transition: all 0.2s ease;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: #f8fafc;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+}
+.srku-homepage-tabs-track .srku-filter-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+    transform: translateY(-1px);
+}
+.srku-homepage-tabs-track .srku-filter-btn.active {
+    background: var(--srku-red, #c0262d) !important;
+    color: #ffffff !important;
+    border-color: var(--srku-red, #c0262d) !important;
+    box-shadow: 0 4px 12px rgba(192, 38, 45, 0.25);
+}
+.srku-tab-hint {
+    font-size: 0.72rem;
+    color: #64748b;
+    white-space: nowrap;
+    padding: 0 4px;
+}
+</style>
+
+<div class="srku-tabs-nav-container mb-4">
+    <button type="button" class="srku-tab-scroll-btn btn-prev" id="srkuTabPrev" title="Scroll Left">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <div class="srku-homepage-tabs-track" id="srkuTabsTrack">
         <a href="manage_homepage.php?tab=hero" class="srku-filter-btn <?php echo $tab === 'hero' ? 'active' : ''; ?>">
             <i class="fas fa-video"></i> 1. Hero Video
         </a>
@@ -283,8 +428,51 @@ try {
         <a href="manage_homepage.php?tab=popup" class="srku-filter-btn <?php echo $tab === 'popup' ? 'active' : ''; ?>">
             <i class="fas fa-bullhorn text-danger"></i> 6. Campus Popup &amp; Alerts
         </a>
+        <a href="manage_homepage.php?tab=student_life" class="srku-filter-btn <?php echo $tab === 'student_life' ? 'active' : ''; ?>">
+            <i class="fas fa-graduation-cap text-success"></i> 7. Student Life &amp; Video
+        </a>
     </div>
+    <button type="button" class="srku-tab-scroll-btn btn-next" id="srkuTabNext" title="Scroll Right">
+        <i class="fas fa-chevron-right"></i>
+    </button>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const track = document.getElementById('srkuTabsTrack');
+    const prevBtn = document.getElementById('srkuTabPrev');
+    const nextBtn = document.getElementById('srkuTabNext');
+    if (!track) return;
+
+    // Arrow navigation
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+            track.scrollBy({ left: -260, behavior: 'smooth' });
+        });
+    }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            track.scrollBy({ left: 260, behavior: 'smooth' });
+        });
+    }
+
+    // Horizontal scroll on mouse wheel
+    track.addEventListener('wheel', function(e) {
+        if (e.deltaY !== 0) {
+            e.preventDefault();
+            track.scrollLeft += e.deltaY;
+        }
+    }, { passive: false });
+
+    // Auto-scroll to active tab so it is immediately visible
+    setTimeout(function() {
+        const activeBtn = track.querySelector('.srku-filter-btn.active');
+        if (activeBtn) {
+            activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+    }, 150);
+});
+</script>
 
 <form action="manage_homepage.php?tab=<?php echo urlencode($tab); ?>" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="save_homepage_sections" value="1">
@@ -1294,6 +1482,173 @@ try {
         if (el) el.innerText = val ? val + 's' : '1.2s';
     }
     </script>
+    <?php endif; ?>
+
+    <!-- TAB 7: STUDENT LIFE SECTION & VIDEO SHOWCASE -->
+    <?php if ($tab === 'student_life'): ?>
+        <?php $slVideoParsed = parseVideoUrl($studentLifeVideoUrl); ?>
+        <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4 bg-white">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom flex-wrap gap-2">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="p-3 rounded-circle bg-success-subtle text-success" style="font-size: 1.3rem;">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <span class="badge bg-success text-white px-3 py-1 rounded-pill small fw-bold">Section 7</span>
+                        <h4 class="fw-bold text-navy mb-0 mt-1">Student Life at SRK — Video &amp; Highlights Section</h4>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="<?php echo BASE_URL; ?>#student-life-v2" target="_blank" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                        <i class="fas fa-external-link-alt me-1"></i> Preview Section
+                    </a>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- Left: Video Settings -->
+                <div class="col-lg-7">
+                    <div class="p-3 bg-light rounded-3 border mb-3">
+                        <h6 class="fw-bold text-dark mb-2"><i class="fab fa-vimeo-v text-info me-1"></i> Vimeo / YouTube / Local Video URL</h6>
+                        <p class="text-muted small mb-2">Paste a Vimeo video URL, YouTube link, or local MP4 path. Plays seamlessly in autoplay loop with controls and edge-to-edge cover.</p>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text bg-white"><i class="fas fa-link text-muted"></i></span>
+                            <input type="text" name="student_life_video_url" id="slVideoInput" class="form-control" 
+                                   value="<?php echo sanitize($studentLifeVideoUrl); ?>" 
+                                   placeholder="https://vimeo.com/1235294623" oninput="updateSlVideoPreview(this.value)">
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between small text-muted">
+                            <span>Detected: <strong id="slVideoProviderBadge" class="text-primary"><?php echo htmlspecialchars($slVideoParsed['provider']); ?></strong></span>
+                            <span>Aspect Ratio: <strong>Cover (1247 / 700)</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Video Badge Overlay -->
+                    <div class="p-3 bg-light rounded-3 border mb-3">
+                        <h6 class="fw-bold text-dark mb-2"><i class="fas fa-certificate text-warning me-1"></i> Video Floating Badge Overlay</h6>
+                        <div class="row g-2">
+                            <div class="col-sm-5">
+                                <label class="form-label small fw-bold text-muted mb-1">Badge Tag</label>
+                                <input type="text" name="student_life_badge_tag" class="form-control form-control-sm" 
+                                       value="<?php echo sanitize($studentLifeBadgeTag); ?>" placeholder="Featured">
+                            </div>
+                            <div class="col-sm-7">
+                                <label class="form-label small fw-bold text-muted mb-1">Badge Title</label>
+                                <input type="text" name="student_life_badge_title" class="form-control form-control-sm" 
+                                       value="<?php echo sanitize($studentLifeBadgeTitle); ?>" placeholder="Annual Cultural Fest">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Headings -->
+                    <div class="p-3 bg-light rounded-3 border mb-3">
+                        <h6 class="fw-bold text-dark mb-2"><i class="fas fa-heading text-danger me-1"></i> Section Headings &amp; Intro</h6>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted mb-1">Eyebrow Tagline</label>
+                            <input type="text" name="student_life_eyebrow" class="form-control form-control-sm" 
+                                   value="<?php echo sanitize($studentLifeEyebrow); ?>" placeholder="Student Life at SRK">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted mb-1">Main Heading (Supports HTML / &lt;em&gt; / &lt;br&gt;)</label>
+                            <input type="text" name="student_life_title" class="form-control form-control-sm" 
+                                   value="<?php echo htmlspecialchars($studentLifeTitle); ?>" placeholder="Experience <em>an Unmatched University</em><br>Campus Life in Bhopal">
+                        </div>
+                        <div>
+                            <label class="form-label small fw-bold text-muted mb-1">Description Paragraph</label>
+                            <textarea name="student_life_desc" class="form-control form-control-sm" rows="3"><?php echo htmlspecialchars($studentLifeDesc); ?></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Live Video Card Preview & Stat Highlights -->
+                <div class="col-lg-5">
+                    <div class="p-3 bg-white rounded-3 border shadow-xs mb-3">
+                        <h6 class="fw-bold text-dark mb-2"><i class="fas fa-eye text-primary me-1"></i> Live Video Preview</h6>
+                        <div id="slVideoPreviewBox" style="position: relative; width: 100%; aspect-ratio: 1247 / 700; border-radius: 12px; overflow: hidden; background: #0b1120;">
+                            <?php if ($slVideoParsed['type'] === 'vimeo'): ?>
+                                <iframe id="slIframePreview" src="https://player.vimeo.com/video/<?php echo htmlspecialchars($slVideoParsed['id']); ?>?autoplay=1&muted=1&loop=1&autopause=0&controls=1" 
+                                        style="position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; transform: translate(-50%, -50%) scale(1.38); border: 0;" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                            <?php elseif ($slVideoParsed['type'] === 'youtube'): ?>
+                                <iframe id="slIframePreview" src="https://www.youtube.com/embed/<?php echo htmlspecialchars($slVideoParsed['id']); ?>?autoplay=1&mute=1&loop=1" 
+                                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                            <?php else: ?>
+                                <div class="text-white d-flex align-items-center justify-content-center h-100 p-3 text-center small">No video configured</div>
+                            <?php endif; ?>
+                            <div style="position: absolute; top: 10px; left: 10px; background: rgba(11,17,32,0.8); backdrop-filter: blur(6px); color: #fff; padding: 4px 10px; border-radius: 6px; border-left: 2px solid #f59e0b; pointer-events: none; z-index: 2;">
+                                <div style="font-size: 0.65rem; color: #f59e0b; font-weight: 700; text-transform: uppercase;">Featured</div>
+                                <div style="font-size: 0.8rem; font-weight: bold;"><?php echo htmlspecialchars($studentLifeBadgeTitle); ?></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 Stat Highlights Grid Settings -->
+                    <div class="p-3 bg-light rounded-3 border">
+                        <h6 class="fw-bold text-dark mb-3"><i class="fas fa-th-large text-navy me-1"></i> 4 Highlight Metric Boxes</h6>
+                        <div class="row g-2">
+                            <!-- Box 1 -->
+                            <div class="col-6">
+                                <div class="p-2 bg-white rounded border">
+                                    <span class="badge bg-danger-subtle text-danger small mb-1">Box 1 (Maroon)</span>
+                                    <input type="text" name="student_life_stat1_num" class="form-control form-control-sm mb-1 fw-bold" value="<?php echo sanitize($studentLifeStat1Num); ?>" placeholder="42+">
+                                    <input type="text" name="student_life_stat1_label" class="form-control form-control-sm mb-1" value="<?php echo sanitize($studentLifeStat1Label); ?>" placeholder="Active Clubs">
+                                    <input type="text" name="student_life_stat1_icon" class="form-control form-control-sm" value="<?php echo sanitize($studentLifeStat1Icon); ?>" placeholder="fas fa-star">
+                                </div>
+                            </div>
+                            <!-- Box 2 -->
+                            <div class="col-6">
+                                <div class="p-2 bg-white rounded border">
+                                    <span class="badge bg-secondary-subtle text-dark small mb-1">Box 2 (Gray)</span>
+                                    <input type="text" name="student_life_stat2_num" class="form-control form-control-sm mb-1 fw-bold" value="<?php echo sanitize($studentLifeStat2Num); ?>" placeholder="120+">
+                                    <input type="text" name="student_life_stat2_label" class="form-control form-control-sm mb-1" value="<?php echo sanitize($studentLifeStat2Label); ?>" placeholder="Sports">
+                                    <input type="text" name="student_life_stat2_icon" class="form-control form-control-sm" value="<?php echo sanitize($studentLifeStat2Icon); ?>" placeholder="fas fa-trophy">
+                                </div>
+                            </div>
+                            <!-- Box 3 -->
+                            <div class="col-6">
+                                <div class="p-2 bg-white rounded border">
+                                    <span class="badge bg-warning-subtle text-dark small mb-1">Box 3 (Cream)</span>
+                                    <input type="text" name="student_life_stat3_num" class="form-control form-control-sm mb-1 fw-bold" value="<?php echo sanitize($studentLifeStat3Num); ?>" placeholder="4,500+">
+                                    <input type="text" name="student_life_stat3_label" class="form-control form-control-sm mb-1" value="<?php echo sanitize($studentLifeStat3Label); ?>" placeholder="Hostel Beds">
+                                    <input type="text" name="student_life_stat3_icon" class="form-control form-control-sm" value="<?php echo sanitize($studentLifeStat3Icon); ?>" placeholder="fas fa-bed">
+                                </div>
+                            </div>
+                            <!-- Box 4 -->
+                            <div class="col-6">
+                                <div class="p-2 bg-white rounded border">
+                                    <span class="badge bg-danger-subtle text-danger small mb-1">Box 4 (Maroon)</span>
+                                    <input type="text" name="student_life_stat4_num" class="form-control form-control-sm mb-1 fw-bold" value="<?php echo sanitize($studentLifeStat4Num); ?>" placeholder="18">
+                                    <input type="text" name="student_life_stat4_label" class="form-control form-control-sm mb-1" value="<?php echo sanitize($studentLifeStat4Label); ?>" placeholder="Annual Fests">
+                                    <input type="text" name="student_life_stat4_icon" class="form-control form-control-sm" value="<?php echo sanitize($studentLifeStat4Icon); ?>" placeholder="fas fa-music">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-end pt-3 border-top mt-4">
+                <button type="submit" class="btn btn-danger px-4 py-2 rounded-pill fw-bold shadow-sm">
+                    <i class="fas fa-save me-1"></i> Save Student Life Settings
+                </button>
+            </div>
+        </div>
+
+        <script>
+        function updateSlVideoPreview(url) {
+            const box = document.getElementById('slVideoPreviewBox');
+            const badge = document.getElementById('slVideoProviderBadge');
+            if (!box || !url) return;
+            const vimeoMatch = url.match(/(?:vimeo\.com\/(?:video\/|channels\/(?:\w+\/)?|groups\/[^\/]+\/videos\/|album\/\d+\/video\/|))(\d+)/i);
+            const ytMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/shorts\/)([^"&?\/ ]{11})/i);
+            if (vimeoMatch && vimeoMatch[1]) {
+                if (badge) badge.innerText = 'Vimeo (ID: ' + vimeoMatch[1] + ')';
+                box.innerHTML = '<iframe src="https://player.vimeo.com/video/' + vimeoMatch[1] + '?autoplay=1&muted=1&loop=1&autopause=0&controls=1" style="position:absolute;top:50%;left:50%;width:100%;height:100%;transform:translate(-50%,-50%) scale(1.38);border:0;" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+            } else if (ytMatch && ytMatch[1]) {
+                if (badge) badge.innerText = 'YouTube (ID: ' + ytMatch[1] + ')';
+                box.innerHTML = '<iframe src="https://www.youtube.com/embed/' + ytMatch[1] + '?autoplay=1&mute=1&loop=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+            }
+        }
+        </script>
     <?php endif; ?>
 
 </form>

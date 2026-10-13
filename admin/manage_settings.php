@@ -173,6 +173,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_settings
         'student_sports_desc' => $_POST['student_sports_desc'] ?? '',
         'student_nss_title' => sanitize($_POST['student_nss_title'] ?? ''),
         'student_nss_desc' => $_POST['student_nss_desc'] ?? '',
+        'student_life_video_url' => sanitize($_POST['student_life_video_url'] ?? 'https://vimeo.com/1235294623?share=copy&fl=sv&fe=ci'),
 
         // Section 12: Global Alumni Portal
         'alumni_banner_title' => sanitize($_POST['alumni_banner_title'] ?? 'SRKU Global Alumni Network'),
@@ -312,6 +313,7 @@ $studentSportsTitle = getSetting('student_sports_title', 'Inter-University Sport
 $studentSportsDesc = getSetting('student_sports_desc', 'Annual tournaments across Cricket, Football, Basketball, Volleyball, Badminton, Table Tennis, and Track & Field athletics.');
 $studentNssTitle = getSetting('student_nss_title', 'NSS & Community Service');
 $studentNssDesc = getSetting('student_nss_desc', 'Active National Service Scheme units organizing blood donation camps, free health checkups, tree plantation, and rural literacy drives.');
+$studentLifeVideoUrl = getSetting('student_life_video_url', 'https://vimeo.com/1235294623?share=copy&fl=sv&fe=ci');
 
 // Section 12: Global Alumni Portal
 $alumniBannerTitle = getSetting('alumni_banner_title', 'SRKU Global Alumni Network');
@@ -806,6 +808,13 @@ $rkdfContactPhone = getSetting('rkdf_contact_phone', '0755 – 4911204');
                 <i class="fas fa-guitar text-danger"></i> Section 11: Student Life Highlights (Fests, Sports &amp; NSS)
             </div>
             <div class="row g-3">
+                <div class="col-12">
+                    <div class="p-3 bg-light rounded-3 border">
+                        <label class="form-label fw-bold text-dark small"><i class="fab fa-vimeo-v text-info me-1"></i> Student Life Vimeo / Video URL</label>
+                        <input type="text" name="student_life_video_url" class="form-control form-control-sm mb-1" value="<?php echo sanitize($studentLifeVideoUrl); ?>" placeholder="https://vimeo.com/1235294623 or https://youtube.com/watch?v=...">
+                        <span class="text-muted small">Supports Vimeo links (e.g. <code>https://vimeo.com/1235294623</code>), YouTube links, or MP4 files. Displays with smooth autoplay and controls.</span>
+                    </div>
+                </div>
                 <div class="col-md-4">
                     <div class="p-3 bg-light rounded-3 border h-100">
                         <label class="form-label fw-bold text-dark small">Annual Fest Title</label>
