@@ -66,6 +66,129 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+/* ═══════════════════════════════════════════════════════════
+   GLOBAL PARAGRAPH JUSTIFICATION
+   - All website paragraphs are justified (text-align: justify).
+   - Paragraphs that are left or right aligned are justified.
+   - Any center-aligned paragraph strictly remains center-aligned.
+   ═══════════════════════════════════════════════════════════ */
+p {
+    text-align: justify;
+    text-justify: inter-word;
+    text-align-last: left;
+}
+
+/* Explicit Right-Aligned Paragraphs: justify body, flush last line right */
+p.text-end,
+p.text-right,
+.text-end p,
+.text-right p,
+[dir="rtl"] p,
+[style*="text-align: right"] p,
+[style*="text-align:right"] p,
+p[style*="text-align: right"],
+p[style*="text-align:right"] {
+    text-align: justify !important;
+    text-align-last: right !important;
+    text-justify: inter-word;
+}
+
+/* Explicit Left-Aligned Paragraphs */
+p.text-start,
+p.text-left,
+.text-start p,
+.text-left p,
+[style*="text-align: left"] p,
+[style*="text-align:left"] p,
+p[style*="text-align: left"],
+p[style*="text-align:left"] {
+    text-align: justify !important;
+    text-align-last: left !important;
+    text-justify: inter-word;
+}
+
+/* STRICT EXCLUSION: Center-aligned paragraphs stay center-aligned */
+p.text-center,
+.text-center p,
+.text-center,
+[align="center"],
+[align="center"] p,
+p[align="center"],
+[style*="text-align: center"] p,
+[style*="text-align:center"] p,
+p[style*="text-align: center"],
+p[style*="text-align:center"],
+.student-life-v2__inner > p,
+.student-life-v2__desc,
+.page-top-banner p,
+.footer-bottom p,
+.stats-strip p {
+    text-align: center !important;
+    text-align-last: center !important;
+}
+
+/* Responsive Center Exclusions (Bootstrap Breakpoints) */
+@media (min-width: 576px) {
+    .text-sm-center,
+    .text-sm-center p,
+    p.text-sm-center {
+        text-align: center !important;
+        text-align-last: center !important;
+    }
+}
+@media (min-width: 768px) {
+    .text-md-center,
+    .text-md-center p,
+    p.text-md-center {
+        text-align: center !important;
+        text-align-last: center !important;
+    }
+}
+@media (min-width: 992px) {
+    .text-lg-center,
+    .text-lg-center p,
+    p.text-lg-center {
+        text-align: center !important;
+        text-align-last: center !important;
+    }
+}
+@media (min-width: 1200px) {
+    .text-xl-center,
+    .text-xl-center p,
+    p.text-xl-center {
+        text-align: center !important;
+        text-align-last: center !important;
+    }
+}
+
+/* If inside a centered container, an element is explicitly set to start/left/end/right, keep it justified */
+.text-center p.text-start,
+.text-center p.text-left,
+.text-center p.text-end,
+.text-center p.text-right {
+    text-align: justify !important;
+}
+.text-center p.text-start,
+.text-center p.text-left {
+    text-align-last: left !important;
+}
+.text-center p.text-end,
+.text-center p.text-right {
+    text-align-last: right !important;
+}
+
+/* Preserve standard alignment in admin panels for form controls & dashboards */
+.admin-main p:not(.text-justify),
+.admin-sidebar p {
+    text-align: left;
+    text-align-last: left;
+}
+.admin-main .text-center,
+.admin-main .text-center p {
+    text-align: center !important;
+    text-align-last: center !important;
+}
+
 h1,
 h2,
 h3,
