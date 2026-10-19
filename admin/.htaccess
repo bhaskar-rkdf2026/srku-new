@@ -20,30 +20,17 @@ Options -Indexes -ExecCGI
 </FilesMatch>
 
 # --------------------------------------------------------------
-# IP ACCESS RESTRICTION
+# ACCESS PERMISSIONS
+# Protected via session-based Admin Authentication (login.php)
 # --------------------------------------------------------------
 # Apache 2.4+ (Default on Modern Servers & XAMPP)
 <IfModule mod_authz_core.c>
-    <RequireAny>
-        # Localhost (Always permitted for local development & server jobs)
-        Require ip 127.0.0.1
-        Require ip ::1
-
-        # AUTHORIZED ADMIN PUBLIC IP:
-        # Check your public IP at https://whatismyipaddress.com or https://api.ipify.org
-        # Replace the IP below with your actual static/broadband IP:
-        Require ip 103.211.55.10
-    </RequireAny>
+    Require all granted
 </IfModule>
 
 # Apache 2.2 Fallback (For legacy hosting environments)
 <IfModule !mod_authz_core.c>
-    Order Deny,Allow
-    Deny from all
-    Allow from 127.0.0.1
-    Allow from ::1
-    Allow from  
+    Order Allow,Deny
+    Allow from all
 </IfModule>
 
-# Custom Error Page for unauthorized IP attempts
-ErrorDocument 403 "<h1>403 Forbidden</h1><p>Access Denied: Your IP address is not authorized to access this Administrative Console.</p>"
