@@ -68,6 +68,8 @@ Options -Indexes
     RewriteRule ^computer-science/?$ syllabus.php?course=computer-science [L,QSA]
     RewriteRule ^allied-courses-3/?$ syllabus.php?course=allied-courses [L,QSA]
     RewriteRule ^placements/?$ placements.php [L,QSA]
+    RewriteRule ^placement-record-srk-university-2024/?$ placement-record-srk-university-2024.php [L,QSA]
+    RewriteRule ^tpo-director-message/?$ tpo-director-message.php [L,QSA]
     RewriteRule ^facilities/?$ facilities.php [L,QSA]
     RewriteRule ^research-innovation/?$ research-innovation.php [L,QSA]
     RewriteRule ^incubation-center/?$ incubation-center.php [L,QSA]

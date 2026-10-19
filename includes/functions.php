@@ -234,16 +234,18 @@ function getDefaultMainMenu() {
         [
             'id' => 'menu_placements',
             'label' => 'Placements',
-            'url' => 'placements',
+            'url' => 'placement-record-srk-university-2024',
             'target' => '_self',
             'type' => 'dropdown',
             'preset' => 'placements',
             'badge' => '',
             'items' => [
-                ['label' => 'Corporate Placements Overview', 'url' => 'placements', 'target' => '_self', 'icon' => 'fas fa-chart-line text-danger'],
-                ['label' => 'Placement Cell', 'url' => 'document/placement-cell', 'target' => '_self', 'icon' => 'fas fa-briefcase text-success'],
-                ['label' => 'Top Recruiters & Packages', 'url' => 'placements#recruiter-section', 'target' => '_self', 'icon' => 'fas fa-building text-primary'],
-                ['label' => 'Placement Brochure (PDF)', 'url' => 'assets/uploads/pdf/placement-cell.pdf', 'target' => '_blank', 'icon' => 'fas fa-file-pdf text-danger']
+                ['label' => 'Placement Record', 'url' => 'placement-record-srk-university-2024', 'target' => '_self', 'icon' => 'fas fa-chart-line text-danger'],
+                ['label' => 'Ph.D Details', 'url' => '#', 'target' => '_self', 'icon' => 'fas fa-graduation-cap text-success', 'items' => [
+                    ['label' => 'Ph. D. Pursuing', 'url' => 'assets/uploads/phd/Phd-Pursuing.pdf', 'target' => '_blank', 'icon' => 'fas fa-file-pdf text-danger'],
+                    ['label' => 'Ph. D. Completed', 'url' => 'assets/uploads/phd/Phd-Completed.pdf', 'target' => '_blank', 'icon' => 'fas fa-file-pdf text-danger']
+                ]],
+                ['label' => 'Director Message', 'url' => 'tpo-director-message', 'target' => '_self', 'icon' => 'fas fa-user-tie text-primary']
             ]
         ],
         [

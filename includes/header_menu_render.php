@@ -324,9 +324,9 @@ function renderHeaderNavigationMenu($activeNav = '') {
                 break;
 
             case 'placements':
-                $isActive = (isset($activeNav) && $activeNav === 'placements') ? 'active' : '';
+                $isActive = (isset($activeNav) && in_array($activeNav, ['placements', 'placement-record', 'director-message', 'tpo-director-message'])) ? 'active' : '';
                 ?>
-                <!-- Placements Main Menu Tab (With Submenu including Placement Cell) -->
+                <!-- Placements Main Menu Tab (With Submenu matching live SRKU website) -->
                 <li class="static-menu-item <?php echo $isActive; ?>">
                     <a href="<?php echo sanitize($mUrl); ?>" target="<?php echo sanitize($mTarget); ?>" class="static-menu-link">
                         <?php echo sanitize($mLabel); ?> <span class="static-dropdown-arrow"></span>
@@ -335,19 +335,39 @@ function renderHeaderNavigationMenu($activeNav = '') {
                     <ul class="static-dropdown-panel" style="min-width: 275px;">
                         <?php 
                         $placementItems = !empty($mSubItems) ? $mSubItems : [
-                            ['label' => 'Corporate Placements Overview', 'url' => 'placements', 'target' => '_self', 'icon' => 'fas fa-chart-line text-danger'],
-                            ['label' => 'Placement Cell', 'url' => 'document/placement-cell', 'target' => '_self', 'icon' => 'fas fa-briefcase text-success'],
-                            ['label' => 'Top Recruiters & Packages', 'url' => 'placements#recruiter-section', 'target' => '_self', 'icon' => 'fas fa-building text-primary'],
-                            ['label' => 'Placement Brochure (PDF)', 'url' => 'assets/uploads/pdf/placement-cell.pdf', 'target' => '_blank', 'icon' => 'fas fa-file-pdf text-danger']
+                            ['label' => 'Placement Record', 'url' => 'placement-record-srk-university-2024', 'target' => '_self', 'icon' => 'fas fa-chart-line text-danger'],
+                            ['label' => 'Ph.D Details', 'url' => '#', 'target' => '_self', 'icon' => 'fas fa-graduation-cap text-success', 'items' => [
+                                ['label' => 'Ph. D. Pursuing', 'url' => 'assets/uploads/phd/Phd-Pursuing.pdf', 'target' => '_blank', 'icon' => 'fas fa-file-pdf text-danger'],
+                                ['label' => 'Ph. D. Completed', 'url' => 'assets/uploads/phd/Phd-Completed.pdf', 'target' => '_blank', 'icon' => 'fas fa-file-pdf text-danger']
+                            ]],
+                            ['label' => 'Director Message', 'url' => 'tpo-director-message', 'target' => '_self', 'icon' => 'fas fa-user-tie text-primary']
                         ];
                         foreach ($placementItems as $sub): 
+                            $hasChildren = !empty($sub['items']) && is_array($sub['items']);
                             $sUrl = formatSubMenuUrl($sub['url'] ?? '');
                         ?>
-                        <li class="static-dropdown-item">
+                        <li class="static-dropdown-item <?php echo $hasChildren ? 'has-sub' : ''; ?>">
                             <a href="<?php echo sanitize($sUrl); ?>" target="<?php echo sanitize($sub['target'] ?? '_self'); ?>" class="static-dropdown-link">
                                 <i class="<?php echo sanitize($sub['icon'] ?? 'fas fa-angle-right text-danger'); ?> me-1"></i>
                                 <?php echo sanitize($sub['label']); ?>
+                                <?php if ($hasChildren): ?>
+                                    <span class="static-dropdown-arrow static-sub-arrow"></span>
+                                <?php endif; ?>
                             </a>
+                            <?php if ($hasChildren): ?>
+                            <ul class="static-dropdown-panel static-sub-dropdown">
+                                <?php foreach ($sub['items'] as $cItem): 
+                                    $cUrl = formatSubMenuUrl($cItem['url'] ?? '');
+                                ?>
+                                <li class="static-dropdown-item">
+                                    <a href="<?php echo sanitize($cUrl); ?>" target="<?php echo sanitize($cItem['target'] ?? '_self'); ?>" class="static-dropdown-link">
+                                        <i class="<?php echo sanitize($cItem['icon'] ?? 'fas fa-angle-right text-danger'); ?> me-1"></i>
+                                        <?php echo sanitize($cItem['label']); ?>
+                                    </a>
+                                </li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <?php endif; ?>
                         </li>
                         <?php endforeach; ?>
                     </ul>
