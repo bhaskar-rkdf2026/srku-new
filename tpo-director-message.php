@@ -71,7 +71,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="card border-0 shadow-sm rounded-4 overflow-hidden sticky-top" style="top: 100px;">
                     <div class="position-relative text-center p-4 pb-0 bg-white">
                         <div class="tpo-img-wrapper mx-auto mb-3">
-                            <img src="<?php echo BASE_URL; ?>assets/uploads/tpo/ajay_sir.png" 
+                            <img src="<?php echo BASE_URL; ?>assets/images/ajay-tnp.jpeg" 
                                  alt="Ajay Vishwakarma - Director Training &amp; Placement" 
                                  class="img-fluid rounded-4 shadow-sm w-100 object-fit-cover"
                                  style="max-height: 380px; object-position: top center; transition: transform 0.4s ease;"
