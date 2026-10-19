@@ -5,24 +5,7 @@ $slug = sanitize($_GET['slug'] ?? 'rkdf-institute-of-science-and-technology');
 $dept = getDepartmentBySlug($slug);
 
 if (!$dept && ($slug === 'allied-sciences' || $slug === 'department-of-allied-sciences' || $slug === 'faculty-of-allied-sciences')) {
-    $dept = [
-        'id' => 73,
-        'name' => 'Faculty of Allied Sciences & Humanities',
-        'category' => 'Allied Sciences',
-        'slug' => 'allied-sciences',
-        'icon' => 'fas fa-atom',
-        'image' => 'assets/uploads/constituent-units/allied-sciences.webp',
-        'banner_img' => 'assets/uploads/constituent-units/allied-sciences.webp',
-        'description' => 'The Faculty of Allied Sciences & Humanities at Sarvepalli Radhakrishnan University (SRKU) delivers premier interdisciplinary education spanning Basic & Applied Sciences, Arts & Humanities, Commerce, Computer Applications, Library & Information Science, Yoga, and Fashion Technology. With modern scientific laboratories, digital libraries, and experienced faculty, the department provides an integrated ecosystem for academic excellence, creative arts, and research.',
-        'dean_name' => 'Prof. (Dr.) S. K. Singh',
-        'dean_designation' => 'Dean & Principal',
-        'dean_photo' => 'assets/uploads/constituent-units/allied-sciences.webp',
-        'dean_message' => 'Welcome to the Faculty of Allied Sciences & Humanities at Sarvepalli Radhakrishnan University. Our multidisciplinary approach empowers students across pure sciences, arts, commerce, computing, and creative design with experiential learning and research excellence.',
-        'contact_no' => '0755-4700983, 7024144981',
-        'approvals' => 'UGC',
-        'established_year' => '2015',
-        'status' => 'active'
-    ];
+    $dept = getDepartmentBySlug('allied-sciences');
 }
 
 if (!$dept) {
@@ -388,19 +371,19 @@ if (!function_exists('istPdf')) {
                     <div class="row row-cols-2 row-cols-md-4 g-3 text-center">
                         <div class="col">
                             <div class="small text-muted mb-1"><i class="fas fa-calendar-alt text-danger me-1"></i> Established</div>
-                            <div class="fw-bold text-navy fs-6"><?php echo sanitize($dept['established_year'] ?: '1995'); ?></div>
+                            <div class="fw-bold text-navy fs-6"><?php echo sanitize($dept['established_year'] ?: '-'); ?></div>
                         </div>
                         <div class="col">
-                            <div class="small text-muted mb-1"><i class="fas fa-graduation-cap text-danger me-1"></i> Programs</div>
-                            <div class="fw-bold text-navy fs-6">Degrees / Diplomas</div>
+                            <div class="small text-muted mb-1"><i class="fas fa-graduation-cap text-danger me-1"></i> Programs Offered</div>
+                            <div class="fw-bold text-navy fs-6"><?php echo count($courses) > 0 ? count($courses) . (count($courses) === 1 ? ' Course' : ' Courses') : 'Degrees / Diplomas'; ?></div>
                         </div>
                         <div class="col">
                             <div class="small text-muted mb-1"><i class="fas fa-stamp text-danger me-1"></i> Regulatory Status</div>
                             <div class="fw-bold text-navy fs-6"><?php echo sanitize($dept['approvals'] ?: 'UGC Approved'); ?></div>
                         </div>
                         <div class="col">
-                            <div class="small text-muted mb-1"><i class="fas fa-chart-line text-danger me-1"></i> Placement Record</div>
-                            <div class="fw-bold text-danger fs-6">Active Assistance</div>
+                            <div class="small text-muted mb-1"><i class="fas fa-layer-group text-danger me-1"></i> Stream / Category</div>
+                            <div class="fw-bold text-danger fs-6 text-truncate" title="<?php echo sanitize($dept['category'] ?? 'Constituent Unit'); ?>"><?php echo sanitize($dept['category'] ?? 'Constituent Unit'); ?></div>
                         </div>
                     </div>
                 </div>
@@ -431,36 +414,32 @@ if (!function_exists('istPdf')) {
                 <!-- About the Faculty Card -->
                 <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 mb-4">
                     <h2 class="text-maroon fw-bold mb-3"><i class="fas fa-university text-danger me-2"></i> About the Constituent Unit &amp; Academic Vision</h2>
-                    <p class="text-dark lead fs-6" style="line-height:1.85;">
-                        <?php echo nl2br(sanitize($dept['description'])); ?>
-                    </p>
-                    <p class="text-muted mb-0" style="line-height:1.85; font-size:0.95rem;">
-                        Equipped with industry-standard curriculum, advanced specialized laboratories, experienced doctoral faculty members, and regular internships, the faculty prepares scholars to excel in competitive careers, clinical healthcare, scientific research, and entrepreneurship.
-                    </p>
+                    <div class="text-dark lead fs-6 dept-overview-body" style="line-height:1.85;">
+                        <?php 
+                        $desc = trim((string)($dept['description'] ?? ''));
+                        if (!empty($desc)) {
+                            // If contains HTML tags (from CKEditor), allow safe tags; otherwise format line breaks
+                            if ($desc !== strip_tags($desc)) {
+                                echo strip_tags($desc, '<p><br><b><strong><i><em><u><ul><ol><li><a><h3><h4><h5>');
+                            } else {
+                                echo nl2br(sanitize($desc));
+                            }
+                        } else {
+                            echo '<p class="text-muted mb-0">Delivering industry-aligned professional academic education, advanced research laboratories, and experiential learning.</p>';
+                        }
+                        ?>
+                    </div>
                 </div>
 
+
                 <?php
-                // RKDF IST: Hardcode Director details as fallback when DB row is empty or has old name
-                if ($dept['slug'] === 'rkdf-institute-of-science-and-technology') {
-                    if (empty(trim($dept['dean_name'] ?? '')) || stripos($dept['dean_name'], 'Nilesh') !== false) {
-                        $dept['dean_name']        = 'Director';
-                        $dept['dean_designation'] = 'Director';
-                        $dept['dean_photo']       = '';
-                        $dept['dean_message']     = "SRK University RKDF Institute of Science & Technology is a premier institute for professional studies. This institute has achieved ladder of engineering excellence since it's inception in 1995 & is recognized as one of the leading professional institutes in Madhya Pradesh, where students acquire technical & professional skills with cutting edge technology, knowledge & high moral standards. The growth achieved by this institution is significant. The institute is committed to offer quality technical education by adopting principle of mutual trust, fairness & positive orientation. The management, faculty members & supporting staff is committed to fulfill the expectations of all the stake holders i.e. students, parent, corporate community & society. The students are benefited with excellent infrastructure, dedicated faculty members & excellent track record of placement in corporate world. The vision of our faculties and their dedication to the cause of technical education combined with their dynamic approach to leadership has made a telling difference to the growth of the college. Our graduate students are selected in top notch organization, working in the field of software, energy, infrastructure, robotics & automation in fortune 500 companies of western world as well as MNCs of India. In the years to come RKDF Institute of Science & Technology shall play a significant role in the technology sector for developing trained & skilled human resources to serve the nation for better economic performance & growth.";
-                    }
-                }
+                // Leadership details strictly from database
                 $dName = trim((string)($dept['dean_name'] ?? ''));
                 $dMsg = trim((string)($dept['dean_message'] ?? ''));
-                if (stripos($dName, 'Nilesh') !== false) {
-                    $dName = 'Director';
-                    $dept['dean_photo'] = '';
-                }
-                if ($dName === 'Director') {
-                    $dept['dean_photo'] = '';
-                }
-                if (!empty($dName) && !empty($dMsg)): 
-                    $dDesig = trim((string)($dept['dean_designation'] ?? 'Dean & Principal')) ?: 'Dean & Principal';
-                    $dPhoto = trim((string)($dept['dean_photo'] ?? ''));
+                $dDesig = trim((string)($dept['dean_designation'] ?? '')) ?: 'Dean & Principal';
+                $dPhoto = trim((string)($dept['dean_photo'] ?? ''));
+
+                if (!empty($dName) || !empty($dMsg)): 
                     $firstDesig = trim(explode('|', $dDesig)[0]);
                     $cleanRole = trim(preg_replace('/\s*\([^)]*(?:PhD|Ph\.D|MD|MBBS|MSc|MA|M\.Pharm|PGDCA|Total Exp)[^)]*\)/i', '', $firstDesig)) ?: 'Dean & Principal';
                 ?>
@@ -850,13 +829,26 @@ if (!function_exists('istPdf')) {
                                 </div>
                             </div>
                         </div>
+                        <?php 
+                        $catLower = strtolower($dept['category'] ?? '');
+                        $isMedicalStream = in_array($catLower, ['medical', 'dental', 'ayurveda', 'homoeopathy', 'nursing', 'paramedical', 'medicine'])
+                            || (strpos($dept['slug'], 'medical') !== false || strpos($dept['slug'], 'dental') !== false || strpos($dept['slug'], 'ayurveda') !== false || strpos($dept['slug'], 'homoeopathic') !== false || strpos($dept['slug'], 'nursing') !== false);
+                        ?>
                         <div class="col-md-6">
                             <div class="p-3 bg-light rounded-3 d-flex align-items-center gap-3 border h-100">
-                                <i class="fas fa-hospital-user text-danger fa-2x"></i>
-                                <div>
-                                    <h5 class="h6 fw-bold text-dark mb-1">Teaching Hospital / Live Beds</h5>
-                                    <small class="text-muted">750+ Bed multi-specialty clinical training</small>
-                                </div>
+                                <?php if ($isMedicalStream): ?>
+                                    <i class="fas fa-hospital-user text-danger fa-2x"></i>
+                                    <div>
+                                        <h5 class="h6 fw-bold text-dark mb-1">Teaching Hospital &amp; Clinical OPD</h5>
+                                        <small class="text-muted">750+ Bed multi-specialty clinical training &amp; live patient wards</small>
+                                    </div>
+                                <?php else: ?>
+                                    <i class="fas fa-chalkboard-teacher text-danger fa-2x"></i>
+                                    <div>
+                                        <h5 class="h6 fw-bold text-dark mb-1">Seminar &amp; Smart Lecture Halls</h5>
+                                        <small class="text-muted">Audio-visual presentation rooms &amp; interactive learning halls</small>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -1241,15 +1233,10 @@ if (!function_exists('istPdf')) {
                 <!-- Career & Placement Widget -->
                 <div class="card p-4 border-0 shadow-sm rounded-4 bg-light border">
                     <h5 class="fw-bold text-navy mb-2"><i class="fas fa-award text-danger me-2"></i> Training &amp; Placements</h5>
-                    <p class="text-muted small mb-3">Dedicated training in soft skills, technical coding, aptitude, and multi-round interviews with 120+ top MNCs.</p>
-                    <div class="d-flex justify-content-between align-items-center p-2 bg-white rounded-3 border mb-2">
-                        <span class="small fw-semibold text-muted">Highest Package:</span>
-                        <span class="text-danger fw-bold">12 LPA</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center p-2 bg-white rounded-3 border">
-                        <span class="small fw-semibold text-muted">Placement Record:</span>
-                        <span class="text-navy fw-bold">94% Verified</span>
-                    </div>
+                    <p class="text-muted small mb-3">Dedicated training in professional skills, industry seminars, and active campus drives organized by the Central Placement Cell.</p>
+                    <a href="<?php echo BASE_URL; ?>placements" class="btn btn-sm btn-outline-danger w-100 fw-semibold">
+                        <i class="fas fa-briefcase me-1"></i> View Placements &amp; Recruiters
+                    </a>
                 </div>
 
                 <?php if ($dept['slug'] === 'rkdf-institute-of-science-and-technology'): ?>

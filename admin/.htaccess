@@ -42,7 +42,7 @@ Options -Indexes -ExecCGI
     Deny from all
     Allow from 127.0.0.1
     Allow from ::1
-    Allow from 103.211.55.10
+    Allow from  
 </IfModule>
 
 # Custom Error Page for unauthorized IP attempts

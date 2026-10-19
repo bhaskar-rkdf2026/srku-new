@@ -250,19 +250,105 @@ function renderHeaderNavigationMenu($activeNav = '') {
                 break;
 
             case 'academics':
-                $isActive = (isset($activeNav) && $activeNav === 'academics') ? 'active' : '';
+                $isActive = (isset($activeNav) && in_array($activeNav, ['academics', 'academic-calendar', 'courses', 'syllabus'])) ? 'active' : '';
                 ?>
-                <!-- 4. Academics -->
+                <!-- Academics (With Nested Course Schemes & Syllabus Submenu) -->
                 <li class="static-menu-item <?php echo $isActive; ?>">
                     <a href="<?php echo sanitize($mUrl); ?>" target="<?php echo sanitize($mTarget); ?>" class="static-menu-link">
                         <?php echo sanitize($mLabel); ?> <span class="static-dropdown-arrow"></span>
                         <?php if ($mBadge): ?><span class="badge bg-danger ms-1"><?php echo sanitize($mBadge); ?></span><?php endif; ?>
                     </a>
-                    <ul class="static-dropdown-panel">
+                    <ul class="static-dropdown-panel" style="min-width: 290px;">
+                        <!-- Level-3 Submenu: Course Schemes & Syllabus -->
+                        <li class="static-dropdown-item">
+                            <a href="<?php echo BASE_URL; ?>syllabus" class="static-dropdown-link fw-semibold text-danger">
+                                <i class="fas fa-book-open text-danger me-1"></i> Course Schemes &amp; Syllabus <span class="static-dropdown-arrow static-sub-arrow"></span>
+                            </a>
+                            <!-- Level-3 Submenu: Course Schemes & Syllabus (Single Column, Scrollbar Hidden) -->
+                            <ul class="static-dropdown-panel static-sub-dropdown shadow-lg syllabus-scroll-hidden" style="min-width: 315px; max-height: 480px; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; -ms-overflow-style: none;">
+                                <li class="static-dropdown-item bg-light border-bottom">
+                                    <a href="<?php echo BASE_URL; ?>syllabus" class="static-dropdown-link fw-bold text-danger py-2">
+                                        <i class="fas fa-file-pdf text-danger me-1"></i> View All Syllabus &amp; Schemes &rarr;
+                                    </a>
+                                </li>
+                                <?php
+                                $academicSyllabusList = [
+                                    ['label' => 'BA LLB (HONS.)', 'url' => 'syllabus?course=ba-llb', 'icon' => 'fas fa-gavel text-danger'],
+                                    ['label' => 'BJMC Syllabus & Scheme', 'url' => 'syllabus?course=bjmc', 'icon' => 'fas fa-newspaper text-danger'],
+                                    ['label' => 'LLB.', 'url' => 'syllabus?course=llb', 'icon' => 'fas fa-balance-scale text-danger'],
+                                    ['label' => 'LLM', 'url' => 'syllabus?course=llm', 'icon' => 'fas fa-graduation-cap text-danger'],
+                                    ['label' => 'B.Pharmacy', 'url' => 'syllabus?course=b-pharmacy', 'icon' => 'fas fa-pills text-danger'],
+                                    ['label' => 'D.Pharmacy', 'url' => 'syllabus?course=d-pharmacy', 'icon' => 'fas fa-capsules text-danger'],
+                                    ['label' => 'M.Pharma', 'url' => 'syllabus?course=m-pharma', 'icon' => 'fas fa-prescription text-danger'],
+                                    ['label' => 'Nursing', 'url' => 'syllabus?course=nursing', 'icon' => 'fas fa-user-nurse text-danger'],
+                                    ['label' => 'Polytechnic Engineering', 'url' => 'syllabus?course=polytechnic-engineering', 'icon' => 'fas fa-tools text-danger'],
+                                    ['label' => 'Agriculture Courses', 'url' => 'syllabus?course=agriculture-courses', 'icon' => 'fas fa-seedling text-danger'],
+                                    ['label' => 'Paramedical', 'url' => 'syllabus?course=paramedical', 'icon' => 'fas fa-stethoscope text-danger'],
+                                    ['label' => 'B.E. / B.Tech', 'url' => 'syllabus?course=be-btech', 'icon' => 'fas fa-laptop-code text-danger'],
+                                    ['label' => 'M.Tech', 'url' => 'syllabus?course=m-tech', 'icon' => 'fas fa-microchip text-danger'],
+                                    ['label' => 'MBA', 'url' => 'syllabus?course=mba', 'icon' => 'fas fa-briefcase text-danger'],
+                                    ['label' => 'BCA', 'url' => 'syllabus?course=bca', 'icon' => 'fas fa-desktop text-danger'],
+                                    ['label' => 'MCA', 'url' => 'syllabus?course=mca', 'icon' => 'fas fa-network-wired text-danger'],
+                                    ['label' => 'Library Course', 'url' => 'syllabus?course=library-course', 'icon' => 'fas fa-book-reader text-danger'],
+                                    ['label' => 'Computer Science', 'url' => 'syllabus?course=computer-science', 'icon' => 'fas fa-code text-danger'],
+                                    ['label' => 'Allied Courses', 'url' => 'syllabus?course=allied-courses', 'icon' => 'fas fa-atom text-danger']
+                                ];
+                                foreach ($academicSyllabusList as $sc):
+                                ?>
+                                <li class="static-dropdown-item">
+                                    <a href="<?php echo BASE_URL . ltrim($sc['url'], '/'); ?>" class="static-dropdown-link">
+                                        <i class="<?php echo $sc['icon']; ?> me-1"></i> <?php echo sanitize($sc['label']); ?>
+                                    </a>
+                                </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </li>
+
                         <?php foreach ($mSubItems as $sub): 
+                            $subLabel = $sub['label'] ?? '';
+                            $subUrlRaw = strtolower($sub['url'] ?? '');
+                            // Skip redundant syllabus items or placements
+                            if (stripos($subLabel, 'syllabus') !== false || stripos($subLabel, 'course scheme') !== false) {
+                                continue;
+                            }
+                            if (stripos($subLabel, 'placement') !== false || stripos($subUrlRaw, 'placements') !== false) {
+                                continue;
+                            }
                             $sUrl = formatSubMenuUrl($sub['url'] ?? '');
                         ?>
                         <li class="static-dropdown-item"><a href="<?php echo sanitize($sUrl); ?>" target="<?php echo sanitize($sub['target'] ?? '_self'); ?>" class="static-dropdown-link"><i class="<?php echo sanitize($sub['icon'] ?? 'fas fa-angle-right text-danger'); ?> me-1"></i> <?php echo sanitize($sub['label']); ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+                <?php
+                break;
+
+            case 'placements':
+                $isActive = (isset($activeNav) && $activeNav === 'placements') ? 'active' : '';
+                ?>
+                <!-- Placements Main Menu Tab (With Submenu including Placement Cell) -->
+                <li class="static-menu-item <?php echo $isActive; ?>">
+                    <a href="<?php echo sanitize($mUrl); ?>" target="<?php echo sanitize($mTarget); ?>" class="static-menu-link">
+                        <?php echo sanitize($mLabel); ?> <span class="static-dropdown-arrow"></span>
+                        <?php if ($mBadge): ?><span class="badge bg-danger ms-1"><?php echo sanitize($mBadge); ?></span><?php endif; ?>
+                    </a>
+                    <ul class="static-dropdown-panel" style="min-width: 275px;">
+                        <?php 
+                        $placementItems = !empty($mSubItems) ? $mSubItems : [
+                            ['label' => 'Corporate Placements Overview', 'url' => 'placements', 'target' => '_self', 'icon' => 'fas fa-chart-line text-danger'],
+                            ['label' => 'Placement Cell', 'url' => 'document/placement-cell', 'target' => '_self', 'icon' => 'fas fa-briefcase text-success'],
+                            ['label' => 'Top Recruiters & Packages', 'url' => 'placements#recruiter-section', 'target' => '_self', 'icon' => 'fas fa-building text-primary'],
+                            ['label' => 'Placement Brochure (PDF)', 'url' => 'assets/uploads/pdf/placement-cell.pdf', 'target' => '_blank', 'icon' => 'fas fa-file-pdf text-danger']
+                        ];
+                        foreach ($placementItems as $sub): 
+                            $sUrl = formatSubMenuUrl($sub['url'] ?? '');
+                        ?>
+                        <li class="static-dropdown-item">
+                            <a href="<?php echo sanitize($sUrl); ?>" target="<?php echo sanitize($sub['target'] ?? '_self'); ?>" class="static-dropdown-link">
+                                <i class="<?php echo sanitize($sub['icon'] ?? 'fas fa-angle-right text-danger'); ?> me-1"></i>
+                                <?php echo sanitize($sub['label']); ?>
+                            </a>
+                        </li>
                         <?php endforeach; ?>
                     </ul>
                 </li>
@@ -379,6 +465,11 @@ function renderHeaderNavigationMenu($activeNav = '') {
                     </a>
                     <ul class="static-dropdown-panel">
                         <?php foreach ($mSubItems as $sub): 
+                            $subLabel = $sub['label'] ?? '';
+                            $subUrlRaw = strtolower($sub['url'] ?? '');
+                            if (stripos($subLabel, 'placement') !== false || stripos($subUrlRaw, 'placement') !== false) {
+                                continue;
+                            }
                             $sUrl = formatSubMenuUrl($sub['url'] ?? '');
                         ?>
                         <li class="static-dropdown-item"><a href="<?php echo sanitize($sUrl); ?>" target="<?php echo sanitize($sub['target'] ?? '_self'); ?>" class="static-dropdown-link"><i class="<?php echo sanitize($sub['icon'] ?? 'fas fa-angle-right text-danger'); ?> me-1"></i> <?php echo sanitize($sub['label']); ?></a></li>

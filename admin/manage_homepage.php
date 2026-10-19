@@ -169,8 +169,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_homepage_section
             'student_life_title' => $_POST['student_life_title'] ?? 'Experience <em>an Unmatched University</em><br>Campus Life in Bhopal',
             'student_life_desc' => $_POST['student_life_desc'] ?? 'A campus that thinks, builds, and celebrates together.<br>200 lush acres, 120+ active student clubs, and 18 annual fests create an unforgettable student journey.',
             'student_life_video_url' => $studentLifeVideo,
-            'student_life_badge_tag' => sanitize($_POST['student_life_badge_tag'] ?? 'Featured'),
-            'student_life_badge_title' => sanitize($_POST['student_life_badge_title'] ?? 'Annual Cultural Fest'),
+            'student_life_badge_tag' => sanitize($_POST['student_life_badge_tag'] ?? 'Sports Complex'),
+            'student_life_badge_title' => sanitize($_POST['student_life_badge_title'] ?? 'Campus Sports Arena'),
             'student_life_stat1_num' => sanitize($_POST['student_life_stat1_num'] ?? '42+'),
             'student_life_stat1_label' => sanitize($_POST['student_life_stat1_label'] ?? 'Active Clubs'),
             'student_life_stat1_icon' => sanitize($_POST['student_life_stat1_icon'] ?? 'fas fa-star'),
@@ -269,8 +269,8 @@ $studentLifeEyebrow = getSetting('student_life_eyebrow', 'Student Life at SRK');
 $studentLifeTitle = getSetting('student_life_title', 'Experience <em>an Unmatched University</em><br>Campus Life in Bhopal');
 $studentLifeDesc = getSetting('student_life_desc', 'A campus that thinks, builds, and celebrates together.<br>200 lush acres, 120+ active student clubs, and 18 annual fests create an unforgettable student journey.');
 $studentLifeVideoUrl = getSetting('student_life_video_url', 'https://vimeo.com/1235294623?share=copy&fl=sv&fe=ci');
-$studentLifeBadgeTag = getSetting('student_life_badge_tag', 'Featured');
-$studentLifeBadgeTitle = getSetting('student_life_badge_title', 'Annual Cultural Fest');
+$studentLifeBadgeTag = getSetting('student_life_badge_tag', 'Sports Complex');
+$studentLifeBadgeTitle = getSetting('student_life_badge_title', 'Campus Sports Arena');
 
 $studentLifeStat1Num = getSetting('student_life_stat1_num', '42+');
 $studentLifeStat1Label = getSetting('student_life_stat1_label', 'Active Clubs');
@@ -1530,12 +1530,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="col-sm-5">
                                 <label class="form-label small fw-bold text-muted mb-1">Badge Tag</label>
                                 <input type="text" name="student_life_badge_tag" class="form-control form-control-sm" 
-                                       value="<?php echo sanitize($studentLifeBadgeTag); ?>" placeholder="Featured">
+                                       value="<?php echo sanitize($studentLifeBadgeTag); ?>" placeholder="Sports Complex">
                             </div>
                             <div class="col-sm-7">
                                 <label class="form-label small fw-bold text-muted mb-1">Badge Title</label>
                                 <input type="text" name="student_life_badge_title" class="form-control form-control-sm" 
-                                       value="<?php echo sanitize($studentLifeBadgeTitle); ?>" placeholder="Annual Cultural Fest">
+                                       value="<?php echo sanitize($studentLifeBadgeTitle); ?>" placeholder="Campus Sports Arena">
                             </div>
                         </div>
                     </div>

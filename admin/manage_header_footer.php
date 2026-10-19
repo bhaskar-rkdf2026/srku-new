@@ -505,6 +505,7 @@ $liUrl = getSetting('linkedin_url', '#');
                             <button type="button" class="preset-badge-btn" onclick="addPresetMenu('syllabus', 'Syllabus & Courses', 'courses')"><i class="fas fa-book-open text-danger"></i> Syllabus &amp; Courses</button>
                             <button type="button" class="preset-badge-btn" onclick="addPresetMenu('academics', 'Academics', 'academic-calendar.php')"><i class="fas fa-graduation-cap text-danger"></i> Academics</button>
                             <button type="button" class="preset-badge-btn" onclick="addPresetMenu('admission', 'Admission & Fee', 'admission-enquiry.php')"><i class="fas fa-user-edit text-danger"></i> Admission &amp; Fee</button>
+                            <button type="button" class="preset-badge-btn" onclick="addPresetMenu('placements', 'Placements', 'placements')"><i class="fas fa-briefcase text-danger"></i> Placements</button>
                             <button type="button" class="preset-badge-btn" onclick="addPresetMenu('research', 'Research', 'research-innovation')"><i class="fas fa-microscope text-danger"></i> Research</button>
                             <button type="button" class="preset-badge-btn" onclick="addPresetMenu('departments', 'Departments', 'departments.php')"><i class="fas fa-building text-danger"></i> Departments</button>
                             <button type="button" class="preset-badge-btn" onclick="addPresetMenu('student-life', 'Student Life', 'student-life')"><i class="fas fa-running text-danger"></i> Student Life</button>

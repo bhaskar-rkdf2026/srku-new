@@ -113,36 +113,6 @@ function getDefaultMainMenu() {
             ]
         ],
         [
-            'id' => 'menu_syllabus',
-            'label' => 'Syllabus & Courses',
-            'url' => 'courses',
-            'target' => '_self',
-            'type' => 'megamenu',
-            'preset' => 'syllabus',
-            'badge' => '',
-            'items' => [
-                ['label' => 'BA LLB (HONS.)', 'url' => 'syllabus?course=ba-llb', 'target' => '_self', 'icon' => 'fas fa-gavel text-danger'],
-                ['label' => 'BJMC Syllabus & Scheme', 'url' => 'syllabus?course=bjmc', 'target' => '_self', 'icon' => 'fas fa-newspaper text-danger'],
-                ['label' => 'LLB.', 'url' => 'syllabus?course=llb', 'target' => '_self', 'icon' => 'fas fa-balance-scale text-danger'],
-                ['label' => 'LLM', 'url' => 'syllabus?course=llm', 'target' => '_self', 'icon' => 'fas fa-graduation-cap text-danger'],
-                ['label' => 'B.pharmacy', 'url' => 'syllabus?course=b-pharmacy', 'target' => '_self', 'icon' => 'fas fa-pills text-danger'],
-                ['label' => 'D.Pharmacy', 'url' => 'syllabus?course=d-pharmacy', 'target' => '_self', 'icon' => 'fas fa-capsules text-danger'],
-                ['label' => 'M.Pharma', 'url' => 'syllabus?course=m-pharma', 'target' => '_self', 'icon' => 'fas fa-prescription text-danger'],
-                ['label' => 'Nursing', 'url' => 'syllabus?course=nursing', 'target' => '_self', 'icon' => 'fas fa-user-nurse text-danger'],
-                ['label' => 'Polytechnic Engineering', 'url' => 'syllabus?course=polytechnic-engineering', 'target' => '_self', 'icon' => 'fas fa-tools text-danger'],
-                ['label' => 'Agriculture Courses', 'url' => 'syllabus?course=agriculture-courses', 'target' => '_self', 'icon' => 'fas fa-seedling text-danger'],
-                ['label' => 'Paramedical', 'url' => 'syllabus?course=paramedical', 'target' => '_self', 'icon' => 'fas fa-stethoscope text-danger'],
-                ['label' => 'B.E. / B.Tech', 'url' => 'syllabus?course=be-btech', 'target' => '_self', 'icon' => 'fas fa-laptop-code text-danger'],
-                ['label' => 'M.Tech', 'url' => 'syllabus?course=m-tech', 'target' => '_self', 'icon' => 'fas fa-microchip text-danger'],
-                ['label' => 'MBA', 'url' => 'syllabus?course=mba', 'target' => '_self', 'icon' => 'fas fa-briefcase text-danger'],
-                ['label' => 'BCA', 'url' => 'syllabus?course=bca', 'target' => '_self', 'icon' => 'fas fa-desktop text-danger'],
-                ['label' => 'MCA', 'url' => 'syllabus?course=mca', 'target' => '_self', 'icon' => 'fas fa-network-wired text-danger'],
-                ['label' => 'Library Course', 'url' => 'syllabus?course=library-course', 'target' => '_self', 'icon' => 'fas fa-book-reader text-danger'],
-                ['label' => 'Computer Science', 'url' => 'syllabus?course=computer-science', 'target' => '_self', 'icon' => 'fas fa-code text-danger'],
-                ['label' => 'Allied Courses', 'url' => 'syllabus?course=allied-courses', 'target' => '_self', 'icon' => 'fas fa-atom text-danger']
-            ]
-        ],
-        [
             'id' => 'menu_academics',
             'label' => 'Academics',
             'url' => 'academic-calendar.php',
@@ -151,6 +121,8 @@ function getDefaultMainMenu() {
             'preset' => 'academics',
             'badge' => '',
             'items' => [
+                ['label' => 'Course Schemes & Syllabus', 'url' => 'syllabus', 'target' => '_self', 'icon' => 'fas fa-book-open text-danger'],
+                ['label' => 'All Academic Programmes (90+ Degrees)', 'url' => 'courses', 'target' => '_self', 'icon' => 'fas fa-graduation-cap text-primary'],
                 ['label' => 'Academic Calendar 2026-27', 'url' => 'academic-calendar.php', 'target' => '_self', 'icon' => 'fas fa-calendar-alt text-warning'],
                 ['label' => 'Examination Rules & Ordinances', 'url' => 'exam-rules.php', 'target' => '_self', 'icon' => 'fas fa-clipboard-check text-primary'],
                 ['label' => 'Details of Academic Programmes', 'url' => 'document/details-of-academic-programmes', 'target' => '_self', 'icon' => 'fas fa-th-list text-danger'],
@@ -158,8 +130,7 @@ function getDefaultMainMenu() {
                 ['label' => 'School/ Department/ Centres', 'url' => 'document/constituent-units-departments', 'target' => '_self', 'icon' => 'fas fa-sitemap text-success'],
                 ['label' => 'Faculty/ Staff Details', 'url' => 'document/department-wise-faculty-details', 'target' => '_self', 'icon' => 'fas fa-chalkboard-teacher text-info'],
                 ['label' => 'Internal Quality Assurance Cell (IQAC)', 'url' => 'document/iqac', 'target' => '_self', 'icon' => 'fas fa-check-double text-warning'],
-                ['label' => 'Library', 'url' => 'document/university-library', 'target' => '_self', 'icon' => 'fas fa-book-reader text-danger'],
-                ['label' => 'Placements', 'url' => 'placements', 'target' => '_self', 'icon' => 'fas fa-briefcase text-success']
+                ['label' => 'Central Library', 'url' => 'document/university-library', 'target' => '_self', 'icon' => 'fas fa-book-reader text-danger']
             ]
         ],
         [
@@ -255,10 +226,24 @@ function getDefaultMainMenu() {
                 ['label' => 'Sports Facilities', 'url' => 'document/sports-facilities', 'target' => '_self', 'icon' => 'fas fa-dumbbell text-primary'],
                 ['label' => 'NCC & NSS', 'url' => 'document/ncc-nss', 'target' => '_self', 'icon' => 'fas fa-medal text-warning'],
                 ['label' => 'Hostel Accommodation', 'url' => 'hostel.php', 'target' => '_self', 'icon' => 'fas fa-bed text-warning'],
-                ['label' => 'Placement Cell', 'url' => 'document/placement-cell', 'target' => '_self', 'icon' => 'fas fa-briefcase text-success'],
                 ['label' => 'Health Facility', 'url' => 'document/health-facility', 'target' => '_self', 'icon' => 'fas fa-heartbeat text-danger'],
                 ['label' => 'Facilities For Differently Abled Students', 'url' => 'document/differently-abled-facilities', 'target' => '_self', 'icon' => 'fas fa-wheelchair text-primary'],
                 ['label' => 'News, Events & Blogs', 'url' => 'blogs', 'target' => '_self', 'icon' => 'fas fa-newspaper text-info']
+            ]
+        ],
+        [
+            'id' => 'menu_placements',
+            'label' => 'Placements',
+            'url' => 'placements',
+            'target' => '_self',
+            'type' => 'dropdown',
+            'preset' => 'placements',
+            'badge' => '',
+            'items' => [
+                ['label' => 'Corporate Placements Overview', 'url' => 'placements', 'target' => '_self', 'icon' => 'fas fa-chart-line text-danger'],
+                ['label' => 'Placement Cell', 'url' => 'document/placement-cell', 'target' => '_self', 'icon' => 'fas fa-briefcase text-success'],
+                ['label' => 'Top Recruiters & Packages', 'url' => 'placements#recruiter-section', 'target' => '_self', 'icon' => 'fas fa-building text-primary'],
+                ['label' => 'Placement Brochure (PDF)', 'url' => 'assets/uploads/pdf/placement-cell.pdf', 'target' => '_blank', 'icon' => 'fas fa-file-pdf text-danger']
             ]
         ],
         [

@@ -9902,21 +9902,19 @@ object {
     padding-left: 14px
 }
 
-.syllabus-sub-dropdown {
-    min-width: 275px !important;
-    max-height: 460px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.16) !important
+.syllabus-scroll-hidden {
+    min-width: 310px !important;
+    max-height: 480px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
 }
 
-.syllabus-sub-dropdown::-webkit-scrollbar {
-    width: 5px
-}
-
-.syllabus-sub-dropdown::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 4px
+.syllabus-scroll-hidden::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
 }
 
 .static-menu-list-footer {

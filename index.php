@@ -767,22 +767,22 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
 <section class="placement-v2">
     <div class="container-xl py-3">
         <div class="text-center mb-5">
-            <span class="section-subtitle">DISCOVER SUCCESS</span>
-            <h2 class="section-title mb-0">A direct pipeline to <span>industry leadership</span></h2>
+            <span class="section-subtitle">TRAINING &amp; PLACEMENT CELL</span>
+            <h2 class="section-title mb-0">Campus Placements &amp; <span>Career Opportunities</span></h2>
         </div>
         <div class="row align-items-center g-4 g-lg-5">
             <div class="col-12 col-lg-6">
-                <p class="text-dark mb-4" style="line-height:1.8; font-size:0.94rem;">
-                    Our dedicated Corporate Relations Cell conducts year-round campus recruitment drives, soft skills training, mock interviews, and industry internships, connecting students to 500+ top national and global MNCs.
+                <p class="text-dark mb-4" style="line-height:1.8; font-size:0.95rem;">
+                    The Training and Placement (T&amp;P) Cell at Sarvepalli Radhakrishnan University serves as an active catalyst for career success. Through structured pre-placement bootcamps, technical coding assessments, domain clinical training, and semester-long paid corporate internships, we empower students across Engineering, Pharmacy, Healthcare, and Management to excel in high-growth roles with 120+ premier national and multinational hiring partners.
                 </p>
                 <div class="row row-cols-3 g-2 mb-4">
-                    <div class="col"><div class="labs-stat-box labs-stat-box--sm"><span class="num">&#8377;42 LPA</span><span class="lbl">Highest Package</span></div></div>
-                    <div class="col"><div class="labs-stat-box labs-stat-box--sm"><span class="num">500+</span><span class="lbl">Corporate Partners</span></div></div>
-                    <div class="col"><div class="labs-stat-box labs-stat-box--sm"><span class="num">15,000+</span><span class="lbl">Alumni Leaders</span></div></div>
+                    <div class="col"><div class="labs-stat-box labs-stat-box--sm"><span class="num">&#8377;12 LPA</span><span class="lbl">Highest Package</span></div></div>
+                    <div class="col"><div class="labs-stat-box labs-stat-box--sm"><span class="num">120+</span><span class="lbl">Corporate Partners</span></div></div>
+                    <div class="col"><div class="labs-stat-box labs-stat-box--sm"><span class="num">1,500+</span><span class="lbl">Annual Offers</span></div></div>
                 </div>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="<?php echo BASE_URL; ?>placements.php" class="btn btn-srku"><i class="fas fa-chart-line me-1"></i> View Full Placement Report</a>
-                    <a href="<?php echo BASE_URL; ?>placements.php" class="btn btn-srku-outline-maroon"><span class="btn-icon-badge"><i class="fas fa-users"></i></span> Explore Recruiters</a>
+                    <a href="<?php echo BASE_URL; ?>placements.php#recruiter-section" class="btn btn-srku-outline-maroon"><span class="btn-icon-badge"><i class="fas fa-handshake"></i></span> Explore Recruiters</a>
                 </div>
             </div>
             <div class="col-12 col-lg-6">
@@ -836,8 +836,8 @@ $slTitle = getSetting('student_life_title', 'Experience <em>an Unmatched Univers
 $slDesc = getSetting('student_life_desc', 'A campus that thinks, builds, and celebrates together.<br>200 lush acres, 120+ active student clubs, and 18 annual fests create an unforgettable student journey.');
 $slVideoUrl = getSetting('student_life_video_url', 'https://vimeo.com/1235294623?share=copy&fl=sv&fe=ci');
 $slVideoParsed = parseVideoUrl($slVideoUrl);
-$slBadgeTag = getSetting('student_life_badge_tag', 'Featured');
-$slBadgeTitle = getSetting('student_life_badge_title', 'Annual Cultural Fest');
+$slBadgeTag = getSetting('student_life_badge_tag', 'Sports Complex');
+$slBadgeTitle = getSetting('student_life_badge_title', 'Campus Sports Arena');
 
 $slStat1Num = getSetting('student_life_stat1_num', '42+');
 $slStat1Label = getSetting('student_life_stat1_label', 'Active Clubs');
