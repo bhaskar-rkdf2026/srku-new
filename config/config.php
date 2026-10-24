@@ -1,4 +1,8 @@
 <?php
+// Initialize Active Web Application Firewall (SQLi, XSS, RFI/LFI, RCE & Polyglot Upload Protection)
+if (file_exists(dirname(__DIR__) . '/includes/waf.php')) {
+    require_once(dirname(__DIR__) . '/includes/waf.php');
+}
 // Site Configuration & Auto URL Resolution for Local and GoDaddy Live Server
 if (!defined('SITE_NAME')) {
     define('SITE_NAME', 'Sarvepalli Radhakrishnan University (SRKU)');

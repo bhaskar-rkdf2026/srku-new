@@ -1,14 +1,16 @@
 # Apache Server Configuration for SRKU Web Application
 # 100% Compatible with original https://new.srku.edu.in/ structure on Localhost & GoDaddy
 
-Options -Indexes
+Options -Indexes -MultiViews -ExecCGI
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # BLOCK ALL DIRECT SCRIPT & SHELL EXECUTION IN STATIC ASSET & UPLOAD DIRECTORIES
+    RewriteRule ^(assets|uploads|scratch)/.*(\.php|\.phtml|\.php[0-9]|\.cgi|\.pl|\.py|\.sh|\.bash|\.rimuru|\.phar|\.inc|\.asp|\.aspx|\.jsp|\.exe|\.bat|\.dat)$ - [F,L,NC]
     # Security: Block access to internal files and sensitive extensions
     RewriteRule "(^|/)\." - [F]
-    RewriteRule \.(sql|sqlite|db|log|md|json|env|bak|backup|yml|yaml|ini|conf|map|sh|bash|bat|py|pl|cgi|ps1)$ - [F,NC]
+    RewriteRule \.(sql|sqlite|db|log|md|json|env|bak|backup|yml|yaml|ini|conf|map|sh|bash|bat|py|pl|cgi|ps1|rimuru|dat|phar|phtml)$ - [F,NC]
     RewriteRule ^.*jquery\.min\.map$ - [F,NC]
     RewriteRule ^scratch(/|$) - [F,NC]
     RewriteRule ^fix_permissions\.(sh|ps1)$ - [F,NC]

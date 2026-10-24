@@ -1,0 +1,45 @@
+# Disable Directory Browsing and Script / CGI Execution
+Options -Indexes -ExecCGI
+
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .pht .phar .inc .cgi .pl .fcgi .sh .bash .exe .bat .rimuru
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .pht .phar .inc .cgi .pl .fcgi .sh .bash .exe .bat .rimuru
+
+<IfModule mod_mime.c>
+    SetHandler default-handler
+</IfModule>
+
+# Deny direct access or execution of ANY script, shell or executable file
+<FilesMatch "(?i)\.(php|phtml|php3|php4|php5|php7|php8|pht|phar|inc|cgi|pl|py|sh|bash|exe|bat|cmd|com|msi|vbs|wsf|scr|dll|so|htaccess|htpasswd|ini|config|bak|sql|env|rimuru|dat)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Block all write request methods (POST, PUT, DELETE) in static directory
+<LimitExcept GET HEAD OPTIONS>
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</LimitExcept>
+
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>
