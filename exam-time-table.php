@@ -22,7 +22,9 @@ foreach ($dbTimetables as $t) {
     if (!empty($rawPdf) && strpos($rawPdf, 'http') !== 0) {
         $cleanRel = ltrim($rawPdf, '/\\');
         if (file_exists(__DIR__ . '/' . $cleanRel)) {
-            $pdfUrl = BASE_URL . $cleanRel;
+            $dirPart = str_replace('\\', '/', dirname($cleanRel));
+            $fnPart = basename($cleanRel);
+            $pdfUrl = BASE_URL . ($dirPart !== '.' ? $dirPart . '/' : '') . rawurlencode($fnPart);
             $localFound = true;
         }
     }
@@ -38,7 +40,7 @@ foreach ($dbTimetables as $t) {
         
         $candidatePath = 'assets/uploads/time-table/' . $safeName;
         if (file_exists(__DIR__ . '/' . $candidatePath)) {
-            $pdfUrl = BASE_URL . $candidatePath;
+            $pdfUrl = BASE_URL . 'assets/uploads/time-table/' . rawurlencode($safeName);
             $localFound = true;
         } else {
             $pdfUrl = $rawPdf;

@@ -274,6 +274,7 @@ $customSchemaJson = $seoResolved['schema_json'] ?? '';
         function openMenu(){
             if(!menu || !toggle) return;
             menu.classList.add('active');
+            menu.scrollTop = 0;
             toggle.classList.add('is-open');
             if(overlay) overlay.classList.add('active');
             lockScroll();
