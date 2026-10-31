@@ -31,9 +31,15 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
             <!-- Col 1: About & University Logo -->
             <div class="col-12 col-md-6 col-lg-3 footer-col">
                 <div class="footer-brand mb-3">
+                    <?php
+                    $footerLogo = getSetting('header_logo_url', 'assets/images/srku-header-logo.png');
+                    $footerLogoSrc = (strpos($footerLogo, 'http') === 0) ? $footerLogo : BASE_URL . ltrim($footerLogo, '/');
+                    $footerLogoFs = realpath(__DIR__ . '/../' . ltrim($footerLogo, '/'));
+                    $footerLogoVer = ($footerLogoFs && file_exists($footerLogoFs)) ? filemtime($footerLogoFs) : time();
+                    ?>
                     <a href="<?php echo BASE_URL; ?>" class="d-inline-block bg-white p-2 px-3 rounded-3 shadow-sm" title="Sarvepalli Radhakrishnan University, Bhopal">
-                        <img src="<?php echo BASE_URL; ?>assets/uploads/2026/07/SRK-logo.webp" 
-                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/images/Dyno-Logo-1.png';" 
+                        <img src="<?php echo sanitize($footerLogoSrc); ?>?v=<?php echo $footerLogoVer; ?>" 
+                             onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/images/srku-header-logo.png';" 
                              alt="Sarvepalli Radhakrishnan University, Bhopal" 
                              class="img-fluid" 
                              style="max-height: 46px; width: auto; display: block;">

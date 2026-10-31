@@ -13,8 +13,23 @@ try {
 
 // Helper to save setting
 function saveSettingValue($pdo, $key, $val) {
-    $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (:k, :v) ON DUPLICATE KEY UPDATE setting_value = :v");
-    $stmt->execute([':k' => $key, ':v' => $val]);
+    try {
+        $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+        if ($driver === 'sqlite') {
+            $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (:k, :v) ON CONFLICT(setting_key) DO UPDATE SET setting_value = :v2");
+            $stmt->execute([':k' => $key, ':v' => $val, ':v2' => $val]);
+        } else {
+            $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (:k, :v) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
+            $stmt->execute([':k' => $key, ':v' => $val]);
+        }
+    } catch (Exception $e) {
+        $stmt = $pdo->prepare("UPDATE settings SET setting_value = :v WHERE setting_key = :k");
+        $stmt->execute([':v' => $val, ':k' => $key]);
+        if ($stmt->rowCount() === 0) {
+            $stmt2 = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (:k, :v)");
+            $stmt2->execute([':k' => $key, ':v' => $val]);
+        }
+    }
 }
 
 // Handle Logo / Media Upload
@@ -106,9 +121,36 @@ if ($reqMethod === 'POST' && isset($_POST['reset_erp_links'])) {
 }
 
 // Handle Tab 4: Save Brand & Buttons
-if ($reqMethod === 'POST' && isset($_POST['save_brand_settings'])) {
+if ($reqMethod === 'POST' && (isset($_POST['save_brand_settings']) || isset($_POST['quick_upload_logo']))) {
+    $finalLogo = sanitize($_POST['header_logo_url'] ?? '');
+    
+    // Check if new logo file is uploaded
+    if (isset($_FILES['logo_upload']) && $_FILES['logo_upload']['error'] === UPLOAD_ERR_OK) {
+        $file = $_FILES['logo_upload'];
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg', 'jpeg', 'png', 'webp', 'svg'];
+        if (in_array($ext, $allowed)) {
+            $targetDir = __DIR__ . '/../assets/images/';
+            if (!is_dir($targetDir)) mkdir($targetDir, 0777, true);
+            $fileName = 'logo_' . time() . '.' . $ext;
+            if (move_uploaded_file($file['tmp_name'], $targetDir . $fileName)) {
+                @copy($targetDir . $fileName, __DIR__ . '/../assets/uploads/2026/07/' . $fileName);
+                $finalLogo = 'assets/images/' . $fileName;
+            }
+        }
+    }
+
+    // Strip BASE_URL if absolute URL was entered
+    if (strpos($finalLogo, BASE_URL) === 0) {
+        $finalLogo = substr($finalLogo, strlen(BASE_URL));
+    }
+    $finalLogo = ltrim($finalLogo, '/');
+    if (empty($finalLogo)) {
+        $finalLogo = 'assets/images/srku-header-logo.png';
+    }
+
     $brandData = [
-        'header_logo_url' => sanitize($_POST['header_logo_url'] ?? 'assets/images/logo.png'),
+        'header_logo_url' => $finalLogo,
         'header_cta_text' => sanitize($_POST['header_cta_text'] ?? 'Contact Us'),
         'header_cta_link' => sanitize($_POST['header_cta_link'] ?? 'contact.php'),
         'header_custom_head_code' => $_POST['header_custom_head_code'] ?? '',
@@ -703,46 +745,52 @@ $liUrl = getSetting('linkedin_url', '#');
     <div class="tab-content-panel" id="panel-tab-brand">
         <div style="max-width: 900px;">
             
-            <!-- Brand Logo Upload Card -->
-            <div class="card border rounded-3 shadow-sm mb-4">
-                <div class="card-header bg-white py-3 border-bottom">
-                    <h6 class="mb-0 fw-bold text-dark"><i class="fas fa-image text-danger me-2"></i> University Brand Logo Uploader</h6>
-                </div>
-                <div class="card-body">
-                    <div class="row g-4 align-items-center">
-                        <div class="col-12 col-md-4 text-center">
-                            <div class="p-3 bg-light rounded-3 border">
-                                <small class="text-muted d-block mb-2 fw-bold">ACTIVE LOGO PREVIEW</small>
-                                <img src="<?php echo (strpos($logoUrl, 'http') === 0) ? $logoUrl : BASE_URL . $logoUrl; ?>" alt="SRKU Logo" style="max-height: 75px; max-width: 100%; object-fit: contain;" class="mb-2">
-                                <div>
-                                    <span class="badge bg-success-subtle text-success border">Active on Navbar &amp; Footer</span>
+            <!-- Unified Brand & CTA Settings Form -->
+            <form action="manage_header_footer.php" method="POST" enctype="multipart/form-data">
+                
+                <!-- Brand Logo Card -->
+                <div class="card border rounded-3 shadow-sm mb-4">
+                    <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0 fw-bold text-dark"><i class="fas fa-image text-danger me-2"></i> University Brand Logo Uploader</h6>
+                        <span class="badge bg-success-subtle text-success border"><i class="fas fa-check-circle me-1"></i> Active on Navbar &amp; Footer</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-4 align-items-center">
+                            <div class="col-12 col-md-4 text-center">
+                                <div class="p-3 bg-light rounded-3 border">
+                                    <small class="text-muted d-block mb-2 fw-bold">ACTIVE LOGO PREVIEW</small>
+                                    <?php 
+                                        $previewSrc = (strpos($logoUrl, 'http') === 0) ? $logoUrl : BASE_URL . ltrim($logoUrl, '/');
+                                        $previewFs = realpath(__DIR__ . '/../' . ltrim($logoUrl, '/'));
+                                        $previewVer = ($previewFs && file_exists($previewFs)) ? filemtime($previewFs) : time();
+                                    ?>
+                                    <img src="<?php echo sanitize($previewSrc); ?>?v=<?php echo $previewVer; ?>" alt="SRKU Logo" style="max-height: 75px; max-width: 100%; object-fit: contain;" class="mb-2">
+                                    <div>
+                                        <small class="text-muted font-monospace d-block" style="font-size:0.75rem; word-break:break-all;"><?php echo sanitize($logoUrl); ?></small>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 col-md-8">
-                            <form action="manage_header_footer.php" method="POST" enctype="multipart/form-data" class="mb-3">
-                                <label class="form-label fw-bold text-dark small">Upload New Logo (PNG, WebP, SVG, JPG)</label>
-                                <div class="input-group mb-1">
-                                    <input type="file" name="logo_upload" class="form-control" accept=".png,.webp,.svg,.jpg,.jpeg" required>
-                                    <button type="submit" class="btn btn-danger fw-bold"><i class="fas fa-cloud-upload-alt me-1"></i> Upload &amp; Set</button>
+                            <div class="col-12 col-md-8">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold text-dark small mb-1">Upload New Logo (PNG, WebP, SVG, JPG)</label>
+                                    <div class="input-group mb-1">
+                                        <input type="file" name="logo_upload" class="form-control" accept=".png,.webp,.svg,.jpg,.jpeg">
+                                        <button type="submit" name="quick_upload_logo" value="1" class="btn btn-outline-danger fw-bold"><i class="fas fa-cloud-upload-alt me-1"></i> Upload Now</button>
+                                    </div>
+                                    <small class="text-muted">Upload an image file directly, or specify/select the path below.</small>
                                 </div>
-                                <small class="text-muted">Recommended: Transparent PNG or SVG with approx. 320x80 px resolution.</small>
-                            </form>
-                            <div class="mt-2">
-                                <label class="form-label fw-bold text-dark small mb-1">Logo Public URL (Auto-Generated)</label>
-                                <div class="input-group">
-                                    <input type="text" id="logoFullUrlInput" class="form-control bg-light" value="<?php echo (strpos($logoUrl, 'http') === 0) ? $logoUrl : BASE_URL . $logoUrl; ?>" readonly>
-                                    <button type="button" class="btn btn-outline-primary" onclick="copyLogoUrl()"><i class="fas fa-copy me-1"></i> Copy URL</button>
+                                <div class="mt-2">
+                                    <label class="form-label fw-bold text-dark small mb-1">Logo File Path / Relative URL</label>
+                                    <div class="input-group">
+                                        <input type="text" name="header_logo_url" id="logoFullUrlInput" class="form-control font-monospace small" value="<?php echo sanitize($logoUrl); ?>">
+                                        <button type="button" class="btn btn-outline-primary" onclick="copyLogoUrl()" title="Copy Path"><i class="fas fa-copy me-1"></i> Copy</button>
+                                        <button type="button" class="btn btn-outline-secondary" onclick="if(window.openMediaPicker){window.openMediaPicker({onSelect:function(item){document.getElementById('logoFullUrlInput').value=item.url;}})}else{alert('Open Media Library');}" title="Browse Media Library"><i class="fas fa-photo-video me-1"></i> Media</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Header CTA & Floating Widgets Form -->
-            <form action="manage_header_footer.php" method="POST">
-                <input type="hidden" name="header_logo_url" value="<?php echo sanitize($logoUrl); ?>">
 
                 <!-- Header CTA Button -->
                 <div class="card border rounded-3 shadow-sm mb-4">

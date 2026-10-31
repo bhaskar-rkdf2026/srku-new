@@ -449,56 +449,64 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
         <!-- 4 Steps with Connected Horizontal Track -->
         <div class="admissions-steps-container position-relative">
             <div class="admissions-step-track-line d-none d-lg-block"></div>
-            <div class="row g-4 position-relative" style="z-index: 2;">
+            <div class="row g-3 g-lg-4 position-relative" style="z-index: 2;">
                 <!-- Step 01 -->
-                <div class="col-12 col-sm-6 col-lg-3">
+                <div class="col-12 col-lg-3">
                     <div class="admissions-step-item">
                         <div class="admissions-step-box">
                             <span class="step-num">01</span>
                         </div>
-                        <h3 class="admissions-step-title">Choose Program</h3>
-                        <p class="admissions-step-desc">
-                            Browse 100+ undergraduate, postgraduate and doctoral offerings.
-                        </p>
+                        <div class="admissions-step-body">
+                            <h3 class="admissions-step-title">Choose Program</h3>
+                            <p class="admissions-step-desc">
+                                Browse 100+ undergraduate, postgraduate and doctoral offerings.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Step 02 -->
-                <div class="col-12 col-sm-6 col-lg-3">
+                <div class="col-12 col-lg-3">
                     <div class="admissions-step-item">
                         <div class="admissions-step-box">
                             <span class="step-num">02</span>
                         </div>
-                        <h3 class="admissions-step-title">Apply Online</h3>
-                        <p class="admissions-step-desc">
-                            Submit your application and academic records through the portal.
-                        </p>
+                        <div class="admissions-step-body">
+                            <h3 class="admissions-step-title">Apply Online</h3>
+                            <p class="admissions-step-desc">
+                                Submit your application and academic records through the portal.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Step 03 -->
-                <div class="col-12 col-sm-6 col-lg-3">
+                <div class="col-12 col-lg-3">
                     <div class="admissions-step-item">
                         <div class="admissions-step-box">
                             <span class="step-num">03</span>
                         </div>
-                        <h3 class="admissions-step-title">Verification</h3>
-                        <p class="admissions-step-desc">
-                            Our admissions team reviews documents and eligibility.
-                        </p>
+                        <div class="admissions-step-body">
+                            <h3 class="admissions-step-title">Verification</h3>
+                            <p class="admissions-step-desc">
+                                Our admissions team reviews documents and eligibility.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Step 04 -->
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="admissions-step-item">
+                <div class="col-12 col-lg-3">
+                    <div class="admissions-step-item is-highlight-card">
                         <div class="admissions-step-box is-highlight">
                             <span class="step-num">04</span>
                         </div>
-                        <h3 class="admissions-step-title">Confirm &amp; Enroll</h3>
-                        <p class="admissions-step-desc">
-                            Pay your fee, receive your ID and join orientation week.
-                        </p>
+                        <div class="admissions-step-body">
+                            <h3 class="admissions-step-title">Confirm &amp; Enroll</h3>
+                            <p class="admissions-step-desc">
+                                Pay your fee, receive your ID and join orientation week.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

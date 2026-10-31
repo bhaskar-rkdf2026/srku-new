@@ -6,7 +6,7 @@ $helpline = getSetting('header_topbar_phone', getSetting('helpline', '0755 - 491
 $email = getSetting('header_topbar_email', getSetting('email', 'exam@srku.edu.in'));
 $erpLink = getSetting('header_topbar_erp_link', 'https://erp.srku.edu.in/');
 $aicteLink = getSetting('header_topbar_aicte_link', 'https://sarswati.aicte.gov.in/');
-$logoUrl = getSetting('header_logo_url', 'assets/uploads/2026/07/SRK-logo.webp');
+$logoUrl = getSetting('header_logo_url', 'assets/images/srku-header-logo.png');
 $ctaText = getSetting('header_cta_text', 'Contact Us');
 $ctaLink = getSetting('header_cta_link', 'contact.php');
 $webmailLink = getSetting('header_topbar_webmail_link', 'http://email.godaddy.com/');
@@ -132,7 +132,7 @@ $customSchemaJson = $seoResolved['schema_json'] ?? '';
                 <img src="<?php echo BASE_URL; ?>assets/images/srku-seal-emblem.png" 
                      alt="Sarvepalli Radhakrishnan University Seal" 
                      class="srku-preloader-img"
-                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/images/SRK-logo.webp';">
+                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/images/srku-header-logo.png';">
             </div>
         </div>
 
@@ -213,8 +213,13 @@ $customSchemaJson = $seoResolved['schema_json'] ?? '';
 
     <div class="static-nav-wrapper">
         <div class="static-nav-container">
+            <?php 
+                $headerLogoSrc = (strpos($logoUrl, 'http') === 0) ? $logoUrl : BASE_URL . ltrim($logoUrl, '/');
+                $headerLogoFs = realpath(__DIR__ . '/../' . ltrim($logoUrl, '/'));
+                $headerLogoVer = ($headerLogoFs && file_exists($headerLogoFs)) ? filemtime($headerLogoFs) : time();
+            ?>
             <a href="<?php echo BASE_URL; ?>" class="static-nav-logo">
-                <img src="<?php echo (strpos($logoUrl, 'http') === 0) ? $logoUrl : BASE_URL . $logoUrl; ?>" alt="Sarvepalli Radhakrishnan University" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/images/SRK-logo.webp';" loading="lazy" decoding="async">
+                <img src="<?php echo sanitize($headerLogoSrc); ?>?v=<?php echo $headerLogoVer; ?>" alt="Sarvepalli Radhakrishnan University" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/images/srku-header-logo.png?v=<?php echo time(); ?>';" loading="lazy" decoding="async">
             </a>
 
             <button class="static-mobile-toggle" id="staticMenuToggle" aria-label="Toggle Navigation" aria-expanded="false">
