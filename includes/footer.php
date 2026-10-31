@@ -500,6 +500,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<!-- Window Base URL Definition for Client Scripts -->
+<script>window.SRKU_BASE_URL = '<?php echo BASE_URL; ?>';</script>
+<!-- Mozilla PDF.js & Responsive Mobile PDF Engine -->
+<script src="<?php echo BASE_URL; ?>assets/js/pdf.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/pdf-mobile-viewer.js?v=<?php echo @filemtime(__DIR__ . '/../assets/js/pdf-mobile-viewer.js') ?: time(); ?>"></script>
+
 <?php if ($footerCustomScripts): echo $footerCustomScripts; endif; ?>
 </body>
 </html>

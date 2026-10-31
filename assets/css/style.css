@@ -11467,5 +11467,173 @@ object {
     }
 }
 
+/* ─── Admission Enquiry: Sidebar Document Buttons Hover Fix ─── */
+.adm-doc-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 10px 14px !important;
+    background: #ffffff !important;
+    border: 1.5px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    color: #1e293b !important;
+    font-weight: 600 !important;
+    font-size: 0.88rem !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease-in-out !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+.adm-doc-link:hover {
+    background: #f8fafc !important;
+    color: #7a0b0d !important;
+    border-color: #7a0b0d !important;
+    transform: translateX(4px) !important;
+    box-shadow: 0 4px 12px rgba(122, 11, 13, 0.1) !important;
+}
+
+.adm-doc-link:hover i.doc-action-icon {
+    color: #7a0b0d !important;
+    transform: translateX(2px) !important;
+}
+
+.adm-doc-link.fee-featured {
+    background: #198754 !important;
+    color: #ffffff !important;
+    border-color: #198754 !important;
+}
+
+.adm-doc-link.fee-featured:hover {
+    background: #157347 !important;
+    color: #ffffff !important;
+    border-color: #146c43 !important;
+    transform: translateX(4px) !important;
+}
+
+/* ═════════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE HTML5 PDF VIEWER ENGINE (Mozilla PDF.js)
+   ═════════════════════════════════════════════════════════════════ */
+.srku-pdf-viewer-active {
+    min-height: 480px !important;
+    height: auto !important;
+}
+
+.srku-pdf-viewer-active.ratio::before {
+    display: none !important;
+    padding-top: 0 !important;
+}
+
+.srku-pdf-viewer-active.ratio > * {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+}
+
+.srku-pdf-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+}
+
+.srku-pdf-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #1e293b;
+    color: #ffffff;
+    font-size: 0.88rem;
+    gap: 10px;
+    flex-wrap: wrap;
+    z-index: 5;
+}
+
+.srku-pdf-nav,
+.srku-pdf-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.srku-pdf-btn {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+    text-decoration: none !important;
+    min-height: 32px;
+}
+
+.srku-pdf-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.25);
+    color: #ffffff !important;
+}
+
+.srku-pdf-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.srku-pdf-page-info {
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0 4px;
+    color: #cbd5e1;
+}
+
+.srku-pdf-zoom-val {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #94a3b8;
+    min-width: 38px;
+    text-align: center;
+}
+
+.srku-pdf-canvas-wrap {
+    position: relative;
+    width: 100%;
+    min-height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: #f1f5f9;
+    padding: 12px;
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.srku-pdf-canvas {
+    max-width: 100%;
+    height: auto;
+    background: #ffffff;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+}
+
+.srku-pdf-loader {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+}
+
+
 
 
