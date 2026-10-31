@@ -230,7 +230,7 @@ $customSchemaJson = $seoResolved['schema_json'] ?? '';
 
             <ul class="static-menu-list" id="staticMenuList">
                 <!-- Mobile Drawer Sticky Header Bar -->
-                <li class="static-menu-drawer-header">
+                <li class="static-menu-drawer-header d-lg-none">
                     <span class="drawer-header-title"><i class="fas fa-bars-staggered me-1.5 text-danger"></i> MENU</span>
                     <button type="button" class="drawer-header-close" id="drawerHeaderCloseBtn" aria-label="Close menu">&times;</button>
                 </li>
