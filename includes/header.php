@@ -127,10 +127,10 @@ $customSchemaJson = $seoResolved['schema_json'] ?? '';
                     <circle class="srku-preloader-circle-fill" cx="60" cy="60" r="54"></circle>
                 </svg>
             </div>
-            <!-- Official SRKU Logo with Subtle Breathing Animation -->
+            <!-- Official SRKU Circular Seal Emblem with Subtle Breathing Animation -->
             <div class="srku-preloader-logo-inner">
-                <img src="<?php echo (strpos($logoUrl, 'http') === 0) ? $logoUrl : BASE_URL . $logoUrl; ?>" 
-                     alt="SRKU Logo" 
+                <img src="<?php echo BASE_URL; ?>assets/images/srku-seal-emblem.png" 
+                     alt="Sarvepalli Radhakrishnan University Seal" 
                      class="srku-preloader-img"
                      onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/images/SRK-logo.webp';">
             </div>

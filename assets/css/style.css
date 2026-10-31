@@ -11235,8 +11235,8 @@ object {
 /* Logo Wrap with Glowing Halo */
 .srku-preloader-logo-wrap {
     position: relative;
-    width: 130px;
-    height: 130px;
+    width: 140px;
+    height: 140px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11248,7 +11248,7 @@ object {
     position: absolute;
     inset: -14px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(122, 11, 13, 0.16) 0%, rgba(245, 158, 11, 0.09) 50%, transparent 75%);
+    background: radial-gradient(circle, rgba(122, 11, 13, 0.2) 0%, rgba(245, 158, 11, 0.12) 50%, transparent 75%);
     animation: srkuHaloPulse 2.4s ease-in-out infinite;
     pointer-events: none;
 }
@@ -11256,9 +11256,9 @@ object {
 /* Outer Rotating Progress Ring */
 .srku-preloader-ring {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    inset: -6px;
+    width: calc(100% + 12px);
+    height: calc(100% + 12px);
     transform: rotate(-90deg);
 }
 
@@ -11287,25 +11287,26 @@ object {
 
 /* Logo Inner Container with Floating/Breathing Animation */
 .srku-preloader-logo-inner {
-    width: 100px;
-    height: 100px;
+    width: 126px;
+    height: 126px;
     border-radius: 50%;
     background: #ffffff;
-    box-shadow: 0 10px 30px rgba(122, 11, 13, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 12px 34px rgba(122, 11, 13, 0.16), 0 4px 14px rgba(0, 0, 0, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     z-index: 3;
-    padding: 12px;
+    padding: 3px;
     animation: srkuLogoBreathe 2.4s ease-in-out infinite;
 }
 
 .srku-preloader-img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.06));
+    border-radius: 50%;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.12));
     image-rendering: -webkit-optimize-contrast;
 }
 
@@ -11401,14 +11402,14 @@ object {
 
 @media (max-width: 576px) {
     .srku-preloader-logo-wrap {
-        width: 110px;
-        height: 110px;
+        width: 122px;
+        height: 122px;
         margin-bottom: 18px;
     }
     .srku-preloader-logo-inner {
-        width: 86px;
-        height: 86px;
-        padding: 10px;
+        width: 108px;
+        height: 108px;
+        padding: 3px;
     }
     .srku-preloader-title {
         font-size: 11.5px;
