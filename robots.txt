@@ -1,7 +1,23 @@
 User-agent: *
 Allow: /
+
+# Disallow sensitive system and admin directories
 Disallow: /admin/
 Disallow: /config/
 Disallow: /includes/
+Disallow: /scratch/
+Disallow: /clean-malware.php
+Disallow: /migrate_to_pdo*
 
+# Prevent Meta / Query-String SEO Poisoning Attacks
+Disallow: /*?*s=*
+Disallow: /*?*search=*
+Disallow: /*?*ref=*
+Disallow: /*?*utm_*
+Disallow: /*?*fbclid=*
+Disallow: /*?*page_id=*
+Disallow: /*?*preview=*
+Disallow: /wp-*
+
+# Sitemaps
 Sitemap: https://srku.edu.in/sitemap.xml

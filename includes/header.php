@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/header_menu_render.php';
+require_once __DIR__ . '/seo_schema_helper.php';
 $helpline = getSetting('header_topbar_phone', getSetting('helpline', '0755 - 4911204'));
 $email = getSetting('header_topbar_email', getSetting('email', 'exam@srku.edu.in'));
 $erpLink = getSetting('header_topbar_erp_link', 'https://erp.srku.edu.in/');
@@ -33,7 +34,7 @@ $seoTitle = sanitize($seoResolved['title']);
 $seoDesc = sanitize($seoResolved['description']);
 $seoKeywords = sanitize($seoResolved['keywords']);
 $seoRobots = $seoResolved['robots'];
-$canonicalUrl = !empty($pageCanonical) ? $pageCanonical : (!empty($seoResolved['canonical']) ? $seoResolved['canonical'] : $currentFullUrl);
+$canonicalUrl = buildSecureCanonicalUrl(!empty($pageCanonical) ? $pageCanonical : ($seoResolved['canonical'] ?? ''), $pageIdCandidate);
 $ogTitle = sanitize($seoResolved['og_title']);
 $ogDesc = sanitize($seoResolved['og_description']);
 $rawOgImage = !empty($seoResolved['og_image']) ? $seoResolved['og_image'] : $logoUrl;
@@ -77,78 +78,17 @@ $customSchemaJson = $seoResolved['schema_json'] ?? '';
     <meta name="twitter:description" content="<?php echo $ogDesc; ?>">
     <meta name="twitter:image" content="<?php echo htmlspecialchars($seoImage); ?>">
 
-    <!-- Schema.org Comprehensive Structured Data (AEO: Google SGE, Perplexity, Gemini, ChatGPT, Bing Copilot) -->
+    <!-- Schema.org Comprehensive Educational Structured Data (College, Constituent Units, Courses, Breadcrumbs, FAQs) -->
+    <?php
+    $educationalSchemas = generateEducationalSchemas($pageIdCandidate, $seoResolved);
+    ?>
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "CollegeOrUniversity",
-      "@id": "https://srku.edu.in/#university",
-      "name": "Sarvepalli Radhakrishnan University",
-      "alternateName": ["SRKU", "SRK University", "SRKU Bhopal"],
-      "url": "https://srku.edu.in/",
-      "logo": "https://srku.edu.in/assets/uploads/2026/07/SRK-logo.webp",
-      "image": "https://srku.edu.in/assets/uploads/2026/07/campus-1.webp",
-      "description": "Sarvepalli Radhakrishnan University (SRKU), Bhopal is a statutory multidisciplinary private university established under Section 2(f) of the UGC Act 1956 and MP Niji Vishwavidyalaya Adhiniyam 2007 (Act No. 17 of 2007).",
-      "foundingDate": "1995",
-      "parentOrganization": {
-        "@type": "EducationalOrganization",
-        "name": "RKDF Education Society"
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "NH-12, Hoshangabad Road, Jatkhedi, Misrod",
-        "addressLocality": "Bhopal",
-        "addressRegion": "Madhya Pradesh",
-        "postalCode": "462026",
-        "addressCountry": "IN"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": "23.1685",
-        "longitude": "77.4682"
-      },
-      "telephone": "+91-755-4911204",
-      "email": "info@srku.edu.in",
-      "contactPoint": [
-        {
-          "@type": "ContactPoint",
-          "telephone": "+91-7024144981",
-          "contactType": "Admissions Desk",
-          "areaServed": "IN",
-          "availableLanguage": ["en", "hi"]
-        },
-        {
-          "@type": "ContactPoint",
-          "telephone": "+91-755-4911204",
-          "contactType": "Examination Support",
-          "email": "exam@srku.edu.in",
-          "areaServed": "IN"
-        },
-        {
-          "@type": "ContactPoint",
-          "telephone": "+91-755-4700982",
-          "contactType": "Academic Affairs",
-          "areaServed": "IN"
-        },
-        {
-          "@type": "ContactPoint",
-          "email": "registrar@srku.edu.in",
-          "contactType": "Registrar Office",
-          "areaServed": "IN"
-        }
-      ],
-      "sameAs": [
-        "https://www.facebook.com/",
-        "https://www.instagram.com/",
-        "https://www.linkedin.com/",
-        "https://www.youtube.com/"
-      ]
-    }
+    <?php echo json_encode($educationalSchemas, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_PRETTY_PRINT); ?>
     </script>
     <?php if (!empty($customSchemaJson)): ?>
-    <!-- Custom Page JSON-LD Structured Data Override (Configured via Dynamic SEO Manager) -->
+    <!-- Custom Page JSON-LD Structured Data Override -->
     <script type="application/ld+json">
-    <?php echo $customSchemaJson; ?>
+    <?php echo str_replace('</script>', '<\/script>', $customSchemaJson); ?>
     </script>
     <?php endif; ?>
 

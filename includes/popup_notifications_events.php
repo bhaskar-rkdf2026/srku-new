@@ -691,10 +691,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const delayMs = <?php echo max(300, (int)($popupDelaySec * 1000)); ?>;
     const showOnceDay = <?php echo $popupShowOnceDay === '1' ? 'true' : 'false'; ?>;
     const dismissCheckbox = document.getElementById('srkuDismissBulletinToday');
+    const SESSION_KEY = 'srku_bulletin_session_shown';
     const STORAGE_KEY = 'srku_events_popup_dismissed_until';
 
+    // Allow quick reset for testing via URL parameter: ?reset_popup=1
+    if (window.location.search.indexOf('reset_popup=1') !== -1) {
+        try {
+            sessionStorage.removeItem(SESSION_KEY);
+            localStorage.removeItem(STORAGE_KEY);
+        } catch (e) {}
+    }
+
     function isPopupDismissed() {
-        if (!showOnceDay) return false;
+        // 1. Visit / Session check: Show only ONCE per visit across any/all pages
+        try {
+            if (sessionStorage.getItem(SESSION_KEY) === '1') {
+                return true;
+            }
+        } catch (e) {}
+
+        // 2. 24-hour dismissal check (localStorage)
         try {
             const dismissedUntil = localStorage.getItem(STORAGE_KEY);
             if (dismissedUntil) {
@@ -706,7 +722,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         } catch (e) {}
+
         return false;
+    }
+
+    function markPopupShownSession() {
+        try {
+            sessionStorage.setItem(SESSION_KEY, '1');
+        } catch (e) {}
     }
 
     // Ensure the default tab configured in Admin is activated every time the modal is opened
@@ -720,8 +743,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // When modal closes, ensure session dismissal and save 24-hr dismissal if checked
+    modalEl.addEventListener('hidden.bs.modal', function() {
+        markPopupShownSession();
+        if (dismissCheckbox && dismissCheckbox.checked) {
+            const expireAt = Date.now() + (24 * 60 * 60 * 1000);
+            try {
+                localStorage.setItem(STORAGE_KEY, expireAt.toString());
+            } catch (e) {}
+        }
+    });
+
     // Dismissal listener (Don't show again today)
     if (dismissCheckbox) {
+        try {
+            const dismissedUntil = localStorage.getItem(STORAGE_KEY);
+            if (dismissedUntil && Date.now() < parseInt(dismissedUntil, 10)) {
+                dismissCheckbox.checked = true;
+            }
+        } catch (e) {}
+
         dismissCheckbox.addEventListener('change', function() {
             if (this.checked) {
                 // Set expiry for 24 hours from now
@@ -737,10 +778,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Automatically trigger popup with configured delay if not dismissed
+    // Automatically trigger popup with configured delay ONLY ONCE per visit if not dismissed
     setTimeout(function() {
         if (!isPopupDismissed()) {
-            const bsModal = new bootstrap.Modal(modalEl);
+            markPopupShownSession();
+            const bsModal = bootstrap.Modal.getOrCreateInstance(modalEl);
             bsModal.show();
         }
     }, delayMs);
