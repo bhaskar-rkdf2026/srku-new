@@ -8,8 +8,12 @@ Thumbs.db
 scratch/
 
 # Ignore session & local database dumps
+*.sql
+*.sql.gz
 *.sqlite
 *.log
+*.bak
+*.backup
 config/db_local.php
 
 # Ignore IDE settings

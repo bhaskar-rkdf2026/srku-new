@@ -11141,3 +11141,46 @@ object {
         color: #7a0b0d !important;
     }
 }
+
+/* ─── Placement Record: 120+ Premier Recruiting Brands Mobile Buttons Fix ─── */
+@media (max-width: 767px) {
+    .placement-recruiter-header-col {
+        padding-right: 48px !important;
+    }
+
+    .placement-recruiter-btns {
+        width: 100% !important;
+        padding-right: 48px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        align-items: stretch !important;
+    }
+
+    .placement-recruiter-btns .btn {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        font-size: 0.92rem !important;
+        font-weight: 600 !important;
+        padding: 12px 18px !important;
+        border-radius: 50rem !important;
+        white-space: normal !important;
+        line-height: 1.35 !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    }
+
+    .placement-related-portals-btns {
+        padding-right: 48px !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .placement-recruiter-btns .btn {
+        font-size: 0.84rem !important;
+        padding: 10px 14px !important;
+    }
+}
+

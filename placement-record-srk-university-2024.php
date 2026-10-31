@@ -423,7 +423,7 @@ $studentPlacements = [
 <section class="py-5 bg-white border-top">
     <div class="container-xl">
         <div class="row align-items-center g-4 mb-4">
-            <div class="col-lg-6">
+            <div class="col-lg-6 placement-recruiter-header-col">
                 <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fw-semibold mb-2">
                     <i class="fas fa-handshake me-1"></i> Corporate Ecosystem
                 </span>
@@ -432,13 +432,15 @@ $studentPlacements = [
                     Industry titans collaborate with SRKU every academic session for campus hiring drives, tech bootcamps, and executive internships.
                 </p>
             </div>
-            <div class="col-lg-6 text-lg-end">
-                <a href="<?php echo BASE_URL; ?>placements" class="btn btn-outline-danger rounded-pill px-4 fw-semibold me-2">
-                    <i class="fas fa-building me-1"></i> Corporate Placements Overview
-                </a>
-                <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/placement-cell.pdf" target="_blank" class="btn btn-danger rounded-pill px-4 fw-semibold">
-                    <i class="fas fa-download me-1"></i> Placement Brochure (PDF)
-                </a>
+            <div class="col-lg-6 text-lg-end mt-3 mt-lg-0">
+                <div class="placement-recruiter-btns d-flex flex-column flex-sm-row justify-content-lg-end align-items-stretch align-items-sm-center gap-2">
+                    <a href="<?php echo BASE_URL; ?>placements" class="btn btn-outline-danger rounded-pill px-4 py-2.5 fw-semibold d-inline-flex align-items-center justify-content-center">
+                        <i class="fas fa-building me-2"></i> Corporate Placements Overview
+                    </a>
+                    <a href="<?php echo BASE_URL; ?>assets/uploads/pdf/placement-cell.pdf" target="_blank" class="btn btn-danger rounded-pill px-4 py-2.5 fw-semibold d-inline-flex align-items-center justify-content-center shadow-sm">
+                        <i class="fas fa-download me-2"></i> Placement Brochure (PDF)
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -475,7 +477,7 @@ $studentPlacements = [
                     <div class="text-muted small">Direct resources from the Central Training &amp; Research Cell</div>
                 </div>
             </div>
-            <div class="d-flex flex-wrap gap-2">
+            <div class="d-flex flex-wrap gap-2 placement-related-portals-btns">
                 <a href="<?php echo BASE_URL; ?>tpo-director-message" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
                     <i class="fas fa-user-tie me-1"></i> Director Message
                 </a>
