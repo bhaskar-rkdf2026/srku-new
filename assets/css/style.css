@@ -11191,4 +11191,247 @@ object {
 .opacity-20 { opacity: 0.20 !important; }
 .pointer-events-none { pointer-events: none !important; }
 
+/* ═════════════════════════════════════════════════════════════════
+   PREMIUM SRKU ANIMATED LOGO PRELOADER
+   ═════════════════════════════════════════════════════════════════ */
+.srku-preloader {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, #ffffff 0%, #f8fafc 100%);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: all;
+    user-select: none;
+    -webkit-user-select: none;
+    overflow: hidden;
+}
+
+.srku-preloader.srku-preloader-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.srku-preloader-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px 24px;
+    max-width: 380px;
+    width: 90%;
+    position: relative;
+    z-index: 2;
+}
+
+/* Logo Wrap with Glowing Halo */
+.srku-preloader-logo-wrap {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+}
+
+/* Pulsing Brand Halo Glow */
+.srku-preloader-halo {
+    position: absolute;
+    inset: -14px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(122, 11, 13, 0.16) 0%, rgba(245, 158, 11, 0.09) 50%, transparent 75%);
+    animation: srkuHaloPulse 2.4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* Outer Rotating Progress Ring */
+.srku-preloader-ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.srku-preloader-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.srku-preloader-circle-bg {
+    fill: none;
+    stroke: #e2e8f0;
+    stroke-width: 3.5;
+}
+
+.srku-preloader-circle-fill {
+    fill: none;
+    stroke: url(#srkuPreloaderGrad);
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-dasharray: 340;
+    stroke-dashoffset: 280;
+    transform-origin: center;
+    animation: srkuCircleSpin 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Logo Inner Container with Floating/Breathing Animation */
+.srku-preloader-logo-inner {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(122, 11, 13, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 3;
+    padding: 12px;
+    animation: srkuLogoBreathe 2.4s ease-in-out infinite;
+}
+
+.srku-preloader-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.06));
+    image-rendering: -webkit-optimize-contrast;
+}
+
+/* Text Group */
+.srku-preloader-text-group {
+    margin-bottom: 20px;
+}
+
+.srku-preloader-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: #7a0b0d;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin: 0 0 6px 0;
+    font-family: inherit;
+    line-height: 1.35;
+}
+
+.srku-preloader-subtitle {
+    font-size: 11px;
+    font-weight: 500;
+    color: #64748b;
+    letter-spacing: 0.4px;
+}
+
+/* Sleek Bottom Progress Track */
+.srku-preloader-progress-track {
+    width: 150px;
+    height: 3px;
+    background: #e2e8f0;
+    border-radius: 99px;
+    overflow: hidden;
+    position: relative;
+}
+
+.srku-preloader-progress-bar {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, #7a0b0d, #f59e0b, transparent);
+    border-radius: 99px;
+    animation: srkuProgressBeam 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Keyframes */
+@keyframes srkuHaloPulse {
+    0%, 100% {
+        transform: scale(0.94);
+        opacity: 0.45;
+    }
+    50% {
+        transform: scale(1.15);
+        opacity: 0.95;
+    }
+}
+
+@keyframes srkuLogoBreathe {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 10px 30px rgba(122, 11, 13, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+    50% {
+        transform: scale(1.04);
+        box-shadow: 0 14px 36px rgba(122, 11, 13, 0.22), 0 6px 16px rgba(245, 158, 11, 0.12);
+    }
+}
+
+@keyframes srkuCircleSpin {
+    0% {
+        stroke-dashoffset: 340;
+        transform: rotate(0deg);
+    }
+    50% {
+        stroke-dashoffset: 100;
+    }
+    100% {
+        stroke-dashoffset: -340;
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes srkuProgressBeam {
+    0% {
+        left: -60%;
+    }
+    100% {
+        left: 140%;
+    }
+}
+
+@media (max-width: 576px) {
+    .srku-preloader-logo-wrap {
+        width: 110px;
+        height: 110px;
+        margin-bottom: 18px;
+    }
+    .srku-preloader-logo-inner {
+        width: 86px;
+        height: 86px;
+        padding: 10px;
+    }
+    .srku-preloader-title {
+        font-size: 11.5px;
+        letter-spacing: 0.8px;
+    }
+    .srku-preloader-subtitle {
+        font-size: 10px;
+    }
+    .srku-preloader-progress-track {
+        width: 120px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .srku-preloader-halo,
+    .srku-preloader-circle-fill,
+    .srku-preloader-logo-inner,
+    .srku-preloader-progress-bar {
+        animation: none !important;
+    }
+    .srku-preloader {
+        transition: opacity 0.2s linear, visibility 0.2s linear !important;
+    }
+}
+
 

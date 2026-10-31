@@ -109,6 +109,74 @@ $customSchemaJson = $seoResolved['schema_json'] ?? '';
 </head>
 <body>
 
+<!-- ═══════ PRELOADER (Animated SRKU Logo & Brand Halo) ═══════ -->
+<div id="srkuPreloader" class="srku-preloader" role="status" aria-live="polite" aria-label="Loading Sarvepalli Radhakrishnan University">
+    <div class="srku-preloader-card">
+        <div class="srku-preloader-logo-wrap">
+            <!-- Pulsing Halo & Spinning Circular Stroke -->
+            <div class="srku-preloader-halo"></div>
+            <div class="srku-preloader-ring">
+                <svg viewBox="0 0 120 120" class="srku-preloader-svg">
+                    <defs>
+                        <linearGradient id="srkuPreloaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#7a0b0d" />
+                            <stop offset="100%" stop-color="#f59e0b" />
+                        </linearGradient>
+                    </defs>
+                    <circle class="srku-preloader-circle-bg" cx="60" cy="60" r="54"></circle>
+                    <circle class="srku-preloader-circle-fill" cx="60" cy="60" r="54"></circle>
+                </svg>
+            </div>
+            <!-- Official SRKU Logo with Subtle Breathing Animation -->
+            <div class="srku-preloader-logo-inner">
+                <img src="<?php echo (strpos($logoUrl, 'http') === 0) ? $logoUrl : BASE_URL . $logoUrl; ?>" 
+                     alt="SRKU Logo" 
+                     class="srku-preloader-img"
+                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/images/SRK-logo.webp';">
+            </div>
+        </div>
+
+        <div class="srku-preloader-text-group">
+            <h6 class="srku-preloader-title">SARVEPALLI RADHAKRISHNAN UNIVERSITY</h6>
+            <div class="srku-preloader-subtitle">Bhopal (M.P.) &bull; Established Under UGC Act 1956</div>
+        </div>
+
+        <!-- Sleek Animated Progress Beam -->
+        <div class="srku-preloader-progress-track">
+            <div class="srku-preloader-progress-bar"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function() {
+    var preloader = document.getElementById('srkuPreloader');
+    if (!preloader) return;
+    var dismissed = false;
+    function dismissPreloader() {
+        if (dismissed) return;
+        dismissed = true;
+        preloader.classList.add('srku-preloader-hidden');
+        setTimeout(function() {
+            if (preloader && preloader.parentNode) {
+                preloader.style.display = 'none';
+            }
+        }, 550);
+    }
+    if (document.readyState === 'complete') {
+        setTimeout(dismissPreloader, 350);
+    } else {
+        window.addEventListener('load', function() {
+            setTimeout(dismissPreloader, 350);
+        });
+    }
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) dismissPreloader();
+    });
+    // Safety fallback: auto-dismiss after 2.2s on slow network/CDN assets
+    setTimeout(dismissPreloader, 2200);
+})();
+</script>
+
 <!-- ═══════ TOP BAR ═══════ -->
 <div class="srku-topbar">
     <div class="container-xl">
