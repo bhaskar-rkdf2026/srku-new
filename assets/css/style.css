@@ -11434,4 +11434,37 @@ object {
     }
 }
 
+/* ─── Constituent Units Hero Buttons (Sharp Square & Mobile Stack Consistency) ─── */
+.about-hero-v2 .btn-hero-yellow,
+.about-hero-v2 .btn-hero-outline,
+.constituent-hero-btns .btn-hero-yellow,
+.constituent-hero-btns .btn-hero-outline {
+    border-radius: 4px !important;
+}
+
+@media (max-width: 767px) {
+    .constituent-hero-btns {
+        width: 100% !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        padding-right: 48px !important;
+    }
+
+    .about-hero-v2 .btn-hero-yellow,
+    .about-hero-v2 .btn-hero-outline,
+    .constituent-hero-btns .btn-hero-yellow,
+    .constituent-hero-btns .btn-hero-outline {
+        width: 100% !important;
+        max-width: 100% !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding: 13px 20px !important;
+        font-size: 0.95rem !important;
+        border-radius: 4px !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+}
+
+
 

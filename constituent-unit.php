@@ -153,15 +153,15 @@ foreach ($units as $u) {
             <span class="badge bg-white bg-opacity-10 text-white border border-white-25 px-2 py-1 rounded-pill small"><i class="fas fa-check-circle text-warning me-1"></i> UGC Recognized</span>
         </div>
 
-        <div class="d-flex flex-wrap gap-3">
+        <div class="d-flex flex-wrap gap-3 constituent-hero-btns">
             <a href="#unitsCatalog" class="btn-hero-yellow shadow-sm">
                 <i class="fas fa-th-large me-2"></i> Explore All Colleges
             </a>
             <a href="<?php echo BASE_URL; ?>assets/uploads/2026/07/Constituent-units.pdf" target="_blank" rel="noopener noreferrer" class="btn-hero-outline shadow-sm">
                 <i class="fas fa-file-pdf me-2 text-danger"></i> Download Official Brochure (PDF)
             </a>
-            <a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 shadow-sm">
-                <i class="fas fa-user-graduate text-warning"></i> Admission Enquiry
+            <a href="<?php echo BASE_URL; ?>admission-enquiry.php" class="btn-hero-outline shadow-sm">
+                <i class="fas fa-user-graduate me-2 text-warning"></i> Admission Enquiry
             </a>
         </div>
     </div>
