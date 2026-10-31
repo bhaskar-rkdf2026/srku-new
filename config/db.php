@@ -45,6 +45,37 @@ function getDBConnection() {
         $displayHost = htmlspecialchars($dbHost);
         $displayDb = htmlspecialchars($dbName);
         $displayUser = htmlspecialchars($dbUser);
+        
+        // Log sensitive error to server log instead of exposing to visitors
+        @error_log("[SRKU DB CONNECTION ERROR] Host: {$dbHost} | DB: {$dbName} | User: {$dbUser} | Error: " . ($lastException ? $lastException->getMessage() : 'Unknown'));
+
+        if (empty($isLocalhost)) {
+            die("<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Portal Maintenance - SRKU</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #0b1329; color: #f8fafc; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        .card { background: #131f37; max-width: 580px; width: 100%; padding: 40px; border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.5); text-align: center; }
+        .icon { width: 64px; height: 64px; margin: 0 auto 20px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; }
+        h1 { color: #f8fafc; font-size: 22px; margin: 0 0 12px; font-weight: 700; }
+        p { color: #94a3b8; font-size: 15px; line-height: 1.6; margin: 0 0 20px; }
+        .btn { display: inline-block; background: #dc2626; color: #fff; text-decoration: none; padding: 10px 24px; border-radius: 8px; font-weight: 600; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class='card'>
+        <div class='icon'>&#9881;</div>
+        <h1>University Portal Maintenance</h1>
+        <p>The Sarvepalli Radhakrishnan University portal is temporarily undergoing scheduled maintenance or database synchronization. Please check back in a few minutes.</p>
+        <a href='javascript:location.reload()' class='btn'>Retry Connection</a>
+    </div>
+</body>
+</html>");
+        }
+
         die("<!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -86,7 +117,7 @@ function getDBConnection() {
 
     // Fast-path: Only run schema initialization once
     $initLockFile = __DIR__ . '/.db_initialized';
-    $needInit = !file_exists($initLockFile) || isset($_GET['reinit_db']);
+    $needInit = !file_exists($initLockFile) || (isset($_GET['reinit_db']) && !empty($_SESSION['admin_logged_in']));
 
     if (!$needInit) {
         try {

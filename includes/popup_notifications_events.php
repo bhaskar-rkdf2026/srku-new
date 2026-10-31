@@ -1,6 +1,6 @@
 <?php
 /**
- * Modern Compact Popup Modal for Latest Notifications & Single Creative Event Showcase
+ * Modern Responsive Popup Modal for Latest Notifications & Single Creative Event Showcase
  * Sarvepalli Radhakrishnan University (SRKU), Bhopal
  * Fully connected to Database & Admin CMS (Active/Disable, Custom/Dynamic Events, Delay, etc.)
  */
@@ -44,7 +44,7 @@ $featuredEvent = !empty($popupEvents) ? $popupEvents[0] : [
     'content' => ''
 ];
 
-// Determine Active Event Details (Custom DB Override or Latest from DB)
+// Determine Active Event Details
 if (!empty($popupEventTitle)) {
     $fTitle = $popupEventTitle;
     $firstDate = !empty($popupEventDate) ? strtotime($popupEventDate) : time();
@@ -72,125 +72,159 @@ try {
     $popupNotices = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {}
 
-// 5. Admission Notices & Important Links (Single-Column List Data)
+// 5. Admission Notices & Important Links with themes
+// Resolver function to guarantee all notices and document links resolve to valid, existing URLs
+if (!function_exists("resolvePopupDocLink")) {
+    function resolvePopupDocLink($url, $filePath = "") {
+        $raw = !empty($url) ? $url : $filePath;
+        if (empty($raw)) return "#";
+        if (preg_match("/^https?:\/\//i", $raw)) return $raw;
+
+        $clean = ltrim($raw, "/");
+        // Check exact path relative to root
+        if (file_exists(__DIR__ . "/../" . $clean)) {
+            return BASE_URL . $clean;
+        }
+        // If missing "assets/", check with "assets/"
+        if (strpos($clean, "assets/") !== 0 && file_exists(__DIR__ . "/../assets/" . $clean)) {
+            return BASE_URL . "assets/" . $clean;
+        }
+        $base = basename($clean);
+        // Check in assets/uploads/2026/07/
+        if (file_exists(__DIR__ . "/../assets/uploads/2026/07/" . $base)) {
+            return BASE_URL . "assets/uploads/2026/07/" . $base;
+        }
+        // Check in assets/uploads/pdf/
+        if (file_exists(__DIR__ . "/../assets/uploads/pdf/" . $base)) {
+            return BASE_URL . "assets/uploads/pdf/" . $base;
+        }
+        // Check in assets/uploads/2026/updated-docs/
+        if (file_exists(__DIR__ . "/../assets/uploads/2026/updated-docs/" . $base)) {
+            return BASE_URL . "assets/uploads/2026/updated-docs/" . $base;
+        }
+        return BASE_URL . (strpos($clean, "assets/") === 0 ? $clean : "assets/" . $clean);
+    }
+}
+
+// 5. Admission Notices & Important Links with themes
 $admissionNoticeItems = [
     [
         'title' => 'Admissions Open 2026-27: UG, PG, Diploma & Ph.D. Programs',
         'badge' => 'ADMISSIONS 2026',
-        'badge_bg' => 'bg-danger text-white',
+        'theme' => 'crimson',
         'desc' => 'UGC-recognized degrees in Engineering, Pharmacy, Nursing, Law, Medicine & Management.',
         'btn_text' => 'Apply Online',
         'btn_type' => 'modal',
         'btn_target' => '#quickAdmissionModal',
-        'btn_class' => 'btn-danger',
-        'icon' => 'fas fa-edit'
+        'icon' => 'fas fa-graduation-cap'
     ],
     [
         'title' => 'Ph.D. Entrance Examination 2026 Guidelines & Online Application',
         'badge' => 'RESEARCH',
-        'badge_bg' => 'bg-primary text-white',
+        'theme' => 'blue',
         'desc' => 'Doctoral entrance test and fellowship admissions for session 2026-27.',
         'btn_text' => 'View Details',
         'btn_type' => 'link',
         'btn_target' => BASE_URL . 'phd-admission.php',
-        'btn_class' => 'btn-outline-navy',
-        'icon' => 'fas fa-user-graduate'
+        'target' => '_blank',
+        'icon' => 'fas fa-microscope'
     ],
     [
         'title' => 'Official Fee Structure & Refund Policy for Academic Session 2026-27',
         'badge' => 'FEES & AID',
-        'badge_bg' => 'bg-success text-white',
+        'theme' => 'emerald',
         'desc' => 'Approved schedule of course-wise tuition fees and hostel accommodations.',
         'btn_text' => 'View PDF',
         'btn_type' => 'link',
-        'btn_target' => BASE_URL . 'document/fees-2026-27',
-        'btn_class' => 'btn-outline-success',
+        'btn_target' => BASE_URL . 'assets/uploads/2026/updated-docs/fees-2026-27.pdf',
+        'target' => '_blank',
         'icon' => 'fas fa-file-invoice-dollar'
     ],
     [
         'title' => 'University Information Prospectus 2026-27 (Complete Brochure)',
         'badge' => 'PROSPECTUS',
-        'badge_bg' => 'bg-warning text-dark',
+        'theme' => 'amber',
         'desc' => 'Detailed curriculum guide, lab facilities, placement records and faculty directory.',
         'btn_text' => 'Download',
         'btn_type' => 'link',
-        'btn_target' => BASE_URL . 'document/prospectus',
-        'btn_class' => 'btn-outline-dark',
+        'btn_target' => BASE_URL . 'assets/uploads/2026/updated-docs/prospectus.pdf',
+        'target' => '_blank',
+        'download' => 'SRKU-Prospectus-2026-27.pdf',
         'icon' => 'fas fa-book-open'
     ],
     [
         'title' => 'AICTE Pragati & Saksham Scholarship Scheme for Girls & Divyangjan',
         'badge' => 'SCHOLARSHIP',
-        'badge_bg' => 'bg-info text-dark',
+        'theme' => 'purple',
         'desc' => 'National scholarship portal guidelines and university student support desk.',
         'btn_text' => 'View Circular',
         'btn_type' => 'link',
-        'btn_target' => BASE_URL . 'document/meritorious-scheme-policy',
-        'btn_class' => 'btn-outline-info',
+        'btn_target' => BASE_URL . 'assets/uploads/2026/updated-docs/meritorious-scheme-policy.pdf',
+        'target' => '_blank',
         'icon' => 'fas fa-award'
     ]
 ];
 ?>
 
 <!-- ═══════════════════════════════════════════════════════════════════
-     COMPACT, MODERN CAMPUS NOTIFICATIONS & EVENT SHOWCASE POPUP
+     RESPONSIVE CAMPUS BULLETIN MODAL (Mobile-Optimized & Desktop-Spacious)
 ═══════════════════════════════════════════════════════════════════ -->
 <div class="modal fade srku-compact-popup" id="campusEventsNotificationsModal" tabindex="-1" aria-labelledby="campusEventsModalLabel" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable srku-modal-compact-dialog">
-        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden bg-white">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable srku-modal-spacious-dialog">
+        <div class="modal-content border-0 shadow-2xl rounded-4 overflow-hidden bg-white">
             
-            <!-- Sleek Compact Header (Maroon-to-Navy Gradient) -->
-            <div class="modal-header text-white px-3 py-2.5 border-0 d-flex align-items-center justify-content-between" style="background: linear-gradient(135deg, #7A0B0D 0%, #0F1E3B 100%);">
+            <!-- Sleek Header (Maroon-to-Navy Gradient) -->
+            <div class="modal-header text-white px-3 px-sm-4 py-2.5 py-sm-3 border-0 d-flex align-items-center justify-content-between" style="background: linear-gradient(135deg, #7A0B0D 0%, #0F1E3B 100%);">
                 <div class="d-flex align-items-center gap-2.5">
-                    <div class="popup-mini-badge rounded-circle bg-warning text-dark d-flex align-items-center justify-content-center shadow-xs" style="width: 32px; height: 32px; min-width: 32px;">
+                    <div class="popup-mini-badge rounded-circle bg-warning text-dark d-flex align-items-center justify-content-center shadow-sm flex-shrink-0" style="width: 32px; height: 32px;">
                         <i class="fas fa-bullhorn" style="font-size: 0.9rem;"></i>
                     </div>
-                    <div>
-                        <h5 class="modal-title fw-bold text-white mb-0" id="campusEventsModalLabel" style="font-size: 1.05rem; letter-spacing: -0.2px;">
+                    <div class="min-w-0">
+                        <h5 class="modal-title fw-bold text-white mb-0 text-truncate" id="campusEventsModalLabel" style="font-size: 1.05rem; letter-spacing: -0.2px;">
                             <?php echo sanitize($popupHeaderTitle); ?>
                         </h5>
-                        <small class="text-white-50" style="font-size: 0.72rem;"><?php echo sanitize($popupHeaderSubtitle); ?></small>
+                        <small class="text-white-50 d-block text-truncate" style="font-size: 0.74rem;"><?php echo sanitize($popupHeaderSubtitle); ?></small>
                     </div>
                 </div>
-                <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close" style="font-size: 0.75rem;"></button>
+                <button type="button" class="btn-close btn-close-white shadow-none flex-shrink-0 ms-2" data-bs-dismiss="modal" aria-label="Close" style="font-size: 0.75rem;"></button>
             </div>
 
-            <!-- Clean Segmented Tabs Bar -->
-            <div class="bg-light border-bottom px-3 py-2">
-                <ul class="nav nav-pills compact-nav-tabs nav-fill gap-1" id="bulletinCompactTab" role="tablist">
+            <!-- Single-Row Non-Wrapping Segmented Tabs Bar -->
+            <div class="popup-tabs-bar bg-light border-bottom px-2.5 px-sm-3 py-2">
+                <ul class="nav nav-pills compact-nav-tabs nav-fill flex-nowrap" id="bulletinCompactTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link <?php echo $popupDefaultTab === 'events' ? 'active' : ''; ?> rounded-pill fw-semibold py-1.5 px-2.5 text-truncate" id="pills-event-btn" data-bs-toggle="pill" data-bs-target="#pills-event-pane" type="button" role="tab" aria-controls="pills-event-pane" aria-selected="<?php echo $popupDefaultTab === 'events' ? 'true' : 'false'; ?>" style="font-size: 0.8rem;">
-                            <i class="fas fa-calendar-star me-1 text-warning"></i> Events
+                        <button class="nav-link <?php echo $popupDefaultTab === 'events' ? 'active' : ''; ?> rounded-pill" id="pills-event-btn" data-bs-toggle="pill" data-bs-target="#pills-event-pane" type="button" role="tab" aria-controls="pills-event-pane" aria-selected="<?php echo $popupDefaultTab === 'events' ? 'true' : 'false'; ?>">
+                            <i class="fas fa-calendar-star me-1 text-warning"></i><span>Events</span>
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link <?php echo $popupDefaultTab === 'notices' ? 'active' : ''; ?> rounded-pill fw-semibold py-1.5 px-2.5 text-truncate" id="pills-notices-btn" data-bs-toggle="pill" data-bs-target="#pills-notices-pane" type="button" role="tab" aria-controls="pills-notices-pane" aria-selected="<?php echo $popupDefaultTab === 'notices' ? 'true' : 'false'; ?>" style="font-size: 0.8rem;">
-                            <i class="fas fa-bell me-1 text-primary"></i> Notices <span class="badge bg-danger rounded-pill px-1.5 py-0.5 ms-1" style="font-size: 0.65rem;"><?php echo count($popupNotices); ?></span>
+                        <button class="nav-link <?php echo $popupDefaultTab === 'notices' ? 'active' : ''; ?> rounded-pill" id="pills-notices-btn" data-bs-toggle="pill" data-bs-target="#pills-notices-pane" type="button" role="tab" aria-controls="pills-notices-pane" aria-selected="<?php echo $popupDefaultTab === 'notices' ? 'true' : 'false'; ?>">
+                            <i class="fas fa-bell me-1 text-primary"></i><span>Notices</span> <span class="badge bg-danger rounded-pill px-1.5 py-0.5 ms-0.5"><?php echo count($popupNotices); ?></span>
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link <?php echo $popupDefaultTab === 'admissions' ? 'active' : ''; ?> rounded-pill fw-semibold py-1.5 px-2.5 text-truncate" id="pills-admission-btn" data-bs-toggle="pill" data-bs-target="#pills-admission-pane" type="button" role="tab" aria-controls="pills-admission-pane" aria-selected="<?php echo $popupDefaultTab === 'admissions' ? 'true' : 'false'; ?>" style="font-size: 0.8rem;">
-                            <i class="fas fa-graduation-cap me-1 text-success"></i> Admissions 2026
+                        <button class="nav-link <?php echo $popupDefaultTab === 'admissions' ? 'active' : ''; ?> rounded-pill" id="pills-admission-btn" data-bs-toggle="pill" data-bs-target="#pills-admission-pane" type="button" role="tab" aria-controls="pills-admission-pane" aria-selected="<?php echo $popupDefaultTab === 'admissions' ? 'true' : 'false'; ?>">
+                            <i class="fas fa-graduation-cap me-1 text-success"></i><span>Admissions<span class="d-none d-md-inline"> 2026</span></span>
                         </button>
                     </li>
                 </ul>
             </div>
 
-            <!-- Modal Body with 3 Focused Views -->
-            <div class="modal-body p-3 bg-white" style="max-height: 500px; overflow-y: auto;">
+            <!-- Modal Body with Scrollable List -->
+            <div class="modal-body p-2.5 p-sm-3.5" style="max-height: calc(85vh - 130px); overflow-y: auto; background-color: #f8fafc;">
                 <div class="tab-content" id="bulletinCompactTabContent">
                     
                     <!-- ═════════ TAB 1: SINGLE CREATIVE EVENT SHOWCASE ═════════ -->
                     <div class="tab-pane fade <?php echo $popupDefaultTab === 'events' ? 'show active' : ''; ?>" id="pills-event-pane" role="tabpanel" aria-labelledby="pills-event-btn">
-                        <div class="single-event-container">
+                        <div class="single-event-container bg-white p-2.5 p-sm-3 rounded-3 border border-slate-200 shadow-2xs">
                             
-                            <!-- Single Creative Image Box (Clickable Direct Link to Event) -->
-                            <a href="<?php echo $fLink; ?>" class="d-block text-decoration-none position-relative rounded-3 overflow-hidden shadow-sm mb-2.5 featured-poster-frame" style="background:#0F1E3B;">
+                            <!-- Single Creative Image Box -->
+                            <a href="<?php echo $fLink; ?>" target="_blank" class="d-block text-decoration-none position-relative rounded-3 overflow-hidden shadow-sm mb-2.5 featured-poster-frame" style="background:#0F1E3B;">
                                 <img id="activeEventImage" 
                                      src="<?php echo $fImg; ?>" 
                                      alt="<?php echo sanitize($fTitle); ?>" 
                                      class="w-100 object-fit-cover transition-all" 
-                                     style="height: 240px; display:block;"
+                                     style="height: 220px; display:block;"
                                      onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/images/news4.jpg';">
 
                                 <!-- Floating Calendar Date Tag -->
@@ -211,111 +245,123 @@ $admissionNoticeItems = [
                                 </div>
                             </a>
 
-                            <!-- Event Details: Title & Direct Redirect Action Only -->
+                            <!-- Event Details -->
                             <div class="px-1">
-                                <h6 id="activeEventTitle" class="fw-bold text-navy mb-2" style="font-size: 1rem; line-height: 1.35;">
-                                    <a href="<?php echo $fLink; ?>" class="text-navy text-decoration-none hover-maroon">
+                                <h6 id="activeEventTitle" class="fw-bold text-navy mb-2" style="font-size: 0.96rem; line-height: 1.4;">
+                                    <a href="<?php echo $fLink; ?>" target="_blank" class="text-navy text-decoration-none hover-maroon">
                                         <?php echo sanitize($fTitle); ?>
                                     </a>
                                 </h6>
                                 
                                 <div class="d-flex align-items-center justify-content-between pt-2 border-top">
-                                    <span id="activeEventDateStr" class="small text-muted" style="font-size: 0.75rem;">
+                                    <span id="activeEventDateStr" class="text-muted fw-semibold small" style="font-size: 0.76rem;">
                                         <i class="far fa-calendar-alt text-danger me-1"></i> Date: <?php echo date('d M, Y', $firstDate); ?>
                                     </span>
-                                    <a id="activeEventLink" href="<?php echo $fLink; ?>" class="btn btn-sm btn-danger rounded-pill px-3 py-1.5 fw-bold shadow-xs d-inline-flex align-items-center gap-1.5" style="font-size: 0.78rem;">
-                                        <span>View Event Details</span> <i class="fas fa-arrow-right"></i>
+                                    <a id="activeEventLink" href="<?php echo $fLink; ?>" target="_blank" class="btn btn-sm btn-danger rounded-pill px-3 py-1 fw-bold shadow-xs d-inline-flex align-items-center gap-1.5" style="font-size: 0.78rem;">
+                                        <span>View Details</span> <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- ═════════ TAB 2: SIMPLE 1-COLUMN LIST VIEW FOR NOTICES ═════════ -->
+                    <!-- ═════════ TAB 2: MOBILE-OPTIMIZED FULL-WIDTH TITLE NOTICES LIST ═════════ -->
                     <div class="tab-pane fade <?php echo $popupDefaultTab === 'notices' ? 'show active' : ''; ?>" id="pills-notices-pane" role="tabpanel" aria-labelledby="pills-notices-btn">
-                        <div class="d-flex flex-column gap-2">
+                        <div class="d-flex flex-column gap-2.5">
                             <?php if (!empty($popupNotices)): ?>
                                 <?php foreach ($popupNotices as $idx => $not): 
-                                    $notDate = !empty($not['publish_date']) ? date('d M, Y', strtotime($not['publish_date'])) : date('d M, Y');
-                                    $docLink = '#';
-                                    if (!empty($not['external_url'])) {
-                                        $docLink = (strpos($not['external_url'], 'http') === 0) ? $not['external_url'] : BASE_URL . ltrim($not['external_url'], '/');
-                                    } elseif (!empty($not['file_path'])) {
-                                        $docLink = BASE_URL . ltrim($not['file_path'], '/');
-                                    }
+                                    $timestamp = !empty($not['publish_date']) ? strtotime($not['publish_date']) : time();
+                                    $notDate = date('d M, Y', $timestamp);
+                                    $docLink = resolvePopupDocLink($not['external_url'] ?? '', $not['file_path'] ?? '');
                                     $isPdf = preg_match('/\.pdf$/i', $docLink);
+                                    $cat = sanitize($not['category'] ?? 'Notice');
+                                    $catClass = 'cat-default';
+                                    if (stripos($cat, 'accred') !== false) $catClass = 'cat-blue';
+                                    elseif (stripos($cat, 'gov') !== false) $catClass = 'cat-green';
+                                    elseif (stripos($cat, 'app') !== false) $catClass = 'cat-amber';
+                                    elseif (stripos($cat, 'comm') !== false) $catClass = 'cat-purple';
                                 ?>
-                                <div class="notice-row-item p-2.5 rounded-3 bg-light border border-light-subtle d-flex align-items-center justify-content-between gap-2.5 transition-all">
-                                    <div class="d-flex align-items-center gap-2.5 flex-grow-1 overflow-hidden">
-                                        <div class="notice-bullet-icon rounded-circle bg-danger-subtle text-danger d-flex align-items-center justify-content-center shadow-2xs" style="width: 32px; height: 32px; min-width: 32px;">
-                                            <i class="fas <?php echo $isPdf ? 'fa-file-pdf' : 'fa-file-alt'; ?>" style="font-size: 0.85rem;"></i>
+                                <div class="popup-notice-card">
+                                    <!-- Top Row: Date Pill, Category Badge & Action Button -->
+                                    <div class="notice-card-header d-flex align-items-center justify-content-between gap-2 mb-1.5">
+                                        <div class="d-flex align-items-center gap-1.5 flex-wrap min-w-0">
+                                            <span class="notice-date-pill">
+                                                <i class="far fa-calendar-alt text-danger me-1"></i><?php echo $notDate; ?>
+                                            </span>
+                                            <span class="notice-cat-pill <?php echo $catClass; ?>">
+                                                <?php echo $cat; ?>
+                                            </span>
+                                            <?php if ($idx < 2): ?>
+                                                <span class="badge bg-danger text-white rounded-pill px-1.5 py-0.5 fw-bold" style="font-size: 0.6rem; letter-spacing: 0.4px;">NEW</span>
+                                            <?php endif; ?>
                                         </div>
-                                        <div class="overflow-hidden">
-                                            <div class="d-flex align-items-center gap-1.5 mb-0.5">
-                                                <span class="badge bg-primary-subtle text-primary rounded-pill px-2 py-0.5" style="font-size: 0.65rem;">
-                                                    <?php echo sanitize($not['category'] ?? 'Notice'); ?>
-                                                </span>
-                                                <?php if ($idx < 2): ?>
-                                                    <span class="badge bg-danger text-white rounded-pill px-1.5 py-0.5 fw-bold" style="font-size: 0.6rem;">NEW</span>
-                                                <?php endif; ?>
-                                                <span class="text-muted small" style="font-size: 0.72rem;">
-                                                    <?php echo $notDate; ?>
-                                                </span>
-                                            </div>
-                                            <a href="<?php echo sanitize($docLink); ?>" target="_blank" class="text-navy text-decoration-none fw-semibold d-block text-truncate hover-maroon" style="font-size: 0.84rem;">
-                                                <?php echo sanitize($not['title']); ?>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="text-end text-nowrap">
-                                        <a href="<?php echo sanitize($docLink); ?>" target="_blank" class="btn btn-xs btn-outline-danger rounded-pill px-2.5 py-1 fw-bold" style="font-size: 0.72rem;">
-                                            <i class="fas <?php echo $isPdf ? 'fa-download' : 'fa-external-link-alt'; ?> me-0.5"></i> View
+                                        <a href="<?php echo sanitize($docLink); ?>" target="_blank" class="notice-action-btn flex-shrink-0" title="View Document">
+                                            <span>View</span>
+                                            <i class="fas fa-arrow-up-right-from-square"></i>
                                         </a>
                                     </div>
+
+                                    <!-- Bottom Row: Title spans the FULL width of the card! -->
+                                    <a href="<?php echo sanitize($docLink); ?>" target="_blank" class="notice-card-title d-block">
+                                        <i class="fas <?php echo $isPdf ? 'fa-file-pdf text-danger' : 'fa-file-alt text-primary'; ?> me-1.5 opacity-75"></i>
+                                        <?php echo sanitize($not['title']); ?>
+                                    </a>
                                 </div>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <div class="text-center py-4 text-muted small">
+                                <div class="text-center py-5 text-muted small bg-white rounded-3 border">
+                                    <i class="fas fa-bell-slash fa-2x text-muted mb-2 d-block opacity-50"></i>
                                     No active notices available right now.
                                 </div>
                             <?php endif; ?>
                         </div>
                     </div>
 
-                    <!-- ═════════ TAB 3: SIMPLE 1-COLUMN LIST VIEW FOR ADMISSIONS ═════════ -->
+                    <!-- ═════════ TAB 3: MOBILE-OPTIMIZED STRUCTURED ADMISSIONS LIST ═════════ -->
                     <div class="tab-pane fade <?php echo $popupDefaultTab === 'admissions' ? 'show active' : ''; ?>" id="pills-admission-pane" role="tabpanel" aria-labelledby="pills-admission-btn">
-                        <div class="d-flex flex-column gap-2">
+                        <div class="d-flex flex-column gap-2.5">
                             <?php foreach ($admissionNoticeItems as $adm): ?>
-                            <div class="admission-row-item p-2.5 rounded-3 bg-light border border-light-subtle d-flex align-items-center justify-content-between gap-2.5 transition-all">
-                                <div class="d-flex align-items-center gap-2.5 flex-grow-1 overflow-hidden">
-                                    <div class="adm-icon-box rounded-circle bg-white border text-navy d-flex align-items-center justify-content-center shadow-2xs" style="width: 34px; height: 34px; min-width: 34px;">
-                                        <i class="<?php echo $adm['icon']; ?>" style="font-size: 0.9rem;"></i>
+                            <div class="popup-adm-card">
+                                <!-- Top Row: Icon + Badge on left, Action on right -->
+                                <div class="d-flex align-items-center justify-content-between gap-2 mb-1.5">
+                                    <div class="d-flex align-items-center gap-2 min-w-0">
+                                        <span class="adm-pill-icon theme-<?php echo $adm['theme']; ?> flex-shrink-0">
+                                            <i class="<?php echo $adm['icon']; ?>"></i>
+                                        </span>
+                                        <span class="adm-cat-pill badge-<?php echo $adm['theme']; ?> text-truncate">
+                                            <?php echo $adm['badge']; ?>
+                                        </span>
                                     </div>
-                                    <div class="overflow-hidden">
-                                        <div class="d-flex align-items-center gap-1.5 mb-0.5">
-                                            <span class="badge <?php echo $adm['badge_bg']; ?> rounded-pill px-2 py-0.5" style="font-size: 0.62rem; letter-spacing: 0.3px;">
-                                                <?php echo $adm['badge']; ?>
-                                            </span>
-                                        </div>
-                                        <h6 class="mb-0 fw-bold text-navy text-truncate" style="font-size: 0.84rem;">
-                                            <?php echo sanitize($adm['title']); ?>
-                                        </h6>
-                                        <p class="text-secondary small mb-0 text-truncate" style="font-size: 0.74rem;">
-                                            <?php echo sanitize($adm['desc']); ?>
-                                        </p>
+                                    <div class="flex-shrink-0">
+                                        <?php if ($adm['btn_type'] === 'modal'): ?>
+                                            <button type="button" class="adm-action-btn btn-<?php echo $adm['theme']; ?>" data-bs-toggle="modal" data-bs-target="<?php echo $adm['btn_target']; ?>" data-bs-dismiss="modal">
+                                                <span><?php echo $adm['btn_text']; ?></span>
+                                                <i class="fas fa-arrow-right"></i>
+                                            </button>
+                                        <?php else: ?>
+                                            <a href="<?php echo $adm['btn_target']; ?>" <?php echo !empty($adm['target']) ? 'target="' . $adm['target'] . '"' : ''; ?> <?php echo !empty($adm['download']) ? 'download="' . $adm['download'] . '"' : ''; ?> class="adm-action-btn btn-<?php echo $adm['theme']; ?>" title="<?php echo sanitize($adm['title']); ?>">
+                                                <span><?php echo $adm['btn_text']; ?></span>
+                                                <i class="fas <?php echo !empty($adm['download']) ? 'fa-download' : 'fa-arrow-up-right-from-square'; ?>"></i>
+                                            </a>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
-                                <div class="text-end text-nowrap">
+
+                                <!-- Full-Width Title & Description -->
+                                <h6 class="adm-card-title mb-1">
                                     <?php if ($adm['btn_type'] === 'modal'): ?>
-                                        <button type="button" class="btn btn-xs <?php echo $adm['btn_class']; ?> rounded-pill px-2.5 py-1 fw-bold shadow-2xs" data-bs-toggle="modal" data-bs-target="<?php echo $adm['btn_target']; ?>" data-bs-dismiss="modal" style="font-size: 0.72rem;">
-                                            <?php echo $adm['btn_text']; ?> &rarr;
-                                        </button>
+                                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="<?php echo $adm['btn_target']; ?>" data-bs-dismiss="modal" class="text-navy text-decoration-none hover-maroon">
+                                            <?php echo sanitize($adm['title']); ?>
+                                        </a>
                                     <?php else: ?>
-                                        <a href="<?php echo $adm['btn_target']; ?>" class="btn btn-xs <?php echo $adm['btn_class']; ?> rounded-pill px-2.5 py-1 fw-bold shadow-2xs" style="font-size: 0.72rem;">
-                                            <?php echo $adm['btn_text']; ?> &rarr;
+                                        <a href="<?php echo $adm['btn_target']; ?>" <?php echo !empty($adm['target']) ? 'target="' . $adm['target'] . '"' : ''; ?> <?php echo !empty($adm['download']) ? 'download="' . $adm['download'] . '"' : ''; ?> class="text-navy text-decoration-none hover-maroon">
+                                            <?php echo sanitize($adm['title']); ?>
                                         </a>
                                     <?php endif; ?>
-                                </div>
+                                </h6>
+                                <p class="adm-card-desc mb-0">
+                                    <?php echo sanitize($adm['desc']); ?>
+                                </p>
                             </div>
                             <?php endforeach; ?>
                         </div>
@@ -324,12 +370,12 @@ $admissionNoticeItems = [
                 </div>
             </div>
 
-            <!-- Compact Modal Footer -->
-            <div class="modal-footer bg-light px-3 py-2 border-top d-flex align-items-center justify-content-between">
+            <!-- Responsive Modal Footer -->
+            <div class="modal-footer bg-white px-3 px-sm-4 py-2 border-top d-flex align-items-center justify-content-between">
                 <?php if ($popupShowOnceDay === '1'): ?>
                 <div class="form-check m-0">
                     <input class="form-check-input shadow-none" type="checkbox" id="srkuDismissBulletinToday" style="cursor: pointer; width: 14px; height: 14px;">
-                    <label class="form-check-label text-muted" for="srkuDismissBulletinToday" style="cursor: pointer; font-size: 0.75rem; user-select: none;">
+                    <label class="form-check-label text-muted small" for="srkuDismissBulletinToday" style="cursor: pointer; font-size: 0.74rem; user-select: none;">
                         Don't show again today
                     </label>
                 </div>
@@ -338,7 +384,10 @@ $admissionNoticeItems = [
                 <?php endif; ?>
                 
                 <div class="d-flex align-items-center gap-2">
-                    <button type="button" class="btn btn-sm btn-dark rounded-pill px-3 py-1 fw-semibold" data-bs-dismiss="modal" style="font-size: 0.78rem;">
+                    <a href="<?php echo BASE_URL; ?>accreditation.php" class="text-maroon fw-semibold small text-decoration-none d-none d-sm-inline-flex align-items-center gap-1" style="font-size: 0.76rem;">
+                        <span>All Circulars</span> <i class="fas fa-arrow-right" style="font-size: 0.68rem;"></i>
+                    </a>
+                    <button type="button" class="btn btn-sm btn-dark rounded-pill px-3.5 py-1 fw-semibold" data-bs-dismiss="modal" style="font-size: 0.78rem;">
                         Close
                     </button>
                 </div>
@@ -349,39 +398,70 @@ $admissionNoticeItems = [
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════════
-     COMPACT POPUP STYLING (Scoped & Clean)
+     HIGH-END RESPONSIVE STYLING (Mobile-Perfect & Desktop-Spacious)
 ═══════════════════════════════════════════════════════════════════ -->
 <style>
-/* Dialog Width Constraint: Compact & Focused */
-.srku-modal-compact-dialog {
-    max-width: 600px !important;
-    width: 92% !important;
-    margin: 1.75rem auto;
+/* Proportional Dialog Sizing */
+.srku-modal-spacious-dialog {
+    max-width: 620px !important;
+    width: 94% !important;
+    margin: 1.5rem auto;
 }
 @media (max-width: 576px) {
-    .srku-modal-compact-dialog {
-        max-width: 95% !important;
-        margin: 0.75rem auto;
+    .srku-modal-spacious-dialog {
+        width: 95% !important;
+        margin: 0.6rem auto;
     }
 }
 
-/* Nav Tabs */
-.compact-nav-tabs .nav-link {
+/* Single-Row Tabs Bar (Never Wraps on Mobile!) */
+.popup-tabs-bar .compact-nav-tabs {
+    display: flex;
+    flex-wrap: nowrap !important;
+    gap: 6px;
+    width: 100%;
+}
+.popup-tabs-bar .compact-nav-tabs .nav-item {
+    flex: 1 1 0;
+    min-width: 0;
+}
+.popup-tabs-bar .compact-nav-tabs .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 7px 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border-radius: 50px;
+    white-space: nowrap;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
     color: #475569;
-    background: #e2e8f0;
     transition: all 0.2s ease;
 }
-.compact-nav-tabs .nav-link:hover {
-    background: #cbd5e1;
+.popup-tabs-bar .compact-nav-tabs .nav-link:hover {
+    background: #f1f5f9;
     color: #0f172a;
 }
-.compact-nav-tabs .nav-link.active {
-    background: #7A0B0D !important;
+.popup-tabs-bar .compact-nav-tabs .nav-link.active {
+    background: linear-gradient(135deg, #8B0000 0%, #7A0B0D 100%) !important;
     color: #ffffff !important;
-    box-shadow: 0 2px 8px rgba(122, 11, 13, 0.35);
+    border-color: #7A0B0D !important;
+    box-shadow: 0 3px 10px rgba(122, 11, 13, 0.3);
 }
 
-/* Event poster container */
+@media (min-width: 576px) {
+    .popup-tabs-bar .compact-nav-tabs {
+        gap: 8px;
+    }
+    .popup-tabs-bar .compact-nav-tabs .nav-link {
+        padding: 8px 14px;
+        font-size: 0.84rem;
+    }
+}
+
+/* Event Poster Frame */
 .featured-poster-frame {
     border: 1px solid #e2e8f0;
 }
@@ -390,26 +470,213 @@ $admissionNoticeItems = [
     min-width: 40px;
 }
 
-/* Single-Column List Rows Hover */
-.notice-row-item:hover, .admission-row-item:hover {
-    background: #ffffff !important;
-    border-color: #cbd5e1 !important;
-    box-shadow: 0 3px 8px rgba(15, 30, 59, 0.06);
-    transform: translateY(-1px);
+/* ==============================================================
+   FULL-WIDTH NOTICES CARDS (Zero Horizontal Chocking!)
+   ============================================================== */
+.popup-notice-card {
+    background: #ffffff;
+    border: 1px solid #edf2f7;
+    border-radius: 12px;
+    padding: 10px 12px;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+.popup-notice-card:hover {
+    border-color: #fca5a5;
+    box-shadow: 0 5px 14px rgba(122, 11, 13, 0.08);
+    transform: translateY(-1.5px);
+}
+
+/* Top Meta Elements */
+.notice-date-pill {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #475569;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    padding: 2px 7px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+}
+.notice-cat-pill {
+    font-size: 0.62rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    padding: 2px 7px;
+    border-radius: 9999px;
+}
+.cat-blue { background: #eff6ff; color: #1d4ed8; border: 1px solid #dbeafe; }
+.cat-green { background: #f0fdf4; color: #15803d; border: 1px solid #dcfce7; }
+.cat-amber { background: #fffbeb; color: #b45309; border: 1px solid #fef3c7; }
+.cat-purple { background: #faf5ff; color: #7e22ce; border: 1px solid #f3e8ff; }
+.cat-default { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+
+/* Notice Card Title (100% Width Freedom) */
+.notice-card-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #0f1e3b;
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color 0.15s ease;
+}
+.notice-card-title:hover {
+    color: #7A0B0D;
+}
+@media (min-width: 576px) {
+    .popup-notice-card {
+        padding: 12px 14px;
+    }
+    .notice-card-title {
+        font-size: 0.92rem;
+    }
+    .notice-date-pill {
+        font-size: 0.72rem;
+    }
+}
+
+/* Action Button */
+.notice-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: #f8fafc;
+    color: #0F1E3B;
+    border: 1px solid #e2e8f0;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.popup-notice-card:hover .notice-action-btn,
+.notice-action-btn:hover {
+    background: #7A0B0D;
+    color: #ffffff !important;
+    border-color: #7A0B0D;
+    box-shadow: 0 3px 8px rgba(122, 11, 13, 0.25);
+}
+
+/* ==============================================================
+   ADMISSIONS TAB CARDS (Mobile-Optimized)
+   ============================================================== */
+.popup-adm-card {
+    background: #ffffff;
+    border: 1px solid #edf2f6;
+    border-radius: 12px;
+    padding: 11px 13px;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+.popup-adm-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 5px 14px rgba(15, 30, 59, 0.07);
+    transform: translateY(-1.5px);
+}
+
+.adm-pill-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+}
+.adm-pill-icon.theme-crimson { background: #fee2e2; color: #dc2626; }
+.adm-pill-icon.theme-blue { background: #eff6ff; color: #2563eb; }
+.adm-pill-icon.theme-emerald { background: #ecfdf5; color: #059669; }
+.adm-pill-icon.theme-amber { background: #fffbeb; color: #d97706; }
+.adm-pill-icon.theme-purple { background: #f5f3ff; color: #7c3aed; }
+
+.adm-cat-pill {
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    padding: 2px 7px;
+    border-radius: 9999px;
+    text-transform: uppercase;
+}
+.badge-crimson { background: #fee2e2; color: #991b1b; }
+.badge-blue { background: #dbeafe; color: #1e40af; }
+.badge-emerald { background: #d1fae5; color: #065f46; }
+.badge-amber { background: #fef3c7; color: #92400e; }
+.badge-purple { background: #ede9fe; color: #5b21b6; }
+
+.adm-card-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #0f1e3b;
+    line-height: 1.35;
+}
+.adm-card-desc {
+    font-size: 0.76rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.adm-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.btn-crimson { background: #7A0B0D; color: #ffffff; }
+.btn-crimson:hover { background: #5c080a; color: #ffffff; box-shadow: 0 3px 8px rgba(122, 11, 13, 0.3); }
+
+.btn-blue { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+.btn-blue:hover { background: #1d4ed8; color: #ffffff; }
+
+.btn-emerald { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+.btn-emerald:hover { background: #047857; color: #ffffff; }
+
+.btn-amber { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+.btn-amber:hover { background: #b45309; color: #ffffff; }
+
+.btn-purple { background: #f5f3ff; color: #6d28d9; border-color: #ddd6fe; }
+.btn-purple:hover { background: #6d28d9; color: #ffffff; }
+
+@media (min-width: 576px) {
+    .popup-adm-card {
+        padding: 12px 14px;
+    }
+    .adm-card-title {
+        font-size: 0.92rem;
+    }
+    .adm-card-desc {
+        font-size: 0.78rem;
+    }
+    .adm-pill-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 0.95rem;
+    }
+    .adm-action-btn {
+        padding: 5px 12px;
+        font-size: 0.74rem;
+    }
 }
 
 .hover-maroon:hover {
     color: #7A0B0D !important;
 }
-
-/* Mini Buttons */
-.btn-xs {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.75rem;
-    line-height: 1.3;
+.text-maroon {
+    color: #7A0B0D !important;
 }
 .shadow-2xs {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 </style>
 
@@ -448,32 +715,34 @@ document.addEventListener('DOMContentLoaded', function() {
         const targetBtnId = (defTab === 'notices') ? 'pills-notices-btn' : ((defTab === 'admissions') ? 'pills-admission-btn' : 'pills-event-btn');
         const targetBtn = document.getElementById(targetBtnId);
         if (targetBtn && typeof bootstrap !== 'undefined' && bootstrap.Tab) {
-            const tabInst = bootstrap.Tab.getOrCreateInstance(targetBtn);
-            tabInst.show();
+            const tabInstance = bootstrap.Tab.getOrCreateInstance(targetBtn);
+            tabInstance.show();
         }
     });
 
-    // Auto-launch popup after configured delay if not dismissed
-    if (!isPopupDismissed()) {
-        setTimeout(function() {
-            if (!document.querySelector('.modal.show')) {
-                const popupModal = new bootstrap.Modal(modalEl, {
-                    backdrop: 'static',
-                    keyboard: true
-                });
-                popupModal.show();
+    // Dismissal listener (Don't show again today)
+    if (dismissCheckbox) {
+        dismissCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                // Set expiry for 24 hours from now
+                const expireAt = Date.now() + (24 * 60 * 60 * 1000);
+                try {
+                    localStorage.setItem(STORAGE_KEY, expireAt.toString());
+                } catch (e) {}
+            } else {
+                try {
+                    localStorage.removeItem(STORAGE_KEY);
+                } catch (e) {}
             }
-        }, delayMs);
+        });
     }
 
-    modalEl.addEventListener('hidden.bs.modal', function() {
-        if (showOnceDay && dismissCheckbox && dismissCheckbox.checked) {
-            try {
-                // 24 hours dismissal
-                const expiryTime = Date.now() + (24 * 60 * 60 * 1000);
-                localStorage.setItem(STORAGE_KEY, expiryTime.toString());
-            } catch (e) {}
+    // Automatically trigger popup with configured delay if not dismissed
+    setTimeout(function() {
+        if (!isPopupDismissed()) {
+            const bsModal = new bootstrap.Modal(modalEl);
+            bsModal.show();
         }
-    });
+    }, delayMs);
 });
 </script>

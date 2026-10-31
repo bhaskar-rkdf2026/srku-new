@@ -3911,7 +3911,21 @@ function getSeoMetadata($pageIdentifier = null, $fallbackTitle = '', $fallbackDe
     $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
     $reqUri = $_SERVER['REQUEST_URI'] ?? '/';
     $currentFullUrl = "$protocol://$host$reqUri";
-    $canonical = !empty($seoRow['canonical_url']) ? $seoRow['canonical_url'] : $currentFullUrl;
+    $rawCanonical = !empty($seoRow['canonical_url']) ? trim($seoRow['canonical_url']) : '';
+
+    if (!empty($rawCanonical)) {
+        // Automatically adapt localhost URLs or relative paths to current active environment domain (BASE_URL)
+        if (preg_match('#^https?://(localhost|127\.0\.0\.1)(:\d+)?(/srku-new)?(/.*)?$#i', $rawCanonical, $m)) {
+            $pathPart = isset($m[4]) ? ltrim($m[4], '/') : '';
+            $canonical = rtrim(defined('BASE_URL') ? BASE_URL : "$protocol://$host/", '/') . '/' . $pathPart;
+        } elseif (!preg_match('#^https?://#i', $rawCanonical)) {
+            $canonical = rtrim(defined('BASE_URL') ? BASE_URL : "$protocol://$host/", '/') . '/' . ltrim($rawCanonical, '/');
+        } else {
+            $canonical = $rawCanonical;
+        }
+    } else {
+        $canonical = $currentFullUrl;
+    }
 
     // Robots Tag Resolution (Inherit Global vs Custom Override)
     $pageRobots = $seoRow['robots_tag'] ?? 'inherit';

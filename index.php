@@ -139,13 +139,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
     <!-- Contrast & Tint Overlay for Clear Text Readability -->
     <div class="hero-overlay"></div>
 
-    <div class="container-fluid px-4 px-lg-5 position-relative z-3">
-        <div class="hero-content px-0">
-            <h1 class="hero-h1">
+    <div class="container-fluid ps-3 ps-sm-4 pe-5 pe-lg-5 position-relative z-3">
+        <div class="hero-content text-start">
+            <h1 class="hero-h1 text-start">
                 <?php echo sanitize($heroTitle); ?><br>
                 <span class="gold-line"><?php echo sanitize($heroSubtitle); ?></span>
             </h1>
-            <p class="hero-desc my-3">
+            <p class="hero-desc my-3 text-start">
                 <?php echo sanitize($heroDesc); ?>
             </p>
             <div class="d-flex flex-wrap gap-3 mt-4">
@@ -228,7 +228,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
                 <div class="stat-val"><?php echo sanitize($statFaculty); ?></div>
                 <div class="stat-txt">Faculty</div>
             </div>
-            <div class="col stat-box">
+            <div class="col stat-box d-none d-md-block">
                 <div class="stat-val"><?php echo sanitize($recruitingPartners); ?></div>
                 <div class="stat-txt">Corporate Recruiters</div>
             </div>
@@ -239,8 +239,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
 <!-- ═══════════════════════════════════════════════════════
      WELCOME SECTION (Bootstrap 2-col Grid)
 ═══════════════════════════════════════════════════════ -->
-<section class="py-5">
-    <div class="container-xl py-3">
+<section class="py-4 py-lg-5">
+    <div class="container-xl py-2 py-lg-3">
         <div class="row align-items-center g-4 g-lg-5">
             
             <div class="col-12 col-lg-6">
@@ -252,7 +252,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
                 <p class="text-muted mb-4" style="line-height:1.8; font-size:0.93rem;">
                     <?php echo $welcomeBody2; ?>
                 </p>
-                <div class="d-flex gap-3">
+                <div class="welcome-btn-group d-flex flex-column flex-sm-row gap-2 gap-sm-3">
                     <a href="<?php echo BASE_URL; ?>about.php" class="btn btn-srku"><i class="fas fa-arrow-right me-1"></i> Read More</a>
                     <a href="<?php echo BASE_URL; ?>why-srk.php" class="btn btn-srku-outline-maroon"><span class="btn-icon-badge"><i class="fas fa-star"></i></span> Why Choose SRKU</a>
                 </div>
@@ -263,15 +263,24 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
                     <img src="<?php echo $welcomePhotoSrc; ?>"
                          onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/08/welcome-srku-campus.jpeg';"
                          alt="SRKU Main Campus" class="welcome-img">
-                    <div class="row g-2 mt-3 text-center">
-                        <div class="col-4">
-                            <div class="welcome-badge"><strong><?php echo sanitize($totalLabs); ?></strong><small>HIGH-TECH LABS</small></div>
+                    <div class="row g-2 mt-3 text-center welcome-badges-row">
+                        <div class="col-4 d-flex">
+                            <div class="welcome-badge w-100 h-100">
+                                <strong><?php echo sanitize($totalLabs); ?></strong>
+                                <small>HIGH-TECH LABS</small>
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <div class="welcome-badge"><strong><?php echo sanitize($placementRecord); ?></strong><small>Placement Rate</small></div>
+                        <div class="col-4 d-flex">
+                            <div class="welcome-badge w-100 h-100">
+                                <strong><?php echo sanitize($placementRecord); ?></strong>
+                                <small>Placement Rate</small>
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <div class="welcome-badge"><strong>2026-27</strong><small>Admissions Open</small></div>
+                        <div class="col-4 d-flex">
+                            <div class="welcome-badge w-100 h-100">
+                                <strong>2026-27</strong>
+                                <small>Admissions Open</small>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -625,16 +634,16 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
                     </div>
 
                     <!-- Trust & Accreditations Pill Row -->
-                    <div class="d-flex flex-wrap gap-3 pt-3 border-top">
-                        <div class="chancellor-accred-box">
+                    <div class="d-flex flex-nowrap chancellor-accred-row gap-2 gap-sm-3 pt-3 border-top w-100">
+                        <div class="chancellor-accred-box flex-fill">
                             <div class="accred-logo"><i class="fas fa-check-circle text-danger"></i> UGC</div>
                             <span class="accred-sub">Recognized</span>
                         </div>
-                        <div class="chancellor-accred-box">
+                        <div class="chancellor-accred-box flex-fill">
                             <div class="accred-logo"><i class="fas fa-award text-warning"></i> NAAC</div>
                             <span class="accred-sub">A+ Grade</span>
                         </div>
-                        <div class="chancellor-accred-box">
+                        <div class="chancellor-accred-box flex-fill">
                             <div class="accred-logo"><i class="fas fa-shield-alt text-success"></i> AICTE</div>
                             <span class="accred-sub">Approved</span>
                         </div>

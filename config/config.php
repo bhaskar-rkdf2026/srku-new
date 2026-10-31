@@ -33,6 +33,9 @@ if (!defined('BASE_URL')) {
 // ENVIRONMENT DETECTION & DATABASE CONFIGURATION
 // ============================================================================
 // Optional custom credentials file override (if present)
+if (file_exists(__DIR__ . '/db_production.php')) {
+    require_once __DIR__ . '/db_production.php';
+}
 if (file_exists(__DIR__ . '/db_local.php')) {
     require_once __DIR__ . '/db_local.php';
 }
@@ -42,6 +45,17 @@ $isLocalhost = (
     (isset($_SERVER['SERVER_NAME']) && in_array($_SERVER['SERVER_NAME'], ['localhost', '127.0.0.1'])) ||
     (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' && file_exists('C:\\xampp'))
 );
+
+// Production vs Local Error Reporting
+if ($isLocalhost) {
+    error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+    @ini_set('display_errors', '1');
+} else {
+    error_reporting(0);
+    @ini_set('display_errors', '0');
+    @ini_set('display_startup_errors', '0');
+    @ini_set('log_errors', '1');
+}
 
 if ($isLocalhost) {
     // ----------------------------------------------------

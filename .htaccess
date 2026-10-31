@@ -6,6 +6,15 @@ Options -Indexes -MultiViews -ExecCGI
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # -------------------------------------------------------------
+    # FORCE HTTPS IN PRODUCTION
+    # Automatically upgrades insecure HTTP traffic to HTTPS on live server
+    # Safely bypasses local development (localhost / 127.0.0.1)
+    # -------------------------------------------------------------
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:\d+)?$ [NC]
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
     # BLOCK ALL DIRECT SCRIPT & SHELL EXECUTION IN STATIC ASSET & UPLOAD DIRECTORIES
     RewriteRule ^(assets|uploads|scratch)/.*(\.php|\.phtml|\.php[0-9]|\.cgi|\.pl|\.py|\.sh|\.bash|\.rimuru|\.phar|\.inc|\.asp|\.aspx|\.jsp|\.exe|\.bat|\.dat)$ - [F,L,NC]
     # Security: Block access to internal files and sensitive extensions

@@ -8,6 +8,16 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Brute-force rate limiting: 5 failed attempts = 15 minute cooldown
+    if (!isset($_SESSION['login_failed_attempts'])) {
+        $_SESSION['login_failed_attempts'] = 0;
+        $_SESSION['last_failed_attempt'] = 0;
+    }
+
+    if ($_SESSION['login_failed_attempts'] >= 5 && (time() - $_SESSION['last_failed_attempt']) < 900) {
+        $remainingMins = ceil((900 - (time() - $_SESSION['last_failed_attempt'])) / 60);
+        $error = "Too many failed login attempts. For security, please wait {$remainingMins} minutes before trying again.";
+    } else {
     $username = sanitize($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
@@ -21,13 +31,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_regenerate_id(true);
             $_SESSION['admin_logged_in'] = true;
             $_SESSION['admin_user'] = $user['username'];
+            $_SESSION['login_failed_attempts'] = 0;
+            $_SESSION['last_failed_attempt'] = 0;
             header("Location: index.php");
             exit;
         } else {
+            $_SESSION['login_failed_attempts'] = ($_SESSION['login_failed_attempts'] ?? 0) + 1;
+            $_SESSION['last_failed_attempt'] = time();
             $error = "Invalid username or password credentials.";
         }
     } else {
         $error = "Please fill in both username and password.";
+    }
     }
 }
 ?>

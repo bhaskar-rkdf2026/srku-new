@@ -210,6 +210,15 @@ switch ($action) {
                 $errors[] = "File '{$origName}' has invalid extension. Allowed: " . implode(', ', $allowedExts);
                 continue;
             }
+
+            // Stored XSS defense: Strict inspection for SVG uploads
+            if ($ext === 'svg') {
+                $svgRaw = @file_get_contents($f['tmp_name']);
+                if ($svgRaw && preg_match('/<script|javascript:|\bon\w+\s*=/i', $svgRaw)) {
+                    $errors[] = "File '{$origName}' rejected: SVG files containing JavaScript or event handlers are forbidden.";
+                    continue;
+                }
+            }
             
             $cleanName = preg_replace('/[^a-zA-Z0-9_-]/', '_', pathinfo($origName, PATHINFO_FILENAME));
             $finalName = time() . '_' . substr(md5(uniqid()), 0, 6) . '_' . $cleanName . '.' . $ext;

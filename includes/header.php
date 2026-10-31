@@ -216,6 +216,11 @@ $customSchemaJson = $seoResolved['schema_json'] ?? '';
             </button>
 
             <ul class="static-menu-list" id="staticMenuList">
+                <!-- Mobile Drawer Sticky Header Bar -->
+                <li class="static-menu-drawer-header">
+                    <span class="drawer-header-title"><i class="fas fa-bars-staggered me-1.5 text-danger"></i> MENU</span>
+                    <button type="button" class="drawer-header-close" id="drawerHeaderCloseBtn" aria-label="Close menu">&times;</button>
+                </li>
                 <?php renderHeaderNavigationMenu($activeNav ?? ''); ?>
                 
                 <!-- Mobile: Contact Us at bottom of drawer -->
@@ -279,9 +284,25 @@ $customSchemaJson = $seoResolved['schema_json'] ?? '';
         if(toggle) toggle.addEventListener('click', toggleMenu);
         if(overlay) overlay.addEventListener('click', closeMenu);
 
+        var drawerCloseBtn = document.getElementById('drawerHeaderCloseBtn');
+        if(drawerCloseBtn){
+            drawerCloseBtn.addEventListener('click', function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                closeMenu();
+            });
+        }
+
         document.addEventListener('keydown', function(e){
             if(e.key === 'Escape') closeMenu();
         });
+
+        // Prevent clicks inside the menu drawer from bubbling up to overlay/document
+        if(menu){
+            menu.addEventListener('click', function(e){
+                e.stopPropagation();
+            });
+        }
 
         function closeAllOpen(container){
             if(!container) return;
@@ -290,26 +311,42 @@ $customSchemaJson = $seoResolved['schema_json'] ?? '';
             });
         }
 
+        // Submenu Accordion Handler for Mobile Devices
         document.querySelectorAll('.static-menu-item > .static-menu-link, .static-dropdown-item > .static-dropdown-link').forEach(function(link){
             link.addEventListener('click', function(e){
                 if(window.innerWidth > 1024) return;
                 var parent = link.parentElement;
                 if(!parent) return;
-                var hasSub = parent.querySelector(':scope > .static-dropdown-panel, :scope > .static-sub-dropdown');
+
+                // Find direct child dropdown panel safely without fragile :scope selector
+                var hasSub = null;
+                for (var i = 0; i < parent.children.length; i++) {
+                    var ch = parent.children[i];
+                    if (ch.classList.contains('static-dropdown-panel') || ch.classList.contains('static-sub-dropdown')) {
+                        hasSub = ch;
+                        break;
+                    }
+                }
+
+                // If this is a leaf link with no submenu, allow normal browser navigation
                 if(!hasSub) return;
+
+                // Has submenu: prevent default URL navigation and toggle open state
                 e.preventDefault();
                 e.stopPropagation();
+
                 var isAlreadyOpen = parent.classList.contains('open');
                 if(parent.parentElement){
                     var siblings = parent.parentElement.children;
                     for(var i = 0; i < siblings.length; i++){
                         var sib = siblings[i];
-                        if(sib !== parent){
+                        if(sib !== parent && sib.classList.contains('open')){
                             closeAllOpen(sib);
                             sib.classList.remove('open');
                         }
                     }
                 }
+
                 if(isAlreadyOpen){
                     closeAllOpen(parent);
                     parent.classList.remove('open');
