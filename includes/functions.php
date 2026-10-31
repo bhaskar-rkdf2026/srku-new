@@ -4099,3 +4099,77 @@ function savePageSeoMetadata($data, $pdo = null) {
     }
 }
 
+
+/**
+ * Resolve Course Scheme / Syllabus PDF URL
+ * Checks physical disk existence, resolves subfolders in assets/uploads/syllabus/,
+ * properly encodes spaces and characters, or returns '#' if unavailable.
+ */
+function resolveCoursePdfUrl($rawUrl) {
+    if (empty($rawUrl) || trim($rawUrl) === '#') {
+        return '#';
+    }
+
+    $rawUrl = trim($rawUrl);
+
+    // If external URL
+    if (preg_match('#^https?://#i', $rawUrl)) {
+        if (strpos($rawUrl, BASE_URL) === 0) {
+            $rawUrl = substr($rawUrl, strlen(BASE_URL));
+        } else {
+            return $rawUrl;
+        }
+    }
+
+    $cleanPath = ltrim($rawUrl, '/');
+    if (strpos($cleanPath, 'srku-new/') === 0) {
+        $cleanPath = substr($cleanPath, 9);
+    }
+
+    $baseFs = realpath(__DIR__ . '/..');
+    $targetFs = $baseFs . '/' . $cleanPath;
+
+    // Check if directly exists
+    if (!file_exists($targetFs)) {
+        // Fallback: search in assets/uploads/syllabus subfolders
+        $filename = basename($cleanPath);
+        static $syllabusFileMap = null;
+        if ($syllabusFileMap === null) {
+            $syllabusFileMap = [];
+            $sylDir = $baseFs . '/assets/uploads/syllabus';
+            if (is_dir($sylDir)) {
+                $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($sylDir));
+                foreach ($it as $f) {
+                    if ($f->isFile() && strtolower($f->getExtension()) === 'pdf') {
+                        $fn = $f->getFilename();
+                        $rel = 'assets/uploads/syllabus/' . str_replace('\\', '/', substr($f->getPathname(), strlen($sylDir) + 1));
+                        $syllabusFileMap[strtolower($fn)] = $rel;
+                        $syllabusFileMap[preg_replace('/[^a-z0-9]/', '', strtolower($fn))] = $rel;
+                    }
+                }
+            }
+        }
+
+        $k1 = strtolower($filename);
+        $k2 = preg_replace('/[^a-z0-9]/', '', strtolower($filename));
+
+        if (isset($syllabusFileMap[$k1])) {
+            $cleanPath = $syllabusFileMap[$k1];
+            $targetFs = $baseFs . '/' . $cleanPath;
+        } elseif (isset($syllabusFileMap[$k2])) {
+            $cleanPath = $syllabusFileMap[$k2];
+            $targetFs = $baseFs . '/' . $cleanPath;
+        } else {
+            return '#';
+        }
+    }
+
+    if (!file_exists($targetFs)) {
+        return '#';
+    }
+
+    // Build URL with rawurlencode on each segment to keep slashes intact
+    $segments = explode('/', $cleanPath);
+    $encodedSegments = array_map('rawurlencode', $segments);
+    return BASE_URL . implode('/', $encodedSegments);
+}

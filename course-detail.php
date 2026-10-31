@@ -346,11 +346,10 @@ $deptInfo = getDepartmentBySlug($course['dept_slug'] ?: $course['department']);
 
                 <!-- Syllabus & Examination Scheme Downloads -->
                 <?php 
-                    $hasScheme = !empty($course['scheme_url']) && $course['scheme_url'] !== '#';
-                    $hasSyllabus = !empty($course['syllabus_url']) && $course['syllabus_url'] !== '#';
-
-                    $schemeHref = $hasScheme ? (strpos($course['scheme_url'], 'http') === 0 ? $course['scheme_url'] : BASE_URL . ltrim($course['scheme_url'], '/')) : '#';
-                    $syllabusHref = $hasSyllabus ? (strpos($course['syllabus_url'], 'http') === 0 ? $course['syllabus_url'] : BASE_URL . ltrim($course['syllabus_url'], '/')) : '#';
+                    $schemeHref = resolveCoursePdfUrl($course['scheme_url'] ?? '');
+                    $syllabusHref = resolveCoursePdfUrl($course['syllabus_url'] ?? '');
+                    $hasScheme = !empty($schemeHref) && $schemeHref !== '#';
+                    $hasSyllabus = !empty($syllabusHref) && $syllabusHref !== '#';
                 ?>
                 <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 mb-4 bg-white border">
                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
