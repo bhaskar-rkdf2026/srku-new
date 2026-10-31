@@ -52,24 +52,27 @@ require_once __DIR__ . '/includes/header.php';
             <!-- Right Official Document Card -->
             <div class="col-12 col-lg-5">
                 <div class="card p-4 p-md-5 border-0 shadow rounded-4 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, #7A0B0D 0%, #16233f 100%);">
-                    <div class="position-absolute top-0 end-0 p-4 opacity-10">
+                    <!-- Background Watermark Icon (Desktop subtle watermark; hidden on mobile to eliminate text overlap) -->
+                    <div class="position-absolute top-0 end-0 p-4 opacity-10 d-none d-md-block pointer-events-none" style="z-index: 0; pointer-events: none; opacity: 0.10;">
                         <i class="fas fa-lightbulb fa-6x"></i>
                     </div>
-                    <div class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3 align-self-start">
-                        <i class="fas fa-certificate me-1"></i> Official University Cell
+                    <div class="position-relative d-flex flex-column" style="z-index: 2;">
+                        <div class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3 align-self-start">
+                            <i class="fas fa-certificate me-1"></i> Official University Cell
+                        </div>
+                        <h3 class="h4 fw-bold mb-3">SRKU Incubation Ecosystem</h3>
+                        <p class="small text-white-50 mb-4" style="line-height: 1.7;">
+                            Supporting pre-company stage incubatees, proof-of-concept validation, prototype laboratories, legal compliance, and seed funding support.
+                        </p>
+                        <ul class="list-unstyled small text-white-50 d-flex flex-column gap-2 mb-4">
+                            <li><i class="fas fa-check-circle text-warning me-2"></i> Initial Focus: Handmade Soaps, Sanitizers &amp; Mobile Apps</li>
+                            <li><i class="fas fa-check-circle text-warning me-2"></i> Pipeline: Solar Energy, Ayurveda &amp; Homoeopathy Startups</li>
+                            <li><i class="fas fa-check-circle text-warning me-2"></i> Capacity Building &amp; VC Investor Pitch Days</li>
+                        </ul>
+                        <a href="<?php echo BASE_URL . getSetting('incubation_pdf', 'assets/uploads/pdf/incubation-centre.pdf'); ?>" target="_blank" class="btn btn-warning text-dark fw-bold rounded-pill w-100 py-2">
+                            <i class="fas fa-download me-1"></i> View Official Circular (PDF)
+                        </a>
                     </div>
-                    <h3 class="h4 fw-bold mb-3">SRKU Incubation Ecosystem</h3>
-                    <p class="small text-white-50 mb-4" style="line-height: 1.7;">
-                        Supporting pre-company stage incubatees, proof-of-concept validation, prototype laboratories, legal compliance, and seed funding support.
-                    </p>
-                    <ul class="list-unstyled small text-white-50 d-flex flex-column gap-2 mb-4">
-                        <li><i class="fas fa-check-circle text-warning me-2"></i> Initial Focus: Handmade Soaps, Sanitizers &amp; Mobile Apps</li>
-                        <li><i class="fas fa-check-circle text-warning me-2"></i> Pipeline: Solar Energy, Ayurveda &amp; Homoeopathy Startups</li>
-                        <li><i class="fas fa-check-circle text-warning me-2"></i> Capacity Building &amp; VC Investor Pitch Days</li>
-                    </ul>
-                    <a href="<?php echo BASE_URL . getSetting('incubation_pdf', 'assets/uploads/pdf/incubation-centre.pdf'); ?>" target="_blank" class="btn btn-warning text-dark fw-bold rounded-pill w-100 py-2">
-                        <i class="fas fa-download me-1"></i> View Official Circular (PDF)
-                    </a>
                 </div>
             </div>
         </div>

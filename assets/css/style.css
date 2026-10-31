@@ -11184,3 +11184,11 @@ object {
     }
 }
 
+/* ─── Global Utility Classes: Opacity & Pointer Events ─── */
+.opacity-05 { opacity: 0.05 !important; }
+.opacity-10 { opacity: 0.10 !important; }
+.opacity-15 { opacity: 0.15 !important; }
+.opacity-20 { opacity: 0.20 !important; }
+.pointer-events-none { pointer-events: none !important; }
+
+
