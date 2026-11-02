@@ -11848,3 +11848,281 @@ object {
     justify-content: center;
     z-index: 4;
 }
+
+
+/* ═══════════════════════════════════════════════════════
+   CONSTITUENT UNITS DUAL-DIRECTION INFINITE MARQUEE SLIDER
+   Row 1: Leftward Infinite Marquee
+   Row 2: Rightward Infinite Marquee
+═══════════════════════════════════════════════════════ */
+.dept-marquee-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.dept-marquee-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 10px 0;
+}
+
+/* Gradient edge fade for smooth entry/exit */
+.dept-marquee-wrapper::before,
+.dept-marquee-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 90px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.dept-marquee-wrapper::before {
+    left: 0;
+    background: linear-gradient(90deg, #f8f9fc 0%, rgba(248, 249, 252, 0) 100%);
+}
+
+.dept-marquee-wrapper::after {
+    right: 0;
+    background: linear-gradient(270deg, #f8f9fc 0%, rgba(248, 249, 252, 0) 100%);
+}
+
+.dept-marquee-row {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    user-select: none;
+    -webkit-user-select: none;
+    padding: 10px 0;
+}
+
+/* JavaScript Draggable Marquee Interactive Mode */
+.dept-marquee-row.js-interactive {
+    cursor: grab;
+    touch-action: pan-y;
+}
+
+.dept-marquee-row.js-interactive.is-dragging {
+    cursor: grabbing !important;
+}
+
+.dept-marquee-row.js-interactive .dept-marquee-track {
+    animation: none !important;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.dept-marquee-row.js-interactive .dept-marquee-card,
+.dept-marquee-row.js-interactive .dept-marquee-card * {
+    -webkit-user-drag: none;
+    user-drag: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.dept-marquee-track {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    width: max-content;
+    will-change: transform;
+}
+
+/* Row 1 - Slide Left */
+.dept-marquee-row--left .dept-marquee-track {
+    animation: deptSlideLeft 48s linear infinite;
+}
+
+/* Row 2 - Slide Right */
+.dept-marquee-row--right .dept-marquee-track {
+    animation: deptSlideRight 48s linear infinite;
+}
+
+/* Pause on Hover and Active/Tap */
+.dept-marquee-row:hover .dept-marquee-track,
+.dept-marquee-row:active .dept-marquee-track {
+    animation-play-state: paused !important;
+}
+
+@keyframes deptSlideLeft {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+@keyframes deptSlideRight {
+    0% {
+        transform: translate3d(-50%, 0, 0);
+    }
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+/* Department Card Styling in Marquee */
+.dept-marquee-card {
+    flex: 0 0 320px;
+    width: 320px;
+    margin-right: 22px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+    text-decoration: none !important;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.dept-marquee-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px rgba(139, 21, 56, 0.14);
+    border-color: rgba(139, 21, 56, 0.35);
+}
+
+.dept-marquee-card-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background: #eef2f6;
+}
+
+.dept-marquee-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dept-marquee-card:hover .dept-marquee-card-img {
+    transform: scale(1.07);
+}
+
+.dept-marquee-card-body {
+    padding: 16px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.dept-marquee-card-title {
+    font-family: var(--font-heading);
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--srku-navy);
+    line-height: 1.35;
+    margin-bottom: 8px;
+    min-height: 42px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.25s ease;
+}
+
+.dept-marquee-card:hover .dept-marquee-card-title {
+    color: var(--srku-maroon);
+}
+
+.dept-marquee-card-desc {
+    font-size: 0.82rem;
+    color: #64748b;
+    line-height: 1.55;
+    margin-bottom: 12px;
+    min-height: 38px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.dept-marquee-card-footer {
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dept-marquee-card-btn {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: var(--srku-maroon);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.25s ease, color 0.25s ease;
+}
+
+.dept-marquee-card:hover .dept-marquee-card-btn {
+    gap: 10px;
+    color: #b31b38;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+    .dept-marquee-card {
+        flex: 0 0 290px;
+        width: 290px;
+        margin-right: 18px;
+    }
+    .dept-marquee-card-img-wrap {
+        height: 165px;
+    }
+    .dept-marquee-wrapper::before,
+    .dept-marquee-wrapper::after {
+        width: 50px;
+    }
+    .dept-marquee-row--left .dept-marquee-track,
+    .dept-marquee-row--right .dept-marquee-track {
+        animation-duration: 40s;
+    }
+}
+
+@media (max-width: 576px) {
+    .dept-marquee-card {
+        flex: 0 0 260px;
+        width: 260px;
+        margin-right: 14px;
+    }
+    .dept-marquee-card-img-wrap {
+        height: 150px;
+    }
+    .dept-marquee-card-title {
+        font-size: 0.90rem;
+        min-height: 36px;
+    }
+    .dept-marquee-card-desc {
+        font-size: 0.78rem;
+        min-height: 36px;
+    }
+    .dept-marquee-wrapper::before,
+    .dept-marquee-wrapper::after {
+        width: 25px;
+    }
+    .dept-marquee-row--left .dept-marquee-track,
+    .dept-marquee-row--right .dept-marquee-track {
+        animation-duration: 32s;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dept-marquee-row--left .dept-marquee-track,
+    .dept-marquee-row--right .dept-marquee-track {
+        animation: none;
+    }
+    .dept-marquee-row {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}

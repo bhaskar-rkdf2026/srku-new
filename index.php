@@ -289,6 +289,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 <!-- ═══════════════════════════════════════════════════════
      STATUTORY APPROVALS & CONSTITUENT LOGOS CAROUSEL (After Welcome)
@@ -360,16 +361,18 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 
 
 
 <!-- ═══════════════════════════════════════════════════════
-     EXPLORE PROGRAMMES SECTION (Bootstrap 4-col Grid)
+     CONSTITUENT UNITS SECTION (2-Row Bi-directional Continuous Slider)
+     Row 1: Leftward Continuous Marquee
+     Row 2: Rightward Continuous Marquee (Vice-Versa)
 ═══════════════════════════════════════════════════════ -->
-<section class="py-5 bg-cream">
-    <div class="container-xl py-3">
-
+<section class="py-5 bg-cream dept-marquee-section">
+    <div class="container-xl py-2">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-2">
             <div>
                 <span class="section-subtitle">CONSTITUENT UNITS</span>
@@ -377,54 +380,96 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
             </div>
             <a href="<?php echo BASE_URL; ?>departments.php" class="btn-card-apply fs-6">View all Constituent Units <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
+    </div>
 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-            <?php
-            $topUnits = $pdo->query("SELECT * FROM departments WHERE status = 'active' ORDER BY established_year ASC, id ASC LIMIT 8")->fetchAll();
-            if (empty($topUnits)) {
-                $topUnits = $pdo->query("SELECT * FROM departments ORDER BY id ASC LIMIT 8")->fetchAll();
+    <?php
+    $allUnits = $pdo->query("SELECT * FROM departments WHERE status = 'active' ORDER BY established_year ASC, id ASC")->fetchAll();
+    if (empty($allUnits)) {
+        $allUnits = $pdo->query("SELECT * FROM departments ORDER BY id ASC")->fetchAll();
+    }
+    
+    // Split into 2 rows
+    $halfCount = ceil(count($allUnits) / 2);
+    $row1Units = array_slice($allUnits, 0, $halfCount);
+    $row2Units = array_slice($allUnits, $halfCount);
+
+    // Safeguard to ensure enough items for continuous infinite marquee loop
+    while (count($row1Units) > 0 && count($row1Units) < 6) {
+        $row1Units = array_merge($row1Units, $row1Units);
+    }
+    while (count($row2Units) > 0 && count($row2Units) < 6) {
+        $row2Units = array_merge($row2Units, $row2Units);
+    }
+
+    $renderDeptMarqueeCard = function($u) {
+        $uImg = !empty($u['image']) ? $u['image'] : (!empty($u['banner_img']) ? $u['banner_img'] : '');
+        if (empty($uImg) || !file_exists(__DIR__ . '/' . ltrim(str_replace('\\', '/', $uImg), '/'))) {
+            $cand = 'assets/uploads/constituent-units/' . ($u['slug'] ?? '') . '.webp';
+            if (file_exists(__DIR__ . '/' . $cand)) {
+                $uImg = $cand;
+            } else {
+                $uImg = 'assets/uploads/2026/07/001.webp';
             }
-            foreach ($topUnits as $u):
-                $uImg = !empty($u['image']) ? $u['image'] : (!empty($u['banner_img']) ? $u['banner_img'] : '');
-                if (empty($uImg) || !file_exists(__DIR__ . '/' . ltrim(str_replace('\\', '/', $uImg), '/'))) {
-                    $cand = 'assets/uploads/constituent-units/' . ($u['slug'] ?? '') . '.webp';
-                    if (file_exists(__DIR__ . '/' . $cand)) {
-                        $uImg = $cand;
-                    } else {
-                        $uImg = 'assets/uploads/2026/07/001.webp';
-                    }
-                }
-                $uImgSrc = resolveMediaUrl($uImg, 'assets/uploads/2026/07/001.webp');
-                $uDesc = !empty($u['description']) ? strip_tags($u['description']) : 'Premier academic and research constituent unit at SRK University.';
-                if (mb_strlen($uDesc) > 95) {
-                    $uDesc = mb_substr($uDesc, 0, 92) . '...';
-                }
-                $uUrl = BASE_URL . 'department-detail.php?slug=' . urlencode($u['slug']);
-            ?>
-                <div class="col">
-                    <div class="prog-card d-flex flex-column h-100">
-                        <a href="<?php echo $uUrl; ?>" class="d-block overflow-hidden" title="<?php echo sanitize($u['name']); ?>">
-                            <img src="<?php echo $uImgSrc; ?>" class="prog-img" alt="<?php echo sanitize($u['name']); ?>"
-                                 onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
-                        </a>
-                        <div class="prog-body d-flex flex-column flex-grow-1">
-                            <h3 class="prog-title mb-2">
-                                <a href="<?php echo $uUrl; ?>" class="text-decoration-none text-navy hover-danger">
-                                    <?php echo sanitize($u['name']); ?>
-                                </a>
-                                <?php if (!empty($u['established_year'])): ?>
-                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;"><?php echo sanitize($u['established_year']); ?></span>
-                                <?php endif; ?>
-                            </h3>
-                            <p class="prog-desc text-muted small mb-3"><?php echo sanitize($uDesc); ?></p>
-                            <a href="<?php echo $uUrl; ?>" class="btn-card-apply mt-auto">Explore &rarr;</a>
-                        </div>
-                    </div>
+        }
+        $uImgSrc = resolveMediaUrl($uImg, 'assets/uploads/2026/07/001.webp');
+        $uDesc = !empty($u['description']) ? strip_tags($u['description']) : 'Premier academic and research constituent unit at SRK University.';
+        if (mb_strlen($uDesc) > 95) {
+            $uDesc = mb_substr($uDesc, 0, 92) . '...';
+        }
+        $uUrl = BASE_URL . 'department-detail.php?slug=' . urlencode($u['slug']);
+        $cleanTitle = trim(preg_replace('/\s*\(\s*(19|20)\d{2}\s*\)/', '', html_entity_decode($u['name'], ENT_QUOTES | ENT_HTML5, 'UTF-8')));
+        ?>
+        <a href="<?php echo $uUrl; ?>" class="dept-marquee-card" title="<?php echo sanitize($cleanTitle); ?>">
+            <div class="dept-marquee-card-img-wrap">
+                <img src="<?php echo $uImgSrc; ?>" class="dept-marquee-card-img" alt="<?php echo sanitize($cleanTitle); ?>"
+                     loading="lazy" onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
+            </div>
+            <div class="dept-marquee-card-body">
+                <h3 class="dept-marquee-card-title">
+                    <?php echo sanitize($cleanTitle); ?>
+                    <?php if (!empty($u['established_year'])): ?>
+                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold ms-1" style="font-size:0.75rem;"><?php echo sanitize($u['established_year']); ?></span>
+                    <?php endif; ?>
+                </h3>
+                <p class="dept-marquee-card-desc"><?php echo sanitize($uDesc); ?></p>
+                <div class="dept-marquee-card-footer">
+                    <span class="dept-marquee-card-btn">Explore <i class="fas fa-arrow-right ms-1"></i></span>
                 </div>
-            <?php endforeach; ?>
+            </div>
+        </a>
+        <?php
+    };
+    ?>
+
+    <div class="dept-marquee-wrapper">
+        <!-- Row 1: Sliding Left -->
+        <div class="dept-marquee-row dept-marquee-row--left mb-4" aria-label="Constituent Units Row 1">
+            <div class="dept-marquee-track">
+                <?php 
+                // Group 1
+                foreach ($row1Units as $u) { $renderDeptMarqueeCard($u); }
+                // Group 2 (identical duplicate for seamless infinite loop)
+                foreach ($row1Units as $u) { $renderDeptMarqueeCard($u); }
+                ?>
+            </div>
+        </div>
+
+        <!-- Row 2: Sliding Right (Vice Versa) -->
+        <div class="dept-marquee-row dept-marquee-row--right" aria-label="Constituent Units Row 2">
+            <div class="dept-marquee-track">
+                <?php 
+                // Group 1
+                foreach ($row2Units as $u) { $renderDeptMarqueeCard($u); }
+                // Group 2 (identical duplicate for seamless infinite loop)
+                foreach ($row2Units as $u) { $renderDeptMarqueeCard($u); }
+                ?>
+            </div>
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
+
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 <!-- ═══════════════════════════════════════════════════════
      ADMISSIONS PROCESS SECTION (SRKU Brand Theme)
@@ -525,6 +570,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 
 <!-- ═══════════════════════════════════════════════════════
@@ -580,6 +626,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 <!-- ═══════════════════════════════════════════════════════
      CHANCELLOR'S MESSAGE SECTION (Luxury Theme Design)
@@ -662,6 +709,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 <!-- ═══════════════════════════════════════════════════════
      CAMPUS FACILITIES (Bootstrap 3-col Grid)
@@ -749,6 +797,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 <!-- ═══════════════════════════════════════════════════════
      LABS DRIVING INDUSTRY INNOVATION
@@ -777,6 +826,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 <!-- ═══════════════════════════════════════════════════════
      PLACEMENT & TOP RECRUITERS
@@ -843,6 +893,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 <!-- ═══════════════════════════════════════════════════════
      STUDENT LIFE AT SRK (matches live srku.edu.in design)
@@ -934,6 +985,7 @@ $slStat4Icon = getSetting('student_life_stat4_icon', 'fas fa-music');
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 <!-- ═══════════════════════════════════════════════════════
      GALLERY SECTION (Bootstrap 5-col Grid) — DB Connected
@@ -961,6 +1013,7 @@ $slStat4Icon = getSetting('student_life_stat4_icon', 'fas fa-music');
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 <!-- ═══════════════════════════════════════════════════════
      INCUBATION & STARTUPS + LATEST NEWS
@@ -1004,6 +1057,7 @@ $slStat4Icon = getSetting('student_life_stat4_icon', 'fas fa-music');
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 <!-- ═══════════════════════════════════════════════════════
      ADMISSION FORM SECTION (Searchable Course & Branch Selection)
@@ -1580,6 +1634,7 @@ $postedBranch = sanitize($_POST['branch'] ?? ($_GET['branch'] ?? ''));
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 <!-- ═══════════════════════════════════════════════════════
      RECENT NEWS & BLOGS
@@ -1620,6 +1675,7 @@ $postedBranch = sanitize($_POST['branch'] ?? ($_GET['branch'] ?? ''));
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 <?php endif; ?>
 
 <!-- ═══════════════════════════════════════════════════════
@@ -1734,6 +1790,7 @@ $testimonialSlides = array_chunk($homeTestimonials, 2);
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     var carousel = document.getElementById('testimonialCarousel');
@@ -1971,5 +2028,6 @@ $eventsGalleryImages = [
         </div>
     </div>
 </section>
+<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
