@@ -469,8 +469,6 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['submit_enquir
 </section>
 <script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
-<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
-
 <!-- ═══════════════════════════════════════════════════════
      ADMISSIONS PROCESS SECTION (SRKU Brand Theme)
 ═══════════════════════════════════════════════════════ -->
@@ -1634,15 +1632,13 @@ $postedBranch = sanitize($_POST['branch'] ?? ($_GET['branch'] ?? ''));
         </div>
     </div>
 </section>
-<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
-
 <!-- ═══════════════════════════════════════════════════════
      RECENT NEWS & BLOGS
 ═══════════════════════════════════════════════════════ -->
 <?php $homeBlogs = getBlogs(null, 3); ?>
 <?php if (!empty($homeBlogs)): ?>
-<section class="py-5 bg-cream">
-    <div class="container-xl py-3">
+<section class="pt-5 pb-2 bg-cream home-blogs-section">
+    <div class="container-xl pt-1 pb-0">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-2">
             <div>
                 <span class="section-subtitle">RECENT BLOGS &amp; ARTICLES</span>
@@ -1650,7 +1646,7 @@ $postedBranch = sanitize($_POST['branch'] ?? ($_GET['branch'] ?? ''));
             </div>
             <a href="<?php echo BASE_URL; ?>blogs.php" class="btn-card-apply fs-6">View All Articles <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row row-cols-1 row-cols-md-3 g-4 mb-0">
             <?php foreach ($homeBlogs as $b): ?>
                 <div class="col">
                     <div class="prog-card h-100 d-flex flex-column">
@@ -1675,7 +1671,6 @@ $postedBranch = sanitize($_POST['branch'] ?? ($_GET['branch'] ?? ''));
         </div>
     </div>
 </section>
-<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 <?php endif; ?>
 
 <!-- ═══════════════════════════════════════════════════════
