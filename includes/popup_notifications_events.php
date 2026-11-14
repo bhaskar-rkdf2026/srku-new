@@ -255,7 +255,7 @@ $admissionNoticeItems = [
                                 
                                 <div class="d-flex align-items-center justify-content-between pt-2 border-top">
                                     <span id="activeEventDateStr" class="text-muted fw-semibold small" style="font-size: 0.76rem;">
-                                        <i class="far fa-calendar-alt text-danger me-1"></i> Date: <?php echo date('d M, Y', $firstDate); ?>
+                                        Date: <?php echo date('d M, Y', $firstDate); ?>
                                     </span>
                                     <a id="activeEventLink" href="<?php echo $fLink; ?>" target="_blank" class="btn btn-sm btn-danger rounded-pill px-3 py-1 fw-bold shadow-xs d-inline-flex align-items-center gap-1.5" style="font-size: 0.78rem;">
                                         <span>View Details</span> <i class="fas fa-arrow-right"></i>
@@ -283,16 +283,16 @@ $admissionNoticeItems = [
                                 ?>
                                 <div class="popup-notice-card">
                                     <!-- Top Row: Date Pill, Category Badge & Action Button -->
-                                    <div class="notice-card-header d-flex align-items-center justify-content-between gap-2 mb-1.5">
+                                    <div class="notice-card-header d-flex align-items-center justify-content-between gap-2 mb-2">
                                         <div class="d-flex align-items-center gap-1.5 flex-wrap min-w-0">
-                                            <span class="notice-date-pill">
-                                                <i class="far fa-calendar-alt text-danger me-1"></i><?php echo $notDate; ?>
+                                            <span class="notice-date-text">
+                                                <?php echo $notDate; ?>
                                             </span>
                                             <span class="notice-cat-pill <?php echo $catClass; ?>">
                                                 <?php echo $cat; ?>
                                             </span>
                                             <?php if ($idx < 2): ?>
-                                                <span class="badge bg-danger text-white rounded-pill px-1.5 py-0.5 fw-bold" style="font-size: 0.6rem; letter-spacing: 0.4px;">NEW</span>
+                                                <span class="notice-new-badge">NEW</span>
                                             <?php endif; ?>
                                         </div>
                                         <a href="<?php echo sanitize($docLink); ?>" target="_blank" class="notice-action-btn flex-shrink-0" title="View Document">
@@ -323,7 +323,7 @@ $admissionNoticeItems = [
                             <?php foreach ($admissionNoticeItems as $adm): ?>
                             <div class="popup-adm-card">
                                 <!-- Top Row: Icon + Badge on left, Action on right -->
-                                <div class="d-flex align-items-center justify-content-between gap-2 mb-1.5">
+                                <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
                                     <div class="d-flex align-items-center gap-2 min-w-0">
                                         <span class="adm-pill-icon theme-<?php echo $adm['theme']; ?> flex-shrink-0">
                                             <i class="<?php echo $adm['icon']; ?>"></i>
@@ -471,55 +471,64 @@ $admissionNoticeItems = [
 }
 
 /* ==============================================================
-   FULL-WIDTH NOTICES CARDS (Zero Horizontal Chocking!)
+   FULL-WIDTH NOTICES CARDS (Subtle, Clean & Breathable)
    ============================================================== */
 .popup-notice-card {
     background: #ffffff;
-    border: 1px solid #edf2f7;
-    border-radius: 12px;
-    padding: 10px 12px;
+    border: 1px solid #f1f5f9;
+    border-radius: 10px;
+    padding: 12px 14px;
     transition: all 0.2s ease;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
 }
 .popup-notice-card:hover {
-    border-color: #fca5a5;
-    box-shadow: 0 5px 14px rgba(122, 11, 13, 0.08);
-    transform: translateY(-1.5px);
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
 }
 
-/* Top Meta Elements */
-.notice-date-pill {
-    font-size: 0.68rem;
-    font-weight: 700;
-    color: #475569;
-    background: #f1f5f9;
-    border: 1px solid #e2e8f0;
-    padding: 2px 7px;
-    border-radius: 9999px;
+/* Subtle Meta Elements */
+.notice-date-text {
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: #64748b;
     display: inline-flex;
     align-items: center;
+    letter-spacing: 0.1px;
 }
 .notice-cat-pill {
     font-size: 0.62rem;
-    font-weight: 800;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.4px;
     padding: 2px 7px;
-    border-radius: 9999px;
+    border-radius: 5px;
+    border: none !important;
 }
-.cat-blue { background: #eff6ff; color: #1d4ed8; border: 1px solid #dbeafe; }
-.cat-green { background: #f0fdf4; color: #15803d; border: 1px solid #dcfce7; }
-.cat-amber { background: #fffbeb; color: #b45309; border: 1px solid #fef3c7; }
-.cat-purple { background: #faf5ff; color: #7e22ce; border: 1px solid #f3e8ff; }
-.cat-default { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+.cat-blue { background: #f0f7ff; color: #1d4ed8; }
+.cat-green { background: #f0fdf4; color: #166534; }
+.cat-amber { background: #fffbeb; color: #92400e; }
+.cat-purple { background: #faf5ff; color: #6b21a8; }
+.cat-default { background: #f8fafc; color: #64748b; }
 
-/* Notice Card Title (100% Width Freedom) */
+.notice-new-badge {
+    background: #fee2e2;
+    color: #b91c1c;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    line-height: 1.2;
+}
+
+/* Notice Card Title (Clean, Airy & Readable) */
 .notice-card-title {
     font-size: 0.88rem;
-    font-weight: 700;
-    color: #0f1e3b;
+    font-weight: 600;
+    color: #1e293b;
     text-decoration: none;
-    line-height: 1.4;
+    line-height: 1.45;
     transition: color 0.15s ease;
 }
 .notice-card-title:hover {
@@ -527,28 +536,28 @@ $admissionNoticeItems = [
 }
 @media (min-width: 576px) {
     .popup-notice-card {
-        padding: 12px 14px;
+        padding: 13px 16px;
     }
     .notice-card-title {
-        font-size: 0.92rem;
+        font-size: 0.90rem;
     }
-    .notice-date-pill {
-        font-size: 0.72rem;
+    .notice-date-text {
+        font-size: 0.76rem;
     }
 }
 
-/* Action Button */
+/* Subtle Action Button */
 .notice-action-btn {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 4px 10px;
+    padding: 3px 10px;
     background: #f8fafc;
-    color: #0F1E3B;
+    color: #475569;
     border: 1px solid #e2e8f0;
-    border-radius: 9999px;
+    border-radius: 6px;
     font-size: 0.72rem;
-    font-weight: 700;
+    font-weight: 600;
     text-decoration: none;
     transition: all 0.2s ease;
     white-space: nowrap;
@@ -558,7 +567,7 @@ $admissionNoticeItems = [
     background: #7A0B0D;
     color: #ffffff !important;
     border-color: #7A0B0D;
-    box-shadow: 0 3px 8px rgba(122, 11, 13, 0.25);
+    box-shadow: 0 2px 6px rgba(122, 11, 13, 0.2);
 }
 
 /* ==============================================================
