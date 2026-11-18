@@ -62,7 +62,14 @@ $filteredNews = array_filter($allNews, function($n) use ($selectedCategory, $sea
                         <i class="fas fa-bullhorn"></i> All Notices
                     </a>
                     <?php 
-                    $cats = ['Admission', 'Placement', 'Examination', 'Announcement'];
+                    $dbCats = [];
+try {
+    $pdoConn = getDBConnection();
+    if ($pdoConn) {
+        $dbCats = $pdoConn->query("SELECT DISTINCT category FROM news WHERE category IS NOT NULL AND category != '' ORDER BY category ASC")->fetchAll(PDO::FETCH_COLUMN);
+    }
+} catch (Exception $e) {}
+$cats = !empty($dbCats) ? $dbCats : ['Sports', 'Press Coverage', 'Examination', 'Admission'];
                     foreach ($cats as $cat):
                     ?>
                         <a href="<?php echo BASE_URL; ?>news.php?category=<?php echo urlencode($cat); ?>" class="srku-filter-btn <?php echo $selectedCategory === $cat ? 'active' : ''; ?>">
@@ -79,28 +86,67 @@ $filteredNews = array_filter($allNews, function($n) use ($selectedCategory, $sea
                 <?php if (!empty($filteredNews)): ?>
                     <div class="d-flex flex-column gap-3">
                         <?php foreach ($filteredNews as $n): ?>
-                            <div class="card p-4 border-0 shadow-sm rounded-4 bg-white hover-shadow" style="transition: all 0.25s ease;">
-                                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2 mb-2">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-1 rounded-pill fw-bold">
-                                            <i class="fas fa-tag me-1"></i> <?php echo sanitize($n['category'] ?? 'Announcement'); ?>
-                                        </span>
-                                        <small class="text-muted"><i class="far fa-calendar-alt me-1"></i> <?php echo date('M d, Y', strtotime($n['publish_date'] ?: $n['created_at'])); ?></small>
+                            <div class="card p-3 p-md-4 border-0 shadow-sm rounded-4 bg-white hover-shadow" style="transition: all 0.25s ease;">
+                                <div class="row g-3 align-items-center">
+                                    <?php if (!empty($n['image_url'])): ?>
+                                        <div class="col-12 col-md-4">
+                                            <a href="javascript:void(0)" 
+                                               class="d-block overflow-hidden rounded-3 border bg-light text-center p-1 position-relative open-news-modal group-zoom-trigger"
+                                               data-bs-toggle="modal" 
+                                               data-bs-target="#newsListModal"
+                                               data-img="<?php echo BASE_URL . sanitize($n['image_url']); ?>"
+                                               data-title="<?php echo htmlspecialchars($n['title'], ENT_QUOTES); ?>"
+                                               data-date="<?php echo date('M d, Y', strtotime($n['publish_date'] ?: $n['created_at'])); ?>"
+                                               data-detail="<?php echo BASE_URL; ?>news-detail.php?id=<?php echo $n['id']; ?>"
+                                               title="Click to view newspaper clipping in popup"
+                                               style="max-height: 200px; cursor: pointer;">
+                                                <img src="<?php echo BASE_URL . sanitize($n['image_url']); ?>" alt="<?php echo sanitize($n['title']); ?>" 
+                                                     class="img-fluid w-100 object-fit-contain" style="max-height: 190px; transition: transform 0.25s ease;"
+                                                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';">
+                                                <span class="position-absolute bottom-0 end-0 m-2 badge bg-dark bg-opacity-75 text-white small px-2 py-1 rounded-pill">
+                                                    <i class="fas fa-search-plus"></i> View Scan
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <div class="col-12 col-md-8">
+                                    <?php else: ?>
+                                        <div class="col-12">
+                                    <?php endif; ?>
+                                        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2 mb-2">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-1 rounded-pill fw-bold">
+                                                    <i class="fas fa-tag me-1"></i> <?php echo sanitize($n['category'] ?? 'Announcement'); ?>
+                                                </span>
+                                                <small class="text-muted"><i class="far fa-calendar-alt me-1"></i> <?php echo date('M d, Y', strtotime($n['publish_date'] ?: $n['created_at'])); ?></small>
+                                            </div>
+                                            <span class="badge bg-light text-dark border">Notice #<?php echo $n['id']; ?></span>
+                                        </div>
+                                        <h3 class="h5 fw-bold text-navy mb-2">
+                                            <a href="<?php echo BASE_URL; ?>news-detail.php?id=<?php echo $n['id']; ?>" class="text-navy text-decoration-none hover-text-danger">
+                                                <?php echo sanitize($n['title']); ?>
+                                            </a>
+                                        </h3>
+                                        <p class="text-muted small mb-3">
+                                            <?php echo mb_substr(strip_tags($n['content']), 0, 175) . '...'; ?>
+                                        </p>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <a href="<?php echo BASE_URL; ?>news-detail.php?id=<?php echo $n['id']; ?>" class="btn btn-sm btn-outline-danger rounded-pill px-3 fw-bold">
+                                                Read Full Coverage &rarr;
+                                            </a>
+                                            <?php if (!empty($n['image_url'])): ?>
+                                                <button type="button" 
+                                                        class="btn btn-sm btn-light border text-navy rounded-pill px-3 fw-semibold open-news-modal"
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#newsListModal"
+                                                        data-img="<?php echo BASE_URL . sanitize($n['image_url']); ?>"
+                                                        data-title="<?php echo htmlspecialchars($n['title'], ENT_QUOTES); ?>"
+                                                        data-date="<?php echo date('M d, Y', strtotime($n['publish_date'] ?: $n['created_at'])); ?>"
+                                                        data-detail="<?php echo BASE_URL; ?>news-detail.php?id=<?php echo $n['id']; ?>">
+                                                    <i class="fas fa-search-plus text-danger me-1"></i> View Scan
+                                                </button>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
-                                    <span class="badge bg-light text-dark border">Notice #<?php echo $n['id']; ?></span>
-                                </div>
-                                <h3 class="h5 fw-bold text-navy mb-2">
-                                    <a href="<?php echo BASE_URL; ?>news-detail.php?id=<?php echo $n['id']; ?>" class="text-navy text-decoration-none hover-text-danger">
-                                        <?php echo sanitize($n['title']); ?>
-                                    </a>
-                                </h3>
-                                <p class="text-muted small mb-3">
-                                    <?php echo substr(strip_tags($n['content']), 0, 160) . '...'; ?>
-                                </p>
-                                <div>
-                                    <a href="<?php echo BASE_URL; ?>news-detail.php?id=<?php echo $n['id']; ?>" class="btn btn-sm btn-outline-danger rounded-pill px-3 fw-bold">
-                                        Read Official Circular &rarr;
-                                    </a>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -155,5 +201,124 @@ $filteredNews = array_filter($allNews, function($n) use ($selectedCategory, $sea
 
     </div>
 </section>
+
+<!-- Reusable News Clipping Lightbox Modal for News Listing -->
+<div class="modal fade" id="newsListModal" tabindex="-1" aria-labelledby="newsListModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow-lg text-white" style="background: rgba(18, 22, 28, 0.96); backdrop-filter: blur(12px); border-radius: 16px;">
+            <div class="modal-header border-bottom border-secondary border-opacity-25 py-2 px-3">
+                <div class="d-flex align-items-center gap-2 overflow-hidden me-2">
+                    <span class="badge bg-danger px-2 py-1 rounded-pill small flex-shrink-0">
+                        <i class="fas fa-newspaper me-1"></i> Press Scan
+                    </span>
+                    <h6 class="modal-title text-truncate fw-semibold mb-0 text-white" id="newsListModalLabel" style="font-size: 0.95rem;">
+                        Newspaper Clipping
+                    </h6>
+                </div>
+                <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                    <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3 py-1" id="newsListZoomBtn" title="Toggle 100% zoom">
+                        <i class="fas fa-search-plus me-1" id="newsListZoomIcon"></i> <span id="newsListZoomText" class="d-none d-sm-inline">Zoom In</span>
+                    </button>
+                    <a href="#" download id="newsListDownloadBtn" class="btn btn-sm btn-outline-light rounded-pill px-3 py-1" title="Download High-Res Scan">
+                        <i class="fas fa-download me-1"></i> <span class="d-none d-sm-inline">Download</span>
+                    </a>
+                    <button type="button" class="btn btn-sm btn-danger rounded-circle d-flex align-items-center justify-content-center shadow-sm" data-bs-dismiss="modal" aria-label="Close" style="width: 32px; height: 32px;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body p-2 p-md-4 text-center position-relative d-flex align-items-center justify-content-center" style="min-height: 320px; max-height: 82vh; overflow-y: auto;">
+                <img src="" 
+                     alt="Newspaper Clipping" 
+                     class="img-fluid rounded shadow" 
+                     id="newsListModalImg"
+                     style="max-height: 75vh; width: auto; max-width: 100%; object-fit: contain; cursor: zoom-in; transition: max-height 0.2s ease, width 0.2s ease;">
+            </div>
+            <div class="modal-footer border-top border-secondary border-opacity-25 py-2 px-3 justify-content-between text-white-50 small">
+                <div id="newsListModalMeta">
+                    <i class="far fa-calendar-alt me-1"></i> Press Release Scan
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="#" id="newsListDetailBtn" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                        Read Full Article &rarr;
+                    </a>
+                    <button type="button" class="btn btn-secondary btn-sm rounded-pill px-3" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var modalImg = document.getElementById('newsListModalImg');
+    var modalTitle = document.getElementById('newsListModalLabel');
+    var modalMeta = document.getElementById('newsListModalMeta');
+    var downloadBtn = document.getElementById('newsListDownloadBtn');
+    var detailBtn = document.getElementById('newsListDetailBtn');
+    var zoomBtn = document.getElementById('newsListZoomBtn');
+    var zoomIcon = document.getElementById('newsListZoomIcon');
+    var zoomText = document.getElementById('newsListZoomText');
+    var isZoomed = false;
+
+    function resetZoom() {
+        isZoomed = false;
+        if (modalImg) {
+            modalImg.style.maxHeight = '75vh';
+            modalImg.style.width = 'auto';
+            modalImg.style.maxWidth = '100%';
+            modalImg.style.cursor = 'zoom-in';
+        }
+        if (zoomIcon) zoomIcon.className = 'fas fa-search-plus me-1';
+        if (zoomText) zoomText.textContent = 'Zoom In';
+    }
+
+    function toggleZoom() {
+        if (!modalImg) return;
+        isZoomed = !isZoomed;
+        if (isZoomed) {
+            modalImg.style.maxHeight = 'none';
+            modalImg.style.width = '100%';
+            modalImg.style.maxWidth = '1150px';
+            modalImg.style.cursor = 'zoom-out';
+            if (zoomIcon) zoomIcon.className = 'fas fa-search-minus me-1';
+            if (zoomText) zoomText.textContent = 'Zoom Out';
+        } else {
+            resetZoom();
+        }
+    }
+
+    if (zoomBtn) zoomBtn.addEventListener('click', toggleZoom);
+    if (modalImg) modalImg.addEventListener('click', toggleZoom);
+
+    document.querySelectorAll('.open-news-modal').forEach(function (trigger) {
+        trigger.addEventListener('click', function () {
+            var imgSrc = this.getAttribute('data-img');
+            var title = this.getAttribute('data-title');
+            var date = this.getAttribute('data-date');
+            var detail = this.getAttribute('data-detail');
+
+            if (modalImg) modalImg.src = imgSrc;
+            if (modalTitle) modalTitle.textContent = title;
+            if (modalMeta) modalMeta.innerHTML = '<i class="far fa-calendar-alt me-1"></i> ' + (date || '') + ' &bull; Click image or Zoom button to toggle 100% view';
+            if (downloadBtn) {
+                downloadBtn.href = imgSrc;
+                downloadBtn.setAttribute('download', title ? title.replace(/[^a-zA-Z0-9_-]/g, '_') : 'newspaper-scan');
+            }
+            if (detailBtn) {
+                detailBtn.href = detail;
+            }
+            resetZoom();
+        });
+    });
+
+    var modalEl = document.getElementById('newsListModal');
+    if (modalEl) {
+        modalEl.addEventListener('hidden.bs.modal', resetZoom);
+    }
+});
+</script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

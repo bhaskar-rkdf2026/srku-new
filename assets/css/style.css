@@ -1294,8 +1294,16 @@ body {
 ═══════════════════════════════════════════════════════ */
 .testimonial-v2 {
     background: #f8fafc;
-    padding: clamp(3.5rem, 6vw, 5.5rem) 0;
+    padding: clamp(1.5rem, 3vw, 2.25rem) 0 clamp(3.5rem, 6vw, 5.5rem);
     position: relative;
+}
+
+.home-blogs-section {
+    padding-bottom: 1.25rem !important;
+}
+
+.home-blogs-section .container-xl {
+    padding-bottom: 0 !important;
 }
 
 .testimonial-v2__eyebrow {
@@ -12126,3 +12134,29 @@ object {
         -webkit-overflow-scrolling: touch;
     }
 }
+
+/* ==========================================================================
+   News Clipping Lightbox Modal & Hover Styles
+   ========================================================================== */
+.group-zoom-trigger {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+}
+.group-zoom-trigger:hover .newspaper-scan-img {
+    transform: scale(1.02);
+}
+.group-zoom-trigger .badge {
+    transition: all 0.2s ease;
+}
+.group-zoom-trigger:hover .badge {
+    background-color: var(--srku-navy, #182B49) !important;
+    transform: translateY(-2px);
+}
+#newsDetailModalImg,
+#newsListModalImg {
+    user-select: none;
+    -webkit-user-select: none;
+}
+

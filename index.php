@@ -1055,7 +1055,6 @@ $slStat4Icon = getSetting('student_life_stat4_icon', 'fas fa-music');
         </div>
     </div>
 </section>
-<script src="<?php echo BASE_URL; ?>assets/js/dept-marquee.js?v=<?php echo @filemtime(__DIR__ . '/assets/js/dept-marquee.js') ?: time(); ?>"></script>
 
 <!-- ═══════════════════════════════════════════════════════
      ADMISSION FORM SECTION (Searchable Course & Branch Selection)

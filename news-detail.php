@@ -74,11 +74,20 @@ $tickerNotices = getNews('Announcement', 4);
                     </h1>
 
                     <?php if (!empty($notice['image_url'])): ?>
-                        <div class="mb-4 text-center">
-                            <img src="<?php echo BASE_URL . sanitize($notice['image_url']); ?>" 
-                                 onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';" 
-                                 class="img-fluid rounded-4 shadow-sm border" style="max-height: 420px; object-fit: cover; width: 100%;" 
-                                 alt="<?php echo sanitize($notice['title']); ?>">
+                        <div class="mb-4 text-center bg-light p-3 rounded-4 border position-relative news-scan-card">
+                            <a href="#newsImageModal" data-bs-toggle="modal" role="button" class="d-inline-block position-relative text-decoration-none group-zoom-trigger" title="Click to view full newspaper clipping in popup" style="cursor: pointer; max-width: 100%;">
+                                <img src="<?php echo BASE_URL . sanitize($notice['image_url']); ?>" 
+                                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>assets/uploads/2026/07/001.webp';" 
+                                     class="img-fluid rounded-3 shadow-sm border newspaper-scan-img" 
+                                     style="max-height: 560px; width: auto; max-width: 100%; object-fit: contain; transition: transform 0.25s ease;" 
+                                     alt="<?php echo sanitize($notice['title']); ?>">
+                                <span class="position-absolute bottom-0 end-0 m-2 m-md-3 badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill shadow-sm d-inline-flex align-items-center gap-1">
+                                    <i class="fas fa-search-plus"></i> Click to Enlarge
+                                </span>
+                            </a>
+                            <div class="text-muted small mt-2">
+                                <i class="fas fa-info-circle text-danger me-1"></i> Click clipping image above to preview full size in popup
+                            </div>
                         </div>
                     <?php endif; ?>
 
@@ -150,5 +159,91 @@ $tickerNotices = getNews('Announcement', 4);
         </div>
     </div>
 </section>
+
+<?php if (!empty($notice['image_url'])): ?>
+<!-- Newspaper Clipping Lightbox Modal -->
+<div class="modal fade" id="newsImageModal" tabindex="-1" aria-labelledby="newsImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow-lg text-white" style="background: rgba(18, 22, 28, 0.96); backdrop-filter: blur(12px); border-radius: 16px;">
+            <div class="modal-header border-bottom border-secondary border-opacity-25 py-2 px-3">
+                <div class="d-flex align-items-center gap-2 overflow-hidden me-2">
+                    <span class="badge bg-danger px-2 py-1 rounded-pill small flex-shrink-0">
+                        <i class="fas fa-newspaper me-1"></i> Press Scan
+                    </span>
+                    <h6 class="modal-title text-truncate fw-semibold mb-0 text-white" id="newsImageModalLabel" style="font-size: 0.95rem;">
+                        <?php echo sanitize($notice['title']); ?>
+                    </h6>
+                </div>
+                <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                    <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3 py-1" id="newsDetailZoomBtn" title="Toggle 100% zoom">
+                        <i class="fas fa-search-plus me-1" id="newsDetailZoomIcon"></i> <span id="newsDetailZoomText" class="d-none d-sm-inline">Zoom In</span>
+                    </button>
+                    <a href="<?php echo BASE_URL . sanitize($notice['image_url']); ?>" download class="btn btn-sm btn-outline-light rounded-pill px-3 py-1" title="Download High-Res Scan">
+                        <i class="fas fa-download me-1"></i> <span class="d-none d-sm-inline">Download</span>
+                    </a>
+                    <button type="button" class="btn btn-sm btn-danger rounded-circle d-flex align-items-center justify-content-center shadow-sm" data-bs-dismiss="modal" aria-label="Close" style="width: 32px; height: 32px;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body p-2 p-md-4 text-center position-relative d-flex align-items-center justify-content-center" style="min-height: 320px; max-height: 82vh; overflow-y: auto;">
+                <img src="<?php echo BASE_URL . sanitize($notice['image_url']); ?>" 
+                     alt="<?php echo sanitize($notice['title']); ?>" 
+                     class="img-fluid rounded shadow" 
+                     id="newsDetailModalImg"
+                     style="max-height: 75vh; width: auto; max-width: 100%; object-fit: contain; cursor: zoom-in; transition: max-height 0.2s ease, width 0.2s ease;">
+            </div>
+            <div class="modal-footer border-top border-secondary border-opacity-25 py-2 px-3 justify-content-between text-white-50 small">
+                <div>
+                    <i class="far fa-calendar-alt me-1"></i> <?php echo date('F j, Y', strtotime($notice['publish_date'] ?: $notice['created_at'])); ?> &bull; Click image or Zoom button to toggle full view
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm rounded-pill px-4" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var img = document.getElementById('newsDetailModalImg');
+    var zoomBtn = document.getElementById('newsDetailZoomBtn');
+    var zoomIcon = document.getElementById('newsDetailZoomIcon');
+    var zoomText = document.getElementById('newsDetailZoomText');
+    if (!img) return;
+
+    var isZoomed = false;
+    function toggleZoom() {
+        isZoomed = !isZoomed;
+        if (isZoomed) {
+            img.style.maxHeight = 'none';
+            img.style.width = '100%';
+            img.style.maxWidth = '1150px';
+            img.style.cursor = 'zoom-out';
+            if (zoomIcon) zoomIcon.className = 'fas fa-search-minus me-1';
+            if (zoomText) zoomText.textContent = 'Zoom Out';
+        } else {
+            img.style.maxHeight = '75vh';
+            img.style.width = 'auto';
+            img.style.maxWidth = '100%';
+            img.style.cursor = 'zoom-in';
+            if (zoomIcon) zoomIcon.className = 'fas fa-search-plus me-1';
+            if (zoomText) zoomText.textContent = 'Zoom In';
+        }
+    }
+
+    if (zoomBtn) zoomBtn.addEventListener('click', toggleZoom);
+    img.addEventListener('click', toggleZoom);
+
+    var modalEl = document.getElementById('newsImageModal');
+    if (modalEl) {
+        modalEl.addEventListener('hidden.bs.modal', function () {
+            if (isZoomed) toggleZoom();
+        });
+    }
+});
+</script>
+<?php endif; ?>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
