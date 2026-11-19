@@ -1512,6 +1512,371 @@ function getFacultyStats() {
 // -------------------------------------------------------------
 
 /**
+ * Standardize syllabus card typography into clean, balanced Title Case
+ * preserving proper academic degree abbreviations and acronyms.
+ */
+function formatSyllabusTypography($title) {
+    $t = trim((string)$title);
+    if ($t === '') return '';
+
+    // Standardize whitespace & delimiters
+    $t = preg_replace('/\s+/', ' ', $t);
+    $t = str_replace(' ? ', ' - ', $t);
+    $t = str_replace(' ?', ' -', $t);
+    $t = str_replace('_', ' ', $t);
+
+    // Initial regex normalizations
+    $preReplacements = [
+        '/\bba\s+llb\s*\(\s*hons\.?\s*\)/i' => 'B.A. LL.B. (Hons.)',
+        '/\bba\s+llb\b/i' => 'B.A. LL.B.',
+        '/\bb\.a\.\s*ll\.b\./i' => 'B.A. LL.B.',
+        '/\bllb\.?\b/i' => 'LL.B.',
+        '/\bllm\.?\b/i' => 'LL.M.',
+        '/\bb\.?\s*tech\.?\b/i' => 'B.Tech',
+        '/\bm\.?\s*tech\.?\b/i' => 'M.Tech',
+        '/\bb\.?\s*e\.?\s*\(/i' => 'B.E. (',
+        '/\bb\.?\s*e\.?\b/i' => 'B.E.',
+        '/\bm\.?\s*e\.?\s*\(/i' => 'M.E. (',
+        '/\bm\.?\s*e\.?\b/i' => 'M.E.',
+        '/\bb\.?\s*sc\.?\b/i' => 'B.Sc.',
+        '/\bm\.?\s*sc\.?\b/i' => 'M.Sc.',
+        '/\bbsc\b/i' => 'B.Sc.',
+        '/\bmsc\b/i' => 'M.Sc.',
+        '/\bb\.?\s*com\.?\b/i' => 'B.Com.',
+        '/\bb\.?\s*a\.?\b/i' => 'B.A.',
+        '/\bb\.?\s*pharmacy\b/i' => 'B.Pharm',
+        '/\bb\.?\s*pharm\.?\b/i' => 'B.Pharm',
+        '/\bd\.?\s*pharmacy\b/i' => 'D.Pharm',
+        '/\bd\.?\s*pharm\.?\b/i' => 'D.Pharm',
+        '/\bd\s+pharmacy\b/i' => 'D.Pharm',
+        '/\bm\.?\s*pharma\b/i' => 'M.Pharm',
+        '/\bm\.?\s*pharm\.?\b/i' => 'M.Pharm',
+        '/\bmba\b/i' => 'MBA',
+        '/\bmca\b/i' => 'MCA',
+        '/\bbca\b/i' => 'BCA',
+        '/\bpg\s*dca\b/i' => 'PGDCA',
+        '/\bp\.?g\.?d\.?c\.?a\.?\b/i' => 'PGDCA',
+        '/\bd\.?c\.?a\.?\b/i' => 'DCA',
+        '/\bb\.?\s*lib\.?\b/i' => 'B.Lib.',
+        '/\bm\.?\s*lib\.?\b/i' => 'M.Lib.',
+        '/\bbjmc\b/i' => 'BJMC',
+        '/\bnpcc\b/i' => 'NPCC',
+        '/\bpbbsc\b/i' => 'PBBSc',
+        '/\brkdf\b/i' => 'RKDF',
+        '/\bcon\b/i' => 'CON',
+        '/\bsrku\b/i' => 'SRKU',
+        '/\bnep\b/i' => 'NEP',
+        '/\bbmlt\b/i' => 'BMLT',
+        '/\bdmlt\b/i' => 'DMLT',
+        '/\bmmlt\b/i' => 'MMLT',
+        '/\bmpt\b/i' => 'MPT',
+        '/\bengg\.?\b/i' => 'Engg.',
+        '/\((\s*all\s+branch(es)?\s*)\)/i' => '(All Branches)',
+        '/\bmark-scheme\b/i' => 'Marks Scheme',
+        '/\bmark\s+scheme\b/i' => 'Marks Scheme',
+        '/\bspelization\b/i' => 'Specialization',
+        '/\bbusinesh\b/i' => 'Business',
+        '/\bcommuniction\b/i' => 'Communication',
+        '/\bevoluation\b/i' => 'Evaluation',
+        '/\bsicence\b/i' => 'Science',
+        '/\bbatach\b/i' => 'Batch',
+        '/\bthirdsemester\b/i' => 'Third Semester',
+        '/\bfirstsemester\b/i' => 'First Semester',
+        '/\bsecondsemester\b/i' => 'Second Semester',
+        '/\bon\s*-\s*word\b/i' => 'Onwards',
+        '/\bon\s*-\s*words\b/i' => 'Onwards',
+        '/\bon\s*-\s*ward\b/i' => 'Onwards',
+        '/\bon\s*-\s*wards\b/i' => 'Onwards',
+        '/\bnd\s+semester\b/i' => 'Semester',
+        '/\brd\s+years\b/i' => 'Year',
+        '/\brd\s+year\b/i' => 'Year',
+        '/\bnd\s+year\b/i' => 'Year',
+        '/\bst\s+year\b/i' => 'Year',
+        '/\bth\s+semester\b/i' => 'Semester',
+        '/\b1st\.?\s*year\b/i' => '1st Year',
+        '/\b2nd\.?\s*year\b/i' => '2nd Year',
+        '/\b3rd\.?\s*year\b/i' => '3rd Year',
+        '/\b4th\.?\s*year\b/i' => '4th Year',
+        '/\breg\s+(\d{4})\b/i' => 'Reg. $1',
+        '/\breg\.?\s+(\d{4})\b/i' => 'Reg. $1',
+        '/\breg\s*-\s*(\d{4})\b/i' => 'Reg. $1',
+    ];
+
+    foreach ($preReplacements as $pat => $rep) {
+        $t = preg_replace($pat, $rep, $t);
+    }
+
+    $t = preg_replace('/([a-zA-Z0-9])\(/', '$1 (', $t);
+    $t = preg_replace('/\)([a-zA-Z0-9])/', ') $1', $t);
+
+    $knownKeep = [
+        'B.TECH' => 'B.Tech',
+        'M.TECH' => 'M.Tech',
+        'B.E.' => 'B.E.',
+        'M.E.' => 'M.E.',
+        'B.SC.' => 'B.Sc.',
+        'M.SC.' => 'M.Sc.',
+        'B.A.' => 'B.A.',
+        'B.COM.' => 'B.Com.',
+        'B.LIB.' => 'B.Lib.',
+        'M.LIB.' => 'M.Lib.',
+        'B.PHARM' => 'B.Pharm',
+        'D.PHARM' => 'D.Pharm',
+        'M.PHARM' => 'M.Pharm',
+        'LL.B.' => 'LL.B.',
+        'LL.M.' => 'LL.M.',
+        'MBA' => 'MBA',
+        'MCA' => 'MCA',
+        'BCA' => 'BCA',
+        'DCA' => 'DCA',
+        'PGDCA' => 'PGDCA',
+        'BJMC' => 'BJMC',
+        'NPCC' => 'NPCC',
+        'PBBSc' => 'PBBSc',
+        'RKDF' => 'RKDF',
+        'CON' => 'CON',
+        'SRKU' => 'SRKU',
+        'NEP' => 'NEP',
+        'BMLT' => 'BMLT',
+        'DMLT' => 'DMLT',
+        'MMLT' => 'MMLT',
+        'MPT' => 'MPT',
+        'CSE' => 'CSE',
+        'CS' => 'CS',
+        'IT' => 'IT',
+        'EC' => 'EC',
+        'EE' => 'EE',
+        'EEE' => 'EEE',
+        'EI' => 'EI',
+        'ME' => 'ME',
+        'CE' => 'CE',
+        'EX' => 'EX',
+        'DC' => 'DC',
+        'HR' => 'HR',
+        'UGC' => 'UGC',
+        'AICTE' => 'AICTE',
+        'PCI' => 'PCI',
+        'INC' => 'INC',
+        'BCI' => 'BCI',
+    ];
+
+    $romans = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+    $lowers = ['and', 'for', 'of', 'to', 'in', 'on', 'at', 'by', 'the', 'a', 'an'];
+
+    $standardWords = [
+        'scheme' => 'Scheme',
+        'schemes' => 'Schemes',
+        'syllabus' => 'Syllabus',
+        'semester' => 'Semester',
+        'semesters' => 'Semesters',
+        'sem' => 'Sem',
+        'batch' => 'Batch',
+        'session' => 'Session',
+        'part' => 'Part',
+        'year' => 'Year',
+        'years' => 'Years',
+        'onwards' => 'Onwards',
+        'branch' => 'Branch',
+        'branches' => 'Branches',
+        'all' => 'All',
+        'full' => 'Full',
+        'time' => 'Time',
+        'marks' => 'Marks',
+        'complete' => 'Complete',
+        'internal' => 'Internal',
+        'assessment' => 'Assessment',
+        'sessional' => 'Sessional',
+        'exam' => 'Exam',
+        'curriculum' => 'Curriculum',
+        'general' => 'General',
+        'updated' => 'Updated',
+        'faculty' => 'Faculty',
+        'commerce' => 'Commerce',
+        'ancient' => 'Ancient',
+        'indian' => 'Indian',
+        'history' => 'History',
+        'botany' => 'Botany',
+        'chemistry' => 'Chemistry',
+        'computer' => 'Computer',
+        'science' => 'Science',
+        'economics' => 'Economics',
+        'education' => 'Education',
+        'electronics' => 'Electronics',
+        'english' => 'English',
+        'literature' => 'Literature',
+        'fashion' => 'Fashion',
+        'design' => 'Design',
+        'hindi' => 'Hindi',
+        'mathematics' => 'Mathematics',
+        'maths' => 'Mathematics',
+        'microbiology' => 'Microbiology',
+        'physics' => 'Physics',
+        'political' => 'Political',
+        'psychology' => 'Psychology',
+        'sociology' => 'Sociology',
+        'yoga' => 'Yoga',
+        'zoology' => 'Zoology',
+        'major' => 'Major',
+        'minor' => 'Minor',
+        'subjects' => 'Subjects',
+        'credit' => 'Credit',
+        'distribution' => 'Distribution',
+        'pharmacognosy' => 'Pharmacognosy',
+        'pharmaceutics' => 'Pharmaceutics',
+        'pharmacology' => 'Pharmacology',
+        'management' => 'Management',
+        'business' => 'Business',
+        'accounting' => 'Accounting',
+        'manager' => 'Manager',
+        'policy' => 'Policy',
+        'strategic' => 'Strategic',
+        'analysis' => 'Analysis',
+        'communication' => 'Communication',
+        'legislation' => 'Legislation',
+        'corporate' => 'Corporate',
+        'evolution' => 'Evolution',
+        'decision' => 'Decision',
+        'support' => 'Support',
+        'systems' => 'Systems',
+        'system' => 'System',
+        'information' => 'Information',
+        'dual' => 'Dual',
+        'specialization' => 'Specialization',
+        'production' => 'Production',
+        'value' => 'Value',
+        'waste' => 'Waste',
+        'control' => 'Control',
+        'rural' => 'Rural',
+        'human' => 'Human',
+        'resource' => 'Resource',
+        'planning' => 'Planning',
+        'development' => 'Development',
+        'event' => 'Event',
+        'evaluation' => 'Evaluation',
+        'principles' => 'Principles',
+        'nutrition' => 'Nutrition',
+        'physiotherapy' => 'Physiotherapy',
+        'medical' => 'Medical',
+        'lab' => 'Lab',
+        'technician' => 'Technician',
+        'thermal' => 'Thermal',
+        'mechanical' => 'Mechanical',
+        'civil' => 'Civil',
+        'electrical' => 'Electrical',
+        'mining' => 'Mining',
+        'diploma' => 'Diploma',
+        'bachelor' => 'Bachelor',
+        'master' => 'Master',
+        'first' => 'First',
+        'second' => 'Second',
+        'third' => 'Third',
+        'fourth' => 'Fourth',
+        'elective' => 'Elective',
+        'table-ix' => 'Table-IX',
+        'engg.' => 'Engg.',
+        'engg' => 'Engg.',
+        'anesthesia' => 'Anesthesia',
+        'dialysis' => 'Dialysis',
+        'ayurvedic' => 'Ayurvedic',
+        'homoeopathic' => 'Homoeopathic',
+        'naturopathy' => 'Naturopathy',
+        'ophthalmic' => 'Ophthalmic',
+        'optometry' => 'Optometry',
+        'refraction' => 'Refraction',
+        'optometric' => 'Optometric',
+        'assistant' => 'Assistant',
+        'common' => 'Common',
+    ];
+
+    $tokens = preg_split('/(\s+|(?<=[^\w])-(?=[^\w])|(?<=\w)-(?=\w))/', $t, -1, PREG_SPLIT_DELIM_CAPTURE);
+    $count = count($tokens);
+
+    for ($i = 0; $i < $count; $i++) {
+        $tok = $tokens[$i];
+        if (trim($tok) === '' || $tok === '-') continue;
+
+        if (in_array($tok, array_values($knownKeep))) {
+            continue;
+        }
+
+        preg_match('/^([(\[\{]*)(.*?)([)\]\}.,;:]*)$/', $tok, $pm);
+        $lead = $pm[1] ?? '';
+        $word = $pm[2] ?? '';
+        $tail = $pm[3] ?? '';
+
+        if ($word === '') continue;
+
+        $wordUpper = strtoupper($word);
+        $wordLower = strtolower($word);
+
+        if (preg_match('/^(i|ii|iii|iv|v|vi|vii|viii|ix|x)-(i|ii|iii|iv|v|vi|vii|viii|ix|x)(th)?$/i', $word, $rm)) {
+            $r1 = strtoupper($rm[1]);
+            $r2 = strtoupper($rm[2]);
+            $th = strtolower($rm[3] ?? '');
+            $word = $r1 . '-' . $r2 . $th;
+        } elseif (isset($knownKeep[$wordUpper])) {
+            $word = $knownKeep[$wordUpper];
+        } elseif (isset($standardWords[$wordLower])) {
+            $word = $standardWords[$wordLower];
+        } elseif (in_array($wordUpper, $romans)) {
+            $word = $wordUpper;
+        } elseif (preg_match('/^(i|ii|iii|iv|v|vi|vii|viii|ix|x)(st|nd|rd|th)$/i', $word, $rm)) {
+            $word = strtoupper($rm[1]) . strtolower($rm[2]);
+        } elseif (preg_match('/^(\d+)(st|nd|rd|th)$/i', $word, $nm)) {
+            $word = $nm[1] . strtolower($nm[2]);
+        } elseif (in_array($wordLower, $lowers) && $i > 0) {
+            $word = $wordLower;
+        } elseif (preg_match('/^\d{4}(-\d{2,4})?$/', $word)) {
+            $word = $word;
+        } elseif (preg_match('/^[A-Z0-9.\-]+$/', $word) && strlen($word) <= 4 && !preg_match('/[a-z]/', $word)) {
+            $word = $word;
+        } else {
+            $word = ucfirst($wordLower);
+        }
+
+        $tokens[$i] = $lead . $word . $tail;
+    }
+
+    $res = implode('', $tokens);
+
+    // Polish acronyms, dots, brackets and spacing
+    $res = str_ireplace('b.sc.', 'B.Sc.', $res);
+    $res = str_ireplace('m.sc.', 'M.Sc.', $res);
+    $res = str_ireplace('b.com.', 'B.Com.', $res);
+    $res = str_ireplace('b.a.', 'B.A.', $res);
+    $res = str_ireplace('ll.b.', 'LL.B.', $res);
+    $res = str_ireplace('ll.m.', 'LL.M.', $res);
+    $res = str_ireplace('b.pharm', 'B.Pharm', $res);
+    $res = str_ireplace('d.pharm', 'D.Pharm', $res);
+    $res = str_ireplace('m.pharm', 'M.Pharm', $res);
+    $res = str_ireplace('b.lib.', 'B.Lib.', $res);
+    $res = str_ireplace('m.lib.', 'M.Lib.', $res);
+    $res = str_ireplace('b.tech.', 'B.Tech', $res);
+    $res = str_ireplace('b.tech', 'B.Tech', $res);
+    $res = str_ireplace('m.tech.', 'M.Tech', $res);
+    $res = str_ireplace('m.tech', 'M.Tech', $res);
+    $res = str_ireplace('b.e.', 'B.E.', $res);
+    $res = str_ireplace('m.e.', 'M.E.', $res);
+    $res = str_ireplace('pgdca.', 'PGDCA', $res);
+    $res = str_ireplace('dca.', 'DCA', $res);
+    $res = str_ireplace('(m.e. & ce)', '(ME & CE)', $res);
+    $res = preg_replace('/\.{2,}/', '.', $res);
+    $res = preg_replace('/\s+/', ' ', $res);
+    $res = preg_replace('/\(\s+/', '(', $res);
+    $res = preg_replace('/\s+\)/', ')', $res);
+    $res = preg_replace('/\s*,\s*/', ', ', $res);
+    $res = preg_replace('/\(\s*\(Hons\.\)\s*\)/', '(Hons.)', $res);
+    $res = preg_replace('/\b(and|&)\s+scheme\b/i', '$1 Scheme', $res);
+    $res = preg_replace('/\b(and|&)\s+syllabus\b/i', '$1 Syllabus', $res);
+    $res = preg_replace('/\bScheme\s+Scheme\b/i', 'Scheme', $res);
+    $res = preg_replace('/\bSyllabus\s+Syllabus\b/i', 'Syllabus', $res);
+    $res = preg_replace('/\s*-\s*word(s)?\b/i', ' Onwards', $res);
+    $res = preg_replace('/\s*-\s*ward(s)?\b/i', ' Onwards', $res);
+
+    return ucfirst(trim($res));
+}
+
+/**
  * Returns icon and department metadata for a given category slug
  */
 function getSyllabusCategoryMeta($slug) {
@@ -1686,7 +2051,8 @@ function getDynamicSyllabusData($onlyActive = true) {
 
             $categories[$slug]['items'][] = [
                 'id' => (int)$row['id'],
-                'title' => $row['title'],
+                'title' => formatSyllabusTypography($row['title']),
+                'raw_title' => $row['title'],
                 'type' => $row['type'],
                 'branch_slug' => $branchInfo['slug'],
                 'branch_name' => $branchInfo['name'],

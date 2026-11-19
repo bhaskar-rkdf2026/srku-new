@@ -246,7 +246,7 @@ require_once __DIR__ . '/includes/header.php';
                                  data-category="<?php echo $slug; ?>"
                                  data-branch="<?php echo $branchSlug; ?>"
                                  data-doctype="<?php echo strtolower($item['type']); ?>"
-                                 data-title="<?php echo htmlspecialchars(strtolower($item['title'] . ' ' . $cat['title'] . ' ' . $item['type'] . ' ' . $branchName . ' ' . $branchShort)); ?>">
+                                 data-title="<?php echo htmlspecialchars(strtolower($item['title'] . ' ' . ($item['raw_title'] ?? '') . ' ' . $cat['title'] . ' ' . $item['type'] . ' ' . $branchName . ' ' . $branchShort)); ?>">
                                 
                                 <div class="card h-100 border-0 rounded-4 syllabus-card-pro bg-white">
                                     <div class="card-body p-3 p-md-4 d-flex flex-column">
