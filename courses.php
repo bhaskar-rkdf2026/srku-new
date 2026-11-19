@@ -170,11 +170,12 @@ $departments = getDepartments(true);
                             <div class="p-4 d-flex flex-column flex-grow-1">
                                 
                                 <!-- Top Badges Row -->
-                                <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
-                                    <span class="course-dept-badge text-truncate" title="<?php echo sanitize($c['department']); ?>">
-                                        <i class="fas fa-university me-1 text-danger"></i> <?php echo sanitize($c['department']); ?>
+                                <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
+                                    <span class="course-dept-badge" title="<?php echo sanitize($c['department']); ?>">
+                                        <i class="fas fa-university me-1 text-danger flex-shrink-0" style="margin-top: 2px;"></i>
+                                        <span><?php echo sanitize($c['department']); ?></span>
                                     </span>
-                                    <span class="badge badge-level-navy rounded-pill">
+                                    <span class="badge badge-level-navy rounded-pill flex-shrink-0">
                                         <?php echo sanitize($c['level']); ?>
                                     </span>
                                 </div>
