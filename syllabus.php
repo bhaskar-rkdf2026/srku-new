@@ -453,7 +453,7 @@ function updateBranchPillsUI(catSlug, branchSlug) {
     }
 }
 
-function switchCategory(catSlug, branchToSet = 'all') {
+function switchCategory(catSlug, branchToSet = 'all', shouldScrollPage = false) {
     currentCategory = catSlug;
     
     // Update select dropdown
@@ -485,8 +485,8 @@ function switchCategory(catSlug, branchToSet = 'all') {
     updateUrlParams();
     filterSyllabus();
 
-    // Scroll if focused
-    if (catSlug !== 'all') {
+    // Only scroll page vertically if explicitly requested (e.g. from quick jump links)
+    if (shouldScrollPage && catSlug !== 'all') {
         const section = document.getElementById('cat-block-' + catSlug);
         if (section) {
             section.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -671,49 +671,6 @@ function initCategoryTabsScroll() {
             }
         }
     }, { passive: false });
-
-    // Click and drag to scroll
-    let isDragging = false;
-    let startX = 0;
-    let scrollStart = 0;
-    let hasDragged = false;
-
-    tabsContainer.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        hasDragged = false;
-        startX = e.pageX - tabsContainer.offsetLeft;
-        scrollStart = tabsContainer.scrollLeft;
-        tabsContainer.classList.add('is-dragging');
-    });
-
-    window.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        const x = e.pageX - tabsContainer.offsetLeft;
-        const walk = x - startX;
-        if (Math.abs(walk) > 4) {
-            hasDragged = true;
-        }
-        tabsContainer.scrollLeft = scrollStart - walk;
-        updateScrollArrows();
-    });
-
-    window.addEventListener('mouseup', () => {
-        if (isDragging) {
-            isDragging = false;
-            tabsContainer.classList.remove('is-dragging');
-            if (hasDragged) {
-                setTimeout(() => { hasDragged = false; }, 60);
-            }
-        }
-    });
-
-    // Suppress button click if user was dragging
-    tabsContainer.addEventListener('click', (e) => {
-        if (hasDragged) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-    }, true);
 
     tabsContainer.addEventListener('scroll', updateScrollArrows);
     window.addEventListener('resize', updateScrollArrows);

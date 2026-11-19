@@ -9357,17 +9357,6 @@ object {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: #cbd5e1 transparent;
-    cursor: grab;
-}
-
-#categoryTabsContainer.is-dragging {
-    cursor: grabbing !important;
-    scroll-behavior: auto !important;
-    user-select: none;
-}
-
-#categoryTabsContainer.is-dragging .cat-pill {
-    pointer-events: none;
 }
 
 #categoryTabsContainer::-webkit-scrollbar {
