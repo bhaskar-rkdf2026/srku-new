@@ -132,8 +132,13 @@ require_once __DIR__ . '/includes/header.php';
             </div>
         </div>
 
-        <!-- Discipline Category Tabs (Horizontal Scrollable Pills) -->
+        <!-- Discipline Category Tabs (Horizontal Scrollable Pills with Navigation Arrows) -->
         <div class="category-pills-wrap mb-4 position-relative">
+            <button type="button" class="category-scroll-btn category-scroll-prev" id="catScrollPrev" aria-label="Previous categories" title="Scroll left">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="category-pills-fade-left" id="catFadeLeft"></div>
+
             <div class="d-flex gap-2 flex-nowrap overflow-x-auto pb-2 px-1" id="categoryTabsContainer">
                 <button type="button" class="btn cat-pill <?php echo ($selectedCourse === 'all') ? 'active' : ''; ?>" data-cat="all" onclick="switchCategory('all')">
                     <span class="cat-pill-icon"><i class="fas fa-th-large"></i></span>
@@ -148,6 +153,11 @@ require_once __DIR__ . '/includes/header.php';
                     </button>
                 <?php endforeach; ?>
             </div>
+
+            <div class="category-pills-fade-right" id="catFadeRight"></div>
+            <button type="button" class="category-scroll-btn category-scroll-next" id="catScrollNext" aria-label="Next categories" title="Scroll right">
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
 
         <!-- Main Syllabus Container (19 Categories) -->
@@ -455,11 +465,16 @@ function switchCategory(catSlug, branchToSet = 'all') {
     pills.forEach(pill => {
         if (pill.dataset.cat === catSlug) {
             pill.classList.add('active');
-            pill.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+            try {
+                pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            } catch (e) {
+                pill.scrollIntoView(false);
+            }
         } else {
             pill.classList.remove('active');
         }
     });
+    setTimeout(updateScrollArrows, 300);
 
     // Populate branch select
     updateBranchDropdown(catSlug, branchToSet !== 'all');
@@ -596,8 +611,122 @@ function resetSyllabusFilters() {
     switchCategory('all');
 }
 
+// Navigation Arrows & Touch / Wheel Scrolling for Category Tabs
+function updateScrollArrows() {
+    const tabsContainer = document.getElementById('categoryTabsContainer');
+    const prevBtn = document.getElementById('catScrollPrev');
+    const nextBtn = document.getElementById('catScrollNext');
+    const fadeLeft = document.getElementById('catFadeLeft');
+    const fadeRight = document.getElementById('catFadeRight');
+    if (!tabsContainer || !prevBtn || !nextBtn) return;
+
+    const scrollLeft = Math.ceil(tabsContainer.scrollLeft);
+    const maxScroll = Math.max(0, tabsContainer.scrollWidth - tabsContainer.clientWidth - 4);
+
+    const canScrollLeft = scrollLeft > 6;
+    const canScrollRight = scrollLeft < maxScroll;
+
+    prevBtn.classList.toggle('disabled', !canScrollLeft);
+    prevBtn.style.opacity = canScrollLeft ? '1' : '0';
+    prevBtn.style.pointerEvents = canScrollLeft ? 'auto' : 'none';
+    prevBtn.style.visibility = canScrollLeft ? 'visible' : 'hidden';
+    if (fadeLeft) fadeLeft.style.opacity = canScrollLeft ? '1' : '0';
+
+    nextBtn.classList.toggle('disabled', !canScrollRight);
+    nextBtn.style.opacity = canScrollRight ? '1' : '0';
+    nextBtn.style.pointerEvents = canScrollRight ? 'auto' : 'none';
+    nextBtn.style.visibility = canScrollRight ? 'visible' : 'hidden';
+    if (fadeRight) fadeRight.style.opacity = canScrollRight ? '1' : '0';
+}
+
+function initCategoryTabsScroll() {
+    const tabsContainer = document.getElementById('categoryTabsContainer');
+    const prevBtn = document.getElementById('catScrollPrev');
+    const nextBtn = document.getElementById('catScrollNext');
+    if (!tabsContainer) return;
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            tabsContainer.scrollBy({ left: -320, behavior: 'smooth' });
+            setTimeout(updateScrollArrows, 320);
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            tabsContainer.scrollBy({ left: 320, behavior: 'smooth' });
+            setTimeout(updateScrollArrows, 320);
+        });
+    }
+
+    // Convert vertical mouse wheel into horizontal scroll on desktop
+    tabsContainer.addEventListener('wheel', (e) => {
+        if (tabsContainer.scrollWidth > tabsContainer.clientWidth) {
+            if (e.deltaY !== 0 && Math.abs(e.deltaX) < Math.abs(e.deltaY)) {
+                e.preventDefault();
+                tabsContainer.scrollLeft += (e.deltaY > 0 ? 1 : -1) * 120;
+                updateScrollArrows();
+            }
+        }
+    }, { passive: false });
+
+    // Click and drag to scroll
+    let isDragging = false;
+    let startX = 0;
+    let scrollStart = 0;
+    let hasDragged = false;
+
+    tabsContainer.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        hasDragged = false;
+        startX = e.pageX - tabsContainer.offsetLeft;
+        scrollStart = tabsContainer.scrollLeft;
+        tabsContainer.classList.add('is-dragging');
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const x = e.pageX - tabsContainer.offsetLeft;
+        const walk = x - startX;
+        if (Math.abs(walk) > 4) {
+            hasDragged = true;
+        }
+        tabsContainer.scrollLeft = scrollStart - walk;
+        updateScrollArrows();
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (isDragging) {
+            isDragging = false;
+            tabsContainer.classList.remove('is-dragging');
+            if (hasDragged) {
+                setTimeout(() => { hasDragged = false; }, 60);
+            }
+        }
+    });
+
+    // Suppress button click if user was dragging
+    tabsContainer.addEventListener('click', (e) => {
+        if (hasDragged) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    }, true);
+
+    tabsContainer.addEventListener('scroll', updateScrollArrows);
+    window.addEventListener('resize', updateScrollArrows);
+
+    // Initial check
+    updateScrollArrows();
+    setTimeout(updateScrollArrows, 150);
+}
+
 // On page load, handle any query params (?course=be-btech&branch=cse)
 window.addEventListener('DOMContentLoaded', () => {
+    initCategoryTabsScroll();
+
     const urlParams = new URLSearchParams(window.location.search);
     const courseParam = urlParams.get('course');
     const branchParam = urlParams.get('branch') || 'all';
@@ -614,6 +743,19 @@ window.addEventListener('DOMContentLoaded', () => {
             if (bSelect) bSelect.value = branchParam;
         }
         filterSyllabus();
+    }
+
+    // Scroll active tab into view on load
+    const activePill = document.querySelector('.cat-pill.active');
+    if (activePill) {
+        setTimeout(() => {
+            try {
+                activePill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            } catch (e) {
+                activePill.scrollIntoView(false);
+            }
+            updateScrollArrows();
+        }, 150);
     }
 });
 </script>
