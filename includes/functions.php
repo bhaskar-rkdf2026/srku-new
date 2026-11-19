@@ -2739,7 +2739,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
                 'chancellor_msg2'    => 'In order to maintain quality in the field of higher education in the state, it is an important responsibility of private universities, alongside government universities, to bring about change in research and exploration. It is hoped that Sarvepalli Radhakrishnan University will, in the future, deliver unprecedented performance on quality standards and establish itself as the state\'s foremost institution of education.',
 
                 // ── HOMEPAGE / VC MESSAGE PAGE - VICE CHANCELLOR ───────────
-                'vc_name'          => 'Dr. Priyanka Jaiswal',
+                'vc_name'          => 'Vice Chancellor',
                 'vc_title'         => 'Vice Chancellor',
                 'vc_photo'         => 'assets/uploads/2026/07/ruchichaubey.webp',
                 'vc_email'         => 'vc@srku.edu.in',
@@ -2795,7 +2795,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
             // Force-correct specific settings that may have wrong values from old syncs.
             // These use UPDATE (not INSERT IGNORE) so they always apply the right value.
             $correctSettings = [
-                'vc_name'  => 'Dr. Priyanka Jaiswal',
+                'vc_name'  => 'Vice Chancellor',
                 'vc_title' => 'Vice Chancellor',
                 'vc_email' => 'vc@srku.edu.in',
             ];
@@ -2827,7 +2827,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
                 $boardMembersMaster = [
                     ['Dr. Sunil Kapoor', 'Chairman & Chief Patron', 'leadership', 'Member', 'Founder & Visionary, RKDF Education Society', 'Guiding the RKDF group and SRK University since 1995 with an inspiring mission of affordable, benchmarked multidisciplinary higher education.', 'fa-crown', 'assets/uploads/2026/08/dr-sunil-kapoor.jpeg', 1],
                     ['Mrs. Janak Kapoor', 'Chancellor', 'leadership', 'Member', 'Chancellor, Sarvepalli Radhakrishnan University', 'Leading policy governance, university growth, philanthropic outreach, and community engagement.', 'fa-user-tie', 'assets/uploads/2026/08/chancellor.jpeg', 2],
-                    ['Dr. Priyanka Jaiswal', 'Vice Chancellor', 'leadership', 'Member', 'Vice Chancellor & Senior Academician', 'Eminent academic leader spearheading multidisciplinary innovation, research partnerships, and academic excellence at SRKU.', 'fa-user-graduate', NULL, 3],
+                    ['Vice Chancellor', 'Vice Chancellor', 'leadership', 'Member', 'Vice Chancellor & Senior Academician', 'Eminent academic leader spearheading multidisciplinary innovation, research partnerships, and academic excellence at SRKU.', 'fa-user-graduate', NULL, 3],
                     ['Shri. Ratnesh Jain', 'Member (Sponsoring Body)', 'sponsoring', 'Member', 'Nominee, Sponsoring Body (RKDF Education Society)', 'Distinguished representative contributing to strategic resource planning, institutional expansion, and university development.', 'fa-briefcase', 'assets/uploads/2026/08/shri-ratnesh-jain.jpeg', 4],
                     ['Dr. Amarjeet Singh', 'Member (Sponsoring Body)', 'sponsoring', 'Member', 'Nominee, Sponsoring Body (RKDF Education Society)', 'Senior educationist and policy strategist supporting institutional accreditation, statutory governance, and regulatory compliance.', 'fa-user-check', 'assets/uploads/2026/08/dr-amarjeet-singh.jpeg', 5],
                     ['Dr. Aparna Paliwal', 'Member', 'academic', 'Member', 'Eminent Academician & Professor', 'Senior professor advising the university on outcome-based education, curriculum restructuring, and pedagogical innovations.', 'fa-book-reader', 'assets/uploads/2026/08/dr-aparna-paliwal.jpeg', 6],
@@ -2846,7 +2846,7 @@ function syncDatabaseMasterData($target = 'all', $force = false) {
             } else {
                 // Ensure existing VC & Chancellor in board_members have valid photos & details
                 try {
-                    $pdo->prepare("UPDATE `board_members` SET `name` = 'Dr. Priyanka Jaiswal', `photo` = NULL, `representation` = 'Vice Chancellor & Senior Academician' WHERE (`designation` LIKE '%Vice Chancellor%' OR `representation` LIKE '%Vice Chancellor%') AND `photo` LIKE '%ruchichaubey%'")->execute();
+                    $pdo->prepare("UPDATE `board_members` SET `name` = 'Vice Chancellor', `photo` = NULL, `representation` = 'Vice Chancellor & Senior Academician' WHERE (`designation` LIKE '%Vice Chancellor%' OR `representation` LIKE '%Vice Chancellor%') AND `photo` LIKE '%ruchichaubey%'")->execute();
                     $pdo->prepare("UPDATE `board_members` SET `photo` = 'assets/uploads/2026/08/chancellor.jpeg' WHERE (`name` LIKE '%Janak%' OR `designation` = 'Chancellor') AND (`photo` IS NULL OR `photo` = '' OR `photo` LIKE '%mrs-janak%')")->execute();
                 } catch (Exception $e) {}
                 $report['counts']['board_members'] = $currBoardCount;
@@ -3342,9 +3342,9 @@ function syncSeoPagesInventory($pdo = null, $force = false) {
             'identifier' => 'vice-chancellor-message.php',
             'name' => "Vice Chancellor's Message",
             'category' => 'Portal Pages',
-            'title' => 'Vice Chancellor Desk - Dr. Priyanka Jaiswal | SRKU Bhopal',
-            'desc' => 'Official message from Dr. Priyanka Jaiswal, Vice Chancellor of Sarvepalli Radhakrishnan University (SRKU) Bhopal.',
-            'keywords' => 'Vice Chancellor SRKU, Dr Priyanka Jaiswal VC SRKU, Vice chancellor address SRKU Bhopal',
+            'title' => 'Vice Chancellor Desk | SRKU Bhopal',
+            'desc' => 'Official message from the Vice Chancellor of Sarvepalli Radhakrishnan University (SRKU) Bhopal.',
+            'keywords' => 'Vice Chancellor SRKU, VC SRKU, Vice chancellor address SRKU Bhopal',
             'canonical' => $baseUrl . 'vice-chancellor-message.php'
         ],
         [

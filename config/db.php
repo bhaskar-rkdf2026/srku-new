@@ -244,7 +244,7 @@ function runUniversalDatabaseMigrations($pdo) {
 
         // Always ensure Vice Chancellor and Chancellor in board_members have valid details & no incorrect photos
         try {
-            $pdo->prepare("UPDATE `board_members` SET `name` = 'Dr. Priyanka Jaiswal', `photo` = NULL WHERE (`designation` LIKE '%Vice Chancellor%' OR `representation` LIKE '%Vice Chancellor%') AND `photo` LIKE '%ruchichaubey%'")->execute();
+            $pdo->prepare("UPDATE `board_members` SET `name` = 'Vice Chancellor', `photo` = NULL WHERE (`designation` LIKE '%Vice Chancellor%' OR `representation` LIKE '%Vice Chancellor%') AND `photo` LIKE '%ruchichaubey%'")->execute();
             $pdo->prepare("UPDATE `board_members` SET `photo` = 'assets/uploads/2026/08/chancellor.jpeg' WHERE (`name` LIKE '%Janak%' OR `designation` = 'Chancellor') AND (`photo` IS NULL OR `photo` = '' OR `photo` LIKE '%mrs-janak%')")->execute();
         } catch (Exception $e) {}
 

@@ -39,7 +39,7 @@ require_once __DIR__ . '/includes/header.php';
                 </p>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="<?php echo BASE_URL; ?>courses" class="btn-hero-yellow">
-                        <i class="fas fa-graduation-cap me-1"></i> Explore 120+ Programs
+                        <i class="fas fa-graduation-cap me-1"></i> Explore Programs
                     </a>
                     <a href="<?php echo BASE_URL; ?>about.php#leadership" class="btn-hero-outline">
                         <i class="fas fa-users-cog me-1"></i> University Leadership
@@ -195,7 +195,7 @@ require_once __DIR__ . '/includes/header.php';
                     <!-- Story Pillar 1 -->
                     <div class="mb-4">
                         <h4 class="h5 fw-bold text-navy d-flex align-items-center gap-2 mb-2">
-                            <span class="rounded-circle bg-navy text-white d-inline-flex align-items-center justify-content-center" style="width:32px; height:32px; font-size:0.9rem;">1</span>
+                            <span class="rounded-circle bg-navy text-white d-inline-flex align-items-center justify-content-center flex-shrink-0" style="width:32px; height:32px; font-size:0.9rem;">1</span>
                             Pioneering Institution Building Since 1995
                         </h4>
                         <p class="text-secondary" style="line-height:1.85; font-size:0.95rem;">
@@ -209,7 +209,7 @@ require_once __DIR__ . '/includes/header.php';
                     <!-- Story Pillar 2 -->
                     <div class="mb-4">
                         <h4 class="h5 fw-bold text-navy d-flex align-items-center gap-2 mb-2">
-                            <span class="rounded-circle bg-maroon text-white d-inline-flex align-items-center justify-content-center" style="width:32px; height:32px; font-size:0.9rem; background:#7A0B0D;">2</span>
+                            <span class="rounded-circle bg-maroon text-white d-inline-flex align-items-center justify-content-center flex-shrink-0" style="width:32px; height:32px; font-size:0.9rem; background:#7A0B0D;">2</span>
                             Multidisciplinary Expertise: Medicine, Management &amp; Global Finance
                         </h4>
                         <p class="text-secondary" style="line-height:1.85; font-size:0.95rem;">
@@ -223,7 +223,7 @@ require_once __DIR__ . '/includes/header.php';
                     <!-- Story Pillar 3 -->
                     <div class="mb-4">
                         <h4 class="h5 fw-bold text-navy d-flex align-items-center gap-2 mb-2">
-                            <span class="rounded-circle bg-warning text-dark d-inline-flex align-items-center justify-content-center" style="width:32px; height:32px; font-size:0.9rem;">3</span>
+                            <span class="rounded-circle bg-warning text-dark d-inline-flex align-items-center justify-content-center flex-shrink-0" style="width:32px; height:32px; font-size:0.9rem;">3</span>
                             Public Leadership, Governance &amp; Technology Collaborations
                         </h4>
                         <p class="text-secondary" style="line-height:1.85; font-size:0.95rem;">
@@ -257,7 +257,7 @@ require_once __DIR__ . '/includes/header.php';
                     <!-- Story Pillar 4 -->
                     <div class="mb-4">
                         <h4 class="h5 fw-bold text-navy d-flex align-items-center gap-2 mb-2">
-                            <span class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center" style="width:32px; height:32px; font-size:0.9rem;">4</span>
+                            <span class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center flex-shrink-0" style="width:32px; height:32px; font-size:0.9rem;">4</span>
                             Healthcare Excellence &amp; Community-First Medical Innovation
                         </h4>
                         <p class="text-secondary" style="line-height:1.85; font-size:0.95rem;">
@@ -276,7 +276,7 @@ require_once __DIR__ . '/includes/header.php';
                     <!-- Story Pillar 5 -->
                     <div class="mb-4">
                         <h4 class="h5 fw-bold text-navy d-flex align-items-center gap-2 mb-2">
-                            <span class="rounded-circle bg-info text-white d-inline-flex align-items-center justify-content-center" style="width:32px; height:32px; font-size:0.9rem;">5</span>
+                            <span class="rounded-circle bg-info text-white d-inline-flex align-items-center justify-content-center flex-shrink-0" style="width:32px; height:32px; font-size:0.9rem;">5</span>
                             Empowering the Next Generation: Research, Incubation &amp; NEP 2020
                         </h4>
                         <p class="text-secondary" style="line-height:1.85; font-size:0.95rem;">

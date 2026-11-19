@@ -165,7 +165,7 @@ try {
                     <label class="form-label fw-bold small text-dark">Full Name <span class="text-danger">*</span></label>
                     <input type="text" name="name" class="form-control form-control-sm" required
                            value="<?php echo htmlspecialchars($editMember['name'] ?? ''); ?>"
-                           placeholder="e.g. Dr. Priyanka Jaiswal">
+                           placeholder="e.g. Vice Chancellor">
                 </div>
 
                 <div class="mb-3">

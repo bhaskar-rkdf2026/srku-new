@@ -200,11 +200,11 @@ require_once __DIR__ . '/includes/header.php';
 
                     <!-- Interactive Branch / Specialization Quick-Filter Pills Ribbon -->
                     <?php if (!empty($branches) && count($branches) > 1): ?>
-                        <div class="branch-filter-strip mb-4 p-2.5 bg-white rounded-4 border shadow-xs d-flex flex-wrap align-items-center gap-2">
+                        <div class="branch-filter-strip mb-4 p-3 bg-white rounded-4 border shadow-xs d-flex flex-wrap align-items-center gap-2">
                             <span class="small fw-bold text-navy px-2 text-nowrap">
                                 <i class="fas fa-code-branch text-danger me-1"></i> Filter by Branch:
                             </span>
-                            <div class="d-flex flex-wrap gap-1.5 align-items-center" id="branchPillsWrap-<?php echo $slug; ?>">
+                            <div class="d-flex flex-wrap gap-2 align-items-center" id="branchPillsWrap-<?php echo $slug; ?>">
                                 <button type="button" class="btn btn-sm btn-dark rounded-pill branch-pill-btn active" data-cat="<?php echo $slug; ?>" data-branch="all" onclick="selectBranchPill('<?php echo $slug; ?>', 'all')">
                                     All Branches (<?php echo $cat['total_pdfs']; ?>)
                                 </button>
@@ -242,7 +242,7 @@ require_once __DIR__ . '/includes/header.php';
                                     <div class="card-body p-3 p-md-4 d-flex flex-column">
                                         <!-- Top Header Bar: Document Type Badge & Branch Tag -->
                                         <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-1">
-                                            <div class="d-flex align-items-center gap-1.5 flex-wrap">
+                                            <div class="d-flex align-items-center gap-2 flex-wrap">
                                                 <span class="badge <?php echo $typeBadgeClass; ?> rounded-pill px-3 py-1-5 fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: .4px;">
                                                     <i class="<?php echo (strtolower($item['type']) === 'scheme' ? 'fas fa-clipboard-list' : 'fas fa-book'); ?> me-1"></i>
                                                     <?php echo htmlspecialchars($item['type']); ?>

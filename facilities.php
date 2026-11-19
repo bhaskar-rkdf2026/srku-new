@@ -88,6 +88,10 @@ foreach ($facilitiesFromDb as $fac) {
                     </p>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
 <!-- Campus Policies & Environmental Standards -->
 <section class="py-5">
     <div class="container-xl py-3">

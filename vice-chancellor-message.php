@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-$vcName = getSetting('vc_name', 'Dr. Priyanka Jaiswal');
+$vcName = getSetting('vc_name', 'Vice Chancellor');
 $vcTitle = getSetting('vc_title', 'Vice Chancellor');
 $vcPhoto = getSetting('vc_photo', '');
 if (strpos($vcPhoto, 'ruchichaubey') !== false) { $vcPhoto = ''; }
@@ -17,9 +17,14 @@ $vcMsg3 = getSetting('vc_msg3', 'Our 1,000+ distinguished faculty members—incl
 $vcMsg4 = getSetting('vc_msg4', 'To all our learners: SRKU is your canvas. Strive for excellence, question conventional thinking, embrace multidisciplinary perspectives, and lead with empathy. Together, let us contribute meaningfully to the advancement of knowledge, human welfare, and the nation.');
 $vcFullPage = getSetting('vc_full_page_msg', '');
 
-$pageTitle = "Vice Chancellor's Message | " . $vcName . " | SRKU Bhopal";
-$pageDesc = "Read the official address and academic vision from " . $vcName . ", " . $vcTitle . " of Sarvepalli Radhakrishnan University (SRKU), Bhopal.";
-$pageKeywords = "Vice Chancellor Message SRKU, " . $vcName . " VC, SRKU Academic Leadership, Vice Chancellor Bhopal";
+$vcHasDistinctName = (strcasecmp(trim($vcName), trim($vcTitle)) !== 0);
+$pageTitle = $vcHasDistinctName ? ("Vice Chancellor's Message | " . $vcName . " | SRKU Bhopal") : "Vice Chancellor's Message | SRKU Bhopal";
+$pageDesc = $vcHasDistinctName
+    ? ("Read the official address and academic vision from " . $vcName . ", " . $vcTitle . " of Sarvepalli Radhakrishnan University (SRKU), Bhopal.")
+    : "Read the official address and academic vision from the Vice Chancellor of Sarvepalli Radhakrishnan University (SRKU), Bhopal.";
+$pageKeywords = $vcHasDistinctName
+    ? ("Vice Chancellor Message SRKU, " . $vcName . " VC, SRKU Academic Leadership, Vice Chancellor Bhopal")
+    : "Vice Chancellor Message SRKU, VC SRKU, SRKU Academic Leadership, Vice Chancellor Bhopal";
 $activeNav = "about";
 require_once __DIR__ . '/includes/header.php';
 ?>
@@ -50,7 +55,7 @@ require_once __DIR__ . '/includes/header.php';
                 </p>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="<?php echo BASE_URL; ?>courses.php" class="btn-hero-yellow">
-                        <i class="fas fa-book-open me-1"></i> Explore 120+ Programmes
+                        <i class="fas fa-book-open me-1"></i> Explore Programmes
                     </a>
                     <a href="<?php echo BASE_URL; ?>chancellor-message.php" class="btn-hero-outline">
                         <i class="fas fa-crown me-1"></i> Chancellor's Message
@@ -104,7 +109,9 @@ require_once __DIR__ . '/includes/header.php';
                             <?php endif; ?>
                         </div>
                         <h4 class="fw-bold mb-1 text-white"><?php echo sanitize($vcName); ?></h4>
-                        <p class="text-warning small mb-0 fw-semibold"><?php echo sanitize($vcTitle); ?></p>
+                        <?php if ($vcHasDistinctName): ?>
+                            <p class="text-warning small mb-0 fw-semibold"><?php echo sanitize($vcTitle); ?></p>
+                        <?php endif; ?>
                         <small class="text-white-50">Sarvepalli Radhakrishnan University, Bhopal</small>
                     </div>
 
@@ -188,7 +195,9 @@ require_once __DIR__ . '/includes/header.php';
                     <div class="mt-5 pt-4 border-top d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
                         <div>
                             <h5 class="fw-bold text-navy mb-0"><?php echo sanitize($vcName); ?></h5>
-                            <p class="text-primary small mb-0 fw-semibold"><?php echo sanitize($vcTitle); ?></p>
+                            <?php if ($vcHasDistinctName): ?>
+                                <p class="text-primary small mb-0 fw-semibold"><?php echo sanitize($vcTitle); ?></p>
+                            <?php endif; ?>
                             <small class="text-muted">Sarvepalli Radhakrishnan University, Bhopal</small>
                         </div>
                         <div class="text-sm-end">

@@ -168,9 +168,9 @@ require_once __DIR__ . '/includes/header.php';
                 <!-- Navigation between Placement Sections -->
                 <div class="row g-3 mt-4">
                     <div class="col-md-4">
-                        <a href="<?php echo BASE_URL; ?>placement-record-srk-university-2024" class="p-3 bg-white rounded-3 shadow-sm text-decoration-none d-block border border-slate-100 hover-lift">
+                        <a href="<?php echo BASE_URL; ?>placement-record-srk-university-2024" class="p-3 bg-white rounded-3 shadow-sm text-decoration-none d-flex align-items-center h-100 border border-slate-100 hover-lift">
                             <div class="d-flex align-items-center">
-                                <div class="bg-danger-subtle text-danger p-2 rounded-circle me-3"><i class="fas fa-chart-line fs-5"></i></div>
+                                <div class="bg-danger-subtle text-danger p-2 rounded-circle me-3 flex-shrink-0"><i class="fas fa-chart-line fs-5"></i></div>
                                 <div>
                                     <div class="fw-bold text-dark">Placement Record</div>
                                     <div class="text-muted small">Student selections &amp; packages</div>
@@ -179,9 +179,9 @@ require_once __DIR__ . '/includes/header.php';
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a href="<?php echo BASE_URL; ?>assets/uploads/phd/Phd-Pursuing.pdf" target="_blank" class="p-3 bg-white rounded-3 shadow-sm text-decoration-none d-block border border-slate-100 hover-lift">
+                        <a href="<?php echo BASE_URL; ?>assets/uploads/phd/Phd-Pursuing.pdf" target="_blank" class="p-3 bg-white rounded-3 shadow-sm text-decoration-none d-flex align-items-center h-100 border border-slate-100 hover-lift">
                             <div class="d-flex align-items-center">
-                                <div class="bg-success-subtle text-success p-2 rounded-circle me-3"><i class="fas fa-file-pdf fs-5"></i></div>
+                                <div class="bg-success-subtle text-success p-2 rounded-circle me-3 flex-shrink-0"><i class="fas fa-file-pdf fs-5"></i></div>
                                 <div>
                                     <div class="fw-bold text-dark">Ph. D. Pursuing</div>
                                     <div class="text-muted small">Registered Research Scholars</div>
@@ -190,9 +190,9 @@ require_once __DIR__ . '/includes/header.php';
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a href="<?php echo BASE_URL; ?>assets/uploads/phd/Phd-Completed.pdf" target="_blank" class="p-3 bg-white rounded-3 shadow-sm text-decoration-none d-block border border-slate-100 hover-lift">
+                        <a href="<?php echo BASE_URL; ?>assets/uploads/phd/Phd-Completed.pdf" target="_blank" class="p-3 bg-white rounded-3 shadow-sm text-decoration-none d-flex align-items-center h-100 border border-slate-100 hover-lift">
                             <div class="d-flex align-items-center">
-                                <div class="bg-primary-subtle text-primary p-2 rounded-circle me-3"><i class="fas fa-award fs-5"></i></div>
+                                <div class="bg-primary-subtle text-primary p-2 rounded-circle me-3 flex-shrink-0"><i class="fas fa-award fs-5"></i></div>
                                 <div>
                                     <div class="fw-bold text-dark">Ph. D. Completed</div>
                                     <div class="text-muted small">Awarded Doctoral Degrees</div>

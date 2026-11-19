@@ -122,7 +122,8 @@ p[style*="text-align:center"],
 .student-life-v2__desc,
 .page-top-banner p,
 .footer-bottom p,
-.stats-strip p {
+.stats-strip p,
+.recruiter-marquee__label {
     text-align: center !important;
     text-align-last: center !important;
 }
@@ -2527,10 +2528,10 @@ body {
     color: #ffffff;
 }
 
-.enquiry-section h2,
-.enquiry-section h3,
-.enquiry-section p,
-.enquiry-section li {
+.enquiry-section .text-white h2,
+.enquiry-section .text-white h3,
+.enquiry-section .text-white p,
+.enquiry-section .text-white li {
     color: #ffffff !important;
 }
 
@@ -6646,10 +6647,10 @@ body {
     color: #ffffff;
 }
 
-.enquiry-section h2,
-.enquiry-section h3,
-.enquiry-section p,
-.enquiry-section li {
+.enquiry-section .text-white h2,
+.enquiry-section .text-white h3,
+.enquiry-section .text-white p,
+.enquiry-section .text-white li {
     color: #ffffff !important;
 }
 
@@ -10554,7 +10555,8 @@ object {
 }
 
 .leadership-card-v2__photo-wrap {
-    height: 185px;
+    height: auto;
+    min-height: 204px;
     position: relative;
     background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
     border-top-left-radius: inherit;
@@ -10562,7 +10564,7 @@ object {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 48px 20px 22px;
 }
 
 .leadership-card-v2__avatar {
@@ -12159,4 +12161,47 @@ object {
     user-select: none;
     -webkit-user-select: none;
 }
+
+/* ==========================================================================
+   QA Polish Overrides (Recruiter Label, Admission Card, Footer Logo, Courses)
+   ========================================================================== */
+.recruiter-marquee__label {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-align: center !important;
+    text-align-last: center !important;
+}
+
+.enquiry-section .enquiry-form-box h3.text-dark {
+    color: #0f172a !important;
+}
+
+.enquiry-section .enquiry-form-box p.text-muted {
+    color: #64748b !important;
+}
+
+.srku-footer .footer-col .footer-brand a,
+.srku-footer .footer-col .footer-brand a:hover {
+    padding: 0.5rem 1rem !important;
+}
+
+.course-dept-badge {
+    display: inline-flex;
+    align-items: flex-start;
+    max-width: 100% !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    line-height: 1.35;
+    border-radius: 12px;
+    padding: 5px 10px;
+}
+
+@media (max-width: 576px) {
+    .course-dept-badge {
+        max-width: 100% !important;
+        font-size: 0.74rem !important;
+    }
+}
+
 
