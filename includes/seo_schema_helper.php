@@ -16,7 +16,7 @@ if (!function_exists('buildSecureCanonicalUrl')) {
      * Only preserves sanctioned routing parameters (slug, course, id, page).
      */
     function buildSecureCanonicalUrl($rawCanonical = '', $pageIdentifier = '') {
-        $baseUrl = defined('BASE_URL') ? rtrim(BASE_URL, '/') : 'https://srku.edu.in';
+        $baseUrl = defined('BASE_URL') ? rtrim(BASE_URL, '/') : '';
         
         // If raw canonical is explicitly configured in DB, adapt it safely
         if (!empty($rawCanonical)) {
@@ -65,7 +65,7 @@ if (!function_exists('generateEducationalSchemas')) {
      * Builds comprehensive Google Rich Snippet & AEO structured data graphs
      */
     function generateEducationalSchemas($pageIdentifier, $seoResolved = []) {
-        $baseUrl = defined('BASE_URL') ? rtrim(BASE_URL, '/') : 'https://srku.edu.in';
+        $baseUrl = defined('BASE_URL') ? rtrim(BASE_URL, '/') : '';
         $logoUrl = $baseUrl . '/assets/uploads/2026/07/SRK-logo.webp';
         $campusImg = $baseUrl . '/assets/uploads/2026/07/campus-1.webp';
         $canonical = $seoResolved['canonical'] ?? ($baseUrl . '/');
@@ -379,7 +379,7 @@ if (!function_exists('generateEducationalSchemas')) {
                         'name' => 'What is the admission procedure for Academic Session 2026-27?',
                         'acceptedAnswer' => [
                             '@type' => 'Answer',
-                            'text' => 'Admissions for 2026-27 are open online through the official portal (https://srku.edu.in/). Candidates can submit their application online, pay fees, or visit the University Admissions Cell on Hoshangabad Road, Bhopal. Helpline numbers: 7024144981, 0755-4911204.'
+                            'text' => 'Admissions for 2026-27 are open online through the official portal (' . (defined('BASE_URL') ? BASE_URL : '/') . '). Candidates can submit their application online, pay fees, or visit the University Admissions Cell on Hoshangabad Road, Bhopal. Helpline numbers: 7024144981, 0755-4911204.'
                         ]
                     ],
                     [

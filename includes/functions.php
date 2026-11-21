@@ -3664,7 +3664,7 @@ function syncSeoPagesInventory($pdo = null, $force = false) {
     }
 
     $siteName = defined('SITE_NAME') ? SITE_NAME : 'Sarvepalli Radhakrishnan University (SRKU)';
-    $baseUrl = defined('BASE_URL') ? BASE_URL : 'https://srku.edu.in/';
+    $baseUrl = defined('BASE_URL') ? BASE_URL : '/';
 
     $pagesCatalog = [
         // 1. PORTAL PAGES

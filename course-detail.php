@@ -53,7 +53,7 @@ require_once __DIR__ . '/includes/header.php';
   "provider": {
     "@type": "CollegeOrUniversity",
     "name": "Sarvepalli Radhakrishnan University",
-    "sameAs": "https://srku.edu.in/"
+    "sameAs": <?php echo json_encode(defined('BASE_URL') ? BASE_URL : '/'); ?>
   },
   "educationalCredentialAwarded": <?php echo json_encode($course['course_name']); ?>,
   "timeRequired": <?php echo json_encode($course['duration'] ?? 'P3Y'); ?>,

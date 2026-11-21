@@ -247,14 +247,14 @@ $externalWebsiteMeta = [
         'icon' => 'fa-leaf'
     ],
     'rkdf-institute-of-science-and-technology' => [
-        'url' => 'https://srku.edu.in/rkdf-ist/index.php',
+        'url' => BASE_URL . 'rkdf-ist/index.php',
         'btn' => 'Visit Official RKDF IST Engineering Portal',
         'badge' => 'Pioneer Engineering Institution Est. 1995',
         'desc' => 'Access technical laboratories, departmental workshops, campus placements, AICTE compliance, and incubation centres.',
         'icon' => 'fa-cogs'
     ],
     'faculty-of-agriculture' => [
-        'url' => 'https://srku.edu.in/agriculture/index.php',
+        'url' => BASE_URL . 'agriculture/index.php',
         'btn' => 'Visit Official Faculty of Agriculture Portal',
         'badge' => 'Experimental Research Farms & Crop Polyhouses',
         'desc' => 'Explore agricultural research labs, crop fields, soil testing facilities, and ICAR 6th Dean committee curriculum details.',
@@ -284,11 +284,9 @@ $otherDepts = array_filter($allDepts, fn($d) => $d['id'] != $dept['id']);
 $_istPdfBase = BASE_URL . 'assets/pdf/rkdf-ist/';
 $_istPdfDir  = __DIR__ . '/assets/pdf/rkdf-ist/';
 if (!function_exists('istPdf')) {
-    function istPdf(string $localRelPath, string $fallbackUrl): string {
+    function istPdf(string $localRelPath, string $fallbackUrl = ''): string {
         global $_istPdfDir, $_istPdfBase;
-        return file_exists($_istPdfDir . $localRelPath)
-            ? $_istPdfBase . $localRelPath
-            : $fallbackUrl;
+        return $_istPdfBase . $localRelPath;
     }
 }
 ?>
@@ -875,7 +873,7 @@ if (!function_exists('istPdf')) {
                         <span class="badge bg-danger ms-auto small">Official Video</span>
                     </div>
                     <video class="w-100 d-block" style="max-height:460px; object-fit:cover; background:#000;" autoplay muted loop playsinline controls>
-                        <source src="<?php echo file_exists(__DIR__ . '/assets/videos/rkdf-ist/RKDF-IST-College-Tour.mp4') ? BASE_URL . 'assets/videos/rkdf-ist/RKDF-IST-College-Tour.mp4' : 'https://www.srku.edu.in/rkdf-ist/images/RKDF-IST-College-Tour.mp4'; ?>" type="video/mp4">
+                        <source src="<?php echo BASE_URL . 'assets/videos/rkdf-ist/RKDF-IST-College-Tour.mp4'; ?>" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -930,17 +928,17 @@ if (!function_exists('istPdf')) {
                                     <div class="row g-2">
                                         <?php
                                         $btechSyllabus = [
-                                            ['branch' => 'All Branch – I &amp; II Sem (Reg. 2020)', 'url' => istPdf('syllabus/be-all-branch-i-ii-sem-2020.pdf',   'https://www.srku.edu.in/wp-content/uploads/2023/05/BE-ALL-BRANCH-I-II-SEM-SYLLABUS-REG-2020-BATCH-ONWARDS-1.pdf')],
-                                            ['branch' => 'All Branch – I &amp; II Sem (Reg. 2021)', 'url' => istPdf('syllabus/be-all-branch-scheme-2021.pdf',     'http://srku.edu.in/rkdf-ist/images/pdf/b-tech-all-branches-scheme.pdf')],
-                                            ['branch' => 'B.E. Mechanical – III to VIII Sem',       'url' => istPdf('syllabus/be-mechanical-iii-viii-2021.pdf',  'https://www.srku.edu.in/wp-content/uploads/2023/05/BE-MECHANICAL-III-VIII-SEM-SYLLABUS-2021-BATCH.pdf')],
-                                            ['branch' => 'B.E. Civil – III to VIII Sem',             'url' => istPdf('syllabus/be-civil-iii-viii-2021.pdf',       'https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHCIVILIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf')],
-                                            ['branch' => 'B.E. CSE – III to VIII Sem',               'url' => istPdf('syllabus/be-cse-iii-viii-2021.pdf',         'https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHCSEIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf')],
-                                            ['branch' => 'B.E. EC – III to VIII Sem',                'url' => istPdf('syllabus/be-ec-iii-viii-2021.pdf',          'https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHECIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf')],
-                                            ['branch' => 'B.E. EE – III to VIII Sem',                'url' => istPdf('syllabus/be-ee-iii-viii-2021.pdf',          'https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHEEIII-VIII-SEMESTER-SCHEMEREG-2021-BATCH-ONWARDS.pdf')],
-                                            ['branch' => 'B.E. EEE – III to VIII Sem',               'url' => istPdf('syllabus/be-eee-iii-viii-2021.pdf',         'https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHEEEIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf')],
-                                            ['branch' => 'B.E. EI – III to VIII Sem',                'url' => istPdf('syllabus/be-ei-iii-viii-2021.pdf',          'https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHEIIII-VIIII-SEMESTER-SYLLABUSREG-2021-ONWARDS-22.pdf')],
-                                            ['branch' => 'B.E. IT – III to VIII Sem',                'url' => istPdf('syllabus/be-it-iii-viii-2021.pdf',          'https://www.srku.edu.in/wp-content/uploads/2023/05/B.TECHITIII-VIII-SEMESTER-SYLLABUSREG-2021-BATCH-ONWARDS.pdf')],
-                                            ['branch' => 'B.E. Electronics – III to VIII Sem',       'url' => istPdf('syllabus/be-electronics-iii-viii-2019.pdf', 'https://www.srku.edu.in/wp-content/uploads/2023/05/BE-ELECTRONICS-III-VIII-sem-SCHEME-reg-2019-batch-onwards-1.pdf')],
+                                            ['branch' => 'All Branch – I &amp; II Sem (Reg. 2020)', 'url' => istPdf('syllabus/be-all-branch-i-ii-sem-2020.pdf')],
+                                            ['branch' => 'All Branch – I &amp; II Sem (Reg. 2021)', 'url' => istPdf('syllabus/be-all-branch-scheme-2021.pdf')],
+                                            ['branch' => 'B.E. Mechanical – III to VIII Sem',       'url' => istPdf('syllabus/be-mechanical-iii-viii-2021.pdf')],
+                                            ['branch' => 'B.E. Civil – III to VIII Sem',             'url' => istPdf('syllabus/be-civil-iii-viii-2021.pdf')],
+                                            ['branch' => 'B.E. CSE – III to VIII Sem',               'url' => istPdf('syllabus/be-cse-iii-viii-2021.pdf')],
+                                            ['branch' => 'B.E. EC – III to VIII Sem',                'url' => istPdf('syllabus/be-ec-iii-viii-2021.pdf')],
+                                            ['branch' => 'B.E. EE – III to VIII Sem',                'url' => istPdf('syllabus/be-ee-iii-viii-2021.pdf')],
+                                            ['branch' => 'B.E. EEE – III to VIII Sem',               'url' => istPdf('syllabus/be-eee-iii-viii-2021.pdf')],
+                                            ['branch' => 'B.E. EI – III to VIII Sem',                'url' => istPdf('syllabus/be-ei-iii-viii-2021.pdf')],
+                                            ['branch' => 'B.E. IT – III to VIII Sem',                'url' => istPdf('syllabus/be-it-iii-viii-2021.pdf')],
+                                            ['branch' => 'B.E. Electronics – III to VIII Sem',       'url' => istPdf('syllabus/be-electronics-iii-viii-2019.pdf')],
                                         ];
                                         foreach ($btechSyllabus as $s): ?>
                                             <div class="col-12 col-md-6">
@@ -968,15 +966,15 @@ if (!function_exists('istPdf')) {
                                     <div class="row g-2">
                                         <?php
                                         $mtechSyllabus = [
-                                            ['branch' => 'M.Tech. VLSI – I to IV Sem',      'url' => istPdf('syllabus/mtech-vlsi-2020.pdf',      'https://www.srku.edu.in/wp-content/uploads/2023/05/M-TECH-VLSI-i-iv-sem-Scheme-reg-2020-batch-onwards.pdf')],
-                                            ['branch' => 'M.Tech. Thermal – I to IV Sem',   'url' => istPdf('syllabus/mtech-thermal-2020.pdf',   'https://www.srku.edu.in/wp-content/uploads/2023/05/M.TECH-THERMAL-I-IV-SEM-SCHEME-REG-2020-BATCH-ONWARDS.pdf')],
-                                            ['branch' => 'M.Tech. Structure – I to IV Sem', 'url' => istPdf('syllabus/mtech-structure.pdf',      'https://srku.edu.in/wp-content/uploads/2023/05/MTECH-SYLLABUS.pdf')],
-                                            ['branch' => 'M.Tech. CSE – I to IV Sem',       'url' => istPdf('syllabus/mtech-cse-se.pdf',         'https://www.srku.edu.in/wp-content/uploads/2023/05/MTECH-SE-SCHEME.pdf')],
-                                            ['branch' => 'M.Tech. IT – I to IV Sem',        'url' => istPdf('syllabus/mtech-it-2016.pdf',        'https://www.srku.edu.in/wp-content/uploads/2023/05/M.TECHIT-I-IV-SEMREG-2016-BATCH-ON-WORD.pdf')],
-                                            ['branch' => 'M.Tech. SE – I to IV Sem',        'url' => istPdf('syllabus/mtech-cse-se.pdf',         'https://www.srku.edu.in/wp-content/uploads/2023/05/MTECH-SE-SCHEME.pdf')],
-                                            ['branch' => 'M.Tech. MWM – I to IV Sem',       'url' => istPdf('syllabus/mtech-mwm-2020.pdf',       'https://www.srku.edu.in/wp-content/uploads/2023/05/04-DEC-2020-MTECH-MWM-SYLLABUS-AICTE.pdf')],
-                                            ['branch' => 'M.Tech. DC – I to IV Sem',        'url' => istPdf('syllabus/mtech-dc-2020.pdf',        'https://www.srku.edu.in/wp-content/uploads/2023/05/04-DEC-2020-MTECH-DC-SYLLABUS-AICTE.pdf')],
-                                            ['branch' => 'M.Tech. PE – I to IV Sem',        'url' => istPdf('syllabus/mtech-pe.pdf',             'https://www.srku.edu.in/wp-content/uploads/2023/05/22-DEC-MTECH-SCHEME_PE.pdf')],
+                                            ['branch' => 'M.Tech. VLSI – I to IV Sem',      'url' => istPdf('syllabus/mtech-vlsi-2020.pdf')],
+                                            ['branch' => 'M.Tech. Thermal – I to IV Sem',   'url' => istPdf('syllabus/mtech-thermal-2020.pdf')],
+                                            ['branch' => 'M.Tech. Structure – I to IV Sem', 'url' => istPdf('syllabus/mtech-structure.pdf')],
+                                            ['branch' => 'M.Tech. CSE – I to IV Sem',       'url' => istPdf('syllabus/mtech-cse-se.pdf')],
+                                            ['branch' => 'M.Tech. IT – I to IV Sem',        'url' => istPdf('syllabus/mtech-it-2016.pdf')],
+                                            ['branch' => 'M.Tech. SE – I to IV Sem',        'url' => istPdf('syllabus/mtech-cse-se.pdf')],
+                                            ['branch' => 'M.Tech. MWM – I to IV Sem',       'url' => istPdf('syllabus/mtech-mwm-2020.pdf')],
+                                            ['branch' => 'M.Tech. DC – I to IV Sem',        'url' => istPdf('syllabus/mtech-dc-2020.pdf')],
+                                            ['branch' => 'M.Tech. PE – I to IV Sem',        'url' => istPdf('syllabus/mtech-pe.pdf')],
                                         ];
                                         foreach ($mtechSyllabus as $s): ?>
                                             <div class="col-12 col-md-6">
@@ -1004,12 +1002,12 @@ if (!function_exists('istPdf')) {
                                     <div class="row g-2">
                                         <?php
                                         $mcaSyllabus = [
-                                            ['branch' => 'MCA – First Semester',   'url' => istPdf('syllabus/mca-sem1.pdf', 'https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-I-Sem-Scheme-Syllabus.pdf')],
-                                            ['branch' => 'MCA – Second Semester',  'url' => istPdf('syllabus/mca-sem2.pdf', 'https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-II-Sem-Scheme-Syllabus.pdf')],
-                                            ['branch' => 'MCA – Third Semester',   'url' => istPdf('syllabus/mca-sem3.pdf', 'https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-III-Sem-Scheme-Syllabus.pdf')],
-                                            ['branch' => 'MCA – Fourth Semester',  'url' => istPdf('syllabus/mca-sem4.pdf', 'https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-IV-Sem-Scheme-Syllabus.pdf')],
-                                            ['branch' => 'MCA – Fifth Semester',   'url' => istPdf('syllabus/mca-sem5.pdf', 'https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-V-Sem-Scheme-Syllabus.pdf')],
-                                            ['branch' => 'MCA – Sixth Semester',   'url' => istPdf('syllabus/mca-sem6.pdf', 'https://www.srku.edu.in/wp-content/uploads/2023/05/MCA-VI-Sem-Scheme-Syllabus.pdf')],
+                                            ['branch' => 'MCA – First Semester',   'url' => istPdf('syllabus/mca-sem1.pdf')],
+                                            ['branch' => 'MCA – Second Semester',  'url' => istPdf('syllabus/mca-sem2.pdf')],
+                                            ['branch' => 'MCA – Third Semester',   'url' => istPdf('syllabus/mca-sem3.pdf')],
+                                            ['branch' => 'MCA – Fourth Semester',  'url' => istPdf('syllabus/mca-sem4.pdf')],
+                                            ['branch' => 'MCA – Fifth Semester',   'url' => istPdf('syllabus/mca-sem5.pdf')],
+                                            ['branch' => 'MCA – Sixth Semester',   'url' => istPdf('syllabus/mca-sem6.pdf')],
                                         ];
                                         foreach ($mcaSyllabus as $s): ?>
                                             <div class="col-12 col-md-6">
@@ -1036,7 +1034,7 @@ if (!function_exists('istPdf')) {
                                 <div class="accordion-body pt-2">
                                     <div class="row g-2">
                                         <div class="col-12 col-md-6">
-                                            <a href="<?php echo istPdf('syllabus/mba-ft-year1.pdf', 'https://www.srku.edu.in/wp-content/uploads/2023/05/MBAFT-1st-year-syllabus.pdf'); ?>" target="_blank" rel="noopener" class="d-flex align-items-center gap-2 p-2 px-3 rounded-3 text-decoration-none bg-light border text-dark small">
+                                            <a href="<?php echo istPdf('syllabus/mba-ft-year1.pdf'); ?>" target="_blank" rel="noopener" class="d-flex align-items-center gap-2 p-2 px-3 rounded-3 text-decoration-none bg-light border text-dark small">
                                                 <i class="fas fa-file-pdf text-danger flex-shrink-0"></i>
                                                 <span>M.B.A. Full Time &ndash; 1st Year Syllabus</span>
                                                 <i class="fas fa-download text-muted ms-auto" style="font-size:0.7rem;"></i>
@@ -1059,19 +1057,19 @@ if (!function_exists('istPdf')) {
                     <div class="row g-2">
                         <?php
                         $eoaReports = [
-                            ['year' => '2026&ndash;27', 'url' => istPdf('eoa/eoa-2026-27.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/approvals/EOA-Report_2026-2027.pdf')],
-                            ['year' => '2025&ndash;26', 'url' => istPdf('eoa/eoa-2025-26.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/approvals/RKDFIST-EOA2025-26.pdf')],
-                            ['year' => '2024&ndash;25', 'url' => istPdf('eoa/eoa-2024-25.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/approvals/RKDFIST-EOA-2024-25.pdf')],
-                            ['year' => '2023&ndash;24', 'url' => istPdf('eoa/eoa-2023-24.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/approvals/EOA-Report-2023-24.PDF')],
-                            ['year' => '2022&ndash;23', 'url' => istPdf('eoa/eoa-2022-23.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/approvals/EOA-Report-2022-23.PDF')],
-                            ['year' => '2021&ndash;22', 'url' => istPdf('eoa/eoa-2021-22.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/approvals/EOA-Report_21-22.PDF')],
-                            ['year' => '2020&ndash;21', 'url' => istPdf('eoa/eoa-2020-21.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/approvals/RKDF-IST-2020-21.pdf')],
-                            ['year' => '2019&ndash;20', 'url' => istPdf('eoa/eoa-2019-20.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/approvals/EOA-Report_2019-20.PDF')],
-                            ['year' => '2018&ndash;19', 'url' => istPdf('eoa/eoa-2018-19.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/approvals/EOA-Report_2018-19.PDF')],
-                            ['year' => '2016&ndash;17', 'url' => istPdf('eoa/eoa-2016-17.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/approvals/RKDFIST_2016-17.pdf')],
-                            ['year' => '2015&ndash;16', 'url' => istPdf('eoa/eoa-2015-16.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/approvals/EOA-Report%202015-16.PDF')],
-                            ['year' => '2014&ndash;15', 'url' => istPdf('eoa/eoa-2014-15.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/approvals/EOA-Report%202014-15.PDF')],
-                            ['year' => '2013&ndash;14', 'url' => istPdf('eoa/eoa-2013-14.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/approvals/EOA-Report-2013-14.PDF')],
+                            ['year' => '2026&ndash;27', 'url' => istPdf('eoa/eoa-2026-27.pdf')],
+                            ['year' => '2025&ndash;26', 'url' => istPdf('eoa/eoa-2025-26.pdf')],
+                            ['year' => '2024&ndash;25', 'url' => istPdf('eoa/eoa-2024-25.pdf')],
+                            ['year' => '2023&ndash;24', 'url' => istPdf('eoa/eoa-2023-24.pdf')],
+                            ['year' => '2022&ndash;23', 'url' => istPdf('eoa/eoa-2022-23.pdf')],
+                            ['year' => '2021&ndash;22', 'url' => istPdf('eoa/eoa-2021-22.pdf')],
+                            ['year' => '2020&ndash;21', 'url' => istPdf('eoa/eoa-2020-21.pdf')],
+                            ['year' => '2019&ndash;20', 'url' => istPdf('eoa/eoa-2019-20.pdf')],
+                            ['year' => '2018&ndash;19', 'url' => istPdf('eoa/eoa-2018-19.pdf')],
+                            ['year' => '2016&ndash;17', 'url' => istPdf('eoa/eoa-2016-17.pdf')],
+                            ['year' => '2015&ndash;16', 'url' => istPdf('eoa/eoa-2015-16.pdf')],
+                            ['year' => '2014&ndash;15', 'url' => istPdf('eoa/eoa-2014-15.pdf')],
+                            ['year' => '2013&ndash;14', 'url' => istPdf('eoa/eoa-2013-14.pdf')],
                         ];
                         foreach ($eoaReports as $eoa): ?>
                             <div class="col-6 col-md-4 col-lg-3">
@@ -1095,14 +1093,14 @@ if (!function_exists('istPdf')) {
                     <div class="row g-3">
                         <?php
                         $committees = [
-                            ['name' => 'Anti Ragging Committee',          'icon' => 'fas fa-shield-alt',       'url' => istPdf('committees/anti-ragging.pdf',             'https://www.srku.edu.in/wp-content/uploads/2024/07/anti-ragging-committee.pdf')],
-                            ['name' => 'Student Grievance Committee',     'icon' => 'fas fa-comment-alt',      'url' => istPdf('committees/student-grievance.pdf',        'https://www.srku.edu.in/wp-content/uploads/2024/07/student-grievance-committee.pdf')],
-                            ['name' => 'Women Grievance Committee',       'icon' => 'fas fa-female',           'url' => istPdf('committees/women-grievance.pdf',          'https://www.srku.edu.in/wp-content/uploads/2024/07/women-grievance-committee.pdf')],
-                            ['name' => 'OBC &amp; Minority Committee',    'icon' => 'fas fa-balance-scale',    'url' => istPdf('committees/obc-minority.pdf',             'https://www.srku.edu.in/wp-content/uploads/2024/07/obc-minority-grievance-committee.pdf')],
-                            ['name' => 'SC &amp; ST Committee',           'icon' => 'fas fa-hands-helping',    'url' => istPdf('committees/sc-st.pdf',                    'https://www.srku.edu.in/wp-content/uploads/2024/07/Sc-ST-committee.pdf')],
-                            ['name' => 'Internal Complaint Committee',    'icon' => 'fas fa-gavel',            'url' => istPdf('committees/internal-complaint.pdf',       'https://www.srku.edu.in/wp-content/uploads/2024/07/Internal-complaint.pdf')],
-                            ['name' => 'IQAC Committee',                  'icon' => 'fas fa-award',            'url' => istPdf('committees/iqac.pdf',                     'https://www.srku.edu.in/rkdf-ist/committee/IQAC.pdf')],
-                            ['name' => 'Employee &amp; Student Redressal','icon' => 'fas fa-user-shield',      'url' => istPdf('committees/employee-student-redressal.pdf','https://www.srku.edu.in/rkdf-ist/committee/EmployeesAndStudentRedressal.pdf')],
+                            ['name' => 'Anti Ragging Committee',          'icon' => 'fas fa-shield-alt',       'url' => istPdf('committees/anti-ragging.pdf')],
+                            ['name' => 'Student Grievance Committee',     'icon' => 'fas fa-comment-alt',      'url' => istPdf('committees/student-grievance.pdf')],
+                            ['name' => 'Women Grievance Committee',       'icon' => 'fas fa-female',           'url' => istPdf('committees/women-grievance.pdf')],
+                            ['name' => 'OBC &amp; Minority Committee',    'icon' => 'fas fa-balance-scale',    'url' => istPdf('committees/obc-minority.pdf')],
+                            ['name' => 'SC &amp; ST Committee',           'icon' => 'fas fa-hands-helping',    'url' => istPdf('committees/sc-st.pdf')],
+                            ['name' => 'Internal Complaint Committee',    'icon' => 'fas fa-gavel',            'url' => istPdf('committees/internal-complaint.pdf')],
+                            ['name' => 'IQAC Committee',                  'icon' => 'fas fa-award',            'url' => istPdf('committees/iqac.pdf')],
+                            ['name' => 'Employee &amp; Student Redressal','icon' => 'fas fa-user-shield',      'url' => istPdf('committees/employee-student-redressal.pdf')],
                         ];
                         foreach ($committees as $com): ?>
                             <div class="col-12 col-md-6">
@@ -1131,11 +1129,11 @@ if (!function_exists('istPdf')) {
                     <div class="row g-3">
                         <?php
                         $feedbackForms = [
-                            ['name' => 'Student Feedback Form',                    'type' => 'PDF File',   'icon' => 'fas fa-user-graduate',       'url' => istPdf('feedback/student-feedback.pdf',             'https://www.srku.edu.in/rkdf-ist/images/pdf/ist/STUDENT-FEEDBACK-FORM_page-0001.pdf')],
+                            ['name' => 'Student Feedback Form',                    'type' => 'PDF File',   'icon' => 'fas fa-user-graduate',       'url' => istPdf('feedback/student-feedback.pdf')],
                             ['name' => 'Online Student Feedback (View & Download)','type' => 'PDF Portal', 'icon' => 'fas fa-eye',                'url' => BASE_URL . 'rkdf-ist-student-feedback.php'],
-                            ['name' => 'Teacher Curriculum Feedback',              'type' => 'PDF File',   'icon' => 'fas fa-chalkboard-teacher',  'url' => istPdf('feedback/teacher-curriculum-feedback.pdf',  'https://www.srku.edu.in/rkdf-ist/images/pdf/ist/feedback-on-curriculum-for-teachers_page-0001.pdf')],
+                            ['name' => 'Teacher Curriculum Feedback',              'type' => 'PDF File',   'icon' => 'fas fa-chalkboard-teacher',  'url' => istPdf('feedback/teacher-curriculum-feedback.pdf')],
                             ['name' => 'Online Teacher Feedback (View & Download)','type' => 'PDF Portal', 'icon' => 'fas fa-eye',                'url' => BASE_URL . 'rkdf-ist-teacher-feedback.php'],
-                            ['name' => 'Parent Feedback Form',                     'type' => 'PDF File',   'icon' => 'fas fa-users',               'url' => istPdf('feedback/parent-feedback.pdf',              'https://www.srku.edu.in/rkdf-ist/images/pdf/ist/Parent-Feed-Back-converted_page-0001%20(1).pdf')],
+                            ['name' => 'Parent Feedback Form',                     'type' => 'PDF File',   'icon' => 'fas fa-users',               'url' => istPdf('feedback/parent-feedback.pdf')],
                             ['name' => 'Online Parent Feedback (View & Download)', 'type' => 'PDF Portal', 'icon' => 'fas fa-eye',                'url' => BASE_URL . 'rkdf-ist-parent-feedback.php'],
                         ];
                         foreach ($feedbackForms as $fb): ?>
@@ -1249,13 +1247,13 @@ if (!function_exists('istPdf')) {
                     <div class="d-flex flex-column gap-2">
                         <?php
                         $impDownloads = [
-                            ['name' => 'Faculty List',                'icon' => 'fas fa-users',        'url' => istPdf('downloads/faculty-list.pdf',          'https://www.srku.edu.in/rkdf-ist/images/RKDF-IST-FACULTY-LIST.pdf')],
-                            ['name' => 'Mandatory Disclosures',       'icon' => 'fas fa-file-alt',     'url' => istPdf('downloads/mandatory-disclosures.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/RKDF%20IST%20Mandatory%20Disclosures.pdf')],
-                            ['name' => 'Accreditation Status',        'icon' => 'fas fa-certificate',  'url' => istPdf('downloads/accreditation-status.pdf', 'https://www.srku.edu.in/rkdf-ist/images/pdf/AccreditationStatusRKDFIST.pdf')],
-                            ['name' => 'Board of Governors (BOG)',    'icon' => 'fas fa-landmark',     'url' => istPdf('downloads/governing-body.pdf',       'https://www.srku.edu.in/rkdf-ist/images/pdf/Governing-Body.pdf')],
-                            ['name' => 'Board of Management (BOM)',   'icon' => 'fas fa-sitemap',      'url' => istPdf('downloads/board-of-management.pdf',  'https://www.srku.edu.in/rkdf-ist/images/pdf/Board-of-Management.pdf')],
-                            ['name' => 'Vacancy / Recruitment',       'icon' => 'fas fa-briefcase',    'url' => istPdf('downloads/vacancy-recruitment.pdf',  'https://www.srku.edu.in/rkdf-ist/rkdf-ist-mca/images/SRKU-Requirement-Paper.pdf')],
-                            ['name' => 'Fee Payment Link',            'icon' => 'fas fa-credit-card',  'url' => istPdf('downloads/payment-link.pdf',          'https://www.srku.edu.in/rkdf-ist/rkdf-ist-mca/images/payment-link.pdf')],
+                            ['name' => 'Faculty List',                'icon' => 'fas fa-users',        'url' => istPdf('downloads/faculty-list.pdf')],
+                            ['name' => 'Mandatory Disclosures',       'icon' => 'fas fa-file-alt',     'url' => istPdf('downloads/mandatory-disclosures.pdf')],
+                            ['name' => 'Accreditation Status',        'icon' => 'fas fa-certificate',  'url' => istPdf('downloads/accreditation-status.pdf')],
+                            ['name' => 'Board of Governors (BOG)',    'icon' => 'fas fa-landmark',     'url' => istPdf('downloads/governing-body.pdf')],
+                            ['name' => 'Board of Management (BOM)',   'icon' => 'fas fa-sitemap',      'url' => istPdf('downloads/board-of-management.pdf')],
+                            ['name' => 'Vacancy / Recruitment',       'icon' => 'fas fa-briefcase',    'url' => istPdf('downloads/vacancy-recruitment.pdf')],
+                            ['name' => 'Fee Payment Link',            'icon' => 'fas fa-credit-card',  'url' => istPdf('downloads/payment-link.pdf')],
                         ];
                         foreach ($impDownloads as $dl): ?>
                             <a href="<?php echo $dl['url']; ?>" target="_blank" rel="noopener"

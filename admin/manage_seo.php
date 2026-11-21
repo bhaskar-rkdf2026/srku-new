@@ -681,7 +681,7 @@ require_once __DIR__ . '/header.php';
                     <div class="col-md-7">
                         <div class="bg-white p-3 rounded-3 border h-100 shadow-2xs">
                             <label class="form-label fw-bold text-dark small mb-1">Canonical URL</label>
-                            <input type="url" name="canonical_url" id="formCanonicalUrl" class="form-control form-control-sm" placeholder="https://srku.edu.in/page.php?id=24">
+                            <input type="url" name="canonical_url" id="formCanonicalUrl" class="form-control form-control-sm" placeholder="https://yourdomain.com/page-name">
                             <div class="form-text small text-muted">
                                 Self-referencing canonical URL prevents duplicate content issues.
                             </div>

@@ -59,7 +59,7 @@ require_once __DIR__ . '/includes/header.php';
     "name": "Sarvepalli Radhakrishnan University",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://srku.edu.in/assets/uploads/2026/07/SRK-logo.webp"
+      "url": "<?php echo BASE_URL; ?>assets/images/srku-header-logo.png"
     }
   },
   "mainEntityOfPage": {

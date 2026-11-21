@@ -36,8 +36,8 @@ $externalWebsites = [
     'rkdf-dental-college' => 'http://rkdfdentalcollege.in/',
     'rkdf-homoeopathic-medical-college' => 'http://www.rkdfhmc.in/',
     'sarvepalli-radhakrishnan-college-of-ayurveda' => 'https://www.srkcahrc.in/',
-    'rkdf-institute-of-science-and-technology' => 'https://srku.edu.in/rkdf-ist/index.php',
-    'faculty-of-agriculture' => 'https://srku.edu.in/agriculture/index.php'
+    'rkdf-institute-of-science-and-technology' => BASE_URL . 'rkdf-ist/index.php',
+    'faculty-of-agriculture' => BASE_URL . 'agriculture/index.php'
 ];
 
 function resolveUnitCategoryGroup($cat, $slug) {

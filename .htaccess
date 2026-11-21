@@ -1,5 +1,5 @@
 # Apache Server Configuration for SRKU Web Application
-# 100% Compatible with original https://new.srku.edu.in/ structure on Localhost & GoDaddy
+# 100% Compatible with dynamic BASE_URL structure on Localhost & Production
 
 Options -Indexes -MultiViews -ExecCGI
 
