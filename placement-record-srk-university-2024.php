@@ -546,21 +546,29 @@ $studentPlacements = [
 
     startAutoPlay();
 
-    // Auto-scroll ticker on hover pause
+    // Auto-scroll ticker on hover pause with guaranteed infinite loop
     var scrollBox = document.getElementById('autoScrollBox');
     var scrollInterval = null;
     if (scrollBox) {
+        var lastScrollPos = -1;
         function runAutoScroll() {
+            if (scrollInterval) clearInterval(scrollInterval);
             scrollInterval = setInterval(function() {
-                if (scrollBox.scrollTop + scrollBox.clientHeight >= scrollBox.scrollHeight - 5) {
+                var maxScroll = scrollBox.scrollHeight - scrollBox.clientHeight;
+                if (maxScroll <= 0) return;
+                
+                // If near bottom or scroll has hit maximum bound, reset smoothly to top
+                if (Math.ceil(scrollBox.scrollTop) >= maxScroll - 3 || (scrollBox.scrollTop === lastScrollPos && scrollBox.scrollTop > 10)) {
                     scrollBox.scrollTop = 0;
+                    lastScrollPos = -1;
                 } else {
+                    lastScrollPos = scrollBox.scrollTop;
                     scrollBox.scrollTop += 1;
                 }
-            }, 60);
+            }, 45);
         }
         runAutoScroll();
-        scrollBox.addEventListener('mouseenter', function() { clearInterval(scrollInterval); });
+        scrollBox.addEventListener('mouseenter', function() { if (scrollInterval) clearInterval(scrollInterval); });
         scrollBox.addEventListener('mouseleave', function() { runAutoScroll(); });
     }
 

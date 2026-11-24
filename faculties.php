@@ -288,9 +288,9 @@ foreach ($allFaculty as $f) {
                             </div>
 
                             <!-- Footer Info -->
-                            <div class="d-flex align-items-center justify-content-between pt-2 border-top text-muted" style="font-size: 0.78rem;">
-                                <span><i class="fas fa-map-marker-alt text-danger me-1"></i> SRKU Main Campus</span>
-                                <span class="text-success fw-semibold">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between pt-2 border-top text-muted gap-2" style="font-size: 0.78rem;">
+                                <span class="text-truncate" style="max-width: 60%;"><i class="fas fa-map-marker-alt text-danger me-1"></i> SRKU Main Campus</span>
+                                <span class="text-success fw-semibold text-nowrap ms-auto">
                                     <i class="fas fa-check-circle me-1"></i> Full Time Faculty
                                 </span>
                             </div>

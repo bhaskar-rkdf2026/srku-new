@@ -87,7 +87,7 @@ $examUfmDesc = getSetting('exam_ufm_desc', 'Carrying mobile phones, smartwatches
         <!-- 1. Mandatory Attendance Ordinance -->
         <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4 bg-white">
             <div class="d-flex align-items-center gap-3 mb-3">
-                <div class="p-3 rounded-circle bg-danger-subtle text-danger" style="font-size: 1.3rem;">
+                <div class="rounded-circle bg-danger-subtle text-danger d-inline-flex align-items-center justify-content-center shadow-xs" style="width: 52px; height: 52px; min-width: 52px; flex-shrink: 0; font-size: 1.3rem;">
                     <i class="fas fa-user-clock"></i>
                 </div>
                 <div>
@@ -117,7 +117,7 @@ $examUfmDesc = getSetting('exam_ufm_desc', 'Carrying mobile phones, smartwatches
         <!-- 2. Choice Based Credit System (CBCS) & 10-Point Grading Scale -->
         <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4 bg-white">
             <div class="d-flex align-items-center gap-3 mb-3">
-                <div class="p-3 rounded-circle bg-primary-subtle text-primary" style="font-size: 1.3rem;">
+                <div class="rounded-circle bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center shadow-xs" style="width: 52px; height: 52px; min-width: 52px; flex-shrink: 0; font-size: 1.3rem;">
                     <i class="fas fa-calculator"></i>
                 </div>
                 <div>
@@ -219,7 +219,7 @@ $examUfmDesc = getSetting('exam_ufm_desc', 'Carrying mobile phones, smartwatches
         <!-- 3. ATKT (Allowed to Keep Term) & Promotion Criteria -->
         <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4 bg-white">
             <div class="d-flex align-items-center gap-3 mb-3">
-                <div class="p-3 rounded-circle bg-warning-subtle text-warning" style="font-size: 1.3rem;">
+                <div class="rounded-circle bg-warning-subtle text-warning d-inline-flex align-items-center justify-content-center shadow-xs" style="width: 52px; height: 52px; min-width: 52px; flex-shrink: 0; font-size: 1.3rem;">
                     <i class="fas fa-forward"></i>
                 </div>
                 <div>

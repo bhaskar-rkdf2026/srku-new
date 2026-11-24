@@ -450,20 +450,40 @@ require_once __DIR__ . '/includes/header.php';
                     </div>
 
                     <div class="p-3 bg-white bg-opacity-10 rounded-3 mb-3 small">
-                        <div class="mb-2">
-                            <i class="fas fa-phone-alt text-warning me-2"></i>
-                            <strong>Toll-Free / Landline:</strong><br>
-                            <span class="text-white-50 ps-4">0755-4700983, 0755-4700980</span>
+                        <div class="mb-3">
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <i class="fas fa-phone-alt text-warning"></i>
+                                <strong class="text-white">Toll-Free / Landline:</strong>
+                            </div>
+                            <div class="ps-3 d-flex flex-wrap gap-2">
+                                <a href="tel:07554700983" class="text-white-50 text-decoration-none hover-text-white">0755-4700983</a>
+                                <span class="text-white-50">&bull;</span>
+                                <a href="tel:07554700980" class="text-white-50 text-decoration-none hover-text-white">0755-4700980</a>
+                            </div>
                         </div>
-                        <div class="mb-2">
-                            <i class="fas fa-mobile-alt text-warning me-2"></i>
-                            <strong>Direct Mobile Helpline:</strong><br>
-                            <span class="text-white-50 ps-4">7024144981, 7024144982, 7024144983, 7024144984, 7024144986</span>
+                        <div class="mb-3">
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <i class="fas fa-mobile-alt text-warning"></i>
+                                <strong class="text-white">Direct Mobile Helpline:</strong>
+                            </div>
+                            <div class="ps-3 d-flex flex-wrap gap-2 pt-1">
+                                <a href="tel:7024144981" class="badge bg-white bg-opacity-15 text-white border border-white-50 text-decoration-none px-2 py-1 shadow-xs hover-lift">7024144981</a>
+                                <a href="tel:7024144982" class="badge bg-white bg-opacity-15 text-white border border-white-50 text-decoration-none px-2 py-1 shadow-xs hover-lift">7024144982</a>
+                                <a href="tel:7024144983" class="badge bg-white bg-opacity-15 text-white border border-white-50 text-decoration-none px-2 py-1 shadow-xs hover-lift">7024144983</a>
+                                <a href="tel:7024144984" class="badge bg-white bg-opacity-15 text-white border border-white-50 text-decoration-none px-2 py-1 shadow-xs hover-lift">7024144984</a>
+                                <a href="tel:7024144986" class="badge bg-white bg-opacity-15 text-white border border-white-50 text-decoration-none px-2 py-1 shadow-xs hover-lift">7024144986</a>
+                            </div>
                         </div>
                         <div>
-                            <i class="fas fa-envelope text-warning me-2"></i>
-                            <strong>Official Email:</strong><br>
-                            <span class="text-white-50 ps-4">info@srku.edu.in, admissions@srku.edu.in</span>
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <i class="fas fa-envelope text-warning"></i>
+                                <strong class="text-white">Official Email:</strong>
+                            </div>
+                            <div class="ps-3 d-flex flex-wrap gap-2">
+                                <a href="mailto:info@srku.edu.in" class="text-white-50 text-decoration-none hover-text-white">info@srku.edu.in</a>
+                                <span class="text-white-50">&bull;</span>
+                                <a href="mailto:admissions@srku.edu.in" class="text-white-50 text-decoration-none hover-text-white">admissions@srku.edu.in</a>
+                            </div>
                         </div>
                     </div>
 

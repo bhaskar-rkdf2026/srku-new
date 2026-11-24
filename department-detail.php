@@ -295,8 +295,8 @@ if (!function_exists('istPdf')) {
 <div class="py-5 text-center text-white position-relative" style="background: linear-gradient(135deg, var(--srku-navy), var(--srku-maroon));">
     <div class="container-xl py-3">
         <?php if ($sealFile && file_exists(__DIR__ . '/assets/images/constituent-logos/' . $sealFile)): ?>
-            <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle shadow mx-auto mb-3" style="width:88px; height:88px;">
-                <img src="<?php echo BASE_URL; ?>assets/images/constituent-logos/<?php echo $sealFile; ?>?v=3" alt="<?php echo sanitize($dept['name']); ?>" class="img-fluid d-block m-auto" style="max-width:88%; max-height:88%; object-fit:contain;">
+            <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle shadow mx-auto mb-3" style="width:88px; height:88px; min-width:88px; flex-shrink:0;">
+                <img src="<?php echo BASE_URL; ?>assets/images/constituent-logos/<?php echo $sealFile; ?>?v=3" alt="<?php echo sanitize($dept['name']); ?>" class="img-fluid d-block m-auto" style="max-width:82%; max-height:82%; width:auto; height:auto; object-fit:contain;">
             </div>
         <?php else: ?>
             <div class="d-inline-flex align-items-center justify-content-center bg-white bg-opacity-10 rounded-circle p-3 mb-3 shadow" style="width:70px; height:70px; font-size:2rem;">
@@ -391,7 +391,7 @@ if (!function_exists('istPdf')) {
                     <div class="card p-3 p-md-4 border-0 rounded-4 mb-4 shadow-sm" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-left: 5px solid #ea580c !important;">
                         <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
                             <div class="d-flex align-items-center gap-3">
-                                <div class="bg-white rounded-circle p-2 shadow-xs border d-flex align-items-center justify-content-center" style="width:56px; height:56px; flex-shrink:0;">
+                                <div class="bg-white rounded-circle p-2 shadow-xs border d-flex align-items-center justify-content-center" style="width:56px; height:56px; min-width:56px; flex-shrink:0;">
                                     <i class="fas <?php echo $extMeta['icon']; ?> text-danger fs-3"></i>
                                 </div>
                                 <div>
@@ -402,7 +402,7 @@ if (!function_exists('istPdf')) {
                                     <p class="text-muted small mb-0"><?php echo sanitize($extMeta['desc']); ?></p>
                                 </div>
                             </div>
-                            <a href="<?php echo $officialWebsite; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-danger btn-sm px-4 py-2 fw-semibold text-nowrap rounded-pill d-inline-flex align-items-center gap-2 shadow-sm">
+                            <a href="<?php echo $officialWebsite; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-danger btn-sm px-4 py-2 fw-semibold text-nowrap rounded-pill d-inline-flex align-items-center justify-content-center gap-2 shadow-sm align-self-start align-self-sm-center">
                                 <span>Explore Portal</span> <i class="fas fa-external-link-alt" style="font-size:0.75rem;"></i>
                             </a>
                         </div>
@@ -445,9 +445,9 @@ if (!function_exists('istPdf')) {
                     <div class="card p-4 p-md-5 border-0 shadow-sm rounded-4 mb-4 position-relative overflow-hidden bg-white" style="border: 1px solid #e2e8f0 !important; border-top: 5px solid #7a0b0d !important;">
                         
                         <!-- Top Header Badge -->
-                        <div class="text-center mb-3">
-                            <span class="badge px-3 py-2 rounded-pill text-white fw-semibold shadow-xs d-inline-flex align-items-center gap-2" style="background: #0b1526; font-size: 0.82rem;">
-                                <i class="fas fa-quote-left text-warning"></i> Leadership Desk &bull; Message from the <?php echo sanitize($cleanRole); ?>
+                        <div class="text-center mb-3 px-2">
+                            <span class="badge px-3 py-2 rounded-pill text-white fw-semibold shadow-xs d-inline-flex align-items-center justify-content-center gap-2 text-wrap" style="background: #0b1526; font-size: 0.82rem; max-width: 100%; line-height: 1.5; white-space: normal;">
+                                <i class="fas fa-quote-left text-warning flex-shrink-0"></i> <span>Leadership Desk &bull; Message from the <?php echo sanitize($cleanRole); ?></span>
                             </span>
                         </div>
 
@@ -474,28 +474,28 @@ if (!function_exists('istPdf')) {
                                     $isQual = (stripos($part, 'Qualification') !== false);
                                 ?>
                                     <?php if ($isPub): ?>
-                                        <span class="badge px-3 py-1 rounded-pill fw-bold text-dark shadow-xs" style="background: linear-gradient(135deg, #fef08a, #facc15); border: 1px solid #eab308; font-size: 0.82rem;">
+                                        <span class="badge px-3 py-1 rounded-pill fw-bold text-dark shadow-xs text-wrap" style="background: linear-gradient(135deg, #fef08a, #facc15); border: 1px solid #eab308; font-size: 0.82rem; white-space: normal; line-height: 1.4; max-width: 100%;">
                                             <i class="fas fa-book-open text-danger me-1"></i> <?php echo sanitize($part); ?>
                                         </span>
                                     <?php elseif ($isExp): ?>
-                                        <span class="badge px-3 py-1 rounded-pill fw-semibold" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; font-size: 0.8rem;">
+                                        <span class="badge px-3 py-1 rounded-pill fw-semibold text-wrap" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; font-size: 0.8rem; white-space: normal; line-height: 1.4; max-width: 100%;">
                                             <i class="fas fa-briefcase text-primary me-1"></i> <?php echo sanitize($part); ?>
                                         </span>
                                     <?php elseif ($isQual): ?>
-                                        <span class="badge px-3 py-1 rounded-pill fw-semibold" style="background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; font-size: 0.8rem;">
+                                        <span class="badge px-3 py-1 rounded-pill fw-semibold text-wrap" style="background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; font-size: 0.8rem; white-space: normal; line-height: 1.4; max-width: 100%;">
                                             <i class="fas fa-graduation-cap text-success me-1"></i> <?php echo sanitize($part); ?>
                                         </span>
                                     <?php elseif ($partIdx === 0): ?>
-                                        <span class="badge px-3 py-1 rounded-pill fw-semibold" style="background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; font-size: 0.8rem;">
+                                        <span class="badge px-3 py-1 rounded-pill fw-semibold text-wrap" style="background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; font-size: 0.8rem; white-space: normal; line-height: 1.4; max-width: 100%;">
                                             <i class="fas fa-user-tie text-danger me-1"></i> <?php echo sanitize($part); ?>
                                         </span>
                                     <?php else: ?>
-                                        <span class="badge px-3 py-1 rounded-pill fw-semibold" style="background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; font-size: 0.8rem;">
+                                        <span class="badge px-3 py-1 rounded-pill fw-semibold text-wrap" style="background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; font-size: 0.8rem; white-space: normal; line-height: 1.4; max-width: 100%;">
                                             <?php echo sanitize($part); ?>
                                         </span>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
-                                <span class="badge px-3 py-1 rounded-pill fw-semibold" style="background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; font-size: 0.8rem;">
+                                <span class="badge px-3 py-1 rounded-pill fw-semibold text-wrap" style="background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; font-size: 0.8rem; white-space: normal; line-height: 1.4; max-width: 100%;">
                                     <i class="fas fa-university me-1 text-muted"></i> <?php echo sanitize($dept['name']); ?>
                                 </span>
                             </div>
@@ -719,7 +719,7 @@ if (!function_exists('istPdf')) {
                                         </div>
                                         <div class="d-flex flex-wrap gap-2">
                                             <?php foreach ($specList as $sp): ?>
-                                                <span class="badge rounded-2 fw-medium py-2 px-3 text-start" style="background: #f8fafc; color: #334155; border: 1px solid #e2e8f0; font-size: 0.83rem; white-space: normal; line-height: 1.4;">
+                                                <span class="badge rounded-2 fw-medium py-2 px-3 text-start spec-pill-badge" style="background: #f8fafc; color: #334155; border: 1px solid #e2e8f0; font-size: 0.83rem; white-space: normal; line-height: 1.4;">
                                                     &bull; <?php echo sanitize($sp); ?>
                                                 </span>
                                             <?php endforeach; ?>
@@ -744,14 +744,16 @@ if (!function_exists('istPdf')) {
                             <div class="small fw-bold text-navy text-uppercase letter-spacing-1 mb-2 d-flex align-items-center gap-2">
                                 <i class="fas fa-compass text-danger"></i> Constituent Faculties Under Allied Sciences:
                             </div>
-                            <div class="d-flex flex-wrap gap-2">
+                            <div class="d-flex flex-wrap gap-2 allied-fac-jump-grid">
                                 <?php foreach ($alliedFacultiesConfig as $fSlug => $fInfo): 
                                     $fCount = count($alliedGroupedCourses[$fSlug] ?? []);
                                 ?>
-                                    <a href="#<?php echo $fSlug; ?>" class="btn btn-sm btn-white border shadow-sm rounded-pill px-3 py-1 fw-semibold text-navy d-flex align-items-center gap-2 hover-shadow" style="font-size: 0.82rem; background: #fff;">
-                                        <i class="fas <?php echo $fInfo['icon']; ?>" style="color: <?php echo $fInfo['color']; ?>;"></i>
-                                        <span><?php echo $fInfo['name']; ?></span>
-                                        <span class="badge rounded-pill bg-light text-muted border px-2 py-0" style="font-size: 0.72rem;"><?php echo $fCount; ?></span>
+                                    <a href="#<?php echo $fSlug; ?>" class="btn btn-sm btn-white border shadow-sm rounded-pill px-3 py-2 fw-semibold text-navy d-flex align-items-center justify-content-between gap-2 hover-shadow allied-fac-jump-btn" style="font-size: 0.82rem; background: #fff;">
+                                        <span class="d-flex align-items-center gap-2">
+                                            <i class="fas <?php echo $fInfo['icon']; ?>" style="color: <?php echo $fInfo['color']; ?>;"></i>
+                                            <span><?php echo $fInfo['name']; ?></span>
+                                        </span>
+                                        <span class="badge rounded-pill bg-light text-muted border px-2 py-1 ms-auto" style="font-size: 0.72rem;"><?php echo $fCount; ?></span>
                                     </a>
                                 <?php endforeach; ?>
                             </div>

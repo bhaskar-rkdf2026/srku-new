@@ -50,22 +50,22 @@ require_once __DIR__ . '/includes/header.php';
                     </div>
                 </div>
                 <div class="col-12 col-lg-4">
-                    <div class="p-4 rounded-4 bg-white text-navy shadow-sm">
+                    <div class="p-4 rounded-4 bg-white text-navy shadow-sm border border-light">
                         <h6 class="fw-bold text-navy mb-3"><i class="fas fa-info-circle text-danger me-2"></i> Form Quick Facts</h6>
                         <ul class="list-unstyled d-flex flex-column gap-2 mb-0 small">
-                            <li class="d-flex justify-content-between pb-2 border-bottom">
+                            <li class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center pb-2 border-bottom gap-1">
                                 <span class="text-muted">Document:</span>
                                 <strong class="text-navy">Entrance Exam Form PDF</strong>
                             </li>
-                            <li class="d-flex justify-content-between pb-2 border-bottom">
+                            <li class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center pb-2 border-bottom gap-1">
                                 <span class="text-muted">Exam Type:</span>
                                 <strong class="text-navy">Doctoral Entrance Test (DET)</strong>
                             </li>
-                            <li class="d-flex justify-content-between pb-2 border-bottom">
+                            <li class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center pb-2 border-bottom gap-1">
                                 <span class="text-muted">Regulation:</span>
                                 <strong class="text-success">As per AICTE / UGC Norms</strong>
                             </li>
-                            <li class="d-flex justify-content-between">
+                            <li class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-1">
                                 <span class="text-muted">Mandatory Enclosure:</span>
                                 <strong class="text-danger">Qualifying Marksheet</strong>
                             </li>

@@ -51,9 +51,12 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
             </div>
 
-            <!-- Single Row Category Tabs (Never Cuts, Smooth Scroll) -->
-            <div class="pt-3 border-top">
-                <div class="srku-filter-row">
+            <!-- Single Row Category Tabs (Never Cuts, Smooth Scroll with Nav Arrows) -->
+            <div class="pt-3 border-top position-relative d-flex align-items-center">
+                <button type="button" class="btn btn-sm btn-light border rounded-circle shadow-xs me-2 d-none d-md-inline-flex align-items-center justify-content-center flex-shrink-0" id="blogCatScrollLeft" style="width:34px; height:34px; z-index:2;" aria-label="Scroll left">
+                    <i class="fas fa-chevron-left text-muted"></i>
+                </button>
+                <div class="srku-filter-row flex-grow-1" id="blogCategoryScrollBox" style="scroll-behavior: smooth;">
                     <a href="<?php echo BASE_URL; ?>blogs.php<?php echo $search ? '?q='.urlencode($search) : ''; ?>" 
                        class="srku-filter-btn <?php echo empty($category) ? 'active' : ''; ?>">
                         <i class="fas fa-th-large"></i> All Categories
@@ -65,6 +68,9 @@ require_once __DIR__ . '/includes/header.php';
                         </a>
                     <?php endforeach; ?>
                 </div>
+                <button type="button" class="btn btn-sm btn-light border rounded-circle shadow-xs ms-2 d-none d-md-inline-flex align-items-center justify-content-center flex-shrink-0" id="blogCatScrollRight" style="width:34px; height:34px; z-index:2;" aria-label="Scroll right">
+                    <i class="fas fa-chevron-right text-muted"></i>
+                </button>
             </div>
         </div>
 
@@ -100,9 +106,16 @@ require_once __DIR__ . '/includes/header.php';
                             </div>
 
                             <div class="p-4 d-flex flex-column flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-center mb-2 small text-muted">
-                                    <span><i class="far fa-calendar-alt text-warning me-1"></i> <?php echo date('d M Y', strtotime($b['publish_date'] ?: $b['created_at'])); ?></span>
-                                    <span><i class="far fa-user text-danger me-1"></i> <?php echo sanitize($b['author'] ?: 'SRKU Desk'); ?></span>
+                                <div class="blog-card-meta mb-2 pb-2 border-bottom">
+                                    <div class="d-flex align-items-center justify-content-between gap-2 text-muted" style="font-size: 0.8rem;">
+                                        <span class="d-inline-flex align-items-center gap-1 text-secondary fw-medium flex-shrink-0">
+                                            <i class="far fa-calendar-alt text-warning"></i>
+                                            <span><?php echo date('d M Y', strtotime($b['publish_date'] ?: $b['created_at'])); ?></span>
+                                        </span>
+                                        <span class="badge bg-light text-muted border text-truncate" style="max-width: 55%; font-size: 0.74rem; font-weight: 500;" title="<?php echo sanitize($b['author'] ?: 'SRKU Desk'); ?>">
+                                            <i class="far fa-user text-danger me-1"></i><?php echo sanitize($b['author'] ?: 'SRKU Desk'); ?>
+                                        </span>
+                                    </div>
                                 </div>
                                 <h3 class="h5 fw-bold text-navy mb-2 line-clamp-2" style="min-height: 48px;">
                                     <a href="<?php echo BASE_URL; ?>blog-detail.php?slug=<?php echo urlencode($b['slug'] ?: $b['id']); ?>" class="text-decoration-none text-navy hover-text-danger">
@@ -141,5 +154,17 @@ require_once __DIR__ . '/includes/header.php';
 
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var catBox = document.getElementById('blogCategoryScrollBox');
+    var btnL = document.getElementById('blogCatScrollLeft');
+    var btnR = document.getElementById('blogCatScrollRight');
+    if (catBox && btnL && btnR) {
+        btnL.addEventListener('click', function() { catBox.scrollBy({ left: -240, behavior: 'smooth' }); });
+        btnR.addEventListener('click', function() { catBox.scrollBy({ left: 240, behavior: 'smooth' }); });
+    }
+});
+</script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
