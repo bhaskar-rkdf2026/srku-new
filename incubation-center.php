@@ -197,10 +197,11 @@ require_once __DIR__ . '/includes/header.php';
             $dbIncubation = getIncubationMembers('active');
             $teamMembers = [];
             foreach ($dbIncubation as $m) {
-                $isHighlight = (stripos($m['designation'], 'co-ordinator') !== false || $m['sort_order'] == 1);
+                $role = $m['role'] ?? $m['designation'] ?? '';
+                $isHighlight = !empty($m['highlight']) || (stripos($role, 'co-ordinator') !== false || (isset($m['sort_order']) && $m['sort_order'] == 1));
                 $teamMembers[] = [
-                    'name' => $m['name'],
-                    'role' => $m['designation'],
+                    'name' => $m['name'] ?? '',
+                    'role' => $role,
                     'highlight' => $isHighlight
                 ];
             }
