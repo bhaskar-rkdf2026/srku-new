@@ -146,9 +146,18 @@ $studentPlacements = [
     width: 100%;
     height: 480px;
     object-fit: contain;
-    background: #000;
+    background: #0b1f44;
     border-radius: 14px;
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.22s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .placement-banner-img {
+        height: 330px;
+    }
+    .placement-ticker-panel {
+        height: 460px;
+    }
 }
 
 .placement-ticker-panel {
@@ -172,7 +181,7 @@ $studentPlacements = [
     flex: 1;
     overflow-y: auto;
     padding: 18px;
-    scroll-behavior: smooth;
+    scroll-behavior: auto !important;
 }
 
 .ticker-scroll-box::-webkit-scrollbar {
@@ -507,15 +516,36 @@ $studentPlacements = [
     var imgEl = document.getElementById('activePlacementImg');
     var counterEl = document.getElementById('sliderCounter');
     var playPauseBtn = document.getElementById('playPauseBtn');
+    var bannerContainer = document.querySelector('.placement-banner-container');
 
+    // Preload all 19 placement photos in the background for zero-delay instant switching
+    for (var i = 1; i <= totalSlides; i++) {
+        var preImg = new Image();
+        preImg.src = baseUrl + 'assets/images/placements/placement' + i + '.jpg';
+    }
+
+    var fadeTimeout = null;
     function updateSlide() {
         if (!imgEl) return;
-        imgEl.style.opacity = '0.3';
-        setTimeout(function() {
-            imgEl.src = baseUrl + 'assets/images/placements/placement' + currentSlide + '.jpg';
-            if (counterEl) counterEl.textContent = 'Photo ' + currentSlide + ' of ' + totalSlides;
-            imgEl.style.opacity = '1';
-        }, 200);
+        if (fadeTimeout) clearTimeout(fadeTimeout);
+
+        // Smooth quick fade out
+        imgEl.style.opacity = '0.15';
+        
+        var targetSrc = baseUrl + 'assets/images/placements/placement' + currentSlide + '.jpg';
+        fadeTimeout = setTimeout(function() {
+            var loader = new Image();
+            loader.onload = function() {
+                imgEl.src = targetSrc;
+                if (counterEl) counterEl.textContent = 'Photo ' + currentSlide + ' of ' + totalSlides;
+                imgEl.style.opacity = '1';
+            };
+            loader.onerror = function() {
+                imgEl.src = targetSrc;
+                imgEl.style.opacity = '1';
+            };
+            loader.src = targetSrc;
+        }, 150);
     }
 
     window.changeSlide = function(delta) {
@@ -523,6 +553,10 @@ $studentPlacements = [
         if (currentSlide > totalSlides) currentSlide = 1;
         if (currentSlide < 1) currentSlide = totalSlides;
         updateSlide();
+        // Reset autoplay timer so manual click never causes an immediate double-jump
+        if (isPlaying) {
+            startAutoPlay();
+        }
     };
 
     function startAutoPlay() {
@@ -546,30 +580,67 @@ $studentPlacements = [
 
     startAutoPlay();
 
-    // Auto-scroll ticker on hover pause with guaranteed infinite loop
+    // Hover Pause on Banner Slider
+    if (bannerContainer) {
+        bannerContainer.addEventListener('mouseenter', function() {
+            if (isPlaying && timer) clearInterval(timer);
+        });
+        bannerContainer.addEventListener('mouseleave', function() {
+            if (isPlaying) startAutoPlay();
+        });
+
+        // Mobile touch swipe gestures
+        var touchStartX = 0;
+        bannerContainer.addEventListener('touchstart', function(e) {
+            if (e.changedTouches && e.changedTouches[0]) {
+                touchStartX = e.changedTouches[0].screenX;
+            }
+        }, { passive: true });
+
+        bannerContainer.addEventListener('touchend', function(e) {
+            if (e.changedTouches && e.changedTouches[0]) {
+                var touchEndX = e.changedTouches[0].screenX;
+                var diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 45) {
+                    if (diff > 0) {
+                        changeSlide(1); // Swiped left
+                    } else {
+                        changeSlide(-1); // Swiped right
+                    }
+                }
+            }
+        }, { passive: true });
+    }
+
+    // Auto-scroll ticker on hover pause with seamless infinite loop
     var scrollBox = document.getElementById('autoScrollBox');
     var scrollInterval = null;
     if (scrollBox) {
-        var lastScrollPos = -1;
+        // Clone ticker items once to create a seamless infinite circular scroll
+        var originalItems = scrollBox.innerHTML;
+        scrollBox.innerHTML = originalItems + originalItems;
+
         function runAutoScroll() {
             if (scrollInterval) clearInterval(scrollInterval);
             scrollInterval = setInterval(function() {
-                var maxScroll = scrollBox.scrollHeight - scrollBox.clientHeight;
-                if (maxScroll <= 0) return;
-                
-                // If near bottom or scroll has hit maximum bound, reset smoothly to top
-                if (Math.ceil(scrollBox.scrollTop) >= maxScroll - 3 || (scrollBox.scrollTop === lastScrollPos && scrollBox.scrollTop > 10)) {
+                var singleHeight = scrollBox.scrollHeight / 2;
+                if (singleHeight <= 0) return;
+
+                if (scrollBox.scrollTop >= singleHeight) {
                     scrollBox.scrollTop = 0;
-                    lastScrollPos = -1;
                 } else {
-                    lastScrollPos = scrollBox.scrollTop;
                     scrollBox.scrollTop += 1;
                 }
-            }, 45);
+            }, 35);
         }
+
         runAutoScroll();
-        scrollBox.addEventListener('mouseenter', function() { if (scrollInterval) clearInterval(scrollInterval); });
-        scrollBox.addEventListener('mouseleave', function() { runAutoScroll(); });
+        scrollBox.addEventListener('mouseenter', function() {
+            if (scrollInterval) clearInterval(scrollInterval);
+        });
+        scrollBox.addEventListener('mouseleave', function() {
+            runAutoScroll();
+        });
     }
 
     // Filter functionality
