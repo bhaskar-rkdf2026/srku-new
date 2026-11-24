@@ -228,7 +228,7 @@ $aboutMilestoneStats = [
 
                 <div class="row g-3 pt-1 mb-3">
                     <div class="col-sm-6">
-                        <div class="d-flex align-items-start gap-3 p-3 rounded-3 bg-light border">
+                        <div class="d-flex align-items-start gap-3 p-3 rounded-3 bg-light border h-100">
                             <div class="icon-circle bg-navy text-white"><i class="fas fa-graduation-cap"></i></div>
                             <div>
                                 <h6 class="fw-bold text-navy mb-1">Inclusive Access</h6>
@@ -237,7 +237,7 @@ $aboutMilestoneStats = [
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="d-flex align-items-start gap-3 p-3 rounded-3 bg-light border">
+                        <div class="d-flex align-items-start gap-3 p-3 rounded-3 bg-light border h-100">
                             <div class="icon-circle" style="background:#7A0B0D; color:#fff;"><i class="fas fa-flask"></i></div>
                             <div>
                                 <h6 class="fw-bold text-navy mb-1">Healthcare &amp; Innovation</h6>
@@ -247,8 +247,8 @@ $aboutMilestoneStats = [
                     </div>
                 </div>
 
-                <div>
-                    <a href="<?php echo BASE_URL; ?>founder-story.php" class="btn btn-outline-maroon rounded-pill px-4 py-2 shadow-sm fw-semibold">
+                <div class="pt-1">
+                    <a href="<?php echo BASE_URL; ?>founder-story.php" class="btn btn-maroon rounded-pill px-4 py-2.5 shadow-sm fw-bold">
                         <i class="fas fa-book-reader me-2"></i> Read Complete Founder's Story &amp; Message &rarr;
                     </a>
                 </div>

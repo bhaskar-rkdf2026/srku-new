@@ -390,21 +390,23 @@ if (!function_exists('istPdf')) {
                     <!-- Official Website Callout Box -->
                     <div class="card p-3 p-md-4 border-0 rounded-4 mb-4 shadow-sm" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-left: 5px solid #ea580c !important;">
                         <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="bg-white rounded-circle p-2 shadow-xs border d-flex align-items-center justify-content-center" style="width:56px; height:56px; min-width:56px; flex-shrink:0;">
-                                    <i class="fas <?php echo $extMeta['icon']; ?> text-danger fs-3"></i>
+                            <div class="d-flex align-items-start gap-3 flex-grow-1" style="min-width: 0;">
+                                <div class="bg-white rounded-circle p-2 shadow-xs border d-flex align-items-center justify-content-center flex-shrink-0" style="width:52px; height:52px; min-width:52px;">
+                                    <i class="fas <?php echo $extMeta['icon']; ?> text-danger fs-4"></i>
                                 </div>
-                                <div>
-                                    <div class="badge bg-danger text-white rounded-pill px-2 py-1 small fw-semibold mb-1">
+                                <div class="flex-grow-1" style="min-width: 0;">
+                                    <span class="badge bg-danger text-white rounded-pill px-2.5 py-1 small fw-semibold mb-1.5 text-wrap d-inline-block text-start" style="white-space: normal; line-height: 1.35; max-width: 100%;">
                                         <?php echo sanitize($extMeta['badge']); ?>
-                                    </div>
-                                    <h4 class="h6 fw-bold text-dark mb-1"><?php echo sanitize($extMeta['btn']); ?></h4>
-                                    <p class="text-muted small mb-0"><?php echo sanitize($extMeta['desc']); ?></p>
+                                    </span>
+                                    <h4 class="h6 fw-bold text-dark mb-1 text-wrap" style="line-height: 1.4; word-break: break-word;"><?php echo sanitize($extMeta['btn']); ?></h4>
+                                    <p class="text-muted small mb-0" style="line-height: 1.5; word-break: break-word;"><?php echo sanitize($extMeta['desc']); ?></p>
                                 </div>
                             </div>
-                            <a href="<?php echo $officialWebsite; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-danger btn-sm px-4 py-2 fw-semibold text-nowrap rounded-pill d-inline-flex align-items-center justify-content-center gap-2 shadow-sm align-self-start align-self-sm-center">
-                                <span>Explore Portal</span> <i class="fas fa-external-link-alt" style="font-size:0.75rem;"></i>
-                            </a>
+                            <div class="pt-1 pt-sm-0 flex-shrink-0 align-self-start align-self-sm-center">
+                                <a href="<?php echo $officialWebsite; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-danger btn-sm px-4 py-2 fw-semibold rounded-pill d-inline-flex align-items-center justify-content-center gap-2 shadow-sm">
+                                    <span>Explore Portal</span> <i class="fas fa-external-link-alt" style="font-size:0.75rem;"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 <?php endif; ?>

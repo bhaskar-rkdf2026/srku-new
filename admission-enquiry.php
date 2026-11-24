@@ -467,11 +467,11 @@ require_once __DIR__ . '/includes/header.php';
                                 <strong class="text-white">Direct Mobile Helpline:</strong>
                             </div>
                             <div class="ps-3 d-flex flex-wrap gap-2 pt-1">
-                                <a href="tel:7024144981" class="badge bg-white bg-opacity-15 text-white border border-white-50 text-decoration-none px-2 py-1 shadow-xs hover-lift">7024144981</a>
-                                <a href="tel:7024144982" class="badge bg-white bg-opacity-15 text-white border border-white-50 text-decoration-none px-2 py-1 shadow-xs hover-lift">7024144982</a>
-                                <a href="tel:7024144983" class="badge bg-white bg-opacity-15 text-white border border-white-50 text-decoration-none px-2 py-1 shadow-xs hover-lift">7024144983</a>
-                                <a href="tel:7024144984" class="badge bg-white bg-opacity-15 text-white border border-white-50 text-decoration-none px-2 py-1 shadow-xs hover-lift">7024144984</a>
-                                <a href="tel:7024144986" class="badge bg-white bg-opacity-15 text-white border border-white-50 text-decoration-none px-2 py-1 shadow-xs hover-lift">7024144986</a>
+                                <a href="tel:7024144981" class="helpline-phone-pill"><i class="fas fa-phone-alt text-warning" style="font-size:0.7rem;"></i> 7024144981</a>
+                                <a href="tel:7024144982" class="helpline-phone-pill"><i class="fas fa-phone-alt text-warning" style="font-size:0.7rem;"></i> 7024144982</a>
+                                <a href="tel:7024144983" class="helpline-phone-pill"><i class="fas fa-phone-alt text-warning" style="font-size:0.7rem;"></i> 7024144983</a>
+                                <a href="tel:7024144984" class="helpline-phone-pill"><i class="fas fa-phone-alt text-warning" style="font-size:0.7rem;"></i> 7024144984</a>
+                                <a href="tel:7024144986" class="helpline-phone-pill"><i class="fas fa-phone-alt text-warning" style="font-size:0.7rem;"></i> 7024144986</a>
                             </div>
                         </div>
                         <div>

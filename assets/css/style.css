@@ -12311,4 +12311,31 @@ object {
     }
 }
 
+/* Helpline Phone Badges (Dark Navy Card Contrast Protection) */
+.helpline-phone-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.32) !important;
+    padding: 3px 10px;
+    border-radius: 50rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+}
+
+.helpline-phone-pill:hover,
+.helpline-phone-pill:focus,
+.helpline-phone-pill:active,
+.helpline-phone-pill:visited {
+    background: rgba(255, 255, 255, 0.25) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.65) !important;
+    outline: none !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+}
+
 
