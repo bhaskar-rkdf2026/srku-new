@@ -98,9 +98,9 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
                 </ul>
             </div>
 
-            <!-- Col 4: CONTACT INFO -->
+            <!-- Col 4: Contact Info -->
             <div class="col-12 col-md-6 col-lg-2 footer-col">
-                <h5 class="fw-bold text-white mb-3">CONTACT INFO</h5>
+                <h5 class="fw-bold text-white mb-3">Contact Info</h5>
                 <div class="footer-contact-block text-light-50 small" style="line-height: 1.75; font-size: 0.85rem;">
                     <div class="mb-1"><i class="fas fa-map-marker-alt text-warning me-1"></i> NH-12, Hoshangabad Rd,</div>
                     <div>Jatkhedi, Misrod, Bhopal,</div>
@@ -111,15 +111,15 @@ $enableBackToTop = getSetting('enable_back_to_top', '1');
                 </div>
             </div>
 
-            <!-- Col 5: IMPORTANT NO. & MAIL ID -->
+            <!-- Col 5: Important No. & Mail ID -->
             <div class="col-12 col-md-6 col-lg-3 footer-col">
-                <h5 class="fw-bold text-white mb-3">IMPORTANT NO.</h5>
+                <h5 class="fw-bold text-white mb-3">Important No.</h5>
                 <div class="footer-contact-block text-light-50 small" style="line-height: 1.75; font-size: 0.85rem;">
                     <div class="mb-1">Exam Helpline: <a href="tel:07554911204" class="text-light-50 text-decoration-none hover-gold fw-semibold">0755 - 4911204</a></div>
                     <div class="mb-1">Academic Helpline: <a href="tel:07554700982" class="text-light-50 text-decoration-none hover-gold fw-semibold">0755 - 4700982</a></div>
                     <div class="mb-3">Admission Helpline: <a href="tel:7024144981" class="text-light-50 text-decoration-none hover-gold fw-semibold">+91 7024144981</a></div>
                     
-                    <h6 class="text-white fw-bold mb-2 text-uppercase" style="font-size: 0.85rem; letter-spacing: 0.5px;">IMPORTANT MAIL ID</h6>
+                    <h6 class="text-white fw-bold mb-2" style="font-size: 0.85rem; letter-spacing: 0.5px;">Important Mail ID</h6>
                     <div class="mb-1">Verification: <a href="mailto:exam@srku.edu.in" class="text-warning text-decoration-none hover-gold">exam@srku.edu.in</a></div>
                     <div class="mb-1">Registrar: <a href="mailto:registrar@srku.edu.in" class="text-warning text-decoration-none hover-gold">registrar@srku.edu.in</a></div>
                     <div>VC Office: <a href="mailto:vc@srku.edu.in" class="text-warning text-decoration-none hover-gold">vc@srku.edu.in</a></div>
